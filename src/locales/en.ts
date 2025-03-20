@@ -151,10 +151,9 @@ const translations = {
   "missing_page": "The page you are looking for is not available. There may be an incorrect URL or the page is no longer available.",
   "month": "Month",
   "navs": {
-    "home": "Home",
-    "invoice": "Invoice",
+    "dashboard": "Dashboard",
+    "administration": "Administration",
     "services": "Services",
-    "helpCenter": "Help",
     "settings": "Settings"
   },
   "next_month": "This month",

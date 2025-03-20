@@ -1,4 +1,7 @@
+import AdministrationPage from "@/pages/AdministrationPage";
+import DashboardPage from "@/pages/DashboardPage";
 import RootPage from "@/pages/RootPage";
+import ServicePage from "@/pages/ServicePage";
 import SettingsPage from "@/pages/SettingsPage";
 import DisplaySettingsPage from "@/pages/settings/DisplaySettingsPage";
 import PermissionsSettingsPage from "@/pages/settings/PermissionsSettingsPage";
@@ -18,28 +21,22 @@ export const ROUTES: Interface__Route[] = [
 
 export const PRIVATE_ROUTES: Interface__PrivateRoute[] = [
   {
-    path: "/home",
-    activePath: "/home",
-    titleKey: "navs.home",
-    element: <></>,
+    path: "/dashboard",
+    activePath: "/dashboard",
+    titleKey: "navs.dashboard",
+    element: <DashboardPage />,
   },
   {
-    path: "/invoice",
-    activePath: "/invoice",
-    titleKey: "navs.invoice",
-    element: <></>,
+    path: "/administration",
+    activePath: "/administration",
+    titleKey: "navs.administration",
+    element: <AdministrationPage />,
   },
   {
     path: "/services",
     activePath: "/services",
     titleKey: "navs.services",
-    element: <></>,
-  },
-  {
-    path: "/help-center",
-    activePath: "/help-center",
-    titleKey: "navs.helpCenter",
-    element: <></>,
+    element: <ServicePage />,
   },
 
   // Settings

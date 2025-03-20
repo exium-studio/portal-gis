@@ -1,20 +1,16 @@
 // Navs
 export const navs = {
-  home: {
-    id: "Beranda",
-    en: "Home",
+  dashboard: {
+    id: "Dashboard",
+    en: "Dashboard",
   },
-  invoice: {
-    id: "Tagihan",
-    en: "Invoice",
+  administration: {
+    id: "Administrasi",
+    en: "Administration",
   },
   services: {
     id: "Layanan",
     en: "Services",
-  },
-  helpCenter: {
-    id: "Bantuan",
-    en: "Help",
   },
   settings: {
     id: "Pengaturan",

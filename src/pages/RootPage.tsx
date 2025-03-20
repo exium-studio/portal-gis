@@ -3,7 +3,7 @@ import LoginForm from "@/components/widget/LoginForm";
 
 const RootPage = () => {
   return (
-    <CContainer>
+    <CContainer p={5} justify={"center"} minH={"100dvh"}>
       <LoginForm />
     </CContainer>
   );

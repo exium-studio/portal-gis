@@ -151,10 +151,9 @@ const translations = {
   "missing_page": "Halaman yang Anda cari tidak tersedia. Kemungkinan ada URL yang keliru atau halaman ini sudah tidak tersedia.",
   "month": "Bulan",
   "navs": {
-    "home": "Beranda",
-    "invoice": "Tagihan",
+    "dashboard": "Dashboard",
+    "administration": "Administrasi",
     "services": "Layanan",
-    "helpCenter": "Bantuan",
     "settings": "Pengaturan"
   },
   "next_month": "Bulan ini",

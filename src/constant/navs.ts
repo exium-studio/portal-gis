@@ -3,7 +3,6 @@ import {
   IconDeviceDesktop,
   IconExclamationCircle,
   IconGavel,
-  IconHelpCircle,
   IconHome,
   IconLanguage,
   IconReceipt2,
@@ -13,24 +12,19 @@ import {
 
 export const NAVS = [
   {
-    labelKey: "navs.home",
-    path: "/home",
+    labelKey: "navs.dashboard",
+    path: "/dashboard",
     icon: IconHome,
   },
   {
-    labelKey: "navs.invoice",
-    path: "/invoice",
+    labelKey: "navs.administration",
+    path: "/administration",
     icon: IconReceipt2,
   },
   {
     labelKey: "navs.services",
     path: "/services",
     icon: IconApps,
-  },
-  {
-    labelKey: "navs.helpCenter",
-    path: "/help-center",
-    icon: IconHelpCircle,
   },
 ];
 
