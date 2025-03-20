@@ -1,11 +1,11 @@
 import {
   IconApps,
+  IconDatabase,
   IconDeviceDesktop,
   IconExclamationCircle,
   IconGavel,
-  IconHome,
   IconLanguage,
-  IconReceipt2,
+  IconLayout,
   IconShieldHalf,
   IconShieldLock,
 } from "@tabler/icons-react";
@@ -14,12 +14,12 @@ export const NAVS = [
   {
     labelKey: "navs.dashboard",
     path: "/dashboard",
-    icon: IconHome,
+    icon: IconLayout,
   },
   {
     labelKey: "navs.administration",
     path: "/administration",
-    icon: IconReceipt2,
+    icon: IconDatabase,
   },
   {
     labelKey: "navs.services",
