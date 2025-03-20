@@ -1,5 +1,7 @@
 import BackButton from "@/components/ui-custom/BackButton";
+import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
+import ConfirmationDisclosure from "@/components/ui-custom/ConfirmationDisclosure";
 import {
   DisclosureBody,
   DisclosureContent,
@@ -8,10 +10,20 @@ import {
   DisclosureRoot,
 } from "@/components/ui-custom/Disclosure";
 import DisclosureHeaderContent from "@/components/ui-custom/DisclosureHeaderContent";
-import FileIcon from "@/components/ui-custom/FileIcon";
+import FileInput from "@/components/ui-custom/FileInput";
+import HelperText from "@/components/ui-custom/HelperText";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
+import StringInput from "@/components/ui-custom/StringInput";
+import Textarea from "@/components/ui-custom/Textarea";
+import { Field } from "@/components/ui/field";
+import {
+  MenuContent,
+  MenuItem,
+  MenuRoot,
+  MenuTrigger,
+} from "@/components/ui/menu";
 import {
   PopoverContent,
   PopoverRoot,
@@ -19,26 +31,31 @@ import {
 } from "@/components/ui/popover";
 import ItemButton from "@/components/widget/ItemButton";
 import PageContainer from "@/components/widget/PageContainer";
+import { SVGS_PATH } from "@/constant/path";
 import useLang from "@/context/useLang";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useBackOnClose from "@/hooks/useBackOnClose";
+import formatDate from "@/utils/formatDate";
 import formatNumber from "@/utils/formatNumber";
 import {
-  Center,
+  FieldLabel,
+  GridItem,
   HStack,
-  Icon,
+  Image,
+  MenuPositioner,
+  Portal,
   SimpleGrid,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import {
-  IconEdit,
-  IconFriends,
+  IconDotsVertical,
   IconPlus,
+  IconSparkles,
   IconSpeakerphone,
-  IconTipJar,
 } from "@tabler/icons-react";
-import { useState } from "react";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 const TotalCounter = () => {
   // Contexts
@@ -72,13 +89,11 @@ const TotalCounter = () => {
   };
 
   return (
-    <SimpleGrid columns={[1, 2]} gap={4}>
+    <SimpleGrid columns={[1, 2]} gap={"10px"}>
       <TotalContainer>
-        <HStack gap={3}>
-          <Icon color={"green.500"}>
-            <IconFriends size={30} />
-          </Icon>
-          <CContainer>
+        <HStack gap={4}>
+          <Image src={`${SVGS_PATH}/people.svg`} h={"30px"} />
+          <CContainer gap={1}>
             <Text>{l.total_population}</Text>
             <HStack justify={"space-between"} align={"end"}>
               <Text fontWeight={"bold"} fontSize={"xl"}>
@@ -103,11 +118,10 @@ const TotalCounter = () => {
       </TotalContainer>
 
       <TotalContainer>
-        <HStack gap={3}>
-          <Icon color={"cyan.500"}>
-            <IconTipJar size={30} />
-          </Icon>
-          <CContainer>
+        <HStack gap={4}>
+          <Image src={`${SVGS_PATH}/funds.svg`} h={"30px"} />
+
+          <CContainer gap={1}>
             <Text>{l.total_village_funds}</Text>
             <HStack justify={"space-between"} align={"end"}>
               <Text fontWeight={"bold"} fontSize={"xl"}>
@@ -133,12 +147,14 @@ const Announcement = () => {
       title: "Pemberitahuan Pemadaman Listrik",
       description:
         "Akan ada pemadaman listrik di wilayah desa pada 25 Maret 2025 mulai pukul 10:00 - 14:00 WIB.",
+      updated_at: new Date().toISOString(),
     },
     {
       id: 2,
       title: "Jadwal Posyandu Bulan Ini",
       description:
         "Posyandu balita akan diadakan pada 28 Maret 2025 di Balai Desa pukul 08:00 WIB.",
+      updated_at: new Date().toISOString(),
     },
     {
       id: 3,
@@ -152,115 +168,231 @@ const Announcement = () => {
           ext: "pdf",
         },
       ],
+      updated_at: new Date().toISOString(),
     },
     {
       id: 4,
       title: "Kerja Bakti Bersama",
       description:
         "Kerja bakti membersihkan lingkungan desa akan diadakan pada 31 Maret 2025 pukul 07:00 WIB. Semua warga diharapkan ikut berpartisipasi.",
+      updated_at: new Date().toISOString(),
     },
     {
       id: 5,
       title: "Rapat Musyawarah Desa",
       description:
         "Rapat musyawarah desa akan diadakan pada 1 April 2025 di Balai Desa untuk membahas rencana pembangunan desa tahun depan.",
+      updated_at: new Date().toISOString(),
     },
   ];
 
+  console.log("Pengumuman", data);
+
   // Components
-  const AnnouncementItem = ({ data }: any) => {
+  const AnnouncementCreate = () => {
     // States, Refs
-    const [hover, setHover] = useState(false);
+    const formik = useFormik({
+      validateOnChange: false,
+      initialValues: {
+        title: "",
+        description: "",
+        file: undefined as any,
+      },
+      validationSchema: yup.object().shape({}),
+      onSubmit: (values) => {
+        console.log(values);
+      },
+    });
 
     // Utils
     const { open, onOpen, onClose } = useDisclosure();
-    useBackOnClose(data.id, open, onOpen, onClose);
+    useBackOnClose(`create-announcement`, open, onOpen, onClose);
 
     return (
       <>
-        <CContainer px={2}>
-          <CContainer
-            onClick={onOpen}
-            gap={1}
-            p={3}
-            transition={"200ms"}
-            cursor={"pointer"}
-            borderRadius={themeConfig.radii.component}
-            _hover={{ bg: "gray.subtle" }}
-            onMouseEnter={() => {
-              setHover(true);
-            }}
-            onMouseLeave={() => {
-              setHover(false);
-            }}
-            position={"relative"}
-          >
-            <HStack transition={"0"} pr={hover ? 10 : 0}>
-              <CContainer truncate>
-                <Text fontWeight={"medium"} truncate>
-                  {data.title}
-                </Text>
-                <Text color={"fg.subtle"} truncate>
-                  {data.description}
-                </Text>
-              </CContainer>
-
-              <Center
-                opacity={hover ? 1 : 0}
-                transition={"200ms"}
-                position={"absolute"}
-                right={2}
-                p={2}
-                aspectRatio={1}
-                borderRadius={"full"}
-              >
-                <Icon mx={1} color={themeConfig.primaryColor}>
-                  <IconEdit />
-                </Icon>
-              </Center>
-            </HStack>
-          </CContainer>
-        </CContainer>
+        <ItemButton pl={2} onClick={onOpen}>
+          <IconPlus />
+          {l.create}
+        </ItemButton>
 
         <DisclosureRoot open={open} lazyLoad size={"sm"}>
           <DisclosureContent>
             <DisclosureHeader>
-              <DisclosureHeaderContent title={data.title} />
+              <DisclosureHeaderContent
+                title={`${l.create} ${l.announcement.toLowerCase()}`}
+              />
             </DisclosureHeader>
 
             <DisclosureBody>
-              <Text>{data.description}</Text>
+              <Field>
+                <FieldLabel>{l.title}</FieldLabel>
+                <StringInput
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("title", input);
+                  }}
+                  inputValue={formik.values.title}
+                />
+              </Field>
 
-              {data.file && (
-                <HStack wrap={"wrap"} mt={4}>
-                  {data.file.map((item: any, i: number) => {
-                    return (
-                      <CContainer
-                        key={i}
-                        w={"fit"}
-                        aspectRatio={1}
-                        p={4}
-                        align={"center"}
-                        borderRadius={themeConfig.radii.component}
-                        border={"1px solid {colors.border.muted}"}
-                      >
-                        <FileIcon
-                          type={item.ext}
-                          iconProps={{ size: 50, stroke: 1 }}
-                        />
-                        <Text mt={2}>{item.name}</Text>
-                      </CContainer>
-                    );
-                  })}
-                </HStack>
-              )}
+              <Field mt={4}>
+                <FieldLabel>{l.description}</FieldLabel>
+                <Textarea
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("description", input);
+                  }}
+                  inputValue={formik.values.description}
+                />
+              </Field>
+
+              <Field mt={4}>
+                <FieldLabel>Attachment</FieldLabel>
+                <FileInput maxFiles={4} />
+              </Field>
             </DisclosureBody>
 
             <DisclosureFooter>
               <BackButton />
+              <BButton colorPalette={themeConfig.colorPalette}>
+                {l.create}
+              </BButton>
             </DisclosureFooter>
           </DisclosureContent>
         </DisclosureRoot>
+      </>
+    );
+  };
+  const AnnouncementEdit = ({ item }: any) => {
+    // States, Refs
+    const formik = useFormik({
+      validateOnChange: false,
+      initialValues: {
+        title: item.title,
+        description: item.description,
+        file: item.file,
+      },
+      validationSchema: yup.object().shape({}),
+      onSubmit: (values) => {
+        console.log(values);
+      },
+    });
+
+    // Utils
+    const { open, onOpen, onClose } = useDisclosure();
+    useBackOnClose(`edit-announcement-${item.id}`, open, onOpen, onClose);
+
+    return (
+      <>
+        <MenuItem value="edit" onClick={onOpen}>
+          Edit
+        </MenuItem>
+
+        <DisclosureRoot open={open} lazyLoad size={"sm"}>
+          <DisclosureContent>
+            <DisclosureHeader>
+              <DisclosureHeaderContent title={"Edit"} />
+            </DisclosureHeader>
+
+            <DisclosureBody>
+              <Field>
+                <FieldLabel>{l.title}</FieldLabel>
+                <StringInput
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("title", input);
+                  }}
+                  inputValue={formik.values.title}
+                />
+              </Field>
+
+              <Field mt={4}>
+                <FieldLabel>{l.description}</FieldLabel>
+                <Textarea
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("description", input);
+                  }}
+                  inputValue={formik.values.description}
+                />
+              </Field>
+
+              <Field mt={4}>
+                <FieldLabel>Attachment</FieldLabel>
+                <FileInput maxFiles={4} />
+              </Field>
+            </DisclosureBody>
+
+            <DisclosureFooter>
+              <BackButton />
+              <BButton colorPalette={themeConfig.colorPalette}>Update</BButton>
+            </DisclosureFooter>
+          </DisclosureContent>
+        </DisclosureRoot>
+      </>
+    );
+  };
+  const AnnouncementOptions = ({ item }: any) => {
+    const { l } = useLang();
+
+    return (
+      <MenuRoot>
+        <MenuTrigger asChild>
+          <BButton
+            iconButton
+            size={"xs"}
+            borderRadius={"full"}
+            variant={"ghost"}
+          >
+            <IconDotsVertical />
+          </BButton>
+        </MenuTrigger>
+
+        <Portal>
+          <MenuPositioner>
+            <MenuContent>
+              <AnnouncementEdit item={item} />
+              <ConfirmationDisclosure
+                id={`delete-announcement-${item.id}`}
+                title="Delete?"
+                description={l.perma_delete_confirmation}
+                confirmCallback={() => {}}
+                confirmLabel="Delete"
+                confirmButtonProps={{
+                  colorPalette: "red",
+                }}
+              >
+                <MenuItem value="delete" color={"red.400"}>
+                  Delete...
+                </MenuItem>
+              </ConfirmationDisclosure>
+            </MenuContent>
+          </MenuPositioner>
+        </Portal>
+      </MenuRoot>
+    );
+  };
+  const AnnouncementItem = ({ item }: any) => {
+    return (
+      <>
+        <CContainer px={2}>
+          <CContainer
+            gap={1}
+            p={3}
+            pr={0}
+            borderRadius={themeConfig.radii.component}
+          >
+            <HStack>
+              <CContainer truncate gap={1}>
+                <Text fontWeight={"medium"} truncate>
+                  {item.title}
+                </Text>
+                <Text color={"fg.muted"} truncate>
+                  {item.description}
+                </Text>
+                <HelperText>{formatDate(item.updated_at)}</HelperText>
+              </CContainer>
+
+              <AnnouncementOptions item={item} />
+            </HStack>
+          </CContainer>
+        </CContainer>
       </>
     );
   };
@@ -269,21 +401,94 @@ const Announcement = () => {
     <ItemContainer>
       <ItemHeaderContainer>
         <HStack>
-          <IconSpeakerphone size={20} stroke={1.5} />
+          <IconSpeakerphone size={20} />
           <ItemHeaderTitle>{l.announcement}</ItemHeaderTitle>
         </HStack>
 
-        <ItemButton pl={2}>
-          <IconPlus />
-          {l.create}
-        </ItemButton>
+        <AnnouncementCreate />
       </ItemHeaderContainer>
 
       <CContainer pb={2}>
         <CContainer pt={2} h={"400px"} overflowY={"auto"} className="scrollY">
           {data.map((item, i) => {
-            return <AnnouncementItem key={i} data={item} />;
+            return <AnnouncementItem key={i} item={item} />;
           })}
+        </CContainer>
+      </CContainer>
+    </ItemContainer>
+  );
+};
+
+const VisionMission = () => {
+  // Contexts
+  const { l } = useLang();
+
+  // States, Refs
+  const data = {
+    name: "Desa Makmur Jaya",
+    vision:
+      "Mewujudkan Desa Makmur Jaya yang Mandiri, Sejahtera, dan Berbudaya Berbasis Kearifan Lokal.",
+    mission: [
+      "Meningkatkan kesejahteraan masyarakat melalui pengembangan ekonomi berbasis pertanian, peternakan, dan UMKM.",
+      "Meningkatkan kualitas sumber daya manusia melalui pendidikan, pelatihan, dan pemberdayaan masyarakat.",
+      "Meningkatkan infrastruktur desa guna menunjang aktivitas ekonomi dan kesejahteraan masyarakat.",
+      "Mewujudkan tata kelola pemerintahan desa yang transparan, akuntabel, dan partisipatif.",
+      "Melestarikan budaya dan kearifan lokal sebagai identitas desa yang berdaya saing.",
+      "Mengembangkan potensi pariwisata desa berbasis alam dan budaya untuk meningkatkan pendapatan desa.",
+      "Meningkatkan kualitas layanan kesehatan dan kebersihan lingkungan untuk masyarakat yang lebih sehat.",
+    ],
+  };
+
+  console.log("Visi Misi", data);
+
+  return (
+    <ItemContainer>
+      <ItemHeaderContainer>
+        <HStack>
+          <IconSparkles size={20} />
+          <ItemHeaderTitle>
+            {l.vision} {l.and} {l.mission.toLowerCase()}
+          </ItemHeaderTitle>
+        </HStack>
+      </ItemHeaderContainer>
+
+      <CContainer pb={2}>
+        <CContainer
+          pt={2}
+          pb={2}
+          h={"400px"}
+          overflowY={"auto"}
+          className="scrollY"
+          px={4}
+        >
+          <Text color={"fg.muted"} mb={1}>
+            {l.vision}
+          </Text>
+          <Text fontWeight={"medium"}>{data.vision}</Text>
+
+          <Text color={"fg.muted"} mt={4} mb={1}>
+            {l.mission}
+          </Text>
+          <CContainer as={"ol"} gap={4}>
+            {data.mission.map((item, i) => {
+              return (
+                <HStack
+                  key={i}
+                  fontWeight={"medium"}
+                  align={"start"}
+                  borderBottom={
+                    i !== data.mission.length - 1
+                      ? "1px solid {colors.border.muted}"
+                      : ""
+                  }
+                  pb={i !== data.mission.length - 1 ? 4 : 0}
+                >
+                  <Text>{i + 1}</Text>
+                  <Text>{item}</Text>
+                </HStack>
+              );
+            })}
+          </CContainer>
         </CContainer>
       </CContainer>
     </ItemContainer>
@@ -301,18 +506,26 @@ const IncomeExpenses = () => {
 const DashboardPage = () => {
   return (
     <PageContainer>
-      <SimpleGrid columns={[1, null, null, 2]} gap={4}>
-        <CContainer gap={4}>
-          <TotalCounter />
+      <SimpleGrid columns={[1, null, 3]} gap={"10px"}>
+        <GridItem colSpan={[3, null, 2]}>
+          <CContainer gap={"10px"}>
+            <TotalCounter />
 
-          <Announcement />
-        </CContainer>
+            <SimpleGrid columns={[1, 2]} gap={"10px"}>
+              <Announcement />
 
-        <CContainer>
-          <OfficialContact />
+              <VisionMission />
+            </SimpleGrid>
+          </CContainer>
+        </GridItem>
 
-          <IncomeExpenses />
-        </CContainer>
+        <GridItem colSpan={[3, null, 1]}>
+          <CContainer>
+            <OfficialContact />
+
+            <IncomeExpenses />
+          </CContainer>
+        </GridItem>
       </SimpleGrid>
     </PageContainer>
   );

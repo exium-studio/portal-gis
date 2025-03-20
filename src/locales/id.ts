@@ -6,6 +6,7 @@ const translations = {
   "address": "Alamat",
   "address_not_found": "Alamat tidak ditemukan",
   "all": "Semua",
+  "and": "dan",
   "announcement": "Pengumuman",
   "ask": "Meminta",
   "auto_time_zone": "Zona waktu saat ini (auto)",
@@ -61,6 +62,7 @@ const translations = {
     "title": "Delete semua?",
     "description": "Delete semua inbox yang sudah dibaca."
   },
+  "description": "Deskripsi",
   "display_settings_helper_text": "Pengaturan tampilan ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
   "edge_permissions_settings_link": "Pengaturan → Cookie dan izin situs → ",
   "empty": "Kosong",
@@ -152,6 +154,7 @@ const translations = {
     "description": "Izinkan aplikasi menggunakan mikrofon perangkat Anda untuk merekam audio."
   },
   "missing_page": "Halaman yang Anda cari tidak tersedia. Kemungkinan ada URL yang keliru atau halaman ini sudah tidak tersedia.",
+  "mission": "Misi",
   "month": "Bulan",
   "navs": {
     "dashboard": "Dashboard",
@@ -244,6 +247,7 @@ const translations = {
   "time_range_picker_default_title": "Pilih Rentang Waktu",
   "time_zone": "Zona waktu",
   "time_zone_settings_title": "Zona Waktu",
+  "title": "Judul",
   "today": "Hari ini",
   "tomorrow": "Besok",
   "total_population": "Total populasi",
@@ -262,6 +266,7 @@ const translations = {
     "imperial": "Sistem pengukuran yang umum digunakan di Amerika Serikat.",
     "iso": "Sistem pengukuran standar internasional. Berdasarkan metric."
   },
+  "vision": "Visi",
   "weekdays": {
     "mon": "Senin",
     "tue": "Selasa",

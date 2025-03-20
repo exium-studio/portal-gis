@@ -59,6 +59,26 @@ export const settings_navs = {
 };
 
 // UI
+export const title = {
+  id: "Judul",
+  en: "Title",
+};
+export const description = {
+  id: "Deskripsi",
+  en: "Description",
+};
+export const and = {
+  id: "dan",
+  en: "and",
+};
+export const vision = {
+  id: "Visi",
+  en: "Vision",
+};
+export const mission = {
+  id: "Misi",
+  en: "Mission",
+};
 export const create = {
   id: "Buat",
   en: "Create",

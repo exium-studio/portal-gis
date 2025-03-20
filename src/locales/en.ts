@@ -6,6 +6,7 @@ const translations = {
   "address": "Address",
   "address_not_found": "Address not found",
   "all": "All",
+  "and": "and",
   "announcement": "Announcement",
   "ask": "Ask",
   "auto_time_zone": "Current time zone (auto)",
@@ -61,6 +62,7 @@ const translations = {
     "title": "Delete all?",
     "description": "Delete all of the read inboxes."
   },
+  "description": "Description",
   "display_settings_helper_text": "These display settings are stored locally on your device and will not be synced with your account.",
   "edge_permissions_settings_link": "Settings → Cookies and site permissions → ",
   "empty": "Empty",
@@ -152,6 +154,7 @@ const translations = {
     "description": "Allow the app to use your device's microphone for recording audio."
   },
   "missing_page": "The page you are looking for is not available. There may be an incorrect URL or the page is no longer available.",
+  "mission": "Mission",
   "month": "Month",
   "navs": {
     "dashboard": "Dashboard",
@@ -244,6 +247,7 @@ const translations = {
   "time_range_picker_default_title": "Select Time Range",
   "time_zone": "Time zone",
   "time_zone_settings_title": "Time Zone",
+  "title": "Title",
   "today": "Today",
   "tomorrow": "Tomorrow",
   "total_population": "Total population",
@@ -262,6 +266,7 @@ const translations = {
     "imperial": "The measurement system commonly used in the United States.",
     "iso": "International standard measurement system. Based on metric."
   },
+  "vision": "Vision",
   "weekdays": {
     "mon": "Monday",
     "tue": "Tuesday",

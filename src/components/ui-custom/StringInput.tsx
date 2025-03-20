@@ -33,10 +33,10 @@ export default function StringInput({
   // SX
   const { colorMode } = useColorMode();
   const darkLightColorManual = colorMode === "light" ? "#fff" : "var(--dark)";
-  const fc = useFieldContext();
 
   // Contexts
   const { themeConfig } = useThemeConfig();
+  const fc = useFieldContext();
 
   // Track first render
   const isFirstRender = useRef(true);
