@@ -94,7 +94,7 @@ const TotalCounter = () => {
   const data = {
     total_population: 438,
     total_family: 243,
-    population_growth: 2.4,
+    population_growth: -2.4,
     family_growth: 4.2,
     total_village_funds: 877088000,
   };

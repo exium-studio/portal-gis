@@ -243,7 +243,7 @@ const translations = {
     "description": "Silahkan pilih menu pengaturan."
   },
   "show": "Tampilkan",
-  "shrink": "Turun {value} dari tahun lalu",
+  "shrink": "Turun ${value} dari tahun lalu",
   "theme_settings_title": "Tema",
   "this_month": "Bulan ini",
   "this_week": "Minggu ini",

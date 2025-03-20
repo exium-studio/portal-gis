@@ -116,8 +116,8 @@ export const grow = {
   en: "Up ${value} from last year",
 };
 export const shrink = {
-  id: "Turun {value} dari tahun lalu",
-  en: "Down {value} from last year",
+  id: "Turun ${value} dari tahun lalu",
+  en: "Down ${value} from last year",
 };
 export const total_family = {
   id: "Total keluarga",

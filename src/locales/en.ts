@@ -243,7 +243,7 @@ const translations = {
     "description": "Please select the settings menu."
   },
   "show": "Show",
-  "shrink": "Down {value} from last year",
+  "shrink": "Down ${value} from last year",
   "theme_settings_title": "Theme",
   "this_month": "This month",
   "this_week": "This week",
