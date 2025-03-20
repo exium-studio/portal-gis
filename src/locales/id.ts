@@ -6,6 +6,7 @@ const translations = {
   "address": "Alamat",
   "address_not_found": "Alamat tidak ditemukan",
   "all": "Semua",
+  "announcement": "Pengumuman",
   "ask": "Meminta",
   "auto_time_zone": "Zona waktu saat ini (auto)",
   "back_online_toast": {
@@ -25,6 +26,7 @@ const translations = {
   "chrome_permissions_settings_link": "Pengaturan → Privasi & Keamanan → Pengaturan Situs → ",
   "close": "Tutup",
   "confirm": "Konfirmasi",
+  "create": "Buat",
   "current": "Saat ini",
   "dark_mode_settings_title": "Mode Gelap",
   "dark_mode_ui_settings": {
@@ -89,6 +91,7 @@ const translations = {
   },
   "forgot_password": "Lupa password",
   "get": "Dapatkan",
+  "income_expenses": "Pemasukan & pengeluaran",
   "language_settings_title": "Bahasa",
   "last": "Terakhir",
   "location": "Lokasi",
@@ -177,6 +180,7 @@ const translations = {
     "description": "Izinkan aplikasi mengirim notifikasi agar Anda tetap mendapatkan informasi terbaru."
   },
   "office": "Kantor",
+  "official_contact": "Kontak perangkat desa",
   "offline_disclosure": {
     "title": "Koneksi Terputus",
     "description": "Sepertinya Anda sedang offline. Periksa koneksi internet Anda dan coba lagi."
@@ -197,6 +201,7 @@ const translations = {
     "location": "Tes Kamera",
     "notifications": "Tes Kamera"
   },
+  "population_grow": "Naik {value} dari tahun lalu",
   "regional_settings_helper_text": "Pengaturan bahasa & wilayah ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
   "religion": "Agama",
   "retry": "Muat ulang",
@@ -241,6 +246,8 @@ const translations = {
   "time_zone_settings_title": "Zona Waktu",
   "today": "Hari ini",
   "tomorrow": "Besok",
+  "total_population": "Total populasi",
+  "total_village_funds": "Total dana desa",
   "try_label": "Coba",
   "uom": {
     "mass": "Berat",

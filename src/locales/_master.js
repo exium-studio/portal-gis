@@ -59,6 +59,34 @@ export const settings_navs = {
 };
 
 // UI
+export const create = {
+  id: "Buat",
+  en: "Create",
+};
+export const total_population = {
+  id: "Total populasi",
+  en: "Total population",
+};
+export const population_grow = {
+  id: "Naik {value} dari tahun lalu",
+  en: "Up {value} from last year",
+};
+export const total_village_funds = {
+  id: "Total dana desa",
+  en: "Total village funds",
+};
+export const announcement = {
+  id: "Pengumuman",
+  en: "Announcement",
+};
+export const official_contact = {
+  id: "Kontak perangkat desa",
+  en: "Contact village apparatus",
+};
+export const income_expenses = {
+  id: "Pemasukan & pengeluaran",
+  en: "Income & expenses",
+};
 export const empty = {
   id: "Kosong",
   en: "Empty",

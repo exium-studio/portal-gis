@@ -6,6 +6,7 @@ const translations = {
   "address": "Address",
   "address_not_found": "Address not found",
   "all": "All",
+  "announcement": "Announcement",
   "ask": "Ask",
   "auto_time_zone": "Current time zone (auto)",
   "back_online_toast": {
@@ -25,6 +26,7 @@ const translations = {
   "chrome_permissions_settings_link": "Settings → Privacy & Security → Site Settings → ",
   "close": "Close",
   "confirm": "Confirm",
+  "create": "Create",
   "current": "Current",
   "dark_mode_settings_title": "Dark Mode",
   "dark_mode_ui_settings": {
@@ -89,6 +91,7 @@ const translations = {
   },
   "forgot_password": "Forgot password",
   "get": "Get",
+  "income_expenses": "Income & expenses",
   "language_settings_title": "Language",
   "last": "Last",
   "location": "Location",
@@ -177,6 +180,7 @@ const translations = {
     "description": "Allow the app to send notifications to keep you updated."
   },
   "office": "Office",
+  "official_contact": "Contact village apparatus",
   "offline_disclosure": {
     "title": "Connection Lost",
     "description": "It looks like you are offline. Check your internet connection and try again."
@@ -197,6 +201,7 @@ const translations = {
     "location": "Camera Test",
     "notifications": "Camera Test"
   },
+  "population_grow": "Up {value} from last year",
   "regional_settings_helper_text": "These language & region settings are stored locally on your device and will not be synced with your account.",
   "religion": "Religion",
   "retry": "Retry now",
@@ -241,6 +246,8 @@ const translations = {
   "time_zone_settings_title": "Time Zone",
   "today": "Today",
   "tomorrow": "Tomorrow",
+  "total_population": "Total population",
+  "total_village_funds": "Total village funds",
   "try_label": "Try",
   "uom": {
     "mass": "Weight",
