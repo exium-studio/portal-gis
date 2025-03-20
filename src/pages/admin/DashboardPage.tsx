@@ -33,7 +33,6 @@ import {
 } from "@/components/ui/popover";
 import ItemButton from "@/components/widget/ItemButton";
 import PageContainer from "@/components/widget/PageContainer";
-import { SVGS_PATH } from "@/constant/path";
 import { R_GAP } from "@/constant/sizes";
 import useLang from "@/context/useLang";
 import { useThemeConfig } from "@/context/useThemeConfig";
@@ -44,7 +43,7 @@ import {
   FieldLabel,
   GridItem,
   HStack,
-  Image,
+  Icon,
   MenuPositioner,
   Portal,
   Separator,
@@ -55,10 +54,12 @@ import {
 import {
   IconBrandWhatsapp,
   IconDotsVertical,
+  IconFriends,
   IconPhone,
   IconPlus,
   IconSparkles,
   IconSpeakerphone,
+  IconTipJar,
 } from "@tabler/icons-react";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -77,28 +78,14 @@ const TotalCounter = () => {
 
   console.log("Total", data);
 
-  // Components
-  const TotalContainer = ({ children, ...props }: any) => {
-    return (
-      <CContainer
-        px={4}
-        py={3}
-        borderRadius={themeConfig.radii.container}
-        border={"1px solid {colors.border.subtle}"}
-        bg={"body"}
-        h={"full"}
-        {...props}
-      >
-        {children}
-      </CContainer>
-    );
-  };
-
   return (
     <SimpleGrid columns={[1, 2]} gap={R_GAP}>
-      <TotalContainer>
+      <ItemContainer p={4}>
         <HStack gap={4}>
-          <Image src={`${SVGS_PATH}/people.svg`} h={"30px"} />
+          <Icon color={themeConfig.primaryColor}>
+            <IconFriends size={40} />
+          </Icon>
+
           <CContainer gap={1}>
             <Text>{l.total_population}</Text>
             <HStack justify={"space-between"} align={"end"}>
@@ -121,11 +108,13 @@ const TotalCounter = () => {
             </HStack>
           </CContainer>
         </HStack>
-      </TotalContainer>
+      </ItemContainer>
 
-      <TotalContainer>
+      <ItemContainer p={4}>
         <HStack gap={4}>
-          <Image src={`${SVGS_PATH}/funds.svg`} h={"30px"} />
+          <Icon color={themeConfig.primaryColor}>
+            <IconTipJar size={40} />
+          </Icon>
 
           <CContainer gap={1}>
             <Text>{l.total_village_funds}</Text>
@@ -136,7 +125,7 @@ const TotalCounter = () => {
             </HStack>
           </CContainer>
         </HStack>
-      </TotalContainer>
+      </ItemContainer>
     </SimpleGrid>
   );
 };
