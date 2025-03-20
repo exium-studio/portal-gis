@@ -1,9 +1,13 @@
 import NavsContainer from "@/components/widget/NavsContainer";
-import { PRIVATE_ROUTES, ROUTES } from "@/constant/routes";
+import {
+  PRIVATE_ROUTES,
+  PRIVATE_ROUTES_NO_MAPS,
+  ROUTES,
+} from "@/constant/routes";
 import useLang from "@/context/useLang";
-import MaintenancePage from "@/pages/error/MaintenancePage";
-import MissingPage from "@/pages/error/MissingPage";
-import ServerErrorPage from "@/pages/error/ServerErrorPage";
+import MaintenancePage from "@/pages/_error/MaintenancePage";
+import MissingPage from "@/pages/_error/MissingPage";
+import ServerErrorPage from "@/pages/_error/ServerErrorPage";
 import pluck from "@/utils/pluck";
 import { Route, Routes } from "react-router-dom";
 
@@ -18,6 +22,27 @@ const Routing = () => {
       ))}
 
       {PRIVATE_ROUTES.map(
+        ({ path, activePath, backPath, titleKey, element }) => (
+          <Route
+            key={path}
+            path={path}
+            element={
+              // <AuthMiddleware allowedPermissions={permissions}>
+              <NavsContainer
+                activePath={activePath}
+                title={pluck(l, titleKey)}
+                backPath={backPath}
+              >
+                {/* Buat layout w/ maps */}
+                {element}
+              </NavsContainer>
+              // </AuthMiddleware>
+            }
+          />
+        )
+      )}
+
+      {PRIVATE_ROUTES_NO_MAPS.map(
         ({ path, activePath, backPath, titleKey, element }) => (
           <Route
             key={path}

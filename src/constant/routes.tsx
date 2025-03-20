@@ -1,14 +1,14 @@
-import AdministrationPage from "@/pages/AdministrationPage";
-import DashboardPage from "@/pages/DashboardPage";
+import AdministrationPage from "@/pages/admin/AdministrationPage";
+import DashboardPage from "@/pages/admin/DashboardPage";
 import RootPage from "@/pages/RootPage";
-import ServicePage from "@/pages/ServicePage";
+import ServicePage from "@/pages/admin/ServicePage";
 import SettingsPage from "@/pages/SettingsPage";
-import DisplaySettingsPage from "@/pages/settings/DisplaySettingsPage";
-import PermissionsSettingsPage from "@/pages/settings/PermissionsSettingsPage";
-import PrivacyPolictPage from "@/pages/settings/PrivacyPolictPage";
-import RegionalSettingsPage from "@/pages/settings/RegionalSettingsPage";
-import ReportProblemPage from "@/pages/settings/ReportProblemPage";
-import TermsOfServicePage from "@/pages/settings/TermsOfServicePage";
+import DisplaySettingsPage from "@/pages/_settings/DisplaySettingsPage";
+import PermissionsSettingsPage from "@/pages/_settings/PermissionsSettingsPage";
+import PrivacyPolictPage from "@/pages/_settings/PrivacyPolictPage";
+import RegionalSettingsPage from "@/pages/_settings/RegionalSettingsPage";
+import ReportProblemPage from "@/pages/_settings/ReportProblemPage";
+import TermsOfServicePage from "@/pages/_settings/TermsOfServicePage";
 import { Interface__PrivateRoute, Interface__Route } from "./interfaces";
 
 export const ROUTES: Interface__Route[] = [
@@ -38,6 +38,9 @@ export const PRIVATE_ROUTES: Interface__PrivateRoute[] = [
     titleKey: "navs.services",
     element: <ServicePage />,
   },
+];
+
+export const PRIVATE_ROUTES_NO_MAPS: Interface__PrivateRoute[] = [
   {
     path: "/profile",
     activePath: "/profile",
@@ -94,9 +97,4 @@ export const PRIVATE_ROUTES: Interface__PrivateRoute[] = [
     backPath: "/settings",
     element: <PrivacyPolictPage />,
   },
-  // {
-  //   path: "/profile",
-  //   labelKey: "navs.profile",
-  //   element: <MerchantProfilePage />,
-  // },
 ];
