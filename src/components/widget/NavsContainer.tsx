@@ -5,6 +5,7 @@ import useCallBackOnNavigate from "@/hooks/useCallBackOnNavigate";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import pluck from "@/utils/pluck";
 import {
+  Center,
   Circle,
   CircleProps,
   HStack,
@@ -13,7 +14,6 @@ import {
   StackProps,
   VStack,
 } from "@chakra-ui/react";
-import { IconSettings } from "@tabler/icons-react";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import BackButton from "../ui-custom/BackButton";
@@ -23,6 +23,7 @@ import FloatCounter from "../ui-custom/FloatCounter";
 import Heading6 from "../ui-custom/Heading6";
 import HelperText from "../ui-custom/HelperText";
 import Logo from "../ui-custom/Logo";
+import { Avatar } from "../ui/avatar";
 import { Tooltip } from "../ui/tooltip";
 import CurrentUserTimeZone from "./CurrentUserTimeZone";
 import MerchantInbox from "./Inbox";
@@ -144,7 +145,7 @@ const NavContainer = ({ children, title, backPath, activePath }: Props) => {
   const NavList2 = () => {
     return (
       <>
-        <Link to={"/settings"}>
+        {/* <Link to={"/settings"}>
           <Tooltip
             content={l.navs.settings}
             positioning={{ placement: "right" }}
@@ -167,9 +168,9 @@ const NavContainer = ({ children, title, backPath, activePath }: Props) => {
               )}
             </NavItemContainer>
           </Tooltip>
-        </Link>
+        </Link> */}
 
-        {/* {!iss && <Separator w={"full"} mb={2} />}
+        {/* {!iss && <Separator w={"full"} mb={2} />} */}
 
         <Link to={"/profile"}>
           <Center
@@ -189,7 +190,7 @@ const NavContainer = ({ children, title, backPath, activePath }: Props) => {
               h={"28px"}
             />
           </Center>
-        </Link> */}
+        </Link>
       </>
     );
   };

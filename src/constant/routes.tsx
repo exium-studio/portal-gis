@@ -10,6 +10,7 @@ import RegionalSettingsPage from "@/pages/_settings/RegionalSettingsPage";
 import ReportProblemPage from "@/pages/_settings/ReportProblemPage";
 import TermsOfServicePage from "@/pages/_settings/TermsOfServicePage";
 import { Interface__PrivateRoute, Interface__Route } from "./interfaces";
+import ProfilePage from "@/pages/admin/ProfilePage";
 
 export const ROUTES: Interface__Route[] = [
   {
@@ -45,7 +46,7 @@ export const PRIVATE_ROUTES_NO_MAPS: Interface__PrivateRoute[] = [
     path: "/profile",
     activePath: "/profile",
     titleKey: "navs.profile",
-    element: <ServicePage />,
+    element: <ProfilePage />,
   },
 
   // Settings

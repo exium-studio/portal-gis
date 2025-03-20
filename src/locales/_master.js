@@ -16,6 +16,10 @@ export const navs = {
     id: "Pengaturan",
     en: "Settings",
   },
+  profile: {
+    id: "Profil",
+    en: "Profile",
+  },
 };
 export const settings_navs_group = {
   main: {
