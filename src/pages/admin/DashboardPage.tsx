@@ -308,7 +308,10 @@ const Announcement = () => {
             <DisclosureBody>
               <form id="announcement_edit" onSubmit={formik.handleSubmit}>
                 <Field>
-                  <FieldLabel>{l.title}</FieldLabel>
+                  <FieldLabel>
+                    {l.title}
+                    <RequiredIndicator />
+                  </FieldLabel>
                   <StringInput
                     onChangeSetter={(input) => {
                       formik.setFieldValue("title", input);
@@ -318,7 +321,10 @@ const Announcement = () => {
                 </Field>
 
                 <Field mt={4}>
-                  <FieldLabel>{l.description}</FieldLabel>
+                  <FieldLabel>
+                    {l.description}
+                    <RequiredIndicator />
+                  </FieldLabel>
                   <Textarea
                     onChangeSetter={(input) => {
                       formik.setFieldValue("description", input);
