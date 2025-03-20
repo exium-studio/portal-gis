@@ -32,7 +32,7 @@ const FileInput = ({
   initialFilepath,
   label,
   dropZone,
-  description = ".your-file-ext up to 5MB, maks. 1 berkas",
+  description = ".your-file-ext up to 10MB",
   maxFiles = 1,
   ...props
 }: Props) => {
