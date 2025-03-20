@@ -47,12 +47,12 @@ import {
   MenuPositioner,
   PopoverPositioner,
   Portal,
-  Separator,
   SimpleGrid,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import {
+  IconAddressBook,
   IconBrandWhatsapp,
   IconDotsVertical,
   IconFriends,
@@ -475,20 +475,24 @@ const VisionMission = () => {
       </ItemHeaderContainer>
 
       <CContainer pb={2} h={"500px"}>
-        <CContainer pt={2} pb={2} overflowY={"auto"} className="scrollY" px={4}>
-          <Text color={"fg.muted"} mb={1}>
-            {l.vision}
-          </Text>
-          <Text fontWeight={"medium"}>{data.vision}</Text>
+        <CContainer pt={2} pb={2} overflowY={"auto"} className="scrollY" px={3}>
+          <CContainer px={1}>
+            <Text color={"fg.muted"} mb={1}>
+              {l.vision}
+            </Text>
+            <Text fontWeight={"medium"}>{data.vision}</Text>
 
-          <Text color={"fg.muted"} mt={4} mb={1}>
-            {l.mission}
-          </Text>
+            <Text color={"fg.muted"} mt={4} mb={1}>
+              {l.mission}
+            </Text>
+          </CContainer>
+
           <CContainer as={"ol"} gap={4}>
             {data.mission.map((item, i) => {
               return (
                 <HStack
                   key={i}
+                  pl={1}
                   fontWeight={"medium"}
                   align={"start"}
                   borderBottom={
@@ -513,6 +517,7 @@ const VisionMission = () => {
 const OfficialContact = () => {
   // Contexts
   const { themeConfig } = useThemeConfig();
+  const { l } = useLang();
 
   // States, Refs
   const data = [
@@ -578,6 +583,27 @@ const OfficialContact = () => {
         ig: "https://instagram.com/budi.santoso",
       },
     },
+    {
+      id: 4,
+      cp: {
+        name: "Yoyok Sip",
+        job_title: {
+          name: "Kasi Pelayanan",
+        },
+      },
+      title: "Pelayanan Masyarakat",
+      description:
+        "Membantu masyarakat dalam pengurusan surat-surat dan pelayanan lainnya.",
+      avatar: "https://bit.ly/dummy-avatar",
+      wa: "0819876543210",
+      phone: "0819876543210",
+      address: "Jl. Kemakmuran No. 10, Desa Sukamaju, Kecamatan Sejahtera",
+      socials: {
+        fb: "https://facebook.com/budi.santoso",
+        x: "https://twitter.com/budi_santoso",
+        ig: "https://instagram.com/budi.santoso",
+      },
+    },
   ];
 
   // Components
@@ -607,47 +633,71 @@ const OfficialContact = () => {
   };
 
   return (
-    <CContainer gap={R_GAP} h={"full"}>
-      {data.map((item, i) => {
-        return (
-          <ItemContainer key={i} p={4} flex={1}>
-            <Text fontSize={"md"} fontWeight={"bold"} mb={2}>
-              {item.title}
-            </Text>
-            <Text mb={2}>{item.description}</Text>
-            <Address item={item} />
+    <ItemContainer overflowY={"auto"} h={"665px"}>
+      <ItemHeaderContainer>
+        <HStack>
+          <IconAddressBook />
+          <ItemHeaderTitle>{l.official_contact}</ItemHeaderTitle>
+        </HStack>
+      </ItemHeaderContainer>
 
-            <Separator mb={4} mt={"auto"} />
-            <HStack gap={4}>
-              <Avatar src={item.avatar} />
-              <CContainer>
-                <HelperText>{item.cp.job_title.name}</HelperText>
-                <Text fontWeight={"bold"}>{item.cp.name}</Text>
+      <CContainer
+        overflowY={"auto"}
+        className="scrollY"
+        minH={"500px"}
+        h={"full"}
+      >
+        <CContainer px={3}>
+          {data.map((item, i) => {
+            return (
+              <CContainer
+                key={i}
+                px={2}
+                pt={3}
+                pb={4}
+                flex={1}
+                borderBottom={
+                  i !== data.length - 1 ? "1px solid {colors.border.muted}" : ""
+                }
+              >
+                <Text fontSize={"md"} fontWeight={"bold"} mb={2}>
+                  {item.title}
+                </Text>
+                <Text mb={2}>{item.description}</Text>
+                <Address item={item} />
+
+                <HStack gap={4}>
+                  <Avatar src={item.avatar} />
+                  <CContainer>
+                    <HelperText>{item.cp.job_title.name}</HelperText>
+                    <Text fontWeight={"bold"}>{item.cp.name}</Text>
+                  </CContainer>
+
+                  <HStack>
+                    <BButton
+                      iconButton
+                      borderRadius={"full"}
+                      variant={"subtle"}
+                      colorPalette={themeConfig.colorPalette}
+                    >
+                      <IconPhone />
+                    </BButton>
+                    <BButton
+                      iconButton
+                      borderRadius={"full"}
+                      variant={"subtle"}
+                      colorPalette={themeConfig.colorPalette}
+                    >
+                      <IconBrandWhatsapp />
+                    </BButton>
+                  </HStack>
+                </HStack>
               </CContainer>
-
-              <HStack>
-                <BButton
-                  iconButton
-                  borderRadius={"full"}
-                  variant={"subtle"}
-                  colorPalette={themeConfig.colorPalette}
-                >
-                  <IconPhone />
-                </BButton>
-                <BButton
-                  iconButton
-                  borderRadius={"full"}
-                  variant={"subtle"}
-                  colorPalette={themeConfig.colorPalette}
-                >
-                  <IconBrandWhatsapp />
-                </BButton>
-              </HStack>
-            </HStack>
-          </ItemContainer>
-        );
-      })}
-    </CContainer>
+            );
+          })}
+        </CContainer>
+      </CContainer>
+    </ItemContainer>
   );
 };
 
