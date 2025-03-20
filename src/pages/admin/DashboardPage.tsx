@@ -475,7 +475,7 @@ const VisionMission = () => {
       </ItemHeaderContainer>
 
       <CContainer pb={2} h={"500px"}>
-        <CContainer pt={2} pb={2} overflowY={"auto"} className="scrollY" px={3}>
+        <CContainer pt={4} pb={2} overflowY={"auto"} className="scrollY" px={3}>
           <CContainer px={1}>
             <Text color={"fg.muted"} mb={1}>
               {l.vision}
