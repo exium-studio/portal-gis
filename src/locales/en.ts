@@ -62,6 +62,7 @@ const translations = {
     "title": "Delete all?",
     "description": "Delete all of the read inboxes."
   },
+  "delete_label": "Delete",
   "description": "Description",
   "display_settings_helper_text": "These display settings are stored locally on your device and will not be synced with your account.",
   "edge_permissions_settings_link": "Settings → Cookies and site permissions → ",

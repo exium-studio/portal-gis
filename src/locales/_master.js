@@ -59,6 +59,10 @@ export const settings_navs = {
 };
 
 // UI
+export const delete_label = {
+  id: "Hapus",
+  en: "Delete",
+};
 export const title = {
   id: "Judul",
   en: "Title",
@@ -610,7 +614,7 @@ export const address = {
 
 // Widget
 export const delete_all_inbox_button = {
-  id: "Delete semua",
+  id: "Hapus semua",
   en: "Delete all",
 };
 
@@ -816,11 +820,11 @@ export const offline_disclosure = {
 };
 export const delete_all_inbox_disclosure = {
   title: {
-    id: "Delete semua?",
+    id: "Hapus semua?",
     en: "Delete all?",
   },
   description: {
-    id: "Delete semua inbox yang sudah dibaca.",
+    id: "Hapus semua inbox yang sudah dibaca.",
     en: "Delete all of the read inboxes.",
   },
 };
