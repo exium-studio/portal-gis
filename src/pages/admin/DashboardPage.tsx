@@ -393,7 +393,7 @@ const Announcement = () => {
   const AnnouncementItem = ({ item }: any) => {
     return (
       <>
-        <CContainer px={2}>
+        <CContainer px={1}>
           <CContainer
             gap={1}
             p={3}
