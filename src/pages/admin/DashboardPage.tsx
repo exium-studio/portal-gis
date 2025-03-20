@@ -18,6 +18,7 @@ import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
 import RequiredIndicator from "@/components/ui-custom/RequiredIndicator";
 import StringInput from "@/components/ui-custom/StringInput";
 import Textarea from "@/components/ui-custom/Textarea";
+import { Avatar } from "@/components/ui/avatar";
 import { Field } from "@/components/ui/field";
 import {
   MenuContent,
@@ -33,6 +34,7 @@ import {
 import ItemButton from "@/components/widget/ItemButton";
 import PageContainer from "@/components/widget/PageContainer";
 import { SVGS_PATH } from "@/constant/path";
+import { R_GAP } from "@/constant/sizes";
 import useLang from "@/context/useLang";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useBackOnClose from "@/hooks/useBackOnClose";
@@ -45,12 +47,15 @@ import {
   Image,
   MenuPositioner,
   Portal,
+  Separator,
   SimpleGrid,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import {
+  IconBrandWhatsapp,
   IconDotsVertical,
+  IconPhone,
   IconPlus,
   IconSparkles,
   IconSpeakerphone,
@@ -90,7 +95,7 @@ const TotalCounter = () => {
   };
 
   return (
-    <SimpleGrid columns={[1, 2]} gap={"10px"}>
+    <SimpleGrid columns={[1, 2]} gap={R_GAP}>
       <TotalContainer>
         <HStack gap={4}>
           <Image src={`${SVGS_PATH}/people.svg`} h={"30px"} />
@@ -516,22 +521,142 @@ const VisionMission = () => {
 };
 
 const OfficialContact = () => {
-  return <></>;
+  // Contexts
+  const { themeConfig } = useThemeConfig();
+
+  // States, Refs
+  const data = [
+    {
+      id: 1,
+      cp: {
+        name: "Rudi Tabuti",
+        job_title: {
+          name: "Lurah",
+        },
+      },
+      title: "Urusan Kelurahan",
+      description:
+        "Bertanggung jawab atas administrasi dan pelayanan di tingkat kelurahan.",
+      avatar: "https://bit.ly/sage-adebayo",
+      wa: "0819827310289",
+      phone: "0819827310289",
+      socials: {
+        fb: "https://facebook.com/rudi.tabuti",
+        x: "https://twitter.com/rudi_tabuti",
+        ig: "https://instagram.com/rudi.tabuti",
+      },
+    },
+    {
+      id: 2,
+      cp: {
+        name: "Siti Marni",
+        job_title: {
+          name: "Sekretaris Desa",
+        },
+      },
+      title: "Administrasi Desa",
+      description: "Mengelola dokumen dan surat-menyurat desa.",
+      avatar: "https://bit.ly/dummy-avatar",
+      wa: "0819327483920",
+      phone: "0819327483920",
+      socials: {
+        fb: "https://facebook.com/siti.marni",
+        x: "https://twitter.com/siti_marni",
+        ig: "https://instagram.com/siti.marni",
+      },
+    },
+    {
+      id: 3,
+      cp: {
+        name: "Budi Santoso",
+        job_title: {
+          name: "Kasi Pelayanan",
+        },
+      },
+      title: "Pelayanan Masyarakat",
+      description:
+        "Membantu masyarakat dalam pengurusan surat-surat dan pelayanan lainnya.",
+      avatar: "https://bit.ly/dummy-avatar",
+      wa: "0819876543210",
+      phone: "0819876543210",
+      socials: {
+        fb: "https://facebook.com/budi.santoso",
+        x: "https://twitter.com/budi_santoso",
+        ig: "https://instagram.com/budi.santoso",
+      },
+    },
+  ];
+
+  return (
+    <CContainer gap={R_GAP} h={"full"}>
+      {data.map((item, i) => {
+        return (
+          <ItemContainer key={i} p={4} flex={1}>
+            <Text fontSize={"md"} fontWeight={"bold"} mb={2}>
+              {item.title}
+            </Text>
+            <Text mb={4}>{item.description}</Text>
+
+            <Separator mb={4} mt={"auto"} />
+
+            <HStack gap={4}>
+              <Avatar src={item.avatar} />
+              <CContainer>
+                <HelperText>{item.cp.job_title.name}</HelperText>
+                <Text fontWeight={"bold"}>{item.cp.name}</Text>
+              </CContainer>
+
+              <HStack>
+                <BButton
+                  iconButton
+                  borderRadius={"full"}
+                  variant={"subtle"}
+                  colorPalette={themeConfig.colorPalette}
+                >
+                  <IconPhone />
+                </BButton>
+                <BButton
+                  iconButton
+                  borderRadius={"full"}
+                  variant={"subtle"}
+                  colorPalette={themeConfig.colorPalette}
+                >
+                  <IconBrandWhatsapp />
+                </BButton>
+              </HStack>
+            </HStack>
+          </ItemContainer>
+        );
+      })}
+    </CContainer>
+  );
 };
 
 const IncomeExpenses = () => {
   return <></>;
 };
 
+const PopulationGrowth = () => {
+  return <></>;
+};
+
+const Facilities = () => {
+  return <></>;
+};
+
+const TotalPopulationByFilter = () => {
+  return <></>;
+};
+
 const DashboardPage = () => {
   return (
     <PageContainer>
-      <SimpleGrid columns={[1, null, 3]} gap={"10px"}>
+      <SimpleGrid columns={[1, null, 3]} gap={R_GAP}>
         <GridItem colSpan={[3, null, 2]}>
-          <CContainer gap={"10px"}>
+          <CContainer gap={R_GAP}>
             <TotalCounter />
 
-            <SimpleGrid columns={[1, 2]} gap={"10px"}>
+            <SimpleGrid columns={[1, 2]} gap={R_GAP}>
               <Announcement />
 
               <VisionMission />
@@ -540,10 +665,24 @@ const DashboardPage = () => {
         </GridItem>
 
         <GridItem colSpan={[3, null, 1]}>
-          <CContainer>
-            <OfficialContact />
+          <OfficialContact />
+        </GridItem>
+      </SimpleGrid>
 
+      <SimpleGrid columns={[1, null, 3]} gap={R_GAP}>
+        <GridItem colSpan={[3, null, 2]}>
+          <CContainer>
             <IncomeExpenses />
+
+            <PopulationGrowth />
+          </CContainer>
+        </GridItem>
+
+        <GridItem colSpan={[3, null, 1]}>
+          <CContainer>
+            <Facilities />
+
+            <TotalPopulationByFilter />
           </CContainer>
         </GridItem>
       </SimpleGrid>
