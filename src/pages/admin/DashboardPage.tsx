@@ -729,7 +729,11 @@ const TotalPopulationByFilter = () => {
 
 const DashboardPage = () => {
   return (
-    <PageContainer>
+    <PageContainer gap={R_GAP}>
+      <SimpleGrid columns={[1, null, 2]}>
+        <VillageMap />
+      </SimpleGrid>
+
       <SimpleGrid columns={[1, null, 3]} gap={R_GAP}>
         <GridItem colSpan={[3, null, 2]}>
           <CContainer gap={R_GAP}>
