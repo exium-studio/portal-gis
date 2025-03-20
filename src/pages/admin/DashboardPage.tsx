@@ -209,7 +209,7 @@ const Announcement = () => {
           <IconPlus />
         </ItemButton>
 
-        <DisclosureRoot open={open} lazyLoad size={"sm"}>
+        <DisclosureRoot open={open} lazyLoad size={"xs"}>
           <DisclosureContent>
             <DisclosureHeader>
               <DisclosureHeaderContent
@@ -292,7 +292,7 @@ const Announcement = () => {
           Edit
         </MenuItem>
 
-        <DisclosureRoot open={open} lazyLoad size={"sm"}>
+        <DisclosureRoot open={open} lazyLoad size={"xs"}>
           <DisclosureContent>
             <DisclosureHeader>
               <DisclosureHeaderContent title={"Edit"} />
