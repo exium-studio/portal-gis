@@ -154,7 +154,8 @@ const translations = {
     "dashboard": "Dashboard",
     "administration": "Administrasi",
     "services": "Layanan",
-    "settings": "Pengaturan"
+    "settings": "Pengaturan",
+    "profile": "Profil"
   },
   "next_month": "Bulan ini",
   "next_week": "Minggu ini",

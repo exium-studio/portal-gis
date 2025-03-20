@@ -154,7 +154,8 @@ const translations = {
     "dashboard": "Dashboard",
     "administration": "Administration",
     "services": "Services",
-    "settings": "Settings"
+    "settings": "Settings",
+    "profile": "Profile"
   },
   "next_month": "This month",
   "next_week": "This week",
