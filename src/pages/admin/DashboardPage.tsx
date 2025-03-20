@@ -633,7 +633,7 @@ const OfficialContact = () => {
   };
 
   return (
-    <ItemContainer overflowY={"auto"} h={"665px"}>
+    <ItemContainer overflowY={"auto"}>
       <ItemHeaderContainer>
         <HStack>
           <IconAddressBook />
@@ -641,60 +641,59 @@ const OfficialContact = () => {
         </HStack>
       </ItemHeaderContainer>
 
-      <CContainer
-        overflowY={"auto"}
-        className="scrollY"
-        minH={"500px"}
-        h={"full"}
-      >
-        <CContainer px={3}>
-          {data.map((item, i) => {
-            return (
-              <CContainer
-                key={i}
-                px={2}
-                pt={3}
-                pb={4}
-                flex={1}
-                borderBottom={
-                  i !== data.length - 1 ? "1px solid {colors.border.muted}" : ""
-                }
-              >
-                <Text fontSize={"md"} fontWeight={"bold"} mb={2}>
-                  {item.title}
-                </Text>
-                <Text mb={2}>{item.description}</Text>
-                <Address item={item} />
+      <CContainer h={"calc(665px - 50px - 8px)"} pb={2}>
+        <CContainer overflowY={"auto"} className="scrollY">
+          <CContainer px={3}>
+            {data.map((item, i) => {
+              return (
+                <CContainer
+                  key={i}
+                  px={2}
+                  pt={3}
+                  pb={4}
+                  flex={1}
+                  borderBottom={
+                    i !== data.length - 1
+                      ? "1px solid {colors.border.muted}"
+                      : ""
+                  }
+                >
+                  <Text fontSize={"md"} fontWeight={"bold"} mb={2}>
+                    {item.title}
+                  </Text>
+                  <Text mb={2}>{item.description}</Text>
+                  <Address item={item} />
 
-                <HStack gap={4}>
-                  <Avatar src={item.avatar} />
-                  <CContainer>
-                    <HelperText>{item.cp.job_title.name}</HelperText>
-                    <Text fontWeight={"bold"}>{item.cp.name}</Text>
-                  </CContainer>
+                  <HStack gap={4}>
+                    <Avatar src={item.avatar} />
+                    <CContainer>
+                      <HelperText>{item.cp.job_title.name}</HelperText>
+                      <Text fontWeight={"bold"}>{item.cp.name}</Text>
+                    </CContainer>
 
-                  <HStack>
-                    <BButton
-                      iconButton
-                      borderRadius={"full"}
-                      variant={"subtle"}
-                      colorPalette={themeConfig.colorPalette}
-                    >
-                      <IconPhone />
-                    </BButton>
-                    <BButton
-                      iconButton
-                      borderRadius={"full"}
-                      variant={"subtle"}
-                      colorPalette={themeConfig.colorPalette}
-                    >
-                      <IconBrandWhatsapp />
-                    </BButton>
+                    <HStack>
+                      <BButton
+                        iconButton
+                        borderRadius={"full"}
+                        variant={"subtle"}
+                        colorPalette={themeConfig.colorPalette}
+                      >
+                        <IconPhone />
+                      </BButton>
+                      <BButton
+                        iconButton
+                        borderRadius={"full"}
+                        variant={"subtle"}
+                        colorPalette={themeConfig.colorPalette}
+                      >
+                        <IconBrandWhatsapp />
+                      </BButton>
+                    </HStack>
                   </HStack>
-                </HStack>
-              </CContainer>
-            );
-          })}
+                </CContainer>
+              );
+            })}
+          </CContainer>
         </CContainer>
       </CContainer>
     </ItemContainer>
