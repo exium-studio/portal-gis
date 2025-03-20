@@ -361,6 +361,7 @@ const Announcement = () => {
             size={"xs"}
             borderRadius={"full"}
             variant={"ghost"}
+            mr={2}
           >
             <IconDotsVertical />
           </BButton>
@@ -439,6 +440,17 @@ const Announcement = () => {
       </CContainer>
     </ItemContainer>
   );
+};
+
+const VillageMap = () => {
+  // States, Refs
+  const data = {
+    name: "Desa Makmur Jaya Abadi",
+    lat: 123,
+    long: 123,
+  };
+
+  return <ItemContainer h={"300px"} bg={"body"}></ItemContainer>;
 };
 
 const VisionMission = () => {
