@@ -5,7 +5,6 @@ import useCallBackOnNavigate from "@/hooks/useCallBackOnNavigate";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import pluck from "@/utils/pluck";
 import {
-  Center,
   Circle,
   CircleProps,
   HStack,
@@ -145,51 +144,33 @@ const NavContainer = ({ children, title, backPath, activePath }: Props) => {
   const NavList2 = () => {
     return (
       <>
-        {/* <Link to={"/settings"}>
+        <Link to={"/profile"}>
           <Tooltip
-            content={l.navs.settings}
+            content={pluck(l, "navs.profile")}
             positioning={{ placement: "right" }}
             contentProps={{ ml: 2 }}
           >
-            <NavItemContainer active={activePath === "/settings"}>
-              <Icon>
-                <IconSettings strokeWidth={1.5} size={iss ? 24 : 20} />
-              </Icon>
+            <NavItemContainer active={activePath === "/profile"}>
+              <Avatar
+                name="Jolitos Kurniawan"
+                cursor={"pointer"}
+                size={"xs"}
+                w={["24px", null, "28px"]}
+                h={["24px", null, "28px"]}
+              />
 
               {iss && (
                 <HelperText
-                  color={activePath === "/settings" ? "" : "fg.muted"}
+                  color={activePath === "/profile" ? "" : "fg.muted"}
                   lineHeight={1}
                   mt={1}
                   truncate
                 >
-                  {pluck(l, "navs.settings")}
+                  {pluck(l, "navs.profile")}
                 </HelperText>
               )}
             </NavItemContainer>
           </Tooltip>
-        </Link> */}
-
-        {/* {!iss && <Separator w={"full"} mb={2} />} */}
-
-        <Link to={"/profile"}>
-          <Center
-            w={"40px"}
-            h={"40px"}
-            borderRadius={"full"}
-            borderColor={themeConfig.primaryColor}
-            position={"relative"}
-          >
-            {activePath === "/profile" && <ActiveNavIndicator />}
-
-            <Avatar
-              name="Jolitos Kurniawan"
-              cursor={"pointer"}
-              size={"xs"}
-              w={"28px"}
-              h={"28px"}
-            />
-          </Center>
         </Link>
       </>
     );
