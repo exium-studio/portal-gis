@@ -7,7 +7,7 @@ const ItemButton = ({ children, ...props }: Props) => {
 
   return (
     <BButton
-      size={"xs"}
+      size={"sm"}
       variant={"subtle"}
       colorPalette={themeConfig.colorPalette}
       borderRadius={"lg"}
