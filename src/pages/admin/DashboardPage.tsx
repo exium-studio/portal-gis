@@ -106,7 +106,7 @@ const TotalCounter = () => {
       <ItemContainer p={4} flex={1} justify={"center"} position={"relative"}>
         <HStack gap={4} h={"full"}>
           <Icon color={themeConfig.primaryColor}>
-            <IconFriends size={40} />
+            <IconFriends size={40} stroke={1.8} />
           </Icon>
 
           <CContainer gap={1}>
@@ -152,7 +152,7 @@ const TotalCounter = () => {
       <ItemContainer p={4} flex={1} justify={"center"} position={"relative"}>
         <HStack gap={4}>
           <Icon color={themeConfig.primaryColor}>
-            <IconUserHeart size={40} />
+            <IconUserHeart size={40} stroke={1.8} />
           </Icon>
 
           <CContainer gap={1}>
@@ -198,7 +198,7 @@ const TotalCounter = () => {
       <ItemContainer p={4} flex={1} justify={"center"}>
         <HStack gap={4}>
           <Icon color={themeConfig.primaryColor}>
-            <IconCoins size={40} />
+            <IconCoins size={40} stroke={1.8} />
           </Icon>
 
           <CContainer gap={1}>
