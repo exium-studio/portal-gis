@@ -205,9 +205,9 @@ const Announcement = () => {
 
     return (
       <>
-        <ItemButton pl={2} onClick={onOpen}>
+        <ItemButton iconButton onClick={onOpen} borderRadius={"full"}>
           <IconPlus />
-          {l.create}
+          {/* {l.create} */}
         </ItemButton>
 
         <DisclosureRoot open={open} lazyLoad size={"sm"}>

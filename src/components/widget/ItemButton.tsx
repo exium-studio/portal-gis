@@ -1,15 +1,15 @@
-import { ButtonProps } from "@chakra-ui/react";
-import BButton from "../ui-custom/BButton";
+import { useThemeConfig } from "@/context/useThemeConfig";
+import BButton, { BButtonProps } from "../ui-custom/BButton";
 
-interface Props extends ButtonProps {}
+interface Props extends BButtonProps {}
 const ItemButton = ({ children, ...props }: Props) => {
-  // const { themeConfig } = useThemeConfig();
+  const { themeConfig } = useThemeConfig();
 
   return (
     <BButton
       size={"xs"}
-      variant={"outline"}
-      // colorPalette={themeConfig.colorPalette}
+      variant={"subtle"}
+      colorPalette={themeConfig.colorPalette}
       borderRadius={"lg"}
       {...props}
     >
