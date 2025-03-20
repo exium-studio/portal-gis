@@ -67,7 +67,7 @@ const Inbox = () => {
               confirmButtonProps={{ colorPalette: "red" }}
               confirmCallback={() => {}}
             >
-              <BButton variant={"surface"}>
+              <BButton variant={"outline"} color={"fg.error"}>
                 {l.delete_all_inbox_button}...
               </BButton>
             </ConfirmationDisclosure>

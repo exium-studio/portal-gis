@@ -87,6 +87,7 @@ const translations = {
     "title": "Gangguan koneksi ke server",
     "description": "Tidak dapat terhubung ke server. Coba lagi nanti."
   },
+  "expired_date": "Tanggal kedaluwarsa",
   "firefox_permissions_settings_link": "Preferensi → Privasi & Keamanan → Izin → ",
   "forbidden_feedback": {
     "title": "Tidak ada akses",
@@ -94,9 +95,11 @@ const translations = {
   },
   "forgot_password": "Lupa password",
   "get": "Dapatkan",
+  "grow": "Naik ${value} dari tahun lalu",
   "income_expenses": "Pemasukan & pengeluaran",
   "language_settings_title": "Bahasa",
   "last": "Terakhir",
+  "last_updated": "Terakhir diperbarui",
   "location": "Lokasi",
   "location_address_fail_toast": {
     "title": "Gagal mendapatkan alamat",
@@ -205,9 +208,10 @@ const translations = {
     "location": "Tes Kamera",
     "notifications": "Tes Kamera"
   },
-  "population_grow": "Naik {value} dari tahun lalu",
+  "published_date": "Tanggal publikasi",
   "regional_settings_helper_text": "Pengaturan bahasa & wilayah ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
   "religion": "Agama",
+  "required_form": "Tidak boleh kosong",
   "retry": "Muat ulang",
   "retry_feedback": {
     "title": "Terjadi error",
@@ -238,6 +242,7 @@ const translations = {
     "description": "Silahkan pilih menu pengaturan."
   },
   "show": "Tampilkan",
+  "shrink": "Turun {value} dari tahun lalu",
   "theme_settings_title": "Tema",
   "this_month": "Bulan ini",
   "this_week": "Minggu ini",
@@ -251,6 +256,7 @@ const translations = {
   "title": "Judul",
   "today": "Hari ini",
   "tomorrow": "Besok",
+  "total_family": "Total keluarga",
   "total_population": "Total populasi",
   "total_village_funds": "Total dana desa",
   "try_label": "Coba",

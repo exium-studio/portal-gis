@@ -2,6 +2,7 @@ import BackButton from "@/components/ui-custom/BackButton";
 import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
 import ConfirmationDisclosure from "@/components/ui-custom/ConfirmationDisclosure";
+import DatePickerInput from "@/components/ui-custom/DatePickerInput";
 import {
   DisclosureBody,
   DisclosureContent,
@@ -18,6 +19,7 @@ import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
 import RequiredIndicator from "@/components/ui-custom/RequiredIndicator";
 import StringInput from "@/components/ui-custom/StringInput";
 import Textarea from "@/components/ui-custom/Textarea";
+import TimePickerInput from "@/components/ui-custom/TimePickerInput";
 import { Avatar } from "@/components/ui/avatar";
 import { Field } from "@/components/ui/field";
 import {
@@ -39,7 +41,10 @@ import { useThemeConfig } from "@/context/useThemeConfig";
 import useBackOnClose from "@/hooks/useBackOnClose";
 import formatDate from "@/utils/formatDate";
 import formatNumber from "@/utils/formatNumber";
+import interpolate from "@/utils/interpolate";
+import { fileValidation } from "@/utils/validationSchemas";
 import {
+  FieldErrorText,
   FieldLabel,
   GridItem,
   HStack,
@@ -54,17 +59,31 @@ import {
 import {
   IconAddressBook,
   IconBrandWhatsapp,
+  IconCoins,
   IconDotsVertical,
+  IconEdit,
   IconFriends,
   IconMapPin,
   IconPhone,
   IconPlus,
   IconSparkles,
   IconSpeakerphone,
-  IconTipJar,
+  IconTrash,
+  IconUserHeart,
 } from "@tabler/icons-react";
 import { useFormik } from "formik";
 import * as yup from "yup";
+
+const VillageMap = () => {
+  // States, Refs
+  // const data = {
+  //   name: "Desa Makmur Jaya Abadi",
+  //   lat: 123,
+  //   long: 123,
+  // };
+
+  return <ItemContainer h={"400px"} bg={"body"}></ItemContainer>;
+};
 
 const TotalCounter = () => {
   // Contexts
@@ -73,17 +92,19 @@ const TotalCounter = () => {
 
   // States, Refs
   const data = {
-    total_population: 243,
+    total_population: 438,
+    total_family: 243,
     population_growth: 2.4,
+    family_growth: 4.2,
     total_village_funds: 877088000,
   };
 
   console.log("Total", data);
 
   return (
-    <SimpleGrid columns={[1, 2]} gap={R_GAP}>
-      <ItemContainer p={4}>
-        <HStack gap={4}>
+    <CContainer gap={R_GAP} h={"full"}>
+      <ItemContainer p={4} flex={1} justify={"center"} position={"relative"}>
+        <HStack gap={4} h={"full"}>
           <Icon color={themeConfig.primaryColor}>
             <IconFriends size={40} />
           </Icon>
@@ -91,12 +112,16 @@ const TotalCounter = () => {
           <CContainer gap={1}>
             <Text>{l.total_population}</Text>
             <HStack justify={"space-between"} align={"end"}>
-              <Text fontWeight={"bold"} fontSize={"xl"}>
+              <Text fontWeight={"bold"} fontSize={"2xl"}>
                 {formatNumber(data.total_population)}
               </Text>
+
               <PopoverRoot>
                 <PopoverTrigger>
                   <Text
+                    position={"absolute"}
+                    right={4}
+                    bottom={4}
                     color={data.population_growth > 0 ? "green.500" : "red.400"}
                     fontSize={"xs"}
                   >
@@ -105,30 +130,88 @@ const TotalCounter = () => {
                   </Text>
                 </PopoverTrigger>
 
-                <PopoverContent>{l.population_grow}</PopoverContent>
+                <Portal>
+                  <PopoverPositioner>
+                    <PopoverContent mt={4}>
+                      {data.population_growth > 0
+                        ? interpolate(l.grow, {
+                            value: `${data.population_growth}%`,
+                          })
+                        : interpolate(l.shrink, {
+                            value: `${data.population_growth}%`,
+                          })}
+                    </PopoverContent>
+                  </PopoverPositioner>
+                </Portal>
               </PopoverRoot>
             </HStack>
           </CContainer>
         </HStack>
       </ItemContainer>
 
-      <ItemContainer p={4}>
+      <ItemContainer p={4} flex={1} justify={"center"} position={"relative"}>
         <HStack gap={4}>
           <Icon color={themeConfig.primaryColor}>
-            <IconTipJar size={40} />
+            <IconUserHeart size={40} />
+          </Icon>
+
+          <CContainer gap={1}>
+            <Text>{l.total_family}</Text>
+            <HStack justify={"space-between"} align={"end"}>
+              <Text fontWeight={"bold"} fontSize={"2xl"}>
+                {formatNumber(data.total_family)}
+              </Text>
+
+              <PopoverRoot>
+                <PopoverTrigger>
+                  <Text
+                    position={"absolute"}
+                    right={4}
+                    bottom={4}
+                    color={data.family_growth > 0 ? "green.500" : "red.400"}
+                    fontSize={"xs"}
+                  >
+                    {data.family_growth > 0 ? "+" : ""}
+                    {data.family_growth}%
+                  </Text>
+                </PopoverTrigger>
+
+                <Portal>
+                  <PopoverPositioner>
+                    <PopoverContent mt={4}>
+                      {data.family_growth > 0
+                        ? interpolate(l.grow, {
+                            value: `${data.family_growth}%`,
+                          })
+                        : interpolate(l.shrink, {
+                            value: `${data.family_growth}%`,
+                          })}
+                    </PopoverContent>
+                  </PopoverPositioner>
+                </Portal>
+              </PopoverRoot>
+            </HStack>
+          </CContainer>
+        </HStack>
+      </ItemContainer>
+
+      <ItemContainer p={4} flex={1} justify={"center"}>
+        <HStack gap={4}>
+          <Icon color={themeConfig.primaryColor}>
+            <IconCoins size={40} />
           </Icon>
 
           <CContainer gap={1}>
             <Text>{l.total_village_funds}</Text>
             <HStack justify={"space-between"} align={"end"}>
-              <Text fontWeight={"bold"} fontSize={"xl"}>
+              <Text fontWeight={"bold"} fontSize={"2xl"}>
                 {formatNumber(data.total_village_funds)}
               </Text>
             </HStack>
           </CContainer>
         </HStack>
       </ItemContainer>
-    </SimpleGrid>
+    </CContainer>
   );
 };
 
@@ -194,10 +277,25 @@ const Announcement = () => {
         title: "",
         description: "",
         file: undefined as any,
+        startDate: undefined as any,
+        endDate: undefined as any,
+        startTime: undefined as any,
+        endTime: undefined as any,
       },
-      validationSchema: yup.object().shape({}),
+      validationSchema: yup.object().shape({
+        title: yup.string().required(l.required_form),
+        description: yup.string().required(l.required_form),
+        file: fileValidation(),
+      }),
       onSubmit: (values) => {
-        console.log(values);
+        const payload = new FormData();
+        payload.append("title", values.title);
+        payload.append("description", values.description);
+        payload.append("file", values.file);
+        payload.append("startDateTime", values.startDate);
+        payload.append("endDateTime", values.endDate);
+
+        console.log(payload);
       },
     });
 
@@ -221,7 +319,7 @@ const Announcement = () => {
 
             <DisclosureBody>
               <form id="announcement_create" onSubmit={formik.handleSubmit}>
-                <Field required>
+                <Field invalid={!!formik.errors.title}>
                   <FieldLabel>
                     {l.title}
                     <RequiredIndicator />
@@ -232,9 +330,12 @@ const Announcement = () => {
                     }}
                     inputValue={formik.values.title}
                   />
+                  <FieldErrorText>
+                    {formik.errors.title as string}
+                  </FieldErrorText>
                 </Field>
 
-                <Field mt={4}>
+                <Field mt={4} invalid={!!formik.errors.description}>
                   <FieldLabel>
                     {l.description}
                     <RequiredIndicator />
@@ -245,11 +346,57 @@ const Announcement = () => {
                     }}
                     inputValue={formik.values.description}
                   />
+                  <FieldErrorText>
+                    {formik.errors.description as string}
+                  </FieldErrorText>
                 </Field>
 
                 <Field mt={4}>
                   <FieldLabel>Attachment</FieldLabel>
                   <FileInput maxFiles={4} />
+                  <FieldErrorText>
+                    {formik.errors.endDate as string}
+                  </FieldErrorText>
+                </Field>
+
+                <Field mt={4}>
+                  <FieldLabel>{l.published_date}</FieldLabel>
+                  <SimpleGrid columns={2} w={"full"} gap={2}>
+                    <DatePickerInput
+                      id="published_date"
+                      onConfirm={(input) => {
+                        formik.setFieldValue("startDate", input);
+                      }}
+                      inputValue={formik.values.startDate}
+                    />
+                    <TimePickerInput
+                      id="published_time"
+                      onConfirm={(input) => {
+                        formik.setFieldValue("startTime", input);
+                      }}
+                      inputValue={formik.values.startTime}
+                    />
+                  </SimpleGrid>
+                </Field>
+
+                <Field mt={4}>
+                  <FieldLabel>{l.expired_date}</FieldLabel>
+                  <SimpleGrid columns={2} w={"full"} gap={2}>
+                    <DatePickerInput
+                      id="expired_date"
+                      onConfirm={(input) => {
+                        formik.setFieldValue("endDate", input);
+                      }}
+                      inputValue={formik.values.endDate}
+                    />
+                    <TimePickerInput
+                      id="expired_time"
+                      onConfirm={(input) => {
+                        formik.setFieldValue("endTime", input);
+                      }}
+                      inputValue={formik.values.endTime}
+                    />
+                  </SimpleGrid>
                 </Field>
               </form>
             </DisclosureBody>
@@ -292,6 +439,9 @@ const Announcement = () => {
       <>
         <MenuItem value="edit" onClick={onOpen}>
           Edit
+          <Icon ml={"auto"}>
+            <IconEdit stroke={1.5} size={16} />
+          </Icon>
         </MenuItem>
 
         <DisclosureRoot open={open} lazyLoad size={"xs"}>
@@ -361,7 +511,6 @@ const Announcement = () => {
             size={"xs"}
             borderRadius={"full"}
             variant={"ghost"}
-            mr={2}
           >
             <IconDotsVertical />
           </BButton>
@@ -373,16 +522,19 @@ const Announcement = () => {
               <AnnouncementEdit item={item} />
               <ConfirmationDisclosure
                 id={`delete-announcement-${item.id}`}
-                title="Delete?"
+                title={`${l.delete_label}?`}
                 description={l.perma_delete_confirmation}
                 confirmCallback={() => {}}
-                confirmLabel="Delete"
+                confirmLabel={l.delete_label}
                 confirmButtonProps={{
                   colorPalette: "red",
                 }}
               >
                 <MenuItem value="delete" color={"red.400"}>
-                  Delete...
+                  {l.delete_label}...
+                  <Icon ml={"auto"}>
+                    <IconTrash stroke={1.5} size={16} />
+                  </Icon>
                 </MenuItem>
               </ConfirmationDisclosure>
             </MenuContent>
@@ -409,7 +561,9 @@ const Announcement = () => {
                 <Text color={"fg.muted"} truncate>
                   {item.description}
                 </Text>
-                <HelperText>{formatDate(item.updated_at)}</HelperText>
+                <HelperText>
+                  {l.last_updated} {formatDate(item.updated_at)}
+                </HelperText>
               </CContainer>
 
               <AnnouncementOptions item={item} />
@@ -431,7 +585,7 @@ const Announcement = () => {
         <AnnouncementCreate />
       </ItemHeaderContainer>
 
-      <CContainer pb={2} h={"500px"}>
+      <CContainer h={"500px"} pb={2}>
         <CContainer pt={2} overflowY={"auto"} className="scrollY">
           {data.map((item, i) => {
             return <AnnouncementItem key={i} item={item} />;
@@ -440,17 +594,6 @@ const Announcement = () => {
       </CContainer>
     </ItemContainer>
   );
-};
-
-const VillageMap = () => {
-  // States, Refs
-  const data = {
-    name: "Desa Makmur Jaya Abadi",
-    lat: 123,
-    long: 123,
-  };
-
-  return <ItemContainer h={"300px"} bg={"body"}></ItemContainer>;
 };
 
 const VisionMission = () => {
@@ -486,7 +629,7 @@ const VisionMission = () => {
         </HStack>
       </ItemHeaderContainer>
 
-      <CContainer pb={2} h={"500px"}>
+      <CContainer h={"500px"} pb={2}>
         <CContainer pt={4} pb={2} overflowY={"auto"} className="scrollY" px={3}>
           <CContainer px={1}>
             <Text color={"fg.muted"} mb={1}>
@@ -653,7 +796,7 @@ const OfficialContact = () => {
         </HStack>
       </ItemHeaderContainer>
 
-      <CContainer h={"calc(665px - 50px - 8px)"} pb={2}>
+      <CContainer h={"500px"} pb={2}>
         <CContainer overflowY={"auto"} className="scrollY">
           <CContainer px={3}>
             {data.map((item, i) => {
@@ -730,26 +873,22 @@ const TotalPopulationByFilter = () => {
 const DashboardPage = () => {
   return (
     <PageContainer gap={R_GAP}>
-      <SimpleGrid columns={[1, null, 2]}>
-        <VillageMap />
-      </SimpleGrid>
-
       <SimpleGrid columns={[1, null, 3]} gap={R_GAP}>
         <GridItem colSpan={[3, null, 2]}>
-          <CContainer gap={R_GAP}>
-            <TotalCounter />
-
-            <SimpleGrid columns={[1, 2]} gap={R_GAP}>
-              <Announcement />
-
-              <VisionMission />
-            </SimpleGrid>
-          </CContainer>
+          <VillageMap />
         </GridItem>
 
         <GridItem colSpan={[3, null, 1]}>
-          <OfficialContact />
+          <TotalCounter />
         </GridItem>
+      </SimpleGrid>
+
+      <SimpleGrid columns={[1, null, 3]} gap={R_GAP}>
+        <Announcement />
+
+        <VisionMission />
+
+        <OfficialContact />
       </SimpleGrid>
 
       <SimpleGrid columns={[1, null, 3]} gap={R_GAP}>

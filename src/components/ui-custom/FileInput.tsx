@@ -1,5 +1,5 @@
 import { Icon } from "@chakra-ui/react";
-import { Button } from "../ui/button";
+import { IconUpload } from "@tabler/icons-react";
 import {
   FileUploadDropzone,
   FileUploadList,
@@ -7,7 +7,7 @@ import {
   FileUploadRootProps,
   FileUploadTrigger,
 } from "../ui/file-button";
-import { IconUpload } from "@tabler/icons-react";
+import BButton from "./BButton";
 
 interface Props extends FileUploadRootProps {
   name?: string;
@@ -32,7 +32,7 @@ const FileInput = ({
   initialFilepath,
   label,
   dropZone,
-  description = "size up to 10MB",
+  description = "size up to 10 MB",
   maxFiles = 1,
   ...props
 }: Props) => {
@@ -61,12 +61,12 @@ const FileInput = ({
           />
         ) : (
           <FileUploadTrigger asChild borderColor={invalid ? "fg.error" : ""}>
-            <Button variant="outline" size="sm">
-              <Icon>
+            <BButton variant="outline">
+              <Icon scale={0.8}>
                 <IconUpload />
               </Icon>{" "}
               {label || "File upload"}
-            </Button>
+            </BButton>
           </FileUploadTrigger>
         )}
 

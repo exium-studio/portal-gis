@@ -42,8 +42,8 @@ const CurrentUserTimeZone = () => {
           <HelperText mb={1}>{l.selected_time_zone}</HelperText>
 
           <HStack>
-            <Text>{formatDate(new Date())}</Text>
-            <Clock />
+            <Text fontWeight={"medium"}>{formatDate(new Date())}</Text>
+            <Clock fontWeight={"medium"} />
           </HStack>
 
           <Text color={"fg.muted"}>
@@ -56,13 +56,13 @@ const CurrentUserTimeZone = () => {
             <HelperText mb={1}>{l.auto_time_zone}</HelperText>
 
             <HStack>
-              <Text>
+              <Text fontWeight={"medium"}>
                 {formatDate(new Date(), {
                   prefixTimeZoneKey: autoTz.key,
                   prefixDateFormat: dateFormat,
                 })}
               </Text>
-              <Clock timeZoneKey={autoTimeZone().key} />
+              <Clock fontWeight={"medium"} timeZoneKey={autoTimeZone().key} />
             </HStack>
 
             <Text color={"fg.muted"}>

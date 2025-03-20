@@ -87,6 +87,7 @@ const translations = {
     "title": "Server connection problem",
     "description": "Unable to connect to the server. Try again later."
   },
+  "expired_date": "Expired date",
   "firefox_permissions_settings_link": "Preferences → Privacy & Security → Permissions → ",
   "forbidden_feedback": {
     "title": "No Access",
@@ -94,9 +95,11 @@ const translations = {
   },
   "forgot_password": "Forgot password",
   "get": "Get",
+  "grow": "Up ${value} from last year",
   "income_expenses": "Income & expenses",
   "language_settings_title": "Language",
   "last": "Last",
+  "last_updated": "Last updated",
   "location": "Location",
   "location_address_fail_toast": {
     "title": "Failed to get address",
@@ -205,9 +208,10 @@ const translations = {
     "location": "Camera Test",
     "notifications": "Camera Test"
   },
-  "population_grow": "Up {value} from last year",
+  "published_date": "Date published",
   "regional_settings_helper_text": "These language & region settings are stored locally on your device and will not be synced with your account.",
   "religion": "Religion",
+  "required_form": "Cannot be empty",
   "retry": "Retry now",
   "retry_feedback": {
     "title": "An Error Occurred",
@@ -238,6 +242,7 @@ const translations = {
     "description": "Please select the settings menu."
   },
   "show": "Show",
+  "shrink": "Down {value} from last year",
   "theme_settings_title": "Theme",
   "this_month": "This month",
   "this_week": "This week",
@@ -251,6 +256,7 @@ const translations = {
   "title": "Title",
   "today": "Today",
   "tomorrow": "Tomorrow",
+  "total_family": "Total family",
   "total_population": "Total population",
   "total_village_funds": "Total village funds",
   "try_label": "Try",

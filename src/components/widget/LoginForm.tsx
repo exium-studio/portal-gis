@@ -1,4 +1,3 @@
-import { REQUIRED_FORM } from "@/constant/validationMessages";
 import useLang from "@/context/useLang";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useRequest from "@/hooks/useRequest";
@@ -47,8 +46,8 @@ const LoginForm = () => {
       password: "",
     },
     validationSchema: yup.object().shape({
-      identifier: yup.string().required(REQUIRED_FORM),
-      password: yup.string().required(REQUIRED_FORM),
+      identifier: yup.string().required(l.required_form),
+      password: yup.string().required(l.required_form),
     }),
     onSubmit: () => {
       // const payload = {

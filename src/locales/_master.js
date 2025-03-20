@@ -59,6 +59,22 @@ export const settings_navs = {
 };
 
 // UI
+export const required_form = {
+  id: "Tidak boleh kosong",
+  en: "Cannot be empty",
+};
+export const published_date = {
+  id: "Tanggal publikasi",
+  en: "Date published",
+};
+export const expired_date = {
+  id: "Tanggal kedaluwarsa",
+  en: "Expired date",
+};
+export const last_updated = {
+  id: "Terakhir diperbarui",
+  en: "Last updated",
+};
 export const delete_label = {
   id: "Hapus",
   en: "Delete",
@@ -91,9 +107,17 @@ export const total_population = {
   id: "Total populasi",
   en: "Total population",
 };
-export const population_grow = {
-  id: "Naik {value} dari tahun lalu",
-  en: "Up {value} from last year",
+export const grow = {
+  id: "Naik ${value} dari tahun lalu",
+  en: "Up ${value} from last year",
+};
+export const shrink = {
+  id: "Turun {value} dari tahun lalu",
+  en: "Down {value} from last year",
+};
+export const total_family = {
+  id: "Total keluarga",
+  en: "Total family",
 };
 export const total_village_funds = {
   id: "Total dana desa",
