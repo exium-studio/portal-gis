@@ -649,8 +649,7 @@ const OfficialContact = () => {
                 <CContainer
                   key={i}
                   px={2}
-                  pt={3}
-                  pb={4}
+                  py={4}
                   flex={1}
                   borderBottom={
                     i !== data.length - 1
