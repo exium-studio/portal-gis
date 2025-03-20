@@ -38,6 +38,12 @@ export const PRIVATE_ROUTES: Interface__PrivateRoute[] = [
     titleKey: "navs.services",
     element: <ServicePage />,
   },
+  {
+    path: "/profile",
+    activePath: "/profile",
+    titleKey: "navs.profile",
+    element: <ServicePage />,
+  },
 
   // Settings
   {
