@@ -45,6 +45,7 @@ import {
   HStack,
   Icon,
   MenuPositioner,
+  PopoverPositioner,
   Portal,
   Separator,
   SimpleGrid,
@@ -55,6 +56,7 @@ import {
   IconBrandWhatsapp,
   IconDotsVertical,
   IconFriends,
+  IconMapPin,
   IconPhone,
   IconPlus,
   IconSparkles,
@@ -428,7 +430,7 @@ const Announcement = () => {
         <AnnouncementCreate />
       </ItemHeaderContainer>
 
-      <CContainer pb={2} h={"450px"}>
+      <CContainer pb={2} h={"500px"}>
         <CContainer pt={2} overflowY={"auto"} className="scrollY">
           {data.map((item, i) => {
             return <AnnouncementItem key={i} item={item} />;
@@ -472,7 +474,7 @@ const VisionMission = () => {
         </HStack>
       </ItemHeaderContainer>
 
-      <CContainer pb={2} h={"450px"}>
+      <CContainer pb={2} h={"500px"}>
         <CContainer pt={2} pb={2} overflowY={"auto"} className="scrollY" px={4}>
           <Text color={"fg.muted"} mb={1}>
             {l.vision}
@@ -528,6 +530,7 @@ const OfficialContact = () => {
       avatar: "https://bit.ly/sage-adebayo",
       wa: "0819827310289",
       phone: "0819827310289",
+      address: "Jl. Merdeka No. 1, Desa Sukamaju, Kecamatan Sejahtera",
       socials: {
         fb: "https://facebook.com/rudi.tabuti",
         x: "https://twitter.com/rudi_tabuti",
@@ -547,6 +550,7 @@ const OfficialContact = () => {
       avatar: "https://bit.ly/dummy-avatar",
       wa: "0819327483920",
       phone: "0819327483920",
+      address: "Jl. Pahlawan No. 5, Desa Sukamaju, Kecamatan Sejahtera",
       socials: {
         fb: "https://facebook.com/siti.marni",
         x: "https://twitter.com/siti_marni",
@@ -567,6 +571,7 @@ const OfficialContact = () => {
       avatar: "https://bit.ly/dummy-avatar",
       wa: "0819876543210",
       phone: "0819876543210",
+      address: "Jl. Kemakmuran No. 10, Desa Sukamaju, Kecamatan Sejahtera",
       socials: {
         fb: "https://facebook.com/budi.santoso",
         x: "https://twitter.com/budi_santoso",
@@ -574,6 +579,32 @@ const OfficialContact = () => {
       },
     },
   ];
+
+  // Components
+  const Address = ({ item }: any) => {
+    return (
+      <PopoverRoot>
+        <PopoverTrigger>
+          <HStack mb={4} align={"start"} cursor={"pointer"}>
+            <Icon color="fg.muted">
+              <IconMapPin stroke={1.5} size={18} />
+            </Icon>
+            <Text color="fg.muted" truncate>
+              {item.address}
+            </Text>
+          </HStack>
+        </PopoverTrigger>
+
+        <Portal>
+          <PopoverPositioner>
+            <PopoverContent mt={-4}>
+              <Text>{item.address}</Text>
+            </PopoverContent>
+          </PopoverPositioner>
+        </Portal>
+      </PopoverRoot>
+    );
+  };
 
   return (
     <CContainer gap={R_GAP} h={"full"}>
@@ -583,10 +614,10 @@ const OfficialContact = () => {
             <Text fontSize={"md"} fontWeight={"bold"} mb={2}>
               {item.title}
             </Text>
-            <Text mb={4}>{item.description}</Text>
+            <Text mb={2}>{item.description}</Text>
+            <Address item={item} />
 
             <Separator mb={4} mt={"auto"} />
-
             <HStack gap={4}>
               <Avatar src={item.avatar} />
               <CContainer>
