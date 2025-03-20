@@ -435,8 +435,8 @@ const Announcement = () => {
         <AnnouncementCreate />
       </ItemHeaderContainer>
 
-      <CContainer pb={2}>
-        <CContainer pt={2} h={"400px"} overflowY={"auto"} className="scrollY">
+      <CContainer pb={2} h={"450px"}>
+        <CContainer pt={2} overflowY={"auto"} className="scrollY">
           {data.map((item, i) => {
             return <AnnouncementItem key={i} item={item} />;
           })}
@@ -479,15 +479,8 @@ const VisionMission = () => {
         </HStack>
       </ItemHeaderContainer>
 
-      <CContainer pb={2}>
-        <CContainer
-          pt={2}
-          pb={2}
-          h={"400px"}
-          overflowY={"auto"}
-          className="scrollY"
-          px={4}
-        >
+      <CContainer pb={2} h={"450px"}>
+        <CContainer pt={2} pb={2} overflowY={"auto"} className="scrollY" px={4}>
           <Text color={"fg.muted"} mb={1}>
             {l.vision}
           </Text>
