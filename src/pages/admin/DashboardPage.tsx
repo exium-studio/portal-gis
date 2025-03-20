@@ -15,6 +15,7 @@ import HelperText from "@/components/ui-custom/HelperText";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
+import RequiredIndicator from "@/components/ui-custom/RequiredIndicator";
 import StringInput from "@/components/ui-custom/StringInput";
 import Textarea from "@/components/ui-custom/Textarea";
 import { Field } from "@/components/ui/field";
@@ -224,35 +225,47 @@ const Announcement = () => {
             </DisclosureHeader>
 
             <DisclosureBody>
-              <Field>
-                <FieldLabel>{l.title}</FieldLabel>
-                <StringInput
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("title", input);
-                  }}
-                  inputValue={formik.values.title}
-                />
-              </Field>
+              <form id="announcement_create" onSubmit={formik.handleSubmit}>
+                <Field required>
+                  <FieldLabel>
+                    {l.title}
+                    <RequiredIndicator />
+                  </FieldLabel>
+                  <StringInput
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("title", input);
+                    }}
+                    inputValue={formik.values.title}
+                  />
+                </Field>
 
-              <Field mt={4}>
-                <FieldLabel>{l.description}</FieldLabel>
-                <Textarea
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("description", input);
-                  }}
-                  inputValue={formik.values.description}
-                />
-              </Field>
+                <Field mt={4}>
+                  <FieldLabel>
+                    {l.description}
+                    <RequiredIndicator />
+                  </FieldLabel>
+                  <Textarea
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("description", input);
+                    }}
+                    inputValue={formik.values.description}
+                  />
+                </Field>
 
-              <Field mt={4}>
-                <FieldLabel>Attachment</FieldLabel>
-                <FileInput maxFiles={4} />
-              </Field>
+                <Field mt={4}>
+                  <FieldLabel>Attachment</FieldLabel>
+                  <FileInput maxFiles={4} />
+                </Field>
+              </form>
             </DisclosureBody>
 
             <DisclosureFooter>
               <BackButton />
-              <BButton colorPalette={themeConfig.colorPalette}>
+              <BButton
+                colorPalette={themeConfig.colorPalette}
+                type="submit"
+                form="announcement_create"
+              >
                 {l.create}
               </BButton>
             </DisclosureFooter>
@@ -293,35 +306,43 @@ const Announcement = () => {
             </DisclosureHeader>
 
             <DisclosureBody>
-              <Field>
-                <FieldLabel>{l.title}</FieldLabel>
-                <StringInput
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("title", input);
-                  }}
-                  inputValue={formik.values.title}
-                />
-              </Field>
+              <form id="announcement_edit" onSubmit={formik.handleSubmit}>
+                <Field>
+                  <FieldLabel>{l.title}</FieldLabel>
+                  <StringInput
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("title", input);
+                    }}
+                    inputValue={formik.values.title}
+                  />
+                </Field>
 
-              <Field mt={4}>
-                <FieldLabel>{l.description}</FieldLabel>
-                <Textarea
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("description", input);
-                  }}
-                  inputValue={formik.values.description}
-                />
-              </Field>
+                <Field mt={4}>
+                  <FieldLabel>{l.description}</FieldLabel>
+                  <Textarea
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("description", input);
+                    }}
+                    inputValue={formik.values.description}
+                  />
+                </Field>
 
-              <Field mt={4}>
-                <FieldLabel>Attachment</FieldLabel>
-                <FileInput maxFiles={4} />
-              </Field>
+                <Field mt={4}>
+                  <FieldLabel>Attachment</FieldLabel>
+                  <FileInput maxFiles={4} />
+                </Field>
+              </form>
             </DisclosureBody>
 
             <DisclosureFooter>
               <BackButton />
-              <BButton colorPalette={themeConfig.colorPalette}>Update</BButton>
+              <BButton
+                colorPalette={themeConfig.colorPalette}
+                type="submit"
+                form="announcement_edit"
+              >
+                Update
+              </BButton>
             </DisclosureFooter>
           </DisclosureContent>
         </DisclosureRoot>
