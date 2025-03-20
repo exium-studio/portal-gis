@@ -285,7 +285,7 @@ const Announcement = () => {
       validationSchema: yup.object().shape({
         title: yup.string().required(l.required_form),
         description: yup.string().required(l.required_form),
-        file: fileValidation(),
+        file: fileValidation({ allowedExtensions: ["pdf"] }),
       }),
       onSubmit: (values) => {
         const payload = new FormData();
@@ -353,13 +353,21 @@ const Announcement = () => {
 
                 <Field mt={4}>
                   <FieldLabel>Attachment</FieldLabel>
-                  <FileInput maxFiles={4} />
+                  <FileInput maxFiles={3} />
                   <FieldErrorText>
                     {formik.errors.endDate as string}
                   </FieldErrorText>
                 </Field>
 
-                <Field mt={4}>
+                <Field
+                  mt={4}
+                  invalid={
+                    !!(
+                      (formik.values.startDate && !formik.values.startTime) ||
+                      (!formik.values.startDate && formik.values.startTime)
+                    )
+                  }
+                >
                   <FieldLabel>{l.published_date}</FieldLabel>
                   <SimpleGrid columns={2} w={"full"} gap={2}>
                     <DatePickerInput
@@ -377,9 +385,18 @@ const Announcement = () => {
                       inputValue={formik.values.startTime}
                     />
                   </SimpleGrid>
+                  <FieldErrorText>{l.requried_date_time}</FieldErrorText>
                 </Field>
 
-                <Field mt={4}>
+                <Field
+                  mt={4}
+                  invalid={
+                    !!(
+                      (formik.values.endDate && !formik.values.endTime) ||
+                      (!formik.values.endDate && formik.values.endTime)
+                    )
+                  }
+                >
                   <FieldLabel>{l.expired_date}</FieldLabel>
                   <SimpleGrid columns={2} w={"full"} gap={2}>
                     <DatePickerInput
@@ -397,6 +414,7 @@ const Announcement = () => {
                       inputValue={formik.values.endTime}
                     />
                   </SimpleGrid>
+                  <FieldErrorText>{l.requried_date_time}</FieldErrorText>
                 </Field>
               </form>
             </DisclosureBody>
@@ -424,8 +442,16 @@ const Announcement = () => {
         title: item.title,
         description: item.description,
         file: item.file,
+        startDate: undefined as any,
+        endDate: undefined as any,
+        startTime: undefined as any,
+        endTime: undefined as any,
       },
-      validationSchema: yup.object().shape({}),
+      validationSchema: yup.object().shape({
+        title: yup.string().required(l.required_form),
+        description: yup.string().required(l.required_form),
+        file: fileValidation({ allowedExtensions: ["pdf"] }),
+      }),
       onSubmit: (values) => {
         console.log(values);
       },
@@ -452,7 +478,7 @@ const Announcement = () => {
 
             <DisclosureBody>
               <form id="announcement_edit" onSubmit={formik.handleSubmit}>
-                <Field>
+                <Field invalid={!!formik.errors.title}>
                   <FieldLabel>
                     {l.title}
                     <RequiredIndicator />
@@ -463,9 +489,12 @@ const Announcement = () => {
                     }}
                     inputValue={formik.values.title}
                   />
+                  <FieldErrorText>
+                    {formik.errors.title as string}
+                  </FieldErrorText>
                 </Field>
 
-                <Field mt={4}>
+                <Field mt={4} invalid={!!formik.errors.description}>
                   <FieldLabel>
                     {l.description}
                     <RequiredIndicator />
@@ -476,11 +505,75 @@ const Announcement = () => {
                     }}
                     inputValue={formik.values.description}
                   />
+                  <FieldErrorText>
+                    {formik.errors.description as string}
+                  </FieldErrorText>
                 </Field>
 
                 <Field mt={4}>
                   <FieldLabel>Attachment</FieldLabel>
-                  <FileInput maxFiles={4} />
+                  <FileInput maxFiles={3} />
+                  <FieldErrorText>
+                    {formik.errors.endDate as string}
+                  </FieldErrorText>
+                </Field>
+
+                <Field
+                  mt={4}
+                  invalid={
+                    !!(
+                      (formik.values.startDate && !formik.values.startTime) ||
+                      (!formik.values.startDate && formik.values.startTime)
+                    )
+                  }
+                >
+                  <FieldLabel>{l.published_date}</FieldLabel>
+                  <SimpleGrid columns={2} w={"full"} gap={2}>
+                    <DatePickerInput
+                      id="published_date"
+                      onConfirm={(input) => {
+                        formik.setFieldValue("startDate", input);
+                      }}
+                      inputValue={formik.values.startDate}
+                    />
+                    <TimePickerInput
+                      id="published_time"
+                      onConfirm={(input) => {
+                        formik.setFieldValue("startTime", input);
+                      }}
+                      inputValue={formik.values.startTime}
+                    />
+                  </SimpleGrid>
+                  <FieldErrorText>{l.requried_date_time}</FieldErrorText>
+                </Field>
+
+                <Field
+                  mt={4}
+                  invalid={
+                    !!(
+                      (formik.values.endDate && !formik.values.endTime) ||
+                      (!formik.values.endDate && formik.values.endTime)
+                    )
+                  }
+                >
+                  <FieldLabel>{l.expired_date}</FieldLabel>
+                  <SimpleGrid columns={2} w={"full"} gap={2}>
+                    <DatePickerInput
+                      id="expired_date"
+                      onConfirm={(input) => {
+                        formik.setFieldValue("endDate", input);
+                      }}
+                      inputValue={formik.values.endDate}
+                    />
+                    <TimePickerInput
+                      id="expired_time"
+                      onConfirm={(input) => {
+                        formik.setFieldValue("endTime", input);
+                      }}
+                      inputValue={formik.values.endTime}
+                    />
+                  </SimpleGrid>
+                  <FieldErrorText>{l.requried_date_time}</FieldErrorText>
                 </Field>
               </form>
             </DisclosureBody>

@@ -59,6 +59,10 @@ export const settings_navs = {
 };
 
 // UI
+export const requried_date_time = {
+  id: "Harap isi tanggal dan waktu, karena ini satu kesatuan.",
+  en: "Please fill in the date and time, as they are one entity.",
+};
 export const required_form = {
   id: "Tidak boleh kosong",
   en: "Cannot be empty",

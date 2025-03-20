@@ -212,6 +212,7 @@ const translations = {
   "regional_settings_helper_text": "Pengaturan bahasa & wilayah ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
   "religion": "Agama",
   "required_form": "Tidak boleh kosong",
+  "requried_date_time": "Harap isi tanggal dan waktu, karena ini satu kesatuan.",
   "retry": "Muat ulang",
   "retry_feedback": {
     "title": "Terjadi error",
