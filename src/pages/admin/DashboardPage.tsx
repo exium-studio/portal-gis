@@ -852,8 +852,8 @@ const OfficialContact = () => {
       description:
         "Bertanggung jawab atas administrasi dan pelayanan di tingkat kelurahan.",
       avatar: "https://bit.ly/sage-adebayo",
-      wa: "0819827310289",
-      phone: "0819827310289",
+      wa: "+62 895-6221-89054",
+      phone: "+62 895-6221-89054",
       address: "Jl. Merdeka No. 1, Desa Sukamaju, Kecamatan Sejahtera",
       socials: {
         fb: "https://facebook.com/rudi.tabuti",
@@ -995,6 +995,9 @@ const OfficialContact = () => {
                         borderRadius={"full"}
                         variant={"subtle"}
                         colorPalette={themeConfig.colorPalette}
+                        onClick={() => {
+                          makeCall(item.phone);
+                        }}
                       >
                         <IconPhone />
                       </BButton>
