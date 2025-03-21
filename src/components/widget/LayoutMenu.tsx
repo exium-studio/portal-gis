@@ -20,7 +20,7 @@ const LayoutMenu = () => {
   return (
     <PopoverRoot>
       <PopoverTrigger asChild>
-        <BButton iconButton unclicky variant={"ghost"}>
+        <BButton iconButton unclicky variant={"ghost"} w={"fit"}>
           <IconLayoutColumns stroke={1.5} />
         </BButton>
       </PopoverTrigger>

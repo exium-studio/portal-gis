@@ -27,6 +27,7 @@ import { Tooltip } from "../ui/tooltip";
 import CurrentUserTimeZone from "./CurrentUserTimeZone";
 import MerchantInbox from "./Inbox";
 import LayoutMenu from "./LayoutMenu";
+import useLayout from "@/context/useLayout";
 
 interface Interface__NavItemContainer extends StackProps {
   active?: boolean;
@@ -49,6 +50,7 @@ const NavContainer = ({
   // Contexts
   const { themeConfig } = useThemeConfig();
   const { l } = useLang();
+  const { layout } = useLayout();
 
   // States, Refs
   const containerRef = useRef<HTMLDivElement>(null);
@@ -220,43 +222,67 @@ const NavContainer = ({
       )}
 
       {/* Content */}
-      <CContainer
-        fRef={containerRef}
-        position={"relative"}
+      <Stack
         flex={1}
-        overflowY={"auto"}
-        overflowX={"clip"}
-        bg={"bgContent"}
+        h={iss ? "calc(100dvh - 80px)" : "100dvh"}
+        align={"stretch"}
+        gap={0}
+        flexDir={iss ? "column-reverse" : "row"}
       >
-        <HStack
-          justify={"space-between"}
-          p={2}
-          px={4}
-          position={"sticky"}
-          top={0}
-          zIndex={2}
-          bg={iss ? "body" : "bgContent"}
-          borderBottom={iss ? "1px solid {colors.border.subtle}" : ""}
-        >
-          <HStack>
-            {backPath && <BackButton iconButton backPath={backPath} />}
+        {/* Main Panel */}
+        {(layout.id === 1 || layout.id === 2) && (
+          <CContainer
+            fRef={containerRef}
+            position={"relative"}
+            flex={1}
+            overflowY={"auto"}
+            overflowX={"clip"}
+            bg={"bgContent"}
+            w={layout.id === 1 && !iss ? "50%" : ""}
+            h={layout.id === 1 && iss ? "50%" : ""}
+          >
+            <HStack
+              justify={"space-between"}
+              p={2}
+              px={4}
+              position={"sticky"}
+              top={0}
+              zIndex={2}
+              bg={iss ? "body" : "bgContent"}
+              borderBottom={iss ? "1px solid {colors.border.subtle}" : ""}
+            >
+              <HStack>
+                {backPath && <BackButton iconButton backPath={backPath} />}
 
-            <Heading6 fontWeight={"bold"} truncate>
-              {title}
-            </Heading6>
-          </HStack>
+                <Heading6 fontWeight={"bold"} truncate>
+                  {title}
+                </Heading6>
+              </HStack>
 
-          <HStack flexShrink={0} gap={0}>
-            {withMaps && <LayoutMenu />}
+              <HStack flexShrink={0} gap={0}>
+                {withMaps && <LayoutMenu />}
 
-            <CurrentUserTimeZone />
+                <CurrentUserTimeZone />
 
-            <MerchantInbox />
-          </HStack>
-        </HStack>
+                <MerchantInbox />
+              </HStack>
+            </HStack>
 
-        {children}
-      </CContainer>
+            {children}
+          </CContainer>
+        )}
+
+        {/* Maps */}
+        {(layout.id === 1 || layout.id === 3) && (
+          <CContainer
+            w={layout.id === 1 && !iss ? "50%" : ""}
+            h={layout.id === 1 && iss ? "50%" : ""}
+            p={2}
+          >
+            {layout.id === 3 && <LayoutMenu />}
+          </CContainer>
+        )}
+      </Stack>
 
       {/* Sm screen nav */}
       {iss && (
@@ -272,6 +298,7 @@ const NavContainer = ({
           flexShrink={0}
           position={"sticky"}
           bottom={0}
+          bg={"body"}
         >
           <NavList />
 

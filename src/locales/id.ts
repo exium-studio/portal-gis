@@ -163,8 +163,8 @@ const translations = {
   "mission": "Misi",
   "month": "Bulan",
   "navs": {
-    "dashboard": "Dashboard",
-    "administration": "Administrasi",
+    "dashboard": "Beranda",
+    "administration": "Adm.",
     "services": "Layanan",
     "settings": "Pengaturan",
     "profile": "Profil"
