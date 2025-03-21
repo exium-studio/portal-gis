@@ -138,6 +138,7 @@ const NavContainer = ({
                       color={active ? "" : "fg.muted"}
                       lineHeight={1}
                       mt={1}
+                      maxW={"50px"}
                       truncate
                     >
                       {pluck(l, nav.labelKey)}
