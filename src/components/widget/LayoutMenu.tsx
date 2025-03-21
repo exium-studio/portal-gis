@@ -42,6 +42,7 @@ const LayoutMenu = () => {
                   variant={"ghost"}
                   justifyContent={"start"}
                   px={2}
+                  size={"md"}
                   onClick={() => {
                     setLayout(item);
                   }}
