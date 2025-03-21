@@ -4,6 +4,7 @@ export type Type__LanguageOptions = "id" | "en";
 
 export type Type__TimeZoneObject = {
   key: string;
+  label: string;
   offset: number;
   offsetMs: number;
   formattedOffset: string;

@@ -459,6 +459,7 @@ const Announcement = ({ ...props }: StackProps) => {
                       }}
                       inputValue={formik.values.startDate}
                     />
+
                     <TimePickerInput
                       id="published_time"
                       onConfirm={(input) => {
