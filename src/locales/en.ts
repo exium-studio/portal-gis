@@ -163,8 +163,8 @@ const translations = {
   "mission": "Mission",
   "month": "Month",
   "navs": {
-    "dashboard": "Home",
-    "administration": "Adm.",
+    "dashboard": "Dashboard",
+    "administration": "Administration",
     "services": "Services",
     "settings": "Settings",
     "profile": "Profile"

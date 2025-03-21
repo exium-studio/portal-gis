@@ -1,12 +1,12 @@
 // Navs
 export const navs = {
   dashboard: {
-    id: "Beranda",
-    en: "Home",
+    id: "Dashboard",
+    en: "Dashboard",
   },
   administration: {
-    id: "Adm.",
-    en: "Adm.",
+    id: "Administrasi",
+    en: "Administration",
   },
   services: {
     id: "Layanan",

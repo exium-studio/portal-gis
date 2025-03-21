@@ -52,7 +52,6 @@ import { fileValidation } from "@/utils/validationSchemas";
 import {
   FieldErrorText,
   FieldLabel,
-  GridItem,
   HStack,
   Icon,
   Image,
@@ -60,6 +59,7 @@ import {
   PopoverPositioner,
   Portal,
   SimpleGrid,
+  StackProps,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -68,7 +68,7 @@ import {
   IconBrandGoogleMaps,
   IconBrandWhatsapp,
   IconCoins,
-  IconDotsVertical,
+  IconDots,
   IconEdit,
   IconFriends,
   IconMapPin,
@@ -83,7 +83,7 @@ import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
 
-const VillageSummary = () => {
+const VillageSummary = ({ ...props }: StackProps) => {
   // Contexts
   const { themeConfig } = useThemeConfig();
   const { l } = useLang();
@@ -108,9 +108,11 @@ const VillageSummary = () => {
     },
   };
 
+  console.log("Village summary", data);
+
   return (
-    <ItemContainer h={"full"}>
-      <HStack wrap={"wrap"} align={"stretch"} h={"full"}>
+    <ItemContainer {...props}>
+      <HStack wrap={"wrap"} align={"stretch"} flex={1}>
         <CContainer flex={"1 1 200px"} position={"relative"}>
           <Image src={data.image_file.path} objectFit={"cover"} h={"full"} />
           <Tooltip content={"Google maps"}>
@@ -137,7 +139,7 @@ const VillageSummary = () => {
 
           <HStack>
             <CContainer>
-              <HelperText>{l.population_density}</HelperText>
+              <Text color={"fg.subtle"}>{l.population_density}</Text>
               <PopulationDensityStatus
                 data={data.population_density}
                 textProps={{ fontWeight: "semibold" }}
@@ -145,7 +147,7 @@ const VillageSummary = () => {
             </CContainer>
 
             <CContainer>
-              <HelperText>{l.population_density}</HelperText>
+              <Text color={"fg.subtle"}>{l.cost_of_living}</Text>
               <CostOfLivingStatus
                 data={data.cost_of_living}
                 textProps={{ fontWeight: "semibold" }}
@@ -158,7 +160,7 @@ const VillageSummary = () => {
   );
 };
 
-const TotalCounter = () => {
+const TotalCounter = ({ ...props }: StackProps) => {
   // Contexts
   const { l } = useLang();
   const { themeConfig } = useThemeConfig();
@@ -175,7 +177,7 @@ const TotalCounter = () => {
   console.log("Total", data);
 
   return (
-    <CContainer gap={R_GAP} h={"full"}>
+    <CContainer gap={R_GAP} {...props}>
       <ItemContainer p={4} flex={1} justify={"center"} position={"relative"}>
         <HStack gap={4} h={"full"}>
           <Icon color={themeConfig.primaryColor}>
@@ -288,7 +290,7 @@ const TotalCounter = () => {
   );
 };
 
-const Announcement = () => {
+const Announcement = ({ ...props }: StackProps) => {
   // Contexts
   const { l } = useLang();
   const { themeConfig } = useThemeConfig();
@@ -677,8 +679,9 @@ const Announcement = () => {
             size={"xs"}
             borderRadius={"full"}
             variant={"ghost"}
+            mr={3}
           >
-            <IconDotsVertical />
+            <IconDots />
           </BButton>
         </MenuTrigger>
 
@@ -711,37 +714,35 @@ const Announcement = () => {
   };
   const AnnouncementItem = ({ item }: any) => {
     return (
-      <>
-        <CContainer px={1}>
-          <CContainer
-            gap={1}
-            p={3}
-            pr={0}
-            borderRadius={themeConfig.radii.component}
-          >
-            <HStack>
-              <CContainer truncate gap={1}>
-                <Text fontWeight={"medium"} truncate>
-                  {item.title}
-                </Text>
-                <Text color={"fg.muted"} truncate>
-                  {item.description}
-                </Text>
-                <HelperText>
-                  {l.last_updated} {formatDate(item.updated_at)}
-                </HelperText>
-              </CContainer>
+      <CContainer px={1}>
+        <CContainer
+          gap={1}
+          p={3}
+          pr={0}
+          borderRadius={themeConfig.radii.component}
+        >
+          <HStack truncate>
+            <CContainer gap={1} truncate>
+              <Text fontWeight={"medium"} truncate>
+                {item.title}
+              </Text>
+              <Text color={"fg.muted"} truncate>
+                {item.description}
+              </Text>
+              <HelperText>
+                {l.last_updated} {formatDate(item.updated_at)}
+              </HelperText>
+            </CContainer>
 
-              <AnnouncementOptions item={item} />
-            </HStack>
-          </CContainer>
+            <AnnouncementOptions item={item} />
+          </HStack>
         </CContainer>
-      </>
+      </CContainer>
     );
   };
 
   return (
-    <ItemContainer>
+    <ItemContainer {...props}>
       <ItemHeaderContainer>
         <HStack>
           <IconSpeakerphone size={20} />
@@ -751,7 +752,7 @@ const Announcement = () => {
         <AnnouncementCreate />
       </ItemHeaderContainer>
 
-      <CContainer h={"500px"} pb={2}>
+      <CContainer pb={2} h={"500px"}>
         <CContainer pt={2} overflowY={"auto"} className="scrollY">
           {data.map((item, i) => {
             return <AnnouncementItem key={i} item={item} />;
@@ -762,80 +763,7 @@ const Announcement = () => {
   );
 };
 
-const VisionMission = () => {
-  // Contexts
-  const { l } = useLang();
-
-  // States, Refs
-  const data = {
-    name: "Desa Makmur Jaya",
-    vision:
-      "Mewujudkan Desa Makmur Jaya yang Mandiri, Sejahtera, dan Berbudaya Berbasis Kearifan Lokal.",
-    mission: [
-      "Meningkatkan kesejahteraan masyarakat melalui pengembangan ekonomi berbasis pertanian, peternakan, dan UMKM.",
-      "Meningkatkan kualitas sumber daya manusia melalui pendidikan, pelatihan, dan pemberdayaan masyarakat.",
-      "Meningkatkan infrastruktur desa guna menunjang aktivitas ekonomi dan kesejahteraan masyarakat.",
-      "Mewujudkan tata kelola pemerintahan desa yang transparan, akuntabel, dan partisipatif.",
-      "Melestarikan budaya dan kearifan lokal sebagai identitas desa yang berdaya saing.",
-      "Mengembangkan potensi pariwisata desa berbasis alam dan budaya untuk meningkatkan pendapatan desa.",
-      "Meningkatkan kualitas layanan kesehatan dan kebersihan lingkungan untuk masyarakat yang lebih sehat.",
-    ],
-  };
-
-  console.log("Visi Misi", data);
-
-  return (
-    <ItemContainer>
-      <ItemHeaderContainer>
-        <HStack>
-          <IconSparkles size={20} />
-          <ItemHeaderTitle>
-            {l.vision} {l.and} {l.mission.toLowerCase()}
-          </ItemHeaderTitle>
-        </HStack>
-      </ItemHeaderContainer>
-
-      <CContainer h={"500px"} pb={2}>
-        <CContainer pt={4} pb={2} overflowY={"auto"} className="scrollY" px={3}>
-          <CContainer px={1}>
-            <Text color={"fg.muted"} mb={1}>
-              {l.vision}
-            </Text>
-            <Text fontWeight={"medium"}>{data.vision}</Text>
-
-            <Text color={"fg.muted"} mt={4} mb={1}>
-              {l.mission}
-            </Text>
-          </CContainer>
-
-          <CContainer as={"ol"} gap={4}>
-            {data.mission.map((item, i) => {
-              return (
-                <HStack
-                  key={i}
-                  pl={1}
-                  fontWeight={"medium"}
-                  align={"start"}
-                  borderBottom={
-                    i !== data.mission.length - 1
-                      ? "1px solid {colors.border.muted}"
-                      : ""
-                  }
-                  pb={i !== data.mission.length - 1 ? 4 : 0}
-                >
-                  <Text>{i + 1}</Text>
-                  <Text>{item}</Text>
-                </HStack>
-              );
-            })}
-          </CContainer>
-        </CContainer>
-      </CContainer>
-    </ItemContainer>
-  );
-};
-
-const OfficialContact = () => {
+const OfficialContact = ({ ...props }: StackProps) => {
   // Contexts
   const { themeConfig } = useThemeConfig();
   const { l } = useLang();
@@ -954,7 +882,7 @@ const OfficialContact = () => {
   };
 
   return (
-    <ItemContainer overflowY={"auto"}>
+    <ItemContainer overflowY={"auto"} {...props}>
       <ItemHeaderContainer>
         <HStack>
           <IconAddressBook />
@@ -962,7 +890,7 @@ const OfficialContact = () => {
         </HStack>
       </ItemHeaderContainer>
 
-      <CContainer h={"500px"} pb={2}>
+      <CContainer pb={2} h={"500px"}>
         <CContainer overflowY={"auto"} className="scrollY">
           <CContainer px={3}>
             {data.map((item, i) => {
@@ -1026,60 +954,121 @@ const OfficialContact = () => {
   );
 };
 
-const IncomeExpenses = () => {
-  return <></>;
+const VisionMission = ({ ...props }: StackProps) => {
+  // Contexts
+  const { l } = useLang();
+
+  // States, Refs
+  const data = {
+    name: "Desa Makmur Jaya",
+    vision:
+      "Mewujudkan Desa Makmur Jaya yang Mandiri, Sejahtera, dan Berbudaya Berbasis Kearifan Lokal.",
+    mission: [
+      "Meningkatkan kesejahteraan masyarakat melalui pengembangan ekonomi berbasis pertanian, peternakan, dan UMKM.",
+      "Meningkatkan kualitas sumber daya manusia melalui pendidikan, pelatihan, dan pemberdayaan masyarakat.",
+      "Meningkatkan infrastruktur desa guna menunjang aktivitas ekonomi dan kesejahteraan masyarakat.",
+      "Mewujudkan tata kelola pemerintahan desa yang transparan, akuntabel, dan partisipatif.",
+      "Melestarikan budaya dan kearifan lokal sebagai identitas desa yang berdaya saing.",
+      "Mengembangkan potensi pariwisata desa berbasis alam dan budaya untuk meningkatkan pendapatan desa.",
+      "Meningkatkan kualitas layanan kesehatan dan kebersihan lingkungan untuk masyarakat yang lebih sehat.",
+    ],
+  };
+
+  console.log("Visi Misi", data);
+
+  return (
+    <ItemContainer {...props}>
+      <ItemHeaderContainer>
+        <HStack>
+          <IconSparkles size={20} />
+          <ItemHeaderTitle>
+            {l.vision} {l.and} {l.mission.toLowerCase()}
+          </ItemHeaderTitle>
+        </HStack>
+      </ItemHeaderContainer>
+
+      <CContainer pb={2} h={"500px"}>
+        <CContainer pt={4} pb={2} overflowY={"auto"} className="scrollY" px={3}>
+          <CContainer px={1}>
+            <Text color={"fg.muted"} mb={1}>
+              {l.vision}
+            </Text>
+            <Text fontWeight={"medium"}>{data.vision}</Text>
+
+            <Text color={"fg.muted"} mt={4} mb={1}>
+              {l.mission}
+            </Text>
+          </CContainer>
+
+          <CContainer as={"ol"} gap={4}>
+            {data.mission.map((item, i) => {
+              return (
+                <HStack
+                  key={i}
+                  pl={1}
+                  fontWeight={"medium"}
+                  align={"start"}
+                  borderBottom={
+                    i !== data.mission.length - 1
+                      ? "1px solid {colors.border.muted}"
+                      : ""
+                  }
+                  pb={i !== data.mission.length - 1 ? 4 : 0}
+                >
+                  <Text>{i + 1}</Text>
+                  <Text>{item}</Text>
+                </HStack>
+              );
+            })}
+          </CContainer>
+        </CContainer>
+      </CContainer>
+    </ItemContainer>
+  );
 };
 
-const PopulationGrowth = () => {
-  return <></>;
+const IncomeExpenses = ({ ...props }: StackProps) => {
+  return <ItemContainer {...props}></ItemContainer>;
 };
 
-const Facilities = () => {
-  return <></>;
+const PopulationGrowth = ({ ...props }: StackProps) => {
+  return <ItemContainer {...props}></ItemContainer>;
 };
 
-const TotalPopulationByFilter = () => {
-  return <></>;
+const Facilities = ({ ...props }: StackProps) => {
+  return <CContainer {...props}></CContainer>;
+};
+
+const TotalPopulationByFilter = ({ ...props }: StackProps) => {
+  return <CContainer {...props}></CContainer>;
 };
 
 const DashboardPage = () => {
   return (
-    <PageContainer gap={R_GAP}>
-      <SimpleGrid columns={[1, null, 3]} gap={R_GAP}>
-        <GridItem colSpan={[3, null, 2]}>
-          <VillageSummary />
-        </GridItem>
+    <PageContainer gap={R_GAP} pb={4}>
+      <HStack wrap={"wrap"} gap={R_GAP} align={"stretch"}>
+        <VillageSummary flex={"1 1 600px"} />
 
-        <GridItem colSpan={[3, null, 1]}>
-          <TotalCounter />
-        </GridItem>
-      </SimpleGrid>
+        <TotalCounter flex={"1 1 300px"} />
+      </HStack>
 
-      <SimpleGrid columns={[1, null, 3]} gap={R_GAP}>
-        <Announcement />
+      <HStack wrap={"wrap"} gap={R_GAP} align={"stretch"}>
+        <Announcement flex={"1 1 300px"} />
 
-        <VisionMission />
+        <VisionMission flex={"1 1 300px"} />
 
-        <OfficialContact />
-      </SimpleGrid>
+        <OfficialContact flex={"1 1 300px"} />
+      </HStack>
 
-      <SimpleGrid columns={[1, null, 3]} gap={R_GAP}>
-        <GridItem colSpan={[3, null, 2]}>
-          <CContainer>
-            <IncomeExpenses />
+      <HStack wrap={"wrap"} gap={R_GAP} align={"stretch"}>
+        <IncomeExpenses flex={"1 1 300px"} />
 
-            <PopulationGrowth />
-          </CContainer>
-        </GridItem>
+        <PopulationGrowth flex={"1 1 300px"} />
 
-        <GridItem colSpan={[3, null, 1]}>
-          <CContainer>
-            <Facilities />
+        <Facilities flex={"1 1 300px"} />
 
-            <TotalPopulationByFilter />
-          </CContainer>
-        </GridItem>
-      </SimpleGrid>
+        <TotalPopulationByFilter flex={"1 1 300px"} />
+      </HStack>
     </PageContainer>
   );
 };
