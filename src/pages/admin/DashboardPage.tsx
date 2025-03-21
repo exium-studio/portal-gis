@@ -3,6 +3,7 @@ import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
 import ConfirmationDisclosure from "@/components/ui-custom/ConfirmationDisclosure";
 import DatePickerInput from "@/components/ui-custom/DatePickerInput";
+import DateTimePicker from "@/components/ui-custom/DateTimePicker";
 import {
   DisclosureBody,
   DisclosureContent,
@@ -359,6 +360,9 @@ const Announcement = ({ ...props }: StackProps) => {
         title: "",
         description: "",
         file: undefined as any,
+        startDateTime: undefined as any,
+        endDateTime: undefined as any,
+
         startDate: undefined as any,
         endDate: undefined as any,
         startTime: undefined as any,
@@ -368,6 +372,8 @@ const Announcement = ({ ...props }: StackProps) => {
         title: yup.string().required(l.required_form),
         description: yup.string().required(l.required_form),
         file: fileValidation({ allowedExtensions: ["pdf"] }),
+        startDateTime: yup.string().required(l.required_form),
+        endDateTime: yup.string().required(l.required_form),
       }),
       onSubmit: (values) => {
         const payload = new FormData();
@@ -441,17 +447,15 @@ const Announcement = ({ ...props }: StackProps) => {
                   </FieldErrorText>
                 </Field>
 
-                <Field
-                  mt={4}
-                  invalid={
-                    !!(
-                      (formik.values.startDate && !formik.values.startTime) ||
-                      (!formik.values.startDate && formik.values.startTime)
-                    )
-                  }
-                >
+                <Field mt={4} invalid={!!formik.errors.startDateTime}>
                   <FieldLabel>{l.published_date}</FieldLabel>
-                  <SimpleGrid columns={2} w={"full"} gap={2}>
+                  <DateTimePicker
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("startDateTime", input);
+                    }}
+                    inputValue={formik.values.startDateTime}
+                  />
+                  {/* <SimpleGrid columns={2} w={"full"} gap={2}>
                     <DatePickerInput
                       id="published_date"
                       onConfirm={(input) => {
@@ -467,11 +471,13 @@ const Announcement = ({ ...props }: StackProps) => {
                       }}
                       inputValue={formik.values.startTime}
                     />
-                  </SimpleGrid>
-                  <FieldErrorText>{l.requried_date_time}</FieldErrorText>
+                  </SimpleGrid> */}
+                  <FieldErrorText>
+                    {formik.values.startDateTime as string}
+                  </FieldErrorText>
                 </Field>
 
-                <Field
+                {/* <Field
                   mt={4}
                   invalid={
                     !!(
@@ -498,7 +504,7 @@ const Announcement = ({ ...props }: StackProps) => {
                     />
                   </SimpleGrid>
                   <FieldErrorText>{l.requried_date_time}</FieldErrorText>
-                </Field>
+                </Field> */}
               </form>
             </DisclosureBody>
 
