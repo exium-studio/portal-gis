@@ -203,6 +203,7 @@ const NavContainer = ({
           bg={"body"}
           borderRight={"1px solid"}
           borderColor={"border.muted"}
+          flexShrink={0}
         >
           <Link to={"/"}>
             {themeConfig.colorPalette === "gray" ? (
@@ -229,6 +230,7 @@ const NavContainer = ({
         align={"stretch"}
         gap={0}
         flexDir={iss ? "column-reverse" : "row"}
+        w={iss ? "full" : "calc(100vw - 76px)"}
       >
         {/* Main Panel */}
         {(layout.id === 1 || layout.id === 2) && (

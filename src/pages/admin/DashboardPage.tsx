@@ -339,6 +339,13 @@ const Announcement = ({ ...props }: StackProps) => {
         "Rapat musyawarah desa akan diadakan pada 1 April 2025 di Balai Desa untuk membahas rencana pembangunan desa tahun depan.",
       updated_at: new Date().toISOString(),
     },
+    {
+      id: 6,
+      title: "Rapat Pleno",
+      description:
+        "Rapat pleno akan diadakan pada 2 April 2025 di Balai Desa untuk membahas rencana pembangunan desa tahun depan.",
+      updated_at: new Date().toISOString(),
+    },
   ];
 
   console.log("Pengumuman", data);
@@ -679,7 +686,6 @@ const Announcement = ({ ...props }: StackProps) => {
             size={"xs"}
             borderRadius={"full"}
             variant={"ghost"}
-            mr={3}
           >
             <IconDots />
           </BButton>
@@ -715,13 +721,8 @@ const Announcement = ({ ...props }: StackProps) => {
   const AnnouncementItem = ({ item }: any) => {
     return (
       <CContainer px={1}>
-        <CContainer
-          gap={1}
-          p={3}
-          pr={0}
-          borderRadius={themeConfig.radii.component}
-        >
-          <HStack truncate>
+        <CContainer gap={1} p={3} borderRadius={themeConfig.radii.component}>
+          <HStack>
             <CContainer gap={1} truncate>
               <Text fontWeight={"medium"} truncate>
                 {item.title}
@@ -854,6 +855,8 @@ const OfficialContact = ({ ...props }: StackProps) => {
       },
     },
   ];
+
+  console.log("Official contat", data);
 
   // Components
   const Address = ({ item }: any) => {
