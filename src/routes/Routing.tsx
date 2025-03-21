@@ -32,6 +32,7 @@ const Routing = () => {
                 activePath={activePath}
                 title={pluck(l, titleKey)}
                 backPath={backPath}
+                withMaps
               >
                 {/* Buat layout w/ maps */}
                 {element}

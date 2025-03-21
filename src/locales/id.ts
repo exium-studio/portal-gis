@@ -101,6 +101,7 @@ const translations = {
   "language_settings_title": "Bahasa",
   "last": "Terakhir",
   "last_updated": "Terakhir diperbarui",
+  "layout_menu_helper": "Layout ini hanya berlaku di navigasi utama.",
   "location": "Lokasi",
   "location_address_fail_toast": {
     "title": "Gagal mendapatkan alamat",

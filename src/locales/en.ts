@@ -101,6 +101,7 @@ const translations = {
   "language_settings_title": "Language",
   "last": "Last",
   "last_updated": "Last updated",
+  "layout_menu_helper": "This layout only applies to the main navigation.",
   "location": "Location",
   "location_address_fail_toast": {
     "title": "Failed to get address",

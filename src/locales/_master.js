@@ -59,6 +59,10 @@ export const settings_navs = {
 };
 
 // UI
+export const layout_menu_helper = {
+  id: "Layout ini hanya berlaku di navigasi utama.",
+  en: "This layout only applies to the main navigation.",
+};
 export const cost_of_living = {
   id: "Biaya hidup",
   en: "Cost of living",

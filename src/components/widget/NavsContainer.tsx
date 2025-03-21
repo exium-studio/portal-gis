@@ -26,6 +26,7 @@ import { Avatar } from "../ui/avatar";
 import { Tooltip } from "../ui/tooltip";
 import CurrentUserTimeZone from "./CurrentUserTimeZone";
 import MerchantInbox from "./Inbox";
+import LayoutMenu from "./LayoutMenu";
 
 interface Interface__NavItemContainer extends StackProps {
   active?: boolean;
@@ -36,8 +37,15 @@ interface Props {
   title?: string;
   backPath?: string;
   activePath?: string;
+  withMaps?: boolean;
 }
-const NavContainer = ({ children, title, backPath, activePath }: Props) => {
+const NavContainer = ({
+  children,
+  title,
+  backPath,
+  activePath,
+  withMaps = false,
+}: Props) => {
   // Contexts
   const { themeConfig } = useThemeConfig();
   const { l } = useLang();
@@ -239,7 +247,8 @@ const NavContainer = ({ children, title, backPath, activePath }: Props) => {
           </HStack>
 
           <HStack flexShrink={0} gap={0}>
-            {/* <ColorModeButton fontSize={"1.1rem"} /> */}
+            {withMaps && <LayoutMenu />}
+
             <CurrentUserTimeZone />
 
             <MerchantInbox />
