@@ -46,6 +46,7 @@ import useBackOnClose from "@/hooks/useBackOnClose";
 import formatDate from "@/utils/formatDate";
 import formatNumber from "@/utils/formatNumber";
 import interpolate from "@/utils/interpolate";
+import makeWA from "@/utils/makeWA";
 import { fileValidation } from "@/utils/validationSchemas";
 import {
   FieldErrorText,
@@ -1006,6 +1007,9 @@ const OfficialContact = () => {
                         borderRadius={"full"}
                         variant={"subtle"}
                         colorPalette={themeConfig.colorPalette}
+                        onClick={() => {
+                          makeWA(item.wa);
+                        }}
                       >
                         <IconBrandWhatsapp />
                       </BButton>
