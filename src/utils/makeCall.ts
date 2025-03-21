@@ -1,13 +1,14 @@
 function makeCall(phoneNumber: string) {
-  const isTelSupported =
-    navigator.userAgent.includes("Android") ||
-    navigator.userAgent.includes("iPhone") ||
-    navigator.userAgent.includes("iPad") ||
-    navigator.userAgent.includes("Windows Phone");
+  const sanitizedPhone = phoneNumber.trim().replace(/[^0-9+]/g, "");
 
-  if (isTelSupported) {
-    window.location.href = `tel:${phoneNumber}`;
+  const testLink = document.createElement("a");
+  testLink.href = `tel:${sanitizedPhone}`;
+
+  if (testLink.protocol === "tel:") {
+    window.location.href = testLink.href;
   } else {
     alert("This device does not support phone calls.");
   }
 }
+
+export default makeCall;
