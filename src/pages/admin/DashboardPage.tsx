@@ -360,7 +360,7 @@ const Announcement = ({ ...props }: StackProps) => {
         title: "",
         description: "",
         file: undefined as any,
-        startDateTime: undefined as any,
+        startDateTime: "2025-03-21T00:00:00.000Z",
         endDateTime: undefined as any,
 
         startDate: undefined as any,
