@@ -11,10 +11,12 @@ const CostOfLivingStatus = ({ data, textProps, ...props }: Props) => {
       case 1:
         return "#A3E635";
       case 2:
-        return "#FACC15";
+        return "#4ADE80";
       case 3:
-        return "#FB923C";
+        return "#FACC15";
       case 4:
+        return "#FB923C";
+      case 5:
         return "#EF4444";
     }
   };

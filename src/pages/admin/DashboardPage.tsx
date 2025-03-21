@@ -99,11 +99,11 @@ const VillageSummary = () => {
     gmaps_link:
       "https://www.google.com/maps/place/Tembalang,+Semarang+City,+Central+Java/@-7.0457892,110.4234427,13z/data=!3m1!4b1!4m6!3m5!1s0x2e708c2fca675267:0x6cf025f6beb40590!8m2!3d-7.024944!4d110.459866!16s%2Fg%2F11b_2kvl3w?entry=ttu&g_ep=EgoyMDI1MDMxOC4wIKXMDSoJLDEwMjExNDU1SAFQAw%3D%3D",
     population_density: {
-      id: 3,
+      id: 4,
       label: "Padat",
     },
     cost_of_living: {
-      id: 2,
+      id: 3,
       label: "Menengah",
     },
   };
