@@ -844,7 +844,7 @@ const OfficialContact = () => {
     {
       id: 1,
       cp: {
-        name: "Rudi Tabuti",
+        name: "Sendi Chicks",
         job_title: {
           name: "Lurah",
         },
