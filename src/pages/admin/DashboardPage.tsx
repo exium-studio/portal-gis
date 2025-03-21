@@ -387,6 +387,8 @@ const Announcement = ({ ...props }: StackProps) => {
       },
     });
 
+    console.log(formik.values.startDateTime);
+
     // Utils
     const { open, onOpen, onClose } = useDisclosure();
     useBackOnClose(`create-announcement`, open, onOpen, onClose);
