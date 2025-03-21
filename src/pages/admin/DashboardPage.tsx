@@ -3,7 +3,6 @@ import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
 import ConfirmationDisclosure from "@/components/ui-custom/ConfirmationDisclosure";
 import DatePickerInput from "@/components/ui-custom/DatePickerInput";
-import DateRangePickerInput from "@/components/ui-custom/DateRangePickerInput";
 import {
   DisclosureBody,
   DisclosureContent,
@@ -442,14 +441,7 @@ const Announcement = ({ ...props }: StackProps) => {
                   </FieldErrorText>
                 </Field>
 
-                <DateRangePickerInput
-                  onConfirm={(input) => {
-                    formik.setFieldValue("startDate", input);
-                  }}
-                  inputValue={formik.values.startDate}
-                />
-
-                {/* <Field
+                <Field
                   mt={4}
                   invalid={
                     !!(
@@ -477,7 +469,7 @@ const Announcement = ({ ...props }: StackProps) => {
                     />
                   </SimpleGrid>
                   <FieldErrorText>{l.requried_date_time}</FieldErrorText>
-                </Field> */}
+                </Field>
 
                 <Field
                   mt={4}
