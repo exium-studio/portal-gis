@@ -360,7 +360,7 @@ const Announcement = ({ ...props }: StackProps) => {
         title: "",
         description: "",
         file: undefined as any,
-        startDateTime: "2025-03-21T00:00:00.000Z",
+        startDateTime: undefined as any,
         endDateTime: undefined as any,
 
         startDate: undefined as any,
@@ -448,63 +448,36 @@ const Announcement = ({ ...props }: StackProps) => {
                 </Field>
 
                 <Field mt={4} invalid={!!formik.errors.startDateTime}>
-                  <FieldLabel>{l.published_date}</FieldLabel>
+                  <FieldLabel>
+                    {l.published_date}
+                    <RequiredIndicator />
+                  </FieldLabel>
                   <DateTimePicker
                     onChangeSetter={(input) => {
                       formik.setFieldValue("startDateTime", input);
                     }}
                     inputValue={formik.values.startDateTime}
                   />
-                  {/* <SimpleGrid columns={2} w={"full"} gap={2}>
-                    <DatePickerInput
-                      id="published_date"
-                      onConfirm={(input) => {
-                        formik.setFieldValue("startDate", input);
-                      }}
-                      inputValue={formik.values.startDate}
-                    />
-
-                    <TimePickerInput
-                      id="published_time"
-                      onConfirm={(input) => {
-                        formik.setFieldValue("startTime", input);
-                      }}
-                      inputValue={formik.values.startTime}
-                    />
-                  </SimpleGrid> */}
                   <FieldErrorText>
-                    {formik.values.startDateTime as string}
+                    {formik.errors.startDateTime as string}
                   </FieldErrorText>
                 </Field>
 
-                {/* <Field
-                  mt={4}
-                  invalid={
-                    !!(
-                      (formik.values.endDate && !formik.values.endTime) ||
-                      (!formik.values.endDate && formik.values.endTime)
-                    )
-                  }
-                >
-                  <FieldLabel>{l.expired_date}</FieldLabel>
-                  <SimpleGrid columns={2} w={"full"} gap={2}>
-                    <DatePickerInput
-                      id="expired_date"
-                      onConfirm={(input) => {
-                        formik.setFieldValue("endDate", input);
-                      }}
-                      inputValue={formik.values.endDate}
-                    />
-                    <TimePickerInput
-                      id="expired_time"
-                      onConfirm={(input) => {
-                        formik.setFieldValue("endTime", input);
-                      }}
-                      inputValue={formik.values.endTime}
-                    />
-                  </SimpleGrid>
-                  <FieldErrorText>{l.requried_date_time}</FieldErrorText>
-                </Field> */}
+                <Field mt={4} invalid={!!formik.errors.endDateTime}>
+                  <FieldLabel>
+                    {l.expired_date}
+                    <RequiredIndicator />
+                  </FieldLabel>
+                  <DateTimePicker
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("endDateTime", input);
+                    }}
+                    inputValue={formik.values.endDateTime}
+                  />
+                  <FieldErrorText>
+                    {formik.errors.endDateTime as string}
+                  </FieldErrorText>
+                </Field>
               </form>
             </DisclosureBody>
 
