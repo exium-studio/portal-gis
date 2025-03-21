@@ -59,6 +59,14 @@ export const settings_navs = {
 };
 
 // UI
+export const cost_of_living = {
+  id: "Biaya hidup",
+  en: "Cost of living",
+};
+export const population_density = {
+  id: "Kepadatan penduduk",
+  en: "Population density",
+};
 export const requried_date_time = {
   id: "Harap isi tanggal dan waktu, karena ini satu kesatuan.",
   en: "Please fill in the date and time, as they are one entity.",

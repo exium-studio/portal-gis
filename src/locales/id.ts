@@ -27,6 +27,7 @@ const translations = {
   "chrome_permissions_settings_link": "Pengaturan → Privasi & Keamanan → Pengaturan Situs → ",
   "close": "Tutup",
   "confirm": "Konfirmasi",
+  "cost_of_living": "Biaya hidup",
   "create": "Buat",
   "current": "Saat ini",
   "dark_mode_settings_title": "Mode Gelap",
@@ -208,6 +209,7 @@ const translations = {
     "location": "Tes Kamera",
     "notifications": "Tes Kamera"
   },
+  "population_density": "Kepadatan penduduk",
   "published_date": "Tanggal publikasi",
   "regional_settings_helper_text": "Pengaturan bahasa & wilayah ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
   "religion": "Agama",

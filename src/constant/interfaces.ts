@@ -16,6 +16,12 @@ import {
   Type__TimeRange,
 } from "./types";
 
+// Gens
+export interface Interface__Gens {
+  id: number;
+  label: string;
+}
+
 // Routes
 export interface Interface__Route {
   path: string;

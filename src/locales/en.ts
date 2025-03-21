@@ -27,6 +27,7 @@ const translations = {
   "chrome_permissions_settings_link": "Settings → Privacy & Security → Site Settings → ",
   "close": "Close",
   "confirm": "Confirm",
+  "cost_of_living": "Cost of living",
   "create": "Create",
   "current": "Current",
   "dark_mode_settings_title": "Dark Mode",
@@ -208,6 +209,7 @@ const translations = {
     "location": "Camera Test",
     "notifications": "Camera Test"
   },
+  "population_density": "Population density",
   "published_date": "Date published",
   "regional_settings_helper_text": "These language & region settings are stored locally on your device and will not be synced with your account.",
   "religion": "Religion",
