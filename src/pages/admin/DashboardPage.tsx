@@ -370,7 +370,7 @@ const Announcement = ({ ...props }: StackProps) => {
           .test(
             "is-less",
             interpolate(l.must_be_before, {
-              a: l.start_date,
+              a: l.published_date,
               b: l.end_date,
             }),
             function (value) {
@@ -549,7 +549,7 @@ const Announcement = ({ ...props }: StackProps) => {
           .test(
             "is-less",
             interpolate(l.must_be_before, {
-              a: l.start_date,
+              a: l.published_date,
               b: l.end_date,
             }),
             function (value) {
@@ -567,8 +567,8 @@ const Announcement = ({ ...props }: StackProps) => {
           .test(
             "is-greater",
             interpolate(l.must_be_after, {
-              a: l.published_date,
-              b: l.end_date,
+              a: l.end_date,
+              b: l.published_date,
             }),
             function (value) {
               const { startDateTime } = this.parent;
