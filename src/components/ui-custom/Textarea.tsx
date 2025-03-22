@@ -49,7 +49,7 @@ export default function Textarea({
       ref={textareaRef}
       minH={"80px"}
       name={name}
-      borderColor={fc?.invalid || invalid ? "border.error" : "border.muted"}
+      borderColor={invalid ?? fc?.invalid ? "border.error" : "border.muted"}
       fontWeight={"medium"}
       outline={"none !important"}
       _focus={{ borderColor: themeConfig.primaryColor }}
