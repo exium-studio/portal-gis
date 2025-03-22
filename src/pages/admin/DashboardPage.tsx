@@ -768,13 +768,11 @@ const Announcement = ({ ...props }: StackProps) => {
                   }
                 >
                   <HStack>
-                    <CContainer gap={1} truncate>
-                      <Text fontWeight={"medium"} truncate>
-                        {item.title}
-                      </Text>
-                      <Text color={"fg.muted"} truncate>
-                        {item.description}
-                      </Text>
+                    <CContainer gap={1}>
+                      <Text fontWeight={"medium"}>{item.title}</Text>
+
+                      <Text color={"fg.muted"}>{item.description}</Text>
+
                       <HelperText>
                         {l.last_updated} {formatDate(item.updated_at)}
                       </HelperText>
@@ -783,6 +781,79 @@ const Announcement = ({ ...props }: StackProps) => {
                     <AnnouncementOptions item={item} />
                   </HStack>
                 </CContainer>
+              );
+            })}
+          </CContainer>
+        </CContainer>
+      </CContainer>
+    </ItemContainer>
+  );
+};
+
+const VisionMission = ({ ...props }: StackProps) => {
+  // Contexts
+  const { l } = useLang();
+
+  // States, Refs
+  const data = {
+    name: "Desa Makmur Jaya",
+    vision:
+      "Mewujudkan Desa Makmur Jaya yang Mandiri, Sejahtera, dan Berbudaya Berbasis Kearifan Lokal.",
+    mission: [
+      "Meningkatkan kesejahteraan masyarakat melalui pengembangan ekonomi berbasis pertanian, peternakan, dan UMKM.",
+      "Meningkatkan kualitas sumber daya manusia melalui pendidikan, pelatihan, dan pemberdayaan masyarakat.",
+      "Meningkatkan infrastruktur desa guna menunjang aktivitas ekonomi dan kesejahteraan masyarakat.",
+      "Mewujudkan tata kelola pemerintahan desa yang transparan, akuntabel, dan partisipatif.",
+      "Melestarikan budaya dan kearifan lokal sebagai identitas desa yang berdaya saing.",
+      "Mengembangkan potensi pariwisata desa berbasis alam dan budaya untuk meningkatkan pendapatan desa.",
+      "Meningkatkan kualitas layanan kesehatan dan kebersihan lingkungan untuk masyarakat yang lebih sehat.",
+    ],
+  };
+
+  console.log("Visi Misi", data);
+
+  return (
+    <ItemContainer {...props}>
+      <ItemHeaderContainer>
+        <HStack>
+          <IconSparkles size={20} />
+          <ItemHeaderTitle>
+            {l.vision} {l.and} {l.mission.toLowerCase()}
+          </ItemHeaderTitle>
+        </HStack>
+      </ItemHeaderContainer>
+
+      <CContainer pb={2} h={"500px"}>
+        <CContainer pt={4} pb={2} overflowY={"auto"} className="scrollY" px={3}>
+          <CContainer px={1}>
+            <Text color={"fg.muted"} mb={1}>
+              {l.vision}
+            </Text>
+            <Text fontWeight={"medium"}>{data.vision}</Text>
+
+            <Text color={"fg.muted"} mt={4} mb={1}>
+              {l.mission}
+            </Text>
+          </CContainer>
+
+          <CContainer as={"ol"} gap={4}>
+            {data.mission.map((item, i) => {
+              return (
+                <HStack
+                  key={i}
+                  pl={1}
+                  fontWeight={"medium"}
+                  align={"start"}
+                  borderBottom={
+                    i !== data.mission.length - 1
+                      ? "1px solid {colors.border.muted}"
+                      : ""
+                  }
+                  pb={i !== data.mission.length - 1 ? 4 : 0}
+                >
+                  <Text>{i + 1}</Text>
+                  <Text>{item}</Text>
+                </HStack>
               );
             })}
           </CContainer>
@@ -886,32 +957,6 @@ const OfficialContact = ({ ...props }: StackProps) => {
 
   console.log("Official contat", data);
 
-  // Components
-  const Address = ({ item }: any) => {
-    return (
-      <PopoverRoot>
-        <PopoverTrigger>
-          <HStack mb={4} align={"start"} cursor={"pointer"}>
-            <Icon color="fg.muted">
-              <IconMapPin stroke={1.5} size={18} />
-            </Icon>
-            <Text color="fg.muted" truncate>
-              {item.address}
-            </Text>
-          </HStack>
-        </PopoverTrigger>
-
-        <Portal>
-          <PopoverPositioner>
-            <PopoverContent mt={-4}>
-              <Text>{item.address}</Text>
-            </PopoverContent>
-          </PopoverPositioner>
-        </Portal>
-      </PopoverRoot>
-    );
-  };
-
   return (
     <ItemContainer {...props}>
       <ItemHeaderContainer>
@@ -940,8 +985,17 @@ const OfficialContact = ({ ...props }: StackProps) => {
                   <Text fontSize={"md"} fontWeight={"bold"} mb={2}>
                     {item.title}
                   </Text>
+
                   <Text mb={2}>{item.description}</Text>
-                  <Address item={item} />
+
+                  <HStack mb={4} align={"start"} cursor={"pointer"}>
+                    <Icon color="fg.muted">
+                      <IconMapPin stroke={1.5} size={18} />
+                    </Icon>
+                    <Text color="fg.muted" truncate>
+                      {item.address}
+                    </Text>
+                  </HStack>
 
                   <HStack gap={4}>
                     <Avatar src={item.avatar} />
@@ -976,79 +1030,6 @@ const OfficialContact = ({ ...props }: StackProps) => {
                     </HStack>
                   </HStack>
                 </CContainer>
-              );
-            })}
-          </CContainer>
-        </CContainer>
-      </CContainer>
-    </ItemContainer>
-  );
-};
-
-const VisionMission = ({ ...props }: StackProps) => {
-  // Contexts
-  const { l } = useLang();
-
-  // States, Refs
-  const data = {
-    name: "Desa Makmur Jaya",
-    vision:
-      "Mewujudkan Desa Makmur Jaya yang Mandiri, Sejahtera, dan Berbudaya Berbasis Kearifan Lokal.",
-    mission: [
-      "Meningkatkan kesejahteraan masyarakat melalui pengembangan ekonomi berbasis pertanian, peternakan, dan UMKM.",
-      "Meningkatkan kualitas sumber daya manusia melalui pendidikan, pelatihan, dan pemberdayaan masyarakat.",
-      "Meningkatkan infrastruktur desa guna menunjang aktivitas ekonomi dan kesejahteraan masyarakat.",
-      "Mewujudkan tata kelola pemerintahan desa yang transparan, akuntabel, dan partisipatif.",
-      "Melestarikan budaya dan kearifan lokal sebagai identitas desa yang berdaya saing.",
-      "Mengembangkan potensi pariwisata desa berbasis alam dan budaya untuk meningkatkan pendapatan desa.",
-      "Meningkatkan kualitas layanan kesehatan dan kebersihan lingkungan untuk masyarakat yang lebih sehat.",
-    ],
-  };
-
-  console.log("Visi Misi", data);
-
-  return (
-    <ItemContainer {...props}>
-      <ItemHeaderContainer>
-        <HStack>
-          <IconSparkles size={20} />
-          <ItemHeaderTitle>
-            {l.vision} {l.and} {l.mission.toLowerCase()}
-          </ItemHeaderTitle>
-        </HStack>
-      </ItemHeaderContainer>
-
-      <CContainer pb={2} h={"500px"}>
-        <CContainer pt={4} pb={2} overflowY={"auto"} className="scrollY" px={3}>
-          <CContainer px={1}>
-            <Text color={"fg.muted"} mb={1}>
-              {l.vision}
-            </Text>
-            <Text fontWeight={"medium"}>{data.vision}</Text>
-
-            <Text color={"fg.muted"} mt={4} mb={1}>
-              {l.mission}
-            </Text>
-          </CContainer>
-
-          <CContainer as={"ol"} gap={4}>
-            {data.mission.map((item, i) => {
-              return (
-                <HStack
-                  key={i}
-                  pl={1}
-                  fontWeight={"medium"}
-                  align={"start"}
-                  borderBottom={
-                    i !== data.mission.length - 1
-                      ? "1px solid {colors.border.muted}"
-                      : ""
-                  }
-                  pb={i !== data.mission.length - 1 ? 4 : 0}
-                >
-                  <Text>{i + 1}</Text>
-                  <Text>{item}</Text>
-                </HStack>
               );
             })}
           </CContainer>
