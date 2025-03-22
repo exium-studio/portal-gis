@@ -79,7 +79,7 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
             overflowY={"auto"}
             maxH={"full"}
           >
-            <CContainer overflowY={"auto"} px={2} gap={4}>
+            <CContainer overflowY={"auto"} className="scrollY" px={2} gap={4}>
               {SETTINGS_NAVS.map((item, i) => {
                 return (
                   <CContainer key={i}>
@@ -130,6 +130,7 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
         display={iss && settingsRoute ? "none" : "flex"}
         overflowY={"auto"}
         maxH={"full"}
+        className="scrollY"
       >
         {children}
       </PageContainer>
