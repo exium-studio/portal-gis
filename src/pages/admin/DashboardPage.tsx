@@ -421,8 +421,6 @@ const Announcement = ({ ...props }: StackProps) => {
     const { open, onOpen, onClose } = useDisclosure();
     useBackOnClose(`create-announcement`, open, onOpen, onClose);
 
-    console.log(formik.values);
-
     return (
       <>
         <ItemButton iconButton onClick={onOpen} borderRadius={"full"}>
