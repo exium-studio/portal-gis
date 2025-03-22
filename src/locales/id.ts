@@ -68,6 +68,7 @@ const translations = {
   "display_settings_helper_text": "Pengaturan tampilan ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
   "edge_permissions_settings_link": "Pengaturan → Cookie dan izin situs → ",
   "empty": "Kosong",
+  "end_date": "Tanggal berakhir",
   "error_400_toast": {
     "title": "Permintaan tidak valid",
     "description": "Server tidak dapat memproses permintaan karena kesalahan klien."
@@ -88,7 +89,6 @@ const translations = {
     "title": "Gangguan koneksi ke server",
     "description": "Tidak dapat terhubung ke server. Coba lagi nanti."
   },
-  "expired_date": "Tanggal kedaluwarsa",
   "firefox_permissions_settings_link": "Preferensi → Privasi & Keamanan → Izin → ",
   "forbidden_feedback": {
     "title": "Tidak ada akses",
@@ -162,6 +162,8 @@ const translations = {
   "missing_page": "Halaman yang Anda cari tidak tersedia. Kemungkinan ada URL yang keliru atau halaman ini sudah tidak tersedia.",
   "mission": "Misi",
   "month": "Bulan",
+  "must_be_after": "${a} harus setelah ${b}",
+  "must_be_before": "${a} harus sebelum ${b}",
   "navs": {
     "dashboard": "Beranda",
     "administration": "Administrasi",
@@ -247,6 +249,7 @@ const translations = {
   },
   "show": "Tampilkan",
   "shrink": "Turun ${value} dari tahun lalu",
+  "start_date": "Tanggal mulai",
   "theme_settings_title": "Tema",
   "this_month": "Bulan ini",
   "this_week": "Minggu ini",

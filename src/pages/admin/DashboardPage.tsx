@@ -362,26 +362,55 @@ const Announcement = ({ ...props }: StackProps) => {
         file: undefined as any,
         startDateTime: undefined as any,
         endDateTime: undefined as any,
-
-        startDate: undefined as any,
-        endDate: undefined as any,
-        startTime: undefined as any,
-        endTime: undefined as any,
       },
       validationSchema: yup.object().shape({
         title: yup.string().required(l.required_form),
         description: yup.string().required(l.required_form),
         file: fileValidation({ allowedExtensions: ["pdf"] }),
-        startDateTime: yup.string().required(l.required_form),
-        endDateTime: yup.string().required(l.required_form),
+        startDateTime: yup
+          .string()
+          .required(l.required_form)
+          .test(
+            "is-less",
+            interpolate(l.must_be_before, {
+              a: l.start_date,
+              b: l.end_date,
+            }),
+            function (value) {
+              const { endDateTime } = this.parent;
+              return (
+                !endDateTime ||
+                !value ||
+                new Date(value) < new Date(endDateTime)
+              );
+            }
+          ),
+        endDateTime: yup
+          .string()
+          .required(l.required_form)
+          .test(
+            "is-greater",
+            interpolate(l.must_be_after, {
+              a: l.published_date,
+              b: l.end_date,
+            }),
+            function (value) {
+              const { startDateTime } = this.parent;
+              return (
+                !startDateTime ||
+                !value ||
+                new Date(value) > new Date(startDateTime)
+              );
+            }
+          ),
       }),
       onSubmit: (values) => {
         const payload = new FormData();
         payload.append("title", values.title);
         payload.append("description", values.description);
         payload.append("file", values.file);
-        payload.append("startDateTime", values.startDate);
-        payload.append("endDateTime", values.endDate);
+        payload.append("startDateTime", values.startDateTime);
+        payload.append("endDateTime", values.endDateTime);
 
         console.log(payload);
       },
@@ -467,7 +496,7 @@ const Announcement = ({ ...props }: StackProps) => {
 
                 <Field mt={4} invalid={!!formik.errors.endDateTime}>
                   <FieldLabel>
-                    {l.expired_date}
+                    {l.end_date}
                     <RequiredIndicator />
                   </FieldLabel>
                   <DateTimePicker

@@ -68,6 +68,7 @@ const translations = {
   "display_settings_helper_text": "These display settings are stored locally on your device and will not be synced with your account.",
   "edge_permissions_settings_link": "Settings → Cookies and site permissions → ",
   "empty": "Empty",
+  "end_date": "End date",
   "error_400_toast": {
     "title": "Bad request",
     "description": "The server could not process the request due to client error."
@@ -88,7 +89,6 @@ const translations = {
     "title": "Server connection problem",
     "description": "Unable to connect to the server. Try again later."
   },
-  "expired_date": "Expired date",
   "firefox_permissions_settings_link": "Preferences → Privacy & Security → Permissions → ",
   "forbidden_feedback": {
     "title": "No Access",
@@ -162,6 +162,8 @@ const translations = {
   "missing_page": "The page you are looking for is not available. There may be an incorrect URL or the page is no longer available.",
   "mission": "Mission",
   "month": "Month",
+  "must_be_after": "${a} must be after ${b}",
+  "must_be_before": "${a} must be before ${b}",
   "navs": {
     "dashboard": "Home",
     "administration": "Administration",
@@ -247,6 +249,7 @@ const translations = {
   },
   "show": "Show",
   "shrink": "Down ${value} from last year",
+  "start_date": "Start date",
   "theme_settings_title": "Theme",
   "this_month": "This month",
   "this_week": "This week",

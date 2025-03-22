@@ -59,6 +59,18 @@ export const settings_navs = {
 };
 
 // UI
+export const start_date = {
+  id: "Tanggal mulai",
+  en: "Start date",
+};
+export const must_be_after = {
+  id: "${a} harus setelah ${b}",
+  en: "${a} must be after ${b}",
+};
+export const must_be_before = {
+  id: "${a} harus sebelum ${b}",
+  en: "${a} must be before ${b}",
+};
 export const layout_menu_helper = {
   id: "Layout ini hanya berlaku di navigasi utama.",
   en: "This layout only applies to the main navigation.",
@@ -83,9 +95,9 @@ export const published_date = {
   id: "Tanggal publikasi",
   en: "Date published",
 };
-export const expired_date = {
-  id: "Tanggal kedaluwarsa",
-  en: "Expired date",
+export const end_date = {
+  id: "Tanggal berakhir",
+  en: "End date",
 };
 export const last_updated = {
   id: "Terakhir diperbarui",
