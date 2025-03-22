@@ -239,6 +239,7 @@ const NavContainer = ({
             position={"relative"}
             flex={1}
             overflowY={"auto"}
+            className="scrollY"
             overflowX={"clip"}
             bg={"bgContent"}
             w={layout.id === 1 && !iss ? "50%" : ""}
