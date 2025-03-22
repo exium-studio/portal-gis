@@ -2,7 +2,6 @@ import BackButton from "@/components/ui-custom/BackButton";
 import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
 import ConfirmationDisclosure from "@/components/ui-custom/ConfirmationDisclosure";
-import DatePickerInput from "@/components/ui-custom/DatePickerInput";
 import DateTimePicker from "@/components/ui-custom/DateTimePicker";
 import {
   DisclosureBody,
@@ -20,7 +19,6 @@ import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
 import RequiredIndicator from "@/components/ui-custom/RequiredIndicator";
 import StringInput from "@/components/ui-custom/StringInput";
 import Textarea from "@/components/ui-custom/Textarea";
-import TimePickerInput from "@/components/ui-custom/TimePickerInput";
 import { Avatar } from "@/components/ui/avatar";
 import { Field } from "@/components/ui/field";
 import {
@@ -59,7 +57,6 @@ import {
   MenuPositioner,
   PopoverPositioner,
   Portal,
-  SimpleGrid,
   StackProps,
   Text,
   useDisclosure,
@@ -391,8 +388,8 @@ const Announcement = ({ ...props }: StackProps) => {
           .test(
             "is-greater",
             interpolate(l.must_be_after, {
-              a: l.published_date,
-              b: l.end_date,
+              a: l.end_date,
+              b: l.published_date,
             }),
             function (value) {
               const { startDateTime } = this.parent;
@@ -405,6 +402,8 @@ const Announcement = ({ ...props }: StackProps) => {
           ),
       }),
       onSubmit: (values) => {
+        console.log(values);
+
         const payload = new FormData();
         payload.append("title", values.title);
         payload.append("description", values.description);
@@ -416,7 +415,7 @@ const Announcement = ({ ...props }: StackProps) => {
       },
     });
 
-    console.log(formik.values.startDateTime);
+    // console.log(formik.values);
 
     // Utils
     const { open, onOpen, onClose } = useDisclosure();
@@ -474,7 +473,7 @@ const Announcement = ({ ...props }: StackProps) => {
                   <FieldLabel>Attachment</FieldLabel>
                   <FileInput maxFiles={3} />
                   <FieldErrorText>
-                    {formik.errors.endDate as string}
+                    {formik.errors.file as string}
                   </FieldErrorText>
                 </Field>
 
@@ -484,6 +483,7 @@ const Announcement = ({ ...props }: StackProps) => {
                     <RequiredIndicator />
                   </FieldLabel>
                   <DateTimePicker
+                    id="start_datetime"
                     onChangeSetter={(input) => {
                       formik.setFieldValue("startDateTime", input);
                     }}
@@ -500,6 +500,7 @@ const Announcement = ({ ...props }: StackProps) => {
                     <RequiredIndicator />
                   </FieldLabel>
                   <DateTimePicker
+                    id="end_datetime"
                     onChangeSetter={(input) => {
                       formik.setFieldValue("endDateTime", input);
                     }}
@@ -535,15 +536,49 @@ const Announcement = ({ ...props }: StackProps) => {
         title: item.title,
         description: item.description,
         file: item.file,
-        startDate: undefined as any,
-        endDate: undefined as any,
-        startTime: undefined as any,
-        endTime: undefined as any,
+        startDateTime: item.start_date_time,
+        endDateTime: item.end_date_time,
       },
       validationSchema: yup.object().shape({
         title: yup.string().required(l.required_form),
         description: yup.string().required(l.required_form),
         file: fileValidation({ allowedExtensions: ["pdf"] }),
+        startDateTime: yup
+          .string()
+          .required(l.required_form)
+          .test(
+            "is-less",
+            interpolate(l.must_be_before, {
+              a: l.start_date,
+              b: l.end_date,
+            }),
+            function (value) {
+              const { endDateTime } = this.parent;
+              return (
+                !endDateTime ||
+                !value ||
+                new Date(value) < new Date(endDateTime)
+              );
+            }
+          ),
+        endDateTime: yup
+          .string()
+          .required(l.required_form)
+          .test(
+            "is-greater",
+            interpolate(l.must_be_after, {
+              a: l.published_date,
+              b: l.end_date,
+            }),
+            function (value) {
+              const { startDateTime } = this.parent;
+              return (
+                !startDateTime ||
+                !value ||
+                new Date(value) > new Date(startDateTime)
+              );
+            }
+          ),
       }),
       onSubmit: (values) => {
         console.log(values);
@@ -607,66 +642,42 @@ const Announcement = ({ ...props }: StackProps) => {
                   <FieldLabel>Attachment</FieldLabel>
                   <FileInput maxFiles={3} />
                   <FieldErrorText>
-                    {formik.errors.endDate as string}
+                    {formik.errors.file as string}
                   </FieldErrorText>
                 </Field>
 
-                <Field
-                  mt={4}
-                  invalid={
-                    !!(
-                      (formik.values.startDate && !formik.values.startTime) ||
-                      (!formik.values.startDate && formik.values.startTime)
-                    )
-                  }
-                >
-                  <FieldLabel>{l.published_date}</FieldLabel>
-                  <SimpleGrid columns={2} w={"full"} gap={2}>
-                    <DatePickerInput
-                      id="published_date"
-                      onConfirm={(input) => {
-                        formik.setFieldValue("startDate", input);
-                      }}
-                      inputValue={formik.values.startDate}
-                    />
-                    <TimePickerInput
-                      id="published_time"
-                      onConfirm={(input) => {
-                        formik.setFieldValue("startTime", input);
-                      }}
-                      inputValue={formik.values.startTime}
-                    />
-                  </SimpleGrid>
-                  <FieldErrorText>{l.requried_date_time}</FieldErrorText>
+                <Field mt={4} invalid={!!formik.errors.startDateTime}>
+                  <FieldLabel>
+                    {l.published_date}
+                    <RequiredIndicator />
+                  </FieldLabel>
+                  <DateTimePicker
+                    id="start_datetime"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("startDateTime", input);
+                    }}
+                    inputValue={formik.values.startDateTime}
+                  />
+                  <FieldErrorText>
+                    {formik.errors.startDateTime as string}
+                  </FieldErrorText>
                 </Field>
 
-                <Field
-                  mt={4}
-                  invalid={
-                    !!(
-                      (formik.values.endDate && !formik.values.endTime) ||
-                      (!formik.values.endDate && formik.values.endTime)
-                    )
-                  }
-                >
-                  <FieldLabel>{l.expired_date}</FieldLabel>
-                  <SimpleGrid columns={2} w={"full"} gap={2}>
-                    <DatePickerInput
-                      id="expired_date"
-                      onConfirm={(input) => {
-                        formik.setFieldValue("endDate", input);
-                      }}
-                      inputValue={formik.values.endDate}
-                    />
-                    <TimePickerInput
-                      id="expired_time"
-                      onConfirm={(input) => {
-                        formik.setFieldValue("endTime", input);
-                      }}
-                      inputValue={formik.values.endTime}
-                    />
-                  </SimpleGrid>
-                  <FieldErrorText>{l.requried_date_time}</FieldErrorText>
+                <Field mt={4} invalid={!!formik.errors.endDateTime}>
+                  <FieldLabel>
+                    {l.end_date}
+                    <RequiredIndicator />
+                  </FieldLabel>
+                  <DateTimePicker
+                    id="end_datetime"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("endDateTime", input);
+                    }}
+                    inputValue={formik.values.endDateTime}
+                  />
+                  <FieldErrorText>
+                    {formik.errors.endDateTime as string}
+                  </FieldErrorText>
                 </Field>
               </form>
             </DisclosureBody>
