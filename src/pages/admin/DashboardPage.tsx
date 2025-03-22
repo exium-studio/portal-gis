@@ -66,7 +66,7 @@ import {
   IconBrandGoogleMaps,
   IconBrandWhatsapp,
   IconCoins,
-  IconDots,
+  IconDotsVertical,
   IconEdit,
   IconFriends,
   IconMapPin,
@@ -709,7 +709,7 @@ const Announcement = ({ ...props }: StackProps) => {
             borderRadius={"full"}
             variant={"ghost"}
           >
-            <IconDots />
+            <IconDotsVertical />
           </BButton>
         </MenuTrigger>
 
@@ -758,7 +758,7 @@ const Announcement = ({ ...props }: StackProps) => {
             {data.map((item, i) => {
               return (
                 <CContainer
-                  px={2}
+                  pl={2}
                   py={4}
                   flex={1}
                   borderBottom={
@@ -771,7 +771,7 @@ const Announcement = ({ ...props }: StackProps) => {
                     <CContainer gap={1}>
                       <Text fontWeight={"medium"}>{item.title}</Text>
 
-                      <Text color={"fg.muted"}>{item.description}</Text>
+                      <Text>{item.description}</Text>
 
                       <HelperText>
                         {l.last_updated} {formatDate(item.updated_at)}
@@ -825,7 +825,7 @@ const VisionMission = ({ ...props }: StackProps) => {
 
       <CContainer pb={2} h={"500px"}>
         <CContainer pt={4} pb={2} overflowY={"auto"} className="scrollY" px={3}>
-          <CContainer px={1}>
+          <CContainer px={2}>
             <Text color={"fg.muted"} mb={1}>
               {l.vision}
             </Text>
@@ -841,7 +841,7 @@ const VisionMission = ({ ...props }: StackProps) => {
               return (
                 <HStack
                   key={i}
-                  pl={1}
+                  px={2}
                   fontWeight={"medium"}
                   align={"start"}
                   borderBottom={
