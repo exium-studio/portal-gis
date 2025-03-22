@@ -1,3 +1,0 @@
-const FEATURES = [];
-
-export { FEATURES };
