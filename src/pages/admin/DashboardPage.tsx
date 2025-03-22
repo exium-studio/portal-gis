@@ -740,29 +740,6 @@ const Announcement = ({ ...props }: StackProps) => {
       </MenuRoot>
     );
   };
-  const AnnouncementItem = ({ item }: any) => {
-    return (
-      <CContainer px={1}>
-        <CContainer gap={1} p={3} borderRadius={themeConfig.radii.component}>
-          <HStack>
-            <CContainer gap={1} truncate>
-              <Text fontWeight={"medium"} truncate>
-                {item.title}
-              </Text>
-              <Text color={"fg.muted"} truncate>
-                {item.description}
-              </Text>
-              <HelperText>
-                {l.last_updated} {formatDate(item.updated_at)}
-              </HelperText>
-            </CContainer>
-
-            <AnnouncementOptions item={item} />
-          </HStack>
-        </CContainer>
-      </CContainer>
-    );
-  };
 
   return (
     <ItemContainer {...props}>
@@ -776,10 +753,39 @@ const Announcement = ({ ...props }: StackProps) => {
       </ItemHeaderContainer>
 
       <CContainer pb={2} h={"500px"}>
-        <CContainer pt={2} overflowY={"auto"} className="scrollY">
-          {data.map((item, i) => {
-            return <AnnouncementItem key={i} item={item} />;
-          })}
+        <CContainer overflowY={"auto"} className="scrollY">
+          <CContainer px={3}>
+            {data.map((item, i) => {
+              return (
+                <CContainer
+                  px={2}
+                  py={4}
+                  flex={1}
+                  borderBottom={
+                    i !== data.length - 1
+                      ? "1px solid {colors.border.muted}"
+                      : ""
+                  }
+                >
+                  <HStack>
+                    <CContainer gap={1} truncate>
+                      <Text fontWeight={"medium"} truncate>
+                        {item.title}
+                      </Text>
+                      <Text color={"fg.muted"} truncate>
+                        {item.description}
+                      </Text>
+                      <HelperText>
+                        {l.last_updated} {formatDate(item.updated_at)}
+                      </HelperText>
+                    </CContainer>
+
+                    <AnnouncementOptions item={item} />
+                  </HStack>
+                </CContainer>
+              );
+            })}
+          </CContainer>
         </CContainer>
       </CContainer>
     </ItemContainer>
@@ -907,7 +913,7 @@ const OfficialContact = ({ ...props }: StackProps) => {
   };
 
   return (
-    <ItemContainer overflowY={"auto"} {...props}>
+    <ItemContainer {...props}>
       <ItemHeaderContainer>
         <HStack>
           <IconAddressBook />
