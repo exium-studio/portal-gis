@@ -1,4 +1,4 @@
-import { LAYOUT_OPTIONS } from "@/constant/layoutOptions";
+import { LAYOUT_OPTIONS } from "@/constants/layoutOptions";
 import useLayout from "@/context/useLayout";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import {

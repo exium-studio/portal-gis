@@ -1,5 +1,5 @@
-import { Interface__Gens } from "@/constant/interfaces";
-import { LAYOUT_OPTIONS } from "@/constant/layoutOptions";
+import { Interface__Gens } from "@/constants/interfaces";
+import { LAYOUT_OPTIONS } from "@/constants/layoutOptions";
 import { create } from "zustand";
 
 const STORAGE_KEY = "layout";

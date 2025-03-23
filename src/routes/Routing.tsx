@@ -3,7 +3,7 @@ import {
   PRIVATE_ROUTES,
   PRIVATE_ROUTES_NO_MAPS,
   ROUTES,
-} from "@/constant/routes";
+} from "@/constants/routes";
 import useLang from "@/context/useLang";
 import MaintenancePage from "@/pages/_error/MaintenancePage";
 import MissingPage from "@/pages/_error/MissingPage";

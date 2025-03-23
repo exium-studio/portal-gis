@@ -1,4 +1,4 @@
-import { Interface__Gens } from "@/constant/interfaces";
+import { Interface__Gens } from "@/constants/interfaces";
 import { Circle, HStack, StackProps, Text, TextProps } from "@chakra-ui/react";
 
 interface Props extends StackProps {
