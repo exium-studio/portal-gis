@@ -38,6 +38,7 @@ import CostOfLivingStatus from "@/components/widget/CostOfLivingStatus";
 import ItemButton from "@/components/widget/ItemButton";
 import PageContainer from "@/components/widget/PageContainer";
 import PopulationDensityStatus from "@/components/widget/PopulationDensityStatus";
+import { MONTHS } from "@/constants/months";
 import { IMAGES_PATH } from "@/constants/paths";
 import {
   PRESET_LINE_CHART,
@@ -1065,71 +1066,63 @@ const OfficialContact = ({ ...props }: StackProps) => {
 
 const IncomeExpenses = ({ ...props }: StackProps) => {
   // Contexts
-  const { l } = useLang();
+  const { l, lang } = useLang();
 
   // States, Refs
   const data = [
     {
-      month: "Jan",
-      income: 10751173,
-      expense: 13453102,
+      expense: 10751173,
+      income: 13453102,
     },
     {
-      month: "Feb",
-      income: 11334632,
-      expense: 14941915,
+      expense: 11334632,
+      income: 14941915,
     },
     {
-      month: "Mar",
-      income: 9330103,
-      expense: 13471852,
+      expense: 9330103,
+      income: 13471852,
     },
     {
-      month: "Apr",
-      income: 13340012,
-      expense: 16773920,
+      expense: 13340012,
+      income: 16773920,
     },
     {
-      month: "May",
-      income: 12199410,
-      expense: 17338526,
+      expense: 12199410,
+      income: 17338526,
     },
     {
-      month: "Jun",
-      income: 12110341,
-      expense: 18019161,
+      expense: 12110341,
+      income: 18019161,
     },
     {
-      month: "Jul",
-      income: 16800661,
-      expense: 19679081,
+      expense: 16800661,
+      income: 19679081,
     },
     {
-      month: "Aug",
-      income: 14323459,
-      expense: 19680479,
+      expense: 14323459,
+      income: 19680479,
     },
     {
-      month: "Sep",
-      income: 16634639,
-      expense: 21179891,
+      expense: 16634639,
+      income: 21179891,
     },
     {
-      month: "Oct",
-      income: 17582756,
-      expense: 21632541,
+      expense: 17582756,
+      income: 21632541,
     },
     {
-      month: "Nov",
-      income: 18154105,
-      expense: 20006748,
+      expense: 18154105,
+      income: 20006748,
     },
     {
-      month: "Dec",
-      income: 21361102,
-      expense: 22008639,
+      expense: 21361102,
+      income: 22008639,
     },
   ];
+  const finalData = data.map((item: any, i: number) => ({
+    ...item,
+    month: MONTHS[lang][i].slice(0, 3),
+  }));
   const legend = [
     {
       label: l.income,
@@ -1159,7 +1152,7 @@ const IncomeExpenses = ({ ...props }: StackProps) => {
 
       <CContainer pr={4} pb={4} ml={-2}>
         <ResponsiveContainer width={"100%"} height={400}>
-          <ComposedChart data={data}>
+          <ComposedChart data={finalData}>
             <CartesianGrid />
             <XAxis dataKey="month" />
             <YAxis tickFormatter={formatCount} />

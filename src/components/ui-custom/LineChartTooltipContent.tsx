@@ -7,7 +7,9 @@ const LineChartTooltipContent = ({ active, payload, label }: any) => {
       <CContainer
         bg={"darktrans"}
         backdropFilter={"blur(5px)"}
-        p={3}
+        px={3}
+        py={2}
+        gap={1}
         borderRadius={6}
       >
         <Text fontWeight={"bold"} color={"fg.subtle"}>{`${label}`}</Text>
