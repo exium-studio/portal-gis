@@ -71,10 +71,10 @@ import {
 } from "@chakra-ui/react";
 import {
   IconAddressBook,
+  IconArrowsUpDown,
   IconBrandGoogleMaps,
   IconBrandWhatsapp,
   IconCoins,
-  IconCurrencyDollar,
   IconDotsVertical,
   IconEdit,
   IconFriends,
@@ -190,7 +190,7 @@ const TotalCounter = ({ ...props }: StackProps) => {
     total_family: 243,
     population_growth: -2.4,
     family_growth: 4.2,
-    total_village_funds: 877088000,
+    total_village_fund: 877088000,
   };
 
   console.log("Total", data);
@@ -296,10 +296,10 @@ const TotalCounter = ({ ...props }: StackProps) => {
           </Icon>
 
           <CContainer gap={1}>
-            <Text>{l.total_village_funds}</Text>
+            <Text>{l.total_village_fund}</Text>
             <HStack justify={"space-between"} align={"end"}>
               <Text fontWeight={"bold"} fontSize={"2xl"}>
-                {formatNumber(data.total_village_funds)}
+                {formatNumber(data.total_village_fund)}
               </Text>
             </HStack>
           </CContainer>
@@ -1066,7 +1066,7 @@ const OfficialContact = ({ ...props }: StackProps) => {
   );
 };
 
-const IncomeExpenses = ({ ...props }: StackProps) => {
+const FundMutation = ({ ...props }: StackProps) => {
   // Contexts
   const { l, lang } = useLang();
 
@@ -1144,11 +1144,9 @@ const IncomeExpenses = ({ ...props }: StackProps) => {
     <ItemContainer {...props}>
       <ItemHeaderContainer borderless>
         <HStack>
-          <IconCurrencyDollar size={20} />
+          <IconArrowsUpDown size={20} />
 
-          <ItemHeaderTitle>
-            {l.income} & {l.expense.toLowerCase()}
-          </ItemHeaderTitle>
+          <ItemHeaderTitle>{l.fund_mutation}</ItemHeaderTitle>
         </HStack>
       </ItemHeaderContainer>
 
@@ -1311,7 +1309,7 @@ const DashboardPage = () => {
       </HStack>
 
       <HStack wrap={"wrap"} gap={R_GAP} align={"stretch"}>
-        <IncomeExpenses flex={"1 1 650px"} />
+        <FundMutation flex={"1 1 650px"} />
 
         <Facilities flex={"1 1 300px"} />
       </HStack>

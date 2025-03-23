@@ -167,9 +167,9 @@ export const total_family = {
   id: "Total keluarga",
   en: "Total family",
 };
-export const total_village_funds = {
+export const total_village_fund = {
   id: "Total dana desa",
-  en: "Total village funds",
+  en: "Total village fund",
 };
 export const announcement = {
   id: "Pengumuman",
@@ -179,9 +179,9 @@ export const official_contact = {
   id: "Kontak perangkat desa",
   en: "Contact village apparatus",
 };
-export const income_expenses = {
-  id: "Pemasukan & pengeluaran",
-  en: "Income & expenses",
+export const fund_mutation = {
+  id: "Mutasi dana",
+  en: "Fund mutation",
 };
 export const empty = {
   id: "Kosong",

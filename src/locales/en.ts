@@ -97,10 +97,10 @@ const translations = {
     "description": "You don't have permission to access this information."
   },
   "forgot_password": "Forgot password",
+  "fund_mutation": "Fund mutation",
   "get": "Get",
   "grow": "Up ${value} from last year",
   "income": "Income",
-  "income_expenses": "Income & expenses",
   "language_settings_title": "Language",
   "last": "Last",
   "last_updated": "Last updated",
@@ -270,7 +270,7 @@ const translations = {
   "tomorrow": "Tomorrow",
   "total_family": "Total family",
   "total_population": "Total population",
-  "total_village_funds": "Total village funds",
+  "total_village_fund": "Total village fund",
   "try_label": "Try",
   "uom": {
     "mass": "Weight",

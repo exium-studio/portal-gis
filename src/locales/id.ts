@@ -97,10 +97,10 @@ const translations = {
     "description": "Anda tidak memiliki izin untuk mengakses informasi ini."
   },
   "forgot_password": "Lupa password",
+  "fund_mutation": "Mutasi dana",
   "get": "Dapatkan",
   "grow": "Naik ${value} dari tahun lalu",
   "income": "Pendapatan",
-  "income_expenses": "Pemasukan & pengeluaran",
   "language_settings_title": "Bahasa",
   "last": "Terakhir",
   "last_updated": "Terakhir diperbarui",
@@ -270,7 +270,7 @@ const translations = {
   "tomorrow": "Besok",
   "total_family": "Total keluarga",
   "total_population": "Total populasi",
-  "total_village_funds": "Total dana desa",
+  "total_village_fund": "Total dana desa",
   "try_label": "Coba",
   "uom": {
     "mass": "Berat",
