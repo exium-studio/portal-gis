@@ -111,7 +111,7 @@ const VillageSummary = ({ ...props }: StackProps) => {
   return (
     <ItemContainer {...props}>
       <HStack wrap={"wrap"} align={"stretch"} flex={1}>
-        <CContainer flex={"1 1 200px"} position={"relative"}>
+        <CContainer flex={"1 1 300px"} position={"relative"}>
           <Image src={data.image_file.path} objectFit={"cover"} h={"full"} />
           <Tooltip content={"Google maps"}>
             <Link to={data.gmaps_link} target="_blank">
@@ -129,7 +129,7 @@ const VillageSummary = ({ ...props }: StackProps) => {
           </Tooltip>
         </CContainer>
 
-        <CContainer flex={"1 0 200px"} gap={4} my={2} p={4} justify={"center"}>
+        <CContainer flex={"1 0 300px"} gap={4} my={2} p={4} justify={"center"}>
           <Text fontSize={"2xl"} fontWeight={"bold"} lineHeight={1.4}>
             {data.name}
           </Text>
@@ -1070,11 +1070,11 @@ const DashboardPage = () => {
       </HStack>
 
       <HStack wrap={"wrap"} gap={R_GAP} align={"stretch"}>
-        <Announcement flex={"1 1 300px"} />
+        <Announcement flex={"1 1 300px"} minW={0} />
 
-        <VisionMission flex={"1 1 300px"} />
+        <VisionMission flex={"1 1 300px"} minW={0} />
 
-        <OfficialContact flex={"1 1 300px"} />
+        <OfficialContact flex={"1 1 300px"} minW={0} />
       </HStack>
 
       <HStack wrap={"wrap"} gap={R_GAP} align={"stretch"}>

@@ -24,6 +24,7 @@ const translations = {
     "label": "Akses kamera",
     "description": "Izinkan aplikasi menggunakan kamera perangkat Anda untuk mengambil foto atau video."
   },
+  "change": "Ganti",
   "chrome_permissions_settings_link": "Pengaturan → Privasi & Keamanan → Pengaturan Situs → ",
   "close": "Tutup",
   "confirm": "Konfirmasi",

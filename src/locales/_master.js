@@ -59,6 +59,10 @@ export const settings_navs = {
 };
 
 // UI
+export const change = {
+  id: "Ganti",
+  en: "Change",
+};
 export const start_date = {
   id: "Tanggal mulai",
   en: "Start date",
