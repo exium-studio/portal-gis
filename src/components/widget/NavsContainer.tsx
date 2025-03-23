@@ -25,7 +25,7 @@ import Logo from "../ui-custom/Logo";
 import { Avatar } from "../ui/avatar";
 import { Tooltip } from "../ui/tooltip";
 import CurrentUserTimeZone from "./CurrentUserTimeZone";
-import MerchantInbox from "./Inbox";
+import Inbox from "./Inbox";
 import LayoutMenu from "./LayoutMenu";
 import useLayout from "@/context/useLayout";
 
@@ -271,7 +271,7 @@ const NavContainer = ({
 
                 <CurrentUserTimeZone />
 
-                <MerchantInbox />
+                <Inbox />
               </HStack>
             </HStack>
 
