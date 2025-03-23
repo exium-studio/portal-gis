@@ -1,7 +1,12 @@
 import { LAYOUT_OPTIONS } from "@/constant/layoutOptions";
 import useLayout from "@/context/useLayout";
 import { useThemeConfig } from "@/context/useThemeConfig";
-import { Icon, PopoverPositioner, Portal } from "@chakra-ui/react";
+import {
+  Icon,
+  PopoverPositioner,
+  Portal,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { IconCheck, IconLayoutColumns } from "@tabler/icons-react";
 import BButton from "../ui-custom/BButton";
 import { PopoverContent, PopoverRoot, PopoverTrigger } from "../ui/popover";
@@ -15,11 +20,12 @@ const LayoutMenu = () => {
   const { layout, setLayout } = useLayout();
   const { l } = useLang();
 
-  // States, Refs
+  // Utils
+  const { open, onOpen, onClose } = useDisclosure();
 
   return (
-    <PopoverRoot>
-      <PopoverTrigger asChild>
+    <PopoverRoot open={open}>
+      <PopoverTrigger asChild onClick={onOpen}>
         <BButton iconButton unclicky variant={"ghost"} w={"fit"}>
           <IconLayoutColumns stroke={1.5} />
         </BButton>
@@ -45,6 +51,7 @@ const LayoutMenu = () => {
                   size={"md"}
                   onClick={() => {
                     setLayout(item);
+                    onClose();
                   }}
                 >
                   {item.label}
