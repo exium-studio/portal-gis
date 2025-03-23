@@ -769,7 +769,7 @@ const Announcement = ({ ...props }: StackProps) => {
                 >
                   <HStack>
                     <CContainer gap={1}>
-                      <Text fontWeight={"medium"}>{item.title}</Text>
+                      <Text fontWeight={"semibold"}>{item.title}</Text>
 
                       <Text>{item.description}</Text>
 
