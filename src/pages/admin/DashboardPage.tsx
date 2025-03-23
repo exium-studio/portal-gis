@@ -1174,7 +1174,7 @@ const IncomeExpenses = ({ ...props }: StackProps) => {
           </ComposedChart>
         </ResponsiveContainer>
 
-        <HStack wrap={"wrap"} justify={"center"} gapX={5} mb={5} pl={4} mt={4}>
+        <HStack wrap={"wrap"} justify={"center"} gapX={5} pl={4} mt={4}>
           {legend.map((item, i) => (
             <HStack key={i}>
               <Circle w={"8px"} h={"8px"} bg={item.color} />
@@ -1276,7 +1276,7 @@ const PopulationGrowth = ({ ...props }: StackProps) => {
           </ComposedChart>
         </ResponsiveContainer>
 
-        <HStack wrap={"wrap"} justify={"center"} gapX={5} mb={5} pl={4} mt={4}>
+        <HStack wrap={"wrap"} justify={"center"} gapX={5} pl={4} mt={4}>
           {legend.map((item, i) => (
             <HStack key={i}>
               <Circle w={"8px"} h={"8px"} bg={item.color} />
