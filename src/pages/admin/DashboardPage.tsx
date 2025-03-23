@@ -37,7 +37,7 @@ import CostOfLivingStatus from "@/components/widget/CostOfLivingStatus";
 import ItemButton from "@/components/widget/ItemButton";
 import PageContainer from "@/components/widget/PageContainer";
 import PopulationDensityStatus from "@/components/widget/PopulationDensityStatus";
-import { IMAGES_PATH } from "@/constant/path";
+import { IMAGES_PATH } from "@/constant/paths";
 import { R_GAP } from "@/constant/sizes";
 import useLang from "@/context/useLang";
 import { useThemeConfig } from "@/context/useThemeConfig";
