@@ -122,8 +122,11 @@ const VillageSummary = ({ ...props }: StackProps) => {
                 bottom={4}
                 borderRadius={"full"}
                 colorPalette={themeConfig.colorPalette}
+                size={"sm"}
               >
-                <IconBrandGoogleMaps />
+                <Icon w={"20px"} h={"20px"} viewBox="0 0 24 24">
+                  <IconBrandGoogleMaps />
+                </Icon>
               </BButton>
             </Link>
           </Tooltip>
