@@ -998,7 +998,7 @@ const OfficialContact = ({ ...props }: StackProps) => {
 
                   <Text mb={2}>{item.description}</Text>
 
-                  <HStack mb={4} align={"start"} cursor={"pointer"}>
+                  <HStack mb={4} align={"start"}>
                     <Icon color="fg.muted">
                       <IconMapPin stroke={1.5} size={18} />
                     </Icon>
