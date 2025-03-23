@@ -215,7 +215,9 @@ const translations = {
     "location": "Camera Test",
     "notifications": "Camera Test"
   },
+  "population": "Population",
   "population_density": "Population density",
+  "population_growth": "Population growth",
   "published_date": "Date published",
   "regional_settings_helper_text": "These language & region settings are stored locally on your device and will not be synced with your account.",
   "religion": "Religion",

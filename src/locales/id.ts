@@ -215,7 +215,9 @@ const translations = {
     "location": "Tes Kamera",
     "notifications": "Tes Kamera"
   },
+  "population": "Populasi",
   "population_density": "Kepadatan penduduk",
+  "population_growth": "Pertumbuhan populasi",
   "published_date": "Tanggal publikasi",
   "regional_settings_helper_text": "Pengaturan bahasa & wilayah ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
   "religion": "Agama",

@@ -84,6 +84,7 @@ import {
   IconSparkles,
   IconSpeakerphone,
   IconTrash,
+  IconTrendingUp,
   IconUserHeart,
 } from "@tabler/icons-react";
 import { useFormik } from "formik";
@@ -728,6 +729,7 @@ const Announcement = ({ ...props }: StackProps) => {
             size={"xs"}
             borderRadius={"full"}
             variant={"ghost"}
+            mr={-1}
           >
             <IconDotsVertical />
           </BButton>
@@ -787,7 +789,7 @@ const Announcement = ({ ...props }: StackProps) => {
                       : ""
                   }
                 >
-                  <HStack>
+                  <HStack align={"start"}>
                     <CContainer gap={1}>
                       <Text fontWeight={"semibold"}>{item.title}</Text>
 
@@ -1187,12 +1189,104 @@ const IncomeExpenses = ({ ...props }: StackProps) => {
   );
 };
 
-const PopulationGrowth = ({ ...props }: StackProps) => {
-  return <ItemContainer {...props}></ItemContainer>;
-};
-
 const Facilities = ({ ...props }: StackProps) => {
   return <CContainer {...props}></CContainer>;
+};
+
+const PopulationGrowth = ({ ...props }: StackProps) => {
+  // Contexts
+  const { l, lang } = useLang();
+
+  // States, Refs
+  const data = [
+    {
+      population: 10751173,
+    },
+    {
+      population: 11334632,
+    },
+    {
+      population: 9330103,
+    },
+    {
+      population: 13340012,
+    },
+    {
+      population: 12199410,
+    },
+    {
+      population: 12110341,
+    },
+    {
+      population: 16800661,
+    },
+    {
+      population: 14323459,
+    },
+    {
+      population: 16634639,
+    },
+    {
+      population: 17582756,
+    },
+    {
+      population: 18154105,
+    },
+    {
+      population: 21361102,
+    },
+  ];
+  const finalData = data.map((item: any, i: number) => ({
+    ...item,
+    month: MONTHS[lang][i].slice(0, 3),
+  }));
+  const legend = [
+    {
+      label: l.population,
+      total: 321000000,
+      color: "#22c55e",
+    },
+  ];
+
+  console.log("Population Growth", data);
+
+  return (
+    <ItemContainer {...props}>
+      <ItemHeaderContainer borderless>
+        <HStack>
+          <IconTrendingUp size={20} />
+
+          <ItemHeaderTitle>{l.population_growth}</ItemHeaderTitle>
+        </HStack>
+      </ItemHeaderContainer>
+
+      <CContainer pr={4} pb={4} ml={-2}>
+        <ResponsiveContainer width={"100%"} height={400}>
+          <ComposedChart data={finalData}>
+            <CartesianGrid />
+            <XAxis dataKey="month" />
+            <YAxis tickFormatter={formatCount} />
+            <ChartTooltip {...PRESET_LINE_CHART_TOOLTIP} />
+            <Line
+              dataKey="population"
+              stroke={"#22c55e"}
+              name={l.population}
+              {...PRESET_LINE_CHART}
+            />
+          </ComposedChart>
+        </ResponsiveContainer>
+
+        <HStack wrap={"wrap"} justify={"center"} gapX={5} mb={5} pl={4} mt={4}>
+          {legend.map((item, i) => (
+            <HStack key={i}>
+              <Circle w={"8px"} h={"8px"} bg={item.color} />
+              <Text>{item.label}</Text>
+            </HStack>
+          ))}
+        </HStack>
+      </CContainer>
+    </ItemContainer>
+  );
 };
 
 const TotalPopulationByFilter = ({ ...props }: StackProps) => {
@@ -1223,7 +1317,7 @@ const DashboardPage = () => {
       </HStack>
 
       <HStack wrap={"wrap"} gap={R_GAP} align={"stretch"}>
-        <PopulationGrowth flex={"1 1 300px"} />
+        <PopulationGrowth flex={"1 1 650px"} />
 
         <TotalPopulationByFilter flex={"1 1 300px"} />
       </HStack>

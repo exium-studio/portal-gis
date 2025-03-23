@@ -294,6 +294,11 @@ button {
   scrollbar-color: var(--d2) transparent;
 }
 
+/* Recharts */
+tspan {
+  font-size: 0.875rem !important;
+}
+
 /* Ckahra UI */
 /* Toast */
 .chakra-toast__actionTrigger {

@@ -59,6 +59,14 @@ export const settings_navs = {
 };
 
 // UI
+export const population = {
+  id: "Populasi",
+  en: "Population",
+};
+export const population_growth = {
+  id: "Pertumbuhan populasi",
+  en: "Population growth",
+};
 export const income = {
   id: "Pendapatan",
   en: "Income",
