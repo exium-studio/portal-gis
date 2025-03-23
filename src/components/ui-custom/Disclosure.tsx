@@ -142,6 +142,8 @@ const DisclosureBody = ({ children, ...props }: DisclosureBodyProps) => {
       px={4}
       py={0}
       className={finalClassName}
+      overflowY={"scroll"}
+      mr={"-6px"}
       overflowX={"clip"}
       {...(props as DrawerHeaderProps)}
     >
@@ -153,6 +155,8 @@ const DisclosureBody = ({ children, ...props }: DisclosureBodyProps) => {
       pt={"0 !important"}
       pb={`${props.pb ?? 4} !important`}
       className={finalClassName}
+      overflowY={"scroll"}
+      mr={"-6px"}
       overflowX={"clip"}
       {...(props as DialogBodyProps)}
     >

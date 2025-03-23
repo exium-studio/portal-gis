@@ -279,7 +279,7 @@ const SelectInput = ({
             />
           </DisclosureHeader>
 
-          <DisclosureBody className="scrollY" py={"0px !important"}>
+          <DisclosureBody py={"0px !important"}>
             {fl && (
               <HStack>
                 <SearchInput

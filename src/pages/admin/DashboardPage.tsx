@@ -753,7 +753,7 @@ const Announcement = ({ ...props }: StackProps) => {
       </ItemHeaderContainer>
 
       <CContainer pb={2} h={"500px"}>
-        <CContainer overflowY={"auto"} className="scrollY">
+        <CContainer overflowY={"scroll"} mr={"-6px"} className="scrollY">
           <CContainer px={3}>
             {data.map((item, i) => {
               return (
@@ -824,7 +824,14 @@ const VisionMission = ({ ...props }: StackProps) => {
       </ItemHeaderContainer>
 
       <CContainer pb={2} h={"500px"}>
-        <CContainer pt={4} pb={2} overflowY={"auto"} className="scrollY" px={3}>
+        <CContainer
+          pt={4}
+          pb={2}
+          overflowY={"scroll"}
+          mr={"-6px"}
+          className="scrollY"
+          px={3}
+        >
           <CContainer px={2}>
             <Text color={"fg.muted"} mb={1}>
               {l.vision}
@@ -1057,7 +1064,7 @@ const DashboardPage = () => {
   return (
     <PageContainer gap={R_GAP} pb={4}>
       <HStack wrap={"wrap"} gap={R_GAP} align={"stretch"}>
-        <VillageSummary flex={"1 1 600px"} />
+        <VillageSummary flex={"1 1 650px"} />
 
         <TotalCounter flex={"1 1 300px"} />
       </HStack>

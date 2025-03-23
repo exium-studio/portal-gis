@@ -6,7 +6,13 @@ interface Props extends StackProps {
 }
 const VScroll = ({ fRef, children, ...props }: Props) => {
   return (
-    <CContainer fRef={fRef} className={`scrollY ${props.className}`} {...props}>
+    <CContainer
+      fRef={fRef}
+      className={`scrollY ${props.className}`}
+      overflowY={"scroll"}
+      mr={"-6px"}
+      {...props}
+    >
       {children}
     </CContainer>
   );

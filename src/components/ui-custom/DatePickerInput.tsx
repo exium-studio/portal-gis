@@ -336,7 +336,7 @@ const DatePickerInput = ({
             />
           </DisclosureHeader>
 
-          <DisclosureBody className="scrollY">
+          <DisclosureBody>
             {/* Period picker */}
             <HStack mb={5}>
               <BButton iconButton variant={"outline"} onClick={prevMonth}>

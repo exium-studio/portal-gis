@@ -364,7 +364,7 @@ const DateRangePickerInput = ({
             />
           </DisclosureHeader>
 
-          <DisclosureBody className="scrollY" pt={0}>
+          <DisclosureBody>
             {maxRange && (
               <Alert
                 variant={"surface"}
