@@ -243,8 +243,8 @@ const NavContainer = ({
             className="scrollY"
             overflowX={"clip"}
             bg={"bgContent"}
-            w={layout.id === 1 && !iss ? "50%" : ""}
-            h={layout.id === 1 && iss ? "50%" : ""}
+            w={layout.id === 1 && !iss && withMaps ? "50%" : ""}
+            h={layout.id === 1 && iss && withMaps ? "50%" : ""}
           >
             <HStack
               justify={"space-between"}
@@ -278,7 +278,7 @@ const NavContainer = ({
         )}
 
         {/* Maps */}
-        {(layout.id === 1 || layout.id === 3) && (
+        {(layout.id === 1 || layout.id === 3) && withMaps && (
           <CContainer
             w={layout.id === 1 && !iss ? "50%" : ""}
             h={layout.id === 1 && iss ? "50%" : ""}
