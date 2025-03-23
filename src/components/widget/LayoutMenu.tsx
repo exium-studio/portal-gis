@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { LAYOUT_OPTIONS } from "@/constants/layoutOptions";
 import useLayout from "@/context/useLayout";
 import { useThemeConfig } from "@/context/useThemeConfig";
@@ -22,17 +23,44 @@ const LayoutMenu = () => {
 
   // Utils
   const { open, onOpen, onClose } = useDisclosure();
+  const popoverRef = useRef(null);
+
+  // Close when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        popoverRef.current &&
+        !(popoverRef.current as HTMLElement).contains(event.target as Node)
+      ) {
+        onClose();
+      }
+    }
+
+    if (open) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [open, onClose]);
 
   return (
     <PopoverRoot open={open}>
-      <PopoverTrigger asChild onClick={onOpen}>
-        <BButton iconButton unclicky variant={"ghost"} w={"fit"}>
+      <PopoverTrigger asChild>
+        <BButton
+          iconButton
+          unclicky
+          variant={"ghost"}
+          w={"fit"}
+          onClick={onOpen}
+        >
           <IconLayoutColumns stroke={1.5} />
         </BButton>
       </PopoverTrigger>
 
       <Portal>
-        <PopoverPositioner>
+        <PopoverPositioner ref={popoverRef}>
           <PopoverContent
             p={1}
             borderRadius={themeConfig.radii.container}
