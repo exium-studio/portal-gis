@@ -90,6 +90,7 @@ const translations = {
     "title": "Gangguan koneksi ke server",
     "description": "Tidak dapat terhubung ke server. Coba lagi nanti."
   },
+  "expense": "Pengeluaran",
   "firefox_permissions_settings_link": "Preferensi → Privasi & Keamanan → Izin → ",
   "forbidden_feedback": {
     "title": "Tidak ada akses",
@@ -98,6 +99,7 @@ const translations = {
   "forgot_password": "Lupa password",
   "get": "Dapatkan",
   "grow": "Naik ${value} dari tahun lalu",
+  "income": "Pendapatan",
   "income_expenses": "Pemasukan & pengeluaran",
   "language_settings_title": "Bahasa",
   "last": "Terakhir",

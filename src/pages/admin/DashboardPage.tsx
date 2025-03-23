@@ -1,5 +1,6 @@
 import BackButton from "@/components/ui-custom/BackButton";
 import BButton from "@/components/ui-custom/BButton";
+import CartesianGrid from "@/components/ui-custom/CartesianGrid";
 import CContainer from "@/components/ui-custom/CContainer";
 import ConfirmationDisclosure from "@/components/ui-custom/ConfirmationDisclosure";
 import DateTimePicker from "@/components/ui-custom/DateTimePicker";
@@ -37,11 +38,17 @@ import CostOfLivingStatus from "@/components/widget/CostOfLivingStatus";
 import ItemButton from "@/components/widget/ItemButton";
 import PageContainer from "@/components/widget/PageContainer";
 import PopulationDensityStatus from "@/components/widget/PopulationDensityStatus";
+import { CHART_COLORS } from "@/constants/chartColors";
 import { IMAGES_PATH } from "@/constants/paths";
+import {
+  PRESET_LINE_CHART,
+  PRESET_LINE_CHART_TOOLTIP,
+} from "@/constants/presetProps";
 import { R_GAP } from "@/constants/sizes";
 import useLang from "@/context/useLang";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useBackOnClose from "@/hooks/useBackOnClose";
+import formatCount from "@/utils/formatCount";
 import formatDate from "@/utils/formatDate";
 import formatNumber from "@/utils/formatNumber";
 import interpolate from "@/utils/interpolate";
@@ -49,6 +56,7 @@ import makeCall from "@/utils/makeCall";
 import makeWA from "@/utils/makeWA";
 import { fileValidation } from "@/utils/validationSchemas";
 import {
+  Circle,
   FieldErrorText,
   FieldLabel,
   HStack,
@@ -66,6 +74,7 @@ import {
   IconBrandGoogleMaps,
   IconBrandWhatsapp,
   IconCoins,
+  IconCurrencyDollar,
   IconDotsVertical,
   IconEdit,
   IconFriends,
@@ -79,6 +88,14 @@ import {
 } from "@tabler/icons-react";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
+import {
+  Tooltip as ChartTooltip,
+  ComposedChart,
+  Line,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+} from "recharts";
 import * as yup from "yup";
 
 const VillageSummary = ({ ...props }: StackProps) => {
@@ -1048,7 +1065,136 @@ const OfficialContact = ({ ...props }: StackProps) => {
 };
 
 const IncomeExpenses = ({ ...props }: StackProps) => {
-  return <ItemContainer {...props}></ItemContainer>;
+  // Contexts
+  const { l } = useLang();
+
+  // States, Refs
+  const data = [
+    {
+      month: "Jan",
+      income: 10751173,
+      expense: 13453102,
+    },
+    {
+      month: "Feb",
+      income: 11334632,
+      expense: 14941915,
+    },
+    {
+      month: "Mar",
+      income: 9330103,
+      expense: 13471852,
+    },
+    {
+      month: "Apr",
+      income: 13340012,
+      expense: 16773920,
+    },
+    {
+      month: "May",
+      income: 12199410,
+      expense: 17338526,
+    },
+    {
+      month: "Jun",
+      income: 12110341,
+      expense: 18019161,
+    },
+    {
+      month: "Jul",
+      income: 16800661,
+      expense: 19679081,
+    },
+    {
+      month: "Aug",
+      income: 14323459,
+      expense: 19680479,
+    },
+    {
+      month: "Sep",
+      income: 16634639,
+      expense: 21179891,
+    },
+    {
+      month: "Oct",
+      income: 17582756,
+      expense: 21632541,
+    },
+    {
+      month: "Nov",
+      income: 18154105,
+      expense: 20006748,
+    },
+    {
+      month: "Dec",
+      income: 21361102,
+      expense: 22008639,
+    },
+  ];
+  const legend = [
+    {
+      label: l.income,
+      total: 321000000,
+    },
+    {
+      label: l.expense,
+      total: 211000000,
+    },
+  ];
+
+  console.log("Income Expenses", data);
+
+  return (
+    <ItemContainer {...props}>
+      <ItemHeaderContainer borderless>
+        <HStack>
+          <IconCurrencyDollar size={20} />
+
+          <ItemHeaderTitle>
+            {l.income} & {l.expense.toLowerCase()}
+          </ItemHeaderTitle>
+        </HStack>
+      </ItemHeaderContainer>
+
+      <CContainer pr={4} pb={4} ml={-2}>
+        <ResponsiveContainer width={"100%"} height={400}>
+          <ComposedChart data={data}>
+            <CartesianGrid />
+            <XAxis dataKey="month" />
+            <YAxis tickFormatter={formatCount} />
+            <ChartTooltip {...PRESET_LINE_CHART_TOOLTIP} />
+            <Line
+              dataKey="income"
+              stroke={CHART_COLORS[0]}
+              name="2024"
+              {...PRESET_LINE_CHART}
+            />
+            <Line
+              dataKey="expense"
+              stroke={CHART_COLORS[1]}
+              name="2025"
+              {...PRESET_LINE_CHART}
+            />
+          </ComposedChart>
+        </ResponsiveContainer>
+
+        <HStack wrap={"wrap"} justify={"center"} gapX={5} mb={5} pl={4} mt={4}>
+          {legend.map((item, i) => (
+            <HStack key={i}>
+              <Circle
+                w={"8px"}
+                h={"8px"}
+                bg={CHART_COLORS[i % CHART_COLORS.length]}
+              />
+              <Text>
+                {item.label} (Total : Rp {formatNumber(item.total)})
+              </Text>
+            </HStack>
+          ))}
+        </HStack>
+      </CContainer>
+    </ItemContainer>
+  );
 };
 
 const PopulationGrowth = ({ ...props }: StackProps) => {
@@ -1081,11 +1227,13 @@ const DashboardPage = () => {
       </HStack>
 
       <HStack wrap={"wrap"} gap={R_GAP} align={"stretch"}>
-        <IncomeExpenses flex={"1 1 300px"} />
-
-        <PopulationGrowth flex={"1 1 300px"} />
+        <IncomeExpenses flex={"1 1 650px"} />
 
         <Facilities flex={"1 1 300px"} />
+      </HStack>
+
+      <HStack wrap={"wrap"} gap={R_GAP} align={"stretch"}>
+        <PopulationGrowth flex={"1 1 300px"} />
 
         <TotalPopulationByFilter flex={"1 1 300px"} />
       </HStack>

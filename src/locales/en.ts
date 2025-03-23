@@ -90,6 +90,7 @@ const translations = {
     "title": "Server connection problem",
     "description": "Unable to connect to the server. Try again later."
   },
+  "expense": "Expense",
   "firefox_permissions_settings_link": "Preferences → Privacy & Security → Permissions → ",
   "forbidden_feedback": {
     "title": "No Access",
@@ -98,6 +99,7 @@ const translations = {
   "forgot_password": "Forgot password",
   "get": "Get",
   "grow": "Up ${value} from last year",
+  "income": "Income",
   "income_expenses": "Income & expenses",
   "language_settings_title": "Language",
   "last": "Last",

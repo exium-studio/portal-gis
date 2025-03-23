@@ -59,6 +59,14 @@ export const settings_navs = {
 };
 
 // UI
+export const income = {
+  id: "Pendapatan",
+  en: "Income",
+};
+export const expense = {
+  id: "Pengeluaran",
+  en: "Expense",
+};
 export const change = {
   id: "Ganti",
   en: "Change",
