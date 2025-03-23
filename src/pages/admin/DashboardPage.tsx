@@ -137,7 +137,7 @@ const VillageSummary = ({ ...props }: StackProps) => {
 
           <HStack>
             <CContainer>
-              <Text color={"fg.subtle"}>{l.population_density}</Text>
+              <Text color={"fg.muted"}>{l.population_density}</Text>
               <PopulationDensityStatus
                 data={data.population_density}
                 textProps={{ fontWeight: "semibold" }}
@@ -145,7 +145,7 @@ const VillageSummary = ({ ...props }: StackProps) => {
             </CContainer>
 
             <CContainer>
-              <Text color={"fg.subtle"}>{l.cost_of_living}</Text>
+              <Text color={"fg.muted"}>{l.cost_of_living}</Text>
               <CostOfLivingStatus
                 data={data.cost_of_living}
                 textProps={{ fontWeight: "semibold" }}
@@ -992,9 +992,7 @@ const OfficialContact = ({ ...props }: StackProps) => {
                     <Icon color="fg.muted">
                       <IconMapPin stroke={1.5} size={18} />
                     </Icon>
-                    <Text color="fg.muted" truncate>
-                      {item.address}
-                    </Text>
+                    <Text color="fg.muted">{item.address}</Text>
                   </HStack>
 
                   <HStack gap={4}>
