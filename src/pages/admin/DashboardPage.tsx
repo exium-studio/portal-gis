@@ -38,7 +38,6 @@ import CostOfLivingStatus from "@/components/widget/CostOfLivingStatus";
 import ItemButton from "@/components/widget/ItemButton";
 import PageContainer from "@/components/widget/PageContainer";
 import PopulationDensityStatus from "@/components/widget/PopulationDensityStatus";
-import { CHART_COLORS } from "@/constants/chartColors";
 import { IMAGES_PATH } from "@/constants/paths";
 import {
   PRESET_LINE_CHART,
@@ -1135,10 +1134,12 @@ const IncomeExpenses = ({ ...props }: StackProps) => {
     {
       label: l.income,
       total: 321000000,
+      color: "#22c55e",
     },
     {
       label: l.expense,
       total: 211000000,
+      color: "#ef4444",
     },
   ];
 
@@ -1165,13 +1166,13 @@ const IncomeExpenses = ({ ...props }: StackProps) => {
             <ChartTooltip {...PRESET_LINE_CHART_TOOLTIP} />
             <Line
               dataKey="income"
-              stroke={CHART_COLORS[0]}
+              stroke={"#22c55e"}
               name="2024"
               {...PRESET_LINE_CHART}
             />
             <Line
               dataKey="expense"
-              stroke={CHART_COLORS[1]}
+              stroke={"#ef4444"}
               name="2025"
               {...PRESET_LINE_CHART}
             />
@@ -1181,11 +1182,7 @@ const IncomeExpenses = ({ ...props }: StackProps) => {
         <HStack wrap={"wrap"} justify={"center"} gapX={5} mb={5} pl={4} mt={4}>
           {legend.map((item, i) => (
             <HStack key={i}>
-              <Circle
-                w={"8px"}
-                h={"8px"}
-                bg={CHART_COLORS[i % CHART_COLORS.length]}
-              />
+              <Circle w={"8px"} h={"8px"} bg={item.color} />
               <Text>
                 {item.label} (Total : Rp {formatNumber(item.total)})
               </Text>
