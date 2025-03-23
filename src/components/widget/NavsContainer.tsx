@@ -166,6 +166,8 @@ const NavContainer = ({
                 name="Jolitos Kurniawan"
                 cursor={"pointer"}
                 size={"xs"}
+                bg={`${themeConfig.primaryColor}`}
+                color={`${themeConfig.colorPalette}.contrast`}
                 w={["24px", null, "28px"]}
                 h={["24px", null, "28px"]}
               />
