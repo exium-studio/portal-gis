@@ -29,6 +29,7 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,svg,png,ico}"],
         cleanupOutdatedCaches: true,
         clientsClaim: true,
+        maximumFileSizeToCacheInBytes: 3000000, // 3MB limit
       },
 
       devOptions: {
@@ -39,4 +40,20 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    terserOptions: {
+      compress: {
+        drop_console: true, // Remove console logs to reduce size
+      },
+    },
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            return "vendor"; // Optimize chunking
+          }
+        },
+      },
+    },
+  },
 });
