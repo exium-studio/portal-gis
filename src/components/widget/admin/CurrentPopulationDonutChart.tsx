@@ -2,6 +2,7 @@ import CContainer from "@/components/ui-custom/CContainer";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
+import SelectInput from "@/components/ui-custom/SelectInput";
 import { CHART_COLORS } from "@/constants/chartColors";
 import {
   PRESET_DONUT_CHART_TOOLTIP,
@@ -35,6 +36,8 @@ const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
 
           <ItemHeaderTitle>{l.current_population}</ItemHeaderTitle>
         </HStack>
+
+        <SelectInput w={"fit"} size={"sm"} placeholder={l.categories} />
       </ItemHeaderContainer>
 
       <CContainer flex={1} pb={4}>
