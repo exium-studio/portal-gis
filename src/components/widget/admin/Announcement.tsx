@@ -190,9 +190,8 @@ const Announcement = ({ ...props }: StackProps) => {
 
     return (
       <>
-        <ItemButton onClick={onOpen}>
+        <ItemButton iconButton onClick={onOpen} borderRadius={"full"}>
           <IconPlus />
-          Tambah
         </ItemButton>
 
         <DisclosureRoot open={open} lazyLoad size={"xs"}>
