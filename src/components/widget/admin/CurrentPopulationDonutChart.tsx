@@ -37,14 +37,11 @@ const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
 
           <ItemHeaderTitle>{l.current_population}</ItemHeaderTitle>
         </HStack>
+
+        <SelectInput w={"fit"} size={"sm"} placeholder={l.categories} />
       </ItemHeaderContainer>
 
       <CContainer flex={1} pb={4} minH={ITEM_BODY_H}>
-        <HStack p={3} justify={"end"}>
-          <Text>{l.categories}</Text>
-          <SelectInput w={"fit"} size={"sm"} />
-        </HStack>
-
         {/* Chart */}
         <CContainer px={4} my={"auto"}>
           <ResponsiveContainer width={"100%"} height={300}>
