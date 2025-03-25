@@ -1,13 +1,13 @@
-import Announcement from "@/components/widget/Announcement";
-import FacilityDoughnutChart from "@/components/widget/FacilityDoughnutChart";
-import FundMutationLineChart from "@/components/widget/FundMutationLineChart";
-import OfficialContact from "@/components/widget/OfficialContact";
+import Announcement from "@/components/widget/admin/Announcement";
+import FacilityDoughnutChart from "@/components/widget/admin/FacilityDoughnutChart";
+import FundMutationLineChart from "@/components/widget/admin/FundMutationLineChart";
+import OfficialContact from "@/components/widget/admin/OfficialContact";
 import PageContainer from "@/components/widget/PageContainer";
 import PopulationGrowthLineChart from "@/components/widget/PopulationGrowthLineChart";
 import TotalCounter from "@/components/widget/TotalCounter";
-import TotalPopulationByFilterDoughnutChart from "@/components/widget/TotalPopulationByFilterDoughnutChart";
-import VillageSummary from "@/components/widget/VillageSummary";
-import VisionMission from "@/components/widget/VisionMission";
+import TotalPopulationByFilterDoughnutChart from "@/components/widget/admin/TotalPopulationByFilterDoughnutChart";
+import VillageSummary from "@/components/widget/admin/VillageSummary";
+import VisionMission from "@/components/widget/admin/VisionMission";
 import { R_GAP } from "@/constants/sizes";
 import { HStack } from "@chakra-ui/react";
 

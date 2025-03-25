@@ -3,7 +3,7 @@ import CContainer from "@/components/ui-custom/CContainer";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
 import { Tooltip } from "@/components/ui/tooltip";
 import CostOfLivingStatus from "@/components/widget/CostOfLivingStatus";
-import PopulationDensityStatus from "@/components/widget/PopulationDensityStatus";
+import PopulationDensityStatus from "@/components/widget/admin/PopulationDensityStatus";
 import { IMAGES_PATH } from "@/constants/paths";
 import useLang from "@/context/useLang";
 import { useThemeConfig } from "@/context/useThemeConfig";
