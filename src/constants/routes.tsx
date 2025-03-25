@@ -1,5 +1,5 @@
 import AdministrationPage from "@/pages/admin/AdministrationPage";
-import DashboardPage from "@/pages/admin/DashboardPage";
+import HomePage from "@/pages/admin/HomePage";
 import RootPage from "@/pages/RootPage";
 import ServicePage from "@/pages/admin/ServicePage";
 import SettingsPage from "@/pages/SettingsPage";
@@ -25,7 +25,7 @@ export const PRIVATE_ROUTES: Interface__PrivateRoute[] = [
     path: "/dashboard",
     activePath: "/dashboard",
     titleKey: "navs.dashboard",
-    element: <DashboardPage />,
+    element: <HomePage />,
   },
   {
     path: "/administration",
