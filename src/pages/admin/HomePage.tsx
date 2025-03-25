@@ -1,5 +1,5 @@
 import Announcement from "@/components/widget/admin/Announcement";
-import FacilityDoughnutChart from "@/components/widget/admin/FacilityDoughnutChart";
+import FacilityDonutChart from "@/components/widget/admin/FacilityDonutChart";
 import FundMutationLineChart from "@/components/widget/admin/FundMutationLineChart";
 import OfficialContact from "@/components/widget/admin/OfficialContact";
 import PageContainer from "@/components/widget/PageContainer";
@@ -31,7 +31,7 @@ const DashboardPage = () => {
       <HStack wrap={"wrap"} gap={R_GAP} align={"stretch"}>
         <FundMutationLineChart flex={"1 1 650px"} />
 
-        <FacilityDoughnutChart flex={"1 1 300px"} />
+        <FacilityDonutChart flex={"1 1 300px"} />
       </HStack>
 
       <HStack wrap={"wrap"} gap={R_GAP} align={"stretch"}>

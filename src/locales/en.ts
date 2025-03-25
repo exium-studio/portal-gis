@@ -94,6 +94,7 @@ const translations = {
     "description": "Unable to connect to the server. Try again later."
   },
   "expense": "Expense",
+  "facility": "Facility",
   "firefox_permissions_settings_link": "Preferences → Privacy & Security → Permissions → ",
   "forbidden_feedback": {
     "title": "No Access",

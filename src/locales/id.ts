@@ -94,6 +94,7 @@ const translations = {
     "description": "Tidak dapat terhubung ke server. Coba lagi nanti."
   },
   "expense": "Pengeluaran",
+  "facility": "Fasilitas",
   "firefox_permissions_settings_link": "Preferensi → Privasi & Keamanan → Izin → ",
   "forbidden_feedback": {
     "title": "Tidak ada akses",

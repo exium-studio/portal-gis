@@ -59,6 +59,10 @@ export const settings_navs = {
 };
 
 // UI
+export const facility = {
+  id: "Fasilitas",
+  en: "Facility",
+};
 export const categories = {
   id: "Kategori",
   en: "Categories",
