@@ -33,6 +33,8 @@ const translations = {
   "cost_of_living": "Cost of living",
   "create": "Create",
   "current": "Current",
+  "current_facility": "Current facility",
+  "current_population": "Current population",
   "dark_mode_settings_title": "Dark Mode",
   "dark_mode_ui_settings": {
     "label": "Dark mode UI",

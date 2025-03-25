@@ -59,6 +59,14 @@ export const settings_navs = {
 };
 
 // UI
+export const current_population = {
+  id: "Populasi saat ini",
+  en: "Current population",
+};
+export const current_facility = {
+  id: "Fasilitas saat ini",
+  en: "Current facility",
+};
 export const facility = {
   id: "Fasilitas",
   en: "Facility",

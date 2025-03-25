@@ -33,6 +33,8 @@ const translations = {
   "cost_of_living": "Biaya hidup",
   "create": "Buat",
   "current": "Saat ini",
+  "current_facility": "Fasilitas saat ini",
+  "current_population": "Populasi saat ini",
   "dark_mode_settings_title": "Mode Gelap",
   "dark_mode_ui_settings": {
     "label": "UI mode gelap",

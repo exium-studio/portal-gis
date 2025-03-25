@@ -9,7 +9,7 @@ import {
 } from "@/constants/presetProps";
 import useLang from "@/context/useLang";
 import { Circle, HStack, Icon, StackProps, Text } from "@chakra-ui/react";
-import { IconHome2 } from "@tabler/icons-react";
+import { IconFriends } from "@tabler/icons-react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
 const TotalPopulationByCategoryDonutChart = ({ ...props }: StackProps) => {
@@ -17,17 +17,23 @@ const TotalPopulationByCategoryDonutChart = ({ ...props }: StackProps) => {
   const { l } = useLang();
 
   // States, Refs
-  const data = [{ count: 4 }, { count: 1 }, { count: 2 }];
+  const data = [
+    { label: "Lapangan", count: 1 },
+    { label: "Balai Desa", count: 1 },
+    { label: "Gor", count: 1 },
+    { label: "Mic", count: 8 },
+    { label: "Speaker", count: 2 },
+  ];
 
   return (
     <ItemContainer {...props}>
       <ItemHeaderContainer borderless>
         <HStack>
           <Icon mb={"2px"}>
-            <IconHome2 size={20} />
+            <IconFriends size={20} />
           </Icon>
 
-          <ItemHeaderTitle>{l.facility}</ItemHeaderTitle>
+          <ItemHeaderTitle>{l.current_population}</ItemHeaderTitle>
         </HStack>
       </ItemHeaderContainer>
 
@@ -39,7 +45,7 @@ const TotalPopulationByCategoryDonutChart = ({ ...props }: StackProps) => {
               <Pie
                 data={data}
                 dataKey="count"
-                nameKey="land_type.label"
+                nameKey="label"
                 {...PRESET_DOUGHNUT_CHART}
               >
                 {data.map((_, i) => {
@@ -55,7 +61,9 @@ const TotalPopulationByCategoryDonutChart = ({ ...props }: StackProps) => {
           {data.map((item, i) => (
             <HStack key={i}>
               <Circle w={"8px"} h={"8px"} bg={CHART_COLORS[i]} />
-              <Text>Jancok : {item.count}</Text>
+              <Text>
+                {item.label} : {item.count}
+              </Text>
             </HStack>
           ))}
         </HStack>
