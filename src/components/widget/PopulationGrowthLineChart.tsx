@@ -10,6 +10,7 @@ import {
   PRESET_LINE_CHART,
   PRESET_LINE_CHART_TOOLTIP,
 } from "@/constants/presetProps";
+import { ITEM_BODY_H } from "@/constants/sizes";
 import useLang from "@/context/useLang";
 import formatCount from "@/utils/formatCount";
 import { Circle, HStack, StackProps, Text } from "@chakra-ui/react";
@@ -23,48 +24,8 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import SelectInput from "../ui-custom/SelectInput";
 import { useColorModeValue } from "../ui/color-mode";
-import { ITEM_BODY_H } from "@/constants/sizes";
-
-const Categories = ({ category, setCategory }: any) => {
-  // Contexts
-  const { l } = useLang();
-
-  // States, Refs
-  const categoriesOptions = [
-    {
-      id: 1,
-      label: l.religion,
-    },
-    {
-      id: 2,
-      label: l.education,
-    },
-    {
-      id: 3,
-      label: l.maried_status,
-    },
-    {
-      id: 4,
-      label: l.citizenship,
-    },
-  ];
-
-  return (
-    <SelectInput
-      id="jancok"
-      initialOptions={categoriesOptions}
-      onConfirm={(input) => {
-        setCategory(input);
-      }}
-      inputValue={category}
-      placeholder={l.categories}
-      w={"fit"}
-      size={"sm"}
-    />
-  );
-};
+import PopulationCategoriesOptions from "./PopulationCategoriesOptions";
 
 const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
   // Contexts
@@ -74,7 +35,6 @@ const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
   const [category, setCategory] = useState<
     Interface__SelectOption[] | undefined
   >(undefined);
-
   const data = [
     {
       population: 6000,
@@ -219,7 +179,10 @@ const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
           <ItemHeaderTitle>{l.population_growth}</ItemHeaderTitle>
         </HStack>
 
-        <Categories category={category} setCategory={setCategory} />
+        <PopulationCategoriesOptions
+          category={category}
+          setCategory={setCategory}
+        />
       </ItemHeaderContainer>
 
       <CContainer

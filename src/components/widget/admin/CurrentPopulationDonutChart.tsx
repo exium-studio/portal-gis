@@ -2,8 +2,8 @@ import CContainer from "@/components/ui-custom/CContainer";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
-import SelectInput from "@/components/ui-custom/SelectInput";
 import { CHART_COLORS } from "@/constants/chartColors";
+import { Interface__SelectOption } from "@/constants/interfaces";
 import {
   PRESET_DONUT_CHART_TOOLTIP,
   PRESET_DOUGHNUT_CHART,
@@ -12,13 +12,18 @@ import { ITEM_BODY_H } from "@/constants/sizes";
 import useLang from "@/context/useLang";
 import { Circle, HStack, Icon, StackProps, Text } from "@chakra-ui/react";
 import { IconFriends } from "@tabler/icons-react";
+import { useState } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import PopulationCategoriesOptions from "../PopulationCategoriesOptions";
 
 const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
   // Contexts
   const { l } = useLang();
 
   // States, Refs
+  const [category, setCategory] = useState<
+    Interface__SelectOption[] | undefined
+  >(undefined);
   const data = [
     { label: "Lapangan", count: 1 },
     { label: "Balai Desa", count: 1 },
@@ -38,7 +43,10 @@ const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
           <ItemHeaderTitle>{l.current_population}</ItemHeaderTitle>
         </HStack>
 
-        <SelectInput w={"fit"} size={"sm"} placeholder={l.categories} />
+        <PopulationCategoriesOptions
+          category={category}
+          setCategory={setCategory}
+        />
       </ItemHeaderContainer>
 
       <CContainer flex={1} pb={4} minH={ITEM_BODY_H}>
