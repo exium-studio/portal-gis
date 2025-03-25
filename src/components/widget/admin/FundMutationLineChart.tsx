@@ -3,6 +3,7 @@ import CContainer from "@/components/ui-custom/CContainer";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
+import { ABS_COLORS } from "@/constants/chartColors";
 import { MONTHS } from "@/constants/months";
 import {
   PRESET_LINE_CHART,
@@ -115,13 +116,13 @@ const FundMutationLineChart = ({ ...props }: StackProps) => {
             <ChartTooltip {...PRESET_LINE_CHART_TOOLTIP} />
             <Line
               dataKey="income"
-              stroke={"#22c55e"}
+              stroke={ABS_COLORS.green}
               name="2024"
               {...PRESET_LINE_CHART}
             />
             <Line
               dataKey="expense"
-              stroke={"#ef4444"}
+              stroke={ABS_COLORS.red}
               name="2025"
               {...PRESET_LINE_CHART}
             />

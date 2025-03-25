@@ -24,8 +24,10 @@ const translations = {
     "label": "Camera access",
     "description": "Allow the app to use your device's camera for capturing photos or videos."
   },
+  "categories": "Categories",
   "change": "Change",
   "chrome_permissions_settings_link": "Settings → Privacy & Security → Site Settings → ",
+  "citizenship": "Citizenship",
   "close": "Close",
   "confirm": "Confirm",
   "cost_of_living": "Cost of living",
@@ -68,6 +70,7 @@ const translations = {
   "description": "Description",
   "display_settings_helper_text": "These display settings are stored locally on your device and will not be synced with your account.",
   "edge_permissions_settings_link": "Settings → Cookies and site permissions → ",
+  "education": "Education",
   "empty": "Empty",
   "end_date": "End date",
   "error_400_toast": {
@@ -152,6 +155,7 @@ const translations = {
     "description": "You are now logged out."
   },
   "maintenance_page": "We are currently performing maintenance to provide better service. Sorry for the inconvenience. Please check back later.",
+  "maried_status": "Maried status",
   "measurment_unit_format_settings_title": "Measurement Units Format",
   "mic": "Microphone",
   "mic_fail_toast": {
@@ -274,7 +278,7 @@ const translations = {
   "try_label": "Try",
   "uom": {
     "mass": "Weight",
-    "length": "Height",
+    "length": "Length",
     "volume": "Volume",
     "temperature": "Temperature",
     "area": "Area",

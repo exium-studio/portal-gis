@@ -1,8 +1,8 @@
 import { StackProps } from "@chakra-ui/react";
 import CContainer from "../../ui-custom/CContainer";
 
-const TotalPopulationByFilterDoughnutChart = ({ ...props }: StackProps) => {
+const TotalPopulationByCategoryDoughnutChart = ({ ...props }: StackProps) => {
   return <CContainer {...props}></CContainer>;
 };
 
-export default TotalPopulationByFilterDoughnutChart;
+export default TotalPopulationByCategoryDoughnutChart;

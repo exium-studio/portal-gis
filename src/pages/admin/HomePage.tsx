@@ -5,7 +5,7 @@ import OfficialContact from "@/components/widget/admin/OfficialContact";
 import PageContainer from "@/components/widget/PageContainer";
 import PopulationGrowthLineChart from "@/components/widget/PopulationGrowthLineChart";
 import TotalCounter from "@/components/widget/TotalCounter";
-import TotalPopulationByFilterDoughnutChart from "@/components/widget/admin/TotalPopulationByFilterDoughnutChart";
+import TotalPopulationByCategoryDoughnutChart from "@/components/widget/admin/TotalPopulationByCategoryDoughnutChart";
 import VillageSummary from "@/components/widget/admin/VillageSummary";
 import VisionMission from "@/components/widget/admin/VisionMission";
 import { R_GAP } from "@/constants/sizes";
@@ -37,7 +37,7 @@ const DashboardPage = () => {
       <HStack wrap={"wrap"} gap={R_GAP} align={"stretch"}>
         <PopulationGrowthLineChart flex={"1 1 650px"} />
 
-        <TotalPopulationByFilterDoughnutChart flex={"1 1 300px"} />
+        <TotalPopulationByCategoryDoughnutChart flex={"1 1 300px"} />
       </HStack>
     </PageContainer>
   );

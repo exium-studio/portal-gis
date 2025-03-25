@@ -24,8 +24,10 @@ const translations = {
     "label": "Akses kamera",
     "description": "Izinkan aplikasi menggunakan kamera perangkat Anda untuk mengambil foto atau video."
   },
+  "categories": "Kategori",
   "change": "Ganti",
   "chrome_permissions_settings_link": "Pengaturan → Privasi & Keamanan → Pengaturan Situs → ",
+  "citizenship": "Kewarganegaraan",
   "close": "Tutup",
   "confirm": "Konfirmasi",
   "cost_of_living": "Biaya hidup",
@@ -68,6 +70,7 @@ const translations = {
   "description": "Deskripsi",
   "display_settings_helper_text": "Pengaturan tampilan ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
   "edge_permissions_settings_link": "Pengaturan → Cookie dan izin situs → ",
+  "education": "Pendidikan",
   "empty": "Kosong",
   "end_date": "Tanggal berakhir",
   "error_400_toast": {
@@ -152,6 +155,7 @@ const translations = {
     "description": "Anda telah keluar."
   },
   "maintenance_page": "Kami sedang melakukan pemeliharaan untuk memberikan layanan yang lebih baik. Mohon maaf atas ketidaknyamanannya. Silakan cek kembali nanti.",
+  "maried_status": "Status pernikahan",
   "measurment_unit_format_settings_title": "Format Satuan Pengukuran",
   "mic": "Mikrofon",
   "mic_fail_toast": {
@@ -274,7 +278,7 @@ const translations = {
   "try_label": "Coba",
   "uom": {
     "mass": "Berat",
-    "length": "Tinggi",
+    "length": "Panjang",
     "volume": "Volume",
     "temperature": "Suhu",
     "area": "Luas",

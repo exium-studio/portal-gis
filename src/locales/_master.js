@@ -59,6 +59,10 @@ export const settings_navs = {
 };
 
 // UI
+export const categories = {
+  id: "Kategori",
+  en: "Categories",
+};
 export const population = {
   id: "Populasi",
   en: "Population",
@@ -662,6 +666,18 @@ export const measurment_unit_format_settings_title = {
 export const religion = {
   id: "Agama",
   en: "Religion",
+};
+export const education = {
+  id: "Pendidikan",
+  en: "Education",
+};
+export const maried_status = {
+  id: "Status pernikahan",
+  en: "Maried status",
+};
+export const citizenship = {
+  id: "Kewarganegaraan",
+  en: "Citizenship",
 };
 export const address_not_found = {
   id: "Alamat tidak ditemukan",

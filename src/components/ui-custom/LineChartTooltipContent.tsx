@@ -20,7 +20,7 @@ const LineChartTooltipContent = ({ active, payload, label }: any) => {
             color={"white"}
             // color={item.color}
           >
-            {`${item.name}: Rp ${item.value.toLocaleString()}`}
+            {`${item.name}: ${item.value.toLocaleString()}`}
           </Text>
         ))}
       </CContainer>
