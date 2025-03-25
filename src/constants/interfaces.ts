@@ -44,7 +44,7 @@ export interface Interface__SelectOption {
 }
 export interface Interface__Select extends ButtonProps {
   id?: string;
-  name: string;
+  name?: string;
   title?: string;
   onConfirm?: (inputValue: Interface__SelectOption[] | undefined) => void;
   inputValue?: Interface__SelectOption[] | undefined;
@@ -105,7 +105,7 @@ export interface Interface__TimePicker extends ButtonProps {
   placeholder?: string;
   nonNullable?: boolean;
   invalid?: boolean;
-  size?: Type__DisclosureSizes;
+  disclosureSize?: Type__DisclosureSizes;
 }
 
 // Time Range Picker
@@ -119,7 +119,7 @@ export interface Interface__TimeRangePicker extends ButtonProps {
   placeholder?: string;
   nonNullable?: boolean;
   invalid?: boolean;
-  size?: Type__DisclosureSizes;
+  disclosureSize?: Type__DisclosureSizes;
 }
 
 // Table Component

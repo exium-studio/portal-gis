@@ -20,6 +20,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import SelectInput from "../ui-custom/SelectInput";
 
 const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
   // Contexts
@@ -75,8 +76,34 @@ const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
       color: "#22c55e",
     },
   ];
+  const filterOptions = [
+    {
+      id: 1,
+      label: l.religion,
+    },
+    {
+      id: 1,
+      label: l.religion,
+    },
+    {
+      id: 1,
+      label: l.religion,
+    },
+  ];
 
   console.log("Population Growth", data);
+
+  // Components
+  const Filter = () => {
+    return (
+      <SelectInput
+        initialOptions={filterOptions}
+        w={"fit"}
+        placeholder=""
+        size={"sm"}
+      />
+    );
+  };
 
   return (
     <ItemContainer {...props}>
@@ -86,6 +113,8 @@ const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
 
           <ItemHeaderTitle>{l.population_growth}</ItemHeaderTitle>
         </HStack>
+
+        <Filter />
       </ItemHeaderContainer>
 
       <CContainer pr={4} pb={4} ml={-2}>
