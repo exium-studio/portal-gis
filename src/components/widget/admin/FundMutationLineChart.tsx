@@ -9,6 +9,7 @@ import {
   PRESET_LINE_CHART,
   PRESET_LINE_CHART_TOOLTIP,
 } from "@/constants/presetProps";
+import { ITEM_BODY_H } from "@/constants/sizes";
 import useLang from "@/context/useLang";
 import formatCount from "@/utils/formatCount";
 import formatNumber from "@/utils/formatNumber";
@@ -31,7 +32,7 @@ const FundMutationLineChart = ({ ...props }: StackProps) => {
   const data = [
     {
       expense: 10751173,
-      income: 13453102,
+      income: 13450112,
     },
     {
       expense: 11334632,
@@ -107,29 +108,39 @@ const FundMutationLineChart = ({ ...props }: StackProps) => {
         </HStack>
       </ItemHeaderContainer>
 
-      <CContainer pr={4} pb={4} ml={-2}>
-        <ResponsiveContainer width={"100%"} height={400}>
-          <ComposedChart data={finalData}>
-            <CartesianGrid />
-            <XAxis dataKey="month" />
-            <YAxis tickFormatter={formatCount} />
-            <ChartTooltip {...PRESET_LINE_CHART_TOOLTIP} />
-            <Line
-              dataKey="income"
-              stroke={ABS_COLORS.green}
-              name="2024"
-              {...PRESET_LINE_CHART}
-            />
-            <Line
-              dataKey="expense"
-              stroke={ABS_COLORS.red}
-              name="2025"
-              {...PRESET_LINE_CHART}
-            />
-          </ComposedChart>
-        </ResponsiveContainer>
+      <CContainer
+        flex={1}
+        w={"calc(100% + 3*4px)"}
+        minH={ITEM_BODY_H}
+        px={3}
+        pb={4}
+        ml={-3}
+      >
+        {/* Chart */}
+        <CContainer my={"auto"}>
+          <ResponsiveContainer width={"100%"} height={450}>
+            <ComposedChart data={finalData}>
+              <CartesianGrid />
+              <XAxis dataKey="month" />
+              <YAxis tickFormatter={formatCount} allowDecimals={false} />
+              <ChartTooltip {...PRESET_LINE_CHART_TOOLTIP} />
+              <Line
+                dataKey="income"
+                stroke={ABS_COLORS.green}
+                name="2024"
+                {...PRESET_LINE_CHART}
+              />
+              <Line
+                dataKey="expense"
+                stroke={ABS_COLORS.red}
+                name="2025"
+                {...PRESET_LINE_CHART}
+              />
+            </ComposedChart>
+          </ResponsiveContainer>
+        </CContainer>
 
-        <HStack wrap={"wrap"} justify={"center"} gapX={5} pl={4} mt={4}>
+        <HStack wrap={"wrap"} justify={"center"} gapX={5} mt={4}>
           {legend.map((item, i) => (
             <HStack key={i}>
               <Circle w={"8px"} h={"8px"} bg={item.color} />

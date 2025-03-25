@@ -34,7 +34,7 @@ const CurrentFacilityDonutChart = ({ ...props }: StackProps) => {
         </HStack>
       </ItemHeaderContainer>
 
-      <CContainer pb={2} h={ITEM_BODY_H}>
+      <CContainer pb={2} minH={ITEM_BODY_H}>
         <CContainer px={3} overflowY={"auto"} className="scrollY" mr={"-6px"}>
           {data.map((item, i) => {
             return (

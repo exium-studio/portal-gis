@@ -25,6 +25,7 @@ import {
 } from "recharts";
 import SelectInput from "../ui-custom/SelectInput";
 import { useColorModeValue } from "../ui/color-mode";
+import { ITEM_BODY_H } from "@/constants/sizes";
 
 const Categories = ({ category, setCategory }: any) => {
   // Contexts
@@ -58,8 +59,8 @@ const Categories = ({ category, setCategory }: any) => {
         setCategory(input);
       }}
       inputValue={category}
-      w={"fit"}
       placeholder={l.categories}
+      w={"fit"}
       size={"sm"}
     />
   );
@@ -221,10 +222,17 @@ const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
         <Categories category={category} setCategory={setCategory} />
       </ItemHeaderContainer>
 
-      <CContainer>
+      <CContainer
+        flex={1}
+        w={"calc(100% + 3*4px)"}
+        minH={ITEM_BODY_H}
+        px={3}
+        pb={4}
+        ml={-3}
+      >
         {/* Chart */}
-        <CContainer pr={4} pb={4} ml={-2}>
-          <ResponsiveContainer width={"100%"} height={400}>
+        <CContainer my={"auto"}>
+          <ResponsiveContainer width={"100%"} height={450}>
             <ComposedChart data={finalData}>
               <CartesianGrid />
               <XAxis dataKey="month" />
@@ -249,18 +257,18 @@ const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
               })}
             </ComposedChart>
           </ResponsiveContainer>
-
-          <HStack wrap={"wrap"} justify={"center"} gapX={5} pl={4} mt={4}>
-            {legend.map((item, i) => {
-              return (
-                <HStack key={i}>
-                  <Circle w={"8px"} h={"8px"} bg={item.color} />
-                  <Text>{item.label}</Text>
-                </HStack>
-              );
-            })}
-          </HStack>
         </CContainer>
+
+        <HStack wrap={"wrap"} justify={"center"} gapX={5} mt={4}>
+          {legend.map((item, i) => {
+            return (
+              <HStack key={i}>
+                <Circle w={"8px"} h={"8px"} bg={item.color} />
+                <Text>{item.label}</Text>
+              </HStack>
+            );
+          })}
+        </HStack>
       </CContainer>
     </ItemContainer>
   );

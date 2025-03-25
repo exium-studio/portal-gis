@@ -8,6 +8,7 @@ import {
   PRESET_DONUT_CHART_TOOLTIP,
   PRESET_DOUGHNUT_CHART,
 } from "@/constants/presetProps";
+import { ITEM_BODY_H } from "@/constants/sizes";
 import useLang from "@/context/useLang";
 import { Circle, HStack, Icon, StackProps, Text } from "@chakra-ui/react";
 import { IconFriends } from "@tabler/icons-react";
@@ -28,7 +29,7 @@ const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
 
   return (
     <ItemContainer {...props}>
-      <ItemHeaderContainer borderless>
+      <ItemHeaderContainer>
         <HStack>
           <Icon mb={"2px"}>
             <IconFriends size={20} />
@@ -36,11 +37,14 @@ const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
 
           <ItemHeaderTitle>{l.current_population}</ItemHeaderTitle>
         </HStack>
-
-        <SelectInput w={"fit"} size={"sm"} placeholder={l.categories} />
       </ItemHeaderContainer>
 
-      <CContainer flex={1} pb={4}>
+      <CContainer flex={1} pb={4} minH={ITEM_BODY_H}>
+        <HStack p={3} justify={"end"}>
+          <Text>{l.categories}</Text>
+          <SelectInput w={"fit"} size={"sm"} />
+        </HStack>
+
         {/* Chart */}
         <CContainer px={4} my={"auto"}>
           <ResponsiveContainer width={"100%"} height={300}>
@@ -60,7 +64,7 @@ const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
           </ResponsiveContainer>
         </CContainer>
 
-        <HStack wrap={"wrap"} justify={"center"} gapX={5} mt={"auto"}>
+        <HStack wrap={"wrap"} justify={"center"} gapX={5} px={4} mt={4}>
           {data.map((item, i) => (
             <HStack key={i}>
               <Circle w={"8px"} h={"8px"} bg={CHART_COLORS[i]} />
