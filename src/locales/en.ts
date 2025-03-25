@@ -107,6 +107,7 @@ const translations = {
   "get": "Get",
   "grow": "Up ${value} from last year",
   "income": "Income",
+  "inventory": "Inventory",
   "language_settings_title": "Language",
   "last": "Last",
   "last_updated": "Last updated",

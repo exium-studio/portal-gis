@@ -5,6 +5,7 @@ import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
 import { Avatar } from "@/components/ui/avatar";
+import { ITEM_BODY_H } from "@/constants/sizes";
 import useLang from "@/context/useLang";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import makeCall from "@/utils/makeCall";
@@ -120,71 +121,67 @@ const OfficialContact = ({ ...props }: StackProps) => {
         </HStack>
       </ItemHeaderContainer>
 
-      <CContainer pb={2} h={"500px"}>
-        <CContainer overflowY={"auto"} className="scrollY">
-          <CContainer px={3}>
-            {data.map((item, i) => {
-              return (
-                <CContainer
-                  key={i}
-                  px={2}
-                  py={4}
-                  flex={1}
-                  borderBottom={
-                    i !== data.length - 1
-                      ? "1px solid {colors.border.muted}"
-                      : ""
-                  }
-                >
-                  <Text fontSize={"md"} fontWeight={"bold"} mb={2}>
-                    {item.title}
-                  </Text>
+      <CContainer pb={2} h={ITEM_BODY_H}>
+        <CContainer px={3} overflowY={"auto"} className="scrollY" mr={"-6px"}>
+          {data.map((item, i) => {
+            return (
+              <CContainer
+                key={i}
+                px={2}
+                py={4}
+                flex={1}
+                borderBottom={
+                  i !== data.length - 1 ? "1px solid {colors.border.muted}" : ""
+                }
+              >
+                <Text fontSize={"md"} fontWeight={"bold"} mb={2}>
+                  {item.title}
+                </Text>
 
-                  <Text mb={2}>{item.description}</Text>
+                <Text mb={2}>{item.description}</Text>
 
-                  <HStack mb={4} align={"start"}>
-                    <Icon color="fg.muted">
-                      <IconMapPin stroke={1.5} size={18} />
-                    </Icon>
-                    <Text color="fg.muted">{item.address}</Text>
+                <HStack mb={4} align={"start"}>
+                  <Icon color="fg.muted">
+                    <IconMapPin stroke={1.5} size={18} />
+                  </Icon>
+                  <Text color="fg.muted">{item.address}</Text>
+                </HStack>
+
+                <HStack gap={4}>
+                  <Avatar src={item.avatar} />
+                  <CContainer>
+                    <HelperText>{item.cp.job_title.name}</HelperText>
+                    <Text fontWeight={"bold"}>{item.cp.name}</Text>
+                  </CContainer>
+
+                  <HStack>
+                    <BButton
+                      iconButton
+                      borderRadius={"full"}
+                      variant={"subtle"}
+                      colorPalette={themeConfig.colorPalette}
+                      onClick={() => {
+                        makeCall(item.phone);
+                      }}
+                    >
+                      <IconPhone />
+                    </BButton>
+                    <BButton
+                      iconButton
+                      borderRadius={"full"}
+                      variant={"subtle"}
+                      colorPalette={themeConfig.colorPalette}
+                      onClick={() => {
+                        makeWA(item.wa);
+                      }}
+                    >
+                      <IconBrandWhatsapp />
+                    </BButton>
                   </HStack>
-
-                  <HStack gap={4}>
-                    <Avatar src={item.avatar} />
-                    <CContainer>
-                      <HelperText>{item.cp.job_title.name}</HelperText>
-                      <Text fontWeight={"bold"}>{item.cp.name}</Text>
-                    </CContainer>
-
-                    <HStack>
-                      <BButton
-                        iconButton
-                        borderRadius={"full"}
-                        variant={"subtle"}
-                        colorPalette={themeConfig.colorPalette}
-                        onClick={() => {
-                          makeCall(item.phone);
-                        }}
-                      >
-                        <IconPhone />
-                      </BButton>
-                      <BButton
-                        iconButton
-                        borderRadius={"full"}
-                        variant={"subtle"}
-                        colorPalette={themeConfig.colorPalette}
-                        onClick={() => {
-                          makeWA(item.wa);
-                        }}
-                      >
-                        <IconBrandWhatsapp />
-                      </BButton>
-                    </HStack>
-                  </HStack>
-                </CContainer>
-              );
-            })}
-          </CContainer>
+                </HStack>
+              </CContainer>
+            );
+          })}
         </CContainer>
       </CContainer>
     </ItemContainer>

@@ -2,6 +2,7 @@ import CContainer from "@/components/ui-custom/CContainer";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
+import { ITEM_BODY_H } from "@/constants/sizes";
 import useLang from "@/context/useLang";
 import { HStack, StackProps, Text } from "@chakra-ui/react";
 import { IconSparkles } from "@tabler/icons-react";
@@ -39,16 +40,9 @@ const VisionMission = ({ ...props }: StackProps) => {
         </HStack>
       </ItemHeaderContainer>
 
-      <CContainer pb={2} h={"500px"}>
-        <CContainer
-          pt={4}
-          pb={2}
-          overflowY={"scroll"}
-          mr={"-6px"}
-          className="scrollY"
-          px={3}
-        >
-          <CContainer px={2}>
+      <CContainer pb={2} h={ITEM_BODY_H}>
+        <CContainer px={3} overflowY={"auto"} className="scrollY" mr={"-6px"}>
+          <CContainer px={2} mt={4}>
             <Text color={"fg.muted"} mb={1}>
               {l.vision}
             </Text>
@@ -72,7 +66,8 @@ const VisionMission = ({ ...props }: StackProps) => {
                       ? "1px solid {colors.border.muted}"
                       : ""
                   }
-                  pb={i !== data.mission.length - 1 ? 4 : 0}
+                  pb={4}
+                  // pb={i !== data.mission.length - 1 ? 4 : 0}
                 >
                   <Text>{i + 1}</Text>
                   <Text>{item}</Text>

@@ -59,6 +59,10 @@ export const settings_navs = {
 };
 
 // UI
+export const inventory = {
+  id: "Inventori",
+  en: "Inventory",
+};
 export const current_population = {
   id: "Populasi saat ini",
   en: "Current population",

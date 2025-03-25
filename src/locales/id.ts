@@ -107,6 +107,7 @@ const translations = {
   "get": "Dapatkan",
   "grow": "Naik ${value} dari tahun lalu",
   "income": "Pendapatan",
+  "inventory": "Inventori",
   "language_settings_title": "Bahasa",
   "last": "Terakhir",
   "last_updated": "Terakhir diperbarui",

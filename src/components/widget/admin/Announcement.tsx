@@ -27,6 +27,7 @@ import {
   MenuTrigger,
 } from "@/components/ui/menu";
 import ItemButton from "@/components/widget/ItemButton";
+import { ITEM_BODY_H } from "@/constants/sizes";
 import useLang from "@/context/useLang";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useBackOnClose from "@/hooks/useBackOnClose";
@@ -520,38 +521,34 @@ const Announcement = ({ ...props }: StackProps) => {
         <AnnouncementCreate />
       </ItemHeaderContainer>
 
-      <CContainer pb={2} h={"500px"}>
-        <CContainer overflowY={"scroll"} mr={"-6px"} className="scrollY">
-          <CContainer px={3}>
-            {data.map((item, i) => {
-              return (
-                <CContainer
-                  pl={2}
-                  py={4}
-                  flex={1}
-                  borderBottom={
-                    i !== data.length - 1
-                      ? "1px solid {colors.border.muted}"
-                      : ""
-                  }
-                >
-                  <HStack align={"start"}>
-                    <CContainer gap={1}>
-                      <Text fontWeight={"semibold"}>{item.title}</Text>
+      <CContainer pb={2} h={ITEM_BODY_H}>
+        <CContainer px={3} overflowY={"scroll"} className="scrollY" mr={"-6px"}>
+          {data.map((item, i) => {
+            return (
+              <CContainer
+                pl={2}
+                py={4}
+                flex={1}
+                borderBottom={
+                  i !== data.length - 1 ? "1px solid {colors.border.muted}" : ""
+                }
+              >
+                <HStack align={"start"}>
+                  <CContainer gap={1}>
+                    <Text fontWeight={"semibold"}>{item.title}</Text>
 
-                      <Text>{item.description}</Text>
+                    <Text>{item.description}</Text>
 
-                      <HelperText>
-                        {l.last_updated} {formatDate(item.updated_at)}
-                      </HelperText>
-                    </CContainer>
+                    <HelperText>
+                      {l.last_updated} {formatDate(item.updated_at)}
+                    </HelperText>
+                  </CContainer>
 
-                    <AnnouncementOptions item={item} />
-                  </HStack>
-                </CContainer>
-              );
-            })}
-          </CContainer>
+                  <AnnouncementOptions item={item} />
+                </HStack>
+              </CContainer>
+            );
+          })}
         </CContainer>
       </CContainer>
     </ItemContainer>
