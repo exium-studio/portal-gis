@@ -7,7 +7,7 @@ import useLang from "@/context/useLang";
 import { HStack, Icon, StackProps, Text } from "@chakra-ui/react";
 import { IconHome2 } from "@tabler/icons-react";
 
-const FacilityDoughnutChart = ({ ...props }: StackProps) => {
+const CurrentFacilityDonutChart = ({ ...props }: StackProps) => {
   // Contexts
   const { l } = useLang();
 
@@ -56,4 +56,4 @@ const FacilityDoughnutChart = ({ ...props }: StackProps) => {
   );
 };
 
-export default FacilityDoughnutChart;
+export default CurrentFacilityDonutChart;

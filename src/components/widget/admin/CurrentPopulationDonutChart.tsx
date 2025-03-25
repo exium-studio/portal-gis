@@ -12,7 +12,7 @@ import { Circle, HStack, Icon, StackProps, Text } from "@chakra-ui/react";
 import { IconFriends } from "@tabler/icons-react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
-const TotalPopulationByCategoryDonutChart = ({ ...props }: StackProps) => {
+const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
   // Contexts
   const { l } = useLang();
 
@@ -72,4 +72,4 @@ const TotalPopulationByCategoryDonutChart = ({ ...props }: StackProps) => {
   );
 };
 
-export default TotalPopulationByCategoryDonutChart;
+export default CurrentPopulationDonutChart;

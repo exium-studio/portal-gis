@@ -1,11 +1,11 @@
 import Announcement from "@/components/widget/admin/Announcement";
-import FacilityDonutChart from "@/components/widget/admin/FacilityDonutChart";
+import CurrentFacilityDonutChart from "@/components/widget/admin/CurrentFacilityDonutChart";
 import FundMutationLineChart from "@/components/widget/admin/FundMutationLineChart";
 import OfficialContact from "@/components/widget/admin/OfficialContact";
 import PageContainer from "@/components/widget/PageContainer";
 import PopulationGrowthLineChart from "@/components/widget/PopulationGrowthLineChart";
 import TotalCounter from "@/components/widget/TotalCounter";
-import TotalPopulationByCategoryDonutChart from "@/components/widget/admin/TotalPopulationByCategoryDonutChart";
+import CurrentPopulationDonutChart from "@/components/widget/admin/CurrentPopulationDonutChart";
 import VillageSummary from "@/components/widget/admin/VillageSummary";
 import VisionMission from "@/components/widget/admin/VisionMission";
 import { R_GAP } from "@/constants/sizes";
@@ -31,13 +31,13 @@ const DashboardPage = () => {
       <HStack wrap={"wrap"} gap={R_GAP} align={"stretch"}>
         <FundMutationLineChart flex={"1 1 650px"} />
 
-        <FacilityDonutChart flex={"1 1 300px"} />
+        <CurrentFacilityDonutChart flex={"1 1 300px"} />
       </HStack>
 
       <HStack wrap={"wrap"} gap={R_GAP} align={"stretch"}>
         <PopulationGrowthLineChart flex={"1 1 650px"} />
 
-        <TotalPopulationByCategoryDonutChart flex={"1 1 300px"} />
+        <CurrentPopulationDonutChart flex={"1 1 300px"} />
       </HStack>
     </PageContainer>
   );
