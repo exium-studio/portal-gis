@@ -32,7 +32,6 @@ const LayoutMenu = () => {
         contentRef.current &&
         !(contentRef.current as HTMLElement).contains(event.target as Node)
       ) {
-        console.log(event.target);
         onClose();
       }
     }
@@ -80,7 +79,6 @@ const LayoutMenu = () => {
                   px={2}
                   size={"md"}
                   onClick={() => {
-                    console.log("log");
                     setLayout(item);
                     onClose();
                   }}
