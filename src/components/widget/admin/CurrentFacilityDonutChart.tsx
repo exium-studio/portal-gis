@@ -1,23 +1,25 @@
+import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
 import { ITEM_BODY_H } from "@/constants/sizes";
 import useLang from "@/context/useLang";
+import { useThemeConfig } from "@/context/useThemeConfig";
 import { HStack, Icon, StackProps, Text } from "@chakra-ui/react";
-import { IconHome2 } from "@tabler/icons-react";
+import { IconEye, IconHome2 } from "@tabler/icons-react";
 
 const CurrentFacilityDonutChart = ({ ...props }: StackProps) => {
   // Contexts
+  const { themeConfig } = useThemeConfig();
   const { l } = useLang();
 
   // States, Refs
   const data = [
-    { label: "Lapangan", count: 1 },
-    { label: "Balai Desa", count: 1 },
-    { label: "Gor", count: 1 },
-    { label: "Mic", count: 8 },
-    { label: "Speaker", count: 2 },
+    { label: "Lapangan" },
+    { label: "Balai Desa" },
+    { label: "Gor" },
+    { label: "Masjid Al-Hidayah" },
   ];
 
   return (
@@ -28,9 +30,7 @@ const CurrentFacilityDonutChart = ({ ...props }: StackProps) => {
             <IconHome2 size={20} />
           </Icon>
 
-          <ItemHeaderTitle>
-            {l.facility} & {l.inventory.toLowerCase()}
-          </ItemHeaderTitle>
+          <ItemHeaderTitle>{l.current_facility}</ItemHeaderTitle>
         </HStack>
       </ItemHeaderContainer>
 
@@ -40,13 +40,22 @@ const CurrentFacilityDonutChart = ({ ...props }: StackProps) => {
             return (
               <HStack
                 key={i}
-                align={"start"}
                 borderBottom={"1px solid {colors.gray.muted}"}
                 px={2}
-                py={3}
+                py={2}
               >
                 <Text fontWeight={"medium"}>{item.label}</Text>
-                <Text ml={"auto"}>{item.count}</Text>
+
+                <BButton
+                  iconButton
+                  borderRadius={"full"}
+                  ml={"auto"}
+                  mr={-1}
+                  variant={"ghost"}
+                  colorPalette={themeConfig.colorPalette}
+                >
+                  <IconEye />
+                </BButton>
               </HStack>
             );
           })}
