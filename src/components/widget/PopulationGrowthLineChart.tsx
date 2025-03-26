@@ -28,6 +28,7 @@ import { useColorModeValue } from "../ui/color-mode";
 import PopulationCategoriesOptions from "./PopulationCategoriesOptions";
 import FeedbackNoData from "../ui-custom/FeedbackNoData";
 import NumberInput from "../ui-custom/NumberInput";
+import now from "@/utils/now";
 
 const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
   // Contexts
@@ -35,7 +36,7 @@ const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
 
   // States, Refs
   const [year, setYear] = useState<number | null | undefined>(
-    new Date().getFullYear()
+    now().getFullYear()
   );
   const [category, setCategory] = useState<
     Interface__SelectOption[] | undefined
