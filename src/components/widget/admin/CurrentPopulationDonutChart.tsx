@@ -16,6 +16,7 @@ import { useState } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import PopulationCategoriesOptions from "../PopulationCategoriesOptions";
 import { Interface__SelectOption } from "@/constants/interfaces";
+import calculatePercentage from "@/utils/calculatePercentage";
 
 const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
   // Contexts
@@ -32,12 +33,12 @@ const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
   ]);
   const data = {
     religion: [
-      { label: "Islam", total_population: 1 },
-      { label: "Katholik", total_population: 1 },
-      { label: "Kristen", total_population: 1 },
-      { label: "Hindu", total_population: 8 },
-      { label: "Budha", total_population: 2 },
-      { label: "Konghuchu", total_population: 2 },
+      { label: "Islam", total_population: 1231 },
+      { label: "Katolik", total_population: 412 },
+      { label: "Kristen", total_population: 221 },
+      { label: "Hindu", total_population: 52 },
+      { label: "Budha", total_population: 75 },
+      { label: "Konghucu", total_population: 22 },
     ],
     education: [
       { label: "TK", total_population: 2342 },
@@ -67,6 +68,15 @@ const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
       { label: "Perempuan", total_population: 3419 },
     ],
   };
+  const finalData = {
+    religion: calculatePercentage(data.religion),
+    education: calculatePercentage(data.education),
+    married_status: calculatePercentage(data.married_status),
+    citizenship: calculatePercentage(data.citizenship),
+    gender: calculatePercentage(data.gender),
+  };
+
+  console.log("Current Population", data);
 
   return (
     <ItemContainer {...props}>
@@ -97,28 +107,30 @@ const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
 
         {category && (
           <>
-            {data && (
+            {finalData && (
               <>
                 {/* Chart */}
                 <CContainer px={4} my={"auto"}>
                   <ResponsiveContainer width={"100%"} height={300}>
                     <PieChart>
                       <Pie
-                        data={data[category[0].id as keyof typeof data]}
+                        data={
+                          finalData[category[0].id as keyof typeof finalData]
+                        }
                         dataKey="total_population"
                         nameKey="label"
                         {...PRESET_DOUGHNUT_CHART}
                       >
-                        {data[category[0].id as keyof typeof data].map(
-                          (_, i) => {
-                            return (
-                              <Cell
-                                key={`cell-${i}`}
-                                fill={CHART_COLORS[i % CHART_COLORS.length]}
-                              />
-                            );
-                          }
-                        )}
+                        {finalData[
+                          category[0].id as keyof typeof finalData
+                        ].map((_, i) => {
+                          return (
+                            <Cell
+                              key={`cell-${i}`}
+                              fill={CHART_COLORS[i % CHART_COLORS.length]}
+                            />
+                          );
+                        })}
                       </Pie>
                       <Tooltip {...PRESET_DONUT_CHART_TOOLTIP} />
                     </PieChart>
@@ -126,18 +138,23 @@ const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
                 </CContainer>
 
                 <HStack wrap={"wrap"} justify={"center"} gapX={5} px={4} mt={4}>
-                  {data[category[0].id as keyof typeof data].map((item, i) => (
-                    <HStack key={i}>
-                      <Circle
-                        w={"8px"}
-                        h={"8px"}
-                        bg={CHART_COLORS[i % CHART_COLORS.length]}
-                      />
-                      <Text>
-                        {item.label} : {item.total_population}
-                      </Text>
-                    </HStack>
-                  ))}
+                  {finalData[category[0].id as keyof typeof finalData].map(
+                    (item, i) => (
+                      <HStack key={i}>
+                        <Circle
+                          w={"8px"}
+                          h={"8px"}
+                          bg={CHART_COLORS[i % CHART_COLORS.length]}
+                        />
+                        <HStack>
+                          <Text>
+                            {item.label} : {item.total_population}
+                          </Text>
+                          <Text color={"fg.subtle"}>{item.percentage}</Text>
+                        </HStack>
+                      </HStack>
+                    )
+                  )}
                 </HStack>
               </>
             )}

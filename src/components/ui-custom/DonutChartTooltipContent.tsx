@@ -1,5 +1,6 @@
 import { Text } from "@chakra-ui/react";
 import CContainer from "./CContainer";
+import formatNumber from "@/utils/formatNumber";
 
 const DoughnutChartTooltipContent = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
@@ -17,10 +18,8 @@ const DoughnutChartTooltipContent = ({ active, payload }: any) => {
               color={"white"}
               // color={item.payload.fill}
             >
-              {`${item.name}: ${item.value.toLocaleString()} ${
-                item.payload.percentage
-                  ? `(${item.payload.percentage.toFixed(0)}%)`
-                  : ""
+              {`${item.name}: ${formatNumber(item.value)} ${
+                item.payload.percentage ? `(${item.payload.percentage})` : ""
               }`}
             </Text>
           );
