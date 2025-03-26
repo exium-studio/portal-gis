@@ -1,5 +1,5 @@
 import Announcement from "@/components/widget/admin/Announcement";
-import CurrentFacilityDonutChart from "@/components/widget/admin/CurrentFacilityDonutChart";
+import CurrentFacility from "@/components/widget/admin/CurrentFacility";
 import FundMutationLineChart from "@/components/widget/admin/FundMutationLineChart";
 import OfficialContact from "@/components/widget/admin/OfficialContact";
 import PageContainer from "@/components/widget/PageContainer";
@@ -23,7 +23,7 @@ const DashboardPage = () => {
         <OfficialContact flex={"1 1 300px"} minW={0} />
 
         <FundMutationLineChart flex={"1 1 650px"} />
-        <CurrentFacilityDonutChart flex={"1 1 300px"} />
+        <CurrentFacility flex={"1 1 300px"} />
 
         <PopulationGrowthLineChart flex={"1 1 650px"} />
         <CurrentPopulationDonutChart flex={"1 1 300px"} />

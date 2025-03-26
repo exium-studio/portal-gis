@@ -7,9 +7,9 @@ import { ITEM_BODY_H } from "@/constants/sizes";
 import useLang from "@/context/useLang";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import { HStack, Icon, StackProps, Text } from "@chakra-ui/react";
-import { IconEye, IconHome2 } from "@tabler/icons-react";
+import { IconHome2, IconMapPin } from "@tabler/icons-react";
 
-const CurrentFacilityDonutChart = ({ ...props }: StackProps) => {
+const CurrentFacility = ({ ...props }: StackProps) => {
   // Contexts
   const { themeConfig } = useThemeConfig();
   const { l } = useLang();
@@ -54,7 +54,7 @@ const CurrentFacilityDonutChart = ({ ...props }: StackProps) => {
                   variant={"ghost"}
                   colorPalette={themeConfig.colorPalette}
                 >
-                  <IconEye />
+                  <IconMapPin />
                 </BButton>
               </HStack>
             );
@@ -65,4 +65,4 @@ const CurrentFacilityDonutChart = ({ ...props }: StackProps) => {
   );
 };
 
-export default CurrentFacilityDonutChart;
+export default CurrentFacility;
