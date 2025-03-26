@@ -13,6 +13,7 @@ import {
 import { ITEM_BODY_H } from "@/constants/sizes";
 import useLang from "@/context/useLang";
 import formatCount from "@/utils/formatCount";
+import userNow from "@/utils/userNow";
 import { Circle, HStack, StackProps, Text } from "@chakra-ui/react";
 import { IconTrendingUp } from "@tabler/icons-react";
 import { useState } from "react";
@@ -24,11 +25,10 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { useColorModeValue } from "../ui/color-mode";
-import PopulationCategoriesOptions from "./PopulationCategoriesOptions";
 import FeedbackNoData from "../ui-custom/FeedbackNoData";
 import NumberInput from "../ui-custom/NumberInput";
-import now from "@/utils/now";
+import { useColorModeValue } from "../ui/color-mode";
+import PopulationCategoriesOptions from "./PopulationCategoriesOptions";
 
 const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
   // Contexts
@@ -36,7 +36,7 @@ const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
 
   // States, Refs
   const [year, setYear] = useState<number | null | undefined>(
-    now().getFullYear()
+    userNow().getFullYear()
   );
   const [category, setCategory] = useState<
     Interface__SelectOption[] | undefined
