@@ -403,7 +403,7 @@ const AnnouncementOptions = ({ item }: any) => {
   const { l } = useLang();
 
   return (
-    <MenuRoot>
+    <MenuRoot lazyMount closeOnSelect={false}>
       <MenuTrigger asChild>
         <BButton
           iconButton
