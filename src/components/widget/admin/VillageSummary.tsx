@@ -2,7 +2,6 @@ import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
 import { Tooltip } from "@/components/ui/tooltip";
-import CostOfLivingStatus from "@/components/widget/CostOfLivingStatus";
 import PopulationDensityStatus from "@/components/widget/admin/PopulationDensityStatus";
 import { IMAGES_PATH } from "@/constants/paths";
 import useLang from "@/context/useLang";
@@ -77,13 +76,13 @@ const VillageSummary = ({ ...props }: StackProps) => {
               />
             </CContainer>
 
-            <CContainer>
+            {/* <CContainer>
               <Text color={"fg.muted"}>{l.cost_of_living}</Text>
               <CostOfLivingStatus
                 data={data.cost_of_living}
                 textProps={{ fontWeight: "semibold" }}
               />
-            </CContainer>
+            </CContainer> */}
           </HStack>
         </CContainer>
       </HStack>
