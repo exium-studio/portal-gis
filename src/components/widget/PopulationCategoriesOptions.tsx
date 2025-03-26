@@ -34,7 +34,7 @@ const PopulationCategoriesOptions = ({ category, setCategory }: any) => {
       }}
       inputValue={category}
       placeholder={l.categories}
-      w={"fit"}
+      w={"110px"}
       size={"sm"}
     />
   );
