@@ -33,12 +33,12 @@ const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
   ]);
   const data = {
     religion: [
-      { label: "Islam", total_population: 1231 },
-      { label: "Katolik", total_population: 412 },
-      { label: "Kristen", total_population: 221 },
-      { label: "Hindu", total_population: 52 },
-      { label: "Budha", total_population: 75 },
-      { label: "Konghucu", total_population: 22 },
+      { label: "Islam", total_population: 4200 },
+      { label: "Katolik", total_population: 800 },
+      { label: "Kristen", total_population: 200 },
+      { label: "Hindu", total_population: 500 },
+      { label: "Budha", total_population: 400 },
+      { label: "Konghucu", total_population: 100 },
     ],
     education: [
       { label: "TK", total_population: 2342 },
