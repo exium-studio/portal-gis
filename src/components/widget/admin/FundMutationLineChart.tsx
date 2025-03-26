@@ -108,16 +108,9 @@ const FundMutationLineChart = ({ ...props }: StackProps) => {
         </HStack>
       </ItemHeaderContainer>
 
-      <CContainer
-        flex={1}
-        w={"calc(100% + 3*4px)"}
-        minH={ITEM_BODY_H}
-        px={3}
-        pb={4}
-        ml={-3}
-      >
+      <CContainer flex={1} minH={ITEM_BODY_H} px={3} pb={4}>
         {/* Chart */}
-        <CContainer my={"auto"}>
+        <CContainer my={"auto"} w={"calc(100% + 3*4px)"} ml={-3}>
           <ResponsiveContainer width={"100%"} height={450}>
             <ComposedChart data={finalData}>
               <CartesianGrid />
