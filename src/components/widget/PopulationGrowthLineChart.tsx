@@ -27,12 +27,16 @@ import {
 import { useColorModeValue } from "../ui/color-mode";
 import PopulationCategoriesOptions from "./PopulationCategoriesOptions";
 import FeedbackNoData from "../ui-custom/FeedbackNoData";
+import NumberInput from "../ui-custom/NumberInput";
 
 const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
   // Contexts
   const { l, lang } = useLang();
 
   // States, Refs
+  const [year, setYear] = useState<number | null | undefined>(
+    new Date().getFullYear()
+  );
   const [category, setCategory] = useState<
     Interface__SelectOption[] | undefined
   >([
@@ -542,11 +546,27 @@ const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
         </HStack>
 
         <HStack>
-          <Text color={"fg.subtle"}>{l.by}</Text>
-          <PopulationCategoriesOptions
-            category={category}
-            setCategory={setCategory}
-          />
+          <HStack>
+            <Text color={"fg.subtle"}>{l.year}</Text>
+            <NumberInput
+              onChangeSetter={(input) => {
+                setYear(input);
+              }}
+              inputValue={year}
+              size={"sm"}
+              w={"60px"}
+              noFormat
+              textAlign={"center"}
+            />
+          </HStack>
+
+          <HStack>
+            <Text color={"fg.subtle"}>{l.by}</Text>
+            <PopulationCategoriesOptions
+              category={category}
+              setCategory={setCategory}
+            />
+          </HStack>
         </HStack>
       </ItemHeaderContainer>
 
