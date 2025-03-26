@@ -298,6 +298,12 @@ button {
 tspan {
   font-size: 0.875rem !important;
 }
+.recharts-wrapper * {
+  outline: none !important;
+}
+.recharts-wrapper:focus-visible {
+  outline: none !important;
+}
 
 /* Ckahra UI */
 /* Toast */
