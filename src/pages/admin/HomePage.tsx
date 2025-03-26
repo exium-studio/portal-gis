@@ -18,23 +18,17 @@ const DashboardPage = () => {
         <VillageSummary flex={"1 1 650px"} />
 
         <TotalCounter flex={"1 1 300px"} />
-      </HStack>
 
-      <HStack wrap={"wrap"} gap={R_GAP} align={"stretch"}>
         <Announcement flex={"1 1 300px"} minW={0} />
 
         <VisionMission flex={"1 1 300px"} minW={0} />
 
         <OfficialContact flex={"1 1 300px"} minW={0} />
-      </HStack>
 
-      <HStack wrap={"wrap"} gap={R_GAP} align={"stretch"}>
         <FundMutationLineChart flex={"1 1 650px"} />
 
         <CurrentFacilityDonutChart flex={"1 1 300px"} />
-      </HStack>
 
-      <HStack wrap={"wrap"} gap={R_GAP} align={"stretch"}>
         <PopulationGrowthLineChart flex={"1 1 650px"} />
 
         <CurrentPopulationDonutChart flex={"1 1 300px"} />
