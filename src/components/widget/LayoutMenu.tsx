@@ -23,15 +23,16 @@ const LayoutMenu = () => {
 
   // Utils
   const { open, onOpen, onClose } = useDisclosure();
-  const popoverRef = useRef(null);
+  const contentRef = useRef(null);
 
   // Close when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
-        popoverRef.current &&
-        !(popoverRef.current as HTMLElement).contains(event.target as Node)
+        contentRef.current &&
+        !(contentRef.current as HTMLElement).contains(event.target as Node)
       ) {
+        console.log(event.target);
         onClose();
       }
     }
@@ -60,8 +61,9 @@ const LayoutMenu = () => {
       </PopoverTrigger>
 
       <Portal>
-        <PopoverPositioner ref={popoverRef}>
+        <PopoverPositioner>
           <PopoverContent
+            ref={contentRef}
             p={1}
             borderRadius={themeConfig.radii.container}
             w={"180px"}
@@ -78,6 +80,7 @@ const LayoutMenu = () => {
                   px={2}
                   size={"md"}
                   onClick={() => {
+                    console.log("log");
                     setLayout(item);
                     onClose();
                   }}
