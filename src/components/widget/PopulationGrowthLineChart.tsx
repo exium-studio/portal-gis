@@ -26,6 +26,7 @@ import {
 } from "recharts";
 import { useColorModeValue } from "../ui/color-mode";
 import PopulationCategoriesOptions from "./PopulationCategoriesOptions";
+import FeedbackNoData from "../ui-custom/FeedbackNoData";
 
 const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
   // Contexts
@@ -383,8 +384,130 @@ const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
         "Belum Kawin": 2180,
       },
     ],
-    citizenship: [],
-    gender: [],
+    citizenship: [
+      {
+        total_population: 6000,
+        WNI: 5900,
+        WNA: 100,
+      },
+      {
+        total_population: 5500,
+        WNI: 5400,
+        WNA: 100,
+      },
+      {
+        total_population: 5800,
+        WNI: 5700,
+        WNA: 100,
+      },
+      {
+        total_population: 6200,
+        WNI: 6100,
+        WNA: 100,
+      },
+      {
+        total_population: 5900,
+        WNI: 5800,
+        WNA: 100,
+      },
+      {
+        total_population: 6100,
+        WNI: 6000,
+        WNA: 100,
+      },
+      {
+        total_population: 6300,
+        WNI: 6200,
+        WNA: 100,
+      },
+      {
+        total_population: 5700,
+        WNI: 5600,
+        WNA: 100,
+      },
+      {
+        total_population: 6000,
+        WNI: 5900,
+        WNA: 100,
+      },
+      {
+        total_population: 6200,
+        WNI: 6100,
+        WNA: 100,
+      },
+      {
+        total_population: 5900,
+        WNI: 5800,
+        WNA: 100,
+      },
+      {
+        total_population: 6100,
+        WNI: 6000,
+        WNA: 100,
+      },
+    ],
+    gender: [
+      {
+        total_population: 6000,
+        "Laki-laki": 3000,
+        Perempuan: 3000,
+      },
+      {
+        total_population: 5500,
+        "Laki-laki": 2750,
+        Perempuan: 2750,
+      },
+      {
+        total_population: 5800,
+        "Laki-laki": 2900,
+        Perempuan: 2900,
+      },
+      {
+        total_population: 6200,
+        "Laki-laki": 3100,
+        Perempuan: 3100,
+      },
+      {
+        total_population: 5900,
+        "Laki-laki": 2950,
+        Perempuan: 2950,
+      },
+      {
+        total_population: 6100,
+        "Laki-laki": 3050,
+        Perempuan: 3050,
+      },
+      {
+        total_population: 6300,
+        "Laki-laki": 3150,
+        Perempuan: 3150,
+      },
+      {
+        total_population: 5700,
+        "Laki-laki": 2850,
+        Perempuan: 2850,
+      },
+      {
+        total_population: 6000,
+        "Laki-laki": 3000,
+        Perempuan: 3000,
+      },
+      {
+        total_population: 6200,
+        "Laki-laki": 3100,
+        Perempuan: 3100,
+      },
+      {
+        total_population: 5900,
+        "Laki-laki": 2950,
+        Perempuan: 2950,
+      },
+      {
+        total_population: 6100,
+        "Laki-laki": 3050,
+        Perempuan: 3050,
+      },
+    ],
   };
   const finalData = data?.[category?.[0]?.id as keyof typeof data].map(
     (item: any, i: number) => ({
@@ -392,7 +515,7 @@ const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
       month: MONTHS[lang][i].slice(0, 3),
     })
   );
-  const categories = Object.keys(finalData[0]).filter(
+  const categories = Object.keys(finalData?.[0]).filter(
     (key) => key !== "month" && key !== "total_population"
   );
   const categoriesLegend = categories.map((item, i) => ({
@@ -428,45 +551,59 @@ const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
       </ItemHeaderContainer>
 
       <CContainer flex={1} minH={ITEM_BODY_H} px={3} pb={4}>
-        {/* Chart */}
-        <CContainer my={"auto"} w={"calc(100% + 3*4px)"} ml={-3}>
-          <ResponsiveContainer width={"100%"} height={450}>
-            <ComposedChart data={finalData}>
-              <CartesianGrid />
-              <XAxis dataKey="month" />
-              <YAxis tickFormatter={formatCount} />
-              <ChartTooltip {...PRESET_LINE_CHART_TOOLTIP} />
-              <Line
-                dataKey="total_population"
-                stroke={useColorModeValue("black", "white")}
-                name={l.population}
-                {...PRESET_LINE_CHART}
-              />
-              {categories?.map((item, i) => {
-                return (
-                  <Line
-                    key={i}
-                    dataKey={item}
-                    stroke={CHART_COLORS[i]}
-                    name={item}
-                    {...PRESET_LINE_CHART}
-                  />
-                );
-              })}
-            </ComposedChart>
-          </ResponsiveContainer>
-        </CContainer>
+        {!category && (
+          <CContainer p={4} m={"auto"}>
+            <FeedbackNoData title="" description={l.please_select_category} />
+          </CContainer>
+        )}
 
-        <HStack wrap={"wrap"} justify={"center"} gapX={5} mt={4}>
-          {legend.map((item, i) => {
-            return (
-              <HStack key={i}>
-                <Circle w={"8px"} h={"8px"} bg={item.color} />
-                <Text>{item.label}</Text>
-              </HStack>
-            );
-          })}
-        </HStack>
+        {category && (
+          <>
+            {finalData && (
+              <>
+                {/* Chart */}
+                <CContainer my={"auto"} w={"calc(100% + 3*4px)"} ml={-3}>
+                  <ResponsiveContainer width={"100%"} height={450}>
+                    <ComposedChart data={finalData}>
+                      <CartesianGrid />
+                      <XAxis dataKey="month" />
+                      <YAxis tickFormatter={formatCount} />
+                      <ChartTooltip {...PRESET_LINE_CHART_TOOLTIP} />
+                      <Line
+                        dataKey="total_population"
+                        stroke={useColorModeValue("black", "white")}
+                        name={l.population}
+                        {...PRESET_LINE_CHART}
+                      />
+                      {categories?.map((item, i) => {
+                        return (
+                          <Line
+                            key={i}
+                            dataKey={item}
+                            stroke={CHART_COLORS[i]}
+                            name={item}
+                            {...PRESET_LINE_CHART}
+                          />
+                        );
+                      })}
+                    </ComposedChart>
+                  </ResponsiveContainer>
+                </CContainer>
+
+                <HStack wrap={"wrap"} justify={"center"} gapX={5} mt={4}>
+                  {legend.map((item, i) => {
+                    return (
+                      <HStack key={i}>
+                        <Circle w={"8px"} h={"8px"} bg={item.color} />
+                        <Text>{item.label}</Text>
+                      </HStack>
+                    );
+                  })}
+                </HStack>
+              </>
+            )}
+          </>
+        )}
       </CContainer>
     </ItemContainer>
   );
