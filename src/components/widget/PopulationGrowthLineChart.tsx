@@ -555,7 +555,7 @@ const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
               }}
               inputValue={year}
               size={"sm"}
-              w={"60px"}
+              w={"70px"}
               noFormat
               textAlign={"center"}
             />
