@@ -34,125 +34,364 @@ const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
   // States, Refs
   const [category, setCategory] = useState<
     Interface__SelectOption[] | undefined
-  >(undefined);
-  const data = [
+  >([
     {
-      population: 6000,
-      category: [
-        { religion_id: 1, label: "Islam", total: 4200 },
-        { religion_id: 2, label: "Kristen", total: 1000 },
-        { religion_id: 3, label: "Hindu", total: 500 },
-        { religion_id: 4, label: "Budha", total: 300 },
-      ],
+      id: "religion",
+      label: l.religion,
     },
-    {
-      population: 5500,
-      category: [
-        { religion_id: 1, label: "Islam", total: 3800 },
-        { religion_id: 2, label: "Kristen", total: 1200 },
-        { religion_id: 3, label: "Hindu", total: 300 },
-        { religion_id: 4, label: "Budha", total: 200 },
-      ],
-    },
-    {
-      population: 5800,
-      category: [
-        { religion_id: 1, label: "Islam", total: 4000 },
-        { religion_id: 2, label: "Kristen", total: 1100 },
-        { religion_id: 3, label: "Hindu", total: 400 },
-        { religion_id: 4, label: "Budha", total: 300 },
-      ],
-    },
-    {
-      population: 6200,
-      category: [
-        { religion_id: 1, label: "Islam", total: 4500 },
-        { religion_id: 2, label: "Kristen", total: 900 },
-        { religion_id: 3, label: "Hindu", total: 500 },
-        { religion_id: 4, label: "Budha", total: 300 },
-      ],
-    },
-    {
-      population: 5900,
-      category: [
-        { religion_id: 1, label: "Islam", total: 4200 },
-        { religion_id: 2, label: "Kristen", total: 1100 },
-        { religion_id: 3, label: "Hindu", total: 400 },
-        { religion_id: 4, label: "Budha", total: 200 },
-      ],
-    },
-    {
-      population: 6100,
-      category: [
-        { religion_id: 1, label: "Islam", total: 4300 },
-        { religion_id: 2, label: "Kristen", total: 1000 },
-        { religion_id: 3, label: "Hindu", total: 500 },
-        { religion_id: 4, label: "Budha", total: 300 },
-      ],
-    },
-    {
-      population: 6300,
-      category: [
-        { religion_id: 1, label: "Islam", total: 4600 },
-        { religion_id: 2, label: "Kristen", total: 800 },
-        { religion_id: 3, label: "Hindu", total: 600 },
-        { religion_id: 4, label: "Budha", total: 300 },
-      ],
-    },
-    {
-      population: 5700,
-      category: [
-        { religion_id: 1, label: "Islam", total: 3900 },
-        { religion_id: 2, label: "Kristen", total: 1200 },
-        { religion_id: 3, label: "Hindu", total: 400 },
-        { religion_id: 4, label: "Budha", total: 200 },
-      ],
-    },
-    {
-      population: 6000,
-      category: [
-        { religion_id: 1, label: "Islam", total: 4100 },
-        { religion_id: 2, label: "Kristen", total: 1100 },
-        { religion_id: 3, label: "Hindu", total: 500 },
-        { religion_id: 4, label: "Budha", total: 300 },
-      ],
-    },
-    {
-      population: 6200,
-      category: [
-        { religion_id: 1, label: "Islam", total: 4400 },
-        { religion_id: 2, label: "Kristen", total: 900 },
-        { religion_id: 3, label: "Hindu", total: 600 },
-        { religion_id: 4, label: "Budha", total: 300 },
-      ],
-    },
-    {
-      population: 5900,
-      category: [
-        { religion_id: 1, label: "Islam", total: 4000 },
-        { religion_id: 2, label: "Kristen", total: 1100 },
-        { religion_id: 3, label: "Hindu", total: 600 },
-        { religion_id: 4, label: "Budha", total: 200 },
-      ],
-    },
-    {
-      population: 6100,
-      category: [
-        { religion_id: 1, label: "Islam", total: 4200 },
-        { religion_id: 2, label: "Kristen", total: 1000 },
-        { religion_id: 3, label: "Hindu", total: 500 },
-        { religion_id: 4, label: "Budha", total: 400 },
-      ],
-    },
-  ];
-
-  const finalData = data.map((item: any, i: number) => ({
-    total_population: item.population,
-    ...Object.fromEntries(
-      item.category.map((cat: any) => [cat.label, cat.total])
-    ),
-    month: MONTHS[lang][i].slice(0, 3),
-  }));
+  ]);
+  const data = {
+    religion: [
+      {
+        total_population: 6000,
+        Islam: 4200,
+        Kristen: 1000,
+        Hindu: 500,
+        Budha: 300,
+      },
+      {
+        total_population: 5500,
+        Islam: 3800,
+        Kristen: 1200,
+        Hindu: 300,
+        Budha: 200,
+      },
+      {
+        total_population: 5800,
+        Islam: 4000,
+        Kristen: 1100,
+        Hindu: 400,
+        Budha: 300,
+      },
+      {
+        total_population: 6200,
+        Islam: 4500,
+        Kristen: 900,
+        Hindu: 500,
+        Budha: 300,
+      },
+      {
+        total_population: 5900,
+        Islam: 4200,
+        Kristen: 1100,
+        Hindu: 400,
+        Budha: 200,
+      },
+      {
+        total_population: 6100,
+        Islam: 4300,
+        Kristen: 1000,
+        Hindu: 500,
+        Budha: 300,
+      },
+      {
+        total_population: 6300,
+        Islam: 4600,
+        Kristen: 800,
+        Hindu: 600,
+        Budha: 300,
+      },
+      {
+        total_population: 5700,
+        Islam: 3900,
+        Kristen: 1200,
+        Hindu: 400,
+        Budha: 200,
+      },
+      {
+        total_population: 6000,
+        Islam: 4100,
+        Kristen: 1100,
+        Hindu: 500,
+        Budha: 300,
+      },
+      {
+        total_population: 6200,
+        Islam: 4400,
+        Kristen: 900,
+        Hindu: 600,
+        Budha: 300,
+      },
+      {
+        total_population: 5900,
+        Islam: 4000,
+        Kristen: 1100,
+        Hindu: 600,
+        Budha: 200,
+      },
+      {
+        total_population: 6100,
+        Islam: 4200,
+        Kristen: 1000,
+        Hindu: 500,
+        Budha: 400,
+      },
+    ],
+    education: [
+      {
+        total_population: 6000,
+        TK: 1757,
+        SD: 176,
+        SMP: 1065,
+        SMA: 1815,
+        SMK: 314,
+        D1: 14,
+        D2: 3,
+        D3: 17,
+        D4: 2,
+        S1: 782,
+        S2: 54,
+        S3: 1,
+      },
+      {
+        total_population: 5500,
+        TK: 1611,
+        SD: 161,
+        SMP: 976,
+        SMA: 1664,
+        SMK: 288,
+        D1: 13,
+        D2: 3,
+        D3: 16,
+        D4: 1,
+        S1: 717,
+        S2: 50,
+        S3: 1,
+      },
+      {
+        total_population: 5800,
+        TK: 1699,
+        SD: 170,
+        SMP: 1029,
+        SMA: 1755,
+        SMK: 304,
+        D1: 14,
+        D2: 3,
+        D3: 17,
+        D4: 1,
+        S1: 756,
+        S2: 52,
+        S3: 1,
+      },
+      {
+        total_population: 6200,
+        TK: 1816,
+        SD: 181,
+        SMP: 1100,
+        SMA: 1876,
+        SMK: 325,
+        D1: 15,
+        D2: 3,
+        D3: 18,
+        D4: 2,
+        S1: 808,
+        S2: 56,
+        S3: 1,
+      },
+      {
+        total_population: 5900,
+        TK: 1728,
+        SD: 172,
+        SMP: 1047,
+        SMA: 1788,
+        SMK: 309,
+        D1: 14,
+        D2: 3,
+        D3: 17,
+        D4: 2,
+        S1: 770,
+        S2: 53,
+        S3: 1,
+      },
+      {
+        total_population: 6100,
+        TK: 1786,
+        SD: 178,
+        SMP: 1084,
+        SMA: 1851,
+        SMK: 320,
+        D1: 14,
+        D2: 3,
+        D3: 18,
+        D4: 2,
+        S1: 796,
+        S2: 55,
+        S3: 1,
+      },
+      {
+        total_population: 6300,
+        TK: 1845,
+        SD: 184,
+        SMP: 1121,
+        SMA: 1914,
+        SMK: 331,
+        D1: 15,
+        D2: 3,
+        D3: 19,
+        D4: 2,
+        S1: 822,
+        S2: 57,
+        S3: 1,
+      },
+      {
+        total_population: 5700,
+        TK: 1670,
+        SD: 167,
+        SMP: 1013,
+        SMA: 1727,
+        SMK: 299,
+        D1: 14,
+        D2: 3,
+        D3: 16,
+        D4: 2,
+        S1: 743,
+        S2: 51,
+        S3: 1,
+      },
+      {
+        total_population: 6000,
+        TK: 1757,
+        SD: 176,
+        SMP: 1065,
+        SMA: 1815,
+        SMK: 314,
+        D1: 14,
+        D2: 3,
+        D3: 17,
+        D4: 2,
+        S1: 782,
+        S2: 54,
+        S3: 1,
+      },
+      {
+        total_population: 6200,
+        TK: 1816,
+        SD: 181,
+        SMP: 1100,
+        SMA: 1876,
+        SMK: 325,
+        D1: 15,
+        D2: 3,
+        D3: 18,
+        D4: 2,
+        S1: 808,
+        S2: 56,
+        S3: 1,
+      },
+      {
+        total_population: 5900,
+        TK: 1728,
+        SD: 172,
+        SMP: 1047,
+        SMA: 1788,
+        SMK: 309,
+        D1: 14,
+        D2: 3,
+        D3: 17,
+        D4: 2,
+        S1: 770,
+        S2: 53,
+        S3: 1,
+      },
+      {
+        total_population: 6100,
+        TK: 1786,
+        SD: 178,
+        SMP: 1084,
+        SMA: 1851,
+        SMK: 320,
+        D1: 14,
+        D2: 3,
+        D3: 18,
+        D4: 2,
+        S1: 796,
+        S2: 55,
+        S3: 1,
+      },
+    ],
+    married_status: [
+      {
+        total_population: 6000,
+        Kawin: 3500,
+        "Kawin Belum Tercatat": 500,
+        "Belum Kawin": 2000,
+      },
+      {
+        total_population: 5500,
+        Kawin: 3200,
+        "Kawin Belum Tercatat": 400,
+        "Belum Kawin": 1900,
+      },
+      {
+        total_population: 5800,
+        Kawin: 3400,
+        "Kawin Belum Tercatat": 450,
+        "Belum Kawin": 1950,
+      },
+      {
+        total_population: 6200,
+        Kawin: 3700,
+        "Kawin Belum Tercatat": 550,
+        "Belum Kawin": 1950,
+      },
+      {
+        total_population: 5900,
+        Kawin: 3300,
+        "Kawin Belum Tercatat": 500,
+        "Belum Kawin": 2100,
+      },
+      {
+        total_population: 6100,
+        Kawin: 3400,
+        "Kawin Belum Tercatat": 520,
+        "Belum Kawin": 2180,
+      },
+      {
+        total_population: 6300,
+        Kawin: 3800,
+        "Kawin Belum Tercatat": 600,
+        "Belum Kawin": 1900,
+      },
+      {
+        total_population: 5700,
+        Kawin: 3100,
+        "Kawin Belum Tercatat": 450,
+        "Belum Kawin": 2150,
+      },
+      {
+        total_population: 6000,
+        Kawin: 3500,
+        "Kawin Belum Tercatat": 500,
+        "Belum Kawin": 2000,
+      },
+      {
+        total_population: 6200,
+        Kawin: 3700,
+        "Kawin Belum Tercatat": 550,
+        "Belum Kawin": 1950,
+      },
+      {
+        total_population: 5900,
+        Kawin: 3300,
+        "Kawin Belum Tercatat": 500,
+        "Belum Kawin": 2100,
+      },
+      {
+        total_population: 6100,
+        Kawin: 3400,
+        "Kawin Belum Tercatat": 520,
+        "Belum Kawin": 2180,
+      },
+    ],
+    citizenship: [],
+    gender: [],
+  };
+  const finalData = data?.[category?.[0]?.id as keyof typeof data].map(
+    (item: any, i: number) => ({
+      ...item,
+      month: MONTHS[lang][i].slice(0, 3),
+    })
+  );
   const categories = Object.keys(finalData[0]).filter(
     (key) => key !== "month" && key !== "total_population"
   );
@@ -168,7 +407,7 @@ const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
     ...categoriesLegend,
   ];
 
-  console.log("Population Growth", data);
+  console.log("Population Growth", finalData);
 
   return (
     <ItemContainer {...props}>
@@ -179,22 +418,18 @@ const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
           <ItemHeaderTitle>{l.population_growth}</ItemHeaderTitle>
         </HStack>
 
-        <PopulationCategoriesOptions
-          category={category}
-          setCategory={setCategory}
-        />
+        <HStack>
+          <Text color={"fg.subtle"}>{l.by}</Text>
+          <PopulationCategoriesOptions
+            category={category}
+            setCategory={setCategory}
+          />
+        </HStack>
       </ItemHeaderContainer>
 
-      <CContainer
-        flex={1}
-        w={"calc(100% + 3*4px)"}
-        minH={ITEM_BODY_H}
-        px={3}
-        pb={4}
-        ml={-3}
-      >
+      <CContainer flex={1} minH={ITEM_BODY_H} px={3} pb={4}>
         {/* Chart */}
-        <CContainer my={"auto"}>
+        <CContainer my={"auto"} w={"calc(100% + 3*4px)"} ml={-3}>
           <ResponsiveContainer width={"100%"} height={450}>
             <ComposedChart data={finalData}>
               <CartesianGrid />

@@ -8,30 +8,30 @@ const PopulationCategoriesOptions = ({ category, setCategory }: any) => {
   // States, Refs
   const categoriesOptions = [
     {
-      id: 1,
+      id: "religion",
       label: l.religion,
     },
     {
-      id: 2,
+      id: "education",
       label: l.education,
     },
     {
-      id: 3,
-      label: l.maried_status,
+      id: "married_status",
+      label: l.married_status,
     },
     {
-      id: 4,
+      id: "citizenship",
       label: l.citizenship,
     },
     {
-      id: 5,
+      id: "gender",
       label: l.gender,
     },
   ];
 
   return (
     <SelectInput
-      id="jancok"
+      id="population-category-options"
       initialOptions={categoriesOptions}
       onConfirm={(input) => {
         setCategory(input);
@@ -40,6 +40,7 @@ const PopulationCategoriesOptions = ({ category, setCategory }: any) => {
       placeholder={l.categories}
       w={"110px"}
       size={"sm"}
+      nonNullable
     />
   );
 };

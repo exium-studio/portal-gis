@@ -15,6 +15,7 @@ const translations = {
     "description": "You are back online."
   },
   "back_to_root": "Back to main page",
+  "by": "by",
   "camera": "Camera",
   "camera_fail_toast": {
     "title": "Failed to access camera",
@@ -163,7 +164,7 @@ const translations = {
     "description": "You are now logged out."
   },
   "maintenance_page": "We are currently performing maintenance to provide better service. Sorry for the inconvenience. Please check back later.",
-  "maried_status": "Maried status",
+  "married_status": "Maried status",
   "measurment_unit_format_settings_title": "Measurement Units Format",
   "mic": "Microphone",
   "mic_fail_toast": {

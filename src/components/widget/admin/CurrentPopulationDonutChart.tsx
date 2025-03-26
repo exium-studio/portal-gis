@@ -1,9 +1,9 @@
 import CContainer from "@/components/ui-custom/CContainer";
+import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
 import { CHART_COLORS } from "@/constants/chartColors";
-import { Interface__SelectOption } from "@/constants/interfaces";
 import {
   PRESET_DONUT_CHART_TOOLTIP,
   PRESET_DOUGHNUT_CHART,
@@ -15,7 +15,7 @@ import { IconFriends } from "@tabler/icons-react";
 import { useState } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import PopulationCategoriesOptions from "../PopulationCategoriesOptions";
-import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
+import { Interface__SelectOption } from "@/constants/interfaces";
 
 const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
   // Contexts
@@ -24,14 +24,49 @@ const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
   // States, Refs
   const [category, setCategory] = useState<
     Interface__SelectOption[] | undefined
-  >(undefined);
-  const data = [
-    { label: "Lapangan", count: 1 },
-    { label: "Balai Desa", count: 1 },
-    { label: "Gor", count: 1 },
-    { label: "Mic", count: 8 },
-    { label: "Speaker", count: 2 },
-  ];
+  >([
+    {
+      id: "religion",
+      label: l.religion,
+    },
+  ]);
+  const data = {
+    religion: [
+      { label: "Islam", total_population: 1 },
+      { label: "Katholik", total_population: 1 },
+      { label: "Kristen", total_population: 1 },
+      { label: "Hindu", total_population: 8 },
+      { label: "Budha", total_population: 2 },
+      { label: "Konghuchu", total_population: 2 },
+    ],
+    education: [
+      { label: "TK", total_population: 2342 },
+      { label: "SD", total_population: 234 },
+      { label: "SMP", total_population: 1419 },
+      { label: "SMA", total_population: 2419 },
+      { label: "SMK", total_population: 419 },
+      { label: "D1", total_population: 19 },
+      { label: "D2", total_population: 4 },
+      { label: "D3", total_population: 23 },
+      { label: "D4", total_population: 2 },
+      { label: "S1", total_population: 1042 },
+      { label: "S2", total_population: 72 },
+      { label: "S3", total_population: 1 },
+    ],
+    married_status: [
+      { label: "Kawin", total_population: 1342 },
+      { label: "Kawin Belum Tercatat", total_population: 42 },
+      { label: "Belum Kawin", total_population: 3634 },
+    ],
+    citizenship: [
+      { label: "WNI", total_population: 4542 },
+      { label: "WNA", total_population: 134 },
+    ],
+    gender: [
+      { label: "Laki-laki", total_population: 2342 },
+      { label: "Perempuan", total_population: 3419 },
+    ],
+  };
 
   return (
     <ItemContainer {...props}>
@@ -66,16 +101,21 @@ const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
                   <ResponsiveContainer width={"100%"} height={300}>
                     <PieChart>
                       <Pie
-                        data={data}
-                        dataKey="count"
+                        data={data[category[0].id as keyof typeof data]}
+                        dataKey="total_population"
                         nameKey="label"
                         {...PRESET_DOUGHNUT_CHART}
                       >
-                        {data.map((_, i) => {
-                          return (
-                            <Cell key={`cell-${i}`} fill={CHART_COLORS[i]} />
-                          );
-                        })}
+                        {data[category[0].id as keyof typeof data].map(
+                          (_, i) => {
+                            return (
+                              <Cell
+                                key={`cell-${i}`}
+                                fill={CHART_COLORS[i % CHART_COLORS.length]}
+                              />
+                            );
+                          }
+                        )}
                       </Pie>
                       <Tooltip {...PRESET_DONUT_CHART_TOOLTIP} />
                     </PieChart>
@@ -83,11 +123,15 @@ const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
                 </CContainer>
 
                 <HStack wrap={"wrap"} justify={"center"} gapX={5} px={4} mt={4}>
-                  {data.map((item, i) => (
+                  {data[category[0].id as keyof typeof data].map((item, i) => (
                     <HStack key={i}>
-                      <Circle w={"8px"} h={"8px"} bg={CHART_COLORS[i]} />
+                      <Circle
+                        w={"8px"}
+                        h={"8px"}
+                        bg={CHART_COLORS[i % CHART_COLORS.length]}
+                      />
                       <Text>
-                        {item.label} : {item.count}
+                        {item.label} : {item.total_population}
                       </Text>
                     </HStack>
                   ))}

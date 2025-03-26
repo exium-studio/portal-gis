@@ -59,6 +59,10 @@ export const settings_navs = {
 };
 
 // UI
+export const by = {
+  id: "per",
+  en: "by",
+};
 export const gender = {
   id: "Jenis Kelamin",
   en: "Gender",
@@ -695,7 +699,7 @@ export const education = {
   id: "Pendidikan",
   en: "Education",
 };
-export const maried_status = {
+export const married_status = {
   id: "Status pernikahan",
   en: "Maried status",
 };

@@ -15,6 +15,7 @@ const translations = {
     "description": "Anda kembali online."
   },
   "back_to_root": "Kembali ke halaman utama",
+  "by": "per",
   "camera": "Kamera",
   "camera_fail_toast": {
     "title": "Gagal mengakses kamera",
@@ -163,7 +164,7 @@ const translations = {
     "description": "Anda telah keluar."
   },
   "maintenance_page": "Kami sedang melakukan pemeliharaan untuk memberikan layanan yang lebih baik. Mohon maaf atas ketidaknyamanannya. Silakan cek kembali nanti.",
-  "maried_status": "Status pernikahan",
+  "married_status": "Status pernikahan",
   "measurment_unit_format_settings_title": "Format Satuan Pengukuran",
   "mic": "Mikrofon",
   "mic_fail_toast": {
