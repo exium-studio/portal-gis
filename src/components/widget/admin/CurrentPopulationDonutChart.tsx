@@ -15,6 +15,7 @@ import { IconFriends } from "@tabler/icons-react";
 import { useState } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import PopulationCategoriesOptions from "../PopulationCategoriesOptions";
+import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
 
 const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
   // Contexts
@@ -50,35 +51,51 @@ const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
       </ItemHeaderContainer>
 
       <CContainer flex={1} pb={4} minH={ITEM_BODY_H}>
-        {/* Chart */}
-        <CContainer px={4} my={"auto"}>
-          <ResponsiveContainer width={"100%"} height={300}>
-            <PieChart>
-              <Pie
-                data={data}
-                dataKey="count"
-                nameKey="label"
-                {...PRESET_DOUGHNUT_CHART}
-              >
-                {data.map((_, i) => {
-                  return <Cell key={`cell-${i}`} fill={CHART_COLORS[i]} />;
-                })}
-              </Pie>
-              <Tooltip {...PRESET_DONUT_CHART_TOOLTIP} />
-            </PieChart>
-          </ResponsiveContainer>
-        </CContainer>
+        {!category && (
+          <CContainer p={4} m={"auto"}>
+            <FeedbackNoData title="" description={l.please_select_category} />
+          </CContainer>
+        )}
 
-        <HStack wrap={"wrap"} justify={"center"} gapX={5} px={4} mt={4}>
-          {data.map((item, i) => (
-            <HStack key={i}>
-              <Circle w={"8px"} h={"8px"} bg={CHART_COLORS[i]} />
-              <Text>
-                {item.label} : {item.count}
-              </Text>
-            </HStack>
-          ))}
-        </HStack>
+        {category && (
+          <>
+            {data && (
+              <>
+                {/* Chart */}
+                <CContainer px={4} my={"auto"}>
+                  <ResponsiveContainer width={"100%"} height={300}>
+                    <PieChart>
+                      <Pie
+                        data={data}
+                        dataKey="count"
+                        nameKey="label"
+                        {...PRESET_DOUGHNUT_CHART}
+                      >
+                        {data.map((_, i) => {
+                          return (
+                            <Cell key={`cell-${i}`} fill={CHART_COLORS[i]} />
+                          );
+                        })}
+                      </Pie>
+                      <Tooltip {...PRESET_DONUT_CHART_TOOLTIP} />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </CContainer>
+
+                <HStack wrap={"wrap"} justify={"center"} gapX={5} px={4} mt={4}>
+                  {data.map((item, i) => (
+                    <HStack key={i}>
+                      <Circle w={"8px"} h={"8px"} bg={CHART_COLORS[i]} />
+                      <Text>
+                        {item.label} : {item.count}
+                      </Text>
+                    </HStack>
+                  ))}
+                </HStack>
+              </>
+            )}
+          </>
+        )}
       </CContainer>
     </ItemContainer>
   );

@@ -59,6 +59,10 @@ export const settings_navs = {
 };
 
 // UI
+export const please_select_category = {
+  id: "Silahkan pilih kategori",
+  en: "Please select category",
+};
 export const inventory = {
   id: "Inventori",
   en: "Inventory",

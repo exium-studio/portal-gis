@@ -223,6 +223,7 @@ const translations = {
     "location": "Camera Test",
     "notifications": "Camera Test"
   },
+  "please_select_category": "Please select category",
   "population": "Population",
   "population_density": "Population density",
   "population_growth": "Population growth",

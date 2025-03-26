@@ -223,6 +223,7 @@ const translations = {
     "location": "Tes Kamera",
     "notifications": "Tes Kamera"
   },
+  "please_select_category": "Silahkan pilih kategori",
   "population": "Populasi",
   "population_density": "Kepadatan penduduk",
   "population_growth": "Pertumbuhan populasi",
