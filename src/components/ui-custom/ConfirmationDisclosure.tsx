@@ -41,7 +41,7 @@ const ConfirmationDisclosure = ({
 
   // Utils
   const { open, onOpen, onClose } = useDisclosure();
-  useBackOnClose(`confirm-${title}-${id}`, open, onOpen, onClose);
+  useBackOnClose(`confirm-${id}`, open, onOpen, onClose);
 
   return (
     <>
