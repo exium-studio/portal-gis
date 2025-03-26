@@ -175,9 +175,9 @@ export const create = {
   id: "Buat",
   en: "Create",
 };
-export const total_population = {
-  id: "Total populasi",
-  en: "Total population",
+export const current_total_population = {
+  id: "Total populasi saat ini",
+  en: "Current total population",
 };
 export const grow = {
   id: "Naik ${value} dari tahun lalu",
@@ -187,13 +187,13 @@ export const shrink = {
   id: "Turun ${value} dari tahun lalu",
   en: "Down ${value} from last year",
 };
-export const total_family = {
-  id: "Total keluarga",
-  en: "Total family",
+export const current_total_family = {
+  id: "Total keluarga saat ini",
+  en: "Current total family",
 };
-export const total_village_fund = {
-  id: "Total dana desa",
-  en: "Total village fund",
+export const current_total_village_fund = {
+  id: "Total dana desa saat ini",
+  en: "Current total village fund",
 };
 export const announcement = {
   id: "Pengumuman",

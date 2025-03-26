@@ -35,6 +35,9 @@ const translations = {
   "current": "Saat ini",
   "current_facility": "Fasilitas saat ini",
   "current_population": "Populasi saat ini",
+  "current_total_family": "Total keluarga saat ini",
+  "current_total_population": "Total populasi saat ini",
+  "current_total_village_fund": "Total dana desa saat ini",
   "dark_mode_settings_title": "Mode Gelap",
   "dark_mode_ui_settings": {
     "label": "UI mode gelap",
@@ -277,9 +280,6 @@ const translations = {
   "title": "Judul",
   "today": "Hari ini",
   "tomorrow": "Besok",
-  "total_family": "Total keluarga",
-  "total_population": "Total populasi",
-  "total_village_fund": "Total dana desa",
   "try_label": "Coba",
   "uom": {
     "mass": "Berat",

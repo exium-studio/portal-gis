@@ -45,7 +45,7 @@ const TotalCounter = ({ ...props }: StackProps) => {
           </Icon>
 
           <CContainer gap={1}>
-            <Text>{l.total_population}</Text>
+            <Text>{l.current_total_population}</Text>
             <HStack justify={"space-between"} align={"end"}>
               <Text fontWeight={"bold"} fontSize={"2xl"}>
                 {formatNumber(data.total_population)}
@@ -91,7 +91,7 @@ const TotalCounter = ({ ...props }: StackProps) => {
           </Icon>
 
           <CContainer gap={1}>
-            <Text>{l.total_family}</Text>
+            <Text>{l.current_total_family}</Text>
             <HStack justify={"space-between"} align={"end"}>
               <Text fontWeight={"bold"} fontSize={"2xl"}>
                 {formatNumber(data.total_family)}
@@ -137,7 +137,7 @@ const TotalCounter = ({ ...props }: StackProps) => {
           </Icon>
 
           <CContainer gap={1}>
-            <Text>{l.total_village_fund}</Text>
+            <Text>{l.current_total_village_fund}</Text>
             <HStack justify={"space-between"} align={"end"}>
               <Text fontWeight={"bold"} fontSize={"2xl"}>
                 {formatNumber(data.total_village_fund)}

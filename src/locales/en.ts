@@ -35,6 +35,9 @@ const translations = {
   "current": "Current",
   "current_facility": "Current facility",
   "current_population": "Current population",
+  "current_total_family": "Current total family",
+  "current_total_population": "Current total population",
+  "current_total_village_fund": "Current total village fund",
   "dark_mode_settings_title": "Dark Mode",
   "dark_mode_ui_settings": {
     "label": "Dark mode UI",
@@ -277,9 +280,6 @@ const translations = {
   "title": "Title",
   "today": "Today",
   "tomorrow": "Tomorrow",
-  "total_family": "Total family",
-  "total_population": "Total population",
-  "total_village_fund": "Total village fund",
   "try_label": "Try",
   "uom": {
     "mass": "Weight",
