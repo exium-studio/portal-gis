@@ -548,7 +548,7 @@ const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
 
         <HStack>
           <HStack>
-            <Text color={"fg.subtle"}>{l.year}</Text>
+            <Text color={"fg.subtle"}>{l.year.toLowerCase()}</Text>
             <NumberInput
               onChangeSetter={(input) => {
                 setYear(input);
