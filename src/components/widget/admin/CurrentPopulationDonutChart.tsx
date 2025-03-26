@@ -79,10 +79,13 @@ const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
           <ItemHeaderTitle>{l.current_population}</ItemHeaderTitle>
         </HStack>
 
-        <PopulationCategoriesOptions
-          category={category}
-          setCategory={setCategory}
-        />
+        <HStack>
+          <Text color={"fg.subtle"}>{l.by}</Text>
+          <PopulationCategoriesOptions
+            category={category}
+            setCategory={setCategory}
+          />
+        </HStack>
       </ItemHeaderContainer>
 
       <CContainer flex={1} pb={4} minH={ITEM_BODY_H}>
