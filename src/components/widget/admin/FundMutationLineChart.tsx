@@ -3,6 +3,7 @@ import CContainer from "@/components/ui-custom/CContainer";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
+import NumberInput from "@/components/ui-custom/NumberInput";
 import { ABS_COLORS } from "@/constants/chartColors";
 import { MONTHS } from "@/constants/months";
 import {
@@ -13,8 +14,10 @@ import { ITEM_BODY_H } from "@/constants/sizes";
 import useLang from "@/context/useLang";
 import formatCount from "@/utils/formatCount";
 import formatNumber from "@/utils/formatNumber";
+import userNow from "@/utils/userNow";
 import { Circle, HStack, StackProps, Text } from "@chakra-ui/react";
 import { IconArrowsUpDown } from "@tabler/icons-react";
+import { useState } from "react";
 import {
   Tooltip as ChartTooltip,
   ComposedChart,
@@ -29,6 +32,9 @@ const FundMutationLineChart = ({ ...props }: StackProps) => {
   const { l, lang } = useLang();
 
   // States, Refs
+  const [year, setYear] = useState<number | null | undefined>(
+    userNow().getFullYear()
+  );
   const data = [
     {
       expense: 10751173,
@@ -105,6 +111,20 @@ const FundMutationLineChart = ({ ...props }: StackProps) => {
           <IconArrowsUpDown size={20} />
 
           <ItemHeaderTitle>{l.fund_mutation}</ItemHeaderTitle>
+        </HStack>
+
+        <HStack>
+          <Text color={"fg.subtle"}>{l.year.toLowerCase()}</Text>
+          <NumberInput
+            onChangeSetter={(input) => {
+              setYear(input);
+            }}
+            inputValue={year}
+            size={"sm"}
+            w={"70px"}
+            noFormat
+            textAlign={"center"}
+          />
         </HStack>
       </ItemHeaderContainer>
 
