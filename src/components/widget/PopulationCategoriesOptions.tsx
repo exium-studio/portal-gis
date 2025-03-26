@@ -23,6 +23,10 @@ const PopulationCategoriesOptions = ({ category, setCategory }: any) => {
       id: 4,
       label: l.citizenship,
     },
+    {
+      id: 5,
+      label: l.gender,
+    },
   ];
 
   return (

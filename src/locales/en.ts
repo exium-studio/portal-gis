@@ -107,6 +107,7 @@ const translations = {
   },
   "forgot_password": "Forgot password",
   "fund_mutation": "Fund mutation",
+  "gender": "Gender",
   "get": "Get",
   "grow": "Up ${value} from last year",
   "income": "Income",

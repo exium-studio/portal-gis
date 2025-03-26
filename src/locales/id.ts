@@ -107,6 +107,7 @@ const translations = {
   },
   "forgot_password": "Lupa password",
   "fund_mutation": "Mutasi dana",
+  "gender": "Jenis Kelamin",
   "get": "Dapatkan",
   "grow": "Naik ${value} dari tahun lalu",
   "income": "Pendapatan",
