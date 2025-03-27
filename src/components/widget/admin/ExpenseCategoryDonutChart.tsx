@@ -96,7 +96,7 @@ const ExpenseCategoryDonutChart = ({ ...props }: StackProps) => {
           </ResponsiveContainer>
         </CContainer>
 
-        <CContainer gap={4} px={4} mt={4} maxH={"200px"} className="scrollY">
+        <CContainer gap={4} px={5} mt={4} maxH={"200px"} className="scrollY">
           {finalData.map((item, i) => (
             <HStack key={i} align={"start"}>
               <Circle
