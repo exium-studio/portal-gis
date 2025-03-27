@@ -191,7 +191,12 @@ const NavContainer = ({
   };
 
   return (
-    <Stack flexDir={iss ? "column" : "row"} h={"100dvh"} gap={0}>
+    <Stack
+      flexDir={iss ? "column" : "row"}
+      h={"100dvh"}
+      gap={0}
+      overflowY={"clip"}
+    >
       {/* Lg screen nav */}
       {!iss && (
         <VStack

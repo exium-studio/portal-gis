@@ -7,9 +7,9 @@ const AdminMaps = () => {
   const { colorMode } = useColorMode();
   const mapRef = useRef<MapRef>(null);
   const [viewState, setViewState] = useState({
-    latitude: -6.966667,
-    longitude: 110.416664,
-    zoom: 15,
+    latitude: 0,
+    longitude: 0,
+    zoom: 0,
   });
 
   const tiles: Record<string, string> = {
