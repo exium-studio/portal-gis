@@ -100,6 +100,7 @@ const translations = {
     "description": "Tidak dapat terhubung ke server. Coba lagi nanti."
   },
   "expense": "Pengeluaran",
+  "expense_category": "Kategori pengeluaran",
   "facility": "Fasilitas",
   "firefox_permissions_settings_link": "Preferensi → Privasi & Keamanan → Izin → ",
   "forbidden_feedback": {
@@ -112,6 +113,7 @@ const translations = {
   "get": "Dapatkan",
   "grow": "Naik ${value} dari tahun lalu",
   "income": "Pendapatan",
+  "income_source": "Sumber pendapatan",
   "inventory": "Inventori",
   "language_settings_title": "Bahasa",
   "last": "Terakhir",

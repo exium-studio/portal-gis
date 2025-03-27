@@ -100,6 +100,7 @@ const translations = {
     "description": "Unable to connect to the server. Try again later."
   },
   "expense": "Expense",
+  "expense_category": "Expense category",
   "facility": "Facility",
   "firefox_permissions_settings_link": "Preferences → Privacy & Security → Permissions → ",
   "forbidden_feedback": {
@@ -112,6 +113,7 @@ const translations = {
   "get": "Get",
   "grow": "Up ${value} from last year",
   "income": "Income",
+  "income_source": "Income source",
   "inventory": "Inventory",
   "language_settings_title": "Language",
   "last": "Last",

@@ -10,6 +10,7 @@ import VillageSummary from "@/components/widget/admin/VillageSummary";
 import VisionMission from "@/components/widget/admin/VisionMission";
 import { R_GAP } from "@/constants/sizes";
 import { HStack } from "@chakra-ui/react";
+import IncomeSourceDonutChart from "@/components/widget/admin/IncomeSourceDonutChart";
 
 const DashboardPage = () => {
   return (
@@ -23,6 +24,8 @@ const DashboardPage = () => {
         <OfficialContact flex={"1 1 300px"} minW={0} />
 
         <FundMutationLineChart flex={"1 1 650px"} />
+        <IncomeSourceDonutChart flex={"1 1 300px"} />
+
         <CurrentFacility flex={"1 1 300px"} />
 
         <PopulationGrowthLineChart flex={"1 1 650px"} />

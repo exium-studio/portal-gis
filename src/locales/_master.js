@@ -59,6 +59,14 @@ export const settings_navs = {
 };
 
 // UI
+export const income_source = {
+  id: "Sumber pendapatan",
+  en: "Income source",
+};
+export const expense_category = {
+  id: "Kategori pengeluaran",
+  en: "Expense category",
+};
 export const by = {
   id: "per",
   en: "by",
