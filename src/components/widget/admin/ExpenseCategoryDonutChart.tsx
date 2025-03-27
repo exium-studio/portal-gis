@@ -2,6 +2,7 @@ import CContainer from "@/components/ui-custom/CContainer";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
+import TruncatedText from "@/components/ui-custom/TruncatedText";
 import { CHART_COLORS } from "@/constants/chartColors";
 import {
   PRESET_DONUT_CHART_TOOLTIP,
@@ -10,7 +11,14 @@ import {
 import { ITEM_BODY_H } from "@/constants/sizes";
 import useLang from "@/context/useLang";
 import formatNumber from "@/utils/formatNumber";
-import { Circle, HStack, Icon, StackProps, Text } from "@chakra-ui/react";
+import {
+  Circle,
+  HStack,
+  Icon,
+  Separator,
+  StackProps,
+  Text,
+} from "@chakra-ui/react";
 import { IconArrowUp } from "@tabler/icons-react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
@@ -88,31 +96,29 @@ const ExpenseCategoryDonutChart = ({ ...props }: StackProps) => {
           </ResponsiveContainer>
         </CContainer>
 
-        <HStack
-          wrap={"wrap"}
-          justify={"center"}
-          gapX={5}
-          px={4}
-          mt={4}
-          maxH={"200px"}
-          className="scrollY"
-        >
+        <CContainer gap={4} px={4} mt={4} maxH={"200px"} className="scrollY">
           {finalData.map((item, i) => (
-            <HStack key={i}>
+            <HStack key={i} align={"start"}>
               <Circle
+                mt={"6px"}
                 w={"8px"}
                 h={"8px"}
                 bg={CHART_COLORS[i % CHART_COLORS.length]}
               />
-              <HStack>
-                <Text>
-                  {item.label} : {formatNumber(item.amount)}
-                </Text>
+              <TruncatedText
+                tooltipContent={item.label}
+                textProps={{ maxW: "150px" }}
+              >
+                {item.label}
+              </TruncatedText>
+              <Separator flex={1} my={"auto"} />
+              <HStack ml={"auto"}>
                 <Text color={"fg.subtle"}>{item.percentage}</Text>
+                <Text>{formatNumber(item.amount)}</Text>
               </HStack>
             </HStack>
           ))}
-        </HStack>
+        </CContainer>
       </CContainer>
     </ItemContainer>
   );
