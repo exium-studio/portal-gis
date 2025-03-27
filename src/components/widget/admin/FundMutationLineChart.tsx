@@ -1,4 +1,3 @@
-import CartesianGrid from "@/components/ui-custom/CartesianGrid";
 import CContainer from "@/components/ui-custom/CContainer";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
@@ -19,6 +18,7 @@ import { Circle, HStack, StackProps, Text } from "@chakra-ui/react";
 import { IconArrowsUpDown } from "@tabler/icons-react";
 import { useState } from "react";
 import {
+  CartesianGrid,
   Tooltip as ChartTooltip,
   ComposedChart,
   Line,
@@ -133,7 +133,7 @@ const FundMutationLineChart = ({ ...props }: StackProps) => {
         <CContainer my={"auto"} w={"calc(100% + 3*4px)"} ml={-3}>
           <ResponsiveContainer width={"100%"} height={450}>
             <ComposedChart data={finalData}>
-              <CartesianGrid />
+              <CartesianGrid stroke={ABS_COLORS.d3} strokeDasharray="3" />
               <XAxis dataKey="month" />
               <YAxis tickFormatter={formatCount} allowDecimals={false} />
               <ChartTooltip {...PRESET_LINE_CHART_TOOLTIP} />
