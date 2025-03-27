@@ -249,6 +249,7 @@ const translations = {
   "search_input_default_placeholder": "Pencarian...",
   "see_all": "Lihat semua",
   "see_detail": "Lihat detail",
+  "see_on_map": "Lihat di peta",
   "select_all": "Pilih semua",
   "select_input_default_placeholder": "Pilih...",
   "select_input_default_title": "Pilih",

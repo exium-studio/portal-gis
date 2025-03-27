@@ -3,6 +3,7 @@ import CContainer from "@/components/ui-custom/CContainer";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
+import { Tooltip } from "@/components/ui/tooltip";
 import { ITEM_BODY_H } from "@/constants/sizes";
 import useLang from "@/context/useLang";
 import { useThemeConfig } from "@/context/useThemeConfig";
@@ -46,16 +47,18 @@ const CurrentFacility = ({ ...props }: StackProps) => {
               >
                 <Text fontWeight={"medium"}>{item.label}</Text>
 
-                <BButton
-                  iconButton
-                  borderRadius={"full"}
-                  ml={"auto"}
-                  mr={-1}
-                  variant={"ghost"}
-                  colorPalette={themeConfig.colorPalette}
-                >
-                  <IconMapPin />
-                </BButton>
+                <Tooltip content={l.see_on_map}>
+                  <BButton
+                    iconButton
+                    borderRadius={"full"}
+                    ml={"auto"}
+                    mr={-1}
+                    variant={"ghost"}
+                    colorPalette={themeConfig.colorPalette}
+                  >
+                    <IconMapPin />
+                  </BButton>
+                </Tooltip>
               </HStack>
             );
           })}

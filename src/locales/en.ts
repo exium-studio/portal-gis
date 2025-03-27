@@ -249,6 +249,7 @@ const translations = {
   "search_input_default_placeholder": "Search...",
   "see_all": "See all",
   "see_detail": "See detail",
+  "see_on_map": "See on map",
   "select_all": "Select all",
   "select_input_default_placeholder": "Select...",
   "select_input_default_title": "Select",

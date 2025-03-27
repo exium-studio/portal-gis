@@ -59,6 +59,10 @@ export const settings_navs = {
 };
 
 // UI
+export const see_on_map = {
+  id: "Lihat di peta",
+  en: "See on map",
+};
 export const see_detail = {
   id: "Lihat detail",
   en: "See detail",
