@@ -5,9 +5,19 @@ import View from "ol/View";
 import TileLayer from "ol/layer/Tile";
 import XYZ from "ol/source/XYZ";
 import { fromLonLat } from "ol/proj";
+import { useColorMode } from "@/components/ui/color-mode";
 
 const AdminMaps = () => {
+  // Contexts
+  const { colorMode } = useColorMode();
+
+  // States, Refs
   const mapRef = useRef<HTMLDivElement>(null);
+  const tiles = {
+    light:
+      "https://{a-d}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png",
+    dark: "https://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+  };
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -15,18 +25,9 @@ const AdminMaps = () => {
     const map = new Map({
       target: mapRef.current,
       layers: [
-        // Carto Light
-        // new TileLayer({
-        //   source: new XYZ({
-        //     url: "https://{a-d}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png",
-        //     attributions: '&copy; <a href="https://carto.com/">CARTO</a>',
-        //   }),
-        // }),
-
-        // Carto dark
         new TileLayer({
           source: new XYZ({
-            url: "https://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+            url: tiles[colorMode as keyof typeof tiles],
             attributions:
               '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
           }),
