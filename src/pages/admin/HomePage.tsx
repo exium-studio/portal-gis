@@ -11,6 +11,7 @@ import VisionMission from "@/components/widget/admin/VisionMission";
 import { R_GAP } from "@/constants/sizes";
 import { HStack } from "@chakra-ui/react";
 import IncomeSourceDonutChart from "@/components/widget/admin/IncomeSourceDonutChart";
+import ExpenseCategoryDonutChart from "@/components/widget/admin/ExpenseCategoryDonutChart";
 
 const DashboardPage = () => {
   return (
@@ -26,6 +27,7 @@ const DashboardPage = () => {
         <FundMutationLineChart flex={"1 1 650px"} />
         <IncomeSourceDonutChart flex={"1 1 300px"} />
 
+        <ExpenseCategoryDonutChart flex={"1 1 300px"} />
         <CurrentFacility flex={"1 1 300px"} />
 
         <PopulationGrowthLineChart flex={"1 1 650px"} />
