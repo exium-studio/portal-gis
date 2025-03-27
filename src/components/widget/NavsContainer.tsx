@@ -283,8 +283,8 @@ const NavContainer = ({
         {/* Maps */}
         {(layout.id === 1 || layout.id === 3) && withMaps && (
           <CContainer
-            w={layout.id === 1 && !iss ? "50%" : ""}
-            h={layout.id === 1 && iss ? "50%" : ""}
+            w={layout.id === 1 && !iss ? "50%" : "full"}
+            h={layout.id === 1 && iss ? "50%" : "full"}
           >
             <AdminMaps />
 

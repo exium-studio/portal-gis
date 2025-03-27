@@ -9,13 +9,14 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { IconCheck, IconLayoutColumns } from "@tabler/icons-react";
-import BButton from "../ui-custom/BButton";
+import BButton, { BButtonProps } from "../ui-custom/BButton";
 import { PopoverContent, PopoverRoot, PopoverTrigger } from "../ui/popover";
 import HelperText from "../ui-custom/HelperText";
 import CContainer from "../ui-custom/CContainer";
 import useLang from "@/context/useLang";
 
-const LayoutMenu = () => {
+interface Props extends BButtonProps {}
+const LayoutMenu = ({ ...props }: Props) => {
   // Contexts
   const { themeConfig } = useThemeConfig();
   const { layout, setLayout } = useLayout();
@@ -54,6 +55,7 @@ const LayoutMenu = () => {
           variant={"ghost"}
           w={"fit"}
           onClick={onOpen}
+          {...props}
         >
           <IconLayoutColumns stroke={1.5} />
         </BButton>

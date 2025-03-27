@@ -15,20 +15,22 @@ const AdminMaps = () => {
     const map = new Map({
       target: mapRef.current,
       layers: [
-        // **Carto Voyager No Labels (Putih, tanpa area kuning)**
-        new TileLayer({
-          source: new XYZ({
-            url: "https://{a-d}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png",
-            attributions: '&copy; <a href="https://carto.com/">CARTO</a>',
-          }),
-        }),
-        // // **OSM Labels (Agar tetap ada nama jalan)**
+        // Carto Light
         // new TileLayer({
         //   source: new XYZ({
-        //     url: "https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        //     attributions: "&copy; OpenStreetMap contributors",
+        //     url: "https://{a-d}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png",
+        //     attributions: '&copy; <a href="https://carto.com/">CARTO</a>',
         //   }),
         // }),
+
+        // Carto dark
+        new TileLayer({
+          source: new XYZ({
+            url: "https://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+            attributions:
+              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
+          }),
+        }),
       ],
       view: new View({
         center: fromLonLat([110.416664, -6.966667]), // Semarang (EPSG:3857)
