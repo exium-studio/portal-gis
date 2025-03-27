@@ -69,11 +69,19 @@ const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
     ],
   };
   const finalData = {
-    religion: calculatePercentage(data.religion),
-    education: calculatePercentage(data.education),
-    married_status: calculatePercentage(data.married_status),
-    citizenship: calculatePercentage(data.citizenship),
-    gender: calculatePercentage(data.gender),
+    religion: calculatePercentage(data.religion, {
+      valueKey: "total_population",
+    }),
+    education: calculatePercentage(data.education, {
+      valueKey: "total_population",
+    }),
+    married_status: calculatePercentage(data.married_status, {
+      valueKey: "total_population",
+    }),
+    citizenship: calculatePercentage(data.citizenship, {
+      valueKey: "total_population",
+    }),
+    gender: calculatePercentage(data.gender, { valueKey: "total_population" }),
   };
 
   console.log("Current Population", data);

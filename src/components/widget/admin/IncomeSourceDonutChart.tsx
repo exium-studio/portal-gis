@@ -9,18 +9,11 @@ import {
 } from "@/constants/presetProps";
 import { ITEM_BODY_H } from "@/constants/sizes";
 import useLang from "@/context/useLang";
+import calculatePercentage from "@/utils/calculatePercentage";
 import formatNumber from "@/utils/formatNumber";
 import { Circle, HStack, Icon, StackProps, Text } from "@chakra-ui/react";
 import { IconArrowDown } from "@tabler/icons-react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
-
-const calculatePercentage = (items: any[]): any[] => {
-  const total = items.reduce((sum, item) => sum + item.total_income, 0);
-  return items.map((item) => ({
-    ...item,
-    percentage: ((item.total_income / total) * 100).toFixed(2) + "%",
-  }));
-};
 
 const IncomeSourceDonutChart = ({ ...props }: StackProps) => {
   // Contexts
@@ -28,15 +21,15 @@ const IncomeSourceDonutChart = ({ ...props }: StackProps) => {
 
   // States, Refs
   const data = [
-    { label: "Dana Desa", total_income: 150000000 },
-    { label: "Alokasi Dana Desa", total_income: 120000000 },
-    { label: "Pendapatan Asli Desa", total_income: 50000000 },
-    { label: "Bantuan Keuangan Provinsi", total_income: 75000000 },
-    { label: "Bantuan Keuangan Kabupaten/Kota", total_income: 60000000 },
-    { label: "Hasil Kerjasama Desa", total_income: 30000000 },
-    { label: "Lainnya", total_income: 25000000 },
+    { label: "Dana Desa", amount: 150000000 },
+    { label: "Alokasi Dana Desa", amount: 120000000 },
+    { label: "Pendapatan Asli Desa", amount: 50000000 },
+    { label: "Bantuan Keuangan Provinsi", amount: 75000000 },
+    { label: "Bantuan Keuangan Kabupaten/Kota", amount: 60000000 },
+    { label: "Hasil Kerjasama Desa", amount: 30000000 },
+    { label: "Lainnya", amount: 25000000 },
   ];
-  const finalData = calculatePercentage(data);
+  const finalData = calculatePercentage(data, { valueKey: "amount" });
 
   console.log("Current Population", data);
 
@@ -59,7 +52,7 @@ const IncomeSourceDonutChart = ({ ...props }: StackProps) => {
             <PieChart>
               <Pie
                 data={finalData}
-                dataKey="total_income"
+                dataKey="amount"
                 nameKey="label"
                 {...PRESET_DOUGHNUT_CHART}
               >
@@ -95,7 +88,7 @@ const IncomeSourceDonutChart = ({ ...props }: StackProps) => {
               />
               <HStack>
                 <Text>
-                  {item.label} : {formatNumber(item.total_income)}
+                  {item.label} : {formatNumber(item.amount)}
                 </Text>
                 <Text color={"fg.subtle"}>{item.percentage}</Text>
               </HStack>
