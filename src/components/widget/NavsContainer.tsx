@@ -28,6 +28,7 @@ import CurrentUserTimeZone from "./CurrentUserTimeZone";
 import Inbox from "./Inbox";
 import LayoutMenu from "./LayoutMenu";
 import useLayout from "@/context/useLayout";
+import AdminMaps from "./admin/AdminMaps";
 
 interface Interface__NavItemContainer extends StackProps {
   active?: boolean;
@@ -284,8 +285,9 @@ const NavContainer = ({
           <CContainer
             w={layout.id === 1 && !iss ? "50%" : ""}
             h={layout.id === 1 && iss ? "50%" : ""}
-            p={2}
           >
+            <AdminMaps />
+
             {layout.id === 3 && <LayoutMenu />}
           </CContainer>
         )}
