@@ -1,3 +1,4 @@
+import { ABS_COLORS } from "@/constants/colors";
 import {
   CartesianGrid as CartesianGridRecharts,
   CartesianGridProps,
@@ -6,7 +7,11 @@ import {
 interface Props extends CartesianGridProps {}
 const CartesianGrid = ({ ...props }: Props) => {
   return (
-    <CartesianGridRecharts stroke="var(--d3)" strokeDasharray="3" {...props} />
+    <CartesianGridRecharts
+      stroke={ABS_COLORS.d3}
+      strokeDasharray="3"
+      {...props}
+    />
   );
 };
 
