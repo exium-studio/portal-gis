@@ -123,9 +123,9 @@ const Camera = () => {
             <DisclosureFooter>
               <BButton
                 variant="outline"
-                onClick={() =>
-                  stopCamera(videoRef, streamRef, () => setCameraOpen(false))
-                }
+                onClick={() => {
+                  stopCamera(videoRef, streamRef, () => setCameraOpen(false));
+                }}
                 disabled={!cameraOpen}
               >
                 {l.close} {l.camera.toLowerCase()}

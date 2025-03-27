@@ -1,6 +1,8 @@
+import { RefObject } from "react";
+
 export function startCamera(
-  videoRef: React.RefObject<HTMLVideoElement>,
-  streamRef: React.MutableRefObject<MediaStream | null>,
+  videoRef: RefObject<HTMLVideoElement | null>,
+  streamRef: RefObject<MediaStream | null>,
   onOpen: () => void,
   onError: (error: Error) => void
 ) {
@@ -20,8 +22,8 @@ export function startCamera(
 }
 
 export function stopCamera(
-  videoRef: React.RefObject<HTMLVideoElement>,
-  streamRef: React.MutableRefObject<MediaStream | null>,
+  videoRef: RefObject<HTMLVideoElement | null>,
+  streamRef: RefObject<MediaStream | null>,
   onClose: () => void
 ) {
   if (streamRef.current) {

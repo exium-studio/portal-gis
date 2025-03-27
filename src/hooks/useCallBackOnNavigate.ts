@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 
 const useCallBackOnNavigate = (callback: () => void) => {
   const location = useLocation();
-  const prevPathname = useRef<string | undefined>();
+  const prevPathname = useRef<string | undefined>("");
 
   useEffect(() => {
     if (prevPathname.current !== location.pathname) {
