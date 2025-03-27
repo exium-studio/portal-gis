@@ -10,6 +10,7 @@ import {
 } from "@/constants/presetProps";
 import { ITEM_BODY_H } from "@/constants/sizes";
 import useLang from "@/context/useLang";
+import calculatePercentage from "@/utils/calculatePercentage";
 import formatNumber from "@/utils/formatNumber";
 import {
   Circle,
@@ -21,19 +22,6 @@ import {
 } from "@chakra-ui/react";
 import { IconArrowUp } from "@tabler/icons-react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
-
-const calculatePercentage = (
-  items: any[],
-  options: { valueKey: string }
-): any[] => {
-  const { valueKey } = options;
-  const total = items.reduce((sum, item) => sum + item[valueKey], 0);
-
-  return items.map((item) => ({
-    ...item,
-    percentage: ((item[valueKey] / total) * 100).toFixed(2) + "%",
-  }));
-};
 
 const ExpenseCategoryDonutChart = ({ ...props }: StackProps) => {
   // Contexts
