@@ -115,9 +115,7 @@ const Detail = ({ item }: any) => {
                   <Text>{item.description}</Text>
 
                   <HStack gap={1} align={"end"}>
-                    <Text fontWeight={"bold"}>
-                      {item.amount - item.amount_usage}
-                    </Text>
+                    <Text>{item.amount - item.amount_usage}</Text>
                     <Text>/</Text>
                     <Text color={"fg.subtle"}>{item.amount}</Text>
 
