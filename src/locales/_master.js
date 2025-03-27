@@ -59,6 +59,18 @@ export const settings_navs = {
 };
 
 // UI
+export const see_detail = {
+  id: "Lihat detail",
+  en: "See detail",
+};
+export const in_use = {
+  id: "sedang digunakan",
+  en: "in use",
+};
+export const current_inventory = {
+  id: "Inventaris saat ini",
+  en: "Current inventory",
+};
 export const income_source = {
   id: "Sumber pendapatan",
   en: "Income source",
