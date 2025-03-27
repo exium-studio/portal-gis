@@ -11,7 +11,7 @@ export const CHART_COLORS: string[] = [
   "#F6AD55", // Oranye ringan
   "#F56565", // Merah cerah
   // "#FC8181", // Merah muda
-  "#FEB2B2", // Pink lembut
+  // "#FEB2B2", // Pink lembut
   "#F687B3", // Pink terang
   "#D6BCFA", // Ungu pastel
   "#9F7AEA", // Ungu sedang
