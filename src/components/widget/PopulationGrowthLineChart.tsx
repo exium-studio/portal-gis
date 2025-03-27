@@ -1,9 +1,8 @@
-import CartesianGrid from "@/components/ui-custom/CartesianGrid";
 import CContainer from "@/components/ui-custom/CContainer";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
-import { CHART_COLORS } from "@/constants/colors";
+import { ABS_COLORS, CHART_COLORS } from "@/constants/colors";
 import { Interface__SelectOption } from "@/constants/interfaces";
 import { MONTHS } from "@/constants/months";
 import {
@@ -18,6 +17,7 @@ import { Circle, HStack, StackProps, Text } from "@chakra-ui/react";
 import { IconTrendingUp } from "@tabler/icons-react";
 import { useState } from "react";
 import {
+  CartesianGrid,
   Tooltip as ChartTooltip,
   ComposedChart,
   Line,
@@ -610,7 +610,10 @@ const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
                 <CContainer my={"auto"} w={"calc(100% + 3*4px)"} ml={-3}>
                   <ResponsiveContainer width={"100%"} height={450}>
                     <ComposedChart data={finalData}>
-                      <CartesianGrid />
+                      <CartesianGrid
+                        stroke={ABS_COLORS.d3}
+                        strokeDasharray="3"
+                      />
                       <XAxis dataKey="month" />
                       <YAxis tickFormatter={formatCount} />
                       <ChartTooltip {...PRESET_LINE_CHART_TOOLTIP} />
