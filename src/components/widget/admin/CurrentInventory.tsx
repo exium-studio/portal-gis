@@ -117,9 +117,9 @@ const Detail = ({ item }: any) => {
                   <HStack gap={1} align={"end"}>
                     <Text>{item.amount - item.amount_usage}</Text>
                     <Text>/</Text>
-                    <Text color={"fg.subtle"}>{item.amount}</Text>
+                    <Text color={"fg.muted"}>{item.amount}</Text>
 
-                    <Text color={"fg.muted"}>
+                    <Text color={"fg.subtle"}>
                       ({item.amount_usage} {l.in_use})
                     </Text>
                   </HStack>
