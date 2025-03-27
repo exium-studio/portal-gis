@@ -3,7 +3,7 @@ import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
 import TruncatedText from "@/components/ui-custom/TruncatedText";
-import { CHART_COLORS } from "@/constants/chartColors";
+import { CHART_COLORS } from "@/constants/colors";
 import {
   PRESET_DONUT_CHART_TOOLTIP,
   PRESET_DOUGHNUT_CHART,

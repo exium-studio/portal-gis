@@ -4,7 +4,7 @@ import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
 import NumberInput from "@/components/ui-custom/NumberInput";
-import { ABS_COLORS } from "@/constants/chartColors";
+import { ABS_COLORS } from "@/constants/colors";
 import { MONTHS } from "@/constants/months";
 import {
   PRESET_LINE_CHART,

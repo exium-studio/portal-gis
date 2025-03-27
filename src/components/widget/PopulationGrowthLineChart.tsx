@@ -3,7 +3,7 @@ import CContainer from "@/components/ui-custom/CContainer";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
-import { CHART_COLORS } from "@/constants/chartColors";
+import { CHART_COLORS } from "@/constants/colors";
 import { Interface__SelectOption } from "@/constants/interfaces";
 import { MONTHS } from "@/constants/months";
 import {
