@@ -326,7 +326,7 @@ const SearchAddress = () => {
   );
 };
 
-const DataDisplayed = ({ popoverContentProps, ...props }: any) => {
+const DataDisplayed = () => {
   // Contexts
   const { themeConfig } = useThemeConfig();
   const { displayedData, setDisplayedData } = useDisplayedData();
@@ -339,7 +339,7 @@ const DataDisplayed = ({ popoverContentProps, ...props }: any) => {
     <PopoverRoot>
       <PopoverTrigger asChild>
         <OverlayItemContainer>
-          <BButton iconButton unclicky variant={"ghost"} w={"fit"} {...props}>
+          <BButton iconButton unclicky variant={"ghost"} w={"fit"}>
             <IconMapPin2 stroke={1.5} />
           </BButton>
         </OverlayItemContainer>
@@ -352,10 +352,12 @@ const DataDisplayed = ({ popoverContentProps, ...props }: any) => {
             p={1}
             w={"250px"}
             pointerEvents={"auto"}
-            {...popoverContentProps}
           >
             <MenuHeaderContainer>
-              <Text fontWeight={"bold"}>{l.displayed_data}</Text>
+              <HStack>
+                <IconMapPin2 stroke={1.5} size={20} />
+                <Text fontWeight={"bold"}>{l.displayed_data}</Text>
+              </HStack>
             </MenuHeaderContainer>
 
             <CContainer pt={1}>
@@ -411,7 +413,7 @@ const DataDisplayed = ({ popoverContentProps, ...props }: any) => {
   );
 };
 
-const Legends = () => {
+const Legend = () => {
   // Contexts
   const { l } = useLang();
 
@@ -438,7 +440,10 @@ const Legends = () => {
           animationEntrance="bottom"
         >
           <HStack px={2} pb={1} justify={"space-between"}>
-            <Text fontWeight={"bold"}>{l.legend}</Text>
+            <HStack>
+              <IconFlag stroke={1.5} size={20} />
+              <Text fontWeight={"bold"}>{l.legend}</Text>
+            </HStack>
 
             <BButton
               iconButton
@@ -468,9 +473,7 @@ const Legends = () => {
       <OverlayItemContainer>
         <Tooltip content={l.legend}>
           <BButton iconButton variant={"ghost"} onClick={onToggle}>
-            <Icon>
-              <IconFlag />
-            </Icon>
+            <IconFlag stroke={1.5} />
           </BButton>
         </Tooltip>
       </OverlayItemContainer>
@@ -674,7 +677,7 @@ const CurrentLocation = () => {
           {currentLocation ? (
             <IconCurrentLocationFilled color={themeConfig.primaryColorHex} />
           ) : (
-            <IconCurrentLocation />
+            <IconCurrentLocation stroke={1.5} />
           )}
         </BButton>
       </Tooltip>
@@ -792,7 +795,7 @@ const AdminMapsOverlay = () => {
           h={"calc(40px + 8px)"}
         >
           <HStack align={"start"} w={"full"} zIndex={2}>
-            <Legends />
+            <Legend />
           </HStack>
 
           <HScroll
