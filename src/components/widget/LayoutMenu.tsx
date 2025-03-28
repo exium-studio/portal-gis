@@ -29,21 +29,23 @@ const LayoutMenu = ({ popoverContentProps, ...props }: Props) => {
   const { l } = useLang();
 
   // Utils
-  const { open, onOpen, onClose } = useDisclosure();
+  const { open, onToggle, onClose } = useDisclosure();
+  const triggerRef = useRef(null);
   const contentRef = useRef(null);
 
   // Close on clicking outside
-  useClickOutside(contentRef, onClose);
+  useClickOutside([triggerRef, contentRef], onClose);
 
   return (
     <PopoverRoot open={open}>
       <PopoverTrigger asChild>
         <BButton
+          ref={triggerRef}
           iconButton
           unclicky
           variant={"ghost"}
           w={"fit"}
-          onClick={onOpen}
+          onClick={onToggle}
           {...props}
         >
           <IconLayoutColumns stroke={1.5} />

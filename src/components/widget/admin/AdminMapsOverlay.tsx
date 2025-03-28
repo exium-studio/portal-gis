@@ -3,6 +3,7 @@ import CContainer from "@/components/ui-custom/CContainer";
 import FeedbackNotFound from "@/components/ui-custom/FeedbackNotFound";
 import FloatingContainer from "@/components/ui-custom/FloatingContainer";
 import HelperText from "@/components/ui-custom/HelperText";
+import NumberInput from "@/components/ui-custom/NumberInput";
 import SearchInput from "@/components/ui-custom/SearchInput";
 import {
   PopoverContent,
@@ -17,6 +18,7 @@ import useCurrentLocation from "@/context/useCurrentLocation";
 import useDisplayedData from "@/context/useDisplayedData";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
+import useMapsZoom from "@/context/useMapsZoom";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useClickOutside from "@/hooks/useClickOutside";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
@@ -53,8 +55,6 @@ import { useEffect, useRef, useState } from "react";
 import TheLayoutMenu from "../LayoutMenu";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import useSearchMode from "./useSearchMode";
-import useMapsZoom from "@/context/useMapsZoom";
-import NumberInput from "@/components/ui-custom/NumberInput";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -325,24 +325,13 @@ const DataDisplayed = ({ popoverContentProps, ...props }: any) => {
   const { l } = useLang();
 
   // Utils
-  const { open, onOpen, onClose } = useDisclosure();
   const contentRef = useRef(null);
 
-  // Close on clicking outside
-  useClickOutside([contentRef], onClose);
-
   return (
-    <PopoverRoot open={open}>
+    <PopoverRoot>
       <PopoverTrigger asChild>
         <OverlayItemContainer>
-          <BButton
-            iconButton
-            unclicky
-            variant={"ghost"}
-            w={"fit"}
-            onClick={onOpen}
-            {...props}
-          >
+          <BButton iconButton unclicky variant={"ghost"} w={"fit"} {...props}>
             <IconMapPin2 stroke={1.5} />
           </BButton>
         </OverlayItemContainer>
@@ -591,6 +580,10 @@ const ZoomControl = () => {
   );
 };
 
+const MapsTile = () => {
+  return "";
+};
+
 const AdminMapsOverlay = () => {
   // Contexts
   const { layout } = useLayout();
@@ -641,7 +634,7 @@ const AdminMapsOverlay = () => {
 
             <ZoomControl />
 
-            <DataDisplayed />
+            <MapsTile />
 
             <DataDisplayed />
           </HStack>
