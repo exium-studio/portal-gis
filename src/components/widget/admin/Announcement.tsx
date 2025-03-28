@@ -502,8 +502,6 @@ const Announcement = ({ ...props }: StackProps) => {
     },
   ];
 
-  console.log("Pengumuman", data);
-
   return (
     <ItemContainer {...props}>
       <ItemHeaderContainer>

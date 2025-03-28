@@ -27,8 +27,6 @@ const VisionMission = ({ ...props }: StackProps) => {
     ],
   };
 
-  console.log("Visi Misi", data);
-
   return (
     <ItemContainer {...props}>
       <ItemHeaderContainer>

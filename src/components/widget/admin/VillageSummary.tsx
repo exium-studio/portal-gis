@@ -35,8 +35,6 @@ const VillageSummary = ({ ...props }: StackProps) => {
     },
   };
 
-  console.log("Village summary", data);
-
   return (
     <ItemContainer {...props}>
       <HStack wrap={"wrap"} align={"stretch"} flex={1}>

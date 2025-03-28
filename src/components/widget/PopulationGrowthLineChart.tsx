@@ -559,8 +559,6 @@ const PopulationGrowthLineChart = ({ ...props }: StackProps) => {
     ...categoriesLegend,
   ];
 
-  console.log("Population Growth", finalData);
-
   return (
     <ItemContainer {...props}>
       <ItemHeaderContainer borderless>

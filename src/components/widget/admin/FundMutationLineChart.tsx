@@ -102,8 +102,6 @@ const FundMutationLineChart = ({ ...props }: StackProps) => {
     },
   ];
 
-  console.log("Income Expenses", data);
-
   return (
     <ItemContainer {...props}>
       <ItemHeaderContainer borderless>

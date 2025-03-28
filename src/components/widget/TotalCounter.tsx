@@ -34,8 +34,6 @@ const TotalCounter = ({ ...props }: StackProps) => {
     total_village_fund: 877088000,
   };
 
-  console.log("Total", data);
-
   return (
     <CContainer gap={R_GAP} {...props}>
       <ItemContainer p={4} flex={1} justify={"center"} position={"relative"}>

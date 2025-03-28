@@ -45,8 +45,6 @@ const ExpenseCategoryDonutChart = ({ ...props }: StackProps) => {
   ];
   const finalData = calculatePercentage(data, { valueKey: "amount" });
 
-  console.log("Current Population", data);
-
   return (
     <ItemContainer {...props}>
       <ItemHeaderContainer>

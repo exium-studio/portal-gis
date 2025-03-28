@@ -84,8 +84,6 @@ const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
     gender: calculatePercentage(data.gender, { valueKey: "total_population" }),
   };
 
-  console.log("Current Population", data);
-
   return (
     <ItemContainer {...props}>
       <ItemHeaderContainer>

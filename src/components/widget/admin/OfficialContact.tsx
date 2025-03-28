@@ -110,8 +110,6 @@ const OfficialContact = ({ ...props }: StackProps) => {
     },
   ];
 
-  console.log("Official contat", data);
-
   return (
     <ItemContainer {...props}>
       <ItemHeaderContainer>

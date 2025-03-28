@@ -62,8 +62,6 @@ const Detail = ({ item }: any) => {
     }
   }
 
-  console.log(item);
-
   return (
     <>
       <Tooltip content={l.see_detail}>
