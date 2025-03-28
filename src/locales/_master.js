@@ -59,6 +59,14 @@ export const settings_navs = {
 };
 
 // UI
+export const angle_to_north = {
+  id: "Sudut terhadap utara",
+  en: "Angle to north",
+};
+export const north_direction = {
+  id: "Arah utara",
+  en: "North direction",
+};
 export const map_type = {
   id: "Jenis peta",
   en: "Map type",

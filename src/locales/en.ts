@@ -7,6 +7,7 @@ const translations = {
   "address_not_found": "Address not found",
   "all": "All",
   "and": "and",
+  "angle_to_north": "Angle to north",
   "announcement": "Announcement",
   "ask": "Ask",
   "auto_time_zone": "Current time zone (auto)",
@@ -207,6 +208,7 @@ const translations = {
     "title": "No data",
     "description": "Try to update the data."
   },
+  "north_direction": "North direction",
   "not_found_feedback": {
     "title": "Not found",
     "description": "Try to adjust the search."

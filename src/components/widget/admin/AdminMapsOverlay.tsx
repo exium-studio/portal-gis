@@ -3,6 +3,7 @@ import CContainer from "@/components/ui-custom/CContainer";
 import FeedbackNotFound from "@/components/ui-custom/FeedbackNotFound";
 import FloatingContainer from "@/components/ui-custom/FloatingContainer";
 import HelperText from "@/components/ui-custom/HelperText";
+import HScroll from "@/components/ui-custom/HScroll";
 import NumberInput from "@/components/ui-custom/NumberInput";
 import SearchInput from "@/components/ui-custom/SearchInput";
 import { useColorMode } from "@/components/ui/color-mode";
@@ -21,6 +22,7 @@ import useDisplayedData from "@/context/useDisplayedData";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
 import useMapStyle from "@/context/useMapsStyle";
+import useMapsViewState from "@/context/useMapsViewState";
 import useMapsZoom from "@/context/useMapsZoom";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useClickOutside from "@/hooks/useClickOutside";
@@ -51,6 +53,7 @@ import {
   IconMapPin,
   IconMapPin2,
   IconMinus,
+  IconNavigationFilled,
   IconPlus,
   IconSearch,
   IconX,
@@ -59,7 +62,6 @@ import { useEffect, useRef, useState } from "react";
 import TheLayoutMenu from "../LayoutMenu";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import useSearchMode from "./useSearchMode";
-import HScroll from "@/components/ui-custom/HScroll";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -675,6 +677,65 @@ const CurrentLocation = () => {
   );
 };
 
+const NorthDirection = () => {
+  // Context
+  const { l } = useLang();
+  const { mapRef } = useMapsViewState();
+
+  // States, Refs
+  const [bearing, setBearing] = useState(0);
+
+  // Utils
+  const handleResetBearing = () => {
+    if (mapRef?.current) {
+      const map = mapRef.current.getMap();
+      map.easeTo({
+        bearing: 0,
+        duration: 300,
+      });
+    }
+  };
+
+  // Handle bearing rotation
+  useEffect(() => {
+    if (!mapRef?.current) return;
+
+    const map = mapRef.current.getMap();
+    const handleMove = () => {
+      setBearing(map.getBearing());
+    };
+
+    map.on("move", handleMove);
+
+    return () => {
+      map.off("move", handleMove);
+    };
+  }, [mapRef?.current]);
+
+  return (
+    <Tooltip content={`${l.angle_to_north}`}>
+      <OverlayItemContainer>
+        <HStack gap={1}>
+          <Text w={"38px"} ml={2} textAlign={"center"} fontWeight={"semibold"}>
+            {Math.round(bearing)}°
+          </Text>
+
+          <BButton iconButton onClick={handleResetBearing} variant={"ghost"}>
+            <Center
+              transform={`rotate(${bearing * -1}deg)`}
+              position={"relative"}
+            >
+              <Icon color={"red.500"}>
+                <IconNavigationFilled />
+              </Icon>
+            </Center>
+          </BButton>
+        </HStack>
+      </OverlayItemContainer>
+    </Tooltip>
+  );
+};
+
 const AdminMapsOverlay = () => {
   // Contexts
   const { layout } = useLayout();
@@ -726,13 +787,13 @@ const AdminMapsOverlay = () => {
             maxW={"calc(100% - 50px - 8px)"}
             right={0}
           >
-            <ZoomControl />
-
             <MapStyle />
+
+            <ZoomControl />
 
             <CurrentLocation />
 
-            <DataDisplayed />
+            <NorthDirection />
           </HScroll>
         </HStack>
       </Box>

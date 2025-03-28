@@ -7,6 +7,7 @@ const translations = {
   "address_not_found": "Alamat tidak ditemukan",
   "all": "Semua",
   "and": "dan",
+  "angle_to_north": "Sudut terhadap utara",
   "announcement": "Pengumuman",
   "ask": "Meminta",
   "auto_time_zone": "Zona waktu saat ini (auto)",
@@ -207,6 +208,7 @@ const translations = {
     "title": "Tidak ada data",
     "description": "Cobalah untuk memperbarui data."
   },
+  "north_direction": "Arah utara",
   "not_found_feedback": {
     "title": "Tidak ditemukan",
     "description": "Cobalah untuk menyesuaikan pencarian."
