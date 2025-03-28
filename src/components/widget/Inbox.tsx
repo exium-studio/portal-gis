@@ -1,6 +1,6 @@
 import useLang from "@/context/useLang";
 import useBackOnClose from "@/hooks/useBackOnClose";
-import { Icon, useDisclosure } from "@chakra-ui/react";
+import { HStack, Text, useDisclosure } from "@chakra-ui/react";
 import { IconInbox, IconInboxOff } from "@tabler/icons-react";
 import BButton from "../ui-custom/BButton";
 import ConfirmationDisclosure from "../ui-custom/ConfirmationDisclosure";
@@ -33,9 +33,7 @@ const Inbox = () => {
               2
             </FloatCounter>
 
-            <Icon>
-              <IconInbox stroke={1.5} />
-            </Icon>
+            <IconInbox stroke={1.5} />
           </>
         </BButton>
       </Tooltip>
@@ -43,7 +41,17 @@ const Inbox = () => {
       <DrawerRoot open={open} size={"sm"}>
         <DrawerContent>
           <DrawerHeader pt={5}>
-            <DisclosureHeaderContent prefix="drawer" title="Inbox" />
+            <DisclosureHeaderContent
+              prefix="drawer"
+              content={
+                <HStack>
+                  <IconInbox stroke={1.5} />
+                  <Text fontSize={"16px"} fontWeight={"semibold"}>
+                    Inbox
+                  </Text>
+                </HStack>
+              }
+            />
           </DrawerHeader>
 
           <DrawerBody display={"flex"}>
