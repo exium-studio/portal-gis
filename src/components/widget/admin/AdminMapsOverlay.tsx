@@ -355,6 +355,7 @@ const DataDisplayed = () => {
           <PopoverContent
             ref={contentRef}
             p={1}
+            mr={"2px"}
             w={"250px"}
             pointerEvents={"auto"}
           >
@@ -767,7 +768,7 @@ const AdminMapsOverlay = () => {
   return (
     <CContainer
       id="map_overlay"
-      w={"full"}
+      w={"calc(100% - 2px)"}
       h={"calc(100% - 4px)"}
       pointerEvents={"none"}
       justify={"space-between"}
