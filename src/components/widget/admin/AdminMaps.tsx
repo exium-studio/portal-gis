@@ -1,4 +1,5 @@
 import { useColorMode } from "@/components/ui/color-mode";
+import useLayout from "@/context/useLayout";
 import useMapStyle from "@/context/useMapStyle";
 import mapboxgl from "mapbox-gl";
 import { useEffect, useRef, useState } from "react";
@@ -8,6 +9,7 @@ const AdminMaps = () => {
   // Contexts
   const { colorMode } = useColorMode();
   const { mapStyle, setMapStyle } = useMapStyle();
+  const { layout } = useLayout();
 
   // States, Refs
   const mapRef = useRef<MapRef>(null);
@@ -20,6 +22,13 @@ const AdminMaps = () => {
     light: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
     dark: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
   };
+
+  // Handle resize on layout change
+  useEffect(() => {
+    setTimeout(() => {
+      mapRef.current?.getMap().resize();
+    }, 0);
+  }, [layout]);
 
   // Handle map style depend on color mode
   useEffect(() => {

@@ -293,7 +293,7 @@ const NavContainer = ({
           >
             <AdminMaps />
 
-            {layout.id === 3 && <LayoutMenu />}
+            {layout.id === 3 && <LayoutMenu position={"absolute"} />}
           </CContainer>
         )}
       </Stack>
