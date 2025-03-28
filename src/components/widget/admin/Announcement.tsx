@@ -518,6 +518,7 @@ const Announcement = ({ ...props }: StackProps) => {
           {data.map((item, i) => {
             return (
               <CContainer
+                key={i}
                 pl={2}
                 py={4}
                 flex={1}
