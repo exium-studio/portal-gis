@@ -694,11 +694,12 @@ const NorthDirection = () => {
   const [bearing, setBearing] = useState(0);
 
   // Utils
-  const handleResetBearing = () => {
+  const handleReset = () => {
     if (mapRef?.current) {
       const map = mapRef.current.getMap();
       map.easeTo({
         bearing: 0,
+        pitch: 0,
         duration: 300,
       });
     }
@@ -737,7 +738,7 @@ const NorthDirection = () => {
         </Tooltip>
 
         <Tooltip content={`Reset ${l.angle_to_north.toLowerCase()}`}>
-          <BButton iconButton onClick={handleResetBearing} variant={"ghost"}>
+          <BButton iconButton onClick={handleReset} variant={"ghost"}>
             <Center
               transform={`rotate(${bearing * -1}deg)`}
               position={"relative"}
