@@ -12,9 +12,9 @@ const AdminMaps = () => {
   // States, Refs
   const mapRef = useRef<MapRef>(null);
   const [viewState, setViewState] = useState({
-    latitude: 0,
-    longitude: 0,
-    zoom: 0,
+    latitude: -2.5489,
+    longitude: 118.0149,
+    zoom: 3,
   });
   const tiles: Record<string, string> = {
     light: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
