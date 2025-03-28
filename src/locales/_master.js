@@ -59,6 +59,10 @@ export const settings_navs = {
 };
 
 // UI
+export const current_location = {
+  id: "Lokasi saat ini",
+  en: "Current location",
+};
 export const legend_helper = {
   id: "Legenda yang tampil disini bergantung pada daftar data yang ditampilkan",
   en: "The legend displayed here depends on the data list displayed",

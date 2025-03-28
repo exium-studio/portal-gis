@@ -2,6 +2,7 @@ import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
 import FeedbackNotFound from "@/components/ui-custom/FeedbackNotFound";
 import FloatingContainer from "@/components/ui-custom/FloatingContainer";
+import HelperText from "@/components/ui-custom/HelperText";
 import SearchInput from "@/components/ui-custom/SearchInput";
 import {
   PopoverContent,
@@ -9,8 +10,10 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Switch } from "@/components/ui/switch";
+import { Tooltip } from "@/components/ui/tooltip";
 import { Interface__Gens } from "@/constants/interfaces";
 import useAdminSearchAddress from "@/constants/useSearchAddress";
+import useCurrentLocation from "@/context/useCurrentLocation";
 import useDisplayedData from "@/context/useDisplayedData";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
@@ -18,6 +21,7 @@ import { useThemeConfig } from "@/context/useThemeConfig";
 import useClickOutside from "@/hooks/useClickOutside";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import DISPLAYED_DATA_LIST from "@/static/displayedDataList";
+import getLocation from "@/utils/getLocation";
 import pluck from "@/utils/pluck";
 import {
   Box,
@@ -34,6 +38,7 @@ import {
 } from "@chakra-ui/react";
 import {
   IconClock,
+  IconCurrentLocation,
   IconFlag,
   IconMapPin,
   IconMapPin2,
@@ -44,7 +49,6 @@ import { useEffect, useRef, useState } from "react";
 import TheLayoutMenu from "../LayoutMenu";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import useSearchMode from "./useSearchMode";
-import HelperText from "@/components/ui-custom/HelperText";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -469,6 +473,49 @@ const Legends = () => {
   );
 };
 
+const CurrentLocation = () => {
+  // Contexts
+  const { l } = useLang();
+  const { setCurrentLocation } = useCurrentLocation();
+
+  // States, Refs
+  const [loading, setLoading] = useState<boolean>(false);
+
+  // Utils
+  function handleOnClick() {
+    setLoading(true);
+    getLocation()
+      .then((loc) => {
+        setCurrentLocation({
+          lat: loc.coords.latitude,
+          lon: loc.coords.longitude,
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
+  return (
+    <OverlayItemContainer>
+      <Tooltip content={l.current_location}>
+        <BButton
+          iconButton
+          unclicky
+          variant={"ghost"}
+          onClick={handleOnClick}
+          loading={loading}
+        >
+          <IconCurrentLocation />
+        </BButton>
+      </Tooltip>
+    </OverlayItemContainer>
+  );
+};
+
 const AdminMapsOverlay = () => {
   // Contexts
   const { layout } = useLayout();
@@ -515,7 +562,7 @@ const AdminMapsOverlay = () => {
           </HStack>
 
           <HStack position={"absolute"} right={0}>
-            <DataDisplayed />
+            <CurrentLocation />
 
             <DataDisplayed />
 

@@ -36,6 +36,7 @@ const translations = {
   "current": "Saat ini",
   "current_facility": "Fasilitas saat ini",
   "current_inventory": "Inventaris saat ini",
+  "current_location": "Lokasi saat ini",
   "current_population": "Populasi saat ini",
   "current_total_family": "Total keluarga saat ini",
   "current_total_population": "Total populasi saat ini",

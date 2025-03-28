@@ -13,6 +13,7 @@ import { useThemeConfig } from "./context/useThemeConfig";
 import useADM from "./context/useADM";
 import { useColorMode } from "./components/ui/color-mode";
 import useScrollEffect from "./hooks/useScrollEffect";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 const EndpointWrapper = ({ children }: { children: React.ReactNode }) => {
   // Contexts

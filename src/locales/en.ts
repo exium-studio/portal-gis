@@ -36,6 +36,7 @@ const translations = {
   "current": "Current",
   "current_facility": "Current facility",
   "current_inventory": "Current inventory",
+  "current_location": "Current location",
   "current_population": "Current population",
   "current_total_family": "Current total family",
   "current_total_population": "Current total population",
