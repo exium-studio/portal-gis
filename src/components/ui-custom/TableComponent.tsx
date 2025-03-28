@@ -528,6 +528,7 @@ const TableComponent = ({
   const borderColor = "border.subtle";
 
   // States, Refs
+  const tableRef = useRef(null);
   const { themeConfig } = useThemeConfig();
   const tableHeader = columnsConfig
     ? columnsConfig.map((columnIndex) => ths[columnIndex])
@@ -693,8 +694,6 @@ const TableComponent = ({
       </Icon>
     );
   };
-
-  const tableRef = useRef(null);
 
   const dataToMap =
     sortConfig.sortColumnIndex !== null &&

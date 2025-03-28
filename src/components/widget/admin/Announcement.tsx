@@ -35,7 +35,6 @@ import formatDate from "@/utils/formatDate";
 import interpolate from "@/utils/interpolate";
 import { fileValidation } from "@/utils/validationSchemas";
 import {
-  FieldErrorText,
   FieldLabel,
   HStack,
   Icon,
@@ -66,15 +65,14 @@ const AnnouncementCreate = () => {
     initialValues: {
       title: "",
       description: "",
-      file: undefined as any,
-      startDateTime: undefined as any,
-      endDateTime: undefined as any,
+      published_at: undefined as any,
+      expires_at: undefined as any,
+      documents: undefined as any,
     },
     validationSchema: yup.object().shape({
       title: yup.string().required(l.required_form),
       description: yup.string().required(l.required_form),
-      file: fileValidation({ allowedExtensions: ["pdf"] }),
-      startDateTime: yup
+      published_at: yup
         .string()
         .required(l.required_form)
         .test(
@@ -84,13 +82,13 @@ const AnnouncementCreate = () => {
             b: l.end_date,
           }),
           function (value) {
-            const { endDateTime } = this.parent;
+            const { expires_at } = this.parent;
             return (
-              !endDateTime || !value || new Date(value) < new Date(endDateTime)
+              !expires_at || !value || new Date(value) < new Date(expires_at)
             );
           }
         ),
-      endDateTime: yup
+      expires_at: yup
         .string()
         .required(l.required_form)
         .test(
@@ -100,14 +98,15 @@ const AnnouncementCreate = () => {
             b: l.published_date,
           }),
           function (value) {
-            const { startDateTime } = this.parent;
+            const { published_at } = this.parent;
             return (
-              !startDateTime ||
+              !published_at ||
               !value ||
-              new Date(value) > new Date(startDateTime)
+              new Date(value) > new Date(published_at)
             );
           }
         ),
+      documents: fileValidation({ allowedExtensions: ["pdf"] }),
     }),
     onSubmit: (values) => {
       console.log(values);
@@ -115,15 +114,13 @@ const AnnouncementCreate = () => {
       const payload = new FormData();
       payload.append("title", values.title);
       payload.append("description", values.description);
-      payload.append("file", values.file);
-      payload.append("startDateTime", values.startDateTime);
-      payload.append("endDateTime", values.endDateTime);
+      payload.append("documents", values.documents);
+      payload.append("published_at", values.published_at);
+      payload.append("expires_at", values.expires_at);
 
       console.log(payload);
     },
   });
-
-  // console.log(formik.values);
 
   // Utils
   const { open, onOpen, onClose } = useDisclosure();
@@ -145,7 +142,10 @@ const AnnouncementCreate = () => {
 
           <DisclosureBody>
             <form id="announcement_create" onSubmit={formik.handleSubmit}>
-              <Field invalid={!!formik.errors.title}>
+              <Field
+                invalid={!!formik.errors.title}
+                errorText={formik.errors.title as string}
+              >
                 <FieldLabel>
                   {l.title}
                   <RequiredIndicator />
@@ -156,10 +156,13 @@ const AnnouncementCreate = () => {
                   }}
                   inputValue={formik.values.title}
                 />
-                <FieldErrorText>{formik.errors.title as string}</FieldErrorText>
               </Field>
 
-              <Field mt={4} invalid={!!formik.errors.description}>
+              <Field
+                mt={4}
+                invalid={!!formik.errors.description}
+                errorText={formik.errors.description as string}
+              >
                 <FieldLabel>
                   {l.description}
                   <RequiredIndicator />
@@ -170,18 +173,13 @@ const AnnouncementCreate = () => {
                   }}
                   inputValue={formik.values.description}
                 />
-                <FieldErrorText>
-                  {formik.errors.description as string}
-                </FieldErrorText>
               </Field>
 
-              <Field mt={4}>
-                <FieldLabel>Attachment</FieldLabel>
-                <FileInput maxFiles={3} />
-                <FieldErrorText>{formik.errors.file as string}</FieldErrorText>
-              </Field>
-
-              <Field mt={4} invalid={!!formik.errors.startDateTime}>
+              <Field
+                mt={4}
+                invalid={!!formik.errors.published_at}
+                errorText={formik.errors.published_at as string}
+              >
                 <FieldLabel>
                   {l.published_date}
                   <RequiredIndicator />
@@ -189,16 +187,17 @@ const AnnouncementCreate = () => {
                 <DateTimePicker
                   id="start_datetime"
                   onChangeSetter={(input) => {
-                    formik.setFieldValue("startDateTime", input);
+                    formik.setFieldValue("published_at", input);
                   }}
-                  inputValue={formik.values.startDateTime}
+                  inputValue={formik.values.published_at}
                 />
-                <FieldErrorText>
-                  {formik.errors.startDateTime as string}
-                </FieldErrorText>
               </Field>
 
-              <Field mt={4} invalid={!!formik.errors.endDateTime}>
+              <Field
+                mt={4}
+                invalid={!!formik.errors.expires_at}
+                errorText={formik.errors.expires_at as string}
+              >
                 <FieldLabel>
                   {l.end_date}
                   <RequiredIndicator />
@@ -206,13 +205,15 @@ const AnnouncementCreate = () => {
                 <DateTimePicker
                   id="end_datetime"
                   onChangeSetter={(input) => {
-                    formik.setFieldValue("endDateTime", input);
+                    formik.setFieldValue("expires_at", input);
                   }}
-                  inputValue={formik.values.endDateTime}
+                  inputValue={formik.values.expires_at}
                 />
-                <FieldErrorText>
-                  {formik.errors.endDateTime as string}
-                </FieldErrorText>
+              </Field>
+
+              <Field mt={4} errorText={formik.errors.documents as string}>
+                <FieldLabel>Attachment</FieldLabel>
+                <FileInput maxFiles={3} />
               </Field>
             </form>
           </DisclosureBody>
@@ -243,15 +244,16 @@ const AnnouncementEdit = ({ item }: any) => {
     initialValues: {
       title: item.title,
       description: item.description,
-      file: item.file,
-      startDateTime: item.start_date_time,
-      endDateTime: item.end_date_time,
+      published_at: item.start_date_time,
+      expires_at: item.end_date_time,
+      documents: undefined as any,
+      deleted_documents: [],
     },
     validationSchema: yup.object().shape({
       title: yup.string().required(l.required_form),
       description: yup.string().required(l.required_form),
-      file: fileValidation({ allowedExtensions: ["pdf"] }),
-      startDateTime: yup
+
+      published_at: yup
         .string()
         .required(l.required_form)
         .test(
@@ -261,13 +263,13 @@ const AnnouncementEdit = ({ item }: any) => {
             b: l.end_date,
           }),
           function (value) {
-            const { endDateTime } = this.parent;
+            const { expires_at } = this.parent;
             return (
-              !endDateTime || !value || new Date(value) < new Date(endDateTime)
+              !expires_at || !value || new Date(value) < new Date(expires_at)
             );
           }
         ),
-      endDateTime: yup
+      expires_at: yup
         .string()
         .required(l.required_form)
         .test(
@@ -277,14 +279,15 @@ const AnnouncementEdit = ({ item }: any) => {
             b: l.published_date,
           }),
           function (value) {
-            const { startDateTime } = this.parent;
+            const { published_at } = this.parent;
             return (
-              !startDateTime ||
+              !published_at ||
               !value ||
-              new Date(value) > new Date(startDateTime)
+              new Date(value) > new Date(published_at)
             );
           }
         ),
+      documents: fileValidation({ allowedExtensions: ["pdf"] }),
     }),
     onSubmit: (values) => {
       console.log(values);
@@ -294,6 +297,8 @@ const AnnouncementEdit = ({ item }: any) => {
   // Utils
   const { open, onOpen, onClose } = useDisclosure();
   useBackOnClose(`edit-announcement-${item.id}`, open, onOpen, onClose);
+
+  console.log("jancok", formik.values);
 
   return (
     <>
@@ -312,7 +317,10 @@ const AnnouncementEdit = ({ item }: any) => {
 
           <DisclosureBody>
             <form id="announcement_edit" onSubmit={formik.handleSubmit}>
-              <Field invalid={!!formik.errors.title}>
+              <Field
+                invalid={!!formik.errors.title}
+                errorText={formik.errors.title as string}
+              >
                 <FieldLabel>
                   {l.title}
                   <RequiredIndicator />
@@ -323,10 +331,13 @@ const AnnouncementEdit = ({ item }: any) => {
                   }}
                   inputValue={formik.values.title}
                 />
-                <FieldErrorText>{formik.errors.title as string}</FieldErrorText>
               </Field>
 
-              <Field mt={4} invalid={!!formik.errors.description}>
+              <Field
+                mt={4}
+                invalid={!!formik.errors.description}
+                errorText={formik.errors.description as string}
+              >
                 <FieldLabel>
                   {l.description}
                   <RequiredIndicator />
@@ -337,18 +348,13 @@ const AnnouncementEdit = ({ item }: any) => {
                   }}
                   inputValue={formik.values.description}
                 />
-                <FieldErrorText>
-                  {formik.errors.description as string}
-                </FieldErrorText>
               </Field>
 
-              <Field mt={4}>
-                <FieldLabel>Attachment</FieldLabel>
-                <FileInput maxFiles={3} />
-                <FieldErrorText>{formik.errors.file as string}</FieldErrorText>
-              </Field>
-
-              <Field mt={4} invalid={!!formik.errors.startDateTime}>
+              <Field
+                mt={4}
+                invalid={!!formik.errors.published_at}
+                errorText={formik.errors.published_at as string}
+              >
                 <FieldLabel>
                   {l.published_date}
                   <RequiredIndicator />
@@ -356,16 +362,17 @@ const AnnouncementEdit = ({ item }: any) => {
                 <DateTimePicker
                   id="start_datetime"
                   onChangeSetter={(input) => {
-                    formik.setFieldValue("startDateTime", input);
+                    formik.setFieldValue("published_at", input);
                   }}
-                  inputValue={formik.values.startDateTime}
+                  inputValue={formik.values.published_at}
                 />
-                <FieldErrorText>
-                  {formik.errors.startDateTime as string}
-                </FieldErrorText>
               </Field>
 
-              <Field mt={4} invalid={!!formik.errors.endDateTime}>
+              <Field
+                mt={4}
+                invalid={!!formik.errors.expires_at}
+                errorText={formik.errors.expires_at as string}
+              >
                 <FieldLabel>
                   {l.end_date}
                   <RequiredIndicator />
@@ -373,13 +380,15 @@ const AnnouncementEdit = ({ item }: any) => {
                 <DateTimePicker
                   id="end_datetime"
                   onChangeSetter={(input) => {
-                    formik.setFieldValue("endDateTime", input);
+                    formik.setFieldValue("expires_at", input);
                   }}
-                  inputValue={formik.values.endDateTime}
+                  inputValue={formik.values.expires_at}
                 />
-                <FieldErrorText>
-                  {formik.errors.endDateTime as string}
-                </FieldErrorText>
+              </Field>
+
+              <Field mt={4} errorText={formik.errors.documents as string}>
+                <FieldLabel>Attachment</FieldLabel>
+                <FileInput maxFiles={3} />
               </Field>
             </form>
           </DisclosureBody>
@@ -456,6 +465,164 @@ const Announcement = ({ ...props }: StackProps) => {
       title: "Pemberitahuan Pemadaman Listrik",
       description:
         "Akan ada pemadaman listrik di wilayah desa pada 25 Maret 2025 mulai pukul 10:00 - 14:00 WIB.",
+      documents: [
+        {
+          id: 2,
+          user_id: 19,
+          document_status_id: 2,
+          verified_by: null,
+          uploaded_by: null,
+          file_id: "d148f339-198d-446b-a861-3401b3c6d668",
+          file_name: "document_2.pdf",
+          file_path: "uploads/documents/document_2.pdf",
+          file_mime_type: "application/pdf",
+          file_size: "478 KB",
+          reason: null,
+          created_at: "2025-03-22T10:21:41.000000Z",
+          updated_at: "2025-03-22T10:21:41.000000Z",
+          document_status: {
+            id: 2,
+            label: "Diverifikasi",
+            deleted_at: null,
+            created_at: "2025-03-22T10:21:31.000000Z",
+            updated_at: "2025-03-22T10:21:31.000000Z",
+          },
+          uploaded_user: null,
+          verified_user: null,
+        },
+        {
+          id: 5,
+          user_id: 27,
+          document_status_id: 3,
+          verified_by: null,
+          uploaded_by: 28,
+          file_id: "cd1fd839-bd55-4b33-bf9e-a175d30971ec",
+          file_name: "document_5.pdf",
+          file_path: "uploads/documents/document_5.pdf",
+          file_mime_type: "application/pdf",
+          file_size: "150 KB",
+          reason: "Approval required",
+          created_at: "2025-03-22T10:21:41.000000Z",
+          updated_at: "2025-03-22T10:21:41.000000Z",
+          document_status: {
+            id: 3,
+            label: "Ditolak",
+            deleted_at: null,
+            created_at: "2025-03-22T10:21:31.000000Z",
+            updated_at: "2025-03-22T10:21:31.000000Z",
+          },
+          uploaded_user: {
+            id: 28,
+            name: "Kepala RT 7",
+            email: "kepalart7@example.com",
+            email_verified_at: null,
+            profile_photo: null,
+            account_status: 2,
+            facilities_filter: [
+              {
+                id: 2,
+                name: "Lapangan",
+                description:
+                  "Area terbuka yang digunakan untuk olahraga, upacara, dan berbagai kegiatan masyarakat.",
+                deleted_at: null,
+                created_at: "2025-03-22T10:21:31.000000Z",
+                updated_at: "2025-03-22T10:21:31.000000Z",
+              },
+              {
+                id: 3,
+                name: "Gor Desa",
+                description:
+                  "Gedung olahraga desa yang digunakan untuk berbagai aktivitas olahraga dan acara masyarakat.",
+                deleted_at: null,
+                created_at: "2025-03-22T10:21:31.000000Z",
+                updated_at: "2025-03-22T10:21:31.000000Z",
+              },
+              {
+                id: 5,
+                name: "Tempat Ibadah",
+                description:
+                  "Sarana ibadah yang tersedia untuk berbagai agama sesuai dengan kebutuhan masyarakat.",
+                deleted_at: null,
+                created_at: "2025-03-22T10:21:31.000000Z",
+                updated_at: "2025-03-22T10:21:31.000000Z",
+              },
+              {
+                id: 8,
+                name: "Pasar",
+                description:
+                  "Tempat transaksi jual beli berbagai kebutuhan masyarakat, baik pangan maupun sandang.",
+                deleted_at: null,
+                created_at: "2025-03-22T10:21:31.000000Z",
+                updated_at: "2025-03-22T10:21:31.000000Z",
+              },
+            ],
+            document_type_filter: [
+              {
+                id: 2,
+                label: "Kartu Tanda Penduduk (KTP)",
+                category: "dokumen_kependudukan",
+                description:
+                  "Identitas resmi yang wajib dimiliki oleh setiap warga negara Indonesia yang telah memenuhi syarat usia.",
+                max_upload: 1024000,
+                deleted_at: null,
+                created_at: "2025-03-22T10:21:31.000000Z",
+                updated_at: "2025-03-22T10:21:31.000000Z",
+              },
+              {
+                id: 5,
+                label: "Surat Keterangan Tempat Tinggal",
+                category: "dokumen_kependudukan",
+                description:
+                  "Dokumen bagi penduduk sementara yang menyatakan tempat tinggalnya.",
+                max_upload: 1024000,
+                deleted_at: null,
+                created_at: "2025-03-22T10:21:31.000000Z",
+                updated_at: "2025-03-22T10:21:31.000000Z",
+              },
+              {
+                id: 7,
+                label: "Akta Kelahiran",
+                category: "dokumen_sipil",
+                description:
+                  "Dokumen yang mencatat kelahiran seseorang secara resmi.",
+                max_upload: 2048000,
+                deleted_at: null,
+                created_at: "2025-03-22T10:21:31.000000Z",
+                updated_at: "2025-03-22T10:21:31.000000Z",
+              },
+              {
+                id: 9,
+                label: "Akta Perkawinan",
+                category: "dokumen_sipil",
+                description:
+                  "Dokumen yang mencatat secara resmi pernikahan pasangan.",
+                max_upload: 2048000,
+                deleted_at: null,
+                created_at: "2025-03-22T10:21:31.000000Z",
+                updated_at: "2025-03-22T10:21:31.000000Z",
+              },
+              {
+                id: 12,
+                label: "Akta Pengesahan Anak",
+                category: "dokumen_sipil",
+                description:
+                  "Dokumen yang mengesahkan status hukum seorang anak.",
+                max_upload: 2048000,
+                deleted_at: null,
+                created_at: "2025-03-22T10:21:31.000000Z",
+                updated_at: "2025-03-22T10:21:31.000000Z",
+              },
+            ],
+            register_at: "1742638897GMT+0000C",
+            deactivate_at: null,
+            last_login: null,
+            deleted_at: null,
+            created_at: "2025-03-22T10:21:37.000000Z",
+            updated_at: "2025-03-22T10:21:37.000000Z",
+          },
+          verified_user: null,
+        },
+      ],
       updated_at: new Date().toISOString(),
     },
     {
@@ -470,13 +637,6 @@ const Announcement = ({ ...props }: StackProps) => {
       title: "Pembagian Bantuan Langsung Tunai (BLT)",
       description:
         "Pembagian BLT Dana Desa akan dilakukan pada 30 Maret 2025. Warga yang berhak diharapkan membawa KTP dan KK.",
-      file: [
-        {
-          name: "Surat edaran",
-          size: 8911,
-          ext: "pdf",
-        },
-      ],
       updated_at: new Date().toISOString(),
     },
     {
