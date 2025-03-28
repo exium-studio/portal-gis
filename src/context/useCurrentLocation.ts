@@ -3,7 +3,7 @@ import { create } from "zustand";
 
 interface Props {
   currentLocation: LatLong | undefined;
-  setCurrentLocation: (newState: LatLong) => void;
+  setCurrentLocation: (newState: Props["currentLocation"]) => void;
 }
 
 const useCurrentLocation = create<Props>((set) => {

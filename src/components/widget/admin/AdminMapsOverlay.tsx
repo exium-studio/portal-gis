@@ -40,6 +40,7 @@ import {
 import {
   IconClock,
   IconCurrentLocation,
+  IconCurrentLocationFilled,
   IconFlag,
   IconMapPin,
   IconMapPin2,
@@ -481,27 +482,32 @@ const Legends = () => {
 const CurrentLocation = () => {
   // Contexts
   const { l } = useLang();
-  const { setCurrentLocation } = useCurrentLocation();
+  const { currentLocation, setCurrentLocation } = useCurrentLocation();
+  const { themeConfig } = useThemeConfig();
 
   // States, Refs
   const [loading, setLoading] = useState<boolean>(false);
 
   // Utils
   function handleOnClick() {
-    setLoading(true);
-    getLocation()
-      .then((loc) => {
-        setCurrentLocation({
-          lat: loc.coords.latitude,
-          lon: loc.coords.longitude,
+    if (currentLocation) {
+      setCurrentLocation(undefined);
+    } else {
+      setLoading(true);
+      getLocation()
+        .then((loc) => {
+          setCurrentLocation({
+            lat: loc.coords.latitude,
+            lon: loc.coords.longitude,
+          });
+        })
+        .catch((e) => {
+          console.log(e);
+        })
+        .finally(() => {
+          setLoading(false);
         });
-      })
-      .catch((e) => {
-        console.log(e);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    }
   }
 
   return (
@@ -514,7 +520,11 @@ const CurrentLocation = () => {
           onClick={handleOnClick}
           loading={loading}
         >
-          <IconCurrentLocation />
+          {currentLocation ? (
+            <IconCurrentLocationFilled color={themeConfig.primaryColorHex} />
+          ) : (
+            <IconCurrentLocation />
+          )}
         </BButton>
       </Tooltip>
     </OverlayItemContainer>
