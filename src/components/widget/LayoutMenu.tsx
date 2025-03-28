@@ -62,7 +62,7 @@ const LayoutMenu = ({ popoverContentProps, ...props }: Props) => {
               <Text fontWeight={"bold"}>Layout</Text>
             </MenuHeaderContainer>
 
-            <CContainer py={1}>
+            <CContainer pt={1}>
               {LAYOUT_OPTIONS.map((item, i) => {
                 const active = layout.id === item.id;
 

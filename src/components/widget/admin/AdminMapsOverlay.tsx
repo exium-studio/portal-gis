@@ -346,7 +346,7 @@ const DataDisplayed = ({ popoverContentProps, ...props }: any) => {
               <Text fontWeight={"bold"}>{l.displayed_data}</Text>
             </MenuHeaderContainer>
 
-            <CContainer py={1}>
+            <CContainer pt={1}>
               {DISPLAYED_DATA_LIST.map((item, i) => {
                 const active = displayedData.some(
                   (data) => data.id === item.id
@@ -367,12 +367,14 @@ const DataDisplayed = ({ popoverContentProps, ...props }: any) => {
                 };
 
                 return (
-                  <HStack
+                  <BButton
                     key={i}
+                    unclicky
                     justifyContent={"space-between"}
                     px={2}
                     onClick={() => toggleItem(item)}
-                    h={"40px"}
+                    variant={"ghost"}
+                    size={"md"}
                     cursor={"pointer"}
                   >
                     {item.label}
@@ -382,7 +384,7 @@ const DataDisplayed = ({ popoverContentProps, ...props }: any) => {
                       pointerEvents={"none"}
                       colorPalette={themeConfig.colorPalette}
                     />
-                  </HStack>
+                  </BButton>
                 );
               })}
             </CContainer>
