@@ -18,6 +18,9 @@ html {
 }
 
 /* Custom Start*/
+.mapboxgl-ctrl-bottom-left {
+  display: none !important;
+}
 .timezones-list::-webkit-scrollbar-track {
   height: 100px !important;
   clip-path: inset(50px 0 50px 0) !important;

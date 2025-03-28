@@ -599,7 +599,7 @@ const AdminMapsOverlay = () => {
     <CContainer
       id="map_overlay"
       w={"full"}
-      h={"full"}
+      h={"calc(100% - 4px)"}
       pointerEvents={"none"}
       justify={"space-between"}
       zIndex={1}
