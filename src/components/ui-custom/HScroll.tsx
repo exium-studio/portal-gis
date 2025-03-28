@@ -18,7 +18,7 @@ const HScroll = ({ fRef, children, ...props }: Props) => {
       hStackRef.current.scrollWidth > hStackRef.current.clientWidth;
 
     if (canScroll) {
-      event.preventDefault();
+      // event.preventDefault();
       scrollVelocity.current += event.deltaY * 0.2;
 
       if (!rafId.current) {

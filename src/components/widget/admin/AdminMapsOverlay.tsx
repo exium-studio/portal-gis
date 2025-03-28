@@ -59,6 +59,7 @@ import { useEffect, useRef, useState } from "react";
 import TheLayoutMenu from "../LayoutMenu";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import useSearchMode from "./useSearchMode";
+import HScroll from "@/components/ui-custom/HScroll";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -473,58 +474,6 @@ const Legends = () => {
   );
 };
 
-const CurrentLocation = () => {
-  // Contexts
-  const { l } = useLang();
-  const { currentLocation, setCurrentLocation } = useCurrentLocation();
-  const { themeConfig } = useThemeConfig();
-
-  // States, Refs
-  const [loading, setLoading] = useState<boolean>(false);
-
-  // Utils
-  function handleOnClick() {
-    if (currentLocation) {
-      setCurrentLocation(undefined);
-    } else {
-      setLoading(true);
-      getLocation()
-        .then((loc) => {
-          setCurrentLocation({
-            lat: loc.coords.latitude,
-            lon: loc.coords.longitude,
-          });
-        })
-        .catch((e) => {
-          console.log(e);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    }
-  }
-
-  return (
-    <OverlayItemContainer>
-      <Tooltip content={l.current_location}>
-        <BButton
-          iconButton
-          unclicky
-          variant={"ghost"}
-          onClick={handleOnClick}
-          loading={loading}
-        >
-          {currentLocation ? (
-            <IconCurrentLocationFilled color={themeConfig.primaryColorHex} />
-          ) : (
-            <IconCurrentLocation />
-          )}
-        </BButton>
-      </Tooltip>
-    </OverlayItemContainer>
-  );
-};
-
 const ZoomControl = () => {
   const { zoomPercent, setZoomPercent } = useMapsZoom();
 
@@ -674,6 +623,58 @@ const MapStyle = () => {
   );
 };
 
+const CurrentLocation = () => {
+  // Contexts
+  const { l } = useLang();
+  const { currentLocation, setCurrentLocation } = useCurrentLocation();
+  const { themeConfig } = useThemeConfig();
+
+  // States, Refs
+  const [loading, setLoading] = useState<boolean>(false);
+
+  // Utils
+  function handleOnClick() {
+    if (currentLocation) {
+      setCurrentLocation(undefined);
+    } else {
+      setLoading(true);
+      getLocation()
+        .then((loc) => {
+          setCurrentLocation({
+            lat: loc.coords.latitude,
+            lon: loc.coords.longitude,
+          });
+        })
+        .catch((e) => {
+          console.log(e);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  }
+
+  return (
+    <OverlayItemContainer>
+      <Tooltip content={l.current_location}>
+        <BButton
+          iconButton
+          unclicky
+          variant={"ghost"}
+          onClick={handleOnClick}
+          loading={loading}
+        >
+          {currentLocation ? (
+            <IconCurrentLocationFilled color={themeConfig.primaryColorHex} />
+          ) : (
+            <IconCurrentLocation />
+          )}
+        </BButton>
+      </Tooltip>
+    </OverlayItemContainer>
+  );
+};
+
 const AdminMapsOverlay = () => {
   // Contexts
   const { layout } = useLayout();
@@ -719,15 +720,20 @@ const AdminMapsOverlay = () => {
             <Legends />
           </HStack>
 
-          <HStack position={"absolute"} right={0}>
-            <CurrentLocation />
-
+          <HScroll
+            position={"absolute"}
+            w={"fit"}
+            maxW={"calc(100% - 50px - 8px)"}
+            right={0}
+          >
             <ZoomControl />
 
             <MapStyle />
 
+            <CurrentLocation />
+
             <DataDisplayed />
-          </HStack>
+          </HScroll>
         </HStack>
       </Box>
     </CContainer>
