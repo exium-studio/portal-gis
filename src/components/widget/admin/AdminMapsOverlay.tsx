@@ -225,9 +225,10 @@ const SearchAddress = () => {
     >
       <OverlayItemContainer
         id="search-trigger"
-        w={searchMode ? "" : "50px"}
+        w={searchMode ? "calc(100vw - 18px)" : "50px"}
         flexDir={"row"}
         overflow={"clip"}
+        transition={"200ms"}
       >
         <BButton
           iconButton
@@ -695,7 +696,7 @@ const AdminMapsOverlay = () => {
           position={"relative"}
           h={"calc(40px + 8px)"}
         >
-          <HStack align={"start"} w={"full"} zIndex={2}>
+          <HStack align={"start"} w={"fit"} h={"fit"} zIndex={2}>
             <SearchAddress />
           </HStack>
 
