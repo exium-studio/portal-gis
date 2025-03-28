@@ -18,7 +18,7 @@ const VillageSummary = ({ ...props }: StackProps) => {
   // States, Refs
   const data = {
     image_file: {
-      path: `${IMAGES_PATH}/tembalang.jpg`,
+      path: `${IMAGES_PATH}/tembalang.png`,
     },
     name: "Temcy, Tembalang City Babyyy",
     summary:
