@@ -657,8 +657,8 @@ const CurrentLocation = () => {
   }
 
   return (
-    <OverlayItemContainer>
-      <Tooltip content={l.current_location}>
+    <Tooltip content={l.current_location}>
+      <OverlayItemContainer>
         <BButton
           iconButton
           unclicky
@@ -672,8 +672,8 @@ const CurrentLocation = () => {
             <IconCurrentLocation />
           )}
         </BButton>
-      </Tooltip>
-    </OverlayItemContainer>
+      </OverlayItemContainer>
+    </Tooltip>
   );
 };
 
