@@ -40,8 +40,8 @@ const VillageSummary = ({ ...props }: StackProps) => {
       <HStack wrap={"wrap"} align={"stretch"} flex={1}>
         <CContainer flex={"1 1 300px"} position={"relative"}>
           <Image src={data.image_file.path} objectFit={"cover"} h={"full"} />
-          <Tooltip content={"Google maps"}>
-            <Link to={data.gmaps_link} target="_blank">
+          <Link to={data.gmaps_link} target="_blank">
+            <Tooltip content={"Google maps"}>
               <BButton
                 iconButton
                 position={"absolute"}
@@ -55,8 +55,8 @@ const VillageSummary = ({ ...props }: StackProps) => {
                   <IconBrandGoogleMaps />
                 </Icon>
               </BButton>
-            </Link>
-          </Tooltip>
+            </Tooltip>
+          </Link>
         </CContainer>
 
         <CContainer flex={"1 0 300px"} gap={4} my={2} p={4} justify={"center"}>
