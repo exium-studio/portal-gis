@@ -39,6 +39,7 @@ import useSearchMode from "./useSearchMode";
 import useDisplayedData from "@/context/useDisplayedData";
 import { Interface__Gens } from "@/constants/interfaces";
 import useLang from "@/context/useLang";
+import MenuHeaderContainer from "../MenuHeaderContainer";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -341,46 +342,50 @@ const DataDisplayed = ({ popoverContentProps, ...props }: any) => {
             pointerEvents={"auto"}
             {...popoverContentProps}
           >
-            <CContainer p={2}>
+            <MenuHeaderContainer>
               <Text fontWeight={"bold"}>{l.displayed_data}</Text>
+            </MenuHeaderContainer>
+
+            <CContainer py={1}>
+              {DISPLAYED_DATA_LIST.map((item, i) => {
+                const active = displayedData.some(
+                  (data) => data.id === item.id
+                );
+
+                const toggleItem = (item: Interface__Gens) => {
+                  let newDisplayedData: Interface__Gens[];
+
+                  if (displayedData.some((data) => data.id === item.id)) {
+                    newDisplayedData = displayedData.filter(
+                      (data) => data.id !== item.id
+                    );
+                  } else {
+                    newDisplayedData = [...displayedData, item];
+                  }
+
+                  setDisplayedData(newDisplayedData);
+                };
+
+                return (
+                  <HStack
+                    key={i}
+                    justifyContent={"space-between"}
+                    px={2}
+                    onClick={() => toggleItem(item)}
+                    h={"40px"}
+                    cursor={"pointer"}
+                  >
+                    {item.label}
+
+                    <Switch
+                      checked={active}
+                      pointerEvents={"none"}
+                      colorPalette={themeConfig.colorPalette}
+                    />
+                  </HStack>
+                );
+              })}
             </CContainer>
-
-            {DISPLAYED_DATA_LIST.map((item, i) => {
-              const active = displayedData.some((data) => data.id === item.id);
-
-              const toggleItem = (item: Interface__Gens) => {
-                let newDisplayedData: Interface__Gens[];
-
-                if (displayedData.some((data) => data.id === item.id)) {
-                  newDisplayedData = displayedData.filter(
-                    (data) => data.id !== item.id
-                  );
-                } else {
-                  newDisplayedData = [...displayedData, item];
-                }
-
-                setDisplayedData(newDisplayedData);
-              };
-
-              return (
-                <HStack
-                  key={i}
-                  justifyContent={"space-between"}
-                  px={2}
-                  onClick={() => toggleItem(item)}
-                  h={"40px"}
-                  cursor={"pointer"}
-                >
-                  {item.label}
-
-                  <Switch
-                    checked={active}
-                    pointerEvents={"none"}
-                    colorPalette={themeConfig.colorPalette}
-                  />
-                </HStack>
-              );
-            })}
 
             {/* <CContainer px={2} pb={1} pt={2}>
               <HelperText lineHeight={1.4}>{l.layout_menu_helper}</HelperText>

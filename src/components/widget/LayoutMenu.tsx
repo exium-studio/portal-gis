@@ -8,6 +8,7 @@ import {
   PopoverContentProps,
   PopoverPositioner,
   Portal,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import { IconCheck, IconLayoutColumns } from "@tabler/icons-react";
@@ -16,6 +17,7 @@ import BButton, { BButtonProps } from "../ui-custom/BButton";
 import CContainer from "../ui-custom/CContainer";
 import HelperText from "../ui-custom/HelperText";
 import { PopoverContent, PopoverRoot, PopoverTrigger } from "../ui/popover";
+import MenuHeaderContainer from "./MenuHeaderContainer";
 
 interface Props extends BButtonProps {
   popoverContentProps?: PopoverContentProps;
@@ -56,34 +58,40 @@ const LayoutMenu = ({ popoverContentProps, ...props }: Props) => {
             w={"180px"}
             {...popoverContentProps}
           >
-            {LAYOUT_OPTIONS.map((item, i) => {
-              const active = layout.id === item.id;
+            <MenuHeaderContainer>
+              <Text fontWeight={"bold"}>Layout</Text>
+            </MenuHeaderContainer>
 
-              return (
-                <BButton
-                  key={i}
-                  unclicky
-                  variant={"ghost"}
-                  justifyContent={"start"}
-                  px={2}
-                  size={"md"}
-                  onClick={() => {
-                    setLayout(item);
-                    onClose();
-                  }}
-                >
-                  {item.label}
+            <CContainer py={1}>
+              {LAYOUT_OPTIONS.map((item, i) => {
+                const active = layout.id === item.id;
 
-                  {active && (
-                    <Icon ml={"auto"} color={themeConfig.primaryColor}>
-                      <IconCheck size={20} />
-                    </Icon>
-                  )}
-                </BButton>
-              );
-            })}
+                return (
+                  <BButton
+                    key={i}
+                    unclicky
+                    variant={"ghost"}
+                    justifyContent={"start"}
+                    px={2}
+                    size={"md"}
+                    onClick={() => {
+                      setLayout(item);
+                      onClose();
+                    }}
+                  >
+                    {item.label}
 
-            <CContainer px={2} pb={1} pt={2}>
+                    {active && (
+                      <Icon ml={"auto"} color={themeConfig.primaryColor}>
+                        <IconCheck size={20} />
+                      </Icon>
+                    )}
+                  </BButton>
+                );
+              })}
+            </CContainer>
+
+            <CContainer px={2} pb={"6px"} pt={2}>
               <HelperText lineHeight={1.4}>{l.layout_menu_helper}</HelperText>
             </CContainer>
           </PopoverContent>
