@@ -4,6 +4,7 @@ import useLayout from "@/context/useLayout";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import {
   Icon,
+  PopoverContentProps,
   PopoverPositioner,
   Portal,
   useDisclosure,
@@ -15,8 +16,10 @@ import HelperText from "../ui-custom/HelperText";
 import CContainer from "../ui-custom/CContainer";
 import useLang from "@/context/useLang";
 
-interface Props extends BButtonProps {}
-const LayoutMenu = ({ ...props }: Props) => {
+interface Props extends BButtonProps {
+  popoverContentProps?: PopoverContentProps;
+}
+const LayoutMenu = ({ popoverContentProps, ...props }: Props) => {
   // Contexts
   const { themeConfig } = useThemeConfig();
   const { layout, setLayout } = useLayout();
@@ -63,7 +66,12 @@ const LayoutMenu = ({ ...props }: Props) => {
 
       <Portal>
         <PopoverPositioner>
-          <PopoverContent ref={contentRef} p={1} w={"180px"}>
+          <PopoverContent
+            ref={contentRef}
+            p={1}
+            w={"180px"}
+            {...popoverContentProps}
+          >
             {LAYOUT_OPTIONS.map((item, i) => {
               const active = layout.id === item.id;
 

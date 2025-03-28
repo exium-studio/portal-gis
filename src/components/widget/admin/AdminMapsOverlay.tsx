@@ -62,7 +62,12 @@ const OverlayItemContainer = ({
 const LayoutMenu = () => {
   return (
     <OverlayItemContainer>
-      <TheLayoutMenu pointerEvents={"auto"} />
+      <TheLayoutMenu
+        pointerEvents={"auto"}
+        popoverContentProps={{
+          mt: 1,
+        }}
+      />
     </OverlayItemContainer>
   );
 };
@@ -189,8 +194,9 @@ const SearchAddress = () => {
     >
       <OverlayItemContainer
         id="search-trigger"
-        w={searchMode ? "" : "49.6px"}
+        w={searchMode ? "" : "50px"}
         flexDir={"row"}
+        overflow={"clip"}
       >
         <BButton
           iconButton
@@ -202,31 +208,39 @@ const SearchAddress = () => {
           <IconSearch />
         </BButton>
 
-        {searchMode && (
-          <SearchInput
-            inputRef={searchRef}
-            onChangeSetter={(input) => {
-              setSearchAddress(input);
-            }}
-            inputValue={searchAddress}
-            noIcon
-            inputProps={{
-              pl: 1,
-              border: "none",
-              onFocus: () => setSearchInputFocus(true),
-            }}
-          />
-        )}
+        <SearchInput
+          inputRef={searchRef}
+          onChangeSetter={(input) => {
+            setSearchAddress(input);
+          }}
+          inputValue={searchAddress}
+          noIcon
+          inputProps={{
+            pl: 1,
+            border: "none",
+            onFocus: () => setSearchInputFocus(true),
+          }}
+        />
       </OverlayItemContainer>
 
-      <PopoverRoot open={showSearchResult} positioning={{ sameWidth: true }}>
+      <PopoverRoot
+        open={showSearchResult}
+        positioning={{ sameWidth: true }}
+        initialFocusEl={() => searchRef.current}
+      >
         <PopoverTrigger asChild>
           <div></div>
         </PopoverTrigger>
 
         <Portal>
           <PopoverPositioner>
-            <PopoverContent ref={contentRef} w={"auto"} p={1} mt={-3}>
+            <PopoverContent
+              ref={contentRef}
+              w={"auto"}
+              p={1}
+              mt={-2}
+              pointerEvents={"auto"}
+            >
               {/* Render loading */}
               {loading && (
                 <Center p={4}>
