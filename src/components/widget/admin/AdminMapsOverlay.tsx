@@ -224,7 +224,7 @@ const SearchAddress = () => {
 
         <Portal>
           <PopoverPositioner>
-            <PopoverContent w={"auto"}>
+            <PopoverContent w={"auto"} p={1}>
               {/* Render loading */}
               {loading && (
                 <Center p={4}>
