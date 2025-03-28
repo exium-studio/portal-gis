@@ -1,5 +1,6 @@
 import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
+import FeedbackNotFound from "@/components/ui-custom/FeedbackNotFound";
 import SearchInput from "@/components/ui-custom/SearchInput";
 import {
   PopoverContent,
@@ -22,7 +23,6 @@ import {
   Stack,
   StackProps,
   Text,
-  VStack,
 } from "@chakra-ui/react";
 import { IconClock, IconMapPin, IconSearch } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
@@ -89,11 +89,12 @@ const SearchAddress = () => {
     localStorage.getItem("search_address_history") as string
   );
   const containerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const showSearchResult =
     (searchAddress || searchAddressHistory) && searchInputFocus;
 
   // Handle click outside
-  useClickOutside(containerRef, () => {
+  useClickOutside([containerRef, contentRef], () => {
     setSearchInputFocus(false);
     if (!searchAddress) {
       setSearchMode(false);
@@ -184,47 +185,48 @@ const SearchAddress = () => {
       gap={2}
       maxW={iss ? "full" : "300px"}
       zIndex={4}
+      pointerEvents={"auto"}
     >
+      <OverlayItemContainer
+        id="search-trigger"
+        w={searchMode ? "" : "49.6px"}
+        flexDir={"row"}
+      >
+        <BButton
+          iconButton
+          variant="ghost"
+          onClick={() => {
+            toggleSearchMode();
+          }}
+        >
+          <IconSearch />
+        </BButton>
+
+        {searchMode && (
+          <SearchInput
+            inputRef={searchRef}
+            onChangeSetter={(input) => {
+              setSearchAddress(input);
+            }}
+            inputValue={searchAddress}
+            noIcon
+            inputProps={{
+              pl: 1,
+              border: "none",
+              onFocus: () => setSearchInputFocus(true),
+            }}
+          />
+        )}
+      </OverlayItemContainer>
+
       <PopoverRoot open={showSearchResult} positioning={{ sameWidth: true }}>
         <PopoverTrigger asChild>
-          <div>
-            <OverlayItemContainer
-              id="search-trigger"
-              w={searchMode ? "" : "49.6px"}
-              flexDir={"row"}
-            >
-              <BButton
-                iconButton
-                variant="ghost"
-                onClick={() => {
-                  toggleSearchMode();
-                }}
-              >
-                <IconSearch />
-              </BButton>
-
-              {searchMode && (
-                <SearchInput
-                  inputRef={searchRef}
-                  onChangeSetter={(input) => {
-                    setSearchAddress(input);
-                  }}
-                  inputValue={searchAddress}
-                  noIcon
-                  inputProps={{
-                    pl: 1,
-                    border: "none",
-                    onFocus: () => setSearchInputFocus(true),
-                  }}
-                />
-              )}
-            </OverlayItemContainer>
-          </div>
+          <div></div>
         </PopoverTrigger>
 
         <Portal>
           <PopoverPositioner>
-            <PopoverContent w={"auto"} p={1}>
+            <PopoverContent ref={contentRef} w={"auto"} p={1} mt={-3}>
               {/* Render loading */}
               {loading && (
                 <Center p={4}>
@@ -239,15 +241,9 @@ const SearchAddress = () => {
                     <>
                       {/* Render Not Found */}
                       {searchResult.length === 0 && (
-                        <VStack p={5} color={"fg.subtle"}>
-                          <Icon>
-                            <IconSearch />
-                          </Icon>
-                          <Text fontSize={"xs"} textAlign={"center"}>
-                            Lokasi tidak ditemukan. Cobalah untuk menyesuaikan
-                            pencarian
-                          </Text>
-                        </VStack>
+                        <CContainer p={5}>
+                          <FeedbackNotFound />
+                        </CContainer>
                       )}
 
                       {/* Render Search Result */}
