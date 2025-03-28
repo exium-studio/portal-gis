@@ -7,6 +7,10 @@ import mapboxgl from "mapbox-gl";
 import { useEffect, useRef, useState } from "react";
 import Map, { MapRef, Marker } from "react-map-gl/mapbox";
 import MapMarkerCircle from "../MapMarkerCircle";
+import useMapsZoom from "@/context/useMapsZoom";
+
+const minZoom = 0;
+const maxZoom = 22;
 
 const AdminMaps = () => {
   // Contexts
@@ -14,6 +18,7 @@ const AdminMaps = () => {
   const { mapStyle, setMapStyle } = useMapStyle();
   const { layout } = useLayout();
   const { currentLocation } = useCurrentLocation();
+  const { zoomPercent, setZoomPercent } = useMapsZoom();
 
   // States, Refs
   const [mapLoad, setMapLoad] = useState<boolean>(false);
@@ -52,11 +57,31 @@ const AdminMaps = () => {
           lat: currentLocation.lat,
           lon: currentLocation.lon,
         },
-        zoom: 18,
+        zoom: 17,
         duration: 1000,
       });
     }
   }, [currentLocation]);
+
+  // Handle zoom percent
+  function handleZoomFromPercent(percent: number) {
+    const zoomLevel = (percent / 100) * (maxZoom - minZoom) + minZoom;
+
+    if (mapRef.current) {
+      mapRef.current?.getMap().easeTo({
+        zoom: zoomLevel,
+        duration: 300,
+      });
+    }
+  }
+  function handleZoomFromLevel(zoomLevel: number) {
+    const zoomPercent = ((zoomLevel - minZoom) / (maxZoom - minZoom)) * 100;
+
+    setZoomPercent(zoomPercent);
+  }
+  useEffect(() => {
+    handleZoomFromPercent(zoomPercent);
+  }, [zoomPercent]);
 
   return (
     <Map
@@ -73,6 +98,9 @@ const AdminMaps = () => {
       mapStyle={mapStyle}
       mapboxAccessToken={import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}
       mapLib={mapboxgl}
+      onZoomEnd={(e) => {
+        handleZoomFromLevel(e.viewState.zoom);
+      }}
     >
       {mapLoad && (
         <>

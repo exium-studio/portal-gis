@@ -26,6 +26,7 @@ import pluck from "@/utils/pluck";
 import {
   Box,
   Center,
+  Group,
   HStack,
   Icon,
   PopoverPositioner,
@@ -42,6 +43,8 @@ import {
   IconFlag,
   IconMapPin,
   IconMapPin2,
+  IconMinus,
+  IconPlus,
   IconSearch,
   IconX,
 } from "@tabler/icons-react";
@@ -49,6 +52,8 @@ import { useEffect, useRef, useState } from "react";
 import TheLayoutMenu from "../LayoutMenu";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import useSearchMode from "./useSearchMode";
+import useMapsZoom from "@/context/useMapsZoom";
+import NumberInput from "@/components/ui-custom/NumberInput";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -516,6 +521,66 @@ const CurrentLocation = () => {
   );
 };
 
+const ZoomControl = () => {
+  const { zoomPercent, setZoomPercent } = useMapsZoom();
+
+  return (
+    <OverlayItemContainer>
+      <Group>
+        <BButton
+          iconButton
+          variant={"ghost"}
+          onClick={() => {
+            if (zoomPercent > 10) {
+              setZoomPercent(zoomPercent - 10);
+            } else {
+              setZoomPercent(0);
+            }
+          }}
+        >
+          <Icon>
+            <IconMinus />
+          </Icon>
+        </BButton>
+
+        <HStack gap={0} justify={"center"}>
+          <NumberInput
+            integer
+            minW={"30px"}
+            maxW={"30px"}
+            border={"none"}
+            px={0}
+            onChangeSetter={(input) => {
+              setZoomPercent(input);
+            }}
+            inputValue={zoomPercent}
+            textAlign={"center"}
+            max={100}
+            fontWeight={"semibold"}
+          />
+          <Text>%</Text>
+        </HStack>
+
+        <BButton
+          iconButton
+          variant={"ghost"}
+          onClick={() => {
+            if (zoomPercent < 90) {
+              setZoomPercent(zoomPercent + 10);
+            } else {
+              setZoomPercent(100);
+            }
+          }}
+        >
+          <Icon>
+            <IconPlus />
+          </Icon>
+        </BButton>
+      </Group>
+    </OverlayItemContainer>
+  );
+};
+
 const AdminMapsOverlay = () => {
   // Contexts
   const { layout } = useLayout();
@@ -564,7 +629,7 @@ const AdminMapsOverlay = () => {
           <HStack position={"absolute"} right={0}>
             <CurrentLocation />
 
-            <DataDisplayed />
+            <ZoomControl />
 
             <DataDisplayed />
 
