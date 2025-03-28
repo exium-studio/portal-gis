@@ -466,73 +466,15 @@ const Legends = () => {
       </Portal>
 
       <OverlayItemContainer>
-        <BButton iconButton variant={"ghost"} onClick={onToggle}>
-          <Icon>
-            <IconFlag />
-          </Icon>
-        </BButton>
+        <Tooltip content={l.legend}>
+          <BButton iconButton variant={"ghost"} onClick={onToggle}>
+            <Icon>
+              <IconFlag />
+            </Icon>
+          </BButton>
+        </Tooltip>
       </OverlayItemContainer>
     </CContainer>
-  );
-};
-
-const ZoomControl = () => {
-  const { zoomPercent, setZoomPercent } = useMapsZoom();
-
-  return (
-    <OverlayItemContainer>
-      <Group>
-        <BButton
-          iconButton
-          variant={"ghost"}
-          onClick={() => {
-            if (zoomPercent > 10) {
-              setZoomPercent(zoomPercent - 10);
-            } else {
-              setZoomPercent(0);
-            }
-          }}
-        >
-          <Icon>
-            <IconMinus />
-          </Icon>
-        </BButton>
-
-        <HStack gap={0} justify={"center"}>
-          <NumberInput
-            integer
-            minW={"30px"}
-            maxW={"30px"}
-            border={"none"}
-            px={0}
-            onChangeSetter={(input) => {
-              setZoomPercent(input);
-            }}
-            inputValue={zoomPercent}
-            textAlign={"center"}
-            max={100}
-            fontWeight={"semibold"}
-          />
-          <Text>%</Text>
-        </HStack>
-
-        <BButton
-          iconButton
-          variant={"ghost"}
-          onClick={() => {
-            if (zoomPercent < 90) {
-              setZoomPercent(zoomPercent + 10);
-            } else {
-              setZoomPercent(100);
-            }
-          }}
-        >
-          <Icon>
-            <IconPlus />
-          </Icon>
-        </BButton>
-      </Group>
-    </OverlayItemContainer>
   );
 };
 
@@ -547,19 +489,18 @@ const MapStyle = () => {
     <PopoverRoot positioning={{ placement: "top" }}>
       <PopoverTrigger asChild>
         <OverlayItemContainer>
-          {/* <BButton iconButton unclicky variant={"ghost"} w={"fit"} {...props}>
-            <IconStack stroke={1.5} />
-          </BButton> */}
-          <Center w={"40px"} aspectRatio={1}>
-            <Image
-              src={mapsStyle.img[colorMode as keyof typeof mapsStyle.img]}
-              w={"36px"}
-              borderRadius={"lg"}
-              cursor={"pointer"}
-              _hover={{ opacity: 0.6 }}
-              transition={"200ms"}
-            />
-          </Center>
+          <Tooltip content={l.map_type}>
+            <Center w={"40px"} aspectRatio={1}>
+              <Image
+                src={mapsStyle.img[colorMode as keyof typeof mapsStyle.img]}
+                w={"36px"}
+                borderRadius={"lg"}
+                cursor={"pointer"}
+                _hover={{ opacity: 0.6 }}
+                transition={"200ms"}
+              />
+            </Center>
+          </Tooltip>
         </OverlayItemContainer>
       </PopoverTrigger>
 
@@ -625,6 +566,70 @@ const MapStyle = () => {
   );
 };
 
+const ZoomControl = () => {
+  const { zoomPercent, setZoomPercent } = useMapsZoom();
+
+  return (
+    <OverlayItemContainer>
+      <Group>
+        <Tooltip content={"Zoom out"}>
+          <BButton
+            iconButton
+            variant={"ghost"}
+            onClick={() => {
+              if (zoomPercent > 10) {
+                setZoomPercent(zoomPercent - 10);
+              } else {
+                setZoomPercent(0);
+              }
+            }}
+          >
+            <Icon>
+              <IconMinus />
+            </Icon>
+          </BButton>
+        </Tooltip>
+
+        <HStack gap={0} justify={"center"}>
+          <NumberInput
+            integer
+            minW={"30px"}
+            maxW={"30px"}
+            border={"none"}
+            px={0}
+            onChangeSetter={(input) => {
+              setZoomPercent(input);
+            }}
+            inputValue={zoomPercent}
+            textAlign={"center"}
+            max={100}
+            fontWeight={"semibold"}
+          />
+          <Text>%</Text>
+        </HStack>
+
+        <Tooltip content={"Zoom in"}>
+          <BButton
+            iconButton
+            variant={"ghost"}
+            onClick={() => {
+              if (zoomPercent < 90) {
+                setZoomPercent(zoomPercent + 10);
+              } else {
+                setZoomPercent(100);
+              }
+            }}
+          >
+            <Icon>
+              <IconPlus />
+            </Icon>
+          </BButton>
+        </Tooltip>
+      </Group>
+    </OverlayItemContainer>
+  );
+};
+
 const CurrentLocation = () => {
   // Contexts
   const { l } = useLang();
@@ -657,8 +662,8 @@ const CurrentLocation = () => {
   }
 
   return (
-    <Tooltip content={l.current_location}>
-      <OverlayItemContainer>
+    <OverlayItemContainer>
+      <Tooltip content={l.current_location}>
         <BButton
           iconButton
           unclicky
@@ -672,8 +677,8 @@ const CurrentLocation = () => {
             <IconCurrentLocation />
           )}
         </BButton>
-      </OverlayItemContainer>
-    </Tooltip>
+      </Tooltip>
+    </OverlayItemContainer>
   );
 };
 
@@ -713,13 +718,22 @@ const NorthDirection = () => {
   }, [mapRef?.current]);
 
   return (
-    <Tooltip content={`${l.angle_to_north}`}>
-      <OverlayItemContainer>
-        <HStack gap={1}>
-          <Text w={"38px"} ml={2} textAlign={"center"} fontWeight={"semibold"}>
-            {Math.round(bearing)}°
-          </Text>
+    <OverlayItemContainer>
+      <HStack gap={1}>
+        <Tooltip content={`${l.angle_to_north}`}>
+          <CContainer h={"40px"} justify={"center"}>
+            <Text
+              w={"38px"}
+              ml={2}
+              textAlign={"center"}
+              fontWeight={"semibold"}
+            >
+              {Math.round(bearing)}°
+            </Text>
+          </CContainer>
+        </Tooltip>
 
+        <Tooltip content={`Reset ${l.angle_to_north.toLowerCase()}`}>
           <BButton iconButton onClick={handleResetBearing} variant={"ghost"}>
             <Center
               transform={`rotate(${bearing * -1}deg)`}
@@ -730,9 +744,9 @@ const NorthDirection = () => {
               </Icon>
             </Center>
           </BButton>
-        </HStack>
-      </OverlayItemContainer>
-    </Tooltip>
+        </Tooltip>
+      </HStack>
+    </OverlayItemContainer>
   );
 };
 
