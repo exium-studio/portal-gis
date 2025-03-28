@@ -27,7 +27,7 @@ const AdminMaps = () => {
   useEffect(() => {
     setTimeout(() => {
       mapRef.current?.getMap().resize();
-    }, 0);
+    }, 1);
   }, [layout]);
 
   // Handle map style depend on color mode

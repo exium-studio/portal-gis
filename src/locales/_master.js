@@ -59,6 +59,18 @@ export const settings_navs = {
 };
 
 // UI
+export const kk = {
+  id: "Kartu Keluarga (KK)",
+  en: "Family Card (KK)",
+};
+export const public_facility = {
+  id: "Fasilitas umum",
+  en: "Public facility",
+};
+export const land_field = {
+  id: "Bidang tanah",
+  en: "Land field",
+};
 export const displayed_data = {
   id: "Data yang ditampilkan",
   en: "Displayed data",
@@ -110,10 +122,6 @@ export const current_population = {
 export const current_facility = {
   id: "Fasilitas saat ini",
   en: "Current facility",
-};
-export const facility = {
-  id: "Fasilitas",
-  en: "Facility",
 };
 export const categories = {
   id: "Kategori",

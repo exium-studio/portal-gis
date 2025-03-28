@@ -1,17 +1,15 @@
-import { Interface__Gens } from "../constants/interfaces";
-
-const DISPLAYED_DATA_LIST: Interface__Gens[] = [
+const DISPLAYED_DATA_LIST: any[] = [
   {
     id: 1,
-    label: "Kartu Keluarga (KK)",
+    key: "kk",
   },
   {
     id: 2,
-    label: "Fasilitas Umum",
+    key: "public_facility",
   },
   {
     id: 3,
-    label: "Bidang Tanah",
+    key: "land_field",
   },
 ];
 

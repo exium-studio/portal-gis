@@ -40,6 +40,7 @@ import useDisplayedData from "@/context/useDisplayedData";
 import { Interface__Gens } from "@/constants/interfaces";
 import useLang from "@/context/useLang";
 import MenuHeaderContainer from "../MenuHeaderContainer";
+import pluck from "@/utils/pluck";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -377,7 +378,7 @@ const DataDisplayed = ({ popoverContentProps, ...props }: any) => {
                     size={"md"}
                     cursor={"pointer"}
                   >
-                    {item.label}
+                    {pluck(l, item.key)}
 
                     <Switch
                       checked={active}
