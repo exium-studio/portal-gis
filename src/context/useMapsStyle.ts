@@ -1,4 +1,4 @@
-import MAP_STYLES from "@/constants/mapStyles";
+import MAP_STYLES from "@/constants/mapsStylesOptions";
 import { create } from "zustand";
 
 const STORAGE_KEY = "mapStyle";

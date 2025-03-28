@@ -23,7 +23,9 @@ const AdminMaps = () => {
   const { zoomPercent, setZoomPercent } = useMapsZoom();
 
   // States, Refs
-  const [activeMapStyle, setActiveMapStyle] = useState("");
+  const [activeMapStyle, setActiveMapStyle] = useState(
+    ACTIVE_MAP_STYLE_DEFAULT
+  );
   const [mapLoad, setMapLoad] = useState<boolean>(false);
   const mapRef = useRef<MapRef>(null);
   const { mapsViewState, setMapsViewState, setMapRef } = useMapsViewState();
@@ -45,7 +47,7 @@ const AdminMaps = () => {
   // Handle map style depend on color mode
   useEffect(() => {
     setActiveMapStyle(mapsStyle.tile[colorMode as keyof typeof mapsStyle.tile]);
-  }, [colorMode]);
+  }, [colorMode, mapsStyle]);
 
   // Handle current location
   useEffect(() => {
@@ -83,7 +85,6 @@ const AdminMaps = () => {
 
   return (
     <Map
-      key={activeMapStyle}
       ref={mapRef}
       {...mapsViewState}
       onLoad={() => {

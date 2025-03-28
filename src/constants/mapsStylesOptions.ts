@@ -1,6 +1,6 @@
 import { IMAGES_PATH } from "./paths";
 
-const MAP_STYLES = [
+const MAPS_STYLES_OPTIONS = [
   {
     id: 1,
     label: "Digital",
@@ -22,12 +22,11 @@ const MAP_STYLES = [
       dark: `${IMAGES_PATH}/map_types/satellite.png`,
     },
     tile: {
-      light:
-        "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-      dark: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+      light: "mapbox://styles/mapbox/satellite-v9",
+      dark: "mapbox://styles/mapbox/satellite-v9",
     },
-    disabled: true,
+    disabled: false,
   },
 ];
 
-export default MAP_STYLES;
+export default MAPS_STYLES_OPTIONS;

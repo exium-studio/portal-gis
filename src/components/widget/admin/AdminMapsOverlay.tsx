@@ -14,7 +14,7 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Tooltip } from "@/components/ui/tooltip";
 import { Interface__Gens } from "@/constants/interfaces";
-import MAP_STYLES from "@/constants/mapStyles";
+import MAPS_STYLES_OPTIONS from "@/constants/mapsStylesOptions";
 import useAdminSearchAddress from "@/constants/useSearchAddress";
 import useCurrentLocation from "@/context/useCurrentLocation";
 import useDisplayedData from "@/context/useDisplayedData";
@@ -598,14 +598,16 @@ const MapStyle = () => {
           {/* <BButton iconButton unclicky variant={"ghost"} w={"fit"} {...props}>
             <IconStack stroke={1.5} />
           </BButton> */}
-          <Image
-            src={mapsStyle.img[colorMode as keyof typeof mapsStyle.img]}
-            w={"40px"}
-            borderRadius={"lg"}
-            cursor={"pointer"}
-            _hover={{ opacity: 0.6 }}
-            transition={"200ms"}
-          />
+          <Center w={"40px"} aspectRatio={1}>
+            <Image
+              src={mapsStyle.img[colorMode as keyof typeof mapsStyle.img]}
+              w={"36px"}
+              borderRadius={"lg"}
+              cursor={"pointer"}
+              _hover={{ opacity: 0.6 }}
+              transition={"200ms"}
+            />
+          </Center>
         </OverlayItemContainer>
       </PopoverTrigger>
 
@@ -618,7 +620,7 @@ const MapStyle = () => {
 
             <CContainer p={1} pt={2}>
               <HStack>
-                {MAP_STYLES.map((item, i) => {
+                {MAPS_STYLES_OPTIONS.map((item, i) => {
                   const active = mapsStyle.id === item.id;
 
                   return (
@@ -644,7 +646,7 @@ const MapStyle = () => {
                       >
                         <Image
                           src={item.img[colorMode as keyof typeof item.img]}
-                          borderRadius={themeConfig.radii.component}
+                          borderRadius={"md"}
                           aspectRatio={1}
                           w={"full"}
                         />
