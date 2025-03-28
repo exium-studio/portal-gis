@@ -1,6 +1,7 @@
 import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
 import FeedbackNotFound from "@/components/ui-custom/FeedbackNotFound";
+import FloatingContainer from "@/components/ui-custom/FloatingContainer";
 import SearchInput from "@/components/ui-custom/SearchInput";
 import {
   PopoverContent,
@@ -8,12 +9,16 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Switch } from "@/components/ui/switch";
+import { Interface__Gens } from "@/constants/interfaces";
 import useAdminSearchAddress from "@/constants/useSearchAddress";
+import useDisplayedData from "@/context/useDisplayedData";
+import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useClickOutside from "@/hooks/useClickOutside";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import DISPLAYED_DATA_LIST from "@/static/displayedDataList";
+import pluck from "@/utils/pluck";
 import {
   Box,
   Center,
@@ -29,18 +34,17 @@ import {
 } from "@chakra-ui/react";
 import {
   IconClock,
+  IconFlag,
   IconMapPin,
   IconMapPin2,
   IconSearch,
+  IconX,
 } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
 import TheLayoutMenu from "../LayoutMenu";
-import useSearchMode from "./useSearchMode";
-import useDisplayedData from "@/context/useDisplayedData";
-import { Interface__Gens } from "@/constants/interfaces";
-import useLang from "@/context/useLang";
 import MenuHeaderContainer from "../MenuHeaderContainer";
-import pluck from "@/utils/pluck";
+import useSearchMode from "./useSearchMode";
+import HelperText from "@/components/ui-custom/HelperText";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -400,6 +404,71 @@ const DataDisplayed = ({ popoverContentProps, ...props }: any) => {
   );
 };
 
+const Legends = () => {
+  // Contexts
+  const { l } = useLang();
+
+  // States, Refs
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Utils
+  const { open, onToggle, onClose } = useDisclosure();
+  const iss = useIsSmScreenWidth();
+
+  return (
+    <CContainer w={"fit"} fRef={containerRef} zIndex={1} position={"relative"}>
+      <Portal container={containerRef}>
+        <FloatingContainer
+          open={open}
+          containerProps={{
+            position: "absolute",
+            left: "0",
+            bottom: "58px",
+            pointerEvents: "auto",
+            w: iss ? "calc(100vw - 16px)" : "300px",
+            p: 1,
+          }}
+          animationEntrance="bottom"
+        >
+          <HStack px={2} pb={1} justify={"space-between"}>
+            <Text fontWeight={"bold"}>{l.legend}</Text>
+
+            <BButton
+              iconButton
+              size={"xs"}
+              borderRadius={"full"}
+              variant={"ghost"}
+              mr={-2}
+              onClick={onClose}
+            >
+              <Icon>
+                <IconX />
+              </Icon>
+            </BButton>
+          </HStack>
+
+          <CContainer p={2}>
+            <HelperText>
+              {l.legend_helper}{" "}
+              <Icon>
+                <IconMapPin2 size={20} stroke={1.5} />
+              </Icon>
+            </HelperText>
+          </CContainer>
+        </FloatingContainer>
+      </Portal>
+
+      <OverlayItemContainer>
+        <BButton iconButton variant={"ghost"} onClick={onToggle}>
+          <Icon>
+            <IconFlag />
+          </Icon>
+        </BButton>
+      </OverlayItemContainer>
+    </CContainer>
+  );
+};
+
 const AdminMapsOverlay = () => {
   // Contexts
   const { layout } = useLayout();
@@ -408,6 +477,7 @@ const AdminMapsOverlay = () => {
     <CContainer
       id="map_overlay"
       w={"full"}
+      h={"full"}
       pointerEvents={"none"}
       justify={"space-between"}
       zIndex={1}
@@ -415,7 +485,12 @@ const AdminMapsOverlay = () => {
       top={0}
     >
       <Box p={2}>
-        <HStack align={"start"} justify={"space-between"} position={"relative"}>
+        <HStack
+          align={"start"}
+          justify={"space-between"}
+          position={"relative"}
+          h={"calc(40px + 8px)"}
+        >
           <HStack align={"start"} w={"full"} zIndex={2}>
             <SearchAddress />
           </HStack>
@@ -424,6 +499,29 @@ const AdminMapsOverlay = () => {
             <DataDisplayed />
 
             {layout.id === 3 && <LayoutMenu />}
+          </HStack>
+        </HStack>
+      </Box>
+
+      <Box p={2}>
+        <HStack
+          align={"start"}
+          justify={"space-between"}
+          position={"relative"}
+          h={"calc(40px + 8px)"}
+        >
+          <HStack align={"start"} w={"full"} zIndex={2}>
+            <Legends />
+          </HStack>
+
+          <HStack position={"absolute"} right={0}>
+            <DataDisplayed />
+
+            <DataDisplayed />
+
+            <DataDisplayed />
+
+            <DataDisplayed />
           </HStack>
         </HStack>
       </Box>
