@@ -63,6 +63,10 @@ export const settings_navs = {
 };
 
 // UI
+export const mark_as_read = {
+  id: "Tandai dibaca semua",
+  en: "Mark all as read",
+};
 export const search = {
   id: "Pencarian",
   en: "Search",

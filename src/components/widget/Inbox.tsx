@@ -2,7 +2,6 @@ import useLang from "@/context/useLang";
 import useBackOnClose from "@/hooks/useBackOnClose";
 import { Icon, useDisclosure } from "@chakra-ui/react";
 import { IconInbox, IconInboxOff } from "@tabler/icons-react";
-import BackButton from "../ui-custom/BackButton";
 import BButton from "../ui-custom/BButton";
 import ConfirmationDisclosure from "../ui-custom/ConfirmationDisclosure";
 import DisclosureHeaderContent from "../ui-custom/DisclosureHeaderContent";
@@ -41,7 +40,7 @@ const Inbox = () => {
         </BButton>
       </Tooltip>
 
-      <DrawerRoot open={open} size={["sm", null, "xs"]}>
+      <DrawerRoot open={open} size={"sm"}>
         <DrawerContent>
           <DrawerHeader pt={5}>
             <DisclosureHeaderContent prefix="drawer" title="Inbox" />
@@ -58,7 +57,7 @@ const Inbox = () => {
           </DrawerBody>
 
           <DrawerFooter>
-            <BackButton />
+            <BButton variant={"outline"}>{l.mark_as_read}</BButton>
             <ConfirmationDisclosure
               id="loggingout"
               title={l.delete_all_inbox_disclosure.title}
