@@ -63,6 +63,10 @@ export const settings_navs = {
 };
 
 // UI
+export const search = {
+  id: "Pencarian",
+  en: "Search",
+};
 export const angle_to_north = {
   id: "Sudut terhadap utara",
   en: "Angle to north",

@@ -256,6 +256,7 @@ const translations = {
     "title": "An Error Occurred",
     "description": "Try to reload using the button below."
   },
+  "search": "Search",
   "search_input_default_placeholder": "Search...",
   "see_all": "See all",
   "see_detail": "See detail",

@@ -256,6 +256,7 @@ const translations = {
     "title": "Terjadi error",
     "description": "Cobalah untuk memuat ulang menggunakan tombol di bawah."
   },
+  "search": "Pencarian",
   "search_input_default_placeholder": "Pencarian...",
   "see_all": "Lihat semua",
   "see_detail": "Lihat detail",

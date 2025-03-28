@@ -111,6 +111,7 @@ const SearchAddress = () => {
   const iss = useIsSmScreenWidth();
 
   // Context
+  const { l } = useLang();
   const {
     searchAddress,
     setSearchAddress,
@@ -233,15 +234,17 @@ const SearchAddress = () => {
         overflow={"clip"}
         transition={"200ms"}
       >
-        <BButton
-          iconButton
-          variant="ghost"
-          onClick={() => {
-            toggleSearchMode();
-          }}
-        >
-          <IconSearch />
-        </BButton>
+        <Tooltip content={`${l.search} ${l.address.toLowerCase()}`}>
+          <BButton
+            iconButton
+            variant="ghost"
+            onClick={() => {
+              toggleSearchMode();
+            }}
+          >
+            <IconSearch />
+          </BButton>
+        </Tooltip>
 
         <SearchInput
           inputRef={searchRef}
@@ -339,9 +342,11 @@ const DataDisplayed = () => {
     <PopoverRoot>
       <PopoverTrigger asChild>
         <OverlayItemContainer>
-          <BButton iconButton unclicky variant={"ghost"} w={"fit"}>
-            <IconMapPin2 stroke={1.5} />
-          </BButton>
+          <Tooltip content={l.displayed_data}>
+            <BButton iconButton unclicky variant={"ghost"} w={"fit"}>
+              <IconMapPin2 stroke={1.5} />
+            </BButton>
+          </Tooltip>
         </OverlayItemContainer>
       </PopoverTrigger>
 
