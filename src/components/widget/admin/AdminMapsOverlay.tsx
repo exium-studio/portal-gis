@@ -53,7 +53,6 @@ import {
   IconMinus,
   IconPlus,
   IconSearch,
-  IconStack,
   IconX,
 } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
@@ -585,7 +584,7 @@ const ZoomControl = () => {
   );
 };
 
-const MapStyle = ({ ...props }: any) => {
+const MapStyle = () => {
   // Contexts
   const { l } = useLang();
   const { themeConfig } = useThemeConfig();
@@ -596,9 +595,17 @@ const MapStyle = ({ ...props }: any) => {
     <PopoverRoot positioning={{ placement: "top" }}>
       <PopoverTrigger asChild>
         <OverlayItemContainer>
-          <BButton iconButton unclicky variant={"ghost"} w={"fit"} {...props}>
+          {/* <BButton iconButton unclicky variant={"ghost"} w={"fit"} {...props}>
             <IconStack stroke={1.5} />
-          </BButton>
+          </BButton> */}
+          <Image
+            src={mapsStyle.img[colorMode as keyof typeof mapsStyle.img]}
+            w={"40px"}
+            borderRadius={"lg"}
+            cursor={"pointer"}
+            _hover={{ opacity: 0.6 }}
+            transition={"200ms"}
+          />
         </OverlayItemContainer>
       </PopoverTrigger>
 
