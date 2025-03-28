@@ -4,6 +4,7 @@ import useLayout from "@/context/useLayout";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useClickOutside from "@/hooks/useClickOutside";
 import {
+  HStack,
   Icon,
   PopoverContentProps,
   PopoverPositioner,
@@ -18,6 +19,7 @@ import CContainer from "../ui-custom/CContainer";
 import HelperText from "../ui-custom/HelperText";
 import { PopoverContent, PopoverRoot, PopoverTrigger } from "../ui/popover";
 import MenuHeaderContainer from "./MenuHeaderContainer";
+import { Tooltip } from "../ui/tooltip";
 
 interface Props extends BButtonProps {
   popoverContentProps?: PopoverContentProps;
@@ -39,17 +41,21 @@ const LayoutMenu = ({ popoverContentProps, ...props }: Props) => {
   return (
     <PopoverRoot open={open}>
       <PopoverTrigger asChild>
-        <BButton
-          ref={triggerRef}
-          iconButton
-          unclicky
-          variant={"ghost"}
-          w={"fit"}
-          onClick={onToggle}
-          {...props}
-        >
-          <IconLayoutColumns stroke={1.5} />
-        </BButton>
+        <div>
+          <Tooltip content={"Layout"}>
+            <BButton
+              ref={triggerRef}
+              iconButton
+              unclicky
+              variant={"ghost"}
+              w={"fit"}
+              onClick={onToggle}
+              {...props}
+            >
+              <IconLayoutColumns stroke={1.5} />
+            </BButton>
+          </Tooltip>
+        </div>
       </PopoverTrigger>
 
       <Portal>
@@ -61,7 +67,10 @@ const LayoutMenu = ({ popoverContentProps, ...props }: Props) => {
             {...popoverContentProps}
           >
             <MenuHeaderContainer>
-              <Text fontWeight={"bold"}>Layout</Text>
+              <HStack>
+                <IconLayoutColumns stroke={1.5} size={20} />
+                <Text fontWeight={"bold"}>Layout</Text>
+              </HStack>
             </MenuHeaderContainer>
 
             <CContainer pt={1}>

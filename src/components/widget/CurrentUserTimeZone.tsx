@@ -3,7 +3,7 @@ import useLang from "@/context/useLang";
 import useTimeZone from "@/context/useTimeZone";
 import autoTimeZone from "@/utils/autoTimeZone";
 import formatDate from "@/utils/formatDate";
-import { HStack, Icon, Text } from "@chakra-ui/react";
+import { HStack, Icon, Text, useDisclosure } from "@chakra-ui/react";
 import { IconTimezone } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import BButton from "../ui-custom/BButton";
@@ -12,6 +12,9 @@ import HelperText from "../ui-custom/HelperText";
 import { PopoverContent, PopoverRoot, PopoverTrigger } from "../ui/popover";
 import { Tooltip } from "../ui/tooltip";
 import Clock from "./Clock";
+import MenuHeaderContainer from "./MenuHeaderContainer";
+import useClickOutside from "@/hooks/useClickOutside";
+import { useRef } from "react";
 
 const CurrentUserTimeZone = () => {
   // Contexts
@@ -22,13 +25,25 @@ const CurrentUserTimeZone = () => {
   // States, Refs
   const autoTz = autoTimeZone();
   const userSelect = autoTz.key === timeZone.key;
+  const triggerRef = useRef(null);
+  const contentRef = useRef(null);
+
+  // Utils
+  const { open, onToggle, onClose } = useDisclosure();
+  useClickOutside([triggerRef, contentRef], onClose);
 
   return (
-    <PopoverRoot>
+    <PopoverRoot open={open}>
       <PopoverTrigger asChild>
         <div>
           <Tooltip content={l.time_zone}>
-            <BButton iconButton unclicky variant="ghost">
+            <BButton
+              ref={triggerRef}
+              iconButton
+              unclicky
+              variant="ghost"
+              onClick={onToggle}
+            >
               <Icon>
                 <IconTimezone stroke={1.5} />
               </Icon>
@@ -37,8 +52,15 @@ const CurrentUserTimeZone = () => {
         </div>
       </PopoverTrigger>
 
-      <PopoverContent mr={2} w={"fit"}>
-        <CContainer px={1}>
+      <PopoverContent ref={contentRef} mr={2} w={"fit"} p={1}>
+        <MenuHeaderContainer>
+          <HStack>
+            <IconTimezone stroke={1.5} size={20} />
+            <Text fontWeight={"bold"}>{l.time_zone}</Text>
+          </HStack>
+        </MenuHeaderContainer>
+
+        <CContainer p={2}>
           <HelperText mb={1}>{l.selected_time_zone}</HelperText>
 
           <HStack>
@@ -71,11 +93,13 @@ const CurrentUserTimeZone = () => {
           </CContainer>
         )}
 
-        <Link to="/settings/regional">
-          <BButton mt={3} variant="outline" size="sm" w="full">
-            {l.change}
-          </BButton>
-        </Link>
+        <CContainer p={1}>
+          <Link to="/settings/regional">
+            <BButton variant="outline" size="sm" w="full" onClick={onClose}>
+              {l.change}
+            </BButton>
+          </Link>
+        </CContainer>
       </PopoverContent>
     </PopoverRoot>
   );
