@@ -1,7 +1,8 @@
-import { useEffect, useRef } from "react";
 import { LAYOUT_OPTIONS } from "@/constants/layoutOptions";
+import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
 import { useThemeConfig } from "@/context/useThemeConfig";
+import useClickOutside from "@/hooks/useClickOutside";
 import {
   Icon,
   PopoverContentProps,
@@ -10,11 +11,11 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { IconCheck, IconLayoutColumns } from "@tabler/icons-react";
+import { useRef } from "react";
 import BButton, { BButtonProps } from "../ui-custom/BButton";
-import { PopoverContent, PopoverRoot, PopoverTrigger } from "../ui/popover";
-import HelperText from "../ui-custom/HelperText";
 import CContainer from "../ui-custom/CContainer";
-import useLang from "@/context/useLang";
+import HelperText from "../ui-custom/HelperText";
+import { PopoverContent, PopoverRoot, PopoverTrigger } from "../ui/popover";
 
 interface Props extends BButtonProps {
   popoverContentProps?: PopoverContentProps;
@@ -29,25 +30,8 @@ const LayoutMenu = ({ popoverContentProps, ...props }: Props) => {
   const { open, onOpen, onClose } = useDisclosure();
   const contentRef = useRef(null);
 
-  // Close when clicking outside
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        contentRef.current &&
-        !(contentRef.current as HTMLElement).contains(event.target as Node)
-      ) {
-        onClose();
-      }
-    }
-
-    if (open) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [open, onClose]);
+  // Close on clicking outside
+  useClickOutside(contentRef, onClose);
 
   return (
     <PopoverRoot open={open}>

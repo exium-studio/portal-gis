@@ -76,6 +76,7 @@ const translations = {
   "delete_label": "Delete",
   "description": "Description",
   "display_settings_helper_text": "These display settings are stored locally on your device and will not be synced with your account.",
+  "displayed_data": "Displayed data",
   "edge_permissions_settings_link": "Settings → Cookies and site permissions → ",
   "education": "Education",
   "empty": "Empty",

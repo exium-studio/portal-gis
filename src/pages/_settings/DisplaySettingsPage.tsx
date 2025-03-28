@@ -12,7 +12,7 @@ import SettingsItemContainer from "@/components/widget/SettingsItemContainer";
 import useADM from "@/context/useADM";
 import useLang from "@/context/useLang";
 import { useThemeConfig } from "@/context/useThemeConfig";
-import { OPTIONS_RELIGION } from "@/gens/selectOptions";
+import { OPTIONS_RELIGION } from "@/static/selectOptions";
 import { Center, HStack, Icon, SimpleGrid, Text } from "@chakra-ui/react";
 import { IconCheck, IconMoon2, IconPalette } from "@tabler/icons-react";
 import { useState } from "react";

@@ -76,6 +76,7 @@ const translations = {
   "delete_label": "Hapus",
   "description": "Deskripsi",
   "display_settings_helper_text": "Pengaturan tampilan ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
+  "displayed_data": "Data yang ditampilkan",
   "edge_permissions_settings_link": "Pengaturan → Cookie dan izin situs → ",
   "education": "Pendidikan",
   "empty": "Kosong",

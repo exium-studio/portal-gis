@@ -7,11 +7,13 @@ import {
   PopoverRoot,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Switch } from "@/components/ui/switch";
 import useAdminSearchAddress from "@/constants/useSearchAddress";
 import useLayout from "@/context/useLayout";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useClickOutside from "@/hooks/useClickOutside";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
+import DISPLAYED_DATA_LIST from "@/static/displayedDataList";
 import {
   Box,
   Center,
@@ -23,11 +25,20 @@ import {
   Stack,
   StackProps,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { IconClock, IconMapPin, IconSearch } from "@tabler/icons-react";
+import {
+  IconClock,
+  IconMapPin,
+  IconMapPin2,
+  IconSearch,
+} from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
 import TheLayoutMenu from "../LayoutMenu";
 import useSearchMode from "./useSearchMode";
+import useDisplayedData from "@/context/useDisplayedData";
+import { Interface__Gens } from "@/constants/interfaces";
+import useLang from "@/context/useLang";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -291,6 +302,96 @@ const SearchAddress = () => {
   );
 };
 
+const DataDisplayed = ({ popoverContentProps, ...props }: any) => {
+  // Contexts
+  const { themeConfig } = useThemeConfig();
+  const { displayedData, setDisplayedData } = useDisplayedData();
+  const { l } = useLang();
+
+  // Utils
+  const { open, onOpen, onClose } = useDisclosure();
+  const contentRef = useRef(null);
+
+  // Close on clicking outside
+  useClickOutside([contentRef], onClose);
+
+  return (
+    <PopoverRoot open={open}>
+      <PopoverTrigger asChild>
+        <OverlayItemContainer>
+          <BButton
+            iconButton
+            unclicky
+            variant={"ghost"}
+            w={"fit"}
+            onClick={onOpen}
+            {...props}
+          >
+            <IconMapPin2 stroke={1.5} />
+          </BButton>
+        </OverlayItemContainer>
+      </PopoverTrigger>
+
+      <Portal>
+        <PopoverPositioner>
+          <PopoverContent
+            ref={contentRef}
+            p={1}
+            w={"250px"}
+            pointerEvents={"auto"}
+            {...popoverContentProps}
+          >
+            <CContainer p={2}>
+              <Text fontWeight={"bold"}>{l.displayed_data}</Text>
+            </CContainer>
+
+            {DISPLAYED_DATA_LIST.map((item, i) => {
+              const active = displayedData.some((data) => data.id === item.id);
+
+              const toggleItem = (item: Interface__Gens) => {
+                let newDisplayedData: Interface__Gens[];
+
+                if (displayedData.some((data) => data.id === item.id)) {
+                  newDisplayedData = displayedData.filter(
+                    (data) => data.id !== item.id
+                  );
+                } else {
+                  newDisplayedData = [...displayedData, item];
+                }
+
+                setDisplayedData(newDisplayedData);
+              };
+
+              return (
+                <HStack
+                  key={i}
+                  justifyContent={"space-between"}
+                  px={2}
+                  onClick={() => toggleItem(item)}
+                  h={"40px"}
+                  cursor={"pointer"}
+                >
+                  {item.label}
+
+                  <Switch
+                    checked={active}
+                    pointerEvents={"none"}
+                    colorPalette={themeConfig.colorPalette}
+                  />
+                </HStack>
+              );
+            })}
+
+            {/* <CContainer px={2} pb={1} pt={2}>
+              <HelperText lineHeight={1.4}>{l.layout_menu_helper}</HelperText>
+            </CContainer> */}
+          </PopoverContent>
+        </PopoverPositioner>
+      </Portal>
+    </PopoverRoot>
+  );
+};
+
 const AdminMapsOverlay = () => {
   // Contexts
   const { layout } = useLayout();
@@ -312,6 +413,8 @@ const AdminMapsOverlay = () => {
           </HStack>
 
           <HStack position={"absolute"} right={0}>
+            <DataDisplayed />
+
             {layout.id === 3 && <LayoutMenu />}
           </HStack>
         </HStack>

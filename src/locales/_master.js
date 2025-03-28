@@ -59,6 +59,10 @@ export const settings_navs = {
 };
 
 // UI
+export const displayed_data = {
+  id: "Data yang ditampilkan",
+  en: "Displayed data",
+};
 export const see_on_map = {
   id: "Lihat di peta",
   en: "See on map",
