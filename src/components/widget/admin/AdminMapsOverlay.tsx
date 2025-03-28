@@ -5,6 +5,7 @@ import FloatingContainer from "@/components/ui-custom/FloatingContainer";
 import HelperText from "@/components/ui-custom/HelperText";
 import NumberInput from "@/components/ui-custom/NumberInput";
 import SearchInput from "@/components/ui-custom/SearchInput";
+import { useColorMode } from "@/components/ui/color-mode";
 import {
   PopoverContent,
   PopoverRoot,
@@ -13,11 +14,13 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Tooltip } from "@/components/ui/tooltip";
 import { Interface__Gens } from "@/constants/interfaces";
+import MAP_STYLES from "@/constants/mapStyles";
 import useAdminSearchAddress from "@/constants/useSearchAddress";
 import useCurrentLocation from "@/context/useCurrentLocation";
 import useDisplayedData from "@/context/useDisplayedData";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
+import useMapStyle from "@/context/useMapsStyle";
 import useMapsZoom from "@/context/useMapsZoom";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useClickOutside from "@/hooks/useClickOutside";
@@ -31,6 +34,7 @@ import {
   Group,
   HStack,
   Icon,
+  Image,
   PopoverPositioner,
   Portal,
   Spinner,
@@ -49,6 +53,7 @@ import {
   IconMinus,
   IconPlus,
   IconSearch,
+  IconStack,
   IconX,
 } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
@@ -580,8 +585,83 @@ const ZoomControl = () => {
   );
 };
 
-const MapsTile = () => {
-  return "";
+const MapStyle = ({ ...props }: any) => {
+  // Contexts
+  const { l } = useLang();
+  const { themeConfig } = useThemeConfig();
+  const { colorMode } = useColorMode();
+  const { mapsStyle, setMapsStyle } = useMapStyle();
+
+  return (
+    <PopoverRoot positioning={{ placement: "top" }}>
+      <PopoverTrigger asChild>
+        <OverlayItemContainer>
+          <BButton iconButton unclicky variant={"ghost"} w={"fit"} {...props}>
+            <IconStack stroke={1.5} />
+          </BButton>
+        </OverlayItemContainer>
+      </PopoverTrigger>
+
+      <Portal>
+        <PopoverPositioner>
+          <PopoverContent p={1} w={"200px"} pointerEvents={"auto"}>
+            <MenuHeaderContainer>
+              <Text fontWeight={"bold"}>{l.map_type}</Text>
+            </MenuHeaderContainer>
+
+            <CContainer p={1} pt={2}>
+              <HStack>
+                {MAP_STYLES.map((item, i) => {
+                  const active = mapsStyle.id === item.id;
+
+                  return (
+                    <CContainer
+                      key={i}
+                      gap={2}
+                      cursor={!item.disabled ? "pointer" : "disabled"}
+                      onClick={
+                        !item.disabled
+                          ? () => {
+                              setMapsStyle(item);
+                            }
+                          : () => {}
+                      }
+                      opacity={item.disabled ? 0.6 : 1}
+                    >
+                      <Box
+                        p={active ? 1 : 0}
+                        border={active ? "1px solid" : ""}
+                        borderColor={active ? themeConfig.primaryColor : ""}
+                        borderRadius={themeConfig.radii.component}
+                        aspectRatio={1}
+                      >
+                        <Image
+                          src={item.img[colorMode as keyof typeof item.img]}
+                          borderRadius={themeConfig.radii.component}
+                          aspectRatio={1}
+                          w={"full"}
+                        />
+                      </Box>
+                      <Text
+                        textAlign={"center"}
+                        color={active ? themeConfig.primaryColor : ""}
+                      >
+                        {item.label}
+                      </Text>
+                    </CContainer>
+                  );
+                })}
+              </HStack>
+            </CContainer>
+
+            {/* <CContainer px={2} pb={1} pt={2}>
+              <HelperText lineHeight={1.4}>{l.layout_menu_helper}</HelperText>
+            </CContainer> */}
+          </PopoverContent>
+        </PopoverPositioner>
+      </Portal>
+    </PopoverRoot>
+  );
 };
 
 const AdminMapsOverlay = () => {
@@ -634,7 +714,7 @@ const AdminMapsOverlay = () => {
 
             <ZoomControl />
 
-            <MapsTile />
+            <MapStyle />
 
             <DataDisplayed />
           </HStack>

@@ -173,6 +173,7 @@ const translations = {
     "description": "You are now logged out."
   },
   "maintenance_page": "We are currently performing maintenance to provide better service. Sorry for the inconvenience. Please check back later.",
+  "map_type": "Map type",
   "married_status": "Maried status",
   "measurment_unit_format_settings_title": "Measurement Units Format",
   "mic": "Microphone",

@@ -173,6 +173,7 @@ const translations = {
     "description": "Anda telah keluar."
   },
   "maintenance_page": "Kami sedang melakukan pemeliharaan untuk memberikan layanan yang lebih baik. Mohon maaf atas ketidaknyamanannya. Silakan cek kembali nanti.",
+  "map_type": "Jenis peta",
   "married_status": "Status pernikahan",
   "measurment_unit_format_settings_title": "Format Satuan Pengukuran",
   "mic": "Mikrofon",

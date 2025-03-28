@@ -59,6 +59,10 @@ export const settings_navs = {
 };
 
 // UI
+export const map_type = {
+  id: "Jenis peta",
+  en: "Map type",
+};
 export const current_location = {
   id: "Lokasi saat ini",
   en: "Current location",

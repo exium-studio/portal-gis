@@ -1,7 +1,7 @@
 import { useColorMode } from "@/components/ui/color-mode";
 import useCurrentLocation from "@/context/useCurrentLocation";
 import useLayout from "@/context/useLayout";
-import useMapStyle from "@/context/useMapStyle";
+import useMapStyle from "@/context/useMapsStyle";
 import useMapsViewState from "@/context/useMapsViewState";
 import mapboxgl from "mapbox-gl";
 import { useEffect, useRef, useState } from "react";
@@ -9,25 +9,24 @@ import Map, { MapRef, Marker } from "react-map-gl/mapbox";
 import MapMarkerCircle from "../MapMarkerCircle";
 import useMapsZoom from "@/context/useMapsZoom";
 
-const minZoom = 0;
-const maxZoom = 22;
+const MIN_ZOOM = 0;
+const MAX_ZOOM = 22;
+const ACTIVE_MAP_STYLE_DEFAULT =
+  "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
 
 const AdminMaps = () => {
   // Contexts
   const { colorMode } = useColorMode();
-  const { mapStyle, setMapStyle } = useMapStyle();
+  const { mapsStyle } = useMapStyle();
   const { layout } = useLayout();
   const { currentLocation } = useCurrentLocation();
   const { zoomPercent, setZoomPercent } = useMapsZoom();
 
   // States, Refs
+  const [activeMapStyle, setActiveMapStyle] = useState("");
   const [mapLoad, setMapLoad] = useState<boolean>(false);
   const mapRef = useRef<MapRef>(null);
   const { mapsViewState, setMapsViewState, setMapRef } = useMapsViewState();
-  const tiles: Record<string, string> = {
-    light: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
-    dark: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
-  };
 
   // Handle init mapRef
   useEffect(() => {
@@ -45,8 +44,7 @@ const AdminMaps = () => {
 
   // Handle map style depend on color mode
   useEffect(() => {
-    if (colorMode === "light") setMapStyle(tiles.light);
-    if (colorMode === "dark") setMapStyle(tiles.dark);
+    setActiveMapStyle(mapsStyle.tile[colorMode as keyof typeof mapsStyle.tile]);
   }, [colorMode]);
 
   // Handle current location
@@ -65,7 +63,7 @@ const AdminMaps = () => {
 
   // Handle zoom percent
   function handleZoomFromPercent(percent: number) {
-    const zoomLevel = (percent / 100) * (maxZoom - minZoom) + minZoom;
+    const zoomLevel = (percent / 100) * (MAX_ZOOM - MIN_ZOOM) + MIN_ZOOM;
 
     if (mapRef.current) {
       mapRef.current?.getMap().easeTo({
@@ -75,7 +73,7 @@ const AdminMaps = () => {
     }
   }
   function handleZoomFromLevel(zoomLevel: number) {
-    const zoomPercent = ((zoomLevel - minZoom) / (maxZoom - minZoom)) * 100;
+    const zoomPercent = ((zoomLevel - MIN_ZOOM) / (MAX_ZOOM - MIN_ZOOM)) * 100;
 
     setZoomPercent(zoomPercent);
   }
@@ -85,6 +83,7 @@ const AdminMaps = () => {
 
   return (
     <Map
+      key={activeMapStyle}
       ref={mapRef}
       {...mapsViewState}
       onLoad={() => {
@@ -95,7 +94,7 @@ const AdminMaps = () => {
       }}
       onMove={(evt) => setMapsViewState(evt.viewState)}
       style={{ width: "100%", height: "100vh" }}
-      mapStyle={mapStyle}
+      mapStyle={activeMapStyle || ACTIVE_MAP_STYLE_DEFAULT}
       mapboxAccessToken={import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}
       mapLib={mapboxgl}
       onZoomEnd={(e) => {
