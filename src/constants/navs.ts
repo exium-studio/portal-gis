@@ -8,6 +8,7 @@ import {
   IconHome,
   IconShieldHalf,
   IconShieldLock,
+  IconServerCog,
 } from "@tabler/icons-react";
 
 export const NAVS = [
@@ -25,6 +26,11 @@ export const NAVS = [
     labelKey: "navs.services",
     path: "/services",
     icon: IconApps,
+  },
+  {
+    labelKey: "navs.master_data",
+    path: "/master-data",
+    icon: IconServerCog,
   },
 ];
 

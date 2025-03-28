@@ -11,6 +11,7 @@ import ReportProblemPage from "@/pages/_settings/ReportProblemPage";
 import TermsOfServicePage from "@/pages/_settings/TermsOfServicePage";
 import { Interface__PrivateRoute, Interface__Route } from "./interfaces";
 import ProfilePage from "@/pages/admin/ProfilePage";
+import MasterDataPage from "@/pages/admin/MasterDataPage";
 
 export const ROUTES: Interface__Route[] = [
   {
@@ -38,6 +39,12 @@ export const PRIVATE_ROUTES: Interface__PrivateRoute[] = [
     activePath: "/services",
     titleKey: "navs.services",
     element: <ServicePage />,
+  },
+  {
+    path: "/master-data",
+    activePath: "/master-data",
+    titleKey: "navs.master_data",
+    element: <MasterDataPage />,
   },
 ];
 

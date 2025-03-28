@@ -195,6 +195,7 @@ const translations = {
     "dashboard": "Beranda",
     "administration": "Administrasi",
     "services": "Layanan",
+    "master_data": "Master data",
     "settings": "Pengaturan",
     "profile": "Profil"
   },

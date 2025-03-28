@@ -195,6 +195,7 @@ const translations = {
     "dashboard": "Home",
     "administration": "Administration",
     "services": "Services",
+    "master_data": "Master data",
     "settings": "Settings",
     "profile": "Profile"
   },

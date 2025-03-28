@@ -12,6 +12,10 @@ export const navs = {
     id: "Layanan",
     en: "Services",
   },
+  master_data: {
+    id: "Master data",
+    en: "Master data",
+  },
   settings: {
     id: "Pengaturan",
     en: "Settings",
