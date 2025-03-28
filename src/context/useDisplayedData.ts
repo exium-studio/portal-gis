@@ -3,7 +3,7 @@ import { Interface__Gens } from "@/constants/interfaces";
 import { create } from "zustand";
 
 const STORAGE_KEY = "dataDisplayed";
-const DEFAULT = DATA_DISPLAYED_LIST;
+const DEFAULT = DATA_DISPLAYED_LIST.filter((item) => !item.disabled);
 
 interface Props {
   displayedData: Interface__Gens[];

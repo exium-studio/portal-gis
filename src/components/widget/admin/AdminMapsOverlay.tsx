@@ -390,6 +390,7 @@ const DataDisplayed = () => {
                     variant={"ghost"}
                     size={"md"}
                     cursor={"pointer"}
+                    disabled={item.disabled}
                   >
                     {pluck(l, item.key)}
 
