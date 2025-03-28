@@ -29,6 +29,7 @@ import Inbox from "./Inbox";
 import LayoutMenu from "./LayoutMenu";
 import useLayout from "@/context/useLayout";
 import AdminMaps from "./admin/AdminMaps";
+import AdminMapsOverlay from "./admin/AdminMapsOverlay";
 
 interface Interface__NavItemContainer extends StackProps {
   active?: boolean;
@@ -195,7 +196,7 @@ const NavContainer = ({
       flexDir={iss ? "column" : "row"}
       h={"100dvh"}
       gap={0}
-      overflowY={"clip"}
+      overflow={"clip"}
     >
       {/* Lg screen nav */}
       {!iss && (
@@ -253,6 +254,7 @@ const NavContainer = ({
             bg={"bgContent"}
             w={layout.id === 1 && !iss && withMaps ? "50%" : ""}
             h={layout.id === 1 && iss && withMaps ? "50%" : ""}
+            zIndex={3}
           >
             <HStack
               justify={"space-between"}
@@ -290,10 +292,11 @@ const NavContainer = ({
           <CContainer
             w={layout.id === 1 && !iss ? "50%" : "full"}
             h={layout.id === 1 && iss ? "50%" : "full"}
+            position={"relative"}
           >
             <AdminMaps />
 
-            {layout.id === 3 && <LayoutMenu position={"absolute"} />}
+            <AdminMapsOverlay />
           </CContainer>
         )}
       </Stack>

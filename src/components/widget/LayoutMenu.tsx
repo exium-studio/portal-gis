@@ -63,12 +63,7 @@ const LayoutMenu = ({ ...props }: Props) => {
 
       <Portal>
         <PopoverPositioner>
-          <PopoverContent
-            ref={contentRef}
-            p={1}
-            borderRadius={themeConfig.radii.container}
-            w={"180px"}
-          >
+          <PopoverContent ref={contentRef} p={1} w={"180px"}>
             {LAYOUT_OPTIONS.map((item, i) => {
               const active = layout.id === item.id;
 

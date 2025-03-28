@@ -1,22 +1,20 @@
+import useDateFormat from "@/context/useDateFormat";
+import useLang from "@/context/useLang";
 import useTimeZone from "@/context/useTimeZone";
+import autoTimeZone from "@/utils/autoTimeZone";
+import formatDate from "@/utils/formatDate";
 import { HStack, Icon, Text } from "@chakra-ui/react";
 import { IconTimezone } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import BButton from "../ui-custom/BButton";
 import CContainer from "../ui-custom/CContainer";
-import { PopoverContent, PopoverRoot, PopoverTrigger } from "../ui/popover";
 import HelperText from "../ui-custom/HelperText";
-import useLang from "@/context/useLang";
+import { PopoverContent, PopoverRoot, PopoverTrigger } from "../ui/popover";
 import { Tooltip } from "../ui/tooltip";
-import formatDate from "@/utils/formatDate";
-import autoTimeZone from "@/utils/autoTimeZone";
 import Clock from "./Clock";
-import useDateFormat from "@/context/useDateFormat";
-import { useThemeConfig } from "@/context/useThemeConfig";
 
 const CurrentUserTimeZone = () => {
   // Contexts
-  const { themeConfig } = useThemeConfig();
   const { timeZone } = useTimeZone();
   const { dateFormat } = useDateFormat();
   const { l } = useLang();
@@ -39,7 +37,7 @@ const CurrentUserTimeZone = () => {
         </div>
       </PopoverTrigger>
 
-      <PopoverContent mr={2} borderRadius={themeConfig.radii.container}>
+      <PopoverContent mr={2} w={"fit"}>
         <CContainer px={1}>
           <HelperText mb={1}>{l.selected_time_zone}</HelperText>
 

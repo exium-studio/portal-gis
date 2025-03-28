@@ -13,6 +13,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  overflow: hidden;
+}
+
 /* Custom Start*/
 .timezones-list::-webkit-scrollbar-track {
   height: 100px !important;
