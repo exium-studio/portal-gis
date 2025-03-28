@@ -219,13 +219,13 @@ const SearchAddress = () => {
     <CContainer
       fRef={containerRef}
       gap={2}
-      maxW={iss ? "full" : "300px"}
+      maxW={iss ? "" : "300px"}
       zIndex={4}
       pointerEvents={"auto"}
     >
       <OverlayItemContainer
         id="search-trigger"
-        w={searchMode ? "calc(100vw - 18px)" : "50px"}
+        w={searchMode ? (iss ? "calc(100vw - 18px)" : "300px") : "50px"}
         flexDir={"row"}
         overflow={"clip"}
         transition={"200ms"}
