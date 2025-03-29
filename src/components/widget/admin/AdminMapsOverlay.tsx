@@ -796,7 +796,7 @@ const AdminMapsOverlay = () => {
         </HStack>
       </Box>
 
-      <Box p={2}>
+      <Box p={2} pr={0}>
         <HStack
           align={"start"}
           justify={"space-between"}
@@ -812,6 +812,7 @@ const AdminMapsOverlay = () => {
             w={"fit"}
             maxW={"calc(100% - 50px - 8px)"}
             right={0}
+            pr={2}
           >
             <MapStyle />
 
