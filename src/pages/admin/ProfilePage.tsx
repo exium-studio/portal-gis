@@ -1,5 +1,11 @@
+import PageContainer from "@/components/widget/PageContainer";
+
 const ProfilePage = () => {
-  return <>Profile</>;
+  return (
+    <PageContainer>
+      <p>Profile</p>
+    </PageContainer>
+  );
 };
 
 export default ProfilePage;

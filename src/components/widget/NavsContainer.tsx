@@ -14,7 +14,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import BackButton from "../ui-custom/BackButton";
 import BnwLogo from "../ui-custom/BnwLogo";
 import CContainer from "../ui-custom/CContainer";
@@ -65,6 +65,8 @@ const NavContainer = ({
     }
   });
   const iss = useIsSmScreenWidth();
+  const { pathname } = useLocation();
+  const inMainNavs = NAVS.some((nav) => nav.path === pathname);
 
   // Components
   const ActiveNavIndicator = ({ ...props }: CircleProps) => {
@@ -244,49 +246,51 @@ const NavContainer = ({
         w={iss ? "full" : "calc(100vw - 76px)"}
       >
         {/* Main Panel */}
-        {(layout.id === 1 || layout.id === 2) && (
-          <CContainer
-            fRef={containerRef}
-            position={"relative"}
-            flex={1}
-            overflowY={"scroll"}
-            className="scrollY"
-            overflowX={"clip"}
-            bg={"bgContent"}
-            w={layout.id === 1 && !iss && withMaps ? "50%" : ""}
-            h={layout.id === 1 && iss && withMaps ? "50%" : ""}
-            zIndex={3}
-          >
-            <HStack
-              justify={"space-between"}
-              p={2}
-              px={4}
-              position={"sticky"}
-              top={0}
-              zIndex={2}
-              bg={iss ? "body" : "bgContent"}
-              borderBottom={iss ? "1px solid {colors.border.subtle}" : ""}
+        {layout.id === 1 ||
+          layout.id === 2 ||
+          (!inMainNavs && (
+            <CContainer
+              fRef={containerRef}
+              position={"relative"}
+              flex={1}
+              overflowY={"scroll"}
+              className="scrollY"
+              overflowX={"clip"}
+              bg={"bgContent"}
+              w={layout.id === 1 && !iss && withMaps ? "50%" : ""}
+              h={layout.id === 1 && iss && withMaps ? "50%" : ""}
+              zIndex={3}
             >
-              <HStack>
-                {backPath && <BackButton iconButton backPath={backPath} />}
+              <HStack
+                justify={"space-between"}
+                p={2}
+                px={4}
+                position={"sticky"}
+                top={0}
+                zIndex={2}
+                bg={iss ? "body" : "bgContent"}
+                borderBottom={iss ? "1px solid {colors.border.subtle}" : ""}
+              >
+                <HStack>
+                  {backPath && <BackButton iconButton backPath={backPath} />}
 
-                <Heading6 fontWeight={"bold"} truncate>
-                  {title}
-                </Heading6>
+                  <Heading6 fontWeight={"bold"} truncate>
+                    {title}
+                  </Heading6>
+                </HStack>
+
+                <HStack flexShrink={0} gap={0}>
+                  {withMaps && <LayoutMenu />}
+
+                  <CurrentUserTimeZone />
+
+                  <Inbox />
+                </HStack>
               </HStack>
 
-              <HStack flexShrink={0} gap={0}>
-                {withMaps && <LayoutMenu />}
-
-                <CurrentUserTimeZone />
-
-                <Inbox />
-              </HStack>
-            </HStack>
-
-            {children}
-          </CContainer>
-        )}
+              {children}
+            </CContainer>
+          ))}
 
         {/* Maps */}
         {(layout.id === 1 || layout.id === 3) && withMaps && (
