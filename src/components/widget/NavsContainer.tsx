@@ -302,25 +302,29 @@ const NavContainer = ({
       </Stack>
 
       {/* Sm screen nav */}
-      {iss && (
-        <HStack
-          h={"80px"}
-          justify={"space-around"}
-          pt={1}
-          pb={6}
-          px={4}
-          borderTop={"1px solid"}
-          borderColor={"d2"}
-          overflowX={"auto"}
-          flexShrink={0}
-          position={"sticky"}
-          bottom={0}
-          bg={"body"}
-        >
-          <NavList />
+      {layout.id !== 3 && (
+        <>
+          {iss && (
+            <HStack
+              h={"80px"}
+              justify={"space-around"}
+              pt={1}
+              pb={6}
+              px={4}
+              borderTop={"1px solid"}
+              borderColor={"d2"}
+              overflowX={"auto"}
+              flexShrink={0}
+              position={"sticky"}
+              bottom={0}
+              bg={"body"}
+            >
+              <NavList />
 
-          <NavList2 />
-        </HStack>
+              <NavList2 />
+            </HStack>
+          )}
+        </>
       )}
     </Stack>
   );

@@ -62,6 +62,8 @@ import { useEffect, useRef, useState } from "react";
 import TheLayoutMenu from "../LayoutMenu";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import useSearchMode from "./useSearchMode";
+import { Avatar } from "@/components/ui/avatar";
+import { Link } from "react-router-dom";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -90,19 +92,6 @@ const OverlayItemContainer = ({
     >
       {children}
     </Stack>
-  );
-};
-
-const LayoutMenu = () => {
-  return (
-    <OverlayItemContainer>
-      <TheLayoutMenu
-        pointerEvents={"auto"}
-        popoverContentProps={{
-          mt: 1,
-        }}
-      />
-    </OverlayItemContainer>
   );
 };
 
@@ -418,6 +407,45 @@ const DataDisplayed = () => {
         </PopoverPositioner>
       </Portal>
     </PopoverRoot>
+  );
+};
+
+const LayoutMenu = () => {
+  return (
+    <OverlayItemContainer>
+      <TheLayoutMenu
+        pointerEvents={"auto"}
+        popoverContentProps={{
+          mt: 1,
+        }}
+      />
+    </OverlayItemContainer>
+  );
+};
+
+const Profile = () => {
+  // Contexts
+  const { themeConfig } = useThemeConfig();
+  const { l } = useLang();
+
+  return (
+    <OverlayItemContainer>
+      <Tooltip content={l.navs.profile}>
+        <Link to={"/profile"}>
+          <BButton iconButton unclicky variant={"ghost"}>
+            <Avatar
+              name="Jolitos Kurniawan"
+              cursor={"pointer"}
+              size={"xs"}
+              bg={`${themeConfig.primaryColor}`}
+              color={`${themeConfig.colorPalette}.contrast`}
+              w={["24px", null, "28px"]}
+              h={["24px", null, "28px"]}
+            />
+          </BButton>
+        </Link>
+      </Tooltip>
+    </OverlayItemContainer>
   );
 };
 
@@ -792,6 +820,8 @@ const AdminMapsOverlay = () => {
             <DataDisplayed />
 
             {layout.id === 3 && <LayoutMenu />}
+
+            {layout.id === 3 && <Profile />}
           </HStack>
         </HStack>
       </Box>
