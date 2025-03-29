@@ -67,7 +67,7 @@ const AnnouncementCreate = () => {
       description: "",
       published_at: undefined as any,
       expires_at: undefined as any,
-      documents: undefined as any,
+      file: undefined as any,
     },
     validationSchema: yup.object().shape({
       title: yup.string().required(l.required_form),
@@ -106,7 +106,7 @@ const AnnouncementCreate = () => {
             );
           }
         ),
-      documents: fileValidation({ allowedExtensions: ["pdf"] }),
+      file: fileValidation({ allowedExtensions: ["pdf"] }),
     }),
     onSubmit: (values) => {
       console.log(values);
@@ -114,7 +114,7 @@ const AnnouncementCreate = () => {
       const payload = new FormData();
       payload.append("title", values.title);
       payload.append("description", values.description);
-      payload.append("documents", values.documents);
+      payload.append("file", values.file);
       payload.append("published_at", values.published_at);
       payload.append("expires_at", values.expires_at);
 
@@ -211,7 +211,7 @@ const AnnouncementCreate = () => {
                 />
               </Field>
 
-              <Field mt={4} errorText={formik.errors.documents as string}>
+              <Field mt={4} errorText={formik.errors.file as string}>
                 <FieldLabel>Attachment</FieldLabel>
                 <FileInput maxFiles={3} />
               </Field>
@@ -246,13 +246,12 @@ const AnnouncementEdit = ({ item }: any) => {
       description: item.description,
       published_at: item.start_date_time,
       expires_at: item.end_date_time,
-      documents: undefined as any,
-      deleted_documents: [],
+      documents: undefined as any, // new
+      deleted_document_ids: [],
     },
     validationSchema: yup.object().shape({
       title: yup.string().required(l.required_form),
       description: yup.string().required(l.required_form),
-
       published_at: yup
         .string()
         .required(l.required_form)
@@ -465,7 +464,7 @@ const Announcement = ({ ...props }: StackProps) => {
       title: "Pemberitahuan Pemadaman Listrik",
       description:
         "Akan ada pemadaman listrik di wilayah desa pada 25 Maret 2025 mulai pukul 10:00 - 14:00 WIB.",
-      documents: [
+      file: [
         {
           id: 2,
           user_id: 19,
@@ -474,7 +473,7 @@ const Announcement = ({ ...props }: StackProps) => {
           uploaded_by: null,
           file_id: "d148f339-198d-446b-a861-3401b3c6d668",
           file_name: "document_2.pdf",
-          file_path: "uploads/documents/document_2.pdf",
+          file_path: "uploads/file/document_2.pdf",
           file_mime_type: "application/pdf",
           file_size: "478 KB",
           reason: null,
@@ -498,7 +497,7 @@ const Announcement = ({ ...props }: StackProps) => {
           uploaded_by: 28,
           file_id: "cd1fd839-bd55-4b33-bf9e-a175d30971ec",
           file_name: "document_5.pdf",
-          file_path: "uploads/documents/document_5.pdf",
+          file_path: "uploads/file/document_5.pdf",
           file_mime_type: "application/pdf",
           file_size: "150 KB",
           reason: "Approval required",
