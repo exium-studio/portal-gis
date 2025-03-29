@@ -67,6 +67,18 @@ const NavContainer = ({
   const iss = useIsSmScreenWidth();
 
   // Components
+  const ActiveNavIndicator = ({ ...props }: CircleProps) => {
+    return (
+      <Circle
+        w={"12px"}
+        h={"2px"}
+        bg={themeConfig.primaryColor}
+        position={"absolute"}
+        bottom={0}
+        {...props}
+      />
+    );
+  };
   const NavItemContainer = ({
     children,
     active,
@@ -79,7 +91,7 @@ const NavContainer = ({
       <VStack
         gap={0}
         w={"40px"}
-        h={"40px"}
+        h={["60px", null, "40px"]}
         justify={"center"}
         position={"relative"}
         color={active ? "fg" : "fg.muted"}
@@ -88,22 +100,10 @@ const NavContainer = ({
         transition={"200ms"}
         {...props}
       >
-        {active && <ActiveNavIndicator bottom={[-2, null, 0]} />}
-
         {children}
+
+        {active && <ActiveNavIndicator bottom={[0, null, 0]} />}
       </VStack>
-    );
-  };
-  const ActiveNavIndicator = ({ ...props }: CircleProps) => {
-    return (
-      <Circle
-        w={"12px"}
-        h={"2px"}
-        bg={themeConfig.primaryColor}
-        position={"absolute"}
-        bottom={0}
-        {...props}
-      />
     );
   };
   const NavList = () => {
