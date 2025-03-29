@@ -30,6 +30,7 @@ import LayoutMenu from "./LayoutMenu";
 import useLayout from "@/context/useLayout";
 import AdminMaps from "./admin/AdminMaps";
 import AdminMapsOverlay from "./admin/AdminMapsOverlay";
+import HScroll from "../ui-custom/HScroll";
 
 interface Interface__NavItemContainer extends StackProps {
   active?: boolean;
@@ -308,7 +309,7 @@ const NavContainer = ({
           justify={"space-around"}
           pt={1}
           pb={6}
-          px={4}
+          pr={4}
           borderTop={"1px solid"}
           borderColor={"d2"}
           overflowX={"auto"}
@@ -317,9 +318,21 @@ const NavContainer = ({
           bottom={0}
           bg={"body"}
         >
-          <NavList />
+          <HScroll
+            pl={4}
+            gap={5}
+            w={"fit"}
+            maxW={"full"}
+            flex={1}
+            justify={"space-around"}
+            // border={"1px solid red"}
+          >
+            <NavList />
+          </HScroll>
 
-          <NavList2 />
+          <HStack ml={2}>
+            <NavList2 />
+          </HStack>
         </HStack>
       )}
     </Stack>
