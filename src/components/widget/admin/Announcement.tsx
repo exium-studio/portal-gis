@@ -67,7 +67,7 @@ const AnnouncementCreate = () => {
       description: "",
       published_at: undefined as any,
       expires_at: undefined as any,
-      file: undefined as any,
+      documents: undefined as any,
     },
     validationSchema: yup.object().shape({
       title: yup.string().required(l.required_form),
@@ -106,7 +106,7 @@ const AnnouncementCreate = () => {
             );
           }
         ),
-      file: fileValidation({ allowedExtensions: ["pdf"] }),
+      documents: fileValidation({ allowedExtensions: ["pdf"] }),
     }),
     onSubmit: (values) => {
       console.log(values);
@@ -114,7 +114,7 @@ const AnnouncementCreate = () => {
       const payload = new FormData();
       payload.append("title", values.title);
       payload.append("description", values.description);
-      payload.append("file", values.file);
+      payload.append("documents", values.documents);
       payload.append("published_at", values.published_at);
       payload.append("expires_at", values.expires_at);
 
@@ -211,7 +211,7 @@ const AnnouncementCreate = () => {
                 />
               </Field>
 
-              <Field mt={4} errorText={formik.errors.file as string}>
+              <Field mt={4} errorText={formik.errors.documents as string}>
                 <FieldLabel>Attachment</FieldLabel>
                 <FileInput maxFiles={3} />
               </Field>
@@ -297,7 +297,7 @@ const AnnouncementEdit = ({ item }: any) => {
   const { open, onOpen, onClose } = useDisclosure();
   useBackOnClose(`edit-announcement-${item.id}`, open, onOpen, onClose);
 
-  console.log("jancok", formik.values);
+  console.log(item);
 
   return (
     <>
@@ -464,7 +464,7 @@ const Announcement = ({ ...props }: StackProps) => {
       title: "Pemberitahuan Pemadaman Listrik",
       description:
         "Akan ada pemadaman listrik di wilayah desa pada 25 Maret 2025 mulai pukul 10:00 - 14:00 WIB.",
-      file: [
+      documents: [
         {
           id: 2,
           user_id: 19,
