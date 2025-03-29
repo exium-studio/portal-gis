@@ -377,7 +377,6 @@ const PageControl = ({
           type: "error",
           title: `Lompat Page Gagal`,
           description: `Input harus lebih dari 0 dan kurang dari/sama dengan halaman terakhir`,
-          placement: iss ? "top" : "bottom-end",
           action: {
             label: "Close",
             onClick: () => {},
