@@ -236,6 +236,7 @@ const SearchAddress = () => {
       >
         <Tooltip content={`${l.search} ${l.address.toLowerCase()}`}>
           <BButton
+            unclicky
             iconButton
             variant="ghost"
             onClick={() => {
