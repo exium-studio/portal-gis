@@ -28,7 +28,7 @@ import { useThemeConfig } from "@/context/useThemeConfig";
 import useClickOutside from "@/hooks/useClickOutside";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import DISPLAYED_DATA_LIST from "@/static/displayedDataList";
-import MAPS_CONFIG_LIST from "@/static/mapsConfigList";
+import BASEMAP_CONFIG_LIST from "@/static/basemapConfigList";
 import pluck from "@/utils/pluck";
 import {
   Box,
@@ -63,6 +63,7 @@ import { useEffect, useRef, useState } from "react";
 import TheLayoutMenu from "../LayoutMenu";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import useSearchMode from "./useSearchMode";
+import useActiveMapStyle from "@/context/useActiveMapStyle";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -402,15 +403,78 @@ const Basemap = () => {
   const { themeConfig } = useThemeConfig();
   const { l } = useLang();
   const { basemap, setBasemap } = useMapsConfig();
+  const { activeMapStyle, setActiveMapStyle } = useActiveMapStyle();
 
   // Utils
   const contentRef = useRef(null);
+  async function basemapSetter(
+    layerType: keyof typeof basemap,
+    visible: boolean
+  ) {
+    if (typeof activeMapStyle === "string") {
+      const response = await fetch(activeMapStyle);
+      const styleJson = await response.json();
+      setActiveMapStyle(styleJson);
+    }
+
+    const layerMapping: Record<string, string[]> = {
+      road: [
+        "road_service_case",
+        "road_minor_case",
+        "road_pri_case_ramp",
+        "road-pri-case-ramp",
+        "road_trunk_case_ramp",
+        "road_mot_case_ramp",
+        "road_sec_case_noramp",
+        "road_pri_case_noramp",
+        "road_trunk_case_noramp",
+        "road_mot_case_noramp",
+        "road_path",
+        "road_service_fill",
+        "road_minor_fill",
+        "road_pri_fill_ramp",
+        "road_trunk_fill_ramp",
+        "road_mot_fill_ramp",
+        "road_sec_fill_noramp",
+        "road_pri_fill_noramp",
+        "road_trunk_fill_noramp",
+        "road_mot_fill_noramp",
+        "roadname_minor",
+        "roadname_sec",
+        "roadname_pri",
+        "roadname_major",
+      ],
+      water: ["water", "water-shadow", "waterway"],
+      building: [
+        "building",
+        "building-top",
+        "building-extrusion",
+        "building-outline",
+      ],
+    };
+
+    const updatedLayers = activeMapStyle.layers.map((layer: any) =>
+      layerMapping[layerType as keyof typeof layerMapping]?.includes(layer.id)
+        ? {
+            ...layer,
+            layout: {
+              ...layer.layout,
+              visibility: visible ? "visible" : "none",
+            },
+          }
+        : layer
+    );
+
+    setActiveMapStyle({ ...activeMapStyle, layers: updatedLayers });
+
+    setBasemap({ ...basemap, [layerType]: visible });
+  }
 
   return (
     <PopoverRoot>
       <PopoverTrigger asChild>
         <OverlayItemContainer>
-          <Tooltip content={l.displayed_data}>
+          <Tooltip content={l.basemap}>
             <BButton iconButton unclicky variant={"ghost"} w={"fit"}>
               <IconMapCog stroke={1.5} />
             </BButton>
@@ -436,15 +500,11 @@ const Basemap = () => {
 
             <CContainer pt={1}>
               <CContainer pt={1}>
-                {MAPS_CONFIG_LIST.map((item, i) => {
+                {BASEMAP_CONFIG_LIST.map((item, i) => {
                   const active = basemap[item.key];
 
                   const toggleItem = () => {
-                    const newState = {
-                      ...basemap,
-                      [item.key]: !basemap[item.key],
-                    };
-                    setBasemap(newState);
+                    basemapSetter(item.key, !basemap[item.key]);
                   };
 
                   return (

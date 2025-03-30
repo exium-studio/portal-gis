@@ -14,7 +14,7 @@ interface Props {
   setBasemap: (newState: any) => void;
 }
 
-const useMapsConfig = create<Props>((set) => {
+const useBasemap = create<Props>((set) => {
   const getStoredFormat = (): any => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
@@ -39,4 +39,4 @@ const useMapsConfig = create<Props>((set) => {
   };
 });
 
-export default useMapsConfig;
+export default useBasemap;

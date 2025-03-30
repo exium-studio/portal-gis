@@ -13,11 +13,10 @@ import MapMarkerCircle from "../MapMarkerCircle";
 import FacilityLayer from "./FacilityLayer";
 import KKLayer from "./KKLayer";
 import VillageAssetLayer from "./VillageAssetLayer";
+import useActiveMapStyle from "@/context/useActiveMapStyle";
 
 const MIN_ZOOM = 0;
 const MAX_ZOOM = 22;
-const ACTIVE_MAP_STYLE_DEFAULT =
-  "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
 
 const AdminMap = () => {
   // Contexts
@@ -29,9 +28,7 @@ const AdminMap = () => {
   const { displayedData } = useDisplayedData();
 
   // States, Refs
-  const [activeMapStyle, setActiveMapStyle] = useState(
-    ACTIVE_MAP_STYLE_DEFAULT
-  );
+  const { activeMapStyle, setActiveMapStyle } = useActiveMapStyle();
   const [mapLoad, setMapLoad] = useState<boolean>(false);
   const mapRef = useRef<MapRef>(null);
   const { mapViewState, setMapViewState, setMapRef } = useMapViewState();
@@ -103,7 +100,7 @@ const AdminMap = () => {
       }}
       onMove={(evt) => setMapViewState(evt.viewState)}
       style={{ width: "100%", height: "100vh" }}
-      mapStyle={activeMapStyle || ACTIVE_MAP_STYLE_DEFAULT}
+      mapStyle={activeMapStyle}
       mapboxAccessToken={import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}
       mapLib={mapboxgl}
       onZoomEnd={(e) => {
