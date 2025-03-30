@@ -50,11 +50,6 @@ const AdminMap = () => {
     }, 1);
   }, [layout]);
 
-  // // Handle map style depend on color mode
-  // useEffect(() => {
-  //   setActiveMapStyle(mapStyle.tile[colorMode as keyof typeof mapStyle.tile]);
-  // }, [colorMode, mapStyle]);
-
   // Handle current location
   useEffect(() => {
     if (mapRef.current && currentLocation) {
