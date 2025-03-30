@@ -16,6 +16,9 @@ const translations = {
     "description": "Anda kembali online."
   },
   "back_to_root": "Kembali ke halaman utama",
+  "basemap": "Peta dasar",
+  "border": "Batas",
+  "building": "Bangunan",
   "by": "per",
   "camera": "Kamera",
   "camera_fail_toast": {
@@ -123,6 +126,7 @@ const translations = {
   "infrastructure": "Infrastruktur",
   "inventory": "Inventori",
   "kk": "Kartu Keluarga (KK)",
+  "label": "Label",
   "land_field": "Bidang tanah",
   "language_settings_title": "Bahasa",
   "last": "Terakhir",
@@ -259,6 +263,7 @@ const translations = {
     "title": "Terjadi error",
     "description": "Cobalah untuk memuat ulang menggunakan tombol di bawah."
   },
+  "road": "Jalan",
   "search": "Pencarian",
   "search_input_default_placeholder": "Pencarian...",
   "see_all": "Lihat semua",
@@ -318,6 +323,7 @@ const translations = {
   },
   "village_asset": "Aset desa",
   "vision": "Visi",
+  "water": "Air",
   "weekdays": {
     "mon": "Senin",
     "tue": "Selasa",

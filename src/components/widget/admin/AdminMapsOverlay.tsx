@@ -61,6 +61,8 @@ import { useEffect, useRef, useState } from "react";
 import TheLayoutMenu from "../LayoutMenu";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import useSearchMode from "./useSearchMode";
+import MAPS_CONFIG_LIST from "@/static/mapsConfigList";
+import useMapsConfig from "@/context/useBasemap";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -388,10 +390,6 @@ const DataDisplayed = () => {
                 );
               })}
             </CContainer>
-
-            {/* <CContainer px={2} pb={1} pt={2}>
-              <HelperText lineHeight={1.4}>{l.layout_menu_helper}</HelperText>
-            </CContainer> */}
           </PopoverContent>
         </PopoverPositioner>
       </Portal>
@@ -399,10 +397,11 @@ const DataDisplayed = () => {
   );
 };
 
-const MapsConfig = () => {
+const Basemap = () => {
   // Contexts
-  // const { themeConfig } = useThemeConfig();
+  const { themeConfig } = useThemeConfig();
   const { l } = useLang();
+  const { basemap, setBasemap } = useMapsConfig();
 
   // Utils
   const contentRef = useRef(null);
@@ -425,17 +424,53 @@ const MapsConfig = () => {
             ref={contentRef}
             p={1}
             mr={"2px"}
-            w={"250px"}
+            w={"200px"}
             pointerEvents={"auto"}
           >
             <MenuHeaderContainer>
               <HStack>
-                <IconMapPin2 stroke={1.5} size={20} />
-                <Text fontWeight={"bold"}>{l.displayed_data}</Text>
+                <IconMapCog stroke={1.5} size={20} />
+                <Text fontWeight={"bold"}>{l.basemap}</Text>
               </HStack>
             </MenuHeaderContainer>
 
-            <CContainer pt={1}>{/* content */}</CContainer>
+            <CContainer pt={1}>
+              <CContainer pt={1}>
+                {MAPS_CONFIG_LIST.map((item, i) => {
+                  const active = basemap[item.key];
+
+                  const toggleItem = () => {
+                    const newState = {
+                      ...basemap,
+                      [item.key]: !basemap[item.key],
+                    };
+                    setBasemap(newState);
+                  };
+
+                  return (
+                    <BButton
+                      key={i}
+                      unclicky
+                      justifyContent={"space-between"}
+                      px={2}
+                      onClick={toggleItem}
+                      variant={"ghost"}
+                      size={"md"}
+                      cursor={"pointer"}
+                      disabled={item.disabled}
+                    >
+                      {pluck(l, item.key)}
+
+                      <Switch
+                        checked={active}
+                        pointerEvents={"none"}
+                        colorPalette={themeConfig.colorPalette}
+                      />
+                    </BButton>
+                  );
+                })}
+              </CContainer>
+            </CContainer>
           </PopoverContent>
         </PopoverPositioner>
       </Portal>
@@ -832,7 +867,7 @@ const AdminMapsOverlay = () => {
           <HStack position={"absolute"} right={0}>
             <DataDisplayed />
 
-            <MapsConfig />
+            <Basemap />
 
             {layout.id === 3 && <LayoutMenu />}
           </HStack>

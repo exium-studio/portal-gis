@@ -63,6 +63,30 @@ export const settings_navs = {
 };
 
 // UI
+export const basemap = {
+  id: "Peta dasar",
+  en: "Basemap",
+};
+export const road = {
+  id: "Jalan",
+  en: "Road",
+};
+export const water = {
+  id: "Air",
+  en: "Water",
+};
+export const building = {
+  id: "Bangunan",
+  en: "Building",
+};
+export const border = {
+  id: "Batas",
+  en: "Border",
+};
+export const label = {
+  id: "Label",
+  en: "Label",
+};
 export const infrastructure = {
   id: "Infrastruktur",
   en: "Infrastructure",

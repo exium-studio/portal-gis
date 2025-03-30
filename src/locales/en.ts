@@ -16,6 +16,9 @@ const translations = {
     "description": "You are back online."
   },
   "back_to_root": "Back to main page",
+  "basemap": "Basemap",
+  "border": "Border",
+  "building": "Building",
   "by": "by",
   "camera": "Camera",
   "camera_fail_toast": {
@@ -123,6 +126,7 @@ const translations = {
   "infrastructure": "Infrastructure",
   "inventory": "Inventory",
   "kk": "Family Card (KK)",
+  "label": "Label",
   "land_field": "Land field",
   "language_settings_title": "Language",
   "last": "Last",
@@ -259,6 +263,7 @@ const translations = {
     "title": "An Error Occurred",
     "description": "Try to reload using the button below."
   },
+  "road": "Road",
   "search": "Search",
   "search_input_default_placeholder": "Search...",
   "see_all": "See all",
@@ -318,6 +323,7 @@ const translations = {
   },
   "village_asset": "Village asset",
   "vision": "Vision",
+  "water": "Water",
   "weekdays": {
     "mon": "Monday",
     "tue": "Tuesday",
