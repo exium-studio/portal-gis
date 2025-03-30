@@ -258,11 +258,11 @@ const NavContainer = ({
             zIndex={3}
           >
             <HStack
-              h={"64px"}
+              h={"67px"}
               justify={"space-between"}
               pl={4}
               pr={"9px"}
-              pt={"23px"}
+              pt={5}
               pb={5}
               flexShrink={0}
               position={"sticky"}
