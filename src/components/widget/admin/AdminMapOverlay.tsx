@@ -598,7 +598,7 @@ const Legend = () => {
               <br />
               <chakra.span>
                 <Icon mx={1}>
-                  <IconMapPinCog size={20} stroke={1.5} />
+                  <IconMapPinCog size={18} stroke={1.5} />
                 </Icon>
                 {l.displayed_data}
               </chakra.span>
