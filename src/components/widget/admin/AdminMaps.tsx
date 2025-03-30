@@ -8,6 +8,8 @@ import { useEffect, useRef, useState } from "react";
 import Map, { MapRef, Marker } from "react-map-gl/mapbox";
 import MapMarkerCircle from "../MapMarkerCircle";
 import useMapsZoom from "@/context/useMapsZoom";
+import { DISPLAYED_DUMMY_DATA } from "@/constants/dummy";
+import KKLayer from "./KKLayer";
 
 const MIN_ZOOM = 0;
 const MAX_ZOOM = 22;
@@ -29,6 +31,7 @@ const AdminMaps = () => {
   const [mapLoad, setMapLoad] = useState<boolean>(false);
   const mapRef = useRef<MapRef>(null);
   const { mapsViewState, setMapsViewState, setMapRef } = useMapsViewState();
+  const data = DISPLAYED_DUMMY_DATA;
 
   // Handle init mapRef
   useEffect(() => {
@@ -112,6 +115,12 @@ const AdminMaps = () => {
             >
               <MapMarkerCircle />
             </Marker>
+          )}
+
+          {data && (
+            <>
+              <KKLayer data={data.kk} />
+            </>
           )}
         </>
       )}
