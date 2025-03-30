@@ -111,7 +111,7 @@ export const kk = {
   id: "Kartu Keluarga (KK)",
   en: "Family Card (KK)",
 };
-export const public_facility = {
+export const facility = {
   id: "Fasilitas umum",
   en: "Public facility",
 };

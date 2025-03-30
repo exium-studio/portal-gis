@@ -12,6 +12,7 @@ import { DISPLAYED_DUMMY_DATA } from "@/constants/dummy";
 import KKLayer from "./KKLayer";
 import FacilityLayer from "./FacilityLayer";
 import VillageAssetLayer from "./VillageAssetLayer";
+import useDisplayedData from "@/context/useDisplayedData";
 
 const MIN_ZOOM = 0;
 const MAX_ZOOM = 22;
@@ -25,6 +26,7 @@ const AdminMaps = () => {
   const { layout } = useLayout();
   const { currentLocation } = useCurrentLocation();
   const { zoomPercent, setZoomPercent } = useMapsZoom();
+  const { displayedData } = useDisplayedData();
 
   // States, Refs
   const [activeMapStyle, setActiveMapStyle] = useState(
@@ -121,11 +123,13 @@ const AdminMaps = () => {
 
           {data && (
             <>
-              <KKLayer data={data.kk} />
+              {displayedData.kk && <KKLayer data={data.kk} />}
 
-              <FacilityLayer data={data.facility} />
+              {displayedData.facility && <FacilityLayer data={data.facility} />}
 
-              <VillageAssetLayer data={data.village_asset} />
+              {displayedData.village_asset && (
+                <VillageAssetLayer data={data.village_asset} />
+              )}
             </>
           )}
         </>

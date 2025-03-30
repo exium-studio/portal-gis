@@ -6,7 +6,7 @@ const DISPLAYED_DATA_LIST: any[] = [
   },
   {
     id: 2,
-    key: "public_facility",
+    key: "facility",
     disabled: false,
   },
   {

@@ -106,6 +106,7 @@ const translations = {
   },
   "expense": "Expense",
   "expense_category": "Expense category",
+  "facility": "Public facility",
   "firefox_permissions_settings_link": "Preferences → Privacy & Security → Permissions → ",
   "forbidden_feedback": {
     "title": "No Access",
@@ -128,7 +129,7 @@ const translations = {
   "last_updated": "Last updated",
   "layout_menu_helper": "This layout only applies to the main navigation.",
   "legend": "Legend",
-  "legend_helper": "The legend displayed here depends on the data list displayed",
+  "legend_helper": "The legend displayed here depends on the Displayed data",
   "location": "Location",
   "location_address_fail_toast": {
     "title": "Failed to get address",
@@ -248,7 +249,6 @@ const translations = {
   "population": "Population",
   "population_density": "Population density",
   "population_growth": "Population growth",
-  "public_facility": "Public facility",
   "published_date": "Date published",
   "regional_settings_helper_text": "These language & region settings are stored locally on your device and will not be synced with your account.",
   "religion": "Religion",

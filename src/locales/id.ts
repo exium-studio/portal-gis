@@ -106,6 +106,7 @@ const translations = {
   },
   "expense": "Pengeluaran",
   "expense_category": "Kategori pengeluaran",
+  "facility": "Fasilitas umum",
   "firefox_permissions_settings_link": "Preferensi → Privasi & Keamanan → Izin → ",
   "forbidden_feedback": {
     "title": "Tidak ada akses",
@@ -128,7 +129,7 @@ const translations = {
   "last_updated": "Terakhir diperbarui",
   "layout_menu_helper": "Layout ini hanya berlaku di navigasi utama.",
   "legend": "Legenda",
-  "legend_helper": "Legenda yang tampil disini bergantung pada daftar data yang ditampilkan",
+  "legend_helper": "Legenda yang tampil disini bergantung pada daftar Data yang ditampilkan",
   "location": "Lokasi",
   "location_address_fail_toast": {
     "title": "Gagal mendapatkan alamat",
@@ -248,7 +249,6 @@ const translations = {
   "population": "Populasi",
   "population_density": "Kepadatan penduduk",
   "population_growth": "Pertumbuhan populasi",
-  "public_facility": "Fasilitas umum",
   "published_date": "Tanggal publikasi",
   "regional_settings_helper_text": "Pengaturan bahasa & wilayah ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
   "religion": "Agama",

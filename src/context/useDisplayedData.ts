@@ -1,20 +1,25 @@
-import DATA_DISPLAYED_LIST from "@/static/displayedDataList";
-import { Interface__Gens } from "@/constants/interfaces";
 import { create } from "zustand";
 
-const STORAGE_KEY = "dataDisplayed";
-const DEFAULT = DATA_DISPLAYED_LIST.filter((item) => !item.disabled);
+const STORAGE_KEY = "displayedData";
+const DEFAULT = {
+  kk: true,
+  facility: true,
+  environment: true,
+  infrastructure: true,
+  village_asset: true,
+  land_field: false,
+};
 
 interface Props {
-  displayedData: Interface__Gens[];
-  setDisplayedData: (newState: Interface__Gens[]) => void;
+  displayedData: any;
+  setDisplayedData: (newState: any) => void;
 }
 
 const useDisplayedData = create<Props>((set) => {
-  const getStoredFormat = (): Interface__Gens[] => {
+  const getStoredFormat = (): any => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) return JSON.parse(stored) as Interface__Gens[];
+      if (stored) return JSON.parse(stored) as any;
       localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT));
     } catch (error) {
       console.error("Failed to access displayedData from localStorage:", error);

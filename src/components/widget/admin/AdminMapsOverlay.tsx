@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/popover";
 import { Switch } from "@/components/ui/switch";
 import { Tooltip } from "@/components/ui/tooltip";
-import { Interface__Gens } from "@/constants/interfaces";
 import MAPS_STYLES_OPTIONS from "@/constants/mapsStylesOptions";
 import useAdminSearchAddress from "@/constants/useSearchAddress";
 import useCurrentLocation from "@/context/useCurrentLocation";
@@ -355,22 +354,14 @@ const DataDisplayed = () => {
 
             <CContainer pt={1}>
               {DISPLAYED_DATA_LIST.map((item, i) => {
-                const active = displayedData.some(
-                  (data) => data.id === item.id
-                );
+                const active = displayedData[item.key];
 
-                const toggleItem = (item: Interface__Gens) => {
-                  let newDisplayedData: Interface__Gens[];
-
-                  if (displayedData.some((data) => data.id === item.id)) {
-                    newDisplayedData = displayedData.filter(
-                      (data) => data.id !== item.id
-                    );
-                  } else {
-                    newDisplayedData = [...displayedData, item];
-                  }
-
-                  setDisplayedData(newDisplayedData);
+                const toggleItem = () => {
+                  const newState = {
+                    ...displayedData,
+                    [item.key]: !displayedData[item.key],
+                  };
+                  setDisplayedData(newState);
                 };
 
                 return (
@@ -379,7 +370,7 @@ const DataDisplayed = () => {
                     unclicky
                     justifyContent={"space-between"}
                     px={2}
-                    onClick={() => toggleItem(item)}
+                    onClick={toggleItem}
                     variant={"ghost"}
                     size={"md"}
                     cursor={"pointer"}
