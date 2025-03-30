@@ -1,18 +1,18 @@
 import { useColorMode } from "@/components/ui/color-mode";
+import { DISPLAYED_DUMMY_DATA } from "@/constants/dummy";
 import useCurrentLocation from "@/context/useCurrentLocation";
+import useDisplayedData from "@/context/useDisplayedData";
 import useLayout from "@/context/useLayout";
 import useMapStyle from "@/context/useMapsStyle";
 import useMapsViewState from "@/context/useMapsViewState";
+import useMapsZoom from "@/context/useMapsZoom";
 import mapboxgl from "mapbox-gl";
 import { useEffect, useRef, useState } from "react";
 import Map, { MapRef, Marker } from "react-map-gl/mapbox";
 import MapMarkerCircle from "../MapMarkerCircle";
-import useMapsZoom from "@/context/useMapsZoom";
-import { DISPLAYED_DUMMY_DATA } from "@/constants/dummy";
-import KKLayer from "./KKLayer";
 import FacilityLayer from "./FacilityLayer";
+import KKLayer from "./KKLayer";
 import VillageAssetLayer from "./VillageAssetLayer";
-import useDisplayedData from "@/context/useDisplayedData";
 
 const MIN_ZOOM = 0;
 const MAX_ZOOM = 22;
@@ -120,20 +120,23 @@ const AdminMaps = () => {
               <MapMarkerCircle />
             </Marker>
           )}
+        </>
+      )}
 
-          {data && (
-            <>
-              {displayedData.kk && <KKLayer data={data.kk} />}
+      {/* Data layer */}
+      {data && (
+        <>
+          {displayedData.kk && <KKLayer data={data.kk} />}
 
-              {displayedData.facility && <FacilityLayer data={data.facility} />}
+          {displayedData.facility && <FacilityLayer data={data.facility} />}
 
-              {displayedData.village_asset && (
-                <VillageAssetLayer data={data.village_asset} />
-              )}
-            </>
+          {displayedData.village_asset && (
+            <VillageAssetLayer data={data.village_asset} />
           )}
         </>
       )}
+
+      {/* Coba */}
     </Map>
   );
 };
