@@ -63,6 +63,18 @@ export const settings_navs = {
 };
 
 // UI
+export const infrastructure = {
+  id: "Infrastruktur",
+  en: "Infrastructure",
+};
+export const environment = {
+  id: "Lingkungan",
+  en: "Environtment",
+};
+export const village_asset = {
+  id: "Aset desa",
+  en: "Village asset",
+};
 export const mark_as_read = {
   id: "Tandai dibaca semua",
   en: "Mark all as read",

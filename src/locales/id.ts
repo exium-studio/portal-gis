@@ -83,6 +83,7 @@ const translations = {
   "education": "Pendidikan",
   "empty": "Kosong",
   "end_date": "Tanggal berakhir",
+  "environment": "Lingkungan",
   "error_400_toast": {
     "title": "Permintaan tidak valid",
     "description": "Server tidak dapat memproses permintaan karena kesalahan klien."
@@ -118,6 +119,7 @@ const translations = {
   "in_use": "sedang digunakan",
   "income": "Pendapatan",
   "income_source": "Sumber pendapatan",
+  "infrastructure": "Infrastruktur",
   "inventory": "Inventori",
   "kk": "Kartu Keluarga (KK)",
   "land_field": "Bidang tanah",
@@ -314,6 +316,7 @@ const translations = {
     "imperial": "Sistem pengukuran yang umum digunakan di Amerika Serikat.",
     "iso": "Sistem pengukuran standar internasional. Berdasarkan metric."
   },
+  "village_asset": "Aset desa",
   "vision": "Visi",
   "weekdays": {
     "mon": "Senin",

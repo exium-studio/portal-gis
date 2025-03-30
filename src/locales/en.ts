@@ -83,6 +83,7 @@ const translations = {
   "education": "Education",
   "empty": "Empty",
   "end_date": "End date",
+  "environment": "Environtment",
   "error_400_toast": {
     "title": "Bad request",
     "description": "The server could not process the request due to client error."
@@ -118,6 +119,7 @@ const translations = {
   "in_use": "in use",
   "income": "Income",
   "income_source": "Income source",
+  "infrastructure": "Infrastructure",
   "inventory": "Inventory",
   "kk": "Family Card (KK)",
   "land_field": "Land field",
@@ -314,6 +316,7 @@ const translations = {
     "imperial": "The measurement system commonly used in the United States.",
     "iso": "International standard measurement system. Based on metric."
   },
+  "village_asset": "Village asset",
   "vision": "Vision",
   "weekdays": {
     "mon": "Monday",
