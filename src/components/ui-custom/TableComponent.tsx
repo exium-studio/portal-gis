@@ -354,7 +354,7 @@ const PageControl = ({
   const { l } = useLang();
 
   // Utils
-  const iss = useIsSmScreenWidth();
+  // const iss = useIsSmScreenWidth();
 
   const formik = useFormik({
     validateOnChange: false,
