@@ -50,10 +50,10 @@ const AdminMap = () => {
     }, 1);
   }, [layout]);
 
-  // Handle map style depend on color mode
-  useEffect(() => {
-    setActiveMapStyle(mapStyle.tile[colorMode as keyof typeof mapStyle.tile]);
-  }, [colorMode, mapStyle]);
+  // // Handle map style depend on color mode
+  // useEffect(() => {
+  //   setActiveMapStyle(mapStyle.tile[colorMode as keyof typeof mapStyle.tile]);
+  // }, [colorMode, mapStyle]);
 
   // Handle current location
   useEffect(() => {
@@ -94,11 +94,11 @@ const AdminMap = () => {
   async function initializeBasemap() {
     let styleJson;
 
-    if (typeof activeMapStyle === "string") {
-      const response = await fetch(activeMapStyle);
+    if (typeof mapStyle.tile[colorMode] === "string") {
+      const response = await fetch(mapStyle.tile[colorMode]);
       styleJson = await response.json();
     } else {
-      styleJson = { ...activeMapStyle };
+      styleJson = { ...(mapStyle.tile[colorMode] as any) };
     }
 
     const layerMapping: Record<string, string[]> = {
@@ -137,33 +137,36 @@ const AdminMap = () => {
       ],
     };
 
-    styleJson.layers = styleJson.layers.map((layer: any) => {
-      if (layer.id === "building") {
-        return { ...layer, layout: { ...layer.layout, visibility: "none" } };
-      }
+    const filteredLayers = Object.entries(layerMapping).flatMap(
+      ([key, layers]) => (basemap[key as keyof typeof basemap] ? [] : layers)
+    );
 
-      const layerType = Object.keys(basemap).find((key) =>
-        layerMapping[key as keyof typeof layerMapping]?.includes(layer.id)
-      );
+    console.log("fl", filteredLayers);
 
-      if (layerType) {
-        return {
-          ...layer,
-          layout: {
-            ...layer.layout,
-            visibility: basemap[layerType] ? "visible" : "none",
-          },
-        };
-      }
+    const updatedLayers = styleJson.layers.map((layer: any) =>
+      filteredLayers?.includes(layer.id) || layer.id === "building"
+        ? {
+            ...layer,
+            layout: {
+              ...layer.layout,
+              visibility: "none",
+            },
+          }
+        : layer
+    );
+    console.log(updatedLayers);
 
-      return layer;
-    });
-
-    setActiveMapStyle(styleJson);
+    setActiveMapStyle({ ...styleJson, layers: updatedLayers });
   }
   useEffect(() => {
-    initializeBasemap();
-  }, []);
+    if (mapStyle.id === 1) {
+      initializeBasemap();
+    } else {
+      setActiveMapStyle(mapStyle.tile[colorMode]);
+    }
+  }, [mapStyle]);
+
+  console.log(mapStyle.id, activeMapStyle);
 
   return (
     <Map
