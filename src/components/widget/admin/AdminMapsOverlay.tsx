@@ -48,6 +48,7 @@ import {
   IconCurrentLocation,
   IconCurrentLocationFilled,
   IconFlag,
+  IconMapCog,
   IconMapPin,
   IconMapPin2,
   IconMinus,
@@ -391,6 +392,50 @@ const DataDisplayed = () => {
             {/* <CContainer px={2} pb={1} pt={2}>
               <HelperText lineHeight={1.4}>{l.layout_menu_helper}</HelperText>
             </CContainer> */}
+          </PopoverContent>
+        </PopoverPositioner>
+      </Portal>
+    </PopoverRoot>
+  );
+};
+
+const MapsConfig = () => {
+  // Contexts
+  // const { themeConfig } = useThemeConfig();
+  const { l } = useLang();
+
+  // Utils
+  const contentRef = useRef(null);
+
+  return (
+    <PopoverRoot>
+      <PopoverTrigger asChild>
+        <OverlayItemContainer>
+          <Tooltip content={l.displayed_data}>
+            <BButton iconButton unclicky variant={"ghost"} w={"fit"}>
+              <IconMapCog stroke={1.5} />
+            </BButton>
+          </Tooltip>
+        </OverlayItemContainer>
+      </PopoverTrigger>
+
+      <Portal>
+        <PopoverPositioner>
+          <PopoverContent
+            ref={contentRef}
+            p={1}
+            mr={"2px"}
+            w={"250px"}
+            pointerEvents={"auto"}
+          >
+            <MenuHeaderContainer>
+              <HStack>
+                <IconMapPin2 stroke={1.5} size={20} />
+                <Text fontWeight={"bold"}>{l.displayed_data}</Text>
+              </HStack>
+            </MenuHeaderContainer>
+
+            <CContainer pt={1}>{/* content */}</CContainer>
           </PopoverContent>
         </PopoverPositioner>
       </Portal>
@@ -786,6 +831,8 @@ const AdminMapsOverlay = () => {
 
           <HStack position={"absolute"} right={0}>
             <DataDisplayed />
+
+            <MapsConfig />
 
             {layout.id === 3 && <LayoutMenu />}
           </HStack>
