@@ -1,5 +1,5 @@
 import { useThemeConfig } from "@/context/useThemeConfig";
-import { Circle, CircleProps } from "@chakra-ui/react";
+import { Center, Circle, CircleProps } from "@chakra-ui/react";
 
 interface Props extends CircleProps {}
 const MapMarkerCircle = ({ ...props }: Props) => {
@@ -7,13 +7,21 @@ const MapMarkerCircle = ({ ...props }: Props) => {
   const { themeConfig } = useThemeConfig();
 
   return (
-    <Circle
+    <Center
       bg={themeConfig.primaryColor}
-      w={"20px"}
-      h={"20px"}
-      border={"2px solid white"}
-      {...props}
-    />
+      borderRadius={"full"}
+      border={"2px solid"}
+      borderColor={themeConfig.primaryColor}
+    >
+      <Circle
+        bg={themeConfig.primaryColor}
+        w={"20px"}
+        h={"20px"}
+        border={"3px solid"}
+        borderColor={"body"}
+        {...props}
+      />
+    </Center>
   );
 };
 
