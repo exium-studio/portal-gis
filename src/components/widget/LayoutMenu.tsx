@@ -34,8 +34,6 @@ const LayoutMenu = ({ popoverContentProps, ...props }: Props) => {
   const { open, onToggle, onClose } = useDisclosure();
   const triggerRef = useRef(null);
   const contentRef = useRef(null);
-
-  // Close on clicking outside
   useClickOutside([triggerRef, contentRef], onClose);
 
   return (

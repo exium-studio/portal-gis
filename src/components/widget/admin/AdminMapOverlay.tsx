@@ -327,14 +327,24 @@ const DataDisplayed = () => {
   const { l } = useLang();
 
   // Utils
+  const { open, onToggle, onClose } = useDisclosure();
+  const triggerRef = useRef(null);
   const contentRef = useRef(null);
+  useClickOutside([triggerRef, contentRef], onClose);
 
   return (
-    <PopoverRoot>
+    <PopoverRoot open={open}>
       <PopoverTrigger asChild>
         <OverlayItemContainer>
           <Tooltip content={l.displayed_data}>
-            <BButton iconButton unclicky variant={"ghost"} w={"fit"}>
+            <BButton
+              ref={triggerRef}
+              iconButton
+              unclicky
+              variant={"ghost"}
+              w={"fit"}
+              onClick={onToggle}
+            >
               <IconMapPinCog stroke={1.5} />
             </BButton>
           </Tooltip>
@@ -408,6 +418,8 @@ const Basemap = () => {
   const { displayedData, setDisplayedData } = useDisplayedData();
 
   // Utils
+  const { open, onToggle, onClose } = useDisclosure();
+  const triggerRef = useRef(null);
   const contentRef = useRef(null);
   async function basemapSetter(
     layerType: keyof typeof basemap,
@@ -465,13 +477,21 @@ const Basemap = () => {
 
     setBasemap({ ...basemap, [layerType]: visible });
   }
+  useClickOutside([triggerRef, contentRef], onClose);
 
   return (
-    <PopoverRoot>
+    <PopoverRoot open={open}>
       <PopoverTrigger asChild>
         <OverlayItemContainer>
           <Tooltip content={l.basemap}>
-            <BButton iconButton unclicky variant={"ghost"} w={"fit"}>
+            <BButton
+              ref={triggerRef}
+              iconButton
+              unclicky
+              variant={"ghost"}
+              w={"fit"}
+              onClick={onToggle}
+            >
               <IconMapCog stroke={1.5} />
             </BButton>
           </Tooltip>
@@ -625,12 +645,23 @@ const MapStyle = () => {
   const { colorMode } = useColorMode();
   const { mapStyle, setMapStyle } = useMapStyle();
 
+  // Utils
+  const { open, onToggle, onClose } = useDisclosure();
+  const triggerRef = useRef(null);
+  const contentRef = useRef(null);
+  useClickOutside([triggerRef, contentRef], onClose);
+
   return (
-    <PopoverRoot positioning={{ placement: "top" }}>
+    <PopoverRoot open={open} positioning={{ placement: "top" }}>
       <PopoverTrigger asChild>
         <OverlayItemContainer>
           <Tooltip content={l.map_type}>
-            <Center w={"40px"} aspectRatio={1}>
+            <Center
+              ref={triggerRef}
+              w={"40px"}
+              aspectRatio={1}
+              onClick={onToggle}
+            >
               <Image
                 src={mapStyle.img[colorMode as keyof typeof mapStyle.img]}
                 w={"36px"}
@@ -646,7 +677,12 @@ const MapStyle = () => {
 
       <Portal>
         <PopoverPositioner>
-          <PopoverContent p={1} w={"200px"} pointerEvents={"auto"}>
+          <PopoverContent
+            ref={contentRef}
+            p={1}
+            w={"200px"}
+            pointerEvents={"auto"}
+          >
             <MenuHeaderContainer>
               <Text fontWeight={"bold"}>{l.map_type}</Text>
             </MenuHeaderContainer>
@@ -695,10 +731,6 @@ const MapStyle = () => {
                 })}
               </HStack>
             </CContainer>
-
-            {/* <CContainer px={2} pb={1} pt={2}>
-              <HelperText lineHeight={1.4}>{l.layout_menu_helper}</HelperText>
-            </CContainer> */}
           </PopoverContent>
         </PopoverPositioner>
       </Portal>
