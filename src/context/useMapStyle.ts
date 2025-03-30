@@ -5,12 +5,12 @@ const STORAGE_KEY = "mapStyle";
 const DEFAULT = MAP_STYLES[0];
 
 interface Props {
-  mapsStyle: (typeof MAP_STYLES)[0];
-  setMapsStyle: (newState: Props["mapsStyle"]) => void;
+  mapStyle: (typeof MAP_STYLES)[0];
+  setMapStyle: (newState: Props["mapStyle"]) => void;
 }
 
 const useMapStyle = create<Props>((set) => {
-  let initial: Props["mapsStyle"] = DEFAULT;
+  let initial: Props["mapStyle"] = DEFAULT;
 
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -25,11 +25,11 @@ const useMapStyle = create<Props>((set) => {
   }
 
   return {
-    mapsStyle: initial,
-    setMapsStyle: (newState) =>
+    mapStyle: initial,
+    setMapStyle: (newState) =>
       set(() => {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(newState));
-        return { mapsStyle: newState };
+        return { mapStyle: newState };
       }),
   };
 });

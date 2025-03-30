@@ -21,9 +21,9 @@ import useCurrentLocation from "@/context/useCurrentLocation";
 import useDisplayedData from "@/context/useDisplayedData";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
-import useMapStyle from "@/context/useMapsStyle";
-import useMapsViewState from "@/context/useMapsViewState";
-import useMapsZoom from "@/context/useMapsZoom";
+import useMapStyle from "@/context/useMapStyle";
+import useMapViewState from "@/context/useMapViewState";
+import useMapsZoom from "@/context/useMapZoom";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useClickOutside from "@/hooks/useClickOutside";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
@@ -564,7 +564,7 @@ const MapStyle = () => {
   const { l } = useLang();
   const { themeConfig } = useThemeConfig();
   const { colorMode } = useColorMode();
-  const { mapsStyle, setMapsStyle } = useMapStyle();
+  const { mapStyle, setMapStyle } = useMapStyle();
 
   return (
     <PopoverRoot positioning={{ placement: "top" }}>
@@ -573,7 +573,7 @@ const MapStyle = () => {
           <Tooltip content={l.map_type}>
             <Center w={"40px"} aspectRatio={1}>
               <Image
-                src={mapsStyle.img[colorMode as keyof typeof mapsStyle.img]}
+                src={mapStyle.img[colorMode as keyof typeof mapStyle.img]}
                 w={"36px"}
                 borderRadius={"lg"}
                 cursor={"pointer"}
@@ -595,7 +595,7 @@ const MapStyle = () => {
             <CContainer p={1} pt={2}>
               <HStack>
                 {MAPS_STYLES_OPTIONS.map((item, i) => {
-                  const active = mapsStyle.id === item.id;
+                  const active = mapStyle.id === item.id;
 
                   return (
                     <CContainer
@@ -605,7 +605,7 @@ const MapStyle = () => {
                       onClick={
                         !item.disabled
                           ? () => {
-                              setMapsStyle(item);
+                              setMapStyle(item);
                             }
                           : () => {}
                       }
@@ -648,7 +648,7 @@ const MapStyle = () => {
 };
 
 const ZoomControl = () => {
-  const { zoomPercent, setZoomPercent } = useMapsZoom();
+  const { mapZoomPercent, setMapZoomPercent } = useMapsZoom();
 
   return (
     <OverlayItemContainer>
@@ -658,10 +658,10 @@ const ZoomControl = () => {
             iconButton
             variant={"ghost"}
             onClick={() => {
-              if (zoomPercent > 10) {
-                setZoomPercent(zoomPercent - 10);
+              if (mapZoomPercent > 10) {
+                setMapZoomPercent(mapZoomPercent - 10);
               } else {
-                setZoomPercent(0);
+                setMapZoomPercent(0);
               }
             }}
           >
@@ -679,9 +679,9 @@ const ZoomControl = () => {
             border={"none"}
             px={0}
             onChangeSetter={(input) => {
-              setZoomPercent(input);
+              setMapZoomPercent(input);
             }}
-            inputValue={zoomPercent}
+            inputValue={mapZoomPercent}
             textAlign={"center"}
             max={100}
             fontWeight={"semibold"}
@@ -694,10 +694,10 @@ const ZoomControl = () => {
             iconButton
             variant={"ghost"}
             onClick={() => {
-              if (zoomPercent < 90) {
-                setZoomPercent(zoomPercent + 10);
+              if (mapZoomPercent < 90) {
+                setMapZoomPercent(mapZoomPercent + 10);
               } else {
-                setZoomPercent(100);
+                setMapZoomPercent(100);
               }
             }}
           >
@@ -772,7 +772,7 @@ const CurrentLocation = () => {
 const Compass = () => {
   // Context
   const { l } = useLang();
-  const { mapRef } = useMapsViewState();
+  const { mapRef } = useMapViewState();
 
   // States, Refs
   const [bearing, setBearing] = useState(0);
@@ -838,7 +838,7 @@ const Compass = () => {
   );
 };
 
-const AdminMapsOverlay = () => {
+const AdminMapOverlay = () => {
   // Contexts
   const { layout } = useLayout();
 
@@ -906,4 +906,4 @@ const AdminMapsOverlay = () => {
   );
 };
 
-export default AdminMapsOverlay;
+export default AdminMapOverlay;

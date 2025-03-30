@@ -3,9 +3,9 @@ import { DISPLAYED_DUMMY_DATA } from "@/constants/dummy";
 import useCurrentLocation from "@/context/useCurrentLocation";
 import useDisplayedData from "@/context/useDisplayedData";
 import useLayout from "@/context/useLayout";
-import useMapStyle from "@/context/useMapsStyle";
-import useMapsViewState from "@/context/useMapsViewState";
-import useMapsZoom from "@/context/useMapsZoom";
+import useMapStyle from "@/context/useMapStyle";
+import useMapViewState from "@/context/useMapViewState";
+import useMapsZoom from "@/context/useMapZoom";
 import mapboxgl from "mapbox-gl";
 import { useEffect, useRef, useState } from "react";
 import Map, { MapRef, Marker } from "react-map-gl/mapbox";
@@ -19,13 +19,13 @@ const MAX_ZOOM = 22;
 const ACTIVE_MAP_STYLE_DEFAULT =
   "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
 
-const AdminMaps = () => {
+const AdminMap = () => {
   // Contexts
   const { colorMode } = useColorMode();
-  const { mapsStyle } = useMapStyle();
+  const { mapStyle } = useMapStyle();
   const { layout } = useLayout();
   const { currentLocation } = useCurrentLocation();
-  const { zoomPercent, setZoomPercent } = useMapsZoom();
+  const { mapZoomPercent, setMapZoomPercent } = useMapsZoom();
   const { displayedData } = useDisplayedData();
 
   // States, Refs
@@ -34,7 +34,7 @@ const AdminMaps = () => {
   );
   const [mapLoad, setMapLoad] = useState<boolean>(false);
   const mapRef = useRef<MapRef>(null);
-  const { mapsViewState, setMapsViewState, setMapRef } = useMapsViewState();
+  const { mapViewState, setMapViewState, setMapRef } = useMapViewState();
   const data = DISPLAYED_DUMMY_DATA;
 
   // Handle init mapRef
@@ -53,8 +53,8 @@ const AdminMaps = () => {
 
   // Handle map style depend on color mode
   useEffect(() => {
-    setActiveMapStyle(mapsStyle.tile[colorMode as keyof typeof mapsStyle.tile]);
-  }, [colorMode, mapsStyle]);
+    setActiveMapStyle(mapStyle.tile[colorMode as keyof typeof mapStyle.tile]);
+  }, [colorMode, mapStyle]);
 
   // Handle current location
   useEffect(() => {
@@ -82,25 +82,26 @@ const AdminMaps = () => {
     }
   }
   function handleZoomFromLevel(zoomLevel: number) {
-    const zoomPercent = ((zoomLevel - MIN_ZOOM) / (MAX_ZOOM - MIN_ZOOM)) * 100;
+    const mapZoomPercent =
+      ((zoomLevel - MIN_ZOOM) / (MAX_ZOOM - MIN_ZOOM)) * 100;
 
-    setZoomPercent(zoomPercent);
+    setMapZoomPercent(mapZoomPercent);
   }
   useEffect(() => {
-    handleZoomFromPercent(zoomPercent);
-  }, [zoomPercent]);
+    handleZoomFromPercent(mapZoomPercent);
+  }, [mapZoomPercent]);
 
   return (
     <Map
       ref={mapRef}
-      {...mapsViewState}
+      {...mapViewState}
       onLoad={() => {
         setMapLoad(true);
       }}
       onRemove={() => {
         setMapLoad(false);
       }}
-      onMove={(evt) => setMapsViewState(evt.viewState)}
+      onMove={(evt) => setMapViewState(evt.viewState)}
       style={{ width: "100%", height: "100vh" }}
       mapStyle={activeMapStyle || ACTIVE_MAP_STYLE_DEFAULT}
       mapboxAccessToken={import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}
@@ -141,4 +142,4 @@ const AdminMaps = () => {
   );
 };
 
-export default AdminMaps;
+export default AdminMap;

@@ -28,8 +28,8 @@ import CurrentUserTimeZone from "./CurrentUserTimeZone";
 import Inbox from "./Inbox";
 import LayoutMenu from "./LayoutMenu";
 import useLayout from "@/context/useLayout";
-import AdminMaps from "./admin/AdminMaps";
-import AdminMapsOverlay from "./admin/AdminMapsOverlay";
+import AdminMap from "./admin/AdminMap";
+import AdminMapOverlay from "./admin/AdminMapOverlay";
 import HScroll from "../ui-custom/HScroll";
 
 interface Interface__NavItemContainer extends StackProps {
@@ -297,9 +297,9 @@ const NavContainer = ({
             h={layout.id === 1 && iss ? "50%" : "full"}
             position={"relative"}
           >
-            <AdminMaps />
+            <AdminMap />
 
-            <AdminMapsOverlay />
+            <AdminMapOverlay />
           </CContainer>
         )}
       </Stack>
