@@ -31,6 +31,7 @@ import DISPLAYED_DATA_LIST from "@/static/displayedDataList";
 import BASEMAP_CONFIG_LIST from "@/static/basemapConfigList";
 import pluck from "@/utils/pluck";
 import {
+  chakra,
   Box,
   Center,
   Group,
@@ -593,10 +594,14 @@ const Legend = () => {
 
           <CContainer p={2}>
             <HelperText>
-              {l.legend_helper}{" "}
-              <Icon>
-                <IconMapPinCog size={20} stroke={1.5} />
-              </Icon>
+              {l.legend_helper}
+              <br />
+              <chakra.span>
+                <Icon mx={1}>
+                  <IconMapPinCog size={20} stroke={1.5} />
+                </Icon>
+                {l.displayed_data}
+              </chakra.span>
             </HelperText>
           </CContainer>
         </FloatingContainer>

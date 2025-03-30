@@ -124,8 +124,8 @@ export const current_location = {
   en: "Current location",
 };
 export const legend_helper = {
-  id: "Legenda yang tampil disini bergantung pada daftar Data yang ditampilkan",
-  en: "The legend displayed here depends on the Displayed data",
+  id: "Legenda yang tampil disini bergantung pada daftar",
+  en: "The legend displayed here depends on the",
 };
 export const legend = {
   id: "Legenda",

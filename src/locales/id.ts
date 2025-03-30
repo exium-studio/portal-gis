@@ -133,7 +133,7 @@ const translations = {
   "last_updated": "Terakhir diperbarui",
   "layout_menu_helper": "Layout ini hanya berlaku di navigasi utama.",
   "legend": "Legenda",
-  "legend_helper": "Legenda yang tampil disini bergantung pada daftar Data yang ditampilkan",
+  "legend_helper": "Legenda yang tampil disini bergantung pada daftar",
   "location": "Lokasi",
   "location_address_fail_toast": {
     "title": "Gagal mendapatkan alamat",
