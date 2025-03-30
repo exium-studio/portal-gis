@@ -14,6 +14,7 @@ import useADM from "./context/useADM";
 import { useColorMode } from "./components/ui/color-mode";
 import useScrollEffect from "./hooks/useScrollEffect";
 import "mapbox-gl/dist/mapbox-gl.css";
+import ReusableDisclosures from "./components/widget/ReusableDisclosures";
 
 const EndpointWrapper = ({ children }: { children: React.ReactNode }) => {
   // Contexts
@@ -120,6 +121,9 @@ function App() {
 
     return () => clearTimeout(timeout);
   }, [ADM, setColorMode]);
+
+  // Components
+  <ReusableDisclosures />;
 
   return (
     <ChakraProvider value={theme}>
