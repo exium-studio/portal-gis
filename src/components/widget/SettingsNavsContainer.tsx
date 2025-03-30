@@ -115,7 +115,7 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
                             {pluck(l, nav.labelKey)}
 
                             {iss && (
-                              <Icon ml={"auto"}>
+                              <Icon ml={"auto"} mr={-1}>
                                 <IconChevronRight stroke={1.5} />
                               </Icon>
                             )}
