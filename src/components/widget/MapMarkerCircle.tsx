@@ -17,7 +17,7 @@ const MapMarkerCircle = ({ ...props }: Props) => {
         bg={themeConfig.primaryColor}
         w={"20px"}
         h={"20px"}
-        border={"3px solid"}
+        border={"4px solid"}
         borderColor={"body"}
         {...props}
       />
