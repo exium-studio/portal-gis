@@ -29,7 +29,7 @@ const FacilityLayer = ({ data }: Props) => {
         type="circle"
         paint={{
           "circle-radius": 5,
-          "circle-color": ABS_COLORS.green,
+          "circle-color": ABS_COLORS.orange,
         }}
       />
     </Source>

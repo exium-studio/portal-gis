@@ -20,6 +20,7 @@ export const CHART_COLORS: string[] = [
 ];
 export const ABS_COLORS = {
   green: "#22c55e",
+  orange: "#F6AD55",
   red: "#ef4444",
   blue: "#007cbf",
   light_blue: "#06b6d4",
