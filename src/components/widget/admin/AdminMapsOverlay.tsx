@@ -28,7 +28,6 @@ import { useThemeConfig } from "@/context/useThemeConfig";
 import useClickOutside from "@/hooks/useClickOutside";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import DISPLAYED_DATA_LIST from "@/static/displayedDataList";
-import getLocation from "@/utils/getLocation";
 import pluck from "@/utils/pluck";
 import {
   Box,
@@ -655,20 +654,26 @@ const CurrentLocation = () => {
     if (currentLocation) {
       setCurrentLocation(undefined);
     } else {
+      const tembalang = { lon: 110.43914667, lat: -7.05959528 };
       setLoading(true);
-      getLocation()
-        .then((loc) => {
-          setCurrentLocation({
-            lat: loc.coords.latitude,
-            lon: loc.coords.longitude,
-          });
-        })
-        .catch((e) => {
-          console.log(e);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+      setCurrentLocation({
+        lat: tembalang.lat,
+        lon: tembalang.lon,
+      });
+      setLoading(false);
+      // getLocation()
+      //   .then((loc) => {
+      //     setCurrentLocation({
+      //       lat: loc.coords.latitude,
+      //       lon: loc.coords.longitude,
+      //     });
+      //   })
+      //   .catch((e) => {
+      //     console.log(e);
+      //   })
+      //   .finally(() => {
+      //     setLoading(false);
+      //   });
     }
   }
 
