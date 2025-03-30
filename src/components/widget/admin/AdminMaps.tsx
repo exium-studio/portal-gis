@@ -10,6 +10,8 @@ import MapMarkerCircle from "../MapMarkerCircle";
 import useMapsZoom from "@/context/useMapsZoom";
 import { DISPLAYED_DUMMY_DATA } from "@/constants/dummy";
 import KKLayer from "./KKLayer";
+import FacilityLayer from "./FacilityLayer";
+import VillageAssetLayer from "./VillageAssetLayer";
 
 const MIN_ZOOM = 0;
 const MAX_ZOOM = 22;
@@ -120,6 +122,10 @@ const AdminMaps = () => {
           {data && (
             <>
               <KKLayer data={data.kk} />
+
+              <FacilityLayer data={data.facility} />
+
+              <VillageAssetLayer data={data.village_asset} />
             </>
           )}
         </>

@@ -2,14 +2,14 @@ import { Source, Layer } from "react-map-gl/mapbox";
 import type { FeatureCollection, GeoJsonProperties, Geometry } from "geojson";
 import { ABS_COLORS } from "@/constants/colors";
 
-interface KKLayerProps {
+interface Props {
   data: {
     id: number;
     location: { lon: number; lat: number };
   }[];
 }
 
-const KKLayer = ({ data }: KKLayerProps) => {
+const FacilityLayer = ({ data }: Props) => {
   const kkGeoJSON: FeatureCollection<Geometry, GeoJsonProperties> = {
     type: "FeatureCollection",
     features: data.map((item) => ({
@@ -23,17 +23,17 @@ const KKLayer = ({ data }: KKLayerProps) => {
   };
 
   return (
-    <Source id="kk-data" type="geojson" data={kkGeoJSON}>
+    <Source id="facility-data" type="geojson" data={kkGeoJSON}>
       <Layer
-        id="kk-layer"
+        id="facility-layer"
         type="circle"
         paint={{
-          "circle-radius": 3,
-          "circle-color": ABS_COLORS.blue,
+          "circle-radius": 5,
+          "circle-color": ABS_COLORS.green,
         }}
       />
     </Source>
   );
 };
 
-export default KKLayer;
+export default FacilityLayer;

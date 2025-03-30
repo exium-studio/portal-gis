@@ -21,6 +21,7 @@ export const CHART_COLORS: string[] = [
 export const ABS_COLORS = {
   green: "#22c55e",
   red: "#ef4444",
+  blue: "#007cbf",
   d0: "#7e7e7e08",
   d1: "#7e7e7e10",
   d2: "#7e7e7e20",

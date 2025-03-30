@@ -5001,7 +5001,7 @@ export const DISPLAYED_DUMMY_DATA = {
       },
     },
   ],
-  public_facility: [
+  facility: [
     {
       id: 1,
       name: "Puskesmas Tembalang",
@@ -5104,25 +5104,31 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 1,
       name: "Kantor Kelurahan Tembalang",
       type: "building",
-      location: { lon: 110.452, lat: -7.0701 },
+      location: { lon: 110.439135, lat: -7.059662 },
     },
     {
       id: 2,
-      name: "Balai RW 05",
+      name: "Balai RW 04",
       type: "hall",
-      location: { lon: 110.4552, lat: -7.0725 },
+      location: { lon: 110.4385, lat: -7.06 },
     },
     {
       id: 3,
-      name: "Gedung Serbaguna",
+      name: "Balai RW 05",
       type: "hall",
-      location: { lon: 110.4578, lat: -7.0752 },
+      location: { lon: 110.44, lat: -7.061 },
     },
     {
       id: 4,
+      name: "Gedung Serbaguna",
+      type: "hall",
+      location: { lon: 110.4375, lat: -7.0585 },
+    },
+    {
+      id: 5,
       name: "Perpustakaan Desa",
       type: "library",
-      location: { lon: 110.4602, lat: -7.078 },
+      location: { lon: 110.438, lat: -7.0575 },
     },
   ],
   land_field: [
