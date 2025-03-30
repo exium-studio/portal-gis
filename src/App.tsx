@@ -1,20 +1,19 @@
 import { ChakraProvider } from "@chakra-ui/react";
+import "mapbox-gl/dist/mapbox-gl.css";
+import { useEffect, useState } from "react";
 import { BrowserRouter, useLocation } from "react-router-dom";
 import "./App.css";
+import { useColorMode } from "./components/ui/color-mode";
 import { toaster, Toaster } from "./components/ui/toaster";
+import OfflineDisclosure from "./components/widget/OfflineDisclosure";
+import useADM from "./context/useADM";
+import useLang from "./context/useLang";
+import useOffline from "./context/useOffilne";
+import { useThemeConfig } from "./context/useThemeConfig";
+import useScrollEffect from "./hooks/useScrollEffect";
 import Routing from "./routes/Routing";
 import theme from "./theme";
 import useStatusBarColor from "./utils/statusBarColor";
-import { useEffect, useState } from "react";
-import useOffline from "./context/useOffilne";
-import OfflineDisclosure from "./components/widget/OfflineDisclosure";
-import useLang from "./context/useLang";
-import { useThemeConfig } from "./context/useThemeConfig";
-import useADM from "./context/useADM";
-import { useColorMode } from "./components/ui/color-mode";
-import useScrollEffect from "./hooks/useScrollEffect";
-import "mapbox-gl/dist/mapbox-gl.css";
-import ReusableDisclosures from "./components/widget/ReusableDisclosures";
 
 const EndpointWrapper = ({ children }: { children: React.ReactNode }) => {
   // Contexts
@@ -121,9 +120,6 @@ function App() {
 
     return () => clearTimeout(timeout);
   }, [ADM, setColorMode]);
-
-  // Components
-  <ReusableDisclosures />;
 
   return (
     <ChakraProvider value={theme}>
