@@ -31,6 +31,8 @@ import useLayout from "@/context/useLayout";
 import AdminMap from "./admin/AdminMap";
 import AdminMapOverlay from "./admin/AdminMapOverlay";
 import HScroll from "../ui-custom/HScroll";
+import BButton from "../ui-custom/BButton";
+import { IconSettings } from "@tabler/icons-react";
 
 interface Interface__NavItemContainer extends StackProps {
   active?: boolean;
@@ -279,6 +281,14 @@ const NavContainer = ({
               </HStack>
 
               <HStack flexShrink={0} gap={0}>
+                {pathname === "/profile" && (
+                  <Link to={"/settings"}>
+                    <BButton iconButton variant={"ghost"}>
+                      <IconSettings stroke={1.5} />
+                    </BButton>
+                  </Link>
+                )}
+
                 <CurrentUserTimeZone />
 
                 <Inbox />
