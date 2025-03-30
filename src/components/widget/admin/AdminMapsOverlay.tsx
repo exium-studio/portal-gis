@@ -689,7 +689,7 @@ const CurrentLocation = () => {
   );
 };
 
-const NorthDirection = () => {
+const Compass = () => {
   // Context
   const { l } = useLang();
   const { mapRef } = useMapsViewState();
@@ -816,7 +816,7 @@ const AdminMapsOverlay = () => {
 
             <CurrentLocation />
 
-            <NorthDirection />
+            <Compass />
           </HScroll>
         </HStack>
       </Box>
