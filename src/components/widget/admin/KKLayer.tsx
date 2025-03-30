@@ -33,7 +33,7 @@ const KKLayer = ({ data }: Props) => {
           "circle-color": [
             "case",
             ["==", ["get", "status"], "poor"],
-            ABS_COLORS.cyan,
+            ABS_COLORS.light_blue,
             ABS_COLORS.blue,
           ],
         }}
