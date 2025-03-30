@@ -92,7 +92,6 @@ const NavContainer = ({
     return (
       <VStack
         gap={0}
-        w={"40px"}
         h={["60px", null, "40px"]}
         justify={"center"}
         position={"relative"}
@@ -121,7 +120,7 @@ const NavContainer = ({
                 positioning={{ placement: "right" }}
                 contentProps={{ ml: 2 }}
               >
-                <NavItemContainer active={active}>
+                <NavItemContainer active={active} w={"64px"}>
                   <FloatCounter
                     circleProps={{
                       h: "18px",
@@ -251,7 +250,6 @@ const NavContainer = ({
             fRef={containerRef}
             position={"relative"}
             flex={1}
-            overflowY={"scroll"}
             className="scrollY"
             overflowX={"clip"}
             bg={"bgContent"}
@@ -306,12 +304,12 @@ const NavContainer = ({
 
       {/* Sm screen nav */}
       {iss && (
-        <HStack
+        <HScroll
           h={"80px"}
-          justify={"space-around"}
+          justify={"space-between"}
           pt={1}
           pb={6}
-          pr={4}
+          pl={4}
           borderTop={"1px solid"}
           borderColor={"d2"}
           overflowX={"auto"}
@@ -319,23 +317,14 @@ const NavContainer = ({
           position={"sticky"}
           bottom={0}
           bg={"body"}
+          gap={2}
         >
-          <HScroll
-            pl={4}
-            gap={5}
-            w={"fit"}
-            maxW={"full"}
-            flex={1}
-            justify={"space-around"}
-            // border={"1px solid red"}
-          >
-            <NavList />
-          </HScroll>
+          <NavList />
 
-          <HStack ml={2}>
+          <HStack position={"sticky"} right={0} bg={"body"} px={4}>
             <NavList2 />
           </HStack>
-        </HStack>
+        </HScroll>
       )}
     </Stack>
   );
