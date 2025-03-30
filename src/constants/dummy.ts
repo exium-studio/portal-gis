@@ -14,7 +14,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 2,
       head: "Lina Kusuma 369",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.435468,
         lat: -7.065009,
@@ -24,7 +24,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 3,
       head: "Lina Pratama 541",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.428533,
         lat: -7.059418,
@@ -34,7 +34,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 4,
       head: "Rina Widodo 796",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.4348,
         lat: -7.057127,
@@ -44,7 +44,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 5,
       head: "Agus Supriyadi 987",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.433778,
         lat: -7.054839,
@@ -54,7 +54,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 6,
       head: "Agus Dewi 862",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.446972,
         lat: -7.066752,
@@ -94,7 +94,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 10,
       head: "Joko Pratama 752",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.43869,
         lat: -7.065853,
@@ -104,7 +104,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 11,
       head: "Siti Marlina 436",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.435654,
         lat: -7.049125,
@@ -114,7 +114,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 12,
       head: "Dewi Susanto 650",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.436316,
         lat: -7.051675,
@@ -124,7 +124,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 13,
       head: "Agus Aisyah 330",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.443926,
         lat: -7.060539,
@@ -144,7 +144,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 15,
       head: "Agus Pratama 966",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.433885,
         lat: -7.061432,
@@ -154,7 +154,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 16,
       head: "Joko Supriyadi 868",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.440443,
         lat: -7.063537,
@@ -164,7 +164,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 17,
       head: "Budi Kusuma 910",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.43018,
         lat: -7.067228,
@@ -174,7 +174,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 18,
       head: "Heri Aisyah 284",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.444846,
         lat: -7.055746,
@@ -184,7 +184,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 19,
       head: "Rina Sartika 866",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.441092,
         lat: -7.058892,
@@ -194,7 +194,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 20,
       head: "Siti Aisyah 146",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.435529,
         lat: -7.062883,
@@ -234,7 +234,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 24,
       head: "Siti Supriyadi 752",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.429882,
         lat: -7.061594,
@@ -274,7 +274,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 28,
       head: "Heri Pratama 771",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.446734,
         lat: -7.057532,
@@ -284,7 +284,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 29,
       head: "Agus Widodo 440",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.445616,
         lat: -7.052343,
@@ -294,7 +294,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 30,
       head: "Dewi Pratama 355",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.446427,
         lat: -7.058691,
@@ -304,7 +304,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 31,
       head: "Joko Supriyadi 993",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.43434,
         lat: -7.062237,
@@ -324,7 +324,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 33,
       head: "Heri Aisyah 975",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.43337,
         lat: -7.051489,
@@ -344,7 +344,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 35,
       head: "Joko Dewi 211",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.435607,
         lat: -7.04915,
@@ -384,7 +384,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 39,
       head: "Siti Pratama 100",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.437932,
         lat: -7.05803,
@@ -404,7 +404,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 41,
       head: "Lina Supriyadi 741",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.44069,
         lat: -7.061431,
@@ -434,7 +434,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 44,
       head: "Agus Susanto 667",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.438658,
         lat: -7.061877,
@@ -444,7 +444,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 45,
       head: "Rina Kusuma 631",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.432861,
         lat: -7.058613,
@@ -484,7 +484,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 49,
       head: "Dewi Sartika 550",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.428086,
         lat: -7.054026,
@@ -494,7 +494,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 50,
       head: "Lina Dewi 182",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.446739,
         lat: -7.066457,
@@ -514,7 +514,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 52,
       head: "Budi Sartika 195",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.434539,
         lat: -7.060594,
@@ -544,7 +544,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 55,
       head: "Ratna Aisyah 367",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.441818,
         lat: -7.065281,
@@ -564,7 +564,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 57,
       head: "Andi Pratama 292",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.434048,
         lat: -7.054785,
@@ -604,7 +604,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 61,
       head: "Budi Widodo 822",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.428686,
         lat: -7.058352,
@@ -654,7 +654,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 66,
       head: "Dewi Susanto 177",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.42837,
         lat: -7.04852,
@@ -664,7 +664,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 67,
       head: "Andi Supriyadi 533",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.437753,
         lat: -7.052321,
@@ -674,7 +674,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 68,
       head: "Joko Santoso 667",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.444847,
         lat: -7.066657,
@@ -684,7 +684,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 69,
       head: "Rina Susanto 553",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.42923,
         lat: -7.066786,
@@ -714,7 +714,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 72,
       head: "Heri Supriyadi 811",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.43088,
         lat: -7.06313,
@@ -744,7 +744,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 75,
       head: "Agus Dewi 931",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.428607,
         lat: -7.057666,
@@ -754,7 +754,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 76,
       head: "Ratna Kusuma 806",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.439367,
         lat: -7.064355,
@@ -794,7 +794,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 80,
       head: "Siti Widodo 889",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.434869,
         lat: -7.060611,
@@ -814,7 +814,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 82,
       head: "Lina Susanto 788",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.436611,
         lat: -7.052913,
@@ -834,7 +834,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 84,
       head: "Agus Santoso 307",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.446863,
         lat: -7.064943,
@@ -844,7 +844,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 85,
       head: "Rina Santoso 877",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.440967,
         lat: -7.060868,
@@ -864,7 +864,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 87,
       head: "Rina Dewi 357",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.435723,
         lat: -7.054764,
@@ -874,7 +874,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 88,
       head: "Rina Sartika 199",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.436963,
         lat: -7.049877,
@@ -894,7 +894,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 90,
       head: "Joko Supriyadi 199",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.44583,
         lat: -7.066126,
@@ -914,7 +914,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 92,
       head: "Andi Kusuma 151",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.444134,
         lat: -7.054722,
@@ -924,7 +924,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 93,
       head: "Budi Dewi 518",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.444643,
         lat: -7.048075,
@@ -954,7 +954,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 96,
       head: "Joko Supriyadi 713",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.432102,
         lat: -7.055684,
@@ -964,7 +964,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 97,
       head: "Agus Kusuma 628",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.444239,
         lat: -7.058283,
@@ -974,7 +974,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 98,
       head: "Dewi Widodo 875",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.43153,
         lat: -7.048579,
@@ -984,7 +984,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 99,
       head: "Budi Santoso 763",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.442934,
         lat: -7.054546,
@@ -1004,7 +1004,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 101,
       head: "Ratna Aisyah 799",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.442806,
         lat: -7.065283,
@@ -1034,7 +1034,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 104,
       head: "Andi Aisyah 403",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.438998,
         lat: -7.05091,
@@ -1064,7 +1064,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 107,
       head: "Siti Dewi 146",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.443901,
         lat: -7.067445,
@@ -1074,7 +1074,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 108,
       head: "Rina Widodo 718",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.446209,
         lat: -7.056255,
@@ -1094,7 +1094,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 110,
       head: "Siti Kusuma 684",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.428394,
         lat: -7.049453,
@@ -1114,7 +1114,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 112,
       head: "Andi Widodo 220",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.428335,
         lat: -7.053249,
@@ -1144,7 +1144,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 115,
       head: "Dewi Marlina 503",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.433069,
         lat: -7.05811,
@@ -1154,7 +1154,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 116,
       head: "Ratna Dewi 156",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.439052,
         lat: -7.052142,
@@ -1174,7 +1174,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 118,
       head: "Lina Marlina 696",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.434187,
         lat: -7.048226,
@@ -1204,7 +1204,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 121,
       head: "Rina Supriyadi 464",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.44772,
         lat: -7.059159,
@@ -1234,7 +1234,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 124,
       head: "Rina Supriyadi 915",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.432457,
         lat: -7.06315,
@@ -1254,7 +1254,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 126,
       head: "Rina Supriyadi 919",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.436034,
         lat: -7.054556,
@@ -1264,7 +1264,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 127,
       head: "Agus Dewi 355",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.442135,
         lat: -7.058056,
@@ -1284,7 +1284,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 129,
       head: "Lina Susanto 780",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.431689,
         lat: -7.055969,
@@ -1294,7 +1294,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 130,
       head: "Budi Dewi 763",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.442968,
         lat: -7.05312,
@@ -1304,7 +1304,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 131,
       head: "Rina Aisyah 566",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.446796,
         lat: -7.056577,
@@ -1334,7 +1334,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 134,
       head: "Ratna Supriyadi 621",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.429096,
         lat: -7.061899,
@@ -1364,7 +1364,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 137,
       head: "Agus Kusuma 460",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.444215,
         lat: -7.06316,
@@ -1374,7 +1374,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 138,
       head: "Heri Aisyah 888",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.43429,
         lat: -7.058039,
@@ -1384,7 +1384,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 139,
       head: "Andi Santoso 188",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.428978,
         lat: -7.049503,
@@ -1394,7 +1394,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 140,
       head: "Agus Marlina 147",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.438733,
         lat: -7.064271,
@@ -1404,7 +1404,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 141,
       head: "Andi Santoso 352",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.442978,
         lat: -7.058883,
@@ -1414,7 +1414,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 142,
       head: "Rina Dewi 524",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.446677,
         lat: -7.056529,
@@ -1434,7 +1434,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 144,
       head: "Agus Santoso 166",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.428154,
         lat: -7.049461,
@@ -1444,7 +1444,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 145,
       head: "Budi Aisyah 877",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.434987,
         lat: -7.059919,
@@ -1454,7 +1454,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 146,
       head: "Siti Aisyah 637",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.442156,
         lat: -7.065277,
@@ -1464,7 +1464,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 147,
       head: "Joko Susanto 370",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.432185,
         lat: -7.05073,
@@ -1474,7 +1474,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 148,
       head: "Lina Sartika 499",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.432846,
         lat: -7.061727,
@@ -1484,7 +1484,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 149,
       head: "Lina Kusuma 969",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.43659,
         lat: -7.048385,
@@ -1494,7 +1494,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 150,
       head: "Budi Widodo 872",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.438001,
         lat: -7.05977,
@@ -1534,7 +1534,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 154,
       head: "Dewi Supriyadi 730",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.43936,
         lat: -7.064169,
@@ -1544,7 +1544,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 155,
       head: "Budi Marlina 846",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.437361,
         lat: -7.052958,
@@ -1584,7 +1584,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 159,
       head: "Heri Aisyah 186",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.437553,
         lat: -7.064851,
@@ -1604,7 +1604,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 161,
       head: "Ratna Supriyadi 499",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.435802,
         lat: -7.066215,
@@ -1614,7 +1614,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 162,
       head: "Rina Santoso 897",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.439556,
         lat: -7.059379,
@@ -1624,7 +1624,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 163,
       head: "Andi Marlina 817",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.441872,
         lat: -7.0534,
@@ -1664,7 +1664,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 167,
       head: "Lina Marlina 725",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.443965,
         lat: -7.053825,
@@ -1674,7 +1674,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 168,
       head: "Dewi Marlina 974",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.444299,
         lat: -7.056307,
@@ -1684,7 +1684,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 169,
       head: "Heri Sartika 750",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.43535,
         lat: -7.063319,
@@ -1694,7 +1694,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 170,
       head: "Heri Santoso 676",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.437032,
         lat: -7.054268,
@@ -1734,7 +1734,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 174,
       head: "Budi Marlina 324",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.438243,
         lat: -7.055116,
@@ -1754,7 +1754,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 176,
       head: "Siti Widodo 565",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.43647,
         lat: -7.057447,
@@ -1794,7 +1794,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 180,
       head: "Agus Pratama 954",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.441575,
         lat: -7.060845,
@@ -1804,7 +1804,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 181,
       head: "Agus Susanto 543",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.440638,
         lat: -7.065333,
@@ -1814,7 +1814,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 182,
       head: "Lina Dewi 439",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.447479,
         lat: -7.048578,
@@ -1824,7 +1824,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 183,
       head: "Budi Susanto 268",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.439379,
         lat: -7.06578,
@@ -1844,7 +1844,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 185,
       head: "Joko Dewi 219",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.440295,
         lat: -7.048989,
@@ -1884,7 +1884,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 189,
       head: "Budi Widodo 185",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.444888,
         lat: -7.053342,
@@ -1944,7 +1944,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 195,
       head: "Andi Marlina 452",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.434426,
         lat: -7.049724,
@@ -1954,7 +1954,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 196,
       head: "Budi Santoso 283",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.440319,
         lat: -7.059766,
@@ -1964,7 +1964,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 197,
       head: "Lina Aisyah 301",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.441667,
         lat: -7.067036,
@@ -1984,7 +1984,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 199,
       head: "Lina Pratama 487",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.437004,
         lat: -7.050444,
@@ -1994,7 +1994,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 200,
       head: "Andi Widodo 835",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.437533,
         lat: -7.058602,
@@ -2004,7 +2004,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 201,
       head: "Joko Aisyah 725",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.430611,
         lat: -7.057222,
@@ -2014,7 +2014,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 202,
       head: "Rina Supriyadi 417",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.443053,
         lat: -7.055324,
@@ -2024,7 +2024,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 203,
       head: "Siti Supriyadi 530",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.44088,
         lat: -7.067317,
@@ -2074,7 +2074,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 208,
       head: "Agus Supriyadi 541",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.433266,
         lat: -7.050181,
@@ -2114,7 +2114,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 212,
       head: "Siti Pratama 124",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.430933,
         lat: -7.048368,
@@ -2124,7 +2124,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 213,
       head: "Agus Widodo 432",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.447939,
         lat: -7.060978,
@@ -2134,7 +2134,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 214,
       head: "Andi Widodo 184",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.445017,
         lat: -7.056804,
@@ -2144,7 +2144,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 215,
       head: "Andi Pratama 637",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.444988,
         lat: -7.064996,
@@ -2154,7 +2154,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 216,
       head: "Lina Susanto 136",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.437749,
         lat: -7.052641,
@@ -2164,7 +2164,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 217,
       head: "Lina Marlina 816",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.432578,
         lat: -7.052737,
@@ -2184,7 +2184,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 219,
       head: "Ratna Kusuma 384",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.444466,
         lat: -7.050579,
@@ -2194,7 +2194,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 220,
       head: "Dewi Kusuma 328",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.439232,
         lat: -7.051678,
@@ -2204,7 +2204,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 221,
       head: "Ratna Supriyadi 559",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.447527,
         lat: -7.058354,
@@ -2214,7 +2214,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 222,
       head: "Lina Santoso 104",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.433986,
         lat: -7.05192,
@@ -2234,7 +2234,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 224,
       head: "Heri Sartika 300",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.438831,
         lat: -7.067474,
@@ -2264,7 +2264,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 227,
       head: "Rina Widodo 642",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.434509,
         lat: -7.060887,
@@ -2274,7 +2274,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 228,
       head: "Heri Dewi 932",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.438016,
         lat: -7.067241,
@@ -2284,7 +2284,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 229,
       head: "Siti Pratama 703",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.43487,
         lat: -7.056032,
@@ -2294,7 +2294,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 230,
       head: "Dewi Susanto 760",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.432998,
         lat: -7.063252,
@@ -2314,7 +2314,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 232,
       head: "Siti Susanto 504",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.429515,
         lat: -7.064582,
@@ -2334,7 +2334,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 234,
       head: "Joko Pratama 613",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.439193,
         lat: -7.05794,
@@ -2344,7 +2344,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 235,
       head: "Dewi Marlina 266",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.432665,
         lat: -7.054733,
@@ -2354,7 +2354,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 236,
       head: "Heri Dewi 264",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.44605,
         lat: -7.060809,
@@ -2404,7 +2404,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 241,
       head: "Heri Susanto 459",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.4377,
         lat: -7.049071,
@@ -2424,7 +2424,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 243,
       head: "Siti Santoso 179",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.439214,
         lat: -7.052638,
@@ -2434,7 +2434,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 244,
       head: "Andi Marlina 229",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.431819,
         lat: -7.057612,
@@ -2454,7 +2454,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 246,
       head: "Ratna Pratama 401",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.430973,
         lat: -7.064242,
@@ -2464,7 +2464,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 247,
       head: "Budi Aisyah 258",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.438626,
         lat: -7.065075,
@@ -2474,7 +2474,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 248,
       head: "Agus Dewi 439",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.439721,
         lat: -7.065623,
@@ -2484,7 +2484,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 249,
       head: "Siti Pratama 808",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.444025,
         lat: -7.052915,
@@ -2494,7 +2494,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 250,
       head: "Heri Marlina 411",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.443382,
         lat: -7.058009,
@@ -2504,7 +2504,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 251,
       head: "Lina Kusuma 354",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.435816,
         lat: -7.058396,
@@ -2524,7 +2524,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 253,
       head: "Siti Supriyadi 527",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.442543,
         lat: -7.067363,
@@ -2534,7 +2534,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 254,
       head: "Agus Aisyah 163",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.428624,
         lat: -7.06385,
@@ -2544,7 +2544,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 255,
       head: "Andi Aisyah 881",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.42874,
         lat: -7.05733,
@@ -2594,7 +2594,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 260,
       head: "Joko Santoso 538",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.431096,
         lat: -7.05602,
@@ -2624,7 +2624,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 263,
       head: "Heri Sartika 646",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.431283,
         lat: -7.062435,
@@ -2634,7 +2634,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 264,
       head: "Joko Aisyah 726",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.433458,
         lat: -7.058567,
@@ -2644,7 +2644,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 265,
       head: "Andi Santoso 550",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.4339,
         lat: -7.058442,
@@ -2684,7 +2684,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 269,
       head: "Siti Kusuma 322",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.440736,
         lat: -7.066167,
@@ -2694,7 +2694,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 270,
       head: "Budi Supriyadi 697",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.433478,
         lat: -7.052359,
@@ -2704,7 +2704,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 271,
       head: "Budi Dewi 523",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.434312,
         lat: -7.059845,
@@ -2724,7 +2724,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 273,
       head: "Andi Sartika 952",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.440488,
         lat: -7.059108,
@@ -2734,7 +2734,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 274,
       head: "Dewi Pratama 716",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.433843,
         lat: -7.050442,
@@ -2744,7 +2744,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 275,
       head: "Budi Susanto 589",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.445785,
         lat: -7.065789,
@@ -2764,7 +2764,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 277,
       head: "Andi Marlina 650",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.431717,
         lat: -7.048957,
@@ -2784,7 +2784,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 279,
       head: "Siti Dewi 986",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.438681,
         lat: -7.054741,
@@ -2804,7 +2804,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 281,
       head: "Agus Kusuma 788",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.43043,
         lat: -7.066439,
@@ -2814,7 +2814,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 282,
       head: "Andi Supriyadi 257",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.43966,
         lat: -7.05441,
@@ -2824,7 +2824,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 283,
       head: "Andi Susanto 851",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.437975,
         lat: -7.065491,
@@ -2844,7 +2844,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 285,
       head: "Budi Supriyadi 455",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.440699,
         lat: -7.056281,
@@ -2874,7 +2874,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 288,
       head: "Budi Kusuma 394",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.428488,
         lat: -7.060613,
@@ -2914,7 +2914,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 292,
       head: "Andi Kusuma 205",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.438009,
         lat: -7.05206,
@@ -2924,7 +2924,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 293,
       head: "Ratna Susanto 449",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.446379,
         lat: -7.057938,
@@ -2934,7 +2934,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 294,
       head: "Siti Marlina 900",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.434363,
         lat: -7.059753,
@@ -2954,7 +2954,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 296,
       head: "Budi Kusuma 183",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.445347,
         lat: -7.055617,
@@ -2964,7 +2964,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 297,
       head: "Ratna Kusuma 947",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.447526,
         lat: -7.055817,
@@ -2974,7 +2974,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 298,
       head: "Dewi Supriyadi 429",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.442214,
         lat: -7.048715,
@@ -2984,7 +2984,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 299,
       head: "Heri Kusuma 957",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.446968,
         lat: -7.062327,
@@ -3044,7 +3044,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 305,
       head: "Siti Santoso 432",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.436781,
         lat: -7.058178,
@@ -3054,7 +3054,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 306,
       head: "Andi Supriyadi 136",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.43215,
         lat: -7.054094,
@@ -3064,7 +3064,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 307,
       head: "Andi Susanto 737",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.442068,
         lat: -7.054521,
@@ -3094,7 +3094,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 310,
       head: "Siti Supriyadi 851",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.436585,
         lat: -7.064784,
@@ -3114,7 +3114,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 312,
       head: "Siti Kusuma 225",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.441471,
         lat: -7.063411,
@@ -3134,7 +3134,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 314,
       head: "Dewi Marlina 827",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.445244,
         lat: -7.055362,
@@ -3144,7 +3144,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 315,
       head: "Rina Santoso 697",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.438595,
         lat: -7.060312,
@@ -3174,7 +3174,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 318,
       head: "Siti Widodo 836",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.433047,
         lat: -7.053501,
@@ -3194,7 +3194,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 320,
       head: "Andi Dewi 868",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.443583,
         lat: -7.066839,
@@ -3224,7 +3224,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 323,
       head: "Ratna Sartika 843",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.445899,
         lat: -7.052998,
@@ -3254,7 +3254,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 326,
       head: "Heri Pratama 119",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.433292,
         lat: -7.053558,
@@ -3264,7 +3264,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 327,
       head: "Agus Pratama 518",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.43844,
         lat: -7.064822,
@@ -3294,7 +3294,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 330,
       head: "Siti Sartika 968",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.429403,
         lat: -7.053929,
@@ -3304,7 +3304,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 331,
       head: "Lina Susanto 872",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.433257,
         lat: -7.064762,
@@ -3334,7 +3334,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 334,
       head: "Budi Sartika 927",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.429051,
         lat: -7.055525,
@@ -3394,7 +3394,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 340,
       head: "Rina Pratama 752",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.436201,
         lat: -7.063515,
@@ -3414,7 +3414,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 342,
       head: "Agus Pratama 543",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.435479,
         lat: -7.059256,
@@ -3424,7 +3424,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 343,
       head: "Ratna Susanto 114",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.446628,
         lat: -7.062388,
@@ -3434,7 +3434,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 344,
       head: "Rina Widodo 830",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.429151,
         lat: -7.067868,
@@ -3454,7 +3454,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 346,
       head: "Rina Dewi 231",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.431754,
         lat: -7.053996,
@@ -3474,7 +3474,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 348,
       head: "Joko Sartika 609",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.437555,
         lat: -7.06217,
@@ -3484,7 +3484,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 349,
       head: "Siti Santoso 408",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.438892,
         lat: -7.051591,
@@ -3514,7 +3514,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 352,
       head: "Lina Marlina 736",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.435669,
         lat: -7.066519,
@@ -3534,7 +3534,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 354,
       head: "Joko Sartika 445",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.434698,
         lat: -7.05704,
@@ -3544,7 +3544,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 355,
       head: "Budi Marlina 753",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.430168,
         lat: -7.059404,
@@ -3554,7 +3554,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 356,
       head: "Ratna Sartika 162",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.447691,
         lat: -7.06605,
@@ -3574,7 +3574,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 358,
       head: "Rina Susanto 496",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.430826,
         lat: -7.057724,
@@ -3594,7 +3594,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 360,
       head: "Siti Santoso 115",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.43354,
         lat: -7.06095,
@@ -3604,7 +3604,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 361,
       head: "Agus Supriyadi 741",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.440398,
         lat: -7.05831,
@@ -3644,7 +3644,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 365,
       head: "Agus Sartika 972",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.44601,
         lat: -7.050245,
@@ -3654,7 +3654,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 366,
       head: "Agus Sartika 679",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.438587,
         lat: -7.05113,
@@ -3664,7 +3664,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 367,
       head: "Ratna Supriyadi 967",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.440064,
         lat: -7.061329,
@@ -3704,7 +3704,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 371,
       head: "Siti Pratama 153",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.441697,
         lat: -7.056976,
@@ -3714,7 +3714,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 372,
       head: "Rina Supriyadi 313",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.431816,
         lat: -7.061926,
@@ -3754,7 +3754,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 376,
       head: "Andi Dewi 176",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.447686,
         lat: -7.060763,
@@ -3784,7 +3784,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 379,
       head: "Budi Sartika 588",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.438509,
         lat: -7.054103,
@@ -3794,7 +3794,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 380,
       head: "Joko Widodo 285",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.445394,
         lat: -7.062121,
@@ -3814,7 +3814,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 382,
       head: "Agus Kusuma 999",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.446054,
         lat: -7.049623,
@@ -3824,7 +3824,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 383,
       head: "Rina Santoso 632",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.430239,
         lat: -7.058554,
@@ -3854,7 +3854,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 386,
       head: "Agus Kusuma 947",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.444399,
         lat: -7.050725,
@@ -3874,7 +3874,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 388,
       head: "Heri Marlina 791",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.440406,
         lat: -7.058432,
@@ -3894,7 +3894,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 390,
       head: "Agus Santoso 823",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.431704,
         lat: -7.054537,
@@ -3954,7 +3954,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 396,
       head: "Rina Marlina 333",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.447778,
         lat: -7.065528,
@@ -3984,7 +3984,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 399,
       head: "Ratna Santoso 334",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.432683,
         lat: -7.050184,
@@ -4004,7 +4004,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 401,
       head: "Siti Kusuma 787",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.431742,
         lat: -7.053995,
@@ -4014,7 +4014,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 402,
       head: "Budi Aisyah 255",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.442775,
         lat: -7.049574,
@@ -4024,7 +4024,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 403,
       head: "Agus Sartika 625",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.430473,
         lat: -7.049447,
@@ -4044,7 +4044,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 405,
       head: "Heri Kusuma 814",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.433876,
         lat: -7.061839,
@@ -4054,7 +4054,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 406,
       head: "Ratna Sartika 159",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.443465,
         lat: -7.065862,
@@ -4074,7 +4074,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 408,
       head: "Heri Marlina 116",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.42918,
         lat: -7.056465,
@@ -4124,7 +4124,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 413,
       head: "Rina Susanto 356",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.440626,
         lat: -7.058559,
@@ -4134,7 +4134,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 414,
       head: "Rina Dewi 522",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.430416,
         lat: -7.062999,
@@ -4144,7 +4144,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 415,
       head: "Ratna Susanto 328",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.435843,
         lat: -7.056284,
@@ -4154,7 +4154,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 416,
       head: "Agus Kusuma 938",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.44681,
         lat: -7.048825,
@@ -4164,7 +4164,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 417,
       head: "Lina Aisyah 794",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.43155,
         lat: -7.050368,
@@ -4184,7 +4184,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 419,
       head: "Joko Aisyah 884",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.43683,
         lat: -7.055895,
@@ -4194,7 +4194,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 420,
       head: "Andi Santoso 407",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.440959,
         lat: -7.063578,
@@ -4224,7 +4224,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 423,
       head: "Agus Widodo 205",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.43121,
         lat: -7.055785,
@@ -4234,7 +4234,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 424,
       head: "Budi Aisyah 693",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.435269,
         lat: -7.062439,
@@ -4244,7 +4244,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 425,
       head: "Joko Santoso 972",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.439302,
         lat: -7.049866,
@@ -4274,7 +4274,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 428,
       head: "Lina Sartika 860",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.429492,
         lat: -7.062189,
@@ -4304,7 +4304,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 431,
       head: "Rina Marlina 896",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.440617,
         lat: -7.063556,
@@ -4324,7 +4324,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 433,
       head: "Rina Widodo 602",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.437541,
         lat: -7.0656,
@@ -4354,7 +4354,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 436,
       head: "Budi Santoso 364",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.441735,
         lat: -7.059826,
@@ -4394,7 +4394,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 440,
       head: "Siti Pratama 380",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.446082,
         lat: -7.05762,
@@ -4414,7 +4414,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 442,
       head: "Joko Supriyadi 189",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.443252,
         lat: -7.064722,
@@ -4424,7 +4424,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 443,
       head: "Budi Supriyadi 825",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.432407,
         lat: -7.052595,
@@ -4434,7 +4434,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 444,
       head: "Joko Marlina 277",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.432096,
         lat: -7.055437,
@@ -4444,7 +4444,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 445,
       head: "Joko Dewi 290",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.431807,
         lat: -7.06737,
@@ -4454,7 +4454,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 446,
       head: "Ratna Supriyadi 632",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.429875,
         lat: -7.057324,
@@ -4474,7 +4474,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 448,
       head: "Lina Susanto 668",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.432109,
         lat: -7.060262,
@@ -4484,7 +4484,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 449,
       head: "Andi Pratama 916",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.434176,
         lat: -7.062083,
@@ -4494,7 +4494,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 450,
       head: "Dewi Sartika 192",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.434393,
         lat: -7.060624,
@@ -4504,7 +4504,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 451,
       head: "Siti Kusuma 834",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.433742,
         lat: -7.058653,
@@ -4524,7 +4524,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 453,
       head: "Andi Widodo 665",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.443528,
         lat: -7.059977,
@@ -4534,7 +4534,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 454,
       head: "Dewi Sartika 462",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.434786,
         lat: -7.057995,
@@ -4554,7 +4554,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 456,
       head: "Agus Sartika 467",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.44336,
         lat: -7.06351,
@@ -4564,7 +4564,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 457,
       head: "Ratna Kusuma 111",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.438014,
         lat: -7.051868,
@@ -4574,7 +4574,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 458,
       head: "Budi Santoso 908",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.43571,
         lat: -7.065598,
@@ -4584,7 +4584,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 459,
       head: "Heri Kusuma 367",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.444606,
         lat: -7.049602,
@@ -4654,7 +4654,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 466,
       head: "Ratna Dewi 414",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.4295,
         lat: -7.066452,
@@ -4664,7 +4664,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 467,
       head: "Siti Supriyadi 205",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.434527,
         lat: -7.06669,
@@ -4704,7 +4704,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 471,
       head: "Dewi Susanto 866",
       members: 6,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.438691,
         lat: -7.066741,
@@ -4714,7 +4714,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 472,
       head: "Andi Widodo 863",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.436072,
         lat: -7.05648,
@@ -4724,7 +4724,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 473,
       head: "Siti Sartika 422",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.431303,
         lat: -7.065049,
@@ -4754,7 +4754,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 476,
       head: "Rina Santoso 308",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.444293,
         lat: -7.049168,
@@ -4764,7 +4764,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 477,
       head: "Dewi Widodo 184",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.446266,
         lat: -7.050544,
@@ -4774,7 +4774,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 478,
       head: "Dewi Widodo 888",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.441506,
         lat: -7.058339,
@@ -4784,7 +4784,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 479,
       head: "Andi Aisyah 603",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.43024,
         lat: -7.054167,
@@ -4814,7 +4814,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 482,
       head: "Agus Widodo 867",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.434583,
         lat: -7.061464,
@@ -4824,7 +4824,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 483,
       head: "Rina Aisyah 406",
       members: 5,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.432192,
         lat: -7.06797,
@@ -4854,7 +4854,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 486,
       head: "Rina Santoso 342",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.446984,
         lat: -7.065334,
@@ -4874,7 +4874,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 488,
       head: "Siti Sartika 611",
       members: 1,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.434423,
         lat: -7.056921,
@@ -4894,7 +4894,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 490,
       head: "Ratna Dewi 310",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.432841,
         lat: -7.054579,
@@ -4944,7 +4944,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 495,
       head: "Lina Dewi 937",
       members: 2,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.446352,
         lat: -7.060798,
@@ -4954,7 +4954,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 496,
       head: "Budi Susanto 121",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.439615,
         lat: -7.063727,
@@ -4974,7 +4974,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 498,
       head: "Budi Susanto 951",
       members: 4,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.434718,
         lat: -7.062132,
@@ -4994,7 +4994,7 @@ export const DISPLAYED_DUMMY_DATA = {
       id: 500,
       head: "Agus Dewi 974",
       members: 3,
-      status: "miskin",
+      status: "poor",
       location: {
         lon: 110.446194,
         lat: -7.052282,

@@ -5,6 +5,7 @@ import { ABS_COLORS } from "@/constants/colors";
 interface Props {
   data: {
     id: number;
+    status: string;
     location: { lon: number; lat: number };
   }[];
 }
@@ -14,7 +15,7 @@ const KKLayer = ({ data }: Props) => {
     type: "FeatureCollection",
     features: data.map((item) => ({
       type: "Feature",
-      properties: { id: item.id },
+      properties: { id: item.id, status: item.status },
       geometry: {
         type: "Point",
         coordinates: [item.location.lon, item.location.lat],
@@ -29,7 +30,12 @@ const KKLayer = ({ data }: Props) => {
         type="circle"
         paint={{
           "circle-radius": 3,
-          "circle-color": ABS_COLORS.blue,
+          "circle-color": [
+            "case",
+            ["==", ["get", "status"], "poor"],
+            ABS_COLORS.cyan,
+            ABS_COLORS.blue,
+          ],
         }}
       />
     </Source>
