@@ -141,8 +141,6 @@ const AdminMap = () => {
       ([key, layers]) => (basemap[key as keyof typeof basemap] ? [] : layers)
     );
 
-    console.log("fl", filteredLayers);
-
     const updatedLayers = styleJson.layers.map((layer: any) =>
       filteredLayers?.includes(layer.id) || layer.id === "building"
         ? {
@@ -154,7 +152,6 @@ const AdminMap = () => {
           }
         : layer
     );
-    console.log(updatedLayers);
 
     setActiveMapStyle({ ...styleJson, layers: updatedLayers });
   }
@@ -165,8 +162,6 @@ const AdminMap = () => {
       setActiveMapStyle(mapStyle.tile[colorMode]);
     }
   }, [mapStyle]);
-
-  console.log(mapStyle.id, activeMapStyle);
 
   return (
     <Map
