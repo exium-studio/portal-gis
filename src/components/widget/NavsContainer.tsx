@@ -120,7 +120,7 @@ const NavContainer = ({
                 positioning={{ placement: "right" }}
                 contentProps={{ ml: 2 }}
               >
-                <NavItemContainer active={active} w={"64px"}>
+                <NavItemContainer active={active} w={["64px", null, "40px"]}>
                   <FloatCounter
                     circleProps={{
                       h: "18px",
