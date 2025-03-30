@@ -2,14 +2,14 @@ import { Source, Layer } from "react-map-gl/mapbox";
 import type { FeatureCollection, GeoJsonProperties, Geometry } from "geojson";
 import { ABS_COLORS } from "@/constants/colors";
 
-interface KKLayerProps {
+interface Props {
   data: {
     id: number;
     location: { lon: number; lat: number };
   }[];
 }
 
-const KKLayer = ({ data }: KKLayerProps) => {
+const KKLayer = ({ data }: Props) => {
   const kkGeoJSON: FeatureCollection<Geometry, GeoJsonProperties> = {
     type: "FeatureCollection",
     features: data.map((item) => ({
