@@ -16,6 +16,7 @@ import { Switch } from "@/components/ui/switch";
 import { Tooltip } from "@/components/ui/tooltip";
 import MAPS_STYLES_OPTIONS from "@/constants/mapsStylesOptions";
 import useAdminSearchAddress from "@/constants/useSearchAddress";
+import useMapsConfig from "@/context/useBasemap";
 import useCurrentLocation from "@/context/useCurrentLocation";
 import useDisplayedData from "@/context/useDisplayedData";
 import useLang from "@/context/useLang";
@@ -27,6 +28,7 @@ import { useThemeConfig } from "@/context/useThemeConfig";
 import useClickOutside from "@/hooks/useClickOutside";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import DISPLAYED_DATA_LIST from "@/static/displayedDataList";
+import MAPS_CONFIG_LIST from "@/static/mapsConfigList";
 import pluck from "@/utils/pluck";
 import {
   Box,
@@ -50,7 +52,7 @@ import {
   IconFlag,
   IconMapCog,
   IconMapPin,
-  IconMapPin2,
+  IconMapPinCog,
   IconMinus,
   IconNavigationFilled,
   IconPlus,
@@ -61,8 +63,6 @@ import { useEffect, useRef, useState } from "react";
 import TheLayoutMenu from "../LayoutMenu";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import useSearchMode from "./useSearchMode";
-import MAPS_CONFIG_LIST from "@/static/mapsConfigList";
-import useMapsConfig from "@/context/useBasemap";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -333,7 +333,7 @@ const DataDisplayed = () => {
         <OverlayItemContainer>
           <Tooltip content={l.displayed_data}>
             <BButton iconButton unclicky variant={"ghost"} w={"fit"}>
-              <IconMapPin2 stroke={1.5} />
+              <IconMapPinCog stroke={1.5} />
             </BButton>
           </Tooltip>
         </OverlayItemContainer>
@@ -350,7 +350,7 @@ const DataDisplayed = () => {
           >
             <MenuHeaderContainer>
               <HStack>
-                <IconMapPin2 stroke={1.5} size={20} />
+                <IconMapPinCog stroke={1.5} size={20} />
                 <Text fontWeight={"bold"}>{l.displayed_data}</Text>
               </HStack>
             </MenuHeaderContainer>
@@ -541,7 +541,7 @@ const Legend = () => {
             <HelperText>
               {l.legend_helper}{" "}
               <Icon>
-                <IconMapPin2 size={20} stroke={1.5} />
+                <IconMapPinCog size={20} stroke={1.5} />
               </Icon>
             </HelperText>
           </CContainer>
