@@ -88,6 +88,31 @@ const AdminMap = () => {
     handleZoomFromPercent(mapZoomPercent);
   }, [mapZoomPercent]);
 
+  // Handle activeMapStyle url to json object
+  async function activeMapStyleJson() {
+    const response = await fetch(activeMapStyle);
+    const styleJson = await response.json();
+
+    styleJson.layers = styleJson.layers.map((layer: any) =>
+      layer.id === "building"
+        ? {
+            ...layer,
+            layout: {
+              ...layer.layout,
+              visibility: "none",
+            },
+          }
+        : layer
+    );
+
+    setActiveMapStyle(styleJson);
+  }
+  useEffect(() => {
+    if (typeof activeMapStyle === "string") {
+      activeMapStyleJson();
+    }
+  }, [activeMapStyle]);
+
   return (
     <Map
       ref={mapRef}

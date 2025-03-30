@@ -446,7 +446,7 @@ const Basemap = () => {
       ],
       water: ["water", "water-shadow", "waterway"],
       building: [
-        "building",
+        // "building",
         "building-top",
         "building-extrusion",
         "building-outline",
