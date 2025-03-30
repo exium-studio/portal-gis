@@ -321,7 +321,7 @@ const NavContainer = ({
         >
           <NavList />
 
-          <HStack position={"sticky"} right={0} bg={"body"} px={4}>
+          <HStack position={"sticky"} right={0} bg={"body"} pl={4} pr={7}>
             <NavList2 />
           </HStack>
         </HScroll>
