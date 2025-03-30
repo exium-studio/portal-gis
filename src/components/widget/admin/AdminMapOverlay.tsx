@@ -16,24 +16,24 @@ import { Switch } from "@/components/ui/switch";
 import { Tooltip } from "@/components/ui/tooltip";
 import MAPS_STYLES_OPTIONS from "@/constants/mapsStylesOptions";
 import useAdminSearchAddress from "@/constants/useSearchAddress";
+import useActiveMapStyle from "@/context/useActiveMapStyle";
 import useMapsConfig from "@/context/useBasemap";
 import useCurrentLocation from "@/context/useCurrentLocation";
 import useDisplayedData from "@/context/useDisplayedData";
 import useLang from "@/context/useLang";
-import useLayout from "@/context/useLayout";
 import useMapStyle from "@/context/useMapStyle";
 import useMapViewState from "@/context/useMapViewState";
 import useMapsZoom from "@/context/useMapZoom";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useClickOutside from "@/hooks/useClickOutside";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
-import DISPLAYED_DATA_LIST from "@/static/displayedDataList";
 import BASEMAP_CONFIG_LIST from "@/static/basemapConfigList";
+import DISPLAYED_DATA_LIST from "@/static/displayedDataList";
 import pluck from "@/utils/pluck";
 import {
-  chakra,
   Box,
   Center,
+  chakra,
   Group,
   HStack,
   Icon,
@@ -64,7 +64,6 @@ import { useEffect, useRef, useState } from "react";
 import TheLayoutMenu from "../LayoutMenu";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import useSearchMode from "./useSearchMode";
-import useActiveMapStyle from "@/context/useActiveMapStyle";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -930,9 +929,6 @@ const Compass = () => {
 };
 
 const AdminMapOverlay = () => {
-  // Contexts
-  const { layout } = useLayout();
-
   return (
     <CContainer
       id="map_overlay"
@@ -960,7 +956,7 @@ const AdminMapOverlay = () => {
 
             <Basemap />
 
-            {layout.id === 3 && <LayoutMenu />}
+            <LayoutMenu />
           </HStack>
         </HStack>
       </Box>

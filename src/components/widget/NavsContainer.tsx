@@ -258,9 +258,13 @@ const NavContainer = ({
             zIndex={3}
           >
             <HStack
+              h={"64px"}
               justify={"space-between"}
-              p={2}
-              px={4}
+              pl={4}
+              pr={"9px"}
+              pt={"23px"}
+              pb={5}
+              flexShrink={0}
               position={"sticky"}
               top={0}
               zIndex={2}
@@ -276,11 +280,11 @@ const NavContainer = ({
               </HStack>
 
               <HStack flexShrink={0} gap={0}>
-                {withMaps && <LayoutMenu />}
-
                 <CurrentUserTimeZone />
 
                 <Inbox />
+
+                {layout.id === 2 && <LayoutMenu />}
               </HStack>
             </HStack>
 
