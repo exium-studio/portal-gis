@@ -5,8 +5,6 @@ const DEFAULT = {
   road: true,
   water: true,
   building: true,
-  border: true,
-  label: true,
 };
 
 interface Props {

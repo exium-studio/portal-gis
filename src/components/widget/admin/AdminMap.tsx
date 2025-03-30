@@ -14,6 +14,7 @@ import FacilityLayer from "./FacilityLayer";
 import KKLayer from "./KKLayer";
 import VillageAssetLayer from "./VillageAssetLayer";
 import useActiveMapStyle from "@/context/useActiveMapStyle";
+import useBasemap from "@/context/useBasemap";
 
 const MIN_ZOOM = 0;
 const MAX_ZOOM = 22;
@@ -26,6 +27,7 @@ const AdminMap = () => {
   const { currentLocation } = useCurrentLocation();
   const { mapZoomPercent, setMapZoomPercent } = useMapsZoom();
   const { displayedData } = useDisplayedData();
+  const { basemap } = useBasemap();
 
   // States, Refs
   const { activeMapStyle, setActiveMapStyle } = useActiveMapStyle();
@@ -88,30 +90,80 @@ const AdminMap = () => {
     handleZoomFromPercent(mapZoomPercent);
   }, [mapZoomPercent]);
 
-  // Handle activeMapStyle url to json object
-  async function activeMapStyleJson() {
-    const response = await fetch(activeMapStyle);
-    const styleJson = await response.json();
+  // Handle activeMapStyle url to json object w/ basemap filter
+  async function initializeBasemap() {
+    let styleJson;
 
-    styleJson.layers = styleJson.layers.map((layer: any) =>
-      layer.id === "building"
-        ? {
-            ...layer,
-            layout: {
-              ...layer.layout,
-              visibility: "none",
-            },
-          }
-        : layer
-    );
+    if (typeof activeMapStyle === "string") {
+      const response = await fetch(activeMapStyle);
+      styleJson = await response.json();
+    } else {
+      styleJson = { ...activeMapStyle };
+    }
+
+    const layerMapping: Record<string, string[]> = {
+      road: [
+        "road_service_case",
+        "road_minor_case",
+        "road_pri_case_ramp",
+        "road-pri-case-ramp",
+        "road_trunk_case_ramp",
+        "road_mot_case_ramp",
+        "road_sec_case_noramp",
+        "road_pri_case_noramp",
+        "road_trunk_case_noramp",
+        "road_mot_case_noramp",
+        "road_path",
+        "road_service_fill",
+        "road_minor_fill",
+        "road_pri_fill_ramp",
+        "road_trunk_fill_ramp",
+        "road_mot_fill_ramp",
+        "road_sec_fill_noramp",
+        "road_pri_fill_noramp",
+        "road_trunk_fill_noramp",
+        "road_mot_fill_noramp",
+        "roadname_minor",
+        "roadname_sec",
+        "roadname_pri",
+        "roadname_major",
+      ],
+      water: ["water", "water-shadow", "waterway"],
+      building: [
+        // "building", // Default hidden
+        "building-top",
+        "building-extrusion",
+        "building-outline",
+      ],
+    };
+
+    styleJson.layers = styleJson.layers.map((layer: any) => {
+      if (layer.id === "building") {
+        return { ...layer, layout: { ...layer.layout, visibility: "none" } };
+      }
+
+      const layerType = Object.keys(basemap).find((key) =>
+        layerMapping[key as keyof typeof layerMapping]?.includes(layer.id)
+      );
+
+      if (layerType) {
+        return {
+          ...layer,
+          layout: {
+            ...layer.layout,
+            visibility: basemap[layerType] ? "visible" : "none",
+          },
+        };
+      }
+
+      return layer;
+    });
 
     setActiveMapStyle(styleJson);
   }
   useEffect(() => {
-    if (typeof activeMapStyle === "string") {
-      activeMapStyleJson();
-    }
-  }, [activeMapStyle]);
+    initializeBasemap();
+  }, []);
 
   return (
     <Map

@@ -411,12 +411,6 @@ const Basemap = () => {
     layerType: keyof typeof basemap,
     visible: boolean
   ) {
-    if (typeof activeMapStyle === "string") {
-      const response = await fetch(activeMapStyle);
-      const styleJson = await response.json();
-      setActiveMapStyle(styleJson);
-    }
-
     const layerMapping: Record<string, string[]> = {
       road: [
         "road_service_case",
