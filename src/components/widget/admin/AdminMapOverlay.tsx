@@ -405,6 +405,7 @@ const Basemap = () => {
   const { l } = useLang();
   const { basemap, setBasemap } = useMapsConfig();
   const { activeMapStyle, setActiveMapStyle } = useActiveMapStyle();
+  const { displayedData, setDisplayedData } = useDisplayedData();
 
   // Utils
   const contentRef = useRef(null);
@@ -494,37 +495,36 @@ const Basemap = () => {
             </MenuHeaderContainer>
 
             <CContainer pt={1}>
-              <CContainer pt={1}>
-                {BASEMAP_CONFIG_LIST.map((item, i) => {
-                  const active = basemap[item.key];
+              {BASEMAP_CONFIG_LIST.map((item, i) => {
+                const active = basemap[item.key];
 
-                  const toggleItem = () => {
-                    basemapSetter(item.key, !basemap[item.key]);
-                  };
+                const toggleItem = () => {
+                  basemapSetter(item.key, !basemap[item.key]);
+                  setDisplayedData({ ...displayedData });
+                };
 
-                  return (
-                    <BButton
-                      key={i}
-                      unclicky
-                      justifyContent={"space-between"}
-                      px={2}
-                      onClick={toggleItem}
-                      variant={"ghost"}
-                      size={"md"}
-                      cursor={"pointer"}
-                      disabled={item.disabled}
-                    >
-                      {pluck(l, item.key)}
+                return (
+                  <BButton
+                    key={i}
+                    unclicky
+                    justifyContent={"space-between"}
+                    px={2}
+                    onClick={toggleItem}
+                    variant={"ghost"}
+                    size={"md"}
+                    cursor={"pointer"}
+                    disabled={item.disabled}
+                  >
+                    {pluck(l, item.key)}
 
-                      <Switch
-                        checked={active}
-                        pointerEvents={"none"}
-                        colorPalette={themeConfig.colorPalette}
-                      />
-                    </BButton>
-                  );
-                })}
-              </CContainer>
+                    <Switch
+                      checked={active}
+                      pointerEvents={"none"}
+                      colorPalette={themeConfig.colorPalette}
+                    />
+                  </BButton>
+                );
+              })}
             </CContainer>
           </PopoverContent>
         </PopoverPositioner>
