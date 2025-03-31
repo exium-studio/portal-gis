@@ -15,16 +15,55 @@ import { useThemeConfig } from "@/context/useThemeConfig";
 import { OPTIONS_RELIGION } from "@/static/selectOptions";
 import { Center, HStack, Icon, SimpleGrid, Text } from "@chakra-ui/react";
 import { IconCheck, IconMoon2, IconPalette } from "@tabler/icons-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import formatTime from "@/utils/formatTime";
 import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
 
-const DarkMode = () => {
+const ManualDarkModeSetting = () => {
   // Contexts
   const { themeConfig } = useThemeConfig();
   const { l } = useLang();
-  const { colorMode, toggleColorMode } = useColorMode();
-  const { ADM, setADM } = useADM(); // Adaptive Dark Mode (Time-based)
+  const { colorMode, setColorMode } = useColorMode();
+  const { ADM } = useADM();
+
+  // States, Refs
+  const timeoutRef = useRef<any>(null);
+  const [active, setActive] = useState(colorMode === "dark");
+
+  // Handle active state
+  useEffect(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      setColorMode(active ? "dark" : "light");
+      timeoutRef.current = null;
+    }, 100);
+  }, [active]);
+
+  return (
+    <SettingsItemContainer disabled={ADM === "true"}>
+      <CContainer>
+        <Text>{l.dark_mode_ui_settings.label}</Text>
+        <Text color={"fg.subtle"}>{l.dark_mode_ui_settings.description}</Text>
+      </CContainer>
+
+      <Switch
+        checked={active}
+        onChange={() => {
+          setActive(!active);
+        }}
+        colorPalette={themeConfig.colorPalette}
+      />
+    </SettingsItemContainer>
+  );
+};
+const ADMSetting = () => {
+  // Contexts
+  const { themeConfig } = useThemeConfig();
+  const { l } = useLang();
+  const { ADM, setADM } = useADM();
 
   const handleAdaptiveToggle = () => {
     if (ADM === "true") {
@@ -33,6 +72,30 @@ const DarkMode = () => {
       setADM("true");
     }
   };
+
+  return (
+    <SettingsItemContainer>
+      <CContainer>
+        <Text>{l.adaptive_dark_mode_ui_settings.label}</Text>
+        <Text color={"fg.subtle"}>
+          {l.adaptive_dark_mode_ui_settings.description}{" "}
+          {`${formatTime("18:00", {
+            prefixTimeZoneKey: "UTC",
+          })} - ${formatTime("06:00", { prefixTimeZoneKey: "UTC" })}`}
+        </Text>
+      </CContainer>
+
+      <Switch
+        checked={ADM === "true"}
+        onChange={handleAdaptiveToggle}
+        colorPalette={themeConfig.colorPalette}
+      />
+    </SettingsItemContainer>
+  );
+};
+const DarkMode = () => {
+  // Contexts
+  const { l } = useLang();
 
   return (
     <ItemContainer>
@@ -45,39 +108,10 @@ const DarkMode = () => {
 
       <CContainer gap={4} py={3}>
         {/* Manual Dark Mode Toggle */}
-        <SettingsItemContainer disabled={ADM === "true"}>
-          <CContainer>
-            <Text>{l.dark_mode_ui_settings.label}</Text>
-            <Text color={"fg.subtle"}>
-              {l.dark_mode_ui_settings.description}
-            </Text>
-          </CContainer>
-
-          <Switch
-            checked={colorMode === "dark"}
-            onChange={toggleColorMode}
-            colorPalette={themeConfig.colorPalette}
-          />
-        </SettingsItemContainer>
+        <ManualDarkModeSetting />
 
         {/* Adaptive Dark Mode Toggle */}
-        <SettingsItemContainer>
-          <CContainer>
-            <Text>{l.adaptive_dark_mode_ui_settings.label}</Text>
-            <Text color={"fg.subtle"}>
-              {l.adaptive_dark_mode_ui_settings.description}{" "}
-              {`${formatTime("18:00", {
-                prefixTimeZoneKey: "UTC",
-              })} - ${formatTime("06:00", { prefixTimeZoneKey: "UTC" })}`}
-            </Text>
-          </CContainer>
-
-          <Switch
-            checked={ADM === "true"}
-            onChange={handleAdaptiveToggle}
-            colorPalette={themeConfig.colorPalette}
-          />
-        </SettingsItemContainer>
+        <ADMSetting />
       </CContainer>
     </ItemContainer>
   );

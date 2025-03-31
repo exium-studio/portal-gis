@@ -414,7 +414,6 @@ const Basemap = () => {
   const { l } = useLang();
   const { basemap, setBasemap } = useMapsConfig();
   const { activeMapStyle, setActiveMapStyle } = useActiveMapStyle();
-  const { displayedData, setDisplayedData } = useDisplayedData();
 
   // Utils
   const { open, onToggle, onClose } = useDisclosure();
@@ -519,7 +518,6 @@ const Basemap = () => {
 
                 const toggleItem = () => {
                   basemapSetter(item.key, !basemap[item.key]);
-                  setDisplayedData({ ...displayedData });
                 };
 
                 return (
