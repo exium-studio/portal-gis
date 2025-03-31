@@ -107,15 +107,14 @@ function App() {
       setColorMode(hour >= 18 || hour < 6 ? "dark" : "light");
     };
 
-    updateDarkMode(); // Set mode saat pertama kali dijalankan
+    updateDarkMode();
 
-    // Cek setiap menit apakah sudah masuk jam 06:00 atau 18:00
     const interval = setInterval(() => {
       const hour = new Date().getHours();
       if (hour === 6 || hour === 18) {
         updateDarkMode();
       }
-    }, 60 * 1000); // Cek setiap 1 menit
+    }, 60 * 1000);
 
     return () => clearInterval(interval);
   }, [ADM, setColorMode]);
