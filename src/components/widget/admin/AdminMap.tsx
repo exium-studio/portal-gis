@@ -158,28 +158,29 @@ const AdminMap = () => {
     }
   }, [mapStyle]);
   useEffect(() => {
-    setTimeout(() => {
+    const timeoutRef: { first: number; second: number } = {
+      first: 0,
+      second: 0,
+    };
+
+    timeoutRef.first = window.setTimeout(() => {
       setMapViewState({
         ...mapViewState,
         latitude: mapViewState.latitude + 0.0000000001,
       });
+    }, 50);
+
+    timeoutRef.second = window.setTimeout(() => {
       setMapViewState({
         ...mapViewState,
         latitude: mapViewState.latitude - 0.0000000001,
       });
     }, 100);
 
-    if (!mapRef.current) return;
-
-    const map = mapRef.current.getMap();
-
-    map.once("styledata", () => {
-      setTimeout(() => {
-        mapRef.current?.triggerRepaint();
-      }, 100);
-    });
-
-    map.setStyle(activeMapStyle);
+    return () => {
+      clearTimeout(timeoutRef.first);
+      clearTimeout(timeoutRef.second);
+    };
   }, [activeMapStyle]);
 
   return (
