@@ -104,21 +104,20 @@ function App() {
 
     const updateDarkMode = () => {
       const hour = new Date().getHours();
-      setColorMode(hour >= 18 || hour < 6 ? "dark" : "light"); // Dark mode 18:00 ~ 06:00
+      setColorMode(hour >= 18 || hour < 6 ? "dark" : "light");
     };
 
-    const hour = new Date().getHours();
-    if (hour >= 18 || hour < 6) {
-      setColorMode("dark");
-    } else {
-      setColorMode("light");
-    }
+    updateDarkMode(); // Set mode saat pertama kali dijalankan
 
-    // Check only at 18:00 and 06:00
-    const nextCheckTime = hour >= 18 || hour < 6 ? 24 - hour + 6 : 18 - hour;
-    const timeout = setTimeout(updateDarkMode, nextCheckTime * 60 * 60 * 1000); // Set the next check time
+    // Cek setiap menit apakah sudah masuk jam 06:00 atau 18:00
+    const interval = setInterval(() => {
+      const hour = new Date().getHours();
+      if (hour === 6 || hour === 18) {
+        updateDarkMode();
+      }
+    }, 60 * 1000); // Cek setiap 1 menit
 
-    return () => clearTimeout(timeout);
+    return () => clearInterval(interval);
   }, [ADM, setColorMode]);
 
   return (
