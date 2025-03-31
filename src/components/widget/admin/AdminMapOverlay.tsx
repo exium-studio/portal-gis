@@ -319,7 +319,7 @@ const SearchAddress = () => {
   );
 };
 
-const DataDisplayed = () => {
+const DisplayedData = () => {
   // Contexts
   const { themeConfig } = useThemeConfig();
   const { displayedData, setDisplayedData } = useDisplayedData();
@@ -950,7 +950,7 @@ const AdminMapOverlay = () => {
           </HStack>
 
           <HStack position={"absolute"} right={0}>
-            <DataDisplayed />
+            <DisplayedData />
 
             <Basemap />
 
