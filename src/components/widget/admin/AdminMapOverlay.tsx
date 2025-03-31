@@ -458,7 +458,6 @@ const Basemap = () => {
         "building-outline",
       ],
     };
-
     const updatedLayers = activeMapStyle.layers.map((layer: any) =>
       layerMapping[layerType as keyof typeof layerMapping]?.includes(layer.id)
         ? {
@@ -470,9 +469,7 @@ const Basemap = () => {
           }
         : layer
     );
-
     setActiveMapStyle({ ...activeMapStyle, layers: updatedLayers });
-
     setBasemap({ ...basemap, [layerType]: visible });
   }
   useClickOutside([triggerRef, contentRef], onClose);

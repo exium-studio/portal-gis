@@ -157,6 +157,30 @@ const AdminMap = () => {
       setActiveMapStyle(mapStyle.tile[colorMode]);
     }
   }, [mapStyle]);
+  useEffect(() => {
+    setTimeout(() => {
+      setMapViewState({
+        ...mapViewState,
+        latitude: mapViewState.latitude + 0.0000000001,
+      });
+      setMapViewState({
+        ...mapViewState,
+        latitude: mapViewState.latitude - 0.0000000001,
+      });
+    }, 100);
+
+    if (!mapRef.current) return;
+
+    const map = mapRef.current.getMap();
+
+    map.once("styledata", () => {
+      setTimeout(() => {
+        mapRef.current?.triggerRepaint();
+      }, 100);
+    });
+
+    map.setStyle(activeMapStyle);
+  }, [activeMapStyle]);
 
   return (
     <Map
@@ -188,18 +212,18 @@ const AdminMap = () => {
               <MapMarkerCircle />
             </Marker>
           )}
-        </>
-      )}
 
-      {/* Data layer */}
-      {data && (
-        <>
-          {displayedData.kk && <KKLayer data={data.kk} />}
+          {/* Data layer */}
+          {data && (
+            <>
+              {displayedData.kk && <KKLayer data={data.kk} />}
 
-          {displayedData.facility && <FacilityLayer data={data.facility} />}
+              {displayedData.facility && <FacilityLayer data={data.facility} />}
 
-          {displayedData.village_asset && (
-            <VillageAssetLayer data={data.village_asset} />
+              {displayedData.village_asset && (
+                <VillageAssetLayer data={data.village_asset} />
+              )}
+            </>
           )}
         </>
       )}
