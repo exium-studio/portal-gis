@@ -63,6 +63,16 @@ export const settings_navs = {
 };
 
 // UI
+export const mark_read_disclosure = {
+  title: {
+    id: "Tandai semua sudah dibaca",
+    en: "Mark all as read",
+  },
+  description: {
+    id: "Semua inbox akan ditandai sudah dibaca",
+    en: "All inboxes will be marked as read",
+  },
+};
 export const basemap = {
   id: "Peta dasar",
   en: "Basemap",

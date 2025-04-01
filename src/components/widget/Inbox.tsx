@@ -65,9 +65,18 @@ const Inbox = () => {
           </DrawerBody>
 
           <DrawerFooter>
-            <BButton variant={"outline"}>{l.mark_as_read}</BButton>
             <ConfirmationDisclosure
-              id="loggingout"
+              id="mark-read-all"
+              title={l.mark_read_disclosure.title}
+              description={l.mark_read_disclosure.description}
+              confirmLabel={l.mark_as_read}
+              confirmCallback={() => {}}
+            >
+              <BButton variant={"outline"}>{l.mark_as_read}</BButton>
+            </ConfirmationDisclosure>
+
+            <ConfirmationDisclosure
+              id="logout"
               title={l.delete_all_inbox_disclosure.title}
               description={l.delete_all_inbox_disclosure.description}
               confirmLabel={l.delete_label}

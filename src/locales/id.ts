@@ -183,6 +183,10 @@ const translations = {
   "maintenance_page": "Kami sedang melakukan pemeliharaan untuk memberikan layanan yang lebih baik. Mohon maaf atas ketidaknyamanannya. Silakan cek kembali nanti.",
   "map_type": "Jenis peta",
   "mark_as_read": "Tandai dibaca semua",
+  "mark_read_disclosure": {
+    "title": "Tandai semua sudah dibaca",
+    "description": "Semua inbox akan ditandai sudah dibaca"
+  },
   "married_status": "Status pernikahan",
   "measurment_unit_format_settings_title": "Format Satuan Pengukuran",
   "mic": "Mikrofon",
