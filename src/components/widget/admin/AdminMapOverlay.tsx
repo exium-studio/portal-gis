@@ -414,6 +414,7 @@ const Basemap = () => {
   const { l } = useLang();
   const { basemap, setBasemap } = useMapsConfig();
   const { activeMapStyle, setActiveMapStyle } = useActiveMapStyle();
+  const { mapStyle } = useMapStyle();
 
   // Utils
   const { open, onToggle, onClose } = useDisclosure();
@@ -486,6 +487,7 @@ const Basemap = () => {
               variant={"ghost"}
               w={"fit"}
               onClick={onToggle}
+              disabled={mapStyle.id === 2}
             >
               <IconMapCog stroke={1.5} />
             </BButton>
