@@ -293,7 +293,7 @@ const NavContainer = ({
 
                 <Inbox />
 
-                {layout.id === 2 && <LayoutMenu />}
+                {layout.id === 2 && !inMainNavs && <LayoutMenu />}
               </HStack>
             </HStack>
 
