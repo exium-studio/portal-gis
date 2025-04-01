@@ -41,6 +41,16 @@ const ManualDarkModeSetting = () => {
       timeoutRef.current = null;
     }, 100);
   }, [active]);
+  useEffect(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      setActive(colorMode === "dark" ? true : false);
+      timeoutRef.current = null;
+    }, 100);
+  }, [colorMode]);
 
   return (
     <SettingsItemContainer disabled={ADM === "true"}>
@@ -65,13 +75,21 @@ const ADMSetting = () => {
   const { l } = useLang();
   const { ADM, setADM } = useADM();
 
-  const handleAdaptiveToggle = () => {
-    if (ADM === "true") {
-      setADM("false");
-    } else {
-      setADM("true");
+  // States, Refs
+  const [active, setActive] = useState(ADM === "true" ? true : false);
+  const timeoutRef = useRef<any>(null);
+
+  // Handle active state
+  useEffect(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
     }
-  };
+
+    timeoutRef.current = setTimeout(() => {
+      setADM(active ? "true" : "false");
+      timeoutRef.current = null;
+    }, 100);
+  }, [active]);
 
   return (
     <SettingsItemContainer>
@@ -86,8 +104,10 @@ const ADMSetting = () => {
       </CContainer>
 
       <Switch
-        checked={ADM === "true"}
-        onChange={handleAdaptiveToggle}
+        checked={active}
+        onChange={() => {
+          setActive(!active);
+        }}
         colorPalette={themeConfig.colorPalette}
       />
     </SettingsItemContainer>
