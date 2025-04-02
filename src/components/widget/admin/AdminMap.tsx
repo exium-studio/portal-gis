@@ -157,31 +157,35 @@ const AdminMap = () => {
       setActiveMapStyle(mapStyle.tile[colorMode]);
     }
   }, [mapStyle]);
-  useEffect(() => {
-    const timeoutRef: { first: number; second: number } = {
-      first: 0,
-      second: 0,
-    };
 
-    timeoutRef.first = window.setTimeout(() => {
-      setMapViewState({
-        ...mapViewState,
-        latitude: mapViewState.latitude + 0.0000000001,
-      });
-    }, 50);
+  // Handle rerender layer
+  // useEffect(() => {
+  //   console.log(mapStyle);
 
-    timeoutRef.second = window.setTimeout(() => {
-      setMapViewState({
-        ...mapViewState,
-        latitude: mapViewState.latitude - 0.0000000001,
-      });
-    }, 100);
+  //   const timeoutRef: { first: number; second: number } = {
+  //     first: 0,
+  //     second: 0,
+  //   };
 
-    return () => {
-      clearTimeout(timeoutRef.first);
-      clearTimeout(timeoutRef.second);
-    };
-  }, [activeMapStyle]);
+  //   timeoutRef.first = window.setTimeout(() => {
+  //     setMapViewState({
+  //       ...mapViewState,
+  //       latitude: mapViewState.latitude + 0.0000000001,
+  //     });
+  //   }, 50);
+
+  //   timeoutRef.second = window.setTimeout(() => {
+  //     setMapViewState({
+  //       ...mapViewState,
+  //       latitude: mapViewState.latitude - 0.0000000001,
+  //     });
+  //   }, 100);
+
+  //   return () => {
+  //     clearTimeout(timeoutRef.first);
+  //     clearTimeout(timeoutRef.second);
+  //   };
+  // }, [activeMapStyle, mapStyle]);
 
   return (
     <Map
