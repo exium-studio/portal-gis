@@ -281,6 +281,10 @@ const NavContainer = ({
               </HStack>
 
               <HStack flexShrink={0} gap={0}>
+                <CurrentUserTimeZone />
+
+                <Inbox />
+
                 {pathname === "/profile" && (
                   <Link to={"/settings"}>
                     <BButton iconButton variant={"ghost"}>
@@ -288,10 +292,6 @@ const NavContainer = ({
                     </BButton>
                   </Link>
                 )}
-
-                <CurrentUserTimeZone />
-
-                <Inbox />
 
                 {layout.id === 2 && inMainNavs && <LayoutMenu />}
               </HStack>
