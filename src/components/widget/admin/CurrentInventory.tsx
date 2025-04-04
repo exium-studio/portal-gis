@@ -355,6 +355,7 @@ const CurrentInventory = ({ ...props }: StackProps) => {
                 borderBottom={"1px solid {colors.gray.muted}"}
                 px={2}
                 py={2}
+                gap={4}
               >
                 <Text fontWeight={"medium"}>{item.name}</Text>
 
