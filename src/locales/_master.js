@@ -63,6 +63,14 @@ export const settings_navs = {
 };
 
 // UI
+export const file_dropzone_label = {
+  id: "Drag and drop/klik untuk unggah berkas",
+  en: "Drag and drop/click to upload files",
+};
+export const previous_attachment = {
+  id: "Attachment sebelumnya",
+  en: "Previous attachments",
+};
 export const mark_read_disclosure = {
   title: {
     id: "Tandai semua sudah dibaca",

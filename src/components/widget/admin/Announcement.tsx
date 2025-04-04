@@ -11,6 +11,7 @@ import {
   DisclosureRoot,
 } from "@/components/ui-custom/Disclosure";
 import DisclosureHeaderContent from "@/components/ui-custom/DisclosureHeaderContent";
+import FileIcon from "@/components/ui-custom/FileIcon";
 import FileInput from "@/components/ui-custom/FileInput";
 import HelperText from "@/components/ui-custom/HelperText";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
@@ -43,6 +44,7 @@ import {
   StackProps,
   Text,
   useDisclosure,
+  VStack,
 } from "@chakra-ui/react";
 import {
   IconDotsVertical,
@@ -297,7 +299,7 @@ const AnnouncementEdit = ({ item }: any) => {
   const { open, onOpen, onClose } = useDisclosure();
   useBackOnClose(`edit-announcement-${item.id}`, open, onOpen, onClose);
 
-  console.log(item);
+  console.log(item.documents);
 
   return (
     <>
@@ -387,13 +389,30 @@ const AnnouncementEdit = ({ item }: any) => {
 
               <Field mt={4} errorText={formik.errors.documents as string}>
                 <FieldLabel>Attachment</FieldLabel>
-                <FileInput maxFiles={3} />
+                <FileInput dropZone maxFiles={3} />
               </Field>
+
+              <CContainer mt={4} gap={2}>
+                <Text fontWeight={"medium"}>{l.previous_attachment}</Text>
+
+                {item.documents.length > 0 && (
+                  <CContainer gap={1}>
+                    {item.documents.map((item: any, i: number) => {
+                      return (
+                        <VStack key={i} bg={"bg.subtle"} p={4}>
+                          <FileIcon mimeType={item.file_mime_type} />
+                        </VStack>
+                      );
+                    })}
+                  </CContainer>
+                )}
+              </CContainer>
             </form>
           </DisclosureBody>
 
           <DisclosureFooter>
             <BackButton />
+
             <BButton
               colorPalette={themeConfig.colorPalette}
               type="submit"

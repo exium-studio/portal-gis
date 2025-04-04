@@ -110,6 +110,7 @@ const translations = {
   "expense": "Expense",
   "expense_category": "Expense category",
   "facility": "Public facility",
+  "file_dropzone_label": "Drag and drop/click to upload files",
   "firefox_permissions_settings_link": "Preferences → Privacy & Security → Permissions → ",
   "forbidden_feedback": {
     "title": "No Access",
@@ -257,6 +258,7 @@ const translations = {
   "population": "Population",
   "population_density": "Population density",
   "population_growth": "Population growth",
+  "previous_attachment": "Previous attachments",
   "published_date": "Date published",
   "regional_settings_helper_text": "These language & region settings are stored locally on your device and will not be synced with your account.",
   "religion": "Religion",

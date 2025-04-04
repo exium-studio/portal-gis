@@ -110,6 +110,7 @@ const translations = {
   "expense": "Pengeluaran",
   "expense_category": "Kategori pengeluaran",
   "facility": "Fasilitas umum",
+  "file_dropzone_label": "Drag and drop/klik untuk unggah berkas",
   "firefox_permissions_settings_link": "Preferensi → Privasi & Keamanan → Izin → ",
   "forbidden_feedback": {
     "title": "Tidak ada akses",
@@ -257,6 +258,7 @@ const translations = {
   "population": "Populasi",
   "population_density": "Kepadatan penduduk",
   "population_growth": "Pertumbuhan populasi",
+  "previous_attachment": "Attachment sebelumnya",
   "published_date": "Tanggal publikasi",
   "regional_settings_helper_text": "Pengaturan bahasa & wilayah ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
   "religion": "Agama",
