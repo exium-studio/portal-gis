@@ -1,7 +1,11 @@
 import { Text } from "@chakra-ui/react";
 import CContainer from "./CContainer";
+import { useThemeConfig } from "@/context/useThemeConfig";
 
 const LineChartTooltipContent = ({ active, payload, label }: any) => {
+  // Contexts
+  const { themeConfig } = useThemeConfig();
+
   if (active && payload && payload.length) {
     return (
       <CContainer
@@ -10,7 +14,7 @@ const LineChartTooltipContent = ({ active, payload, label }: any) => {
         px={3}
         py={2}
         gap={1}
-        borderRadius={6}
+        borderRadius={themeConfig.radii.component}
       >
         <Text fontWeight={"bold"} color={"fg.subtle"}>{`${label}`}</Text>
 
