@@ -102,56 +102,62 @@ const Detail = ({ item }: any) => {
                   })}
                 </HStack>
               </HStack>
+
+              {item.document.length > 1 && (
+                <HStack
+                  justify={"center"}
+                  position={"absolute"}
+                  right={2}
+                  bottom={3}
+                  w={"calc(100% - 16px)"}
+                >
+                  <BButton
+                    iconButton
+                    unclicky
+                    borderRadius={"full"}
+                    size={"sm"}
+                    onClick={prev}
+                  >
+                    <IconChevronLeft />
+                  </BButton>
+
+                  <BButton
+                    iconButton
+                    unclicky
+                    borderRadius={"full"}
+                    size={"sm"}
+                    onClick={next}
+                  >
+                    <IconChevronRight />
+                  </BButton>
+                </HStack>
+              )}
             </CContainer>
 
             <CContainer px={4} mt={4}>
-              <HStack align={"start"}>
-                <CContainer gap={2}>
-                  <Text fontSize={"xl"} fontWeight={"bold"}>
-                    {item.name}
+              <CContainer gap={2}>
+                <Text fontSize={"xl"} fontWeight={"bold"}>
+                  {item.name}
+                </Text>
+                <Text>{item.description}</Text>
+
+                <HStack gap={1} align={"end"}>
+                  <Text fontSize={"xl"} lineHeight={1.2}>
+                    {item.amount - item.amount_usage}
                   </Text>
-                  <Text>{item.description}</Text>
+                  <Text>/</Text>
+                  <Text>{item.amount}</Text>
 
-                  <HStack gap={1} align={"end"}>
-                    <Text>{item.amount - item.amount_usage}</Text>
-                    <Text>/</Text>
-                    <Text color={"fg.muted"}>{item.amount}</Text>
-
-                    <Text color={"fg.subtle"}>
-                      ({item.amount_usage} {l.in_use})
-                    </Text>
-                  </HStack>
-
-                  <Text color={"fg.subtle"} mt={2}>
-                    {l.last_updated} {formatDate(item.updated_at)}{" "}
-                    {formatTime(makeTime(item.updated_at))}
+                  <Text color={"fg.subtle"}>
+                    ({item.amount_usage} {l.in_use})
                   </Text>
-                </CContainer>
+                </HStack>
 
-                {item.document.length > 1 && (
-                  <HStack justify={"end"}>
-                    <BButton
-                      iconButton
-                      unclicky
-                      borderRadius={"full"}
-                      variant={"ghost"}
-                      onClick={prev}
-                    >
-                      <IconChevronLeft />
-                    </BButton>
-
-                    <BButton
-                      iconButton
-                      unclicky
-                      borderRadius={"full"}
-                      variant={"ghost"}
-                      onClick={next}
-                    >
-                      <IconChevronRight />
-                    </BButton>
-                  </HStack>
-                )}
-              </HStack>
+                <Text color={"fg.subtle"} mt={2}>
+                  {l.last_updated} {formatDate(item.updated_at)}{" "}
+                  {formatTime(makeTime(item.updated_at))}
+                </Text>
+              </CContainer>
             </CContainer>
           </DisclosureBody>
 
