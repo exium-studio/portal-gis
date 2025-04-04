@@ -10,7 +10,14 @@ import {
 } from "@/constants/presetProps";
 import { ITEM_BODY_H } from "@/constants/sizes";
 import useLang from "@/context/useLang";
-import { Circle, HStack, Icon, StackProps, Text } from "@chakra-ui/react";
+import {
+  Circle,
+  HStack,
+  Icon,
+  Separator,
+  StackProps,
+  Text,
+} from "@chakra-ui/react";
 import { IconFriends } from "@tabler/icons-react";
 import { useState } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
@@ -143,7 +150,13 @@ const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
                   </ResponsiveContainer>
                 </CContainer>
 
-                <HStack wrap={"wrap"} justify={"center"} gapX={5} px={4} mt={4}>
+                <CContainer
+                  gap={4}
+                  px={5}
+                  mt={4}
+                  maxH={"200px"}
+                  className="scrollY"
+                >
                   {finalData[category[0].id as keyof typeof finalData].map(
                     (item, i) => (
                       <HStack key={i}>
@@ -152,16 +165,18 @@ const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
                           h={"8px"}
                           bg={CHART_COLORS[i % CHART_COLORS.length]}
                         />
-                        <HStack>
-                          <Text>
-                            {item.label} : {item.total_population}
-                          </Text>
+                        <HStack flex={1}>
+                          <Text>{item.label}</Text>
+
+                          <Separator flex={1} my={"auto"} />
+
                           <Text color={"fg.subtle"}>{item.percentage}</Text>
+                          <Text>{item.total_population}</Text>
                         </HStack>
                       </HStack>
                     )
                   )}
-                </HStack>
+                </CContainer>
               </>
             )}
           </>

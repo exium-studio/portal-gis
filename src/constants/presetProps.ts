@@ -28,8 +28,8 @@ export const PRESET_LINE_CHART = {
 };
 
 export const PRESET_DOUGHNUT_CHART = {
-  innerRadius: 80,
-  outerRadius: 120,
+  innerRadius: 70,
+  outerRadius: 110,
   stroke: "",
   // paddingAngle: 4,
   // cornerRadius: 6,
