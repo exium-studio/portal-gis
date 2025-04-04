@@ -395,7 +395,7 @@ const AnnouncementEdit = ({ item }: any) => {
               <CContainer mt={4} gap={2}>
                 <Text fontWeight={"medium"}>{l.previous_attachment}</Text>
 
-                {item.documents.length > 0 && (
+                {item?.documents?.length > 0 && (
                   <CContainer gap={1}>
                     {item.documents.map((item: any, i: number) => {
                       return (
