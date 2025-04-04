@@ -10,6 +10,7 @@ const translations = {
   "angle_to_north": "Angle to north",
   "announcement": "Announcement",
   "ask": "Ask",
+  "attachment": "Attachment",
   "auto_time_zone": "Current time zone (auto)",
   "back_online_toast": {
     "title": "Connection Recovered",
@@ -79,6 +80,7 @@ const translations = {
     "description": "Delete all of the read inboxes."
   },
   "delete_label": "Delete",
+  "delete_previous_attachment": "Will delete this file when submitted.",
   "description": "Description",
   "display_settings_helper_text": "These display settings are stored locally on your device and will not be synced with your account.",
   "displayed_data": "Displayed data",

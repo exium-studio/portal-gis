@@ -67,9 +67,17 @@ export const file_dropzone_label = {
   id: "Drag and drop/klik untuk unggah berkas",
   en: "Drag and drop/click to upload files",
 };
+export const attachment = {
+  id: "Lampiran",
+  en: "Attachment",
+};
 export const previous_attachment = {
-  id: "Attachment sebelumnya",
+  id: "Lampiran sebelumnya",
   en: "Previous attachments",
+};
+export const delete_previous_attachment = {
+  id: "Akan menghapus file ini saat submit.",
+  en: "Will delete this file when submitted.",
 };
 export const mark_read_disclosure = {
   title: {

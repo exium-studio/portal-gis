@@ -10,6 +10,7 @@ const translations = {
   "angle_to_north": "Sudut terhadap utara",
   "announcement": "Pengumuman",
   "ask": "Meminta",
+  "attachment": "Lampiran",
   "auto_time_zone": "Zona waktu saat ini (auto)",
   "back_online_toast": {
     "title": "Koneksi Pulih",
@@ -79,6 +80,7 @@ const translations = {
     "description": "Hapus semua inbox yang sudah dibaca."
   },
   "delete_label": "Hapus",
+  "delete_previous_attachment": "Akan menghapus file ini saat submit.",
   "description": "Deskripsi",
   "display_settings_helper_text": "Pengaturan tampilan ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
   "displayed_data": "Data yang ditampilkan",
@@ -258,7 +260,7 @@ const translations = {
   "population": "Populasi",
   "population_density": "Kepadatan penduduk",
   "population_growth": "Pertumbuhan populasi",
-  "previous_attachment": "Attachment sebelumnya",
+  "previous_attachment": "Lampiran sebelumnya",
   "published_date": "Tanggal publikasi",
   "regional_settings_helper_text": "Pengaturan bahasa & wilayah ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
   "religion": "Agama",
