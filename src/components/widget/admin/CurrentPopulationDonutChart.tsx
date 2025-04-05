@@ -24,6 +24,7 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import PopulationCategoriesOptions from "../PopulationCategoriesOptions";
 import { Interface__SelectOption } from "@/constants/interfaces";
 import calculatePercentage from "@/utils/calculatePercentage";
+import TruncatedText from "@/components/ui-custom/TruncatedText";
 
 const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
   // Contexts
@@ -166,7 +167,12 @@ const CurrentPopulationDonutChart = ({ ...props }: StackProps) => {
                           bg={CHART_COLORS[i % CHART_COLORS.length]}
                         />
                         <HStack flex={1}>
-                          <Text>{item.label}</Text>
+                          <TruncatedText
+                            tooltipContent={item.label}
+                            textProps={{ maxW: "120px" }}
+                          >
+                            {item.label}
+                          </TruncatedText>
 
                           <Separator flex={1} my={"auto"} />
 
