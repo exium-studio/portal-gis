@@ -46,7 +46,7 @@ const DisclosureHeaderContent = ({
                 <DialogCloseTrigger
                   borderRadius={"full"}
                   top={"12px"}
-                  right={"14px"}
+                  right={"12px"}
                   onClick={handleBack}
                   mt={"-2px"}
                   mr={"-6px"}
@@ -68,7 +68,7 @@ const DisclosureHeaderContent = ({
             <DisclosureCloseTrigger
               borderRadius={"full"}
               top={3}
-              right={"14px"}
+              right={["14px", null, "12px"]}
               onClick={handleBack}
             />
           )}

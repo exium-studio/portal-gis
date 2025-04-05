@@ -167,7 +167,10 @@ const NavContainer = ({
             positioning={{ placement: "right" }}
             contentProps={{ ml: 2 }}
           >
-            <NavItemContainer active={activePath === "/profile"}>
+            <NavItemContainer
+              active={activePath === "/profile"}
+              w={["60px", null, "40px"]}
+            >
               <Avatar
                 name="Jolitos Kurniawan"
                 cursor={"pointer"}
@@ -334,7 +337,7 @@ const NavContainer = ({
         >
           <NavList />
 
-          <HStack position={"sticky"} right={0} bg={"body"} pl={4} pr={7}>
+          <HStack position={"sticky"} right={0} bg={"body"} pr={4}>
             <NavList2 />
           </HStack>
         </HScroll>
