@@ -56,7 +56,7 @@ const CurrentFacility = ({ ...props }: StackProps) => {
                     variant={"ghost"}
                     colorPalette={themeConfig.colorPalette}
                   >
-                    <IconMapPin />
+                    <IconMapPin stroke={1.5} />
                   </BButton>
                 </Tooltip>
               </HStack>

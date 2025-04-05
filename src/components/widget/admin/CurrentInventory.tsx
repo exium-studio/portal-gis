@@ -32,7 +32,7 @@ import {
 import {
   IconChevronLeft,
   IconChevronRight,
-  IconEye,
+  IconEyeEdit,
   IconPackage,
 } from "@tabler/icons-react";
 import { useRef } from "react";
@@ -73,7 +73,7 @@ const Detail = ({ item }: any) => {
           mr={-1}
           onClick={onOpen}
         >
-          <IconEye />
+          <IconEyeEdit stroke={1.5} />
         </BButton>
       </Tooltip>
 

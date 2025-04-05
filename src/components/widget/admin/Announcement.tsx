@@ -46,7 +46,7 @@ import {
 } from "@chakra-ui/react";
 import {
   IconDotsVertical,
-  IconEdit,
+  IconEyeEdit,
   IconPlus,
   IconSpeakerphone,
   IconTrash,
@@ -301,9 +301,9 @@ const AnnouncementEdit = ({ item }: any) => {
   return (
     <>
       <MenuItem value="edit" onClick={onOpen}>
-        Edit
+        Detail / Edit
         <Icon ml={"auto"}>
-          <IconEdit stroke={1.5} size={16} />
+          <IconEyeEdit stroke={1.5} size={16} />
         </Icon>
       </MenuItem>
 
