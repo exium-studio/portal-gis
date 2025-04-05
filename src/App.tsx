@@ -1,7 +1,7 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useEffect, useState } from "react";
-import { BrowserRouter, useLocation } from "react-router-dom";
+import { BrowserRouter, useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
 import { useColorMode } from "./components/ui/color-mode";
 import { toaster, Toaster } from "./components/ui/toaster";
@@ -21,6 +21,7 @@ const EndpointWrapper = ({ children }: { children: React.ReactNode }) => {
 
   // Utils
   const location = useLocation();
+  const navigate = useNavigate();
   const setStatusBarPrimary = useStatusBarColor(
     themeConfig.primaryColorHex,
     themeConfig.primaryColorHex
@@ -44,6 +45,13 @@ const EndpointWrapper = ({ children }: { children: React.ReactNode }) => {
         break;
     }
   }, [location, setStatusBarBody, setStatusBarDark]);
+
+  // Handle on refresh remove all query params
+  useEffect(() => {
+    if (location.search) {
+      navigate(location.pathname, { replace: true });
+    }
+  }, []);
 
   return <>{children}</>;
 };

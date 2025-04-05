@@ -386,7 +386,7 @@ const AnnouncementEdit = ({ item }: any) => {
 
               <Field mt={4} errorText={formik.errors.documents as string}>
                 <FieldLabel>Attachment</FieldLabel>
-                <FileInput dropZone maxFiles={3} />
+                <FileInput dropzone maxFiles={3} />
               </Field>
 
               <PreviousAttachment initialFiles={item.documents} mt={4} />
