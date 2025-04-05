@@ -596,6 +596,7 @@ const Legend = () => {
 
             <BButton
               iconButton
+              unclicky
               size={"xs"}
               borderRadius={"full"}
               variant={"ghost"}
@@ -625,7 +626,7 @@ const Legend = () => {
 
       <OverlayItemContainer>
         <Tooltip content={l.legend}>
-          <BButton iconButton variant={"ghost"} onClick={onToggle}>
+          <BButton iconButton unclicky variant={"ghost"} onClick={onToggle}>
             <IconFlag stroke={1.5} />
           </BButton>
         </Tooltip>
@@ -743,6 +744,7 @@ const ZoomControl = () => {
         <Tooltip content={"Zoom out"}>
           <BButton
             iconButton
+            unclicky
             variant={"ghost"}
             onClick={() => {
               if (mapZoomPercent > 10) {
@@ -779,6 +781,7 @@ const ZoomControl = () => {
         <Tooltip content={"Zoom in"}>
           <BButton
             iconButton
+            unclicky
             variant={"ghost"}
             onClick={() => {
               if (mapZoomPercent < 90) {
@@ -909,7 +912,7 @@ const Compass = () => {
         </Tooltip>
 
         <Tooltip content={`Reset ${l.angle_to_north.toLowerCase()}`}>
-          <BButton iconButton onClick={handleReset} variant={"ghost"}>
+          <BButton iconButton unclicky onClick={handleReset} variant={"ghost"}>
             <Center
               transform={`rotate(${bearing * -1}deg)`}
               position={"relative"}
