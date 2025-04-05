@@ -129,6 +129,7 @@ const translations = {
   "infrastructure": "Infrastructure",
   "inventory": "Inventory",
   "kk": "Family Card (KK)",
+  "kk_poor": "Family Card (KK) poor",
   "label": "Label",
   "land_field": "Land field",
   "language_settings_title": "Language",

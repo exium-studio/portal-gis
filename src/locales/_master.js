@@ -63,6 +63,10 @@ export const settings_navs = {
 };
 
 // UI
+export const kk_poor = {
+  id: "Kartu Keluarga (KK) miskin",
+  en: "Family Card (KK) poor",
+};
 export const file_dropzone_label = {
   id: "Drag and drop/klik untuk unggah berkas",
   en: "Drag and drop/click to upload files",

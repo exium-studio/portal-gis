@@ -129,6 +129,7 @@ const translations = {
   "infrastructure": "Infrastruktur",
   "inventory": "Inventori",
   "kk": "Kartu Keluarga (KK)",
+  "kk_poor": "Kartu Keluarga (KK) miskin",
   "label": "Label",
   "land_field": "Bidang tanah",
   "language_settings_title": "Bahasa",

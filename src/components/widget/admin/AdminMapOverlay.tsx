@@ -34,6 +34,7 @@ import {
   Box,
   Center,
   chakra,
+  Circle,
   Group,
   HStack,
   Icon,
@@ -565,6 +566,7 @@ const LayoutMenu = () => {
 const Legend = () => {
   // Contexts
   const { l } = useLang();
+  const { displayedData } = useDisplayedData();
 
   // States, Refs
   const containerRef = useRef<HTMLDivElement>(null);
@@ -610,9 +612,23 @@ const Legend = () => {
           </HStack>
 
           <CContainer p={2}>
+            <HStack wrap={"wrap"} gapX={4} mb={4}>
+              {DISPLAYED_DATA_LIST.map((item) => {
+                return displayedData[item.key]
+                  ? item.color.map((color: any, ii: number) => {
+                      return (
+                        <HStack key={ii}>
+                          <Circle w={"10px"} h={"10px"} bg={color.color} />
+                          <Text>{pluck(l, color.labelKey)}</Text>
+                        </HStack>
+                      );
+                    })
+                  : "";
+              })}
+            </HStack>
+
             <HelperText>
               {l.legend_helper}
-              <br />
               <chakra.span>
                 <Icon mx={1}>
                   <IconMapPinCog size={18} stroke={1.5} />
