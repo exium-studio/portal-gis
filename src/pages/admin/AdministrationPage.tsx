@@ -1,5 +1,11 @@
+import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
+
 const AdministrationPage = () => {
-  return <>Administration</>;
+  return (
+    <>
+      <FeedbackNoData />
+    </>
+  );
 };
 
 export default AdministrationPage;

@@ -1,5 +1,11 @@
+import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
+
 const MasterDataPage = () => {
-  return <>Master Data</>;
+  return (
+    <>
+      <FeedbackNoData />
+    </>
+  );
 };
 
 export default MasterDataPage;

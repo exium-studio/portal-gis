@@ -1,5 +1,11 @@
+import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
+
 const ServicePage = () => {
-  return <>Service</>;
+  return (
+    <>
+      <FeedbackNoData />
+    </>
+  );
 };
 
 export default ServicePage;
