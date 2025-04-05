@@ -10,7 +10,7 @@ interface Props {
 }
 
 const VillageAssetLayer = ({ data }: Props) => {
-  const kkGeoJSON: FeatureCollection<Geometry, GeoJsonProperties> = {
+  const geoJSONData: FeatureCollection<Geometry, GeoJsonProperties> = {
     type: "FeatureCollection",
     features: data.map((item) => ({
       type: "Feature",
@@ -23,12 +23,12 @@ const VillageAssetLayer = ({ data }: Props) => {
   };
 
   return (
-    <Source id="village-asset-data" type="geojson" data={kkGeoJSON}>
+    <Source id="village-asset-data" type="geojson" data={geoJSONData}>
       <Layer
         id="village-asset-layer"
         type="circle"
         paint={{
-          "circle-radius": 5,
+          "circle-radius": 10,
           "circle-color": ABS_COLORS.red,
         }}
       />

@@ -11,7 +11,7 @@ interface Props {
 }
 
 const KKLayer = ({ data }: Props) => {
-  const kkGeoJSON: FeatureCollection<Geometry, GeoJsonProperties> = {
+  const geoJSONData: FeatureCollection<Geometry, GeoJsonProperties> = {
     type: "FeatureCollection",
     features: data.map((item) => ({
       type: "Feature",
@@ -24,12 +24,12 @@ const KKLayer = ({ data }: Props) => {
   };
 
   return (
-    <Source id="kk-data" type="geojson" data={kkGeoJSON}>
+    <Source id="kk-data" type="geojson" data={geoJSONData}>
       <Layer
         id="kk-layer"
         type="circle"
         paint={{
-          "circle-radius": 3,
+          "circle-radius": 10,
           "circle-color": [
             "case",
             ["==", ["get", "status"], "poor"],
