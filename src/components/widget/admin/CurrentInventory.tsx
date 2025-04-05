@@ -103,9 +103,10 @@ const Detail = ({ item }: any) => {
                 </HStack>
               </HStack>
 
+              {/* Control */}
               {item.document.length > 1 && (
                 <HStack
-                  justify={"center"}
+                  justify={"end"}
                   position={"absolute"}
                   right={2}
                   bottom={3}
@@ -116,6 +117,7 @@ const Detail = ({ item }: any) => {
                     unclicky
                     borderRadius={"full"}
                     size={"sm"}
+                    variant={"subtle"}
                     onClick={prev}
                   >
                     <IconChevronLeft />
@@ -126,6 +128,7 @@ const Detail = ({ item }: any) => {
                     unclicky
                     borderRadius={"full"}
                     size={"sm"}
+                    variant={"subtle"}
                     onClick={next}
                   >
                     <IconChevronRight />
