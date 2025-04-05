@@ -15,6 +15,7 @@ import KKLayer from "./KKLayer";
 import VillageAssetLayer from "./VillageAssetLayer";
 import useActiveMapStyle from "@/context/useActiveMapStyle";
 import useBasemap from "@/context/useBasemap";
+import useSearchAddress from "@/constants/useSearchAddress";
 
 const MIN_ZOOM = 0;
 const MAX_ZOOM = 22;
@@ -28,6 +29,7 @@ const AdminMap = () => {
   const { mapZoomPercent, setMapZoomPercent } = useMapsZoom();
   const { displayedData } = useDisplayedData();
   const { basemap } = useBasemap();
+  const { selectedSearchResult } = useSearchAddress(); // long = 0, lat = 1 (center)
 
   // States, Refs
   const { activeMapStyle, setActiveMapStyle } = useActiveMapStyle();
@@ -63,6 +65,20 @@ const AdminMap = () => {
       });
     }
   }, [currentLocation]);
+
+  // Handle search address
+  useEffect(() => {
+    if (mapRef.current && selectedSearchResult) {
+      mapRef.current.easeTo({
+        center: {
+          lat: selectedSearchResult.center[1],
+          lon: selectedSearchResult.center[0],
+        },
+        zoom: 11,
+        duration: 1000,
+      });
+    }
+  }, [selectedSearchResult]);
 
   // Handle zoom percent
   function handleZoomFromPercent(percent: number) {
