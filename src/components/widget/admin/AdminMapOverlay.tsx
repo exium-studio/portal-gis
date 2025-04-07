@@ -557,6 +557,7 @@ const LayoutMenu = () => {
         pointerEvents={"auto"}
         popoverContentProps={{
           mt: 1,
+          mr: "2px",
         }}
       />
     </OverlayItemContainer>
@@ -590,28 +591,30 @@ const Legend = () => {
           }}
           animationEntrance="bottom"
         >
-          <HStack px={2} pb={1} justify={"space-between"}>
-            <HStack>
+          <MenuHeaderContainer borderless>
+            <HStack h={"20px"}>
               <IconFlag stroke={1.5} size={20} />
               <Text fontWeight={"bold"}>{l.legend}</Text>
+
+              <BButton
+                iconButton
+                unclicky
+                size={"xs"}
+                borderRadius={"full"}
+                variant={"ghost"}
+                ml={"auto"}
+                mr={-1}
+                mt={"-2px"}
+                onClick={onClose}
+              >
+                <Icon>
+                  <IconX />
+                </Icon>
+              </BButton>
             </HStack>
+          </MenuHeaderContainer>
 
-            <BButton
-              iconButton
-              unclicky
-              size={"xs"}
-              borderRadius={"full"}
-              variant={"ghost"}
-              mr={-2}
-              onClick={onClose}
-            >
-              <Icon>
-                <IconX />
-              </Icon>
-            </BButton>
-          </HStack>
-
-          <CContainer p={2}>
+          <CContainer p={2} mt={1}>
             <HStack wrap={"wrap"} gapX={4} mb={4}>
               {DISPLAYED_DATA_LIST.map((item) => {
                 return displayedData[item.key]
