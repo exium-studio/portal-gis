@@ -10,10 +10,6 @@ const DISPLAYED_DATA_LIST: any[] = [
         labelKey: "kk",
         color: ABS_COLORS.blue,
       },
-      {
-        labelKey: "kk_poor",
-        color: ABS_COLORS.light_blue,
-      },
     ],
   },
   {

@@ -30,12 +30,13 @@ const KKLayer = ({ data }: Props) => {
         type="circle"
         paint={{
           "circle-radius": 10,
-          "circle-color": [
-            "case",
-            ["==", ["get", "status"], "poor"],
-            ABS_COLORS.light_blue,
-            ABS_COLORS.blue,
-          ],
+          // "circle-color": [
+          //   "case",
+          //   ["==", ["get", "status"], "poor"],
+          //   ABS_COLORS.light_blue,
+          //   ABS_COLORS.blue,
+          // ],
+          "circle-color": ABS_COLORS.blue,
         }}
       />
     </Source>
