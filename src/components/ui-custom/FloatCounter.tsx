@@ -14,7 +14,8 @@ const FloatCounter = ({ children, circleProps, ...props }: Props) => {
     <Float {...props}>
       <Circle
         px={"5px"}
-        bg={themeConfig.primaryColor}
+        // bg={themeConfig.primaryColor}
+        bg={"ibody"}
         color={`${themeConfig.colorPalette}.contrast`}
         fontSize={"xs"}
         h={"18px"}

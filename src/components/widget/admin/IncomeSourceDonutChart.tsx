@@ -87,7 +87,7 @@ const IncomeSourceDonutChart = ({ ...props }: StackProps) => {
               />
               <TruncatedText
                 tooltipContent={item.label}
-                textProps={{ maxW: "120px" }}
+                textProps={{ maxW: ["full", null, "120px"] }}
               >
                 {item.label}
               </TruncatedText>
