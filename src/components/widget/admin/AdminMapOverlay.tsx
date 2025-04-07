@@ -76,6 +76,7 @@ import {
 import DisclosureHeaderContent from "@/components/ui-custom/DisclosureHeaderContent";
 import useBackOnClose from "@/hooks/useBackOnClose";
 import BackButton from "@/components/ui-custom/BackButton";
+import FloatCounter from "@/components/ui-custom/FloatCounter";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -333,12 +334,20 @@ const SearchAddress = () => {
 
 const DisplayedDataFilter = (props: any) => {
   // Props
-  const { item, disabled } = props;
+  const {
+    // active,
+    item,
+    disabled,
+    totalFilterCount,
+    setTotalFilterCount,
+  } = props;
 
   // Contexts
   const { l } = useLang();
 
   // States, Refs
+  const [prevFilterCount, setPrevFilterCount] = useState<number>(0);
+  const [filterCount] = useState<number>(0);
   const filterComponent = {
     kk: <></>,
     facility: <></>,
@@ -357,6 +366,12 @@ const DisplayedDataFilter = (props: any) => {
     onClose
   );
 
+  // Handle set total filter count on filter count update
+  useEffect(() => {
+    setTotalFilterCount(totalFilterCount - prevFilterCount + filterCount);
+    setPrevFilterCount(filterCount);
+  }, [filterCount]);
+
   return (
     <>
       <BButton
@@ -365,6 +380,7 @@ const DisplayedDataFilter = (props: any) => {
         onClick={onOpen}
         disabled={disabled}
       >
+        {filterCount > 0 && <FloatCounter>{filterCount}</FloatCounter>}
         <IconAdjustmentsHorizontal stroke={1.5} />
       </BButton>
 
@@ -392,6 +408,9 @@ const DisplayedData = () => {
   const { displayedData, setDisplayedData } = useDisplayedData();
   const { l } = useLang();
 
+  // States, Refs
+  const [totalFilterCount, setTotalFilterCount] = useState<number>(0);
+
   // Utils
   const { open, onToggle, onClose } = useDisclosure();
   const triggerRef = useRef(null);
@@ -411,6 +430,10 @@ const DisplayedData = () => {
               w={"fit"}
               onClick={onToggle}
             >
+              {totalFilterCount > 0 && (
+                <FloatCounter>{totalFilterCount}</FloatCounter>
+              )}
+
               <IconMapPinCog stroke={1.5} />
             </BButton>
           </Tooltip>
@@ -449,8 +472,11 @@ const DisplayedData = () => {
                   <HStack w={"full"} gap={"2px"}>
                     <Box onClick={onClose}>
                       <DisplayedDataFilter
+                        active={active}
                         item={item}
                         disabled={item.disabled}
+                        totalFilterCount={totalFilterCount}
+                        setTotalFilterCount={setTotalFilterCount}
                       />
                     </Box>
 
