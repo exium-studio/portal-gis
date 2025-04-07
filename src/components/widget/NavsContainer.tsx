@@ -177,8 +177,8 @@ const NavContainer = ({
                 size={"xs"}
                 bg={`${themeConfig.primaryColor}`}
                 color={`${themeConfig.colorPalette}.contrast`}
-                w={["24px", null, "28px"]}
-                h={["24px", null, "28px"]}
+                w={["24px", null, "26px"]}
+                h={["24px", null, "26px"]}
               />
 
               {iss && (
@@ -211,8 +211,7 @@ const NavContainer = ({
           w={"fit"}
           align={"center"}
           px={2}
-          pt={5}
-          pb={4}
+          py={"26px"}
           overflowX={"clip"}
           overflowY={"scroll"}
           mr={"-6px"}
