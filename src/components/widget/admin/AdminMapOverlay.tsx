@@ -48,6 +48,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import {
+  IconAdjustmentsHorizontal,
   IconClock,
   IconCurrentLocation,
   IconCurrentLocationFilled,
@@ -65,6 +66,16 @@ import { useEffect, useRef, useState } from "react";
 import TheLayoutMenu from "../LayoutMenu";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import useSearchMode from "./useSearchMode";
+import {
+  DisclosureBody,
+  DisclosureContent,
+  DisclosureFooter,
+  DisclosureHeader,
+  DisclosureRoot,
+} from "@/components/ui-custom/Disclosure";
+import DisclosureHeaderContent from "@/components/ui-custom/DisclosureHeaderContent";
+import useBackOnClose from "@/hooks/useBackOnClose";
+import BackButton from "@/components/ui-custom/BackButton";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -320,6 +331,61 @@ const SearchAddress = () => {
   );
 };
 
+const DisplayedDataFilter = (props: any) => {
+  // Props
+  const { item, disabled } = props;
+
+  // Contexts
+  const { l } = useLang();
+
+  // States, Refs
+  const filterComponent = {
+    kk: <></>,
+    facility: <></>,
+    infrastructure: <></>,
+    environtment: <></>,
+    village_asset: <></>,
+    land_field: <></>,
+  };
+
+  // Utils
+  const { open, onOpen, onClose } = useDisclosure();
+  useBackOnClose(
+    `displayed-data-filter-${pluck(l, item.key)}`,
+    open,
+    onOpen,
+    onClose
+  );
+
+  return (
+    <>
+      <BButton
+        iconButton
+        variant={"ghost"}
+        onClick={onOpen}
+        disabled={disabled}
+      >
+        <IconAdjustmentsHorizontal stroke={1.5} />
+      </BButton>
+
+      <DisclosureRoot open={open} lazyLoad size={"xs"}>
+        <DisclosureContent>
+          <DisclosureHeader>
+            <DisclosureHeaderContent title={`Filter ${pluck(l, item.key)}`} />
+          </DisclosureHeader>
+
+          <DisclosureBody>
+            {filterComponent[item.key as keyof typeof filterComponent]}
+          </DisclosureBody>
+
+          <DisclosureFooter>
+            <BackButton />
+          </DisclosureFooter>
+        </DisclosureContent>
+      </DisclosureRoot>
+    </>
+  );
+};
 const DisplayedData = () => {
   // Contexts
   const { themeConfig } = useThemeConfig();
@@ -357,7 +423,7 @@ const DisplayedData = () => {
             ref={contentRef}
             p={1}
             mr={"2px"}
-            w={"250px"}
+            w={"270px"}
             pointerEvents={"auto"}
           >
             <MenuHeaderContainer>
@@ -371,7 +437,7 @@ const DisplayedData = () => {
               {DISPLAYED_DATA_LIST.map((item, i) => {
                 const active = displayedData[item.key];
 
-                const toggleItem = () => {
+                const toggleActive = () => {
                   const newState = {
                     ...displayedData,
                     [item.key]: !displayedData[item.key],
@@ -380,25 +446,34 @@ const DisplayedData = () => {
                 };
 
                 return (
-                  <BButton
-                    key={i}
-                    unclicky
-                    justifyContent={"space-between"}
-                    px={2}
-                    onClick={toggleItem}
-                    variant={"ghost"}
-                    size={"md"}
-                    cursor={"pointer"}
-                    disabled={item.disabled}
-                  >
-                    {pluck(l, item.key)}
+                  <HStack w={"full"} gap={"2px"}>
+                    <Box onClick={onClose}>
+                      <DisplayedDataFilter
+                        item={item}
+                        disabled={item.disabled}
+                      />
+                    </Box>
 
-                    <Switch
-                      checked={active}
-                      pointerEvents={"none"}
-                      colorPalette={themeConfig.colorPalette}
-                    />
-                  </BButton>
+                    <BButton
+                      key={i}
+                      unclicky
+                      flex={1}
+                      justifyContent={"space-between"}
+                      px={2}
+                      onClick={toggleActive}
+                      variant={"ghost"}
+                      size={"md"}
+                      disabled={item.disabled}
+                    >
+                      {pluck(l, item.key)}
+
+                      <Switch
+                        checked={active}
+                        pointerEvents={"none"}
+                        colorPalette={themeConfig.colorPalette}
+                      />
+                    </BButton>
+                  </HStack>
                 );
               })}
             </CContainer>
