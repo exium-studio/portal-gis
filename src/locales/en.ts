@@ -342,7 +342,8 @@ const translations = {
     "sat": "Saturday",
     "sun": "Sunday"
   },
-  "year": "Year"
+  "year": "Year",
+  "yes": "Yes"
 };
 
 export default translations;

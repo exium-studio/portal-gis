@@ -63,6 +63,10 @@ export const settings_navs = {
 };
 
 // UI
+export const yes = {
+  id: "Ya",
+  en: "Yes",
+};
 export const kk_poor = {
   id: "Kartu Keluarga (KK) miskin",
   en: "Family Card (KK) poor",
