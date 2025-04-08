@@ -481,7 +481,7 @@ const DisplayedData = () => {
                 };
 
                 return (
-                  <HStack w={"full"} gap={"2px"}>
+                  <HStack key={i} w={"full"} gap={"2px"}>
                     <Box onClick={onClose}>
                       <DisplayedDataFilter
                         active={active}
@@ -493,7 +493,6 @@ const DisplayedData = () => {
                     </Box>
 
                     <BButton
-                      key={i}
                       unclicky
                       flex={1}
                       justifyContent={"space-between"}
