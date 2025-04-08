@@ -83,6 +83,10 @@ function App() {
   function handleOffline() {
     setOffline(true);
   }
+  function updateDarkMode() {
+    const hour = new Date().getHours();
+    setColorMode(hour >= 18 || hour < 6 ? "dark" : "light");
+  }
 
   // Handle scroll style
   useScrollEffect();
@@ -109,14 +113,6 @@ function App() {
   // Handle adaptive dark mode (ADM)
   useEffect(() => {
     if (ADM === "true") {
-      const updateDarkMode = () => {
-        const hour = new Date().getHours();
-        setColorMode(hour >= 18 || hour < 6 ? "dark" : "light");
-        console.log("jalan");
-      };
-
-      updateDarkMode();
-
       const interval = setInterval(() => {
         const hour = new Date().getHours();
         if (hour === 6 || hour === 18) {
@@ -125,6 +121,12 @@ function App() {
       }, 60 * 1000);
 
       return () => clearInterval(interval);
+    }
+  }, []);
+  useEffect(() => {
+    console.log("ADM", ADM);
+    if (ADM === "true") {
+      updateDarkMode();
     }
   }, [ADM]);
 
