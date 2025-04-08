@@ -46,7 +46,7 @@ import {
 } from "@chakra-ui/react";
 import {
   IconDotsVertical,
-  IconEyeEdit,
+  IconEdit,
   IconPlus,
   IconSpeakerphone,
   IconTrash,
@@ -214,7 +214,7 @@ const AnnouncementCreate = () => {
 
               <Field mt={4} errorText={formik.errors.documents as string}>
                 <FieldLabel>Attachment</FieldLabel>
-                <FileInput maxFiles={3} />
+                <FileInput dropzone maxFiles={3} />
               </Field>
             </form>
           </DisclosureBody>
@@ -303,7 +303,7 @@ const AnnouncementEdit = ({ item }: any) => {
       <MenuItem value="edit" onClick={onOpen}>
         Detail / Edit
         <Icon ml={"auto"}>
-          <IconEyeEdit stroke={1.5} size={16} />
+          <IconEdit stroke={1.5} size={16} />
         </Icon>
       </MenuItem>
 
