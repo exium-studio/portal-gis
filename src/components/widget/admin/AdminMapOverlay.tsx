@@ -387,7 +387,16 @@ const DisplayedDataFilter = (props: any) => {
       <DisclosureRoot open={open} lazyLoad size={"xs"}>
         <DisclosureContent>
           <DisclosureHeader>
-            <DisclosureHeaderContent title={`Filter ${pluck(l, item.key)}`} />
+            <DisclosureHeaderContent
+              content={
+                <HStack>
+                  <IconAdjustmentsHorizontal stroke={1.5} size={20} />
+                  <Text fontSize={"16px"} fontWeight={"semibold"}>
+                    {pluck(l, item.key)}
+                  </Text>
+                </HStack>
+              }
+            />
           </DisclosureHeader>
 
           <DisclosureBody>
