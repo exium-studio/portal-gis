@@ -186,14 +186,16 @@ const AdminMap = () => {
         ...mapViewState,
         latitude: mapViewState.latitude + 0.000000001,
       });
-    }, 100);
+    }, 200);
 
     timeoutRef.second = window.setTimeout(() => {
       setMapViewState({
         ...mapViewState,
         latitude: mapViewState.latitude - 0.000000001,
       });
-    }, 200);
+    }, 400);
+
+    // console.log(mapStyle);
 
     return () => {
       clearTimeout(timeoutRef.first);
