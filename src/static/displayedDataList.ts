@@ -3,7 +3,7 @@ import { ABS_COLORS } from "@/constants/colors";
 const DISPLAYED_DATA_LIST: any[] = [
   {
     id: 1,
-    key: "kk", // miskin ditandai merah
+    key: "kk",
     disabled: false,
     color: [
       {
@@ -30,7 +30,7 @@ const DISPLAYED_DATA_LIST: any[] = [
     color: [
       {
         labelKey: "infrastructure",
-        color: ABS_COLORS.blue,
+        color: ABS_COLORS.light_blue,
       },
     ],
   },

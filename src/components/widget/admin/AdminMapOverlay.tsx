@@ -727,7 +727,7 @@ const Legend = () => {
           </MenuHeaderContainer>
 
           <CContainer p={2} mt={1}>
-            <HStack wrap={"wrap"} gapX={4} mb={4}>
+            <HStack wrap={"wrap"} gapX={4} px={"2px"} mb={4}>
               {DISPLAYED_DATA_LIST.map((item) => {
                 return displayedData[item.key]
                   ? item.color.map((color: any, ii: number) => {
