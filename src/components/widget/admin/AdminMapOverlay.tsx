@@ -1,6 +1,16 @@
+import BackButton from "@/components/ui-custom/BackButton";
 import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
+import {
+  DisclosureBody,
+  DisclosureContent,
+  DisclosureFooter,
+  DisclosureHeader,
+  DisclosureRoot,
+} from "@/components/ui-custom/Disclosure";
+import DisclosureHeaderContent from "@/components/ui-custom/DisclosureHeaderContent";
 import FeedbackNotFound from "@/components/ui-custom/FeedbackNotFound";
+import FloatCounter from "@/components/ui-custom/FloatCounter";
 import FloatingContainer from "@/components/ui-custom/FloatingContainer";
 import HelperText from "@/components/ui-custom/HelperText";
 import HScroll from "@/components/ui-custom/HScroll";
@@ -25,6 +35,7 @@ import useMapStyle from "@/context/useMapStyle";
 import useMapViewState from "@/context/useMapViewState";
 import useMapsZoom from "@/context/useMapZoom";
 import { useThemeConfig } from "@/context/useThemeConfig";
+import useBackOnClose from "@/hooks/useBackOnClose";
 import useClickOutside from "@/hooks/useClickOutside";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import BASEMAP_CONFIG_LIST from "@/static/basemapConfigList";
@@ -66,17 +77,6 @@ import { useEffect, useRef, useState } from "react";
 import TheLayoutMenu from "../LayoutMenu";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import useSearchMode from "./useSearchMode";
-import {
-  DisclosureBody,
-  DisclosureContent,
-  DisclosureFooter,
-  DisclosureHeader,
-  DisclosureRoot,
-} from "@/components/ui-custom/Disclosure";
-import DisclosureHeaderContent from "@/components/ui-custom/DisclosureHeaderContent";
-import useBackOnClose from "@/hooks/useBackOnClose";
-import BackButton from "@/components/ui-custom/BackButton";
-import FloatCounter from "@/components/ui-custom/FloatCounter";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -349,10 +349,22 @@ const DisplayedDataFilter = (props: any) => {
   const [prevFilterCount, setPrevFilterCount] = useState<number>(0);
   const [filterCount] = useState<number>(0);
   const filterComponent = {
-    kk: <></>,
-    facility: <></>,
-    infrastructure: <></>,
-    environtment: <></>,
+    kk: (
+      <>
+        {/* member_count */}
+        {/* rt */}
+        {/* rw */}
+        {/* economic_status */}
+      </>
+    ),
+    facility: <>{/* facility_type */}</>,
+    infrastructure: <>{/* infrastructure_type */}</>,
+    environtment: (
+      <>
+        {/* economic_status */}
+        {/* economic_status */}
+      </>
+    ),
     village_asset: <></>,
     land_field: <></>,
   };
