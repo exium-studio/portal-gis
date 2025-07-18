@@ -208,9 +208,9 @@ const translations = {
   "must_be_after": "${a} harus setelah ${b}",
   "must_be_before": "${a} harus sebelum ${b}",
   "navs": {
-    "dashboard": "Beranda",
+    "dashboard": "Dasbor",
     "administration": "Administrasi",
-    "services": "Layanan",
+    "workspace": "Workspace",
     "master_data": "Master data",
     "settings": "Pengaturan",
     "profile": "Profil"

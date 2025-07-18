@@ -208,9 +208,9 @@ const translations = {
   "must_be_after": "${a} must be after ${b}",
   "must_be_before": "${a} must be before ${b}",
   "navs": {
-    "dashboard": "Home",
+    "dashboard": "Dashboard",
     "administration": "Administration",
-    "services": "Services",
+    "workspace": "Workspace",
     "master_data": "Master data",
     "settings": "Settings",
     "profile": "Profile"

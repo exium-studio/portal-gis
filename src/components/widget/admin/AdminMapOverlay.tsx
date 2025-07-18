@@ -1,16 +1,6 @@
-import BackButton from "@/components/ui-custom/BackButton";
 import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
-import {
-  DisclosureBody,
-  DisclosureContent,
-  DisclosureFooter,
-  DisclosureHeader,
-  DisclosureRoot,
-} from "@/components/ui-custom/Disclosure";
-import DisclosureHeaderContent from "@/components/ui-custom/DisclosureHeaderContent";
 import FeedbackNotFound from "@/components/ui-custom/FeedbackNotFound";
-import FloatCounter from "@/components/ui-custom/FloatCounter";
 import FloatingContainer from "@/components/ui-custom/FloatingContainer";
 import HelperText from "@/components/ui-custom/HelperText";
 import HScroll from "@/components/ui-custom/HScroll";
@@ -35,7 +25,6 @@ import useMapStyle from "@/context/useMapStyle";
 import useMapViewState from "@/context/useMapViewState";
 import useMapsZoom from "@/context/useMapZoom";
 import { useThemeConfig } from "@/context/useThemeConfig";
-import useBackOnClose from "@/hooks/useBackOnClose";
 import useClickOutside from "@/hooks/useClickOutside";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import BASEMAP_CONFIG_LIST from "@/static/basemapConfigList";
@@ -59,7 +48,6 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import {
-  IconAdjustmentsHorizontal,
   IconClock,
   IconCurrentLocation,
   IconCurrentLocationFilled,
@@ -332,194 +320,194 @@ const SearchAddress = () => {
   );
 };
 
-const DisplayedDataFilter = (props: any) => {
-  // Props
-  const {
-    // active,
-    item,
-    disabled,
-    totalFilterCount,
-    setTotalFilterCount,
-  } = props;
+// const DisplayedDataFilter = (props: any) => {
+//   // Props
+//   const {
+//     // active,
+//     item,
+//     disabled,
+//     totalFilterCount,
+//     setTotalFilterCount,
+//   } = props;
 
-  // Contexts
-  const { l } = useLang();
+//   // Contexts
+//   const { l } = useLang();
 
-  // States, Refs
-  const [prevFilterCount, setPrevFilterCount] = useState<number>(0);
-  const [filterCount] = useState<number>(0);
-  const filterComponent = {
-    kk: (
-      <>
-        {/* member_count */}
-        {/* rt */}
-        {/* rw */}
-        {/* economic_status */}
-      </>
-    ),
-    facility: <>{/* facility_type */}</>,
-    infrastructure: <>{/* infrastructure_type */}</>,
-    environtment: (
-      <>
-        {/* economic_status */}
-        {/* economic_status */}
-      </>
-    ),
-    village_asset: <></>,
-    land_field: <></>,
-  };
+//   // States, Refs
+//   const [prevFilterCount, setPrevFilterCount] = useState<number>(0);
+//   const [filterCount] = useState<number>(0);
+//   const filterComponent = {
+//     kk: (
+//       <>
+//         {/* member_count */}
+//         {/* rt */}
+//         {/* rw */}
+//         {/* economic_status */}
+//       </>
+//     ),
+//     facility: <>{/* facility_type */}</>,
+//     infrastructure: <>{/* infrastructure_type */}</>,
+//     environtment: (
+//       <>
+//         {/* economic_status */}
+//         {/* economic_status */}
+//       </>
+//     ),
+//     village_asset: <></>,
+//     land_field: <></>,
+//   };
 
-  // Utils
-  const { open, onOpen, onClose } = useDisclosure();
-  useBackOnClose(
-    `displayed-data-filter-${pluck(l, item.key)}`,
-    open,
-    onOpen,
-    onClose
-  );
+//   // Utils
+//   const { open, onOpen, onClose } = useDisclosure();
+//   useBackOnClose(
+//     `displayed-data-filter-${pluck(l, item.key)}`,
+//     open,
+//     onOpen,
+//     onClose
+//   );
 
-  // Handle set total filter count on filter count update
-  useEffect(() => {
-    setTotalFilterCount(totalFilterCount - prevFilterCount + filterCount);
-    setPrevFilterCount(filterCount);
-  }, [filterCount]);
+//   // Handle set total filter count on filter count update
+//   useEffect(() => {
+//     setTotalFilterCount(totalFilterCount - prevFilterCount + filterCount);
+//     setPrevFilterCount(filterCount);
+//   }, [filterCount]);
 
-  return (
-    <>
-      <BButton
-        iconButton
-        variant={"ghost"}
-        onClick={onOpen}
-        disabled={disabled}
-      >
-        {filterCount > 0 && <FloatCounter>{filterCount}</FloatCounter>}
-        <IconAdjustmentsHorizontal stroke={1.5} />
-      </BButton>
+//   return (
+//     <>
+//       <BButton
+//         iconButton
+//         variant={"ghost"}
+//         onClick={onOpen}
+//         disabled={disabled}
+//       >
+//         {filterCount > 0 && <FloatCounter>{filterCount}</FloatCounter>}
+//         <IconAdjustmentsHorizontal stroke={1.5} />
+//       </BButton>
 
-      <DisclosureRoot open={open} lazyLoad size={"xs"}>
-        <DisclosureContent>
-          <DisclosureHeader>
-            <DisclosureHeaderContent title={`Filter ${pluck(l, item.key)}`} />
-          </DisclosureHeader>
+//       <DisclosureRoot open={open} lazyLoad size={"xs"}>
+//         <DisclosureContent>
+//           <DisclosureHeader>
+//             <DisclosureHeaderContent title={`Filter ${pluck(l, item.key)}`} />
+//           </DisclosureHeader>
 
-          <DisclosureBody>
-            {filterComponent[item.key as keyof typeof filterComponent]}
-          </DisclosureBody>
+//           <DisclosureBody>
+//             {filterComponent[item.key as keyof typeof filterComponent]}
+//           </DisclosureBody>
 
-          <DisclosureFooter>
-            <BackButton />
-          </DisclosureFooter>
-        </DisclosureContent>
-      </DisclosureRoot>
-    </>
-  );
-};
-const DisplayedData = () => {
-  // Contexts
-  const { themeConfig } = useThemeConfig();
-  const { displayedData, setDisplayedData } = useDisplayedData();
-  const { l } = useLang();
+//           <DisclosureFooter>
+//             <BackButton />
+//           </DisclosureFooter>
+//         </DisclosureContent>
+//       </DisclosureRoot>
+//     </>
+//   );
+// };
+// const DisplayedData = () => {
+//   // Contexts
+//   const { themeConfig } = useThemeConfig();
+//   const { displayedData, setDisplayedData } = useDisplayedData();
+//   const { l } = useLang();
 
-  // States, Refs
-  const [totalFilterCount, setTotalFilterCount] = useState<number>(0);
+//   // States, Refs
+//   const [totalFilterCount, setTotalFilterCount] = useState<number>(0);
 
-  // Utils
-  const { open, onToggle, onClose } = useDisclosure();
-  const triggerRef = useRef(null);
-  const contentRef = useRef(null);
-  useClickOutside([triggerRef, contentRef], onClose);
+//   // Utils
+//   const { open, onToggle, onClose } = useDisclosure();
+//   const triggerRef = useRef(null);
+//   const contentRef = useRef(null);
+//   useClickOutside([triggerRef, contentRef], onClose);
 
-  return (
-    <PopoverRoot open={open}>
-      <PopoverTrigger asChild>
-        <OverlayItemContainer>
-          <Tooltip content={l.displayed_data}>
-            <BButton
-              ref={triggerRef}
-              iconButton
-              unclicky
-              variant={"ghost"}
-              w={"fit"}
-              onClick={onToggle}
-            >
-              {totalFilterCount > 0 && (
-                <FloatCounter>{totalFilterCount}</FloatCounter>
-              )}
+//   return (
+//     <PopoverRoot open={open}>
+//       <PopoverTrigger asChild>
+//         <OverlayItemContainer>
+//           <Tooltip content={l.displayed_data}>
+//             <BButton
+//               ref={triggerRef}
+//               iconButton
+//               unclicky
+//               variant={"ghost"}
+//               w={"fit"}
+//               onClick={onToggle}
+//             >
+//               {totalFilterCount > 0 && (
+//                 <FloatCounter>{totalFilterCount}</FloatCounter>
+//               )}
 
-              <IconMapPinCog stroke={1.5} />
-            </BButton>
-          </Tooltip>
-        </OverlayItemContainer>
-      </PopoverTrigger>
+//               <IconMapPinCog stroke={1.5} />
+//             </BButton>
+//           </Tooltip>
+//         </OverlayItemContainer>
+//       </PopoverTrigger>
 
-      <Portal>
-        <PopoverPositioner>
-          <PopoverContent
-            ref={contentRef}
-            p={1}
-            mr={"2px"}
-            w={"270px"}
-            pointerEvents={"auto"}
-          >
-            <MenuHeaderContainer>
-              <HStack>
-                <IconMapPinCog stroke={1.5} size={20} />
-                <Text fontWeight={"bold"}>{l.displayed_data}</Text>
-              </HStack>
-            </MenuHeaderContainer>
+//       <Portal>
+//         <PopoverPositioner>
+//           <PopoverContent
+//             ref={contentRef}
+//             p={1}
+//             mr={"2px"}
+//             w={"270px"}
+//             pointerEvents={"auto"}
+//           >
+//             <MenuHeaderContainer>
+//               <HStack>
+//                 <IconMapPinCog stroke={1.5} size={20} />
+//                 <Text fontWeight={"bold"}>{l.displayed_data}</Text>
+//               </HStack>
+//             </MenuHeaderContainer>
 
-            <CContainer pt={1}>
-              {DISPLAYED_DATA_LIST.map((item, i) => {
-                const active = displayedData[item.key];
+//             <CContainer pt={1}>
+//               {DISPLAYED_DATA_LIST.map((item, i) => {
+//                 const active = displayedData[item.key];
 
-                const toggleActive = () => {
-                  const newState = {
-                    ...displayedData,
-                    [item.key]: !displayedData[item.key],
-                  };
-                  setDisplayedData(newState);
-                };
+//                 const toggleActive = () => {
+//                   const newState = {
+//                     ...displayedData,
+//                     [item.key]: !displayedData[item.key],
+//                   };
+//                   setDisplayedData(newState);
+//                 };
 
-                return (
-                  <HStack key={i} w={"full"} gap={"2px"}>
-                    <Box onClick={onClose}>
-                      <DisplayedDataFilter
-                        active={active}
-                        item={item}
-                        disabled={item.disabled}
-                        totalFilterCount={totalFilterCount}
-                        setTotalFilterCount={setTotalFilterCount}
-                      />
-                    </Box>
+//                 return (
+//                   <HStack key={i} w={"full"} gap={"2px"}>
+//                     <Box onClick={onClose}>
+//                       <DisplayedDataFilter
+//                         active={active}
+//                         item={item}
+//                         disabled={item.disabled}
+//                         totalFilterCount={totalFilterCount}
+//                         setTotalFilterCount={setTotalFilterCount}
+//                       />
+//                     </Box>
 
-                    <BButton
-                      unclicky
-                      flex={1}
-                      justifyContent={"space-between"}
-                      px={2}
-                      onClick={toggleActive}
-                      variant={"ghost"}
-                      size={"md"}
-                      disabled={item.disabled}
-                    >
-                      {pluck(l, item.key)}
+//                     <BButton
+//                       unclicky
+//                       flex={1}
+//                       justifyContent={"space-between"}
+//                       px={2}
+//                       onClick={toggleActive}
+//                       variant={"ghost"}
+//                       size={"md"}
+//                       disabled={item.disabled}
+//                     >
+//                       {pluck(l, item.key)}
 
-                      <Switch
-                        checked={active}
-                        pointerEvents={"none"}
-                        colorPalette={themeConfig.colorPalette}
-                      />
-                    </BButton>
-                  </HStack>
-                );
-              })}
-            </CContainer>
-          </PopoverContent>
-        </PopoverPositioner>
-      </Portal>
-    </PopoverRoot>
-  );
-};
+//                       <Switch
+//                         checked={active}
+//                         pointerEvents={"none"}
+//                         colorPalette={themeConfig.colorPalette}
+//                       />
+//                     </BButton>
+//                   </HStack>
+//                 );
+//               })}
+//             </CContainer>
+//           </PopoverContent>
+//         </PopoverPositioner>
+//       </Portal>
+//     </PopoverRoot>
+//   );
+// };
 
 const Basemap = () => {
   // Contexts
@@ -1083,7 +1071,7 @@ const AdminMapOverlay = () => {
           </HStack>
 
           <HStack position={"absolute"} right={0}>
-            <DisplayedData />
+            {/* <DisplayedData /> */}
 
             <Basemap />
 

@@ -1,32 +1,36 @@
 import {
-  IconApps,
-  IconDatabase,
+  IconChartBar,
   IconDeviceDesktop,
   IconExclamationCircle,
   IconGavel,
   IconLanguage,
-  IconHome,
+  IconMapStar,
+  IconServerCog,
   IconShieldHalf,
   IconShieldLock,
-  IconServerCog,
 } from "@tabler/icons-react";
 
 export const NAVS = [
   {
     labelKey: "navs.dashboard",
     path: "/dashboard",
-    icon: IconHome,
+    icon: IconChartBar,
   },
   {
-    labelKey: "navs.administration",
-    path: "/administration",
-    icon: IconDatabase,
+    labelKey: "navs.workspace",
+    path: "/workspace",
+    icon: IconMapStar,
   },
-  {
-    labelKey: "navs.services",
-    path: "/services",
-    icon: IconApps,
-  },
+  // {
+  //   labelKey: "navs.administration",
+  //   path: "/administration",
+  //   icon: IconDatabase,
+  // },
+  // {
+  //   labelKey: "navs.services",
+  //   path: "/services",
+  //   icon: IconApps,
+  // },
   {
     labelKey: "navs.master_data",
     path: "/master-data",

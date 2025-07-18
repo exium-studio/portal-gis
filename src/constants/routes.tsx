@@ -1,17 +1,16 @@
-import AdministrationPage from "@/pages/admin/AdministrationPage";
-import HomePage from "@/pages/admin/HomePage";
-import RootPage from "@/pages/RootPage";
-import ServicePage from "@/pages/admin/ServicePage";
-import SettingsPage from "@/pages/SettingsPage";
 import DisplaySettingsPage from "@/pages/_settings/DisplaySettingsPage";
 import PermissionsSettingsPage from "@/pages/_settings/PermissionsSettingsPage";
 import PrivacyPolictPage from "@/pages/_settings/PrivacyPolictPage";
 import RegionalSettingsPage from "@/pages/_settings/RegionalSettingsPage";
 import ReportProblemPage from "@/pages/_settings/ReportProblemPage";
 import TermsOfServicePage from "@/pages/_settings/TermsOfServicePage";
-import { Interface__PrivateRoute, Interface__Route } from "./interfaces";
-import ProfilePage from "@/pages/admin/ProfilePage";
+import HomePage from "@/pages/admin/HomePage";
 import MasterDataPage from "@/pages/admin/MasterDataPage";
+import ProfilePage from "@/pages/admin/ProfilePage";
+import ServicePage from "@/pages/admin/ServicePage";
+import RootPage from "@/pages/RootPage";
+import SettingsPage from "@/pages/SettingsPage";
+import { Interface__PrivateRoute, Interface__Route } from "./interfaces";
 
 export const ROUTES: Interface__Route[] = [
   {
@@ -28,16 +27,16 @@ export const PRIVATE_ROUTES: Interface__PrivateRoute[] = [
     titleKey: "navs.dashboard",
     element: <HomePage />,
   },
+  // {
+  //   path: "/administration",
+  //   activePath: "/administration",
+  //   titleKey: "navs.administration",
+  //   element: <AdministrationPage />,
+  // },
   {
-    path: "/administration",
-    activePath: "/administration",
-    titleKey: "navs.administration",
-    element: <AdministrationPage />,
-  },
-  {
-    path: "/services",
-    activePath: "/services",
-    titleKey: "navs.services",
+    path: "/workspace",
+    activePath: "/workspace",
+    titleKey: "navs.workspace",
     element: <ServicePage />,
   },
   {
