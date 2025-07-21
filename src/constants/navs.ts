@@ -12,14 +12,14 @@ import {
 
 export const NAVS = [
   {
-    labelKey: "navs.dashboard",
-    path: "/dashboard",
-    icon: IconChartBar,
-  },
-  {
     labelKey: "navs.workspace",
     path: "/workspace",
     icon: IconMapStar,
+  },
+  {
+    labelKey: "navs.dashboard",
+    path: "/dashboard",
+    icon: IconChartBar,
   },
   // {
   //   labelKey: "navs.administration",

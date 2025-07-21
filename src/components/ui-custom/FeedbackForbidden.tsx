@@ -14,11 +14,18 @@ export default function FeedbackForbidden({
   description,
   ...props
 }: Props) {
-  // Contexts
+  // Hooks
   const { l } = useLang();
 
   return (
-    <CContainer w={"fit"} m={"auto"} {...props}>
+    <CContainer
+      w={"fit"}
+      m={"auto"}
+      align={"center"}
+      minH={"300px"}
+      justify={"center"}
+      {...props}
+    >
       <EmptyState
         icon={
           <Icon>

@@ -1,9 +1,10 @@
 import useLang from "@/context/useLang";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toaster } from "../components/ui/toaster";
 import request from "../utils/request";
+import useAuthMiddleware from "@/context/useAuthMiddleware";
 
 interface Interface__Req {
   config: AxiosRequestConfig;
@@ -32,23 +33,31 @@ interface Props {
       default?: { title: string; description: string };
     }
   >;
+  dataResource?: boolean;
 
   loginPath?: string;
 }
-const useRequest = ({
-  id,
-  showLoadingToast = true,
-  showSuccessToast = true,
-  showErrorToast = true,
-  loadingMessage,
-  successMessage,
-  errorMessage,
-  loginPath = "/",
-}: Props) => {
-  // Contexts
-  const { l } = useLang();
+const useRequest = (props: Props) => {
+  // Props
+  const {
+    id,
+    showLoadingToast = true,
+    showSuccessToast = true,
+    showErrorToast = true,
+    loadingMessage,
+    successMessage,
+    errorMessage,
+    loginPath = "/",
+  } = props;
 
-  // States, Refs
+  //  Hooks
+  const { l } = useLang();
+  const navigate = useNavigate();
+
+  // Contexts
+  const setAuthToken = useAuthMiddleware((s) => s.setAuthToken);
+
+  // States
   const [loading, setLoading] = useState<boolean>(false);
   const [status, setStatus] = useState<number | undefined>(undefined);
   const [response, setResponse] = useState<any>(undefined);
@@ -66,12 +75,18 @@ const useRequest = ({
       l.default_request_success_toast.description,
   };
 
-  // Utils
+  // Refs
   const abortControllerRef = useRef<AbortController | null>(null);
-  const navigate = useNavigate();
 
   // Make request func
   function req({ config, onResolve }: Interface__Req) {
+    showLoadingToast &&
+      toaster.loading({
+        id: id,
+        title: fLoadingMessage.title,
+        description: fLoadingMessage.description,
+      });
+
     if (!loading) setLoading(true);
     if (error) setError(false);
     if (status) setStatus(undefined);
@@ -99,6 +114,7 @@ const useRequest = ({
         }
 
         showSuccessToast &&
+          showLoadingToast &&
           toaster.update(id, {
             type: "success",
             title: fSuccessMessage.title,
@@ -110,11 +126,12 @@ const useRequest = ({
           });
       })
       .catch((e) => {
-        console.log(e);
-
         switch (e.code) {
-          case "ERR_CANCELED":
+          default:
+            console.log(e);
             setError(true);
+            break;
+          case "ERR_CANCELED":
             setLoading(false);
             break;
         }
@@ -123,10 +140,12 @@ const useRequest = ({
           case 401:
           case 403:
             // call logout func
+            localStorage.removeItem("__auth_token");
+            setAuthToken(undefined);
             navigate(loginPath);
             break;
           case 500:
-            navigate("/server-error");
+            // navigate("/server-error");
             break;
           case 503:
             navigate("/maintenance");
@@ -143,12 +162,30 @@ const useRequest = ({
             }
             return (
               errorMessage[statusCode].default || {
-                title: "Terjadi Kesalahan",
-                description: "Coba lagi nanti.",
+                title: l.error_default_toast.title,
+                description: l.error_default_toast.description,
               }
             );
           } else if (e.code === "ERR_NETWORK") {
             return l.error_network_toast;
+          } else if (statusCode === 400) {
+            switch (errorCase) {
+              default:
+                return {
+                  title: l.error_400_toast.title,
+                  description: l.error_400_toast.description,
+                };
+              case "FAILED_VALIDATION":
+                return {
+                  title: l.error_400_toast.title,
+                  description: l.error_400_toast.description,
+                };
+              case "STEP_NOT_ALLOWED":
+                return {
+                  title: l.error_403_toast.title,
+                  description: l.error_403_toast.description,
+                };
+            }
           } else if (statusCode === 401) {
             return {
               title: l.error_401_toast.title,
@@ -159,10 +196,28 @@ const useRequest = ({
               title: l.error_403_toast.title,
               description: l.error_403_toast.description,
             };
+          } else if (statusCode === 409) {
+            switch (errorCase) {
+              default:
+                return {
+                  title: l.error_409_toast.title,
+                  description: l.error_409_toast.description,
+                };
+              case "DUPLICATE_NAME":
+                return {
+                  title: l.error_duplicate_name_toast.title,
+                  description: l.error_duplicate_name_toast.description,
+                };
+              case "DUPLICATE_EMAIL":
+                return {
+                  title: l.error_duplicate_email_toast.title,
+                  description: l.error_duplicate_email_toast.description,
+                };
+            }
           } else if (statusCode === 500) {
             return {
-              title: "Server Error",
-              description: "Terjadi kesalahan pada server. Coba lagi nanti.",
+              title: l.error_500_toast.title,
+              description: l.error_500_toast.description,
             };
           }
 
@@ -203,16 +258,6 @@ const useRequest = ({
         setLoading(false);
       });
   }
-
-  useEffect(() => {
-    if (loading && showLoadingToast) {
-      toaster.loading({
-        id: id,
-        title: fLoadingMessage.title,
-        description: fLoadingMessage.description,
-      });
-    }
-  }, [loading]);
 
   return {
     req,

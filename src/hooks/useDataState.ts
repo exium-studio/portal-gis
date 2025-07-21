@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import useRenderTrigger from "./useRenderTrigger";
+import useRenderTrigger from "../context/useRenderTrigger";
 import useRequest from "./useRequest";
+import { arrayType } from "@/utils/arrayType";
 
 interface Props<T> {
   initialData?: T;
   url?: string;
+  method?: string;
   payload?: any;
   dependencies?: any[];
   conditions?: boolean;
@@ -12,21 +14,27 @@ interface Props<T> {
   initialPage?: number;
   initialLimit?: number;
   intialOffset?: number;
+  dataResource?: boolean;
   // withLimit?: boolean;
   // withPagination?: boolean;
 }
 
-const useDataState = <T>({
-  initialData,
-  payload,
-  url,
-  dependencies = [],
-  conditions = true,
-  noRt = false,
-  initialPage = 1,
-  initialLimit = 10,
-  intialOffset = 0,
-}: Props<T>) => {
+const useDataState = <T = any>(props: Props<T>) => {
+  // Props
+  const {
+    initialData,
+    payload,
+    url,
+    method,
+    dependencies = [],
+    conditions = true,
+    noRt = false,
+    initialPage = 1,
+    initialLimit = 10,
+    intialOffset = 0,
+    dataResource = true,
+  } = props;
+
   // States
   const [data, setData] = useState<T | undefined>(initialData);
   const [initialLoading, setInitialLoading] = useState<boolean>(true);
@@ -39,24 +47,32 @@ const useDataState = <T>({
   const { req, response, loading, error, status } = useRequest({
     id: url || "data-state",
     showLoadingToast: false,
+    showErrorToast: false,
+    showSuccessToast: false,
   });
-
-  // Requset function
-  const method = payload ? "POST" : "GET";
   const payloadData = {
     ...payload,
-    limit: limit,
+    limit,
+    page,
   };
+
   const baseConfig = {
+    url: `${url}${`?page=${page}`}`,
     method,
-    url: `${url}${limit > 0 && `?page=${page}`}`,
-    data: method === "POST" ? payloadData : undefined,
+    data: payloadData,
+    params: payloadData,
   };
+
+  // Refs
   const abortControllerRef = useRef<AbortController | null>(null);
+  const latestUrlRef = useRef<string | null>(null);
+
+  // Utils
   function makeRequest() {
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort();
-    }
+    if (!url) return;
+
+    latestUrlRef.current = url;
+
     const abortController = new AbortController();
     abortControllerRef.current = abortController;
 
@@ -64,16 +80,36 @@ const useDataState = <T>({
       ...baseConfig,
       signal: abortController.signal,
     };
-    setData(undefined);
-    req({
-      config,
-      onResolve: {
-        onSuccess: (r) => {
-          setData(r?.data?.data);
-          setPagination(r?.data?.pagination);
-          setInitialLoading(false);
+
+    const currentUrl = url;
+
+    // setData(undefined);
+
+    // Delay microtask untuk memastikan ini benar url terbaru
+    Promise.resolve().then(() => {
+      if (latestUrlRef.current !== currentUrl) {
+        return; // Skip if outdated
+      }
+
+      req({
+        config,
+        onResolve: {
+          onSuccess: (r) => {
+            setData(
+              dataResource
+                ? arrayType(r?.data?.data) === "array"
+                  ? r?.data?.data
+                  : r?.data?.data?.data
+                : r?.data?.data
+            );
+            setPagination(r?.data?.data?.pagination);
+            setInitialLoading(false);
+          },
+          onError: () => {
+            setInitialLoading(false);
+          },
         },
-      },
+      });
     });
   }
   function loadMore() {
@@ -99,10 +135,14 @@ const useDataState = <T>({
 
   // Handle request via useEffect
   useEffect(() => {
-    if (conditions && url) {
+    if (!conditions || !url) return;
+
+    const timeout = setTimeout(() => {
       makeRequest();
-    }
+    }, 50);
+
     return () => {
+      clearTimeout(timeout);
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
       }
@@ -116,10 +156,17 @@ const useDataState = <T>({
     ...(dependencies || []),
   ]);
 
+  // Handle set initial limit
+  useEffect(() => {
+    setLimit(initialLimit);
+  }, [initialLimit]);
+
   return {
+    makeRequest,
     data,
     setData,
     initialLoading,
+    setInitialLoading,
     loading,
     error,
     loadMore,

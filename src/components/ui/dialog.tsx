@@ -1,4 +1,3 @@
-import useBackOnDefaultPage from "@/hooks/useBackOnDefaultPage";
 import useScreen from "@/hooks/useScreen";
 import back from "@/utils/back";
 import { Dialog as ChakraDialog, Portal } from "@chakra-ui/react";
@@ -22,7 +21,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
     } = props;
 
     // Utils
-    const handleBackOnDefaultPage = useBackOnDefaultPage();
+    // const handleBackOnDefaultPage = useBackOnDefaultPage();
     const { sh } = useScreen();
 
     return (
@@ -37,15 +36,16 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
           pointerEvents="auto"
           onClick={() => {
             back();
-            handleBackOnDefaultPage();
+            // handleBackOnDefaultPage();
           }}
+          py={4}
         >
           <ChakraDialog.Content
             ref={ref}
             minH={sh < 500 ? "90dvh" : ""}
             bg={"body"}
             shadow={"none"}
-            border={"1px solid {colors.border.subtle}"}
+            // border={"1px solid {colors.border.subtle}"}
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -72,7 +72,7 @@ export const DialogCloseTrigger = forwardRef<
       {...props}
       asChild
     >
-      <CloseButton size="xs" ref={ref}>
+      <CloseButton size="2xs" ref={ref}>
         {props.children}
       </CloseButton>
     </ChakraDialog.CloseTrigger>

@@ -1,23 +1,41 @@
 const translations = {
+  "account_registration_loading_toast": {
+    "title": "Mendaftar",
+    "description": "Memproses pendaftaran akun."
+  },
+  "account_registration_success_toast": {
+    "title": "Pendaftaran berhasil",
+    "description": "Akun Anda telah berhasil didaftarkan."
+  },
   "adaptive_dark_mode_ui_settings": {
     "label": "Mode gelap adaptif",
     "description": "Otomatis aktif saat malam hari"
+  },
+  "add": "Tambah",
+  "add_to_cart": {
+    "title": "Tambahkan ke keranjang",
+    "description": "Masukkan produk ini ke dalam keranjang Anda."
   },
   "address": "Alamat",
   "address_not_found": "Alamat tidak ditemukan",
   "all": "Semua",
   "and": "dan",
   "angle_to_north": "Sudut terhadap utara",
+  "animal": "Hewan",
+  "animal_breed": "Ras hewan",
+  "animal_category": "Kategori hewan",
   "announcement": "Pengumuman",
   "ask": "Meminta",
   "attachment": "Lampiran",
   "auto_time_zone": "Zona waktu saat ini (auto)",
+  "auto_timezone": "Zona waktu lokal (auto)",
   "back_online_toast": {
     "title": "Koneksi Pulih",
     "description": "Anda kembali online."
   },
   "back_to_root": "Kembali ke halaman utama",
   "basemap": "Peta dasar",
+  "before": "Sebelum",
   "border": "Batas",
   "building": "Bangunan",
   "by": "per",
@@ -30,14 +48,30 @@ const translations = {
     "label": "Akses kamera",
     "description": "Izinkan aplikasi menggunakan kamera perangkat Anda untuk mengambil foto atau video."
   },
+  "cancel_order_prompt": {
+    "title": "Konfirmasi pembatalan",
+    "description": "Apakah Anda yakin ingin membatalkan pesanan ini?"
+  },
   "categories": "Kategori",
   "change": "Ganti",
+  "change_password": "Ganti password",
+  "checking_payment_status_toast": {
+    "title": "Cek Status Pembayaran",
+    "description": "Sedang memeriksa status pembayaran Anda."
+  },
   "chrome_permissions_settings_link": "Pengaturan → Privasi & Keamanan → Pengaturan Situs → ",
   "citizenship": "Kewarganegaraan",
+  "city": "Kota",
   "close": "Tutup",
   "confirm": "Konfirmasi",
+  "continue_ordering": "Lanjutkan pemesanan",
   "cost_of_living": "Biaya hidup",
+  "country": "Negara",
   "create": "Buat",
+  "crypto": {
+    "description": "Pembayaran dengan aset kripto (misal: BTC, ETH)."
+  },
+  "cta": "Pesan Sekarang",
   "current": "Saat ini",
   "current_facility": "Fasilitas saat ini",
   "current_inventory": "Inventaris saat ini",
@@ -80,8 +114,12 @@ const translations = {
     "description": "Hapus semua inbox yang sudah dibaca."
   },
   "delete_label": "Hapus",
+  "delete_order": "Hapus pesanan",
   "delete_previous_attachment": "Akan menghapus file ini saat submit.",
+  "delete_status": "Status dihapus",
+  "delivery_address": "Alamat pengiriman",
   "description": "Deskripsi",
+  "dialy": "Harian",
   "display_settings_helper_text": "Pengaturan tampilan ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
   "displayed_data": "Data yang ditampilkan",
   "edge_permissions_settings_link": "Pengaturan → Cookie dan izin situs → ",
@@ -105,6 +143,38 @@ const translations = {
     "title": "Tidak ditemukan",
     "description": "Sumber daya yang Anda cari tidak ditemukan."
   },
+  "error_409_toast": {
+    "title": "Data duplikat",
+    "description": "Permintaan tidak dapat diproses karena data sudah ada"
+  },
+  "error_500_toast": {
+    "title": "Kesalahan server",
+    "description": "Terjadi kesalahan pada server. Silakan coba beberapa saat lagi."
+  },
+  "error_default_toast": {
+    "title": "Terjadi kesalahan",
+    "description": "Terjadi kesalahan yang tidak diketahui. Silakan coba lagi."
+  },
+  "error_duplicate_animal_category_and_breed_toast": {
+    "title": "Data duplikat",
+    "description": "Kategori dan ras sudah terdaftar"
+  },
+  "error_duplicate_email_toast": {
+    "title": "Data duplikat",
+    "description": "Email sudah terdaftar"
+  },
+  "error_duplicate_name_toast": {
+    "title": "Data duplikat",
+    "description": "Nama sudah terdaftar"
+  },
+  "error_file_input": {
+    "title": "File tidak valid",
+    "description": "Pastikan format dan jumlah file sesuai ketentuan."
+  },
+  "error_invalid_otp": {
+    "title": "Kode OTP tidak valid",
+    "description": "Silakan periksa kembali kode OTP Anda dan coba lagi."
+  },
   "error_network_toast": {
     "title": "Gangguan koneksi ke server",
     "description": "Tidak dapat terhubung ke server. Coba lagi nanti."
@@ -112,8 +182,13 @@ const translations = {
   "expense": "Pengeluaran",
   "expense_category": "Kategori pengeluaran",
   "facility": "Fasilitas umum",
+  "female": "Perempuan",
+  "fiat": {
+    "description": "Pembayaran dengan mata uang resmi (misal: IDR, USD)."
+  },
   "file_dropzone_label": "Drag and drop/klik untuk unggah berkas",
   "firefox_permissions_settings_link": "Preferensi → Privasi & Keamanan → Izin → ",
+  "for_gender": "Untuk gender",
   "forbidden_feedback": {
     "title": "Tidak ada akses",
     "description": "Anda tidak memiliki izin untuk mengakses informasi ini."
@@ -127,6 +202,7 @@ const translations = {
   "income": "Pendapatan",
   "income_source": "Sumber pendapatan",
   "infrastructure": "Infrastruktur",
+  "input_otp": "Masukkan kode OTP",
   "inventory": "Inventori",
   "kk": "Kartu Keluarga (KK)",
   "kk_poor": "Kartu Keluarga (KK) miskin",
@@ -134,6 +210,7 @@ const translations = {
   "land_field": "Bidang tanah",
   "language_settings_title": "Bahasa",
   "last": "Terakhir",
+  "last_step": "Tahap terakhir",
   "last_updated": "Terakhir diperbarui",
   "layout_menu_helper": "Layout ini hanya berlaku di navigasi utama.",
   "legend": "Legenda",
@@ -185,6 +262,7 @@ const translations = {
     "description": "Anda telah keluar."
   },
   "maintenance_page": "Kami sedang melakukan pemeliharaan untuk memberikan layanan yang lebih baik. Mohon maaf atas ketidaknyamanannya. Silakan cek kembali nanti.",
+  "male": "Laki-laki",
   "map_type": "Jenis peta",
   "mark_as_read": "Tandai dibaca semua",
   "mark_read_disclosure": {
@@ -192,6 +270,11 @@ const translations = {
     "description": "Semua inbox akan ditandai sudah dibaca"
   },
   "married_status": "Status pernikahan",
+  "master_data_page": {
+    "title": "Master Data",
+    "description": "Silahkan pilih menu master data."
+  },
+  "max_char": "Maksimal ${maxChar} karakter",
   "measurment_unit_format_settings_title": "Format Satuan Pengukuran",
   "mic": "Mikrofon",
   "mic_fail_toast": {
@@ -202,11 +285,20 @@ const translations = {
     "label": "Akses mikrofon",
     "description": "Izinkan aplikasi menggunakan mikrofon perangkat Anda untuk merekam audio."
   },
+  "min_char": "Minimal ${minChar} karakter",
   "missing_page": "Halaman yang Anda cari tidak tersedia. Kemungkinan ada URL yang keliru atau halaman ini sudah tidak tersedia.",
   "mission": "Misi",
   "month": "Bulan",
+  "monthly": "Bulanan",
+  "mosque": "Masjid",
   "must_be_after": "${a} harus setelah ${b}",
   "must_be_before": "${a} harus sebelum ${b}",
+  "must_login_first_feedback": {
+    "title": "Perlu login",
+    "description": "Silakan login terlebih dahulu untuk melanjutkan."
+  },
+  "my_order": "Pesanan saya",
+  "name": "Nama",
   "navs": {
     "dashboard": "Dasbor",
     "administration": "Administrasi",
@@ -230,6 +322,7 @@ const translations = {
     "title": "Tidak ditemukan",
     "description": "Cobalah untuk menyesuaikan pencarian."
   },
+  "notes": "Catatan",
   "notifications": "Notifikasi",
   "notifications_permissions_settings": {
     "label": "Akses notifikasi",
@@ -242,7 +335,54 @@ const translations = {
     "description": "Sepertinya Anda sedang offline. Periksa koneksi internet Anda dan coba lagi."
   },
   "open": "Buka",
+  "optional": "Opsional",
+  "order": "Pesan",
+  "order_cancel": {
+    "button_label": "Batalkan Pesanan",
+    "desc": "Membatalkan pesanan akan menghapus semua data yang telah dimasukkan dan tidak dapat dibatalkan"
+  },
+  "order_need_signin": "Anda perlu masuk terlebih dahulu",
+  "order_step_1": {
+    "title": "Silakan pilih layanan",
+    "desc": "Klik salah satu layanan untuk memilih layanan yang Anda inginkan."
+  },
+  "order_step_2": {
+    "title": "Pilih produk ${serviceTypeLabel}",
+    "desc": "Pilih jenis produk sesuai kebutuhan dan anggaran Anda."
+  },
+  "order_step_3": {
+    "title": "Detail pemesanan",
+    "desc": "Isi detail pemesanan seperti lokasi, metode pembayaran"
+  },
+  "order_step_4": {
+    "title": "Pembayaran",
+    "desc": "Lakukan pembayaran untuk memproses pesanan Anda."
+  },
+  "otp_sent_to": "Kode OTP telah dikirimkan ke email",
+  "paid": "Dibayar",
+  "password_confirmation": "Konfirmasi password",
   "pay": "Bayar",
+  "pay_bill": {
+    "title": "Bayar tagihan",
+    "description": "Lanjutkan untuk membayar tagihan Anda."
+  },
+  "payment_agreement": "Dengan melakukan pembayaran, Anda menyetujui syarat dan ketentuan pembayaran.",
+  "payment_details": "Rincian pembayaran",
+  "payment_expired": "Pembayaran telah kadaluarsa",
+  "payment_method": "Metode pembayaran",
+  "payment_settled_toast": {
+    "title": "Pembayaran Sukses",
+    "description": "Pembayaran sudah diterima."
+  },
+  "payment_status": "Status pembayaran",
+  "payment_trust": {
+    "title": "Pembayaran Aman & Terpercaya",
+    "description": "Pembayaran diproses dengan aman melalui Midtrans dan CoinPayment, memberikan jaminan kepercayaan dan perlindungan."
+  },
+  "payment_unsettled_toast": {
+    "title": "Pembayaran Belum Selesai",
+    "description": "Pembayaran Anda belum selesai."
+  },
   "periode_picker_default_title": "Pilih Periode",
   "perma_delete_confirmation": "Aksi ini tidak dapat dibatalkan, harap hati-hati.",
   "permissions_denied": "Ditolak",
@@ -257,22 +397,31 @@ const translations = {
     "location": "Tes Kamera",
     "notifications": "Tes Kamera"
   },
+  "phone_number": "Telepon",
   "please_select_category": "Silahkan pilih kategori",
   "population": "Populasi",
   "population_density": "Kepadatan penduduk",
   "population_growth": "Pertumbuhan populasi",
+  "postal_code": "Kode pos",
   "previous_attachment": "Lampiran sebelumnya",
+  "primary_address": "Alamat utama",
+  "profile": "Profil",
+  "province": "Provinsi",
   "published_date": "Tanggal publikasi",
   "regional_settings_helper_text": "Pengaturan bahasa & wilayah ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
   "religion": "Agama",
   "required_form": "Tidak boleh kosong",
   "requried_date_time": "Harap isi tanggal dan waktu, karena ini satu kesatuan.",
+  "restore_confirmation": "Pulihkan data ini?",
   "retry": "Muat ulang",
   "retry_feedback": {
     "title": "Terjadi error",
     "description": "Cobalah untuk memuat ulang menggunakan tombol di bawah."
   },
   "road": "Jalan",
+  "save": "Simpan",
+  "save_continue": "Simpan & Lanjutkan",
+  "saved_address": "Alamat disimpan",
   "search": "Pencarian",
   "search_input_default_placeholder": "Pencarian...",
   "see_all": "Lihat semua",
@@ -283,7 +432,9 @@ const translations = {
   "select_input_default_title": "Pilih",
   "selected": "terpilih",
   "selected_time_zone": "Zona waktu dipilih",
+  "selected_timezone": "Zona waktu dipilih",
   "server_error_page": "Sistem kami saat ini sedang mengalami gangguan. Tim kami sedang bekerja untuk memperbaikinya.",
+  "service_type": "Jenis layanan",
   "settings_navs": {
     "display": "Tampilan",
     "regional": "Regional",
@@ -300,9 +451,21 @@ const translations = {
     "title": "Pengaturan",
     "description": "Silahkan pilih menu pengaturan."
   },
+  "shohibul_input": {
+    "title": "Data Shohibul"
+  },
   "show": "Tampilkan",
   "shrink": "Turun ${value} dari tahun lalu",
+  "signin_form": {
+    "title": "Login ke Sistem",
+    "description": "Masukkan detail akun Anda untuk melanjutkan."
+  },
+  "signup_form": {
+    "title": "Buat Akun Baru",
+    "description": "Isi data diri Anda untuk mendaftar dan mulai menggunakan layanan kami."
+  },
   "start_date": "Tanggal mulai",
+  "start_from": "Mulai dari",
   "theme_settings_title": "Tema",
   "this_month": "Bulan ini",
   "this_week": "Minggu ini",
@@ -313,9 +476,12 @@ const translations = {
   "time_range_picker_default_title": "Pilih Rentang Waktu",
   "time_zone": "Zona waktu",
   "time_zone_settings_title": "Zona Waktu",
+  "timezone": "Zona waktu",
+  "timezone_settings_title": "Zona Waktu",
   "title": "Judul",
   "today": "Hari ini",
   "tomorrow": "Besok",
+  "transaction": "Transaksi",
   "try_label": "Coba",
   "uom": {
     "mass": "Berat",
@@ -330,8 +496,11 @@ const translations = {
     "imperial": "Sistem pengukuran yang umum digunakan di Amerika Serikat.",
     "iso": "Sistem pengukuran standar internasional. Berdasarkan metric."
   },
+  "verify_email": "Verifikasi email",
+  "view": "Lihat",
   "village_asset": "Aset desa",
   "vision": "Visi",
+  "wa_number": "Nomor WA",
   "water": "Air",
   "weekdays": {
     "mon": "Senin",
@@ -342,6 +511,7 @@ const translations = {
     "sat": "Sabtu",
     "sun": "Minggu"
   },
+  "weekly": "Mingguan",
   "year": "Tahun",
   "yes": "Ya"
 };

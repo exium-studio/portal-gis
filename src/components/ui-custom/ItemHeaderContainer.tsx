@@ -1,31 +1,80 @@
-import { HStack, StackProps } from "@chakra-ui/react";
-import CContainer from "./CContainer";
+import back from "@/utils/back";
+import { HStack, Text } from "@chakra-ui/react";
+import { DialogCloseTrigger } from "../ui/dialog";
+import { DrawerCloseTrigger } from "../ui/drawer";
+import { DisclosureCloseTrigger } from "./Disclosure";
 
-interface Props extends StackProps {
-  borderless?: boolean;
-}
-const ItemHeaderContainer = ({
-  children,
-  borderless = false,
-  ...props
+type Props = {
+  title?: string;
+  withCloseButton?: boolean;
+  content?: any;
+  prefix?: "drawer" | "dialog";
+};
+const DisclosureHeaderContent = ({
+  title,
+  withCloseButton = true,
+  prefix,
+  content,
 }: Props) => {
+  // const handleBackOnDefaultPage = useBackOnDefaultPage();
+
+  function handleBack() {
+    back();
+    // handleBackOnDefaultPage();
+  }
+
   return (
-    <CContainer px={3} pt={"10px"} pb={0}>
-      <HStack
-        borderBottom={"1px solid"}
-        borderColor={borderless ? "transparent" : "border.muted"}
-        justify={"space-between"}
-        pb={2}
-        pl={1}
-        // gap={4}
-        minH={"50px"}
-        wrap={"wrap"}
-        {...props}
-      >
-        {children}
-      </HStack>
-    </CContainer>
+    <HStack justify={"space-between"} w={"full"} pr={7}>
+      {content ? (
+        content
+      ) : (
+        <Text
+          fontSize={"14px"}
+          fontWeight={"semibold"}
+          ml={!prefix ? [-1, null, 1] : ""}
+        >
+          {title}
+        </Text>
+      )}
+
+      {withCloseButton && (
+        <>
+          {prefix && (
+            <>
+              {prefix === "dialog" && (
+                <DialogCloseTrigger
+                  borderRadius={"full"}
+                  top={"12px"}
+                  right={"12px"}
+                  onClick={handleBack}
+                  mt={"-2px"}
+                  mr={"-6px"}
+                />
+              )}
+
+              {prefix === "drawer" && (
+                <DrawerCloseTrigger
+                  borderRadius={"full"}
+                  top={3}
+                  right={"14px"}
+                  onClick={handleBack}
+                />
+              )}
+            </>
+          )}
+
+          {!prefix && (
+            <DisclosureCloseTrigger
+              borderRadius={"full"}
+              top={3}
+              right={["14px", null, "12px"]}
+              onClick={handleBack}
+            />
+          )}
+        </>
+      )}
+    </HStack>
   );
 };
 
-export default ItemHeaderContainer;
+export default DisclosureHeaderContent;

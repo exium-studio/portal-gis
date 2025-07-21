@@ -124,7 +124,12 @@ const DisclosureHeader = ({ children, ...props }: DisclosureHeaderProps) => {
       {children}
     </DrawerHeader>
   ) : (
-    <DialogHeader p={4} {...(props as DialogHeaderProps)}>
+    <DialogHeader
+      p={3}
+      borderBottom={"1px solid"}
+      borderColor={children ? "border.subtle" : ""}
+      {...(props as DialogHeaderProps)}
+    >
       {children}
     </DialogHeader>
   );
@@ -152,8 +157,8 @@ const DisclosureBody = ({ children, ...props }: DisclosureBodyProps) => {
   ) : (
     <DialogBody
       px={4}
-      pt={"0 !important"}
-      pb={`${props.pb ?? 4} !important`}
+      // pt={"0 !important"}
+      py={`${props.pb ?? 4} !important`}
       className={finalClassName}
       overflowY={"scroll"}
       mr={"-6px"}
@@ -180,7 +185,8 @@ const DisclosureFooter = ({ children, ...props }: DisclosureFooterProps) => {
   ) : (
     <DialogFooter
       p={4}
-      borderTop={"1px solid {colors.border.subtle}"}
+      borderTop={"1px solid"}
+      borderColor={"border.subtle"}
       {...(props as DialogFooterProps)}
     >
       <HStack w={"full"} justify={"end"}>
@@ -238,8 +244,9 @@ const DisclosureCloseTrigger = ({
     </DrawerCloseTrigger>
   ) : (
     <DialogCloseTrigger
-      mr={"-2px"}
+      // mr={"-2px"}
       mt={"-2px"}
+      bg={"bg.muted"}
       onClick={back}
       {...(props as DialogCloseTriggerProps)}
     >

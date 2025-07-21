@@ -47,6 +47,7 @@ const LayoutMenu = ({ popoverContentProps, ...props }: Props) => {
               unclicky
               variant={"ghost"}
               w={"fit"}
+              color={themeConfig.primaryColor}
               onClick={onToggle}
               {...props}
             >

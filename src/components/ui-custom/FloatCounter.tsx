@@ -1,4 +1,3 @@
-import { useThemeConfig } from "@/context/useThemeConfig";
 import { Circle, CircleProps, Float, FloatProps } from "@chakra-ui/react";
 
 interface Props extends FloatProps {
@@ -7,16 +6,13 @@ interface Props extends FloatProps {
 }
 
 const FloatCounter = ({ children, circleProps, ...props }: Props) => {
-  // Contexts
-  const { themeConfig } = useThemeConfig();
-
   return (
     <Float {...props}>
       <Circle
         px={"5px"}
         // bg={themeConfig.primaryColor}
         bg={"ibody"}
-        color={`${themeConfig.colorPalette}.contrast`}
+        color={`body`}
         fontSize={"xs"}
         h={"18px"}
         mt={"8px"}

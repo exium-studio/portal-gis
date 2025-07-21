@@ -7,28 +7,37 @@ import useLang from "@/context/useLang";
 interface Props extends StackProps {
   title?: string;
   description?: string;
+  icon?: any;
 }
 
 export default function FeedbackNoData({
   title,
   description,
+  icon,
+  children,
   ...props
 }: Props) {
   // Contexts
   const { l } = useLang();
 
   return (
-    <CContainer w={"fit"} m={"auto"} {...props}>
+    <CContainer
+      w={"fit"}
+      m={"auto"}
+      align={"center"}
+      minH={"300px"}
+      justify={"center"}
+      gap={4}
+      {...props}
+    >
       <EmptyState
-        icon={
-          <Icon>
-            <IconDatabaseOff />
-          </Icon>
-        }
-        title={title || l.no_data_feedback.title}
-        description={description || l.no_data_feedback.description}
+        icon={<Icon mb={title ? 0 : -2}>{icon || <IconDatabaseOff />}</Icon>}
+        title={title ?? l.no_data_feedback.title}
+        description={description ?? l.no_data_feedback.description}
         maxW={"300px"}
       />
+
+      {children}
     </CContainer>
   );
 }

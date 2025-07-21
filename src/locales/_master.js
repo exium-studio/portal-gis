@@ -1083,9 +1083,270 @@ export const delete_all_inbox_disclosure = {
   },
 };
 
-// Responses
+// UI
+export const payment_expired = {
+  id: "Pembayaran telah kadaluarsa",
+  en: "Payment has expired",
+};
+export const payment_trust = {
+  title: {
+    id: "Pembayaran Aman & Terpercaya",
+    en: "Secure & Trusted Payment",
+  },
+  description: {
+    id: "Pembayaran diproses dengan aman melalui Midtrans dan CoinPayment, memberikan jaminan kepercayaan dan perlindungan.",
+    en: "Payments are securely processed via Midtrans and CoinPayment, ensuring trust and protection.",
+  },
+};
+export const payment_agreement = {
+  id: "Dengan melakukan pembayaran, Anda menyetujui syarat dan ketentuan pembayaran.",
+  en: "By making a payment, you agree to the payment terms and conditions.",
+};
+export const fiat = {
+  description: {
+    id: "Pembayaran dengan mata uang resmi (misal: IDR, USD).",
+    en: "Payment using official currencies (e.g., IDR, USD).",
+  },
+};
+export const crypto = {
+  description: {
+    id: "Pembayaran dengan aset kripto (misal: BTC, ETH).",
+    en: "Payment using crypto assets (e.g., BTC, ETH).",
+  },
+};
+export const payment_details = {
+  id: "Rincian pembayaran",
+  en: "Payment details",
+};
+export const delivery_address = {
+  id: "Alamat pengiriman",
+  en: "Delivery address",
+};
+export const pay_bill = {
+  title: {
+    id: "Bayar tagihan",
+    en: "Pay bill",
+  },
+  description: {
+    id: "Lanjutkan untuk membayar tagihan Anda.",
+    en: "Proceed to pay your bill.",
+  },
+};
+export const for_gender = {
+  id: "Untuk gender",
+  en: "For gender",
+};
+export const add_to_cart = {
+  title: {
+    id: "Tambahkan ke keranjang",
+    en: "Add to cart",
+  },
+  description: {
+    id: "Masukkan produk ini ke dalam keranjang Anda.",
+    en: "Add this product to your cart.",
+  },
+};
+export const last_step = {
+  id: "Tahap terakhir",
+  en: "Last step",
+};
+export const continue_ordering = {
+  id: "Lanjutkan pemesanan",
+  en: "Continue ordering",
+};
+export const must_login_first_feedback = {
+  title: {
+    id: "Perlu login",
+    en: "Login required",
+  },
+  description: {
+    id: "Silakan login terlebih dahulu untuk melanjutkan.",
+    en: "Please log in first to continue.",
+  },
+};
+export const verify_email = {
+  id: "Verifikasi email",
+  en: "Verify email",
+};
+export const otp_sent_to = {
+  id: "Kode OTP telah dikirimkan ke email",
+  en: "OTP code has been sent to email",
+};
+export const input_otp = {
+  id: "Masukkan kode OTP",
+  en: "Enter OTP code",
+};
+export const save_continue = {
+  id: "Simpan & Lanjutkan",
+  en: "Save & Continue",
+};
+export const auto_timezone = {
+  id: "Zona waktu lokal (auto)",
+  en: "Local time zone (auto)",
+};
+export const restore_confirmation = {
+  id: "Pulihkan data ini?",
+  en: "Restore this data?",
+};
+export const signin_form = {
+  title: {
+    id: "Login ke Sistem",
+    en: "Login to System",
+  },
+  description: {
+    id: "Masukkan detail akun Anda untuk melanjutkan.",
+    en: "Enter your account details to continue.",
+  },
+};
+export const signup_form = {
+  title: {
+    id: "Buat Akun Baru",
+    en: "Create New Account",
+  },
+  description: {
+    id: "Isi data diri Anda untuk mendaftar dan mulai menggunakan layanan kami.",
+    en: "Fill in your details to register and start using our services.",
+  },
+};
+export const master_data_page = {
+  title: {
+    id: "Master Data",
+    en: "Master Data",
+  },
+  description: {
+    id: "Silahkan pilih menu master data.",
+    en: "Please select the master data menu.",
+  },
+};
+export const timezone_settings_title = {
+  id: "Zona Waktu",
+  en: "Time Zone",
+};
 
-// Others
+// Toasters
+export const checking_payment_status_toast = {
+  title: { id: "Cek Status Pembayaran", en: "Checking Payment" },
+  description: {
+    id: "Sedang memeriksa status pembayaran Anda.",
+    en: "Checking your payment status.",
+  },
+};
+export const payment_settled_toast = {
+  title: { id: "Pembayaran Sukses", en: "Payment Successful" },
+  description: {
+    id: "Pembayaran sudah diterima.",
+    en: "Payment has been received.",
+  },
+};
+export const payment_unsettled_toast = {
+  title: { id: "Pembayaran Belum Selesai", en: "Payment Not Complete" },
+  description: {
+    id: "Pembayaran Anda belum selesai.",
+    en: "Your payment is not complete.",
+  },
+};
+export const error_duplicate_animal_category_and_breed_toast = {
+  title: {
+    id: "Data duplikat",
+    en: "Duplicate data",
+  },
+  description: {
+    id: "Kategori dan ras sudah terdaftar",
+    en: "Category and breed are already registered",
+  },
+};
+export const error_invalid_otp = {
+  title: {
+    id: "Kode OTP tidak valid",
+    en: "Invalid OTP code",
+  },
+  description: {
+    id: "Silakan periksa kembali kode OTP Anda dan coba lagi.",
+    en: "Please check your OTP code and try again.",
+  },
+};
+export const error_file_input = {
+  title: { id: "File tidak valid", en: "Invalid file" },
+  description: {
+    id: "Pastikan format dan jumlah file sesuai ketentuan.",
+    en: "Ensure the file format and quantity meet the requirements.",
+  },
+};
+export const error_default_toast = {
+  title: { id: "Terjadi kesalahan", en: "An error occurred" },
+  description: {
+    id: "Terjadi kesalahan yang tidak diketahui. Silakan coba lagi.",
+    en: "An unknown error occurred. Please try again.",
+  },
+};
+export const error_duplicate_name_toast = {
+  title: {
+    id: "Data duplikat",
+    en: "Duplicate data",
+  },
+  description: {
+    id: "Nama sudah terdaftar",
+    en: "Name is already registered",
+  },
+};
+export const error_duplicate_email_toast = {
+  title: {
+    id: "Data duplikat",
+    en: "Duplicate data",
+  },
+  description: {
+    id: "Email sudah terdaftar",
+    en: "Email is already registered",
+  },
+};
+export const error_409_toast = {
+  title: {
+    id: "Data duplikat",
+    en: "Duplicate data",
+  },
+  description: {
+    id: "Permintaan tidak dapat diproses karena data sudah ada",
+    en: "Request could not be processed because the data already exists",
+  },
+};
+export const error_500_toast = {
+  title: { id: "Kesalahan server", en: "Server error" },
+  description: {
+    id: "Terjadi kesalahan pada server. Silakan coba beberapa saat lagi.",
+    en: "An error occurred on the server. Please try again later.",
+  },
+};
+export const account_registration_loading_toast = {
+  title: {
+    id: "Mendaftar",
+    en: "Registering",
+  },
+  description: {
+    id: "Memproses pendaftaran akun.",
+    en: "Processing account registration.",
+  },
+};
+export const account_registration_success_toast = {
+  title: {
+    id: "Pendaftaran berhasil",
+    en: "Registration successful",
+  },
+  description: {
+    id: "Akun Anda telah berhasil didaftarkan.",
+    en: "Your account has been successfully registered.",
+  },
+};
+
+// Disclosures
+export const cancel_order_prompt = {
+  title: { id: "Konfirmasi pembatalan", en: "Confirm Cancellation" },
+  description: {
+    id: "Apakah Anda yakin ingin membatalkan pesanan ini?",
+    en: "Are you sure you want to cancel this order?",
+  },
+};
+
+// Semantic
 export const pay = {
   id: "Bayar",
   en: "Pay",
@@ -1093,4 +1354,238 @@ export const pay = {
 export const see_all = {
   id: "Lihat semua",
   en: "See all",
+};
+export const delete_order = {
+  id: "Hapus pesanan",
+  en: "Delete order",
+};
+export const before = {
+  id: "Sebelum",
+  en: "Before",
+};
+export const service_type = {
+  id: "Jenis layanan",
+  en: "Service layanan",
+};
+export const change_password = {
+  id: "Ganti password",
+  en: "Change password",
+};
+export const paid = {
+  id: "Dibayar",
+  en: "Paid",
+};
+export const payment_status = {
+  id: "Status pembayaran",
+  en: "Payment status",
+};
+export const start_from = {
+  id: "Mulai dari",
+  en: "Start from",
+};
+export const mosque = {
+  id: "Masjid",
+  en: "Mosque",
+};
+export const notes = {
+  id: "Catatan",
+  en: "Notes",
+};
+export const order = {
+  id: "Pesan",
+  en: "Order",
+};
+export const payment_method = {
+  id: "Metode pembayaran",
+  en: "Payment method",
+};
+export const city = {
+  id: "Kota",
+  en: "City",
+};
+export const province = {
+  id: "Provinsi",
+  en: "Province",
+};
+export const country = {
+  id: "Negara",
+  en: "Country",
+};
+export const primary_address = {
+  id: "Alamat utama",
+  en: "Primary address",
+};
+export const postal_code = {
+  id: "Kode pos",
+  en: "Postal code",
+};
+export const animal_category = {
+  id: "Kategori hewan",
+  en: "Animal Category",
+};
+export const animal_breed = {
+  id: "Ras hewan",
+  en: "Animal breed",
+};
+export const cta = {
+  id: "Pesan Sekarang",
+  en: "Order Now",
+};
+export const password_confirmation = {
+  id: "Konfirmasi password",
+  en: "Confirm password",
+};
+export const phone_number = {
+  id: "Telepon",
+  en: "Phone",
+};
+export const wa_number = {
+  id: "Nomor WA",
+  en: "WA number",
+};
+export const profile = {
+  id: "Profil",
+  en: "Profile",
+};
+export const my_order = {
+  id: "Pesanan saya",
+  en: "My order",
+};
+export const saved_address = {
+  id: "Alamat disimpan",
+  en: "Saved address",
+};
+export const male = {
+  id: "Laki-laki",
+  en: "Male",
+};
+export const female = {
+  id: "Perempuan",
+  en: "Female",
+};
+export const name = {
+  id: "Nama",
+  en: "Name",
+};
+export const animal = {
+  id: "Hewan",
+  en: "Animal",
+};
+export const view = {
+  id: "Lihat",
+  en: "View",
+};
+export const optional = {
+  id: "Opsional",
+  en: "Optional",
+};
+export const save = {
+  id: "Simpan",
+  en: "Save",
+};
+export const timezone = {
+  id: "Zona waktu",
+  en: "Time zone",
+};
+export const selected_timezone = {
+  id: "Zona waktu dipilih",
+  en: "Selected time zone",
+};
+export const delete_status = {
+  id: "Status dihapus",
+  en: "Delete status",
+};
+export const add = {
+  id: "Tambah",
+  en: "Add",
+};
+export const transaction = {
+  id: "Transaksi",
+  en: "Transaction",
+};
+export const dialy = {
+  id: "Harian",
+  en: "Daily",
+};
+export const weekly = {
+  id: "Mingguan",
+  en: "Weekly",
+};
+export const monthly = {
+  id: "Bulanan",
+  en: "Monthly",
+};
+
+// Validation
+export const min_char = {
+  id: "Minimal ${minChar} karakter",
+  en: "Minimum ${minChar} characters",
+};
+export const max_char = {
+  id: "Maksimal ${maxChar} karakter",
+  en: "Maksimal ${maxChar} characters",
+};
+
+// Order Intro
+export const order_need_signin = {
+  id: "Anda perlu masuk terlebih dahulu",
+  en: "You need to Sign in first",
+};
+export const order_step_1 = {
+  title: {
+    id: "Silakan pilih layanan",
+    en: "Please select a service",
+  },
+  desc: {
+    id: "Klik salah satu layanan untuk memilih layanan yang Anda inginkan.",
+    en: "Click one of the services to select the service you want.",
+  },
+};
+export const order_step_2 = {
+  title: {
+    id: "Pilih produk ${serviceTypeLabel}",
+    en: "Select ${serviceTypeLabel} product",
+  },
+  desc: {
+    id: "Pilih jenis produk sesuai kebutuhan dan anggaran Anda.",
+    en: "Select the type of product based on your needs and budget.",
+  },
+};
+export const order_step_3 = {
+  title: {
+    id: "Detail pemesanan",
+    en: "Order details",
+  },
+  desc: {
+    id: "Isi detail pemesanan seperti lokasi, metode pembayaran",
+    en: "Fill in the order details such as the name of the person offering, location, and preferred schedule.",
+  },
+};
+export const order_step_4 = {
+  title: {
+    id: "Pembayaran",
+    en: "Payment",
+  },
+  desc: {
+    id: "Lakukan pembayaran untuk memproses pesanan Anda.",
+    en: "Make the payment to process your order.",
+  },
+};
+export const order_cancel = {
+  button_label: {
+    id: "Batalkan Pesanan",
+    en: "Cancel Order",
+  },
+  desc: {
+    id: "Membatalkan pesanan akan menghapus semua data yang telah dimasukkan dan tidak dapat dibatalkan",
+    en: "Canceling the order will delete all entered data and cannot be undone",
+  },
+};
+
+// Interface
+export const shohibul_input = {
+  title: {
+    id: "Data Shohibul",
+    en: "Shohibul Data",
+  },
 };
