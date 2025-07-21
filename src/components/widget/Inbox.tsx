@@ -38,8 +38,8 @@ const Inbox = () => {
         </BButton>
       </Tooltip>
 
-      <DrawerRoot open={open} size={"sm"}>
-        <DrawerContent>
+      <DrawerRoot open={open} size={"xs"}>
+        <DrawerContent minW={"360px"}>
           <DrawerHeader pt={5}>
             <DisclosureHeaderContent
               prefix="drawer"

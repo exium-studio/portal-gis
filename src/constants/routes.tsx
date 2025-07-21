@@ -4,7 +4,7 @@ import PrivacyPolictPage from "@/pages/_settings/PrivacyPolictPage";
 import RegionalSettingsPage from "@/pages/_settings/RegionalSettingsPage";
 import ReportProblemPage from "@/pages/_settings/ReportProblemPage";
 import TermsOfServicePage from "@/pages/_settings/TermsOfServicePage";
-import HomePage from "@/pages/admin/HomePage";
+import DashboardPage from "@/pages/admin/DashboardPage";
 import MasterDataPage from "@/pages/admin/MasterDataPage";
 import ProfilePage from "@/pages/admin/ProfilePage";
 import ServicePage from "@/pages/admin/ServicePage";
@@ -25,14 +25,8 @@ export const PRIVATE_ROUTES: Interface__PrivateRoute[] = [
     path: "/dashboard",
     activePath: "/dashboard",
     titleKey: "navs.dashboard",
-    element: <HomePage />,
+    element: <DashboardPage />,
   },
-  // {
-  //   path: "/administration",
-  //   activePath: "/administration",
-  //   titleKey: "navs.administration",
-  //   element: <AdministrationPage />,
-  // },
   {
     path: "/workspace",
     activePath: "/workspace",

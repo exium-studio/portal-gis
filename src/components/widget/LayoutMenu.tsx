@@ -51,7 +51,7 @@ const LayoutMenu = ({ popoverContentProps, ...props }: Props) => {
               onClick={onToggle}
               {...props}
             >
-              <IconLayoutColumns stroke={1.5} />
+              <IconLayoutColumns />
             </BButton>
           </Tooltip>
         </div>
