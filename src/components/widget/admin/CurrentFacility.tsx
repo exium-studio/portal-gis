@@ -36,7 +36,7 @@ const CurrentFacility = ({ ...props }: StackProps) => {
       </ItemHeaderContainer>
 
       <CContainer pb={2} minH={ITEM_BODY_H}>
-        <CContainer px={3} overflowY={"auto"} className="scrollY" mr={"-6px"}>
+        <CContainer px={3} overflowY={"auto"} className="scrollY">
           {data.map((item, i) => {
             return (
               <HStack

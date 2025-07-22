@@ -49,7 +49,6 @@ const DisclosureHeaderContent = ({
                   right={"12px"}
                   onClick={handleBack}
                   mt={"-2px"}
-                  mr={"-6px"}
                 />
               )}
 

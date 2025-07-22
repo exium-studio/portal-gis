@@ -148,7 +148,6 @@ const DisclosureBody = ({ children, ...props }: DisclosureBodyProps) => {
       py={0}
       className={finalClassName}
       overflowY={"scroll"}
-      mr={"-6px"}
       overflowX={"clip"}
       {...(props as DrawerHeaderProps)}
     >
@@ -161,7 +160,6 @@ const DisclosureBody = ({ children, ...props }: DisclosureBodyProps) => {
       py={`${props.pb ?? 4} !important`}
       className={finalClassName}
       overflowY={"scroll"}
-      mr={"-6px"}
       overflowX={"clip"}
       {...(props as DialogBodyProps)}
     >
@@ -236,7 +234,6 @@ const DisclosureCloseTrigger = ({
   return iss ? (
     <DrawerCloseTrigger
       mt={"2px"}
-      mr={"-6px"}
       onClick={back}
       {...(props as DrawerCloseTriggerProps)}
     >

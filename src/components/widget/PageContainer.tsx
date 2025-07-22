@@ -10,6 +10,7 @@ const PageContainer = ({ children, ...props }: Props) => {
     <CContainer
       pt={iss ? 4 : ""}
       px={4}
+      pr={3}
       // pl={[2, null, 4]}
       // pr={["2px", null, "10px"]}
       pb={4}

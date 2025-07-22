@@ -39,7 +39,7 @@ const VisionMission = ({ ...props }: StackProps) => {
       </ItemHeaderContainer>
 
       <CContainer pb={2} h={ITEM_BODY_H}>
-        <CContainer px={3} overflowY={"auto"} className="scrollY" mr={"-6px"}>
+        <CContainer px={3} overflowY={"auto"} className="scrollY">
           <CContainer px={2} mt={4}>
             <Text color={"fg.muted"} mb={1}>
               {l.vision}

@@ -54,6 +54,7 @@ interface Props {
 const MainPanelNavigation = () => {
   // Hooks
   const { l } = useLang();
+  const iss = useIsSmScreenWidth();
 
   // Contexts
   const { themeConfig } = useThemeConfig();
@@ -72,11 +73,11 @@ const MainPanelNavigation = () => {
 
   return (
     <HStack
-      bg={"body"}
+      bg={iss ? "bg.muted" : "body"}
       gap={0}
       borderRadius={themeConfig.radii.container}
       border={"1px solid"}
-      borderColor={"border.subtle"}
+      borderColor={"border.muted"}
     >
       <Tooltip
         content={layoutFullMainPanel ? l.half_main_panel : l.full_main_panel}
@@ -334,7 +335,6 @@ const NavContainer = ({
           py={"26px"}
           overflowX={"clip"}
           overflowY={"scroll"}
-          mr={"-6px"}
           className="scrollY"
           bg={"body"}
           borderRight={"1px solid"}
@@ -380,11 +380,15 @@ const NavContainer = ({
             w={layout.id === 1 && !iss && withMaps ? "50%" : ""}
             h={layout.id === 1 && iss && withMaps ? "50%" : ""}
             zIndex={3}
+            borderRight={iss ? "" : "1px solid"}
+            borderTop={iss ? "1px solid" : ""}
+            borderColor={"border.muted"}
           >
             <HStack
               h={"67px"}
               justify={"space-between"}
               px={4}
+              pr={3}
               py={5}
               flexShrink={0}
               position={"sticky"}

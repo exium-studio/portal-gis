@@ -711,7 +711,6 @@ const TableComponent = ({
         borderColor={"border.muted"}
         className="scrollX scrollY"
         overflow={"scroll"}
-        mr={"-6px"}
         mb={"-6px"}
         flex={1}
         {...props}

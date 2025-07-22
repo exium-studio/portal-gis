@@ -9,7 +9,6 @@ import OfflineDisclosure from "./components/widget/OfflineDisclosure";
 import useADM from "./context/useADM";
 import useLang from "./context/useLang";
 import useOffline from "./context/useOffilne";
-import { useThemeConfig } from "./context/useThemeConfig";
 import useScrollEffect from "./hooks/useScrollEffect";
 import Routing from "./routes/Routing";
 import theme from "./theme";
@@ -17,17 +16,17 @@ import useStatusBarColor from "./utils/statusBarColor";
 
 const EndpointWrapper = ({ children }: { children: React.ReactNode }) => {
   // Contexts
-  const { themeConfig } = useThemeConfig();
+  // const { themeConfig } = useThemeConfig();
 
   // Utils
   const location = useLocation();
   const navigate = useNavigate();
-  const setStatusBarPrimary = useStatusBarColor(
-    themeConfig.primaryColorHex,
-    themeConfig.primaryColorHex
-  );
-  const setStatusBarBody = useStatusBarColor("#ffffff", "#101010");
-  const setStatusBarDark = useStatusBarColor("#101010", "#101010");
+  // const setStatusBarPrimary = useStatusBarColor(
+  //   themeConfig.primaryColorHex,
+  //   themeConfig.primaryColorHex
+  // );
+  const setStatusBarBody = useStatusBarColor("#ffffff", "#151515");
+  const setStatusBarDark = useStatusBarColor("#151515", "#151515");
 
   // Handle notif bar color
   useEffect(() => {
@@ -36,12 +35,6 @@ const EndpointWrapper = ({ children }: { children: React.ReactNode }) => {
     switch (endpoint) {
       default:
         setStatusBarBody();
-        break;
-      case "beranda":
-        setStatusBarPrimary();
-        break;
-      case "employee/foto":
-        setStatusBarDark();
         break;
     }
   }, [location, setStatusBarBody, setStatusBarDark]);
