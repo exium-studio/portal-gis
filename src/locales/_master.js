@@ -1338,7 +1338,7 @@ export const error_404_toast = {
     en: "The resource you are looking for was not found.",
   },
 };
-export const login_loading_toast = {
+export const signin_loading_toast = {
   title: {
     id: "Login",
     en: "Login",
@@ -1348,11 +1348,11 @@ export const login_loading_toast = {
     en: "Verifying credentials.",
   },
 };
-export const login_success_toast = {
+export const signin_success_toast = {
   title: { id: "Login berhasil", en: "Login successful" },
   description: { id: "Anda telah masuk.", en: "You are now logged in." },
 };
-export const login_wrong_credentials_toast = {
+export const signin_wrong_credentials_toast = {
   title: { id: "Login gagal", en: "Login failed" },
   description: { id: "Kredensial tidak valid.", en: "Invalid credentials." },
 };

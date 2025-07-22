@@ -13,7 +13,7 @@ import StringInput from "../ui-custom/StringInput";
 import TextRouterLink from "../ui-custom/TextRouterLink";
 import { Field } from "../ui/field";
 
-const LoginForm = () => {
+const SigninForm = () => {
   // Contexts
   const { l } = useLang();
   // const { setAuthToken, setPermissions } = useAuthMiddleware();
@@ -21,17 +21,17 @@ const LoginForm = () => {
 
   // Utils
   const { loading } = useRequest({
-    id: "login",
+    id: "signin",
     loadingMessage: {
-      ...l.login_loading_toast,
+      ...l.signin_loading_toast,
     },
     successMessage: {
-      ...l.login_success_toast,
+      ...l.signin_success_toast,
     },
     errorMessage: {
       400: {
         WRONG_CREDENTIALS: {
-          ...l.login_wrong_credentials_toast,
+          ...l.signin_wrong_credentials_toast,
         },
       },
     },
@@ -50,47 +50,6 @@ const LoginForm = () => {
       password: yup.string().required(l.required_form),
     }),
     onSubmit: () => {
-      // const payload = {
-      //   email: values.identifier,
-      //   password: values.password,
-      // };
-      // const config = {
-      //   method: "post",
-      //   url: `/login`,
-      //   data: payload,
-      // };
-      // req({
-      //   config,
-      //   onResolve: {
-      //     onSuccess: (r: any) => {
-      //       //! Dummy
-      //       const dummy_user = {
-      //         name: "Sulenq Wazawsky",
-      //         avatar: "https://bit.ly/sage-adebayo",
-      //         email: "sulengpol@gmail.com",
-      //         subscriptions: [
-      //           {
-      //             id: 1,
-      //             name: "HRIS",
-      //             pricing: {
-      //               id: 1,
-      //               name: "Essential",
-      //             },
-      //           },
-      //         ],
-      //         permissions: [], // number array
-      //       };
-      //       localStorage.setItem("__auth_token", r.data.token);
-      //       localStorage.setItem(
-      //         "__user_data",
-      //         r.data.data?.user || JSON.stringify(dummy_user)
-      //       );
-      //       setAuthToken(r.data.token);
-      //       setPermissions(r.data.user.permission ?? []);
-      //       navigate("/home");
-      //     },
-      //   },
-      // });
       navigate("/profile");
     },
   });
@@ -101,8 +60,8 @@ const LoginForm = () => {
       m={"auto"}
       w={"full"}
       maxW={"380px"}
-      p={4}
-      borderRadius={8}
+      p={6}
+      borderRadius={themeConfig.radii.container}
     >
       <FieldsetRoot disabled={loading}>
         <CContainer mb={4} gap={1}>
@@ -110,7 +69,7 @@ const LoginForm = () => {
           <Text fontSize={"sm"}>{l.login_form.description}</Text>
         </CContainer>
 
-        <form id="login-form" onSubmit={formik.handleSubmit}>
+        <form id="signin_form" onSubmit={formik.handleSubmit}>
           <Field
             label="Email/Username"
             invalid={!!formik.errors.identifier}
@@ -148,7 +107,7 @@ const LoginForm = () => {
 
           <BButton
             type="submit"
-            form="login-form"
+            form="signin_form"
             w={"full"}
             mt={6}
             size={"lg"}
@@ -163,4 +122,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default SigninForm;
