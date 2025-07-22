@@ -131,6 +131,7 @@ const NavContainer = ({
 
   // States
   const layoutFullMap = layout.id === 3;
+  const layoutHalfMap = layout.id === 1;
 
   // Utils
   useCallBackOnNavigate(() => {
@@ -164,6 +165,7 @@ const NavContainer = ({
         to={to}
         onClick={() => {
           if (layoutFullMap) setLayout(LAYOUT_OPTIONS[0]);
+          if (layoutHalfMap) setLayout(LAYOUT_OPTIONS[2]);
         }}
         {...restProps}
       >

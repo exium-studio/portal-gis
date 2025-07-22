@@ -1,7 +1,8 @@
 import { useColorMode } from "@/components/ui/color-mode";
-import { DISPLAYED_DUMMY_DATA } from "@/constants/dummy";
+import useSearchAddress from "@/constants/useSearchAddress";
+import useActiveMapStyle from "@/context/useActiveMapStyle";
+import useBasemap from "@/context/useBasemap";
 import useCurrentLocation from "@/context/useCurrentLocation";
-import useDisplayedData from "@/context/useDisplayedData";
 import useLayout from "@/context/useLayout";
 import useMapStyle from "@/context/useMapStyle";
 import useMapViewState from "@/context/useMapViewState";
@@ -10,12 +11,6 @@ import mapboxgl from "mapbox-gl";
 import { useEffect, useRef, useState } from "react";
 import Map, { MapRef, Marker } from "react-map-gl/mapbox";
 import MapMarkerCircle from "../MapMarkerCircle";
-import FacilityLayer from "./FacilityLayer";
-import KKLayer from "./KKLayer";
-import VillageAssetLayer from "./VillageAssetLayer";
-import useActiveMapStyle from "@/context/useActiveMapStyle";
-import useBasemap from "@/context/useBasemap";
-import useSearchAddress from "@/constants/useSearchAddress";
 
 const MIN_ZOOM = 0;
 const MAX_ZOOM = 22;
@@ -27,16 +22,16 @@ const AdminMap = () => {
   const { layout } = useLayout();
   const { currentLocation } = useCurrentLocation();
   const { mapZoomPercent, setMapZoomPercent } = useMapsZoom();
-  const { displayedData } = useDisplayedData();
   const { basemap } = useBasemap();
   const { selectedSearchResult } = useSearchAddress(); // long = 0, lat = 1 (center)
 
-  // States, Refs
+  // Refs
+  const mapRef = useRef<MapRef>(null);
+
+  // States
   const { activeMapStyle, setActiveMapStyle } = useActiveMapStyle();
   const [mapLoad, setMapLoad] = useState<boolean>(false);
-  const mapRef = useRef<MapRef>(null);
   const { mapViewState, setMapViewState, setMapRef } = useMapViewState();
-  const data = DISPLAYED_DUMMY_DATA;
 
   // Handle init mapRef
   useEffect(() => {
@@ -235,21 +230,8 @@ const AdminMap = () => {
           )}
 
           {/* Data layer */}
-          {data && (
-            <>
-              {displayedData.kk && <KKLayer data={data.kk} />}
-
-              {displayedData.facility && <FacilityLayer data={data.facility} />}
-
-              {displayedData.village_asset && (
-                <VillageAssetLayer data={data.village_asset} />
-              )}
-            </>
-          )}
         </>
       )}
-
-      {/* Coba */}
     </Map>
   );
 };
