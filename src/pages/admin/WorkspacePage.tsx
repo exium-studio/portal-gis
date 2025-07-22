@@ -52,7 +52,7 @@ const Create = () => {
 
   // Contexts
   const { themeConfig } = useThemeConfig();
-  const { rt, setRt } = useRenderTrigger();
+  const setRt = useRenderTrigger((s) => s.setRt);
 
   // States
   const formik = useFormik({
@@ -84,7 +84,7 @@ const Create = () => {
         });
       }
 
-      const url = `/api/piramid/admin/master-data/animal-category`;
+      const url = `/api/gis-bpn/workspaces/create`;
       const config = {
         url,
         method: "POST",
@@ -95,7 +95,7 @@ const Create = () => {
         config,
         onResolve: {
           onSuccess: () => {
-            setRt(!rt);
+            setRt((ps) => !ps);
             resetForm();
           },
         },

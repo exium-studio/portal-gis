@@ -5,12 +5,18 @@ type State = {
 };
 
 type Actions = {
-  setRt: (rt: boolean) => void;
+  setRt: (rt: boolean | ((prev: boolean) => boolean)) => void;
 };
 
-const useRenderTrigger = create<State & Actions>((set) => ({
+const useRenderTrigger = create<State & Actions>((set, get) => ({
   rt: false,
-  setRt: (rt) => set(() => ({ rt: rt })),
+  setRt: (rt) => {
+    if (typeof rt === "function") {
+      set({ rt: rt(get().rt) });
+    } else {
+      set({ rt });
+    }
+  },
 }));
 
 export default useRenderTrigger;

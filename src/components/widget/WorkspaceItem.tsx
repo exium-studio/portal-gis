@@ -34,6 +34,7 @@ import P from "../ui-custom/P";
 import { Field } from "../ui/field";
 import { Tooltip } from "../ui/tooltip";
 import SelectLayerFileType from "./SelectLayerFileType";
+import useRenderTrigger from "@/context/useRenderTrigger";
 
 const CreateLayer = (props: any) => {
   // Props
@@ -176,13 +177,15 @@ const EditWorkspace = (props: any) => {
   const { l } = useLang();
 
   return (
-    <Tooltip content={l.edit_workspace}>
-      <BButton unclicky iconButton variant={"ghost"} size={"sm"}>
-        <Icon>
-          <IconEdit />
-        </Icon>
-      </BButton>
-    </Tooltip>
+    <>
+      <Tooltip content={l.edit_workspace}>
+        <BButton unclicky iconButton variant={"ghost"} size={"sm"}>
+          <Icon>
+            <IconEdit />
+          </Icon>
+        </BButton>
+      </Tooltip>
+    </>
   );
 };
 const DeleteWorkspace = (props: any) => {
@@ -191,10 +194,34 @@ const DeleteWorkspace = (props: any) => {
 
   // Hooks
   const { l } = useLang();
+  const { req } = useRequest({
+    id: "crud_workspace",
+  });
 
   // Contexts
+  const setRt = useRenderTrigger((s) => s.setRt);
   const { setConfirmationData, confirmationOnOpen } =
     useConfirmationDisclosure();
+
+  // Utils
+  function onDelete() {
+    back();
+
+    const url = `/api/gis-bpn/workspaces/delete/${data?.id}`;
+    const config = {
+      url,
+      method: "DELETE",
+    };
+
+    req({
+      config,
+      onResolve: {
+        onSuccess: () => {
+          setRt((ps) => !ps);
+        },
+      },
+    });
+  }
 
   return (
     <Tooltip content={l.delete_workspace}>
@@ -209,10 +236,7 @@ const DeleteWorkspace = (props: any) => {
             description: l.perma_delete_confirmation,
             confirmLabel: "Delete",
             confirmButtonProps: { colorPalette: "red" },
-            onConfirm: () => {
-              // TODO req on delete workspace
-              back();
-            },
+            onConfirm: onDelete,
           });
           confirmationOnOpen();
         }}
