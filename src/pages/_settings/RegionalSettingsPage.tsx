@@ -163,8 +163,8 @@ const TimeZone = () => {
   return (
     // <Profiler id="TimeZone" onRender={onRenderCallback}>
     <ItemContainer>
-      <ItemHeaderContainer borderless={iss} gap={2}>
-        <HStack truncate>
+      <ItemHeaderContainer borderless={true} gap={2} p={0}>
+        <HStack truncate px={4} pt={4}>
           <HStack>
             <IconTimezone size={20} />
             <ItemHeaderTitle>
@@ -181,8 +181,18 @@ const TimeZone = () => {
           <SearchInput
             onChangeSetter={setSearch}
             inputValue={search}
-            inputProps={{ size: "sm" }}
-            maxW="300px"
+            inputProps={{
+              // px: 4,
+              pl: "50px",
+              borderTop: "none",
+              borderLeft: "none",
+              borderRight: "none",
+              borderRadius: 0,
+            }}
+            iconProps={{
+              ml: 1,
+            }}
+            // maxW="300px"
           />
         )}
       </ItemHeaderContainer>

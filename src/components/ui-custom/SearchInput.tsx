@@ -93,6 +93,7 @@ export default function SearchInput({
                   ? "sm"
                   : "md"
               }
+              mb={"2px"}
               {...iconProps}
             >
               {icon || <IconSearch />}

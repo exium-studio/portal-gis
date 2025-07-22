@@ -153,7 +153,7 @@ const SelectInput = ({
                 }}
                 {...props}
               >
-                <Text truncate>{item?.label}</Text>
+                <Text lineClamp={1}>{item?.label}</Text>
               </BButton>
             ))}
           </>
@@ -197,13 +197,14 @@ const SelectInput = ({
         >
           <HStack w={"full"} justify={"space-between"}>
             {inputValue ? (
-              <Text fontWeight={"normal"} truncate>
+              <Text fontWeight={"normal"} lineClamp={1} textAlign={"left"}>
                 {inputValue?.map((item) => item.label).join(", ")}
               </Text>
             ) : (
               <Text
                 color={props?._placeholder?.color || "var(--placeholder)"}
-                truncate
+                lineClamp={1}
+                textAlign={"left"}
               >
                 {finalPlaceholder}
               </Text>
@@ -219,19 +220,24 @@ const SelectInput = ({
         </BButton>
       </Tooltip>
 
-      <DisclosureRoot open={open} size={disclosureSize} lazyMount>
+      <DisclosureRoot
+        open={open}
+        size={disclosureSize}
+        scrollBehavior={"inside"}
+        lazyMount
+      >
         <DisclosureContent>
           <DisclosureHeader>
             <DisclosureHeaderContent
               content={
                 <HStack justify={"space-between"}>
                   <Text
-                    fontSize={"1rem"}
+                    fontSize={"14px"}
                     ml={1}
                     w={"full"}
                     fontWeight={"semibold"}
                     pr={"80px"}
-                    truncate
+                    lineClamp={1}
                   >{`${
                     title
                       ? `${l.select_input_default_title} ${title}`
@@ -243,8 +249,8 @@ const SelectInput = ({
                       unclicky
                       iconButton
                       variant={"ghost"}
-                      mr={5}
-                      size={"sm"}
+                      mr={3}
+                      size={"2xs"}
                       borderRadius={"full"}
                       position={"absolute"}
                       right={"30px"}
@@ -264,12 +270,24 @@ const SelectInput = ({
             />
           </DisclosureHeader>
 
-          <DisclosureBody py={"0px !important"}>
+          <DisclosureBody
+            pb={0}
+            // pt={"4 !important"}
+            className="scrollY"
+            // bg={"red"}
+            mr={"1px"}
+          >
             {fl && (
-              <HStack>
+              <HStack position={"sticky"} top={"0"} bg={"body"} zIndex={2}>
                 <SearchInput
                   onChangeSetter={(inputValue) => {
                     setSearch(inputValue);
+                  }}
+                  inputProps={{
+                    borderTop: "none",
+                    borderLeft: "none",
+                    borderRight: "none",
+                    borderRadius: 0,
                   }}
                   inputValue={search}
                   invalid={false}

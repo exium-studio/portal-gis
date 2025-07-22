@@ -1,4 +1,4 @@
-import { Icon } from "@chakra-ui/react";
+import { Icon, useFieldContext } from "@chakra-ui/react";
 import { IconUpload } from "@tabler/icons-react";
 import {
   FileUploadDropzone,
@@ -9,6 +9,7 @@ import {
 } from "../ui/file-button";
 import BButton from "./BButton";
 import useLang from "@/context/useLang";
+import { toaster } from "../ui/toaster";
 
 interface Props extends FileUploadRootProps {
   name?: string;
@@ -35,22 +36,29 @@ const FileInput = (props: Props) => {
     initialFilepath,
     label,
     dropzone,
-    description = `size up to 10 MB, max ${props.maxFiles} file(s)`,
     maxFiles = 1,
+    description = `up to 10 MB, max ${props?.maxFiles || 1} file${
+      props?.maxFiles!! > 1 ? "s" : ""
+    }`,
     ...restProps
   } = props;
 
-  // Contexts
+  // Hooks
   const { l } = useLang();
+
+  // Contexts
+  const fc = useFieldContext();
 
   // Utils
   const handleFileChange = (details: any) => {
+    let files = details.acceptedFiles || [];
+
+    if (maxFiles && files.length > maxFiles) {
+      files = files.slice(0, maxFiles);
+    }
+
     if (onChangeSetter) {
-      onChangeSetter(
-        details.acceptedFiles && details.acceptedFiles.length > 0
-          ? details.acceptedFiles
-          : undefined
-      );
+      onChangeSetter(files.length > 0 ? files : undefined);
     }
   };
 
@@ -58,19 +66,38 @@ const FileInput = (props: Props) => {
     <FileUploadRoot
       alignItems="stretch"
       onFileChange={handleFileChange}
+      onFileReject={() => {
+        toaster.error({
+          title: l.error_file_input.title,
+          description: l.error_file_input.description,
+          action: {
+            label: "Close",
+            onClick: () => {},
+          },
+        });
+      }}
       maxFiles={maxFiles}
+      gap={2}
+      accept={accept}
       {...restProps}
     >
       <>
         {dropzone ? (
           <FileUploadDropzone
-            borderColor={invalid ? "fg.error" : ""}
-            description={description}
+            description={`${description} ${accept ? `(${accept})` : ""}`}
             label={l.file_dropzone_label}
+            borderColor={
+              invalid ?? fc?.invalid ? "border.error" : "border.muted"
+            }
           />
         ) : (
           <FileUploadTrigger asChild borderColor={invalid ? "fg.error" : ""}>
-            <BButton variant="outline">
+            <BButton
+              variant="outline"
+              borderColor={
+                invalid ?? fc?.invalid ? "border.error" : "border.muted"
+              }
+            >
               <Icon scale={0.8}>
                 <IconUpload />
               </Icon>{" "}

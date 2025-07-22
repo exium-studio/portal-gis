@@ -51,12 +51,10 @@ export const FileUploadDropzone = forwardRef<
       _hover={{ bg: "gray.subtle" }}
     >
       <Icon fontSize="2xl" color="fg.muted">
-        <Icon>
-          <IconUpload />
-        </Icon>
+        <IconUpload />
       </Icon>
       <ChakraFileUpload.DropzoneContent>
-        <div>{label || "Drag and drop untuk unggah berkas"}</div>
+        <div>{label}</div>
         {description && (
           <Text color="fg.muted">{description || ".* up to 5MB"}</Text>
         )}
@@ -90,7 +88,7 @@ const FileUploadItem = (props: FileUploadItemProps) => {
       borderRadius={themeConfig.radii.component}
     >
       <ChakraFileUpload.ItemPreview asChild>
-        <Icon fontSize={20} color="fg.muted">
+        <Icon fontSize={20}>
           <FileIcon mimeType={file.type} />
         </Icon>
       </ChakraFileUpload.ItemPreview>

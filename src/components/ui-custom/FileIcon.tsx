@@ -59,6 +59,7 @@ const FileIcon = forwardRef<SVGSVGElement, Props>(
       case "jpeg":
       case "png":
       case "svg":
+      case "svg+xml":
       case "heic":
       case "webp":
       case "gif":
@@ -68,6 +69,7 @@ const FileIcon = forwardRef<SVGSVGElement, Props>(
       case "image/jpeg":
       case "image/png":
       case "image/svg":
+      case "image/svg+xml":
       case "image/heic":
       case "image/webp":
       case "image/gif":
