@@ -62,7 +62,6 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
       pl={!compact ? 4 : ""}
       align={"start"}
       gap={0}
-      overflowY={"auto"}
       {...props}
     >
       {/* Settings Navs */}
@@ -135,13 +134,7 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
       )}
 
       {/* Content */}
-      <PageContainer
-        display={compact && settingsRoute ? "none" : "flex"}
-        overflowY={"auto"}
-        maxH={"full"}
-        className="scrollY"
-        h={"calc(100%)"}
-      >
+      <PageContainer display={compact && settingsRoute ? "none" : "flex"}>
         {children}
       </PageContainer>
     </HStack>
