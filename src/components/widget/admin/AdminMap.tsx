@@ -16,8 +16,10 @@ const MIN_ZOOM = 0;
 const MAX_ZOOM = 22;
 
 const AdminMap = () => {
-  // Contexts
+  // Hooks
   const { colorMode } = useColorMode();
+
+  // Contexts
   const { mapStyle } = useMapStyle();
   const { layout } = useLayout();
   const { currentLocation } = useCurrentLocation();
@@ -167,7 +169,7 @@ const AdminMap = () => {
     } else {
       setActiveMapStyle(mapStyle.tile[colorMode]);
     }
-  }, [mapStyle]);
+  }, [mapStyle, colorMode]);
 
   // Handle rerender layer
   useEffect(() => {
