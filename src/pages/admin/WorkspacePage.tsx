@@ -1,6 +1,6 @@
 import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
 
-const ServicePage = () => {
+const WorkspacePage = () => {
   return (
     <>
       <FeedbackNoData />
@@ -8,4 +8,4 @@ const ServicePage = () => {
   );
 };
 
-export default ServicePage;
+export default WorkspacePage;

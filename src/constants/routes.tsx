@@ -7,7 +7,7 @@ import TermsOfServicePage from "@/pages/_settings/TermsOfServicePage";
 import DashboardPage from "@/pages/admin/DashboardPage";
 import MasterDataPage from "@/pages/admin/MasterDataPage";
 import ProfilePage from "@/pages/admin/ProfilePage";
-import ServicePage from "@/pages/admin/ServicePage";
+import WorkspacePage from "@/pages/admin/WorkspacePage";
 import RootPage from "@/pages/RootPage";
 import SettingsPage from "@/pages/SettingsPage";
 import { Interface__PrivateRoute, Interface__Route } from "./interfaces";
@@ -22,16 +22,16 @@ export const ROUTES: Interface__Route[] = [
 
 export const PRIVATE_ROUTES: Interface__PrivateRoute[] = [
   {
+    path: "/workspace",
+    activePath: "/workspace",
+    titleKey: "navs.workspace",
+    element: <WorkspacePage />,
+  },
+  {
     path: "/dashboard",
     activePath: "/dashboard",
     titleKey: "navs.dashboard",
     element: <DashboardPage />,
-  },
-  {
-    path: "/workspace",
-    activePath: "/workspace",
-    titleKey: "navs.workspace",
-    element: <ServicePage />,
   },
   {
     path: "/master-data",

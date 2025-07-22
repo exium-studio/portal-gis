@@ -31,7 +31,7 @@ export default function FeedbackNoData({
       {...props}
     >
       <EmptyState
-        icon={<Icon mb={title ? 0 : -2}>{icon || <IconDatabaseOff />}</Icon>}
+        icon={<Icon mb={title ? -2 : 0}>{icon || <IconDatabaseOff />}</Icon>}
         title={title ?? l.no_data_feedback.title}
         description={description ?? l.no_data_feedback.description}
         maxW={"300px"}
