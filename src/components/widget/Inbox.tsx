@@ -3,7 +3,6 @@ import useBackOnClose from "@/hooks/useBackOnClose";
 import { HStack, Text, useDisclosure } from "@chakra-ui/react";
 import { IconInbox, IconInboxOff } from "@tabler/icons-react";
 import BButton from "../ui-custom/BButton";
-import ConfirmationDisclosure from "./ConfirmationDisclosure";
 import DisclosureHeaderContent from "../ui-custom/DisclosureHeaderContent";
 import FloatCounter from "../ui-custom/FloatCounter";
 import {
@@ -65,28 +64,11 @@ const Inbox = () => {
           </DrawerBody>
 
           <DrawerFooter>
-            <ConfirmationDisclosure
-              id="mark-read-all"
-              title={l.mark_read_disclosure.title}
-              description={l.mark_read_disclosure.description}
-              confirmLabel={l.mark_as_read}
-              confirmCallback={() => {}}
-            >
-              <BButton variant={"outline"}>{l.mark_as_read}</BButton>
-            </ConfirmationDisclosure>
+            <BButton variant={"outline"}>{l.mark_as_read}</BButton>
 
-            <ConfirmationDisclosure
-              id="logout"
-              title={l.delete_all_inbox_disclosure.title}
-              description={l.delete_all_inbox_disclosure.description}
-              confirmLabel={l.delete_label}
-              confirmButtonProps={{ colorPalette: "red" }}
-              confirmCallback={() => {}}
-            >
-              <BButton variant={"outline"} color={"fg.error"}>
-                {l.delete_all_inbox_button}...
-              </BButton>
-            </ConfirmationDisclosure>
+            <BButton variant={"outline"} color={"fg.error"}>
+              {l.delete_all_inbox_button}...
+            </BButton>
           </DrawerFooter>
         </DrawerContent>
       </DrawerRoot>
