@@ -5,6 +5,9 @@
   font-optical-sizing: auto;
   box-sizing: border-box !important;
 }
+*::selection {
+  background: var(--d3);
+}
 
 :root {
   font-synthesis: none;

@@ -1,5 +1,6 @@
 import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
+import ComponentSpinner from "@/components/ui-custom/ComponentSpinner";
 import FeedbackNotFound from "@/components/ui-custom/FeedbackNotFound";
 import FloatingContainer from "@/components/ui-custom/FloatingContainer";
 import HelperText from "@/components/ui-custom/HelperText";
@@ -41,7 +42,6 @@ import {
   Image,
   PopoverPositioner,
   Portal,
-  Spinner,
   Stack,
   StackProps,
   Text,
@@ -270,11 +270,7 @@ const SearchAddress = () => {
               pointerEvents={"auto"}
             >
               {/* Render loading */}
-              {loading && (
-                <Center p={4}>
-                  <Spinner size={"sm"} />
-                </Center>
-              )}
+              {loading && <ComponentSpinner />}
 
               {/* Render result */}
               {!loading && (
@@ -282,11 +278,7 @@ const SearchAddress = () => {
                   {searchAddress && (
                     <>
                       {/* Render Not Found */}
-                      {searchResult.length === 0 && (
-                        <CContainer p={5}>
-                          <FeedbackNotFound />
-                        </CContainer>
-                      )}
+                      {searchResult.length === 0 && <FeedbackNotFound />}
 
                       {/* Render Search Result */}
                       {searchResult?.length > 0 &&

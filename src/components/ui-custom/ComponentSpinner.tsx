@@ -6,7 +6,13 @@ interface Props extends StackProps {
 
 export default function ComponentSpinner({ spinnerProps, ...props }: Props) {
   return (
-    <VStack w={"full"} h={"200px"} justify={"center"} {...props}>
+    <VStack
+      w={"full"}
+      minH={"300px"}
+      justify={"center"}
+      opacity={0.4}
+      {...props}
+    >
       <Spinner {...spinnerProps} />
     </VStack>
   );

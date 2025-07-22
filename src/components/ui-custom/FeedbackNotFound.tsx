@@ -29,7 +29,7 @@ export default function FeedbackNotFound({
     >
       <EmptyState
         icon={
-          <Icon>
+          <Icon mb={title ? -2 : 0}>
             <IconSearch />
           </Icon>
         }

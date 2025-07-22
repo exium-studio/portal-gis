@@ -25,14 +25,14 @@ const DisclosureHeaderContent = ({
   }
 
   return (
-    <HStack justify={"space-between"} mb={1}>
+    <HStack justify={"space-between"} w={"full"} pr={7}>
       {content ? (
         content
       ) : (
         <Text
-          fontSize={"16px"}
+          fontSize={"14px"}
           fontWeight={"semibold"}
-          ml={!prefix ? [-1, null, 0] : ""}
+          ml={!prefix ? [-1, null, 1] : ""}
         >
           {title}
         </Text>
@@ -49,6 +49,7 @@ const DisclosureHeaderContent = ({
                   right={"12px"}
                   onClick={handleBack}
                   mt={"-2px"}
+                  mr={"-6px"}
                 />
               )}
 

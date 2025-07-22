@@ -221,13 +221,23 @@ const AdminMap = () => {
     >
       {mapLoad && (
         <>
-          {/* Markers */}
+          {/* Current LocationMarker */}
           {currentLocation && (
             <Marker
               longitude={currentLocation.lon}
               latitude={currentLocation.lat}
             >
               <MapMarkerCircle />
+            </Marker>
+          )}
+
+          {/* Search Marker */}
+          {selectedSearchResult && (
+            <Marker
+              longitude={selectedSearchResult?.center[0]}
+              latitude={selectedSearchResult?.center[1]}
+            >
+              <MapMarkerCircle color="fg" />
             </Marker>
           )}
 

@@ -68,7 +68,8 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
       {/* Settings Navs */}
       {(!compact || settingsRoute) && (
         <CContainer
-          px={compact && settingsRoute ? 2 : 0}
+          pl={compact && settingsRoute ? 4 : 0}
+          pr={compact && settingsRoute ? 3 : 0}
           pt={iss ? 4 : ""}
           pb={4}
           w={compact ? "full" : "200px"}
