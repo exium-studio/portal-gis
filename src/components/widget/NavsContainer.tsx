@@ -17,9 +17,9 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import {
-  IconLayoutColumns,
+  IconMaximize,
+  IconMinimize,
   IconSettings,
-  IconSquare,
   IconX,
 } from "@tabler/icons-react";
 import { useRef } from "react";
@@ -84,9 +84,9 @@ const MainPanelNavigation = () => {
         <BButton iconButton variant={"ghost"} onClick={toggleFullMainPanel}>
           <Icon>
             {layoutFullMainPanel ? (
-              <IconLayoutColumns stroke={1.5} />
+              <IconMinimize stroke={1.5} />
             ) : (
-              <IconSquare stroke={1.5} />
+              <IconMaximize stroke={1.5} />
             )}
           </Icon>
         </BButton>
@@ -142,8 +142,6 @@ const NavContainer = ({
     }
   });
   const iss = useIsSmScreenWidth();
-  const { pathname } = useLocation();
-  const inMainNavs = NAVS.some((nav) => nav.path === pathname);
 
   // Components
   const ActiveNavIndicator = ({ ...props }: CircleProps) => {
@@ -371,7 +369,7 @@ const NavContainer = ({
         w={iss ? "full" : "calc(100vw - 76px)"}
       >
         {/* Main Panel */}
-        {(layout.id === 1 || layout.id === 2 || !inMainNavs) && (
+        {(layout.id === 1 || layout.id === 2) && (
           <CContainer
             fRef={containerRef}
             position={"relative"}
@@ -386,8 +384,7 @@ const NavContainer = ({
             <HStack
               h={"67px"}
               justify={"space-between"}
-              pl={4}
-              pr={"9px"}
+              px={4}
               py={5}
               flexShrink={0}
               position={"sticky"}

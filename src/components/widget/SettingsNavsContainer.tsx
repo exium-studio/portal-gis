@@ -37,7 +37,7 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
   const { layout } = useLayout();
 
   // States
-  const ciss = sw < 1200;
+  const ciss = sw < 1440;
   const compact = (ciss && layout.id !== 2) || iss;
 
   // Components
@@ -62,13 +62,12 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
       pl={!compact ? 4 : ""}
       align={"start"}
       gap={0}
-      overflowY={"auto"}
       {...props}
     >
       {/* Settings Navs */}
       {(!compact || settingsRoute) && (
         <CContainer
-          px={compact && settingsRoute ? 2 : 0}
+          px={compact && settingsRoute ? 4 : 0}
           pt={compact ? 4 : ""}
           pb={4}
           w={compact ? "full" : "200px"}
@@ -142,9 +141,8 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
       {/* Content */}
       <PageContainer
         display={compact && settingsRoute ? "none" : "flex"}
-        overflowY={"auto"}
         maxH={"full"}
-        className="scrollY"
+        px={"4 !important"}
       >
         {children}
       </PageContainer>

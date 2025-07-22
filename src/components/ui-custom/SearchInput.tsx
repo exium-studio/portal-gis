@@ -1,5 +1,7 @@
+import useLang from "@/context/useLang";
 import {
   Center,
+  HStack,
   Icon,
   IconButton,
   IconProps,
@@ -10,7 +12,6 @@ import { Dispatch, useCallback, useEffect, useState } from "react";
 import { InputGroup, InputGroupProps } from "../ui/input-group";
 import { Tooltip } from "../ui/tooltip";
 import StringInput from "./StringInput";
-import useLang from "@/context/useLang";
 
 interface Props extends Omit<InputGroupProps, "children"> {
   inputValue?: string;
@@ -41,7 +42,7 @@ export default function SearchInput({
   noIcon = false,
   ...props
 }: Props) {
-  // Contexts
+  // Hooks
   const { l } = useLang();
 
   // States, Refs
@@ -100,7 +101,7 @@ export default function SearchInput({
         }
         {...props}
       >
-        <>
+        <HStack position="relative" w="full">
           <StringInput
             pl={inputProps?.size === "xs" || inputProps?.size === "sm" ? 8 : 10}
             name={name}
@@ -145,7 +146,7 @@ export default function SearchInput({
               </IconButton>
             </Center>
           )}
-        </>
+        </HStack>
       </InputGroup>
     </Tooltip>
   );

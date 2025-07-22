@@ -181,7 +181,7 @@ const TimeZone = () => {
           <SearchInput
             onChangeSetter={setSearch}
             inputValue={search}
-            inputProps={{ size: "xs" }}
+            inputProps={{ size: "sm" }}
             maxW="300px"
           />
         )}
