@@ -62,7 +62,6 @@ import {
   IconX,
 } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
-import TheLayoutMenu from "../LayoutMenu";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import useSearchMode from "./useSearchMode";
 
@@ -511,7 +510,6 @@ const Legend = () => {
                 iconButton
                 unclicky
                 size={"xs"}
-                borderRadius={"full"}
                 variant={"ghost"}
                 ml={"auto"}
                 mr={-1}
