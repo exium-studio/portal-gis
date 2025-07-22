@@ -461,19 +461,19 @@ const Basemap = () => {
   );
 };
 
-const LayoutMenu = () => {
-  return (
-    <OverlayItemContainer>
-      <TheLayoutMenu
-        pointerEvents={"auto"}
-        popoverContentProps={{
-          mt: 1,
-          mr: "2px",
-        }}
-      />
-    </OverlayItemContainer>
-  );
-};
+// const LayoutMenu = () => {
+//   return (
+//     <OverlayItemContainer>
+//       <TheLayoutMenu
+//         pointerEvents={"auto"}
+//         popoverContentProps={{
+//           mt: 1,
+//           mr: "2px",
+//         }}
+//       />
+//     </OverlayItemContainer>
+//   );
+// };
 
 const Legend = () => {
   // Contexts
@@ -886,7 +886,7 @@ const AdminMapOverlay = () => {
 
             <Basemap />
 
-            <LayoutMenu />
+            {/* <LayoutMenu /> */}
           </HStack>
         </HStack>
       </Box>

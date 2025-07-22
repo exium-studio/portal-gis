@@ -63,6 +63,7 @@ const translations = {
   "citizenship": "Kewarganegaraan",
   "city": "Kota",
   "close": "Tutup",
+  "close_main_panel": "Tutup panel utama",
   "confirm": "Konfirmasi",
   "continue_ordering": "Lanjutkan pemesanan",
   "cost_of_living": "Biaya hidup",
@@ -194,10 +195,12 @@ const translations = {
     "description": "Anda tidak memiliki izin untuk mengakses informasi ini."
   },
   "forgot_password": "Lupa password",
+  "full_main_panel": "Panel utama penuh",
   "fund_mutation": "Mutasi dana",
   "gender": "Jenis Kelamin",
   "get": "Dapatkan",
   "grow": "Naik ${value} dari tahun lalu",
+  "half_main_panel": "Panel utama setengah",
   "in_use": "sedang digunakan",
   "income": "Pendapatan",
   "income_source": "Sumber pendapatan",
@@ -212,7 +215,7 @@ const translations = {
   "last": "Terakhir",
   "last_step": "Tahap terakhir",
   "last_updated": "Terakhir diperbarui",
-  "layout_menu_helper": "Layout ini hanya berlaku di navigasi utama.",
+  "layout_menu_helper": "Pengaturan layout ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
   "legend": "Legenda",
   "legend_helper": "Legenda yang tampil disini bergantung pada daftar",
   "location": "Lokasi",
@@ -314,8 +317,8 @@ const translations = {
     "description": "Silahkan login dengan akun anda."
   },
   "no_data_feedback": {
-    "title": "Tidak ada data",
-    "description": "Cobalah untuk memperbarui data."
+    "title": "Data tidak ditemukan",
+    "description": "Belum ada data yang tersedia."
   },
   "north_direction": "Arah utara",
   "not_found_feedback": {
@@ -337,27 +340,6 @@ const translations = {
   "open": "Buka",
   "optional": "Opsional",
   "order": "Pesan",
-  "order_cancel": {
-    "button_label": "Batalkan Pesanan",
-    "desc": "Membatalkan pesanan akan menghapus semua data yang telah dimasukkan dan tidak dapat dibatalkan"
-  },
-  "order_need_signin": "Anda perlu masuk terlebih dahulu",
-  "order_step_1": {
-    "title": "Silakan pilih layanan",
-    "desc": "Klik salah satu layanan untuk memilih layanan yang Anda inginkan."
-  },
-  "order_step_2": {
-    "title": "Pilih produk ${serviceTypeLabel}",
-    "desc": "Pilih jenis produk sesuai kebutuhan dan anggaran Anda."
-  },
-  "order_step_3": {
-    "title": "Detail pemesanan",
-    "desc": "Isi detail pemesanan seperti lokasi, metode pembayaran"
-  },
-  "order_step_4": {
-    "title": "Pembayaran",
-    "desc": "Lakukan pembayaran untuk memproses pesanan Anda."
-  },
   "otp_sent_to": "Kode OTP telah dikirimkan ke email",
   "paid": "Dibayar",
   "password_confirmation": "Konfirmasi password",
@@ -450,9 +432,6 @@ const translations = {
   "settings_page": {
     "title": "Pengaturan",
     "description": "Silahkan pilih menu pengaturan."
-  },
-  "shohibul_input": {
-    "title": "Data Shohibul"
   },
   "show": "Tampilkan",
   "shrink": "Turun ${value} dari tahun lalu",

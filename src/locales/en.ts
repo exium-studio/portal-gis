@@ -63,6 +63,7 @@ const translations = {
   "citizenship": "Citizenship",
   "city": "City",
   "close": "Close",
+  "close_main_panel": "Close main panel",
   "confirm": "Confirm",
   "continue_ordering": "Continue ordering",
   "cost_of_living": "Cost of living",
@@ -194,10 +195,12 @@ const translations = {
     "description": "You don't have permission to access this information."
   },
   "forgot_password": "Forgot password",
+  "full_main_panel": "Full main panel",
   "fund_mutation": "Fund mutation",
   "gender": "Gender",
   "get": "Get",
   "grow": "Up ${value} from last year",
+  "half_main_panel": "Half main panel",
   "in_use": "in use",
   "income": "Income",
   "income_source": "Income source",
@@ -212,7 +215,7 @@ const translations = {
   "last": "Last",
   "last_step": "Last step",
   "last_updated": "Last updated",
-  "layout_menu_helper": "This layout only applies to the main navigation.",
+  "layout_menu_helper": "These layout settings are stored locally on your device and will not be synced with your account.",
   "legend": "Legend",
   "legend_helper": "The legend displayed here depends on the",
   "location": "Location",
@@ -314,8 +317,8 @@ const translations = {
     "description": "Please login with your account."
   },
   "no_data_feedback": {
-    "title": "No data",
-    "description": "Try to update the data."
+    "title": "Data not found",
+    "description": "No data available."
   },
   "north_direction": "North direction",
   "not_found_feedback": {
@@ -337,27 +340,6 @@ const translations = {
   "open": "Open",
   "optional": "Optional",
   "order": "Order",
-  "order_cancel": {
-    "button_label": "Cancel Order",
-    "desc": "Canceling the order will delete all entered data and cannot be undone"
-  },
-  "order_need_signin": "You need to Sign in first",
-  "order_step_1": {
-    "title": "Please select a service",
-    "desc": "Click one of the services to select the service you want."
-  },
-  "order_step_2": {
-    "title": "Select ${serviceTypeLabel} product",
-    "desc": "Select the type of product based on your needs and budget."
-  },
-  "order_step_3": {
-    "title": "Order details",
-    "desc": "Fill in the order details such as the name of the person offering, location, and preferred schedule."
-  },
-  "order_step_4": {
-    "title": "Payment",
-    "desc": "Make the payment to process your order."
-  },
   "otp_sent_to": "OTP code has been sent to email",
   "paid": "Paid",
   "password_confirmation": "Confirm password",
@@ -450,9 +432,6 @@ const translations = {
   "settings_page": {
     "title": "Settings",
     "description": "Please select the settings menu."
-  },
-  "shohibul_input": {
-    "title": "Shohibul Data"
   },
   "show": "Show",
   "shrink": "Down ${value} from last year",

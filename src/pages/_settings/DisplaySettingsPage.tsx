@@ -213,7 +213,7 @@ const Theme = () => {
                     ? themeConfig.primaryColor
                     : `${color.palette}.500`
                 }
-                borderRadius={themeConfig.radii.component}
+                borderRadius={themeConfig.radii.container}
                 cursor={"pointer"}
                 onClick={() => {
                   setThemeConfig({

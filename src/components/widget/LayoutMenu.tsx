@@ -16,19 +16,21 @@ import { IconCheck, IconLayoutColumns } from "@tabler/icons-react";
 import { useRef } from "react";
 import BButton, { BButtonProps } from "../ui-custom/BButton";
 import CContainer from "../ui-custom/CContainer";
-import HelperText from "../ui-custom/HelperText";
 import { PopoverContent, PopoverRoot, PopoverTrigger } from "../ui/popover";
-import MenuHeaderContainer from "./MenuHeaderContainer";
 import { Tooltip } from "../ui/tooltip";
+import MenuHeaderContainer from "./MenuHeaderContainer";
+import HelperText from "../ui-custom/HelperText";
 
 interface Props extends BButtonProps {
   popoverContentProps?: PopoverContentProps;
 }
 const LayoutMenu = ({ popoverContentProps, ...props }: Props) => {
+  // Hooks
+  const { l } = useLang();
+
   // Contexts
   const { themeConfig } = useThemeConfig();
   const { layout, setLayout } = useLayout();
-  const { l } = useLang();
 
   // Utils
   const { open, onToggle, onClose } = useDisclosure();
@@ -47,11 +49,11 @@ const LayoutMenu = ({ popoverContentProps, ...props }: Props) => {
               unclicky
               variant={"ghost"}
               w={"fit"}
-              color={themeConfig.primaryColor}
+              // color={themeConfig.primaryColor}
               onClick={onToggle}
               {...props}
             >
-              <IconLayoutColumns />
+              <IconLayoutColumns stroke={1.5} />
             </BButton>
           </Tooltip>
         </div>

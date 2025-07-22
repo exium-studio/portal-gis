@@ -21,16 +21,6 @@ export const NAVS = [
     path: "/dashboard",
     icon: IconChartBar,
   },
-  // {
-  //   labelKey: "navs.administration",
-  //   path: "/administration",
-  //   icon: IconDatabase,
-  // },
-  // {
-  //   labelKey: "navs.services",
-  //   path: "/services",
-  //   icon: IconApps,
-  // },
   {
     labelKey: "navs.master_data",
     path: "/master-data",

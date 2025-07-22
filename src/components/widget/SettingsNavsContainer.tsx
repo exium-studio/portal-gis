@@ -1,7 +1,7 @@
 import { SETTINGS_NAVS } from "@/constants/navs";
 import useLang from "@/context/useLang";
 import { useThemeConfig } from "@/context/useThemeConfig";
-import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
+import useScreen from "@/hooks/useScreen";
 import { useSettingsContent } from "@/hooks/useSettingsContent";
 import pluck from "@/utils/pluck";
 import {
@@ -17,6 +17,8 @@ import { Link } from "react-router-dom";
 import BButton from "../ui-custom/BButton";
 import CContainer from "../ui-custom/CContainer";
 import PageContainer from "./PageContainer";
+import useLayout from "@/context/useLayout";
+import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 
 interface Props extends StackProps {
   children?: any;
@@ -24,13 +26,19 @@ interface Props extends StackProps {
 }
 
 const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
-  // Contexts
-  const { themeConfig } = useThemeConfig();
+  // Hooks
   const { l } = useLang();
-
-  // Utils
+  const { sw } = useScreen();
   const iss = useIsSmScreenWidth();
   const { settingsRoute } = useSettingsContent();
+
+  // Contexts
+  const { themeConfig } = useThemeConfig();
+  const { layout } = useLayout();
+
+  // States
+  const ciss = sw < 1200;
+  const compact = (ciss && layout.id !== 2) || iss;
 
   // Components
   const ActiveNavIndicator = ({ ...props }: CircleProps) => {
@@ -51,19 +59,19 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
       id="settingsNavsContainer"
       w={"full"}
       h={"full"}
-      pl={!iss ? 4 : ""}
+      pl={!compact ? 4 : ""}
       align={"start"}
       gap={0}
       overflowY={"auto"}
       {...props}
     >
       {/* Settings Navs */}
-      {(!iss || settingsRoute) && (
+      {(!compact || settingsRoute) && (
         <CContainer
-          px={iss && settingsRoute ? 2 : 0}
-          pt={iss ? 4 : ""}
+          px={compact && settingsRoute ? 2 : 0}
+          pt={compact ? 4 : ""}
           pb={4}
-          w={iss ? "full" : "200px"}
+          w={compact ? "full" : "200px"}
           flexShrink={0}
           overflowY={"auto"}
           maxH={"full"}
@@ -114,7 +122,7 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
 
                             {pluck(l, nav.labelKey)}
 
-                            {iss && (
+                            {compact && (
                               <Icon ml={"auto"} mr={-1}>
                                 <IconChevronRight stroke={1.5} />
                               </Icon>
@@ -133,7 +141,7 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
 
       {/* Content */}
       <PageContainer
-        display={iss && settingsRoute ? "none" : "flex"}
+        display={compact && settingsRoute ? "none" : "flex"}
         overflowY={"auto"}
         maxH={"full"}
         className="scrollY"

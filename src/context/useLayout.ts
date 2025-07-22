@@ -23,7 +23,7 @@ const useLayout = create<Props>((set) => {
   };
 
   return {
-    layout: getStoredFormat(),
+    layout: getStoredFormat() || DEFAULT,
     setLayout: (newState) =>
       set((state) => {
         if (state.layout !== newState) {

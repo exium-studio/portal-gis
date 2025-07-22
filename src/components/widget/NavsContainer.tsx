@@ -1,3 +1,4 @@
+import { LAYOUT_OPTIONS } from "@/constants/layoutOptions";
 import { NAVS } from "@/constants/navs";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
@@ -15,7 +16,12 @@ import {
   StackProps,
   VStack,
 } from "@chakra-ui/react";
-import { IconSettings } from "@tabler/icons-react";
+import {
+  IconLayoutColumns,
+  IconSettings,
+  IconSquare,
+  IconX,
+} from "@tabler/icons-react";
 import { useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import BackButton from "../ui-custom/BackButton";
@@ -28,17 +34,15 @@ import HelperText from "../ui-custom/HelperText";
 import HScroll from "../ui-custom/HScroll";
 import Logo from "../ui-custom/Logo";
 import { Avatar } from "../ui/avatar";
+import { ColorModeButton } from "../ui/color-mode";
 import { Tooltip } from "../ui/tooltip";
 import AdminMap from "./admin/AdminMap";
 import AdminMapOverlay from "./admin/AdminMapOverlay";
 import CurrentUserTimeZone from "./CurrentUserTimeZone";
-import Inbox from "./Inbox";
-import LayoutMenu from "./LayoutMenu";
 
 interface Interface__NavItemContainer extends StackProps {
   active?: boolean;
 }
-
 interface Props {
   children?: any;
   title?: string;
@@ -47,6 +51,67 @@ interface Props {
   withMaps?: boolean;
 }
 
+const PanelNavigation = () => {
+  // Hooks
+  const { l } = useLang();
+
+  // Contexts
+  const { themeConfig } = useThemeConfig();
+  const { layout, setLayout } = useLayout();
+
+  // States
+  const layoutFullMainPanel = layout.id === 2;
+
+  function toggleFullMainPanel() {
+    if (!layoutFullMainPanel) {
+      setLayout(LAYOUT_OPTIONS[1]);
+    } else if (layoutFullMainPanel) {
+      setLayout(LAYOUT_OPTIONS[0]);
+    }
+  }
+
+  return (
+    <HStack
+      bg={"body"}
+      gap={0}
+      borderRadius={themeConfig.radii.container}
+      border={"1px solid"}
+      borderColor={"border.subtle"}
+    >
+      <Tooltip
+        content={layoutFullMainPanel ? l.half_main_panel : l.full_main_panel}
+      >
+        <BButton iconButton variant={"ghost"} onClick={toggleFullMainPanel}>
+          <Icon>
+            {layoutFullMainPanel ? (
+              <IconLayoutColumns stroke={1.5} />
+            ) : (
+              <IconSquare stroke={1.5} />
+            )}
+          </Icon>
+        </BButton>
+      </Tooltip>
+
+      {/* <LayoutMenu /> */}
+
+      <Tooltip content={l.close_main_panel}>
+        <BButton
+          iconButton
+          variant={"ghost"}
+          color={"red.400"}
+          onClick={() => {
+            setLayout(LAYOUT_OPTIONS[2]);
+          }}
+        >
+          <Icon>
+            <IconX />
+          </Icon>
+        </BButton>
+      </Tooltip>
+    </HStack>
+  );
+};
+
 const NavContainer = ({
   children,
   title,
@@ -54,13 +119,18 @@ const NavContainer = ({
   activePath,
   withMaps = false,
 }: Props) => {
+  // Hooks
+  const { l } = useLang();
+
   // Contexts
   const { themeConfig } = useThemeConfig();
-  const { l } = useLang();
-  const { layout } = useLayout();
+  const { layout, setLayout } = useLayout();
 
-  // States, Refs
+  // Refs
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // States
+  const layoutFullMap = layout.id === 3;
 
   // Utils
   useCallBackOnNavigate(() => {
@@ -85,6 +155,22 @@ const NavContainer = ({
       />
     );
   };
+  const NavLinkContainer = (props: any) => {
+    // Props
+    const { children, to, ...restProps } = props;
+
+    return (
+      <Link
+        to={to}
+        onClick={() => {
+          if (layoutFullMap) setLayout(LAYOUT_OPTIONS[0]);
+        }}
+        {...restProps}
+      >
+        {children}
+      </Link>
+    );
+  };
   const NavItemContainer = ({
     children,
     active,
@@ -99,7 +185,7 @@ const NavContainer = ({
         h={["60px", null, "40px"]}
         justify={"center"}
         position={"relative"}
-        color={active ? "fg" : "fg.muted"}
+        color={active && !layoutFullMap ? "fg" : "fg.muted"}
         _hover={{ bg: "bg.muted" }}
         borderRadius={themeConfig.radii.component}
         transition={"200ms"}
@@ -107,7 +193,9 @@ const NavContainer = ({
       >
         {children}
 
-        {active && <ActiveNavIndicator bottom={[0, null, 0]} />}
+        {active && !layoutFullMap && (
+          <ActiveNavIndicator bottom={[0, null, 0]} />
+        )}
       </VStack>
     );
   };
@@ -118,7 +206,7 @@ const NavContainer = ({
           const active = activePath === nav.path;
 
           return (
-            <Link key={i} to={nav.path}>
+            <NavLinkContainer key={i} to={nav.path}>
               <Tooltip
                 content={pluck(l, nav.labelKey)}
                 positioning={{ placement: "right" }}
@@ -154,7 +242,7 @@ const NavContainer = ({
                   )}
                 </NavItemContainer>
               </Tooltip>
-            </Link>
+            </NavLinkContainer>
           );
         })}
       </>
@@ -163,7 +251,7 @@ const NavContainer = ({
   const NavList2 = () => {
     return (
       <>
-        <Link to={"/settings"}>
+        <NavLinkContainer to={"/settings"}>
           <Tooltip
             content={pluck(l, "navs.settings")}
             positioning={{ placement: "right" }}
@@ -189,11 +277,11 @@ const NavContainer = ({
               )}
             </NavItemContainer>
           </Tooltip>
-        </Link>
+        </NavLinkContainer>
 
-        {!iss && <Separator w={"full"} my={1} />}
+        {!iss && <Separator w={"full"} my={1} borderColor={"border.muted"} />}
 
-        <Link to={"/profile"}>
+        <NavLinkContainer to={"/profile"}>
           <Tooltip
             content={pluck(l, "navs.profile")}
             positioning={{ placement: "right" }}
@@ -223,7 +311,7 @@ const NavContainer = ({
               )}
             </NavItemContainer>
           </Tooltip>
-        </Link>
+        </NavLinkContainer>
       </>
     );
   };
@@ -312,20 +400,14 @@ const NavContainer = ({
                 </Heading6>
               </HStack>
 
-              <HStack flexShrink={0} gap={0}>
+              <HStack flexShrink={0}>
+                <ColorModeButton />
+
                 <CurrentUserTimeZone />
 
-                <Inbox />
+                <PanelNavigation />
 
-                {pathname === "/profile" && (
-                  <Link to={"/settings"}>
-                    <BButton iconButton variant={"ghost"}>
-                      <IconSettings stroke={1.5} />
-                    </BButton>
-                  </Link>
-                )}
-
-                {layout.id === 2 && inMainNavs && <LayoutMenu />}
+                {/* {layout.id === 2 && inMainNavs && <LayoutMenu />} */}
               </HStack>
             </HStack>
 

@@ -233,6 +233,18 @@ export const monthly = {
 };
 
 // UI
+export const close_main_panel = {
+  id: "Tutup panel utama",
+  en: "Close main panel",
+};
+export const full_main_panel = {
+  id: "Panel utama penuh",
+  en: "Full main panel",
+};
+export const half_main_panel = {
+  id: "Panel utama setengah",
+  en: "Half main panel",
+};
 export const payment_expired = {
   id: "Pembayaran telah kadaluarsa",
   en: "Payment has expired",
@@ -574,8 +586,8 @@ export const must_be_before = {
   en: "${a} must be before ${b}",
 };
 export const layout_menu_helper = {
-  id: "Layout ini hanya berlaku di navigasi utama.",
-  en: "This layout only applies to the main navigation.",
+  id: "Pengaturan layout ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
+  en: "These layout settings are stored locally on your device and will not be synced with your account.",
 };
 export const cost_of_living = {
   id: "Biaya hidup",

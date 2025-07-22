@@ -1,9 +1,5 @@
 import NavsContainer from "@/components/widget/NavsContainer";
-import {
-  PRIVATE_ROUTES,
-  PRIVATE_ROUTES_NO_MAPS,
-  ROUTES,
-} from "@/constants/routes";
+import { PRIVATE_ROUTES, ROUTES } from "@/constants/routes";
 import useLang from "@/context/useLang";
 import MaintenancePage from "@/pages/_error/MaintenancePage";
 import MissingPage from "@/pages/_error/MissingPage";
@@ -43,7 +39,7 @@ const Routing = () => {
         )
       )}
 
-      {PRIVATE_ROUTES_NO_MAPS.map(
+      {/* {PRIVATE_ROUTES_NO_MAPS.map(
         ({ path, activePath, backPath, titleKey, element }) => (
           <Route
             key={path}
@@ -61,7 +57,7 @@ const Routing = () => {
             }
           />
         )
-      )}
+      )} */}
 
       <Route path="*" element={<MissingPage />} />
       <Route path="/server-error" element={<ServerErrorPage />} />
