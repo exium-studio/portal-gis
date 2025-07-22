@@ -156,10 +156,10 @@ const DisclosureBody = ({ children, ...props }: DisclosureBodyProps) => {
   ) : (
     <DialogBody
       px={4}
+      pr={3}
       // pt={"0 !important"}
       py={`${props.pb ?? 4} !important`}
       className={finalClassName}
-      overflowY={"scroll"}
       overflowX={"clip"}
       {...(props as DialogBodyProps)}
     >

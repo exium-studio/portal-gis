@@ -6,6 +6,7 @@ import {
   Interface__TableComponent,
   Interface__TableFooterNote,
 } from "@/constants/interfaces";
+import useConfirmationDisclosure from "@/context/useConfirmationDisclosure";
 import useLang from "@/context/useLang";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
@@ -38,7 +39,6 @@ import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
 import { toaster } from "../ui/toaster";
 import BButton from "./BButton";
 import CContainer from "./CContainer";
-import ConfirmationDisclosure from "./ConfirmationDisclosure";
 import NumberInput from "./NumberInput";
 
 const BatchOptions = ({
@@ -48,11 +48,28 @@ const BatchOptions = ({
   handleSelectAllRows,
   tableRef,
 }: Interface__BatchOptions) => {
-  // Contexts
+  // Hooks
   const { l } = useLang();
+
+  // Contexts
+  const { setConfirmationData, confirmationOnOpen } =
+    useConfirmationDisclosure();
 
   // States, Refs
   const { themeConfig } = useThemeConfig();
+
+  // Utils
+  function handleConfirmationClick(option: any) {
+    setConfirmationData({
+      id: option.confirmation(selectedRows).id,
+      title: option.confirmation(selectedRows).title,
+      description: option.confirmation(selectedRows).description,
+      confirmLabel: option.confirmation(selectedRows).confirmLabel,
+      confirmCallback: option.confirmation(selectedRows).confirmCallback,
+      confirmButtonProps: option.confirmation(selectedRows).confirmButtonProps,
+    });
+    confirmationOnOpen();
+  }
 
   return (
     <MenuRoot lazyMount closeOnSelect={false}>
@@ -109,36 +126,28 @@ const BatchOptions = ({
 
             if (option.confirmation) {
               return (
-                <ConfirmationDisclosure
-                  id={option.confirmation(selectedRows).id}
-                  title={option.confirmation(selectedRows).title}
-                  description={option.confirmation(selectedRows).description}
-                  confirmLabel={option.confirmation(selectedRows).confirmLabel}
-                  confirmCallback={
-                    option.confirmation(selectedRows).confirmCallback
-                  }
-                  confirmButtonProps={
-                    option.confirmation(selectedRows).confirmButtonProps
-                  }
-                  disabled={disabled}
+                <MenuItem
                   key={i}
+                  value={option.label}
+                  color={"light"}
+                  justifyContent={"space-between"}
+                  disabled={
+                    typeof option?.disabled === "boolean"
+                      ? option.disabled
+                      : disabled
+                  }
+                  onClick={
+                    disabled
+                      ? undefined
+                      : () => {
+                          handleConfirmationClick(option);
+                        }
+                  }
+                  {...option.menuItemProps}
                 >
-                  <MenuItem
-                    key={i}
-                    value={option.label}
-                    disabled={
-                      typeof option?.disabled === "boolean"
-                        ? option?.disabled
-                        : disabled
-                    }
-                    color={"light"}
-                    justifyContent={"space-between"}
-                    {...option.menuItemProps}
-                  >
-                    {option.label}
-                    {option.icon}
-                  </MenuItem>
-                </ConfirmationDisclosure>
+                  {option.label}
+                  {option.icon}
+                </MenuItem>
               );
             }
 
@@ -177,8 +186,26 @@ const RowOptions = ({
   rowOptions,
   tableRef,
 }: Interface__RowOptions) => {
+  // Contexts
+  const { setConfirmationData, confirmationOnOpen } =
+    useConfirmationDisclosure();
+
+  // Utils
+  function handleConfirmationClick(option: any) {
+    setConfirmationData({
+      id: option.confirmation(rowData).id,
+      title: option.confirmation(rowData).title,
+      description: option.confirmation(rowData).description,
+      confirmLabel: option.confirmation(rowData).confirmLabel,
+      confirmCallback: option.confirmation(rowData).confirmCallback,
+      confirmButtonProps: option.confirmation(rowData).confirmButtonProps,
+      loading: option.confirmation(rowData).loading,
+    });
+    confirmationOnOpen();
+  }
+
   return (
-    <MenuRoot lazyMount closeOnSelect={false}>
+    <MenuRoot lazyMount>
       <MenuTrigger asChild aria-label="row options">
         <BButton iconButton unclicky variant={"ghost"} size={"xs"}>
           <Icon fontSize={"lg !important"}>
@@ -193,39 +220,30 @@ const RowOptions = ({
             if (option === "divider") return <MenuSeparator key={i} />;
 
             if (option.confirmation) {
+              const disabled =
+                typeof option?.disabled === "boolean"
+                  ? option.disabled
+                  : !!option?.disabled?.(rowData);
+
               return (
-                <ConfirmationDisclosure
+                <MenuItem
                   key={i}
-                  id={option.confirmation(rowData).id}
-                  title={option.confirmation(rowData).title}
-                  description={option.confirmation(rowData).description}
-                  confirmLabel={option.confirmation(rowData).confirmLabel}
-                  confirmCallback={option.confirmation(rowData).confirmCallback}
-                  confirmButtonProps={
-                    option.confirmation(rowData)?.confirmButtonProps
+                  value={option.label}
+                  justifyContent={"space-between"}
+                  color={"light"}
+                  disabled={disabled}
+                  onClick={
+                    disabled
+                      ? undefined
+                      : () => {
+                          handleConfirmationClick(option);
+                        }
                   }
-                  disabled={
-                    typeof option?.disabled === "boolean"
-                      ? option.disabled
-                      : !!option?.disabled?.(rowData)
-                  }
+                  {...option.menuItemProps}
                 >
-                  <MenuItem
-                    key={i}
-                    value={option.label}
-                    justifyContent={"space-between"}
-                    color={"light"}
-                    disabled={
-                      typeof option?.disabled === "boolean"
-                        ? option.disabled
-                        : !!option?.disabled?.(rowData)
-                    }
-                    {...option.menuItemProps}
-                  >
-                    {option.label}
-                    {option.icon}
-                  </MenuItem>
-                </ConfirmationDisclosure>
+                  {option.label}
+                  {option.icon}
+                </MenuItem>
               );
             }
 
@@ -246,7 +264,7 @@ const RowOptions = ({
                 disabled={
                   typeof option?.disabled === "boolean"
                     ? option.disabled
-                    : !!option.disabled?.(rowData)
+                    : !!option?.disabled?.(rowData)
                 }
                 {...option.menuItemProps}
               >
@@ -279,11 +297,10 @@ const LimitControl = ({
   limitOptions,
   ...props
 }: Interface__LimitControl) => {
-  // Contexts
+  // Hooks
   const { l } = useLang();
 
   // States, Refs
-  const [limit, setLimit] = useState(initialLimit);
   const limits = limitOptions || [
     initialLimit,
     initialLimit * 5,
@@ -292,7 +309,7 @@ const LimitControl = ({
 
   return (
     <CContainer align={"start"} {...props}>
-      {limitControl && setLimitControl && (
+      {limitControl && setLimitControl ? (
         <MenuRoot>
           <MenuTrigger asChild>
             <BButton
@@ -304,7 +321,9 @@ const LimitControl = ({
             >
               <HStack gap={1}>
                 {l.show}
-                <Text fontWeight={"bold"}>{limit === 0 ? l.all : limit}</Text>
+                <Text fontWeight={"bold"}>
+                  {limitControl === 0 ? l.all : limitControl}
+                </Text>
               </HStack>
 
               <Icon maxW={"13px"} ml={1}>
@@ -318,25 +337,18 @@ const LimitControl = ({
               <MenuItem
                 key={i}
                 value={`${item}`}
-                fontWeight={item === limit ? "bold" : ""}
+                fontWeight={item === limitControl ? "bold" : ""}
                 onClick={() => {
-                  setLimit(item);
+                  setLimitControl(item);
                 }}
               >
                 {item}
               </MenuItem>
             ))}
-            <MenuItem
-              value={`0`}
-              fontWeight={0 === limit ? "bold" : ""}
-              onClick={() => {
-                setLimit(0);
-              }}
-            >
-              {l.all}
-            </MenuItem>
           </MenuContent>
         </MenuRoot>
+      ) : (
+        ""
       )}
     </CContainer>
   );
@@ -352,9 +364,6 @@ const PageControl = ({
   // Contexts
   const { themeConfig } = useThemeConfig();
   const { l } = useLang();
-
-  // Utils
-  // const iss = useIsSmScreenWidth();
 
   const formik = useFormik({
     validateOnChange: false,
@@ -393,7 +402,7 @@ const PageControl = ({
 
   return (
     <CContainer ml={["", null, "auto"]} {...props}>
-      {pageControl && setPageControl && pagination && (
+      {pageControl && setPageControl && pagination ? (
         <HStack w={"full"} gap={1} justify={"end"}>
           <BButton
             unclicky
@@ -492,6 +501,8 @@ const PageControl = ({
             </Icon>
           </BButton>
         </HStack>
+      ) : (
+        ""
       )}
     </CContainer>
   );
@@ -520,14 +531,14 @@ const TableComponent = ({
   footerContainerProps,
   ...props
 }: Interface__TableComponent) => {
-  // SX
-  const thHeight = "48px";
-  const thWidth = "52.4px";
-  const thBg = "body";
-  const borderColor = "border.subtle";
+  // Hooks
+  const iss = useIsSmScreenWidth();
+  const { sh } = useScreen();
 
-  // States, Refs
+  // Refs
   const tableRef = useRef(null);
+
+  // States
   const { themeConfig } = useThemeConfig();
   const tableHeader = columnsConfig
     ? columnsConfig.map((columnIndex) => ths[columnIndex])
@@ -551,58 +562,6 @@ const TableComponent = ({
     sortColumnIndex: initialSortColumnIndex || undefined,
     direction: initialSortOrder || "asc",
   });
-
-  // Utils
-  const iss = useIsSmScreenWidth();
-  const { sh } = useScreen();
-
-  // Column filter
-  useEffect(() => {
-    const newOriginalDataState = columnsConfig
-      ? tds.map((data) => {
-          const filteredColumns = columnsConfig.map(
-            (columnIndex) => data.columnsFormat[columnIndex]
-          );
-          return { ...data, columnsFormat: filteredColumns };
-        })
-      : [...tds];
-    setOriginalDataState([...newOriginalDataState]); // Save real data when first render
-  }, [tds, columnsConfig]);
-
-  // Row click
-  const handleRowClick = (rowData: any) => {
-    if (rowClick) {
-      rowClick(rowData);
-    }
-  };
-
-  // Batch options
-  const handleSelectAllRows = (isChecked: boolean) => {
-    setSelectAllRows(!selectAllRows);
-    if (!isChecked) {
-      const allIds = tds.map((row) => row.id);
-      setSelectedRows(allIds);
-    } else {
-      setSelectedRows([]);
-    }
-  };
-  const toggleRowSelection = (rowId: number) => {
-    setSelectedRows((prevSelected) => {
-      const isSelected = prevSelected.includes(rowId);
-
-      if (isSelected) {
-        setSelectAllRows(false);
-        return prevSelected.filter((id) => id !== rowId);
-      } else {
-        if (tds.length === selectedRows.length + 1) {
-          setSelectAllRows(true);
-        }
-        return [...prevSelected, rowId];
-      }
-    });
-  };
-
-  // Sort
   const sort = (columnIndex: number) => {
     setSortConfig((prevConfig) => {
       if (prevConfig.sortColumnIndex === columnIndex) {
@@ -649,8 +608,13 @@ const TableComponent = ({
               : Number(bValue) - Number(aValue),
 
           date: (aValue, bValue, direction) => {
-            const dateA = new Date(aValue).getTime();
-            const dateB = new Date(bValue).getTime();
+            const dateA = aValue ? new Date(aValue).getTime() : NaN;
+            const dateB = bValue ? new Date(bValue).getTime() : NaN;
+
+            if (isNaN(dateA) && isNaN(dateB)) return 0;
+            if (isNaN(dateA)) return direction === "asc" ? 1 : -1;
+            if (isNaN(dateB)) return direction === "asc" ? -1 : 1;
+
             return direction === "asc" ? dateA - dateB : dateB - dateA;
           },
 
@@ -693,25 +657,79 @@ const TableComponent = ({
       </Icon>
     );
   };
-
   const dataToMap =
     sortConfig.sortColumnIndex !== null &&
     sortConfig.sortColumnIndex !== undefined
       ? sortedData()
       : originalDataState;
 
+  // Column filter
+  useEffect(() => {
+    const newOriginalDataState = columnsConfig
+      ? tds.map((data) => {
+          const filteredColumns = columnsConfig.map(
+            (columnIndex) => data.columnsFormat[columnIndex]
+          );
+          return { ...data, columnsFormat: filteredColumns };
+        })
+      : [...tds];
+    setOriginalDataState([...newOriginalDataState]); // Save real data when first render
+  }, [tds, columnsConfig]);
+
+  // Utils
+  function handleRowClick(rowData: any) {
+    if (rowClick) {
+      rowClick(rowData);
+    }
+  }
+  function handleSelectAllRows(isChecked: boolean) {
+    setSelectAllRows(!selectAllRows);
+    if (!isChecked) {
+      const allIds = tds.map((row) => row.id);
+      setSelectedRows(allIds);
+    } else {
+      setSelectedRows([]);
+    }
+  }
+  function toggleRowSelection(rowId: number) {
+    setSelectedRows((prevSelected) => {
+      const isSelected = prevSelected.includes(rowId);
+
+      if (isSelected) {
+        setSelectAllRows(false);
+        return prevSelected.filter((id) => id !== rowId);
+      } else {
+        if (tds.length === selectedRows.length + 1) {
+          setSelectAllRows(true);
+        }
+        return [...prevSelected, rowId];
+      }
+    });
+  }
+
+  // SX
+  const thHeight = "48px";
+  const thWidth = "52.4px";
+  const thBg = "body";
+  const borderColor = "border.subtle";
+
   return (
     <CContainer
       borderColor={"border.muted"}
       minH={props?.minH || sh < 625 ? "400px" : ""}
+      overflowY={"auto"}
+      flex={1}
     >
       {/* Table content */}
       <CContainer
+        borderBottom={"1px solid"}
+        borderColor={borderColor}
         minW={"full"}
-        borderColor={"border.muted"}
         className="scrollX scrollY"
         overflow={"scroll"}
-        mb={"-6px"}
+        // mb={"-6px"}
+        // mr={"-6px"}
+
         flex={1}
         {...props}
       >
@@ -783,7 +801,7 @@ const TableComponent = ({
                     pr={i === ths.length - 1 ? 4 : ""}
                     {...tableColumnHeader?.wrapperProps}
                   >
-                    <Text>{tableColumnHeader?.th}</Text>
+                    <Text color={"fg.muted"}>{tableColumnHeader?.th}</Text>
 
                     {tableColumnHeader?.sortable && renderSortIcon(i)}
                   </HStack>
@@ -822,16 +840,11 @@ const TableComponent = ({
                 <Table.Row
                   key={rowIndex}
                   role="group"
-                  // transition={"500ms"}
                   onClick={() => {
                     handleRowClick(row);
                   }}
                   cursor={rowClick ? "pointer" : "auto"}
                   px={2}
-                  borderBottom={
-                    rowIndex !== dataToMap.length - 1 ? "1px solid" : ""
-                  }
-                  borderColor={borderColor}
                   position={"relative"}
                   bg={"body"}
                   {...trBodyProps}
@@ -850,8 +863,11 @@ const TableComponent = ({
                         className={rowClick && "td-content-group-hover"}
                         h={"48px"}
                         px={"10px"}
-                        // transition={"500ms"}
                         cursor={"pointer"}
+                        borderBottom={
+                          rowIndex !== dataToMap.length - 1 ? "1px solid" : ""
+                        }
+                        borderColor={borderColor}
                         onClick={(e) => {
                           e.stopPropagation();
                           toggleRowSelection(row.id);
@@ -879,7 +895,10 @@ const TableComponent = ({
                         py={3}
                         px={4}
                         h={"48px"}
-                        // transition={"500ms"}
+                        borderBottom={
+                          rowIndex !== dataToMap.length - 1 ? "1px solid" : ""
+                        }
+                        borderColor={borderColor}
                         {...col?.wrapperProps}
                       >
                         {typeof col?.td === "string" ||
@@ -906,7 +925,10 @@ const TableComponent = ({
                         h={"48px"}
                         className={rowClick && "td-content-group-hover"}
                         px={"10px"}
-                        // transition={"500ms"}
+                        borderBottom={
+                          rowIndex !== dataToMap.length - 1 ? "1px solid" : ""
+                        }
+                        borderColor={borderColor}
                         onClick={(e) => {
                           e.stopPropagation();
                         }}
@@ -932,7 +954,7 @@ const TableComponent = ({
         footerContent) && (
         <>
           {iss && (
-            <CContainer gap={4} mt={4} px={4}>
+            <CContainer gap={4} my={2} px={2}>
               <HStack wrap={"wrap"}>
                 <LimitControl
                   initialLimit={initialLimit}
@@ -961,8 +983,8 @@ const TableComponent = ({
             <SimpleGrid
               columns={3}
               gap={4}
-              mt={4}
-              px={4}
+              my={2}
+              px={2}
               {...footerContainerProps}
             >
               <LimitControl

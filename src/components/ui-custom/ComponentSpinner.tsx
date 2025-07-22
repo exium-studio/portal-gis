@@ -11,6 +11,7 @@ export default function ComponentSpinner({ spinnerProps, ...props }: Props) {
       minH={"300px"}
       justify={"center"}
       opacity={0.4}
+      m={"auto"}
       {...props}
     >
       <Spinner {...spinnerProps} />

@@ -5,7 +5,7 @@ import { BrowserRouter, useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
 import { useColorMode } from "./components/ui/color-mode";
 import { toaster, Toaster } from "./components/ui/toaster";
-import OfflineDisclosure from "./components/widget/OfflineDisclosure";
+import GlobalDisclosure from "./components/widget/GlobalDisclosure";
 import useADM from "./context/useADM";
 import useLang from "./context/useLang";
 import useOffline from "./context/useOffilne";
@@ -126,7 +126,7 @@ function App() {
     <ChakraProvider value={theme}>
       <Toaster />
       <BrowserRouter>
-        <OfflineDisclosure />
+        <GlobalDisclosure />
 
         <EndpointWrapper>
           <Routing />

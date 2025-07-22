@@ -21,8 +21,10 @@ interface Props extends FileUploadRootProps {
   initialFilepath?: string;
   label?: string;
   dropzone?: boolean;
-  description?: string;
+  maxFileSize?: number;
   maxFiles?: number;
+  description?: string;
+  disabled?: boolean;
 }
 const FileInput = (props: Props) => {
   // Props
@@ -36,10 +38,12 @@ const FileInput = (props: Props) => {
     initialFilepath,
     label,
     dropzone,
+    maxFileSize,
     maxFiles = 1,
-    description = `up to 10 MB, max ${props?.maxFiles || 1} file${
-      props?.maxFiles!! > 1 ? "s" : ""
-    }`,
+    description = `up to ${props.maxFileSize || 10} MB, max ${
+      props?.maxFiles || 1
+    } file${props?.maxFiles!! > 1 ? "s" : ""}`,
+    disabled,
     ...restProps
   } = props;
 
@@ -89,6 +93,8 @@ const FileInput = (props: Props) => {
             borderColor={
               invalid ?? fc?.invalid ? "border.error" : "border.muted"
             }
+            opacity={disabled ? 0.5 : 1}
+            cursor={disabled ? "disabled" : "pointer"}
           />
         ) : (
           <FileUploadTrigger asChild borderColor={invalid ? "fg.error" : ""}>

@@ -1,3 +1,4 @@
+import useBackOnDefaultPage from "@/hooks/useBackOnDefaultPage";
 import useScreen from "@/hooks/useScreen";
 import back from "@/utils/back";
 import { Dialog as ChakraDialog, Portal } from "@chakra-ui/react";
@@ -21,7 +22,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
     } = props;
 
     // Utils
-    // const handleBackOnDefaultPage = useBackOnDefaultPage();
+    const handleBackOnDefaultPage = useBackOnDefaultPage();
     const { sh } = useScreen();
 
     return (
@@ -36,7 +37,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
           pointerEvents="auto"
           onClick={() => {
             back();
-            // handleBackOnDefaultPage();
+            handleBackOnDefaultPage();
           }}
           py={4}
         >

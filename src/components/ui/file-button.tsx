@@ -46,8 +46,8 @@ export const FileUploadDropzone = forwardRef<
   return (
     <ChakraFileUpload.Dropzone
       ref={ref}
-      {...rest}
       cursor={"pointer"}
+      {...rest}
       _hover={{ bg: "gray.subtle" }}
     >
       <Icon fontSize="2xl" color="fg.muted">

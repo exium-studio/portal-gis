@@ -231,8 +231,28 @@ export const monthly = {
   id: "Bulanan",
   en: "Monthly",
 };
+export const layer_file_type = {
+  id: "Tipe file layer",
+  en: "Layer file type",
+};
 
 // UI
+export const load_workspace_to_map = {
+  id: "Load workspace ke peta",
+  en: "Load workspace to map",
+};
+export const add_workspace_layer = {
+  id: "Tambah layer workspace",
+  en: "Add workspace layer",
+};
+export const edit_workspace = {
+  id: "Edit workspace",
+  en: "Edit workspace",
+};
+export const delete_workspace = {
+  id: "Delete workspace",
+  en: "Delete workspace",
+};
 export const close_main_panel = {
   id: "Tutup panel utama",
   en: "Close main panel",

@@ -1,7 +1,7 @@
 import BackButton from "@/components/ui-custom/BackButton";
 import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
-import ConfirmationDisclosure from "@/components/ui-custom/ConfirmationDisclosure";
+import ConfirmationDisclosure from "@/components/widget/ConfirmationDisclosure";
 import DateTimePicker from "@/components/ui-custom/DateTimePicker";
 import {
   DisclosureBody,

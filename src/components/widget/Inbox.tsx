@@ -3,7 +3,7 @@ import useBackOnClose from "@/hooks/useBackOnClose";
 import { HStack, Text, useDisclosure } from "@chakra-ui/react";
 import { IconInbox, IconInboxOff } from "@tabler/icons-react";
 import BButton from "../ui-custom/BButton";
-import ConfirmationDisclosure from "../ui-custom/ConfirmationDisclosure";
+import ConfirmationDisclosure from "./ConfirmationDisclosure";
 import DisclosureHeaderContent from "../ui-custom/DisclosureHeaderContent";
 import FloatCounter from "../ui-custom/FloatCounter";
 import {

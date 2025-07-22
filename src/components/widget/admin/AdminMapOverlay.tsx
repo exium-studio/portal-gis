@@ -491,7 +491,7 @@ const Legend = () => {
             w: iss ? "calc(100vw - 16px)" : "300px",
             p: 1,
           }}
-          animationEntrance="bottom"
+          animationEntrance="center"
         >
           <MenuHeaderContainer borderless>
             <HStack h={"20px"}>

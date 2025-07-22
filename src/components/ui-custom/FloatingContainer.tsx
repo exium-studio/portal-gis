@@ -6,7 +6,7 @@ interface Props extends PresenceProps {
   children?: any;
   open?: boolean;
   containerProps?: StackProps;
-  animationEntrance?: "top" | "bottom";
+  animationEntrance?: "top" | "bottom" | "left" | "right" | "center";
 }
 
 const FloatingContainer = ({
@@ -19,19 +19,34 @@ const FloatingContainer = ({
   // Components
   const { themeConfig } = useThemeConfig();
 
-  const animationName =
-    animationEntrance === "top"
-      ? { _open: "slide-from-top, fade-in", _closed: "slide-to-top, fade-out" }
-      : {
-          _open: "slide-from-bottom, fade-in",
-          _closed: "slide-to-bottom, fade-out",
-        };
+  const animationName = {
+    top: {
+      _open: "slide-from-top, fade-in",
+      _closed: "slide-to-top, fade-out",
+    },
+    center: {
+      _open: "scale-up, fade-in",
+      _closed: "scale-down, fade-out",
+    },
+    left: {
+      _open: "slide-from-left, fade-in",
+      _closed: "slide-to-left, fade-out",
+    },
+    right: {
+      _open: "slide-from-right, fade-in",
+      _closed: "slide-to-right, fade-out",
+    },
+    bottom: {
+      _open: "slide-from-bottom, fade-in",
+      _closed: "slide-to-bottom, fade-out",
+    },
+  };
 
   return (
     <Presence
       lazyMount
       present={open}
-      animationName={animationName}
+      animationName={animationName[animationEntrance]}
       animationDuration="moderate"
       {...props}
     >

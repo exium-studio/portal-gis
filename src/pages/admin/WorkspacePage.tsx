@@ -20,6 +20,7 @@ import StringInput from "@/components/ui-custom/StringInput";
 import Textarea from "@/components/ui-custom/Textarea";
 import { Field } from "@/components/ui/field";
 import PageContainer from "@/components/widget/PageContainer";
+import WorkspaceItem from "@/components/widget/WorkspaceItem";
 import useLang from "@/context/useLang";
 import useRenderTrigger from "@/context/useRenderTrigger";
 import { useThemeConfig } from "@/context/useThemeConfig";
@@ -28,7 +29,13 @@ import useDataState from "@/hooks/useDataState";
 import useRequest from "@/hooks/useRequest";
 import back from "@/utils/back";
 import { fileValidation } from "@/utils/validationSchemas";
-import { FieldsetRoot, HStack, Icon, useDisclosure } from "@chakra-ui/react";
+import {
+  FieldsetRoot,
+  HStack,
+  Icon,
+  SimpleGrid,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { IconPlus } from "@tabler/icons-react";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -182,10 +189,20 @@ const Create = () => {
 
 const Data = (props: any) => {
   // Props
-  const {} = props;
-  // const { data, pagination, limit, setLimit, page, setPage } = dataState;
+  const { dataState } = props;
+  const { data } = dataState;
 
-  return <CContainer>Jancok</CContainer>;
+  return (
+    <CContainer px={4}>
+      <SimpleGrid columns={[1, null, 2]}>
+        {data?.map((item: any, i: number) => {
+          return (
+            <WorkspaceItem key={i} initialData={item} flex={"1 1 300px"} />
+          );
+        })}
+      </SimpleGrid>
+    </CContainer>
+  );
 };
 
 const WorkspacePage = () => {
@@ -197,14 +214,15 @@ const WorkspacePage = () => {
     search: "",
   });
   const dataState = useDataState<any>({
-    url: ``,
+    url: `/api/gis-bpn/workspaces/index`,
     method: "GET",
     payload: {
       search: filterConfig.search,
+      limit: 999999999999,
     },
     dependencies: [filterConfig, rt],
   });
-  const { data, loading, error, makeRequest } = dataState;
+  const { data, initialLoading, error, makeRequest } = dataState;
   const render = {
     loading: <ComponentSpinner />,
     error: <FeedbackRetry onRetry={makeRequest} />,
@@ -215,7 +233,7 @@ const WorkspacePage = () => {
   return (
     <PageContainer flex={1}>
       <ItemContainer flex={1} overflowY={"auto"}>
-        <ItemHeaderContainer borderless py={1}>
+        <ItemHeaderContainer borderless py={2}>
           <HStack py={2} justify={"space-between"} w={"full"}>
             <SearchInput
               onChangeSetter={(input) => {
@@ -231,8 +249,8 @@ const WorkspacePage = () => {
           </HStack>
         </ItemHeaderContainer>
 
-        {loading && render.loading}
-        {!loading && (
+        {initialLoading && render.loading}
+        {!initialLoading && (
           <>
             {error && render.error}
             {!error && (

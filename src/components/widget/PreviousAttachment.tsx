@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import BButton from "../ui-custom/BButton";
 import CContainer from "../ui-custom/CContainer";
-import ConfirmationDisclosure from "../ui-custom/ConfirmationDisclosure";
+import ConfirmationDisclosure from "./ConfirmationDisclosure";
 import FileIcon from "../ui-custom/FileIcon";
 
 interface Props extends StackProps {

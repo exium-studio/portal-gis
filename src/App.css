@@ -266,7 +266,7 @@ button {
   display: none;
 }
 .scrollX {
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 .scrollY {
   overflow-y: scroll;
