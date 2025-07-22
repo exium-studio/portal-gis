@@ -1,5 +1,6 @@
 import { NAVS } from "@/constants/navs";
 import useLang from "@/context/useLang";
+import useLayout from "@/context/useLayout";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useCallBackOnNavigate from "@/hooks/useCallBackOnNavigate";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
@@ -9,30 +10,30 @@ import {
   CircleProps,
   HStack,
   Icon,
+  Separator,
   Stack,
   StackProps,
   VStack,
 } from "@chakra-ui/react";
+import { IconSettings } from "@tabler/icons-react";
 import { useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import BackButton from "../ui-custom/BackButton";
+import BButton from "../ui-custom/BButton";
 import BnwLogo from "../ui-custom/BnwLogo";
 import CContainer from "../ui-custom/CContainer";
 import FloatCounter from "../ui-custom/FloatCounter";
 import Heading6 from "../ui-custom/Heading6";
 import HelperText from "../ui-custom/HelperText";
+import HScroll from "../ui-custom/HScroll";
 import Logo from "../ui-custom/Logo";
 import { Avatar } from "../ui/avatar";
 import { Tooltip } from "../ui/tooltip";
+import AdminMap from "./admin/AdminMap";
+import AdminMapOverlay from "./admin/AdminMapOverlay";
 import CurrentUserTimeZone from "./CurrentUserTimeZone";
 import Inbox from "./Inbox";
 import LayoutMenu from "./LayoutMenu";
-import useLayout from "@/context/useLayout";
-import AdminMap from "./admin/AdminMap";
-import AdminMapOverlay from "./admin/AdminMapOverlay";
-import HScroll from "../ui-custom/HScroll";
-import BButton from "../ui-custom/BButton";
-import { IconSettings } from "@tabler/icons-react";
 
 interface Interface__NavItemContainer extends StackProps {
   active?: boolean;
@@ -45,6 +46,7 @@ interface Props {
   activePath?: string;
   withMaps?: boolean;
 }
+
 const NavContainer = ({
   children,
   title,
@@ -161,6 +163,36 @@ const NavContainer = ({
   const NavList2 = () => {
     return (
       <>
+        <Link to={"/settings"}>
+          <Tooltip
+            content={pluck(l, "navs.settings")}
+            positioning={{ placement: "right" }}
+            contentProps={{ ml: 2 }}
+          >
+            <NavItemContainer
+              active={activePath === "/settings"}
+              w={["60px", null, "40px"]}
+            >
+              <Icon>
+                <IconSettings stroke={1.5} size={iss ? 24 : 20} />
+              </Icon>
+
+              {iss && (
+                <HelperText
+                  color={activePath === "/settings" ? "" : "fg.muted"}
+                  lineHeight={1}
+                  mt={1}
+                  truncate
+                >
+                  {pluck(l, "navs.settings")}
+                </HelperText>
+              )}
+            </NavItemContainer>
+          </Tooltip>
+        </Link>
+
+        {!iss && <Separator w={"full"} my={1} />}
+
         <Link to={"/profile"}>
           <Tooltip
             content={pluck(l, "navs.profile")}
@@ -175,10 +207,8 @@ const NavContainer = ({
                 name="Jolitos Kurniawan"
                 cursor={"pointer"}
                 size={"xs"}
-                bg={`${themeConfig.primaryColor}`}
-                color={`${themeConfig.colorPalette}.contrast`}
-                w={["24px", null, "26px"]}
-                h={["24px", null, "26px"]}
+                w={"24px"}
+                h={"24px"}
               />
 
               {iss && (
@@ -324,7 +354,7 @@ const NavContainer = ({
           justify={"space-between"}
           pt={1}
           pb={6}
-          pl={4}
+          px={4}
           borderTop={"1px solid"}
           borderColor={"d2"}
           overflowX={"auto"}
@@ -336,9 +366,7 @@ const NavContainer = ({
         >
           <NavList />
 
-          <HStack position={"sticky"} right={0} bg={"body"} pr={4}>
-            <NavList2 />
-          </HStack>
+          <NavList2 />
         </HScroll>
       )}
     </Stack>
