@@ -3,21 +3,23 @@ import CContainer from "@/components/ui-custom/CContainer";
 import HelperText from "@/components/ui-custom/HelperText";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
+import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
 import SelectInput from "@/components/ui-custom/SelectInput";
 import StringInput from "@/components/ui-custom/StringInput";
 import { useColorMode } from "@/components/ui/color-mode";
 import { Switch } from "@/components/ui/switch";
-import SettingsNavsContainer from "@/components/widget/SettingsNavsContainer";
 import SettingsItemContainer from "@/components/widget/SettingsItemContainer";
+import SettingsNavsContainer from "@/components/widget/SettingsNavsContainer";
 import useADM from "@/context/useADM";
 import useLang from "@/context/useLang";
+import useLayout from "@/context/useLayout";
 import { useThemeConfig } from "@/context/useThemeConfig";
+import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import { OPTIONS_RELIGION } from "@/static/selectOptions";
+import formatTime from "@/utils/formatTime";
 import { Center, HStack, Icon, SimpleGrid, Text } from "@chakra-ui/react";
 import { IconCheck, IconMoon2, IconPalette } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
-import formatTime from "@/utils/formatTime";
-import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
 
 const ManualDarkModeSetting = () => {
   // Contexts
@@ -138,11 +140,15 @@ const DarkMode = () => {
 };
 
 const Theme = () => {
+  // Hooks
+  const { l } = useLang();
+  const iss = useIsSmScreenWidth();
+
   // Contexts
   const { themeConfig, setThemeConfig } = useThemeConfig();
-  const { l } = useLang();
+  const layout = useLayout((s) => s.layout);
 
-  // States, Refs
+  // States
   const colorPalettes = [
     { palette: "p", primaryHex: "#0062FF" },
 
@@ -188,6 +194,7 @@ const Theme = () => {
     { palette: "purple", primaryHex: "#9C27B0" },
   ];
   const [select, setSelect] = useState<any>();
+  const layoutHalfMap = layout.id === 1;
 
   return (
     <ItemContainer>
@@ -199,7 +206,16 @@ const Theme = () => {
       </ItemHeaderContainer>
 
       <CContainer gap={4} py={3} px={3}>
-        <SimpleGrid columns={[5, 10, null, null, 15]} gap={2}>
+        <SimpleGrid
+          columns={
+            layoutHalfMap
+              ? iss
+                ? 5
+                : [5, null, null, null, null, 10]
+              : [5, 10, null, null, 15]
+          }
+          gap={2}
+        >
           {colorPalettes.map((color, i) => {
             const active = color.palette === themeConfig.colorPalette;
 

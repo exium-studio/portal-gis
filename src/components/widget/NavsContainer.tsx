@@ -51,7 +51,7 @@ interface Props {
   withMaps?: boolean;
 }
 
-const PanelNavigation = () => {
+const MainPanelNavigation = () => {
   // Hooks
   const { l } = useLang();
 
@@ -98,7 +98,7 @@ const PanelNavigation = () => {
         <BButton
           iconButton
           variant={"ghost"}
-          color={"red.400"}
+          color={"fg.error"}
           onClick={() => {
             setLayout(LAYOUT_OPTIONS[2]);
           }}
@@ -409,7 +409,7 @@ const NavContainer = ({
 
                 <CurrentUserTimeZone />
 
-                <PanelNavigation />
+                <MainPanelNavigation />
 
                 {/* {layout.id === 2 && inMainNavs && <LayoutMenu />} */}
               </HStack>

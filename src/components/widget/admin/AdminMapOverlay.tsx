@@ -788,11 +788,13 @@ const CurrentLocation = () => {
 };
 
 const Compass = () => {
-  // Context
+  // Hooks
   const { l } = useLang();
+
+  // Context
   const { mapRef } = useMapViewState();
 
-  // States, Refs
+  // States
   const [bearing, setBearing] = useState(0);
 
   // Utils
@@ -845,7 +847,7 @@ const Compass = () => {
               transform={`rotate(${bearing * -1}deg)`}
               position={"relative"}
             >
-              <Icon color={"red.500"}>
+              <Icon color={"fg.error"}>
                 <IconNavigationFilled />
               </Icon>
             </Center>
