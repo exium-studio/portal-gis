@@ -125,6 +125,8 @@ const NavContainer = ({
   // Contexts
   const { themeConfig } = useThemeConfig();
   const { layout, setLayout } = useLayout();
+  const location = useLocation();
+  const cp = location.pathname;
 
   // Refs
   const containerRef = useRef<HTMLDivElement>(null);
@@ -165,7 +167,7 @@ const NavContainer = ({
         to={to}
         onClick={() => {
           if (layoutFullMap) setLayout(LAYOUT_OPTIONS[0]);
-          if (layoutHalfMap) setLayout(LAYOUT_OPTIONS[2]);
+          if (layoutHalfMap && cp === to) setLayout(LAYOUT_OPTIONS[2]);
         }}
         {...restProps}
       >
