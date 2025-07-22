@@ -54,10 +54,10 @@ interface Props {
 const MainPanelNavigation = () => {
   // Hooks
   const { l } = useLang();
-  const iss = useIsSmScreenWidth();
+  // const iss = useIsSmScreenWidth();
 
   // Contexts
-  const { themeConfig } = useThemeConfig();
+  // const { themeConfig } = useThemeConfig();
   const { layout, setLayout } = useLayout();
 
   // States
@@ -72,13 +72,7 @@ const MainPanelNavigation = () => {
   }
 
   return (
-    <HStack
-      bg={iss ? "bg.muted" : "body"}
-      gap={0}
-      borderRadius={themeConfig.radii.container}
-      border={"1px solid"}
-      borderColor={"border.muted"}
-    >
+    <>
       <Tooltip
         content={layoutFullMainPanel ? l.half_main_panel : l.full_main_panel}
       >
@@ -109,7 +103,7 @@ const MainPanelNavigation = () => {
           </Icon>
         </BButton>
       </Tooltip>
-    </HStack>
+    </>
   );
 };
 
@@ -405,7 +399,7 @@ const NavContainer = ({
                 </Heading6>
               </HStack>
 
-              <HStack flexShrink={0}>
+              <HStack flexShrink={0} gap={0}>
                 <ColorModeButton />
 
                 <CurrentUserTimeZone />
