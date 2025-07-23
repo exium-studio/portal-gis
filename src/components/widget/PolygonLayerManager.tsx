@@ -78,8 +78,8 @@ const LayerSource = (props: any) => {
         paint={{
           "fill-color": [
             "case",
-            ["==", ["get", "id"], selectedFeatureId || ""], // Fallback to empty string if null
-            themeConfig.primaryColorHex || "#000000", // Fallback to default color if null
+            ["==", ["get", "id"], selectedFeatureId || ""],
+            themeConfig.primaryColorHex || "#000000",
             defaultFillColor,
           ],
           "fill-opacity": 0.8,

@@ -201,9 +201,13 @@ const Data = (props: any) => {
   return (
     <CContainer px={4}>
       <SimpleGrid columns={layoutHalfMap ? [1, null, 2] : [1, null, 4]} gap={4}>
-        {data?.map((item: any, i: number) => {
+        {data?.map((item: any) => {
           return (
-            <WorkspaceItem key={i} initialData={item} flex={"1 1 300px"} />
+            <WorkspaceItem
+              key={item?.id}
+              initialData={item}
+              flex={"1 1 300px"}
+            />
           );
         })}
       </SimpleGrid>
@@ -225,7 +229,7 @@ const WorkspacePage = () => {
     },
     dependencies: [filterConfig],
   });
-  const { data, loading, error, makeRequest } = dataState;
+  const { data, initialLoading, error, makeRequest } = dataState;
   const render = {
     loading: <ComponentSpinner />,
     error: <FeedbackRetry onRetry={makeRequest} />,
@@ -252,8 +256,8 @@ const WorkspacePage = () => {
           </HStack>
         </ItemHeaderContainer>
 
-        {loading && render.loading}
-        {!loading && (
+        {initialLoading && render.loading}
+        {!initialLoading && (
           <>
             {error && render.error}
             {!error && (

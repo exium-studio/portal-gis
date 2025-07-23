@@ -42,7 +42,7 @@ import { Tooltip } from "../ui/tooltip";
 import ExistingFileItem from "./ExistingFIleItem";
 import SelectLayerFileType from "./SelectLayerFileType";
 
-const UpdateLayer = (props: any) => {
+const AddLayer = (props: any) => {
   // Props
   const { data } = props;
 
@@ -136,9 +136,7 @@ const UpdateLayer = (props: any) => {
       <DisclosureRoot open={open} lazyLoad size={"xs"}>
         <DisclosureContent>
           <DisclosureHeader>
-            <DisclosureHeaderContent
-              title={capsFirstLetterEachWord(l.add_workspace_layer)}
-            />
+            <DisclosureHeaderContent title={`${l.add} Layer`} />
           </DisclosureHeader>
 
           <DisclosureBody>
@@ -265,6 +263,19 @@ const EditWorkspace = (props: any) => {
       });
     },
   });
+
+  // Handle initial data
+  useEffect(() => {
+    formik.setValues({
+      title: data?.title,
+      description: data?.description,
+      for_aqiqah: data?.for_aqiqah,
+      thumbnail: undefined as any,
+      deleted_thumbnail: [],
+    });
+
+    setExistingThumbnail(data?.thumbnail);
+  }, [data]);
 
   return (
     <>
@@ -579,8 +590,6 @@ const WorkspaceItem = (props: any) => {
     (layerData: any) => layerData.workspace.id === data.id
   );
 
-  // console.log("layerLoaded", layerLoaded);
-
   useEffect(() => {
     setData(initialData);
   }, [initialData, rt]);
@@ -596,7 +605,11 @@ const WorkspaceItem = (props: any) => {
       {...restProps}
     >
       <CContainer>
-        <Img src={data?.thumbnail?.[0]?.file_url} aspectRatio={16 / 10} />
+        <Img
+          key={data?.thumbnail?.[0]?.file_url}
+          src={data?.thumbnail?.[0]?.file_url}
+          aspectRatio={16 / 10}
+        />
 
         <CContainer p={4} gap={1}>
           <P fontWeight={"semibold"}>{data?.title}</P>
@@ -613,7 +626,7 @@ const WorkspaceItem = (props: any) => {
         borderTop={"1px solid"}
         borderColor={"border.muted"}
       >
-        <UpdateLayer data={data} />
+        <AddLayer data={data} />
 
         <EditWorkspace data={data} />
 

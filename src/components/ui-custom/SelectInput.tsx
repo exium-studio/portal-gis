@@ -138,7 +138,6 @@ const SelectInput = ({
         {fl && fl.length > 0 && (
           <>
             {fl?.map((item, i) => {
-              console.log(item);
               return (
                 <BButton
                   unclicky
