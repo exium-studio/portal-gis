@@ -29,16 +29,21 @@ export const fileValidation = ({
     })
     .test(
       "fileExtension",
-      `Supported extentions: ${allowedExtensions}`,
-      async (value) => {
-        if (!Array.isArray(value) || value.length === 0) return true;
-        if (allowedExtensions) {
-          return value.every((file) => {
-            const fileExtension = file.name.split(".").pop()?.toLowerCase();
-            return allowedExtensions.includes(`.${fileExtension}` || "");
-          });
-        }
-        return true;
+      `Supported extensions: ${allowedExtensions?.join(", ") || "all"}`,
+      (value) => {
+        if (!value || !Array.isArray(value)) return true;
+
+        if (!allowedExtensions || allowedExtensions.length === 0) return true;
+
+        return value.every((file) => {
+          if (!file?.name) return false;
+
+          const fileExtension = file.name
+            .slice(((file.name.lastIndexOf(".") - 1) >>> 0) + 2)
+            .toLowerCase();
+
+          return allowedExtensions.includes(`${fileExtension}`);
+        });
       }
     )
     .test(
