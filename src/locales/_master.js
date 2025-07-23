@@ -309,6 +309,10 @@ export const result = {
 };
 
 // UI
+export const view_layer = {
+  id: "Lihat area layer",
+  en: "View layer area",
+};
 export const field_data = {
   id: "Data bidang",
   en: "Field data",

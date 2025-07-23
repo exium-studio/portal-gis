@@ -517,6 +517,7 @@ const translations = {
   "verify": "Verifikasi",
   "verify_email": "Verifikasi email",
   "view": "Lihat",
+  "view_layer": "Lihat area layer",
   "village_asset": "Aset desa",
   "vision": "Visi",
   "wa_number": "Nomor WA",

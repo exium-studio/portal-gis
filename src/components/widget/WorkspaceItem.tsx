@@ -581,7 +581,7 @@ const ViewLayers = (props: any) => {
     }
   }
   return (
-    <Tooltip content={l.load_workspace_to_map}>
+    <Tooltip content={l.view_layer}>
       <BButton
         unclicky
         iconButton

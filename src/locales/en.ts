@@ -517,6 +517,7 @@ const translations = {
   "verify": "Verify",
   "verify_email": "Verify email",
   "view": "View",
+  "view_layer": "View layer area",
   "village_asset": "Village asset",
   "vision": "Vision",
   "wa_number": "WA number",
