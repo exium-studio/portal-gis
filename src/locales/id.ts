@@ -178,7 +178,7 @@ const translations = {
     "title": "File tidak valid",
     "description": "Pastikan format dan jumlah file sesuai ketentuan."
   },
-  "error_invalid_otp": {
+  "error_invalid_otp_toast": {
     "title": "Kode OTP tidak valid",
     "description": "Silakan periksa kembali kode OTP Anda dan coba lagi."
   },
@@ -227,6 +227,14 @@ const translations = {
   "last_step": "Tahap terakhir",
   "last_updated": "Terakhir diperbarui",
   "layer_file_type": "Tipe file layer",
+  "layer_loaded_toast": {
+    "title": "Berhasil Dimuat",
+    "description": "Layer siap digunakan di peta."
+  },
+  "layer_loading_toast": {
+    "title": "Sedang Memuat",
+    "description": "Layer sedang dimuat ke peta."
+  },
   "layout_menu_helper": "Pengaturan layout ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
   "legend": "Legenda",
   "legend_helper": "Legenda yang tampil disini bergantung pada daftar",
@@ -290,7 +298,7 @@ const translations = {
     "description": "Izinkan aplikasi menggunakan mikrofon perangkat Anda untuk merekam audio."
   },
   "min_char": "Minimal ${minChar} karakter",
-  "missing_layer_data": {
+  "missing_layer_data_toast": {
     "title": "Data Layer Tidak Ditemukan",
     "description": "Silahkan perbarui data layer"
   },

@@ -178,7 +178,7 @@ const translations = {
     "title": "Invalid file",
     "description": "Ensure the file format and quantity meet the requirements."
   },
-  "error_invalid_otp": {
+  "error_invalid_otp_toast": {
     "title": "Invalid OTP code",
     "description": "Please check your OTP code and try again."
   },
@@ -227,6 +227,14 @@ const translations = {
   "last_step": "Last step",
   "last_updated": "Last updated",
   "layer_file_type": "Layer file type",
+  "layer_loaded_toast": {
+    "title": "Loaded Successfully",
+    "description": "Layer is ready on the map."
+  },
+  "layer_loading_toast": {
+    "title": "Loading",
+    "description": "Layer is being loaded onto the map."
+  },
   "layout_menu_helper": "These layout settings are stored locally on your device and will not be synced with your account.",
   "legend": "Legend",
   "legend_helper": "The legend displayed here depends on the",
@@ -290,7 +298,7 @@ const translations = {
     "description": "Allow the app to use your device's microphone for recording audio."
   },
   "min_char": "Minimum ${minChar} characters",
-  "missing_layer_data": {
+  "missing_layer_data_toast": {
     "title": "Layer Data Not Found",
     "description": "Please update the layer data"
   },

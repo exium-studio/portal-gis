@@ -16,7 +16,7 @@ interface Workspace {
 
 interface LayerGroup {
   workspace: Workspace;
-  layers: Layer[]; // Changed from single layer to array of layers
+  layer: Layer[]; // Changed from single layer to array of layer
   visible: boolean;
 }
 
@@ -45,7 +45,7 @@ interface GeoJSONLayerState {
 const useActiveLayers = create<GeoJSONLayerState>((set) => ({
   activeLayerGroups: [],
 
-  // Add a new layer group with initial layers
+  // Add a new layer group with initial layer
   addLayerGroup: (newGroup) =>
     set((state) => {
       const groupExists = state.activeLayerGroups.some(
@@ -63,10 +63,7 @@ const useActiveLayers = create<GeoJSONLayerState>((set) => ({
           {
             ...newGroup,
             visible: true,
-            layers: newGroup.layers.map((layer) => ({
-              ...layer,
-              visible: true,
-            })),
+            layer: newGroup.layer,
           },
         ],
       };
@@ -78,7 +75,7 @@ const useActiveLayers = create<GeoJSONLayerState>((set) => ({
       activeLayerGroups: state.activeLayerGroups.map((group) => {
         if (group.workspace.id !== workspaceId) return group;
 
-        const layerExists = group.layers.some(
+        const layerExists = group.layer.some(
           (l) => l.layer_id === newLayer.layer_id
         );
 
@@ -91,7 +88,7 @@ const useActiveLayers = create<GeoJSONLayerState>((set) => ({
 
         return {
           ...group,
-          layers: [...group.layers, { ...newLayer, visible: true }],
+          layer: [...group.layer, { ...newLayer, visible: true }],
         };
       }),
     })),
@@ -114,7 +111,7 @@ const useActiveLayers = create<GeoJSONLayerState>((set) => ({
 
         return {
           ...group,
-          layers: group.layers.map((layer) =>
+          layer: group.layer.map((layer) =>
             layer.layer_id === layer_id
               ? { ...layer, visible: !layer.visible }
               : layer
@@ -132,7 +129,7 @@ const useActiveLayers = create<GeoJSONLayerState>((set) => ({
 
         return {
           ...group,
-          layers: group.layers.map((layer) =>
+          layer: group.layer.map((layer) =>
             layer.layer_id === layer_id ? { ...layer, data: data } : layer
           ),
         };
@@ -155,7 +152,7 @@ const useActiveLayers = create<GeoJSONLayerState>((set) => ({
 
         return {
           ...group,
-          layers: group.layers.filter((l) => l.layer_id !== layer_id),
+          layer: group.layer.filter((l) => l.layer_id !== layer_id),
         };
       }),
     })),

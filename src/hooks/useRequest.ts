@@ -205,8 +205,8 @@ const useRequest = (props: Props) => {
                 };
               case "SHAPEFILES_NOT_FOUND":
                 return {
-                  title: l.missing_layer_data.title,
-                  description: l.missing_layer_data.description,
+                  title: l.missing_layer_data_toast.title,
+                  description: l.missing_layer_data_toast.description,
                 };
             }
           } else if (statusCode === 409) {

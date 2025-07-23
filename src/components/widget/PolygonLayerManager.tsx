@@ -19,8 +19,8 @@ const LayerSource = (props: any) => {
   const { themeConfig } = useThemeConfig();
 
   // States
-  const layer = data?.layers?.[0];
-  const geojson = data?.layers?.[0]?.data;
+  const layer = data?.layers;
+  const geojson = data?.layers?.data;
 
   // Default fill color
   const defaultFillColor = "#7e7e7e";

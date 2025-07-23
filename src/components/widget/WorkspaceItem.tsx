@@ -41,6 +41,7 @@ import { Field } from "../ui/field";
 import { Tooltip } from "../ui/tooltip";
 import ExistingFileItem from "./ExistingFIleItem";
 import SelectLayerFileType from "./SelectLayerFileType";
+import useMapViewState from "@/context/useMapViewState";
 
 const AddLayer = (props: any) => {
   // Props
@@ -481,13 +482,19 @@ const DeleteWorkspace = (props: any) => {
 };
 const LoadWorkspace = (props: any) => {
   // Props
-  const { data } = props;
-  const { req, loading } = useRequest({
-    id: "load_workspace",
-  });
+  const { data, setBboxCenter } = props;
 
   // Hooks
   const { l } = useLang();
+  const { req, loading } = useRequest({
+    id: "load_workspace",
+    loadingMessage: {
+      ...l.layer_loading_toast,
+    },
+    successMessage: {
+      ...l.layer_loaded_toast,
+    },
+  });
 
   // Contexts
   const { themeConfig } = useThemeConfig();
@@ -511,11 +518,15 @@ const LoadWorkspace = (props: any) => {
       config,
       onResolve: {
         onSuccess: (r: any) => {
-          const layerData = r.data.data;
+          const layerData = r.data.data?.[0];
           addLayerGroup({
             workspace: data,
-            layers: layerData,
+            layer: layerData,
             visible: true,
+          });
+          setBboxCenter({
+            bbox: layerData?.data?.bbox,
+            center: layerData?.data?.center,
           });
         },
       },
@@ -541,31 +552,42 @@ const LoadWorkspace = (props: any) => {
     </Tooltip>
   );
 };
-const WorkspaceVisibility = (props: any) => {
+const ViewLayers = (props: any) => {
   // Props
-  const { data } = props;
+  const { bboxCenter } = props;
 
   // Hooks
   const { l } = useLang();
 
   // Contexts
-  const toggleGroupVisibility = useActiveLayers((s) => s.toggleGroupVisibility);
+  const { mapRef } = useMapViewState();
 
   // Utils
-  function onToggleGroupVisibility() {
-    toggleGroupVisibility(data.id);
-  }
+  function onViewLayers() {
+    if (mapRef.current && bboxCenter?.bbox) {
+      const [minLng, minLat, maxLng, maxLat] = bboxCenter.bbox;
 
+      mapRef.current.fitBounds(
+        [
+          [minLng, minLat],
+          [maxLng, maxLat],
+        ],
+        {
+          padding: 40, // px
+          duration: 1000, // ms
+          essential: true,
+        }
+      );
+    }
+  }
   return (
     <Tooltip content={l.load_workspace_to_map}>
       <BButton
         unclicky
         iconButton
         variant={"ghost"}
-        // color={themeConfig.primaryColor}
-        // size={"sm"}
         ml={"auto"}
-        onClick={onToggleGroupVisibility}
+        onClick={onViewLayers}
       >
         <Icon>
           <IconEye />
@@ -581,21 +603,22 @@ const WorkspaceItem = (props: any) => {
 
   // Contexts
   const { themeConfig } = useThemeConfig();
-  const rt = useRenderTrigger((s) => s.rt);
   const activeLayerGroups = useActiveLayers((s) => s.activeLayerGroups);
 
   // States
   const [data, setData] = useState<any>(initialData);
+  const [bboxCenter, setBboxCenter] = useState<number[] | null>(null);
   const layerLoaded = activeLayerGroups.some(
     (layerData: any) => layerData.workspace.id === data.id
   );
 
   useEffect(() => {
     setData(initialData);
-  }, [initialData, rt]);
+  }, [initialData]);
 
   return (
     <CContainer
+      key={data.id}
       borderRadius={themeConfig.radii.container}
       overflow={"clip"}
       border={"1px solid"}
@@ -632,9 +655,11 @@ const WorkspaceItem = (props: any) => {
 
         <DeleteWorkspace data={data} />
 
-        {layerLoaded && <WorkspaceVisibility data={data} />}
+        {layerLoaded && <ViewLayers data={data} bboxCenter={bboxCenter} />}
 
-        {!layerLoaded && <LoadWorkspace data={data} />}
+        {!layerLoaded && (
+          <LoadWorkspace data={data} setBboxCenter={setBboxCenter} />
+        )}
       </HStack>
     </CContainer>
   );

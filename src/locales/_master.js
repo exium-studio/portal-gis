@@ -1307,7 +1307,27 @@ export const delete_all_inbox_button = {
 };
 
 // Toasters
-export const missing_layer_data = {
+export const layer_loading_toast = {
+  title: {
+    id: "Sedang Memuat",
+    en: "Loading",
+  },
+  description: {
+    id: "Layer sedang dimuat ke peta.",
+    en: "Layer is being loaded onto the map.",
+  },
+};
+export const layer_loaded_toast = {
+  title: {
+    id: "Berhasil Dimuat",
+    en: "Loaded Successfully",
+  },
+  description: {
+    id: "Layer siap digunakan di peta.",
+    en: "Layer is ready on the map.",
+  },
+};
+export const missing_layer_data_toast = {
   title: { id: "Data Layer Tidak Ditemukan", en: "Layer Data Not Found" },
   description: {
     id: "Silahkan perbarui data layer",
@@ -1345,7 +1365,7 @@ export const error_duplicate_animal_category_and_breed_toast = {
     en: "Category and breed are already registered",
   },
 };
-export const error_invalid_otp = {
+export const error_invalid_otp_toast = {
   title: {
     id: "Kode OTP tidak valid",
     en: "Invalid OTP code",
