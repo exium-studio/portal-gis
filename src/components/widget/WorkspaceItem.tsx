@@ -519,6 +519,7 @@ const WorkspaceItem = (props: any) => {
 
   // Contexts
   const { themeConfig } = useThemeConfig();
+  const rt = useRenderTrigger((s) => s.rt);
 
   // States
   const [data, setData] = useState<any>(initialData);
@@ -529,6 +530,7 @@ const WorkspaceItem = (props: any) => {
 
   return (
     <CContainer
+      key={rt}
       borderRadius={themeConfig.radii.container}
       overflow={"clip"}
       border={"1px solid"}
