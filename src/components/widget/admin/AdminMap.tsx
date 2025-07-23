@@ -1,6 +1,7 @@
 import { useColorMode } from "@/components/ui/color-mode";
 import useSearchAddress from "@/constants/useSearchAddress";
 import useActiveMapStyle from "@/context/useActiveMapStyle";
+import useActiveWMSLayers from "@/context/useActiveWMSLayers";
 import useBasemap from "@/context/useBasemap";
 import useCurrentLocation from "@/context/useCurrentLocation";
 import useLayout from "@/context/useLayout";
@@ -11,7 +12,7 @@ import mapboxgl from "mapbox-gl";
 import { useEffect, useRef, useState } from "react";
 import Map, { MapRef, Marker } from "react-map-gl/mapbox";
 import MapMarkerCircle from "../MapMarkerCircle";
-import WMSLayerManager from "../WMSLayerManagement";
+import PolygonLayerManager from "../PolygonLayerManager";
 
 const MIN_ZOOM = 0;
 const MAX_ZOOM = 22;
@@ -21,7 +22,7 @@ const AdminMap = () => {
   const { colorMode } = useColorMode();
 
   // Contexts
-  // const activeLayers = useActiveWMSLayers();
+  const activeLayers = useActiveWMSLayers((s) => s.activeLayers);
   const { mapStyle } = useMapStyle();
   const { layout } = useLayout();
   const { currentLocation } = useCurrentLocation();
@@ -171,7 +172,7 @@ const AdminMap = () => {
     } else {
       setActiveMapStyle(mapStyle.tile[colorMode]);
     }
-  }, [mapStyle, colorMode]);
+  }, [mapStyle, colorMode, activeLayers]);
 
   // Handle rerender layer
   useEffect(() => {
@@ -244,7 +245,10 @@ const AdminMap = () => {
           )}
 
           {/* WMS Layers */}
-          <WMSLayerManager />
+          {/* <WMSLayerManager /> */}
+
+          {/* Polygon Layer */}
+          <PolygonLayerManager />
         </>
       )}
     </Map>

@@ -212,9 +212,6 @@ const Data = (props: any) => {
 };
 
 const WorkspacePage = () => {
-  // Context
-  const rt = useRenderTrigger((s) => s.rt);
-
   // States
   const [filterConfig, setFilterConfig] = useState<any>({
     search: "",
@@ -226,9 +223,9 @@ const WorkspacePage = () => {
       search: filterConfig.search,
       limit: 999999999999,
     },
-    dependencies: [filterConfig, rt],
+    dependencies: [filterConfig],
   });
-  const { data, initialLoading, error, makeRequest } = dataState;
+  const { data, loading, error, makeRequest } = dataState;
   const render = {
     loading: <ComponentSpinner />,
     error: <FeedbackRetry onRetry={makeRequest} />,
@@ -255,8 +252,8 @@ const WorkspacePage = () => {
           </HStack>
         </ItemHeaderContainer>
 
-        {initialLoading && render.loading}
-        {!initialLoading && (
+        {loading && render.loading}
+        {!loading && (
           <>
             {error && render.error}
             {!error && (

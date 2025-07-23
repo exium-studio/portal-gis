@@ -5,7 +5,9 @@ import useActiveWMSLayers from "@/context/useActiveWMSLayers";
 
 const WMSLayerManager = () => {
   const { current: map } = useMap();
-  const { activeLayers } = useActiveWMSLayers();
+  const activeLayers = useActiveWMSLayers((s) => s.activeLayers);
+
+  console.log("activeLayers wms management", activeLayers);
 
   useEffect(() => {
     if (!map) return;
@@ -24,27 +26,17 @@ const WMSLayerManager = () => {
 
     // Add new layers
     activeLayers.forEach((layer) => {
+      console.log("layer", layer);
+      console.log("layer url", layer.url);
+
       if (!layer.visible) return;
 
       const layerId = `wms-${layer.id}`;
       const sourceId = `wms-source-${layer.id}`;
 
-      const params = new URLSearchParams({
-        service: "WMS",
-        version: "1.1.1",
-        request: "GetMap",
-        layers: layer.layers,
-        format: "image/png",
-        transparent: "true",
-        width: "256",
-        height: "256",
-        srs: "EPSG:3857",
-        bbox: "{bbox-epsg-3857}",
-      });
-
       map.addSource(sourceId, {
         type: "raster",
-        tiles: [`${layer.url}?${params.toString()}`],
+        tiles: [`${layer.url}`],
         tileSize: 256,
       });
 
@@ -58,7 +50,7 @@ const WMSLayerManager = () => {
           },
         },
         "road-label"
-      ); // Letakkan di atas basemap tapi di bawah label jalan
+      );
     });
 
     return cleanupLayers;

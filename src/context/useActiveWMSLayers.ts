@@ -11,22 +11,44 @@ interface WMSLayer {
 
 interface WMSLayerState {
   activeLayers: WMSLayer[];
-  addLayer: (layer: Omit<WMSLayer, "id">) => void;
+  addLayer: (layer: Omit<WMSLayer, "id">) => {
+    success: boolean;
+    message: string;
+  };
   removeLayer: (id: string) => void;
   toggleLayer: (id: string) => void;
   updateOpacity: (id: string, opacity: number) => void;
+  layerExists: (url: string, layers: string) => boolean;
 }
 
-const useActiveWMSLayers = create<WMSLayerState>((set) => ({
+const useActiveWMSLayers = create<WMSLayerState>((set, get) => ({
   activeLayers: [],
 
-  addLayer: (layer) =>
+  // Fungsi pengecekan layer exist
+  layerExists: (url, layers) => {
+    return get().activeLayers.some((l) => l.url === url && l.layers === layers);
+  },
+
+  // Add layer dengan validasi
+  addLayer: (layer) => {
+    const { url, layers } = layer;
+
+    if (get().layerExists(url, layers)) {
+      return {
+        success: false,
+        message: "Layer dengan URL dan nama layers yang sama sudah ada",
+      };
+    }
+
     set((state) => ({
       activeLayers: [
         ...state.activeLayers,
         { ...layer, id: Date.now().toString() },
       ],
-    })),
+    }));
+
+    return { success: true, message: "Layer berhasil ditambahkan" };
+  },
 
   removeLayer: (id) =>
     set((state) => ({

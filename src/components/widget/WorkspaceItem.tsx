@@ -1,4 +1,5 @@
 import CContainer from "@/components/ui-custom/CContainer";
+import useActiveWMSLayers from "@/context/useActiveWMSLayers";
 import useConfirmationDisclosure from "@/context/useConfirmationDisclosure";
 import useLang from "@/context/useLang";
 import useRenderTrigger from "@/context/useRenderTrigger";
@@ -476,10 +477,11 @@ const LoadWorkspace = (props: any) => {
 
   // Contexts
   const { themeConfig } = useThemeConfig();
+  const addActiveLayers = useActiveWMSLayers((s) => s.addLayer);
 
   // Utils
   function onLoad() {
-    const url = `/api/gis-bpn/workspaces/load/${data?.id}`;
+    const url = `/api/gis-bpn/workspace-layers/shape-files/${data.id}`;
     const config = {
       url,
       method: "GET",
@@ -488,7 +490,11 @@ const LoadWorkspace = (props: any) => {
     req({
       config,
       onResolve: {
-        onSuccess: () => {},
+        onSuccess: (r: any) => {
+          console.log(data?.id);
+          console.log(r.data.data);
+          addActiveLayers(r.data.data);
+        },
       },
     });
   }
@@ -526,11 +532,10 @@ const WorkspaceItem = (props: any) => {
 
   useEffect(() => {
     setData(initialData);
-  }, [initialData]);
+  }, [initialData, rt]);
 
   return (
     <CContainer
-      key={rt}
       borderRadius={themeConfig.radii.container}
       overflow={"clip"}
       border={"1px solid"}
