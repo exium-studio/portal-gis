@@ -71,8 +71,8 @@ const RootPage = () => {
             <Avatar size={"2xl"} />
 
             <VStack gap={0}>
-              <Text fontWeight={"semibold"}>Admin Piramid</Text>
-              <Text>admin@piramid.com</Text>
+              <Text fontWeight={"semibold"}>Admin</Text>
+              <Text>admin@gmail.com</Text>
             </VStack>
 
             <VStack>
