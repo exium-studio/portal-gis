@@ -1,7 +1,67 @@
+import BButton from "@/components/ui-custom/BButton";
+import P from "@/components/ui-custom/P";
+import { Avatar } from "@/components/ui/avatar";
 import PageContainer from "@/components/widget/PageContainer";
+import useAuthMiddleware from "@/context/useAuthMiddleware";
+import useRequest from "@/hooks/useRequest";
+import { VStack } from "@chakra-ui/react";
 
 const ProfilePage = () => {
-  return <PageContainer></PageContainer>;
+  // Hooks
+  const { req, loading } = useRequest({
+    id: "logout",
+    showLoadingToast: false,
+    showSuccessToast: false,
+  });
+
+  // Contexts
+  const setPermissions = useAuthMiddleware((s) => s.setPermissions);
+  const setAuthToken = useAuthMiddleware((s) => s.setAuthToken);
+
+  // Utils
+  function onSignout() {
+    const url = `/api/signout`;
+
+    const config = {
+      url,
+      method: "GET",
+    };
+
+    req({
+      config,
+      onResolve: {
+        onSuccess: () => {
+          localStorage.removeItem("__auth_token");
+          localStorage.removeItem("__user_data");
+          setAuthToken(undefined);
+          setPermissions(undefined);
+        },
+      },
+    });
+  }
+
+  return (
+    <PageContainer flex={1} align={"center"} justify={"center"} gap={4}>
+      <Avatar size={"2xl"} />
+
+      <VStack gap={0}>
+        <P textAlign={"center"} fontWeight={"semibold"}>
+          Admin
+        </P>
+        <P textAlign={"center"}>admin@gmail.com</P>
+      </VStack>
+
+      <BButton
+        onClick={onSignout}
+        w={"fit"}
+        colorPalette={"red"}
+        variant={"subtle"}
+        loading={loading}
+      >
+        Sign out
+      </BButton>
+    </PageContainer>
+  );
 };
 
 export default ProfilePage;
