@@ -200,6 +200,9 @@ const translations = {
     "description": "Anda tidak memiliki izin untuk mengakses informasi ini."
   },
   "forgot_password": "Lupa password",
+  "forgot_password_step_1_helper": "Langkah pertama lupa kata sandi, masukkan email Anda dan kami akan mengirimkan OTP untuk mengatur ulang kata sandi Anda.",
+  "forgot_password_step_2_helper": "Langkah kedua lupa kata sandi, verifikasi OTP",
+  "forgot_password_step_3_helper": "Langkah ketiga lupa kata sandi, masukkan kata sandi baru Anda",
   "full_main_panel": "Panel utama penuh",
   "fund_mutation": "Mutasi dana",
   "gender": "Jenis Kelamin",
@@ -338,6 +341,7 @@ const translations = {
   "otp_sent_to": "Kode OTP telah dikirimkan ke email",
   "paid": "Dibayar",
   "password_confirmation": "Konfirmasi password",
+  "password_confirmation_not_match": "Konfirmasi password tidak cocok",
   "pay": "Bayar",
   "pay_bill": {
     "title": "Bayar tagihan",
@@ -385,6 +389,7 @@ const translations = {
   "profile": "Profil",
   "province": "Provinsi",
   "published_date": "Tanggal publikasi",
+  "recieve": "Terima",
   "regional_settings_helper_text": "Pengaturan bahasa & wilayah ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
   "religion": "Agama",
   "required_form": "Tidak boleh kosong",
@@ -410,6 +415,7 @@ const translations = {
   "selected": "terpilih",
   "selected_time_zone": "Zona waktu dipilih",
   "selected_timezone": "Zona waktu dipilih",
+  "send": "Kirim",
   "server_error_page": "Sistem kami saat ini sedang mengalami gangguan. Tim kami sedang bekerja untuk memperbaikinya.",
   "service_type": "Jenis layanan",
   "settings_navs": {
@@ -482,6 +488,7 @@ const translations = {
     "imperial": "Sistem pengukuran yang umum digunakan di Amerika Serikat.",
     "iso": "Sistem pengukuran standar internasional. Berdasarkan metric."
   },
+  "verify": "Verifikasi",
   "verify_email": "Verifikasi email",
   "view": "Lihat",
   "village_asset": "Aset desa",

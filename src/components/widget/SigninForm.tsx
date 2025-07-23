@@ -1,3 +1,4 @@
+import useAuthMiddleware from "@/context/useAuthMiddleware";
 import useLang from "@/context/useLang";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useRequest from "@/hooks/useRequest";
@@ -10,9 +11,8 @@ import CContainer from "../ui-custom/CContainer";
 import Heading6 from "../ui-custom/Heading6";
 import PasswordInput from "../ui-custom/PasswordInput";
 import StringInput from "../ui-custom/StringInput";
-import TextRouterLink from "../ui-custom/TextRouterLink";
 import { Field } from "../ui/field";
-import useAuthMiddleware from "@/context/useAuthMiddleware";
+import ForgotPassword from "./ForgotPassword";
 
 const SigninForm = () => {
   // Hooks
@@ -96,9 +96,9 @@ const SigninForm = () => {
 
         <form id="signin_form" onSubmit={formik.handleSubmit}>
           <Field
-            label="Email/Username"
+            label="Email"
             invalid={!!formik.errors.identifier}
-            errorText={formik.errors.identifier}
+            errorText={formik.errors.identifier as string}
             mb={4}
           >
             <StringInput
@@ -114,7 +114,7 @@ const SigninForm = () => {
           <Field
             label="Password"
             invalid={!!formik.errors.password}
-            errorText={formik.errors.password}
+            errorText={formik.errors.password as string}
           >
             <PasswordInput
               name="password"
@@ -127,7 +127,7 @@ const SigninForm = () => {
           </Field>
 
           <HStack mt={4}>
-            <TextRouterLink to="/">{l.forgot_password}</TextRouterLink>
+            <ForgotPassword />
           </HStack>
 
           <BButton

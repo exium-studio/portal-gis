@@ -28,11 +28,12 @@ const RootPage = () => {
   const currentYear = new Date().getFullYear();
 
   // Utils
-  function logout() {
-    const url = `/api/logout`;
+  function onSignout() {
+    const url = `/api/signout`;
 
     const config = {
       url,
+      method: "GET",
     };
 
     req({
@@ -84,7 +85,7 @@ const RootPage = () => {
               <BButton
                 w={"160px"}
                 variant={"ghost"}
-                onClick={logout}
+                onClick={onSignout}
                 loading={loading}
               >
                 Signin

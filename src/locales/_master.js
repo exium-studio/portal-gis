@@ -239,8 +239,36 @@ export const edit = {
   id: "Edit",
   en: "Edit",
 };
+export const recieve = {
+  id: "Terima",
+  en: "Recieve",
+};
+export const send = {
+  id: "Kirim",
+  en: "Send",
+};
+export const verify = {
+  id: "Verifikasi",
+  en: "Verify",
+};
 
 // UI
+export const password_confirmation_not_match = {
+  id: "Konfirmasi password tidak cocok",
+  en: "Password confirmation does not match",
+};
+export const forgot_password_step_1_helper = {
+  id: "Langkah pertama lupa kata sandi, masukkan email Anda dan kami akan mengirimkan OTP untuk mengatur ulang kata sandi Anda.",
+  en: "First step of forgot password, enter your email and we will send you an OTP to reset your password.",
+};
+export const forgot_password_step_2_helper = {
+  id: "Langkah kedua lupa kata sandi, verifikasi OTP",
+  en: "Second step of forgot password, verify OTP",
+};
+export const forgot_password_step_3_helper = {
+  id: "Langkah ketiga lupa kata sandi, masukkan kata sandi baru Anda",
+  en: "Third step of forgot password, enter your new password",
+};
 export const deleted_thumbnail = {
   id: "Thumbnail dihapus",
   en: "Deleted thumbnail",

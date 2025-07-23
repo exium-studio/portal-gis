@@ -200,6 +200,9 @@ const translations = {
     "description": "You don't have permission to access this information."
   },
   "forgot_password": "Forgot password",
+  "forgot_password_step_1_helper": "First step of forgot password, enter your email and we will send you an OTP to reset your password.",
+  "forgot_password_step_2_helper": "Second step of forgot password, verify OTP",
+  "forgot_password_step_3_helper": "Third step of forgot password, enter your new password",
   "full_main_panel": "Full main panel",
   "fund_mutation": "Fund mutation",
   "gender": "Gender",
@@ -338,6 +341,7 @@ const translations = {
   "otp_sent_to": "OTP code has been sent to email",
   "paid": "Paid",
   "password_confirmation": "Confirm password",
+  "password_confirmation_not_match": "Password confirmation does not match",
   "pay": "Pay",
   "pay_bill": {
     "title": "Pay bill",
@@ -385,6 +389,7 @@ const translations = {
   "profile": "Profile",
   "province": "Province",
   "published_date": "Date published",
+  "recieve": "Recieve",
   "regional_settings_helper_text": "These language & region settings are stored locally on your device and will not be synced with your account.",
   "religion": "Religion",
   "required_form": "Cannot be empty",
@@ -410,6 +415,7 @@ const translations = {
   "selected": "selected",
   "selected_time_zone": "Selected time zone",
   "selected_timezone": "Selected time zone",
+  "send": "Send",
   "server_error_page": "Our system is currently experiencing an issue. Our team is working to fix it.",
   "service_type": "Service layanan",
   "settings_navs": {
@@ -482,6 +488,7 @@ const translations = {
     "imperial": "The measurement system commonly used in the United States.",
     "iso": "International standard measurement system. Based on metric."
   },
+  "verify": "Verify",
   "verify_email": "Verify email",
   "view": "View",
   "village_asset": "Village asset",
