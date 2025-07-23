@@ -27,7 +27,7 @@ const SigninForm = () => {
     },
     errorMessage: {
       400: {
-        WRONG_CREDENTIALS: {
+        INVALID_CREDENTIALS: {
           ...l.signin_wrong_credentials_toast,
         },
       },
