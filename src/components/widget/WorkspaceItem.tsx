@@ -69,7 +69,7 @@ const CreateLayer = (props: any) => {
     validationSchema: yup.object().shape({
       layerFileType: yup.array().required(l.required_form),
       docs: fileValidation({
-        allowedExtensions: [".shp", ".zip"],
+        allowedExtensions: ["shp", "zip"],
       }).required(l.required_form),
     }),
     onSubmit: (values) => {
