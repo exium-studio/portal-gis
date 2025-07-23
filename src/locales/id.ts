@@ -28,7 +28,7 @@ const translations = {
   "announcement": "Pengumuman",
   "ask": "Meminta",
   "attachment": "Lampiran",
-  "auto_time_zone": "Zona waktu saat ini (auto)",
+  "auto_time_zone": "Zona waktu lokal (auto)",
   "auto_timezone": "Zona waktu lokal (auto)",
   "back_online_toast": {
     "title": "Koneksi Pulih",

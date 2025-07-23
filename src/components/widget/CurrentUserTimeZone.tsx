@@ -78,7 +78,7 @@ const CurrentUserTimeZone = (props: BButtonProps) => {
         </CContainer>
 
         {!userSelect && (
-          <CContainer px={1} mt={4}>
+          <CContainer px={2} my={2}>
             <HelperText mb={1}>{l.auto_time_zone}</HelperText>
 
             <HStack>
