@@ -51,13 +51,11 @@ interface Props {
   withMaps?: boolean;
 }
 
-const MainPanelNavigation = () => {
+const MainPanelUtils = () => {
   // Hooks
   const { l } = useLang();
-  // const iss = useIsSmScreenWidth();
 
   // Contexts
-  // const { themeConfig } = useThemeConfig();
   const { layout, setLayout } = useLayout();
 
   // States
@@ -72,11 +70,20 @@ const MainPanelNavigation = () => {
   }
 
   return (
-    <>
+    <HStack flexShrink={0} gap={0}>
+      <ColorModeButton />
+
+      <CurrentUserTimeZone size={"sm"} />
+
       <Tooltip
         content={layoutFullMainPanel ? l.half_main_panel : l.full_main_panel}
       >
-        <BButton iconButton variant={"ghost"} onClick={toggleFullMainPanel}>
+        <BButton
+          iconButton
+          variant={"ghost"}
+          onClick={toggleFullMainPanel}
+          size={"sm"}
+        >
           <Icon>
             {layoutFullMainPanel ? (
               <IconMinimize stroke={1.5} />
@@ -97,13 +104,14 @@ const MainPanelNavigation = () => {
           onClick={() => {
             setLayout(LAYOUT_OPTIONS[2]);
           }}
+          size={"sm"}
         >
           <Icon>
             <IconX />
           </Icon>
         </BButton>
       </Tooltip>
-    </>
+    </HStack>
   );
 };
 
@@ -399,15 +407,7 @@ const NavContainer = ({
                 </Heading6>
               </HStack>
 
-              <HStack flexShrink={0} gap={0}>
-                <ColorModeButton />
-
-                <CurrentUserTimeZone />
-
-                <MainPanelNavigation />
-
-                {/* {layout.id === 2 && inMainNavs && <LayoutMenu />} */}
-              </HStack>
+              <MainPanelUtils />
             </HStack>
 
             {children}

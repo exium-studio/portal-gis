@@ -6,7 +6,7 @@ import formatDate from "@/utils/formatDate";
 import { HStack, Icon, Text, useDisclosure } from "@chakra-ui/react";
 import { IconTimezone } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
-import BButton from "../ui-custom/BButton";
+import BButton, { BButtonProps } from "../ui-custom/BButton";
 import CContainer from "../ui-custom/CContainer";
 import HelperText from "../ui-custom/HelperText";
 import { PopoverContent, PopoverRoot, PopoverTrigger } from "../ui/popover";
@@ -16,7 +16,10 @@ import MenuHeaderContainer from "./MenuHeaderContainer";
 import useClickOutside from "@/hooks/useClickOutside";
 import { useRef } from "react";
 
-const CurrentUserTimeZone = () => {
+const CurrentUserTimeZone = (props: BButtonProps) => {
+  // Props
+  const { ...restProps } = props;
+
   // Contexts
   const { timeZone } = useTimeZone();
   const { dateFormat } = useDateFormat();
@@ -43,6 +46,7 @@ const CurrentUserTimeZone = () => {
               unclicky
               variant="ghost"
               onClick={onToggle}
+              {...restProps}
             >
               <Icon>
                 <IconTimezone stroke={1.5} />
