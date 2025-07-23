@@ -32,7 +32,7 @@ export interface Interface__PrivateRoute extends Interface__Route {
   label?: any;
   titleKey: string;
   backPath?: string;
-  permissions?: number[];
+  allowedPermissions?: number[];
 }
 
 // Select

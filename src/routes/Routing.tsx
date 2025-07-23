@@ -6,6 +6,7 @@ import MissingPage from "@/pages/_error/MissingPage";
 import ServerErrorPage from "@/pages/_error/ServerErrorPage";
 import pluck from "@/utils/pluck";
 import { Route, Routes } from "react-router-dom";
+import AuthMiddleware from "./AuthMiddleware";
 
 const Routing = () => {
   // Contexts
@@ -18,22 +19,29 @@ const Routing = () => {
       ))}
 
       {PRIVATE_ROUTES.map(
-        ({ path, activePath, backPath, titleKey, element }) => (
+        ({
+          path,
+          activePath,
+          backPath,
+          titleKey,
+          element,
+          allowedPermissions,
+        }) => (
           <Route
             key={path}
             path={path}
             element={
-              // <AuthMiddleware allowedPermissions={permissions}>
-              <NavsContainer
-                activePath={activePath}
-                title={pluck(l, titleKey)}
-                backPath={backPath}
-                withMaps
-              >
-                {/* Buat layout w/ maps */}
-                {element}
-              </NavsContainer>
-              // </AuthMiddleware>
+              <AuthMiddleware allowedPermissions={allowedPermissions}>
+                <NavsContainer
+                  activePath={activePath}
+                  title={pluck(l, titleKey)}
+                  backPath={backPath}
+                  withMaps
+                >
+                  {/* Buat layout w/ maps */}
+                  {element}
+                </NavsContainer>
+              </AuthMiddleware>
             }
           />
         )

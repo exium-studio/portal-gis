@@ -12,15 +12,12 @@ import PasswordInput from "../ui-custom/PasswordInput";
 import StringInput from "../ui-custom/StringInput";
 import TextRouterLink from "../ui-custom/TextRouterLink";
 import { Field } from "../ui/field";
+import useAuthMiddleware from "@/context/useAuthMiddleware";
 
 const SigninForm = () => {
-  // Contexts
+  // Hooks
   const { l } = useLang();
-  // const { setAuthToken, setPermissions } = useAuthMiddleware();
-  const { themeConfig } = useThemeConfig();
-
-  // Utils
-  const { loading } = useRequest({
+  const { req, loading } = useRequest({
     id: "signin",
     loadingMessage: {
       ...l.signin_loading_toast,
@@ -38,6 +35,10 @@ const SigninForm = () => {
   });
   const navigate = useNavigate();
 
+  // Contexts
+  const { setAuthToken, setPermissions } = useAuthMiddleware();
+  const { themeConfig } = useThemeConfig();
+
   // Formik
   const formik = useFormik({
     validateOnChange: false,
@@ -49,8 +50,32 @@ const SigninForm = () => {
       identifier: yup.string().required(l.required_form),
       password: yup.string().required(l.required_form),
     }),
-    onSubmit: () => {
-      navigate("/profile");
+    onSubmit: (values) => {
+      const payload = {
+        email: values.identifier,
+        password: values.password,
+      };
+      const config = {
+        method: "post",
+        url: "/api/signin",
+        data: payload,
+      };
+
+      req({
+        config,
+        onResolve: {
+          onSuccess: (r: any) => {
+            localStorage.setItem("__auth_token", r.data.data?.token);
+            localStorage.setItem(
+              "__user_data",
+              JSON.stringify(r.data.data?.user)
+            );
+            setAuthToken(r.data.data?.token);
+            setPermissions(r.data.data?.permissions);
+            navigate("/dashboard");
+          },
+        },
+      });
     },
   });
 

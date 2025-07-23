@@ -22,6 +22,7 @@ import { Field } from "@/components/ui/field";
 import PageContainer from "@/components/widget/PageContainer";
 import WorkspaceItem from "@/components/widget/WorkspaceItem";
 import useLang from "@/context/useLang";
+import useLayout from "@/context/useLayout";
 import useRenderTrigger from "@/context/useRenderTrigger";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useBackOnClose from "@/hooks/useBackOnClose";
@@ -186,15 +187,20 @@ const Create = () => {
     </>
   );
 };
-
 const Data = (props: any) => {
   // Props
   const { dataState } = props;
   const { data } = dataState;
 
+  // Contexts
+  const { layout } = useLayout();
+
+  // States
+  const layoutHalfMap = layout.id === 1;
+
   return (
     <CContainer px={4}>
-      <SimpleGrid columns={[1, null, 2]}>
+      <SimpleGrid columns={layoutHalfMap ? [1, null, 2] : [1, null, 4]}>
         {data?.map((item: any, i: number) => {
           return (
             <WorkspaceItem key={i} initialData={item} flex={"1 1 300px"} />

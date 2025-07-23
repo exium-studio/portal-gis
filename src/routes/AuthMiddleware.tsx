@@ -18,8 +18,10 @@ const AuthMiddleware = ({
   children,
   redirectTo = "/",
 }: Props) => {
-  // Contexts
+  // Hooks
   const { l } = useLang();
+
+  // Contexts
   const { authToken, permissions, setPermissions, hasPermissions } =
     useAuthMiddleware();
 
@@ -49,7 +51,8 @@ const AuthMiddleware = ({
   // Handle permissions
   useEffect(() => {
     function handleOnSuccess(r: any) {
-      const permissions = r?.data?.data?.permission;
+      const permissions = r?.data?.data?.permissions;
+
       if (Array.isArray(permissions)) {
         setPermissions(permissions);
       }
@@ -58,12 +61,14 @@ const AuthMiddleware = ({
     if (authToken) {
       if (!permissions) {
         const config = {
-          url: `/rski/dashboard/user-info`,
+          url: `/api/user-info`,
         };
         req({
           config,
           onResolve: {
-            onSuccess: handleOnSuccess,
+            onSuccess: (r) => {
+              handleOnSuccess(r);
+            },
             onError: () => {
               navigate(redirectTo);
             },
@@ -82,10 +87,15 @@ const AuthMiddleware = ({
     <>
       {!authToken && <Redirect />}
 
-      {(loading || !permissions) && (
+      {loading && (
         <Center w={"100w"} minH={"100dvh"} color={"fg.subtle"}>
           <Center position={"relative"}>
-            <Spinner position={"absolute"} w={"60px"} h={"60px"} />
+            <Spinner
+              position={"absolute"}
+              w={"60px"}
+              h={"60px"}
+              borderWidth={"1px"}
+            />
             <Icon>
               <IconShieldCheckFilled size={32} />
             </Icon>
@@ -93,7 +103,7 @@ const AuthMiddleware = ({
         </Center>
       )}
 
-      {!loading && permissions && (
+      {!loading && (
         <>{hasPermissions(allowedPermissions) ? children : <Redirect />}</>
       )}
     </>
