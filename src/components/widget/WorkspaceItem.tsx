@@ -433,7 +433,7 @@ const DeleteWorkspace = (props: any) => {
         size={"sm"}
         onClick={() => {
           setConfirmationData({
-            title: `${l.delete_workspace} <b>${data?.title}</b>`,
+            title: `${capsFirstLetterEachWord(l.delete_workspace)}`,
             description: l.perma_delete_confirmation,
             confirmLabel: "Delete",
             confirmButtonProps: { colorPalette: "red" },
