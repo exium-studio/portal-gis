@@ -62,7 +62,7 @@ const translations = {
   },
   "chrome_permissions_settings_link": "Pengaturan → Privasi & Keamanan → Pengaturan Situs → ",
   "citizenship": "Kewarganegaraan",
-  "city": "Kota",
+  "city": "Kota/Kabupaten",
   "close": "Tutup",
   "close_main_panel": "Tutup panel utama",
   "confirm": "Konfirmasi",
@@ -126,6 +126,7 @@ const translations = {
   "dialy": "Harian",
   "display_settings_helper_text": "Pengaturan tampilan ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
   "displayed_data": "Data yang ditampilkan",
+  "dispute_parties": "Para pihak yg berselisih",
   "edge_permissions_settings_link": "Pengaturan → Cookie dan izin situs → ",
   "edit": "Edit",
   "edit_workspace": "Edit workspace",
@@ -192,6 +193,7 @@ const translations = {
   "fiat": {
     "description": "Pembayaran dengan mata uang resmi (misal: IDR, USD)."
   },
+  "field_data": "Data bidang",
   "file_dropzone_label": "Drag and drop/klik untuk unggah berkas",
   "firefox_permissions_settings_link": "Preferensi → Privasi & Keamanan → Izin → ",
   "for_gender": "Untuk gender",
@@ -209,6 +211,7 @@ const translations = {
   "get": "Dapatkan",
   "grow": "Naik ${value} dari tahun lalu",
   "half_main_panel": "Panel utama setengah",
+  "handling_and_follow_up": "Upaya penanganan & tindak lanjut",
   "in_use": "sedang digunakan",
   "income": "Pendapatan",
   "income_source": "Sumber pendapatan",
@@ -343,6 +346,8 @@ const translations = {
   "optional": "Opsional",
   "order": "Pesan",
   "otp_sent_to": "Kode OTP telah dikirimkan ke email",
+  "owner": "Pemilik",
+  "owner_type": "Tipe pemilik",
   "paid": "Dibayar",
   "password_confirmation": "Konfirmasi password",
   "password_confirmation_not_match": "Konfirmasi password tidak cocok",
@@ -390,6 +395,7 @@ const translations = {
   "postal_code": "Kode pos",
   "previous_attachment": "Lampiran sebelumnya",
   "primary_address": "Alamat utama",
+  "problems": "Permasalahan",
   "profile": "Profil",
   "province": "Provinsi",
   "published_date": "Tanggal publikasi",
@@ -399,11 +405,15 @@ const translations = {
   "required_form": "Tidak boleh kosong",
   "requried_date_time": "Harap isi tanggal dan waktu, karena ini satu kesatuan.",
   "restore_confirmation": "Pulihkan data ini?",
+  "result": "Hasil",
   "retry": "Muat ulang",
   "retry_feedback": {
     "title": "Terjadi error",
     "description": "Cobalah untuk memuat ulang menggunakan tombol di bawah."
   },
+  "rights_expired_date": "Tanggal berakhir hak",
+  "rights_published_date": "Tanggal terbit hak",
+  "rights_type": "Tipe hak",
   "road": "Jalan",
   "save": "Simpan",
   "save_continue": "Simpan & Lanjutkan",
@@ -420,6 +430,7 @@ const translations = {
   "selected_time_zone": "Zona waktu dipilih",
   "selected_timezone": "Zona waktu dipilih",
   "send": "Kirim",
+  "sertificate_number": "Nomor sertifikat",
   "server_error_page": "Sistem kami saat ini sedang mengalami gangguan. Tim kami sedang bekerja untuk memperbaikinya.",
   "service_type": "Jenis layanan",
   "settings_navs": {
@@ -460,6 +471,8 @@ const translations = {
     "title": "Buat Akun Baru",
     "description": "Isi data diri Anda untuk mendaftar dan mulai menggunakan layanan kami."
   },
+  "sk": "SK",
+  "sk_date": "Tanggal SK",
   "start_date": "Tanggal mulai",
   "start_from": "Mulai dari",
   "theme_settings_title": "Tema",
@@ -492,6 +505,7 @@ const translations = {
     "imperial": "Sistem pengukuran yang umum digunakan di Amerika Serikat.",
     "iso": "Sistem pengukuran standar internasional. Berdasarkan metric."
   },
+  "usage": "Penggunaan",
   "verify": "Verifikasi",
   "verify_email": "Verifikasi email",
   "view": "Lihat",
@@ -509,6 +523,7 @@ const translations = {
     "sun": "Minggu"
   },
   "weekly": "Mingguan",
+  "written_area": "Luas tertulis",
   "year": "Tahun",
   "yes": "Ya"
 };

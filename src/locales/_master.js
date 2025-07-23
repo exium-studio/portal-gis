@@ -116,7 +116,7 @@ export const payment_method = {
   en: "Payment method",
 };
 export const city = {
-  id: "Kota",
+  id: "Kota/Kabupaten",
   en: "City",
 };
 export const province = {
@@ -251,8 +251,68 @@ export const verify = {
   id: "Verifikasi",
   en: "Verify",
 };
+export const sertificate_number = {
+  id: "Nomor sertifikat",
+  en: "Certificate number",
+};
+export const owner = {
+  id: "Pemilik",
+  en: "Owner",
+};
+export const owner_type = {
+  id: "Tipe pemilik",
+  en: "Owner type",
+};
+export const rights_type = {
+  id: "Tipe hak",
+  en: "Rights type",
+};
+export const written_area = {
+  id: "Luas tertulis",
+  en: "Written area",
+};
+export const sk = {
+  id: "SK",
+  en: "SK",
+};
+export const sk_date = {
+  id: "Tanggal SK",
+  en: "SK date",
+};
+export const rights_published_date = {
+  id: "Tanggal terbit hak",
+  en: "Rights published date",
+};
+export const rights_expired_date = {
+  id: "Tanggal berakhir hak",
+  en: "Rights expired date",
+};
+export const usage = {
+  id: "Penggunaan",
+  en: "Usage",
+};
+export const problems = {
+  id: "Permasalahan",
+  en: "Problems",
+};
+export const dispute_parties = {
+  id: "Para pihak yg berselisih",
+  en: "The parties to the dispute",
+};
+export const handling_and_follow_up = {
+  id: "Upaya penanganan & tindak lanjut",
+  en: "Handling and follow up",
+};
+export const result = {
+  id: "Hasil",
+  en: "Result",
+};
 
 // UI
+export const field_data = {
+  id: "Data bidang",
+  en: "Field data",
+};
 export const password_confirmation_not_match = {
   id: "Konfirmasi password tidak cocok",
   en: "Password confirmation does not match",
@@ -1592,5 +1652,3 @@ export const max_char = {
   id: "Maksimal ${maxChar} karakter",
   en: "Maksimal ${maxChar} characters",
 };
-
-// Interface

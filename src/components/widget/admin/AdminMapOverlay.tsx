@@ -6,6 +6,7 @@ import FloatingContainer from "@/components/ui-custom/FloatingContainer";
 import HelperText from "@/components/ui-custom/HelperText";
 import HScroll from "@/components/ui-custom/HScroll";
 import NumberInput from "@/components/ui-custom/NumberInput";
+import P from "@/components/ui-custom/P";
 import SearchInput from "@/components/ui-custom/SearchInput";
 import { useColorMode } from "@/components/ui/color-mode";
 import {
@@ -25,11 +26,13 @@ import useLang from "@/context/useLang";
 import useMapStyle from "@/context/useMapStyle";
 import useMapViewState from "@/context/useMapViewState";
 import useMapsZoom from "@/context/useMapZoom";
+import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useClickOutside from "@/hooks/useClickOutside";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import BASEMAP_CONFIG_LIST from "@/static/basemapConfigList";
 import DISPLAYED_DATA_LIST from "@/static/displayedDataList";
+import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import pluck from "@/utils/pluck";
 import {
   Box,
@@ -52,6 +55,7 @@ import {
   IconCurrentLocation,
   IconCurrentLocationFilled,
   IconFlag,
+  IconInfoCircle,
   IconMapCog,
   IconMapPin,
   IconMapPinCog,
@@ -61,15 +65,17 @@ import {
   IconSearch,
   IconX,
 } from "@tabler/icons-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import useSearchMode from "./useSearchMode";
+import formatDate from "@/utils/formatDate";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 interface OverlayItemContainerProps extends StackProps {
   children?: any;
 }
+
 const OverlayItemContainer = ({
   children,
   ...props
@@ -452,31 +458,17 @@ const Basemap = () => {
   );
 };
 
-// const LayoutMenu = () => {
-//   return (
-//     <OverlayItemContainer>
-//       <TheLayoutMenu
-//         pointerEvents={"auto"}
-//         popoverContentProps={{
-//           mt: 1,
-//           mr: "2px",
-//         }}
-//       />
-//     </OverlayItemContainer>
-//   );
-// };
-
 const Legend = () => {
+  // Hooks
+  const { open, onToggle, onClose } = useDisclosure();
+  const iss = useIsSmScreenWidth();
+
   // Contexts
   const { l } = useLang();
   const { displayedData } = useDisplayedData();
 
-  // States, Refs
+  // Refs
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // Utils
-  const { open, onToggle, onClose } = useDisclosure();
-  const iss = useIsSmScreenWidth();
 
   return (
     <CContainer w={"fit"} fRef={containerRef} zIndex={1} position={"relative"}>
@@ -489,9 +481,8 @@ const Legend = () => {
             bottom: "58px",
             pointerEvents: "auto",
             w: iss ? "calc(100vw - 16px)" : "300px",
-            p: 1,
           }}
-          animationEntrance="center"
+          animationEntrance="bottom"
         >
           <MenuHeaderContainer borderless>
             <HStack h={"20px"}>
@@ -515,7 +506,7 @@ const Legend = () => {
             </HStack>
           </MenuHeaderContainer>
 
-          <CContainer p={2} mt={1}>
+          <CContainer px={3} pb={3}>
             <HStack wrap={"wrap"} gapX={4} px={"2px"} mb={4}>
               {DISPLAYED_DATA_LIST.map((item) => {
                 return displayedData[item.key]
@@ -850,6 +841,161 @@ const Compass = () => {
   );
 };
 
+const DetailPolygon = () => {
+  // Hooks
+  const { l } = useLang();
+  const { open, onOpen, onClose } = useDisclosure();
+  const iss = useIsSmScreenWidth();
+
+  // Contexts
+  const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
+
+  // States
+  const data = useMemo(
+    () => selectedPolygon?.polygon?.properties,
+    [selectedPolygon?.polygon?.properties]
+  );
+
+  // Handle open
+  useEffect(() => {
+    if (selectedPolygon) {
+      onOpen();
+    } else {
+      onClose();
+    }
+  }, [selectedPolygon]);
+
+  const ItemContainer = (props: any) => {
+    const { children, last } = props;
+
+    return (
+      <CContainer
+        borderBottom={last ? "" : "1px solid"}
+        borderColor={"border.muted"}
+        p={2}
+      >
+        {children}
+      </CContainer>
+    );
+  };
+
+  return (
+    <FloatingContainer
+      open={open}
+      containerProps={{
+        position: "absolute",
+        left: "8px",
+        top: "68px",
+        pointerEvents: "auto",
+        w: iss ? "calc(100vw - 16px)" : "300px",
+      }}
+      animationEntrance="top"
+    >
+      <MenuHeaderContainer borderless>
+        <HStack h={"20px"}>
+          <IconInfoCircle stroke={1.5} size={20} />
+          <Text fontWeight={"bold"}>
+            {capsFirstLetterEachWord(l.field_data)}
+          </Text>
+
+          <BButton
+            iconButton
+            unclicky
+            size={"xs"}
+            variant={"ghost"}
+            ml={"auto"}
+            mr={-1}
+            mt={"-2px"}
+            onClick={onClose}
+          >
+            <Icon>
+              <IconX />
+            </Icon>
+          </BButton>
+        </HStack>
+      </MenuHeaderContainer>
+
+      <CContainer px={2} overflowY={"auto"} className="scrollY" maxH={"500px"}>
+        <ItemContainer>
+          <P fontWeight={"semibold"}>{l.sertificate_number}</P>
+          <P>{`${data?.hak || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"semibold"}>NIB</P>
+          <P>{`${data?.nib || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"semibold"}>{l.owner}</P>
+          <P>{`${data?.pemilik || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"semibold"}>{l.owner_type}</P>
+          <P>{`${data?.tipepemili || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"semibold"}>{l.rights_type}</P>
+          <P>{`${data?.tipehak || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"semibold"}>{l.rights_published_date}</P>
+          <P>{`${data?.tglterbith ? formatDate(data?.tglterbith) : "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"semibold"}>{l.rights_expired_date}</P>
+          <P>{`${data?.berakhirha ? formatDate(data?.berakhirha) : "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"semibold"}>{l.written_area}</P>
+          <P>{`${data?.luastertul || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"semibold"}>{l.sk}</P>
+          <P>{`${data?.sk || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"semibold"}>{l.sk_date}</P>
+          <P>{`${data?.tanggalsk || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"semibold"}>{l.usage}</P>
+          <P>{`${data?.penggunaan || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"semibold"}>{l.problems}</P>
+          <P>{`${data?.permasalah || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"semibold"}>{l.dispute_parties}</P>
+          {/* TODO kolom undefined */}
+          <P>{`-`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"semibold"}>{l.handling_and_follow_up}</P>
+          <P>{`${data?.tindaklanj || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer last>
+          <P fontWeight={"semibold"}>{l.result}</P>
+          <P>{`${data?.hasil || "-"}`}</P>
+        </ItemContainer>
+      </CContainer>
+    </FloatingContainer>
+  );
+};
+
 const AdminMapOverlay = () => {
   return (
     <CContainer
@@ -862,55 +1008,59 @@ const AdminMapOverlay = () => {
       position={"absolute"}
       top={0}
     >
-      <Box p={2}>
-        <HStack
-          align={"start"}
-          justify={"space-between"}
-          position={"relative"}
-          h={"calc(40px + 8px)"}
-        >
-          <HStack align={"start"} w={"fit"} h={"fit"} zIndex={2}>
-            <SearchAddress />
-          </HStack>
+      <DetailPolygon />
 
-          <HStack position={"absolute"} right={0}>
-            {/* <DisplayedData /> */}
-
-            <Basemap />
-
-            {/* <LayoutMenu /> */}
-          </HStack>
-        </HStack>
-      </Box>
-
-      <Box p={2} pr={0}>
-        <HStack
-          align={"start"}
-          justify={"space-between"}
-          position={"relative"}
-          h={"calc(40px + 8px)"}
-        >
-          <HStack align={"start"} w={"full"} zIndex={2}>
-            <Legend />
-          </HStack>
-
-          <HScroll
-            position={"absolute"}
-            w={"fit"}
-            maxW={"calc(100% - 50px - 8px)"}
-            right={0}
-            pr={2}
+      <CContainer flex={1} justify={"space-between"}>
+        <Box p={2}>
+          <HStack
+            align={"start"}
+            justify={"space-between"}
+            position={"relative"}
+            h={"calc(40px + 8px)"}
           >
-            <MapStyle />
+            <HStack align={"start"} w={"fit"} h={"fit"} zIndex={2}>
+              <SearchAddress />
+            </HStack>
 
-            <ZoomControl />
+            <HStack position={"absolute"} right={0}>
+              {/* <DisplayedData /> */}
 
-            <CurrentLocation />
+              <Basemap />
 
-            <Compass />
-          </HScroll>
-        </HStack>
-      </Box>
+              {/* <LayoutMenu /> */}
+            </HStack>
+          </HStack>
+        </Box>
+
+        <Box p={2} pr={0}>
+          <HStack
+            align={"start"}
+            justify={"space-between"}
+            position={"relative"}
+            h={"calc(40px + 8px)"}
+          >
+            <HStack align={"start"} w={"full"} zIndex={2}>
+              <Legend />
+            </HStack>
+
+            <HScroll
+              position={"absolute"}
+              w={"fit"}
+              maxW={"calc(100% - 50px - 8px)"}
+              right={0}
+              pr={2}
+            >
+              <MapStyle />
+
+              <ZoomControl />
+
+              <CurrentLocation />
+
+              <Compass />
+            </HScroll>
+          </HStack>
+        </Box>
+      </CContainer>
     </CContainer>
   );
 };

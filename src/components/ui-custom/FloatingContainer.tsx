@@ -55,7 +55,6 @@ const FloatingContainer = ({
         border={"1px solid"}
         borderColor={"border.muted"}
         borderRadius={themeConfig.radii.container}
-        p={1}
         transition={"140ms"}
         pointerEvents={open ? "auto" : "none"}
         {...containerProps}

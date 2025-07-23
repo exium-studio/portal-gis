@@ -5,7 +5,7 @@ interface Layer {
   layer_name: string;
   description?: string;
   table_name?: string;
-  geojson: any;
+  data: any;
   visible?: boolean;
 }
 
@@ -133,7 +133,7 @@ const useActiveLayers = create<GeoJSONLayerState>((set) => ({
         return {
           ...group,
           layers: group.layers.map((layer) =>
-            layer.layer_id === layer_id ? { ...layer, geojson: data } : layer
+            layer.layer_id === layer_id ? { ...layer, data: data } : layer
           ),
         };
       }),

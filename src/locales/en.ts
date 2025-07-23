@@ -126,6 +126,7 @@ const translations = {
   "dialy": "Daily",
   "display_settings_helper_text": "These display settings are stored locally on your device and will not be synced with your account.",
   "displayed_data": "Displayed data",
+  "dispute_parties": "The parties to the dispute",
   "edge_permissions_settings_link": "Settings → Cookies and site permissions → ",
   "edit": "Edit",
   "edit_workspace": "Edit workspace",
@@ -192,6 +193,7 @@ const translations = {
   "fiat": {
     "description": "Payment using official currencies (e.g., IDR, USD)."
   },
+  "field_data": "Field data",
   "file_dropzone_label": "Drag and drop/click to upload files",
   "firefox_permissions_settings_link": "Preferences → Privacy & Security → Permissions → ",
   "for_gender": "For gender",
@@ -209,6 +211,7 @@ const translations = {
   "get": "Get",
   "grow": "Up ${value} from last year",
   "half_main_panel": "Half main panel",
+  "handling_and_follow_up": "Handling and follow up",
   "in_use": "in use",
   "income": "Income",
   "income_source": "Income source",
@@ -343,6 +346,8 @@ const translations = {
   "optional": "Optional",
   "order": "Order",
   "otp_sent_to": "OTP code has been sent to email",
+  "owner": "Owner",
+  "owner_type": "Owner type",
   "paid": "Paid",
   "password_confirmation": "Confirm password",
   "password_confirmation_not_match": "Password confirmation does not match",
@@ -390,6 +395,7 @@ const translations = {
   "postal_code": "Postal code",
   "previous_attachment": "Previous attachments",
   "primary_address": "Primary address",
+  "problems": "Problems",
   "profile": "Profile",
   "province": "Province",
   "published_date": "Date published",
@@ -399,11 +405,15 @@ const translations = {
   "required_form": "Cannot be empty",
   "requried_date_time": "Please fill in the date and time, as they are one entity.",
   "restore_confirmation": "Restore this data?",
+  "result": "Result",
   "retry": "Retry now",
   "retry_feedback": {
     "title": "An Error Occurred",
     "description": "Try to reload using the button below."
   },
+  "rights_expired_date": "Rights expired date",
+  "rights_published_date": "Rights published date",
+  "rights_type": "Rights type",
   "road": "Road",
   "save": "Save",
   "save_continue": "Save & Continue",
@@ -420,6 +430,7 @@ const translations = {
   "selected_time_zone": "Selected time zone",
   "selected_timezone": "Selected time zone",
   "send": "Send",
+  "sertificate_number": "Certificate number",
   "server_error_page": "Our system is currently experiencing an issue. Our team is working to fix it.",
   "service_type": "Service layanan",
   "settings_navs": {
@@ -460,6 +471,8 @@ const translations = {
     "title": "Create New Account",
     "description": "Fill in your details to register and start using our services."
   },
+  "sk": "SK",
+  "sk_date": "SK date",
   "start_date": "Start date",
   "start_from": "Start from",
   "theme_settings_title": "Theme",
@@ -492,6 +505,7 @@ const translations = {
     "imperial": "The measurement system commonly used in the United States.",
     "iso": "International standard measurement system. Based on metric."
   },
+  "usage": "Usage",
   "verify": "Verify",
   "verify_email": "Verify email",
   "view": "View",
@@ -509,6 +523,7 @@ const translations = {
     "sun": "Sunday"
   },
   "weekly": "Weekly",
+  "written_area": "Written area",
   "year": "Year",
   "yes": "Yes"
 };

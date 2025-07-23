@@ -46,6 +46,8 @@ const UpdateLayer = (props: any) => {
   // Props
   const { data } = props;
 
+  // console.log(data);
+
   // Hooks
   const { l } = useLang();
   const { open, onOpen, onClose } = useDisclosure();
@@ -488,11 +490,16 @@ const LoadWorkspace = (props: any) => {
       method: "GET",
     };
 
+    // addLayerGroup({
+    //   workspace: data,
+    //   layers: [{ layer_id: 1, layer_name: "dummy", data: dummyGeoJSON }],
+    //   visible: true,
+    // });
+
     req({
       config,
       onResolve: {
         onSuccess: (r: any) => {
-          // addLayerGroup(r.data.data);
           const layerData = r.data.data;
           addLayerGroup({
             workspace: data,
