@@ -1,6 +1,19 @@
 import { ButtonProps, MenuItemProps } from "@chakra-ui/react";
 import { RefObject } from "react";
 
+export interface WMSServiceConfig {
+  baseUrl: string; // "http://localhost:8080/geoserver/bpn-gis/wms"
+  workspace: string; // "bpn-gis"
+}
+
+export interface WMSLayer {
+  id: string;
+  layerName: string; // "Update_Data_PTPNI_from_postgis"
+  visible: boolean;
+  opacity: number;
+  style?: string;
+}
+
 export type MapRefType = RefObject<mapboxgl.Map | null>;
 
 export type Type__LanguageOptions = "id" | "en";

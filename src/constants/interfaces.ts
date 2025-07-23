@@ -18,30 +18,11 @@ import {
 } from "./types";
 
 // WMS
-export interface WMSLayer {
-  id: string;
-  url: string;
-  layers: string;
-  workspaceId: string;
-  style?: string;
-  opacity: number;
-  visible: boolean;
-}
 export interface Workspace {
   id: string;
-  name: string;
-  description?: string;
-  layers: WMSLayer[];
-}
-export interface WorkspaceItemProps {
-  workspace: Workspace;
-  isSelected: boolean;
-  onLoad: (id: string) => void;
-  onEdit: (id: string) => void;
-  onDelete: (id: string) => void;
-}
-export interface WMSLayerManagerProps {
-  layers: WMSLayer[];
+  title: string;
+  description: string;
+  thumbnail: object;
 }
 export interface MapOverlayProps {
   mapRef: MapRefType;

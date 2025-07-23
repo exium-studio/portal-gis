@@ -11,6 +11,7 @@ import mapboxgl from "mapbox-gl";
 import { useEffect, useRef, useState } from "react";
 import Map, { MapRef, Marker } from "react-map-gl/mapbox";
 import MapMarkerCircle from "../MapMarkerCircle";
+import WMSLayerManager from "../WMSLayerManagement";
 
 const MIN_ZOOM = 0;
 const MAX_ZOOM = 22;
@@ -20,6 +21,7 @@ const AdminMap = () => {
   const { colorMode } = useColorMode();
 
   // Contexts
+  // const activeLayers = useActiveWMSLayers();
   const { mapStyle } = useMapStyle();
   const { layout } = useLayout();
   const { currentLocation } = useCurrentLocation();
@@ -241,7 +243,8 @@ const AdminMap = () => {
             </Marker>
           )}
 
-          {/* Data layer */}
+          {/* WMS Layers */}
+          <WMSLayerManager />
         </>
       )}
     </Map>

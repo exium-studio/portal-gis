@@ -1,19 +1,20 @@
-// WMSLayerManager.tsx
+// components/WMSLayerManager.tsx
 import { useEffect } from "react";
 import { useMap } from "react-map-gl/maplibre";
-import { WMSLayerManagerProps } from "@/constants/interfaces";
+import useActiveWMSLayers from "@/context/useActiveWMSLayers";
 
-const WMSLayerManager = ({ layers }: WMSLayerManagerProps) => {
+const WMSLayerManager = () => {
   const { current: map } = useMap();
+  const { activeLayers } = useActiveWMSLayers();
 
   useEffect(() => {
     if (!map) return;
 
+    // Cleanup function
     const cleanupLayers = () => {
-      layers.forEach((layer) => {
+      activeLayers.forEach((layer) => {
         const layerId = `wms-${layer.id}`;
         const sourceId = `wms-source-${layer.id}`;
-
         if (map.getLayer(layerId)) map.removeLayer(layerId);
         if (map.getSource(sourceId)) map.removeSource(sourceId);
       });
@@ -21,7 +22,8 @@ const WMSLayerManager = ({ layers }: WMSLayerManagerProps) => {
 
     cleanupLayers();
 
-    layers.forEach((layer) => {
+    // Add new layers
+    activeLayers.forEach((layer) => {
       if (!layer.visible) return;
 
       const layerId = `wms-${layer.id}`;
@@ -32,7 +34,6 @@ const WMSLayerManager = ({ layers }: WMSLayerManagerProps) => {
         version: "1.1.1",
         request: "GetMap",
         layers: layer.layers,
-        styles: layer.style || "",
         format: "image/png",
         transparent: "true",
         width: "256",
@@ -47,18 +48,21 @@ const WMSLayerManager = ({ layers }: WMSLayerManagerProps) => {
         tileSize: 256,
       });
 
-      map.addLayer({
-        id: layerId,
-        type: "raster",
-        source: sourceId,
-        paint: {
-          "raster-opacity": layer.opacity,
+      map.addLayer(
+        {
+          id: layerId,
+          type: "raster",
+          source: sourceId,
+          paint: {
+            "raster-opacity": layer.opacity,
+          },
         },
-      });
+        "road-label"
+      ); // Letakkan di atas basemap tapi di bawah label jalan
     });
 
     return cleanupLayers;
-  }, [map, layers]);
+  }, [map, activeLayers]);
 
   return null;
 };

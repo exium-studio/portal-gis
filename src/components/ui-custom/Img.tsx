@@ -9,7 +9,7 @@ const Img = (props: Props) => {
   const { src, onError, ...rest } = props;
 
   // States
-  const fallbackSrc = `${IMAGES_PATH}/tembalang.png`;
+  const fallbackSrc = `${IMAGES_PATH}/no_img.jpeg`;
   const [currentSrc, setCurrentSrc] = useState(src || fallbackSrc);
 
   const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
