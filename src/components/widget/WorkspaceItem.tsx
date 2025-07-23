@@ -89,7 +89,7 @@ const CreateLayer = (props: any) => {
         LAYER_PROPS[
           values.layerFileType?.[0]?.label as keyof typeof LAYER_PROPS
         ].key,
-        values.docs
+        values.docs?.[0]
       );
       const url =
         LAYER_PROPS[

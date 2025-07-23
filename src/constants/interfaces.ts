@@ -9,12 +9,43 @@ import {
 } from "@chakra-ui/react";
 import { Dispatch, SetStateAction } from "react";
 import {
+  MapRefType,
   Type__DateRange,
   Type__DateRangePresets,
   Type__DisclosureSizes,
   Type__TableOptions,
   Type__TimeRange,
 } from "./types";
+
+// WMS
+export interface WMSLayer {
+  id: string;
+  url: string;
+  layers: string;
+  workspaceId: string;
+  style?: string;
+  opacity: number;
+  visible: boolean;
+}
+export interface Workspace {
+  id: string;
+  name: string;
+  description?: string;
+  layers: WMSLayer[];
+}
+export interface WorkspaceItemProps {
+  workspace: Workspace;
+  isSelected: boolean;
+  onLoad: (id: string) => void;
+  onEdit: (id: string) => void;
+  onDelete: (id: string) => void;
+}
+export interface WMSLayerManagerProps {
+  layers: WMSLayer[];
+}
+export interface MapOverlayProps {
+  mapRef: MapRefType;
+}
 
 // Gens
 export interface Interface__Gens {
@@ -165,7 +196,6 @@ export interface Interface__TableComponent extends StackProps {
   setLimitControl?: Dispatch<number>;
   footerContainerProps?: SimpleGridProps;
 }
-
 export interface Interface__RowOptions {
   rowData: any;
   rowOptions: Type__TableOptions;

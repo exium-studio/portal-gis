@@ -1,4 +1,7 @@
 import { ButtonProps, MenuItemProps } from "@chakra-ui/react";
+import { RefObject } from "react";
+
+export type MapRefType = RefObject<mapboxgl.Map | null>;
 
 export type Type__LanguageOptions = "id" | "en";
 

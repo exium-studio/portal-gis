@@ -7,9 +7,8 @@ import useLayout from "@/context/useLayout";
 import useMapStyle from "@/context/useMapStyle";
 import useMapViewState from "@/context/useMapViewState";
 import useMapsZoom from "@/context/useMapZoom";
-import mapboxgl from "mapbox-gl";
 import { useEffect, useRef, useState } from "react";
-import Map, { MapRef, Marker } from "react-map-gl/mapbox";
+import Map, { MapRef, Marker } from "react-map-gl/maplibre";
 import MapMarkerCircle from "../MapMarkerCircle";
 
 const MIN_ZOOM = 0;
@@ -214,7 +213,7 @@ const AdminMap = () => {
       style={{ width: "100%", height: "100vh" }}
       mapStyle={activeMapStyle}
       mapboxAccessToken={import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}
-      mapLib={mapboxgl}
+      // mapLib={mapboxgl}
       onZoomEnd={(e) => {
         handleZoomFromLevel(e.viewState.zoom);
       }}
