@@ -79,7 +79,7 @@ const CreateLayer = (props: any) => {
       }).required(l.required_form),
     }),
     onSubmit: (values) => {
-      // console.log(values);
+      // console.log(values.docs[0]);
 
       back();
 
@@ -89,7 +89,7 @@ const CreateLayer = (props: any) => {
         LAYER_PROPS[
           values.layerFileType?.[0]?.label as keyof typeof LAYER_PROPS
         ].key,
-        values.docs?.[0]
+        values.docs[0]
       );
       const url =
         LAYER_PROPS[
