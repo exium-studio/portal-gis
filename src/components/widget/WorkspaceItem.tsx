@@ -568,12 +568,13 @@ const ViewLayers = (props: any) => {
         ],
         {
           padding: 40, // px
-          duration: 1000, // ms
+          duration: 1200, // ms
           essential: true,
         }
       );
     }
   }
+
   return (
     <Tooltip content={l.view_layer}>
       <BButton
