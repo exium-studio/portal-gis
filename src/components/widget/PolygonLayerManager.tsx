@@ -11,18 +11,22 @@ const LayerSource = (props: any) => {
 
   // Contexts
   const { mapRef } = useMapViewState();
-
-  // const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
+  const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
   const setSelectedPolygon = useSelectedPolygon((s) => s.setSelectedPolygon);
   const clearSelectedPolygon = useSelectedPolygon(
     (s) => s.clearSelectedPolygon
   );
+  const { themeConfig } = useThemeConfig();
 
   // States
-  const { themeConfig } = useThemeConfig();
   const layer = data?.layers?.[0];
   const geojson = data?.layers?.[0]?.data;
-  const fillColor = "#7e7e7e";
+
+  // Default fill color
+  const defaultFillColor = "#7e7e7e";
+
+  // Determine if current layer has selected polygon
+  const selectedFeatureId = selectedPolygon?.polygon?.properties?.id;
 
   // Utils
   const handleOnClickPolygon = useCallback(
@@ -33,14 +37,25 @@ const LayerSource = (props: any) => {
         return;
       }
 
-      const fillColor = themeConfig.primaryColorHex;
+      // Check if clicked feature is already selected
+      const isAlreadySelected =
+        selectedPolygon?.polygon?.properties?.id ===
+          clickedFeature?.properties?.id &&
+        selectedPolygon?.polygon?.layer?.id === layer?.id;
 
-      setSelectedPolygon({
-        polygon: clickedFeature,
-        fillColor: fillColor,
-      });
+      if (isAlreadySelected) {
+        clearSelectedPolygon();
+      } else {
+        setSelectedPolygon({
+          polygon: {
+            ...clickedFeature,
+            layer: { id: layer?.id }, // Store layer info with the feature
+          },
+          fillColor: themeConfig.primaryColorHex,
+        });
+      }
     },
-    [data]
+    [selectedPolygon, layer?.id, themeConfig.primaryColorHex]
   );
 
   // Handle onClick event
@@ -53,7 +68,7 @@ const LayerSource = (props: any) => {
     return () => {
       map.off("click", `${layer?.id}`, handleOnClickPolygon);
     };
-  }, [mapRef, handleOnClickPolygon]);
+  }, [mapRef, handleOnClickPolygon, layer?.id]);
 
   return (
     <Source type="geojson" data={geojson}>
@@ -61,13 +76,17 @@ const LayerSource = (props: any) => {
         id={`${layer?.id}`}
         type="fill"
         paint={{
-          "fill-color": fillColor,
-          // "fill-opacity": selectedGeoJSONKelurahan ? 0.1 : 0.8,
+          "fill-color": [
+            "case",
+            ["==", ["get", "id"], selectedFeatureId || ""], // Fallback to empty string if null
+            themeConfig.primaryColorHex || "#000000", // Fallback to default color if null
+            defaultFillColor,
+          ],
           "fill-opacity": 0.8,
         }}
       />
       <Layer
-        id="all-kelurahan-layer-line"
+        id={`${layer?.id}-outline`}
         type="line"
         paint={{
           "line-color": "#ccc",

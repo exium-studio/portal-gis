@@ -848,6 +848,9 @@ const DetailPolygon = () => {
 
   // Contexts
   const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
+  const clearSelectedPolygon = useSelectedPolygon(
+    (s) => s.clearSelectedPolygon
+  );
 
   // States
   const data = useMemo(
@@ -905,7 +908,10 @@ const DetailPolygon = () => {
             ml={"auto"}
             mr={-1}
             mt={"-2px"}
-            onClick={onClose}
+            onClick={() => {
+              clearSelectedPolygon();
+              onClose();
+            }}
           >
             <Icon>
               <IconX />
