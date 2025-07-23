@@ -76,9 +76,9 @@ const RootPage = () => {
             </VStack>
 
             <VStack>
-              <NavLink to="/dashboard" w={"fit"}>
+              <NavLink to="/workspace" w={"fit"}>
                 <BButton w={"160px"} colorPalette={themeConfig.colorPalette}>
-                  Go to Dashboard
+                  Go to App
                 </BButton>
               </NavLink>
 
