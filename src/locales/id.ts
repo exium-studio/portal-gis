@@ -57,7 +57,7 @@ const translations = {
   "change": "Ganti",
   "change_password": "Ganti password",
   "checking_payment_status_toast": {
-    "title": "Cek Status Pembayaran",
+    "title": "Cek status pembayaran",
     "description": "Sedang memeriksa status pembayaran Anda."
   },
   "chrome_permissions_settings_link": "Pengaturan → Privasi & Keamanan → Pengaturan Situs → ",
@@ -228,11 +228,11 @@ const translations = {
   "last_updated": "Terakhir diperbarui",
   "layer_file_type": "Tipe file layer",
   "layer_loaded_toast": {
-    "title": "Berhasil Dimuat",
+    "title": "Berhasil dimuat",
     "description": "Layer siap digunakan di peta."
   },
   "layer_loading_toast": {
-    "title": "Sedang Memuat",
+    "title": "Memuat layer",
     "description": "Layer sedang dimuat ke peta."
   },
   "layout_menu_helper": "Pengaturan layout ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
@@ -299,7 +299,7 @@ const translations = {
   },
   "min_char": "Minimal ${minChar} karakter",
   "missing_layer_data_toast": {
-    "title": "Data Layer Tidak Ditemukan",
+    "title": "Data layer tidak ditemukan",
     "description": "Silahkan perbarui data layer"
   },
   "missing_page": "Halaman yang Anda cari tidak tersedia. Kemungkinan ada URL yang keliru atau halaman ini sudah tidak tersedia.",
@@ -369,7 +369,7 @@ const translations = {
   "payment_expired": "Pembayaran telah kadaluarsa",
   "payment_method": "Metode pembayaran",
   "payment_settled_toast": {
-    "title": "Pembayaran Sukses",
+    "title": "Pembayaran sukses",
     "description": "Pembayaran sudah diterima."
   },
   "payment_status": "Status pembayaran",
@@ -378,7 +378,7 @@ const translations = {
     "description": "Pembayaran diproses dengan aman melalui Midtrans dan CoinPayment, memberikan jaminan kepercayaan dan perlindungan."
   },
   "payment_unsettled_toast": {
-    "title": "Pembayaran Belum Selesai",
+    "title": "Pembayaran belum selesai",
     "description": "Pembayaran Anda belum selesai."
   },
   "periode_picker_default_title": "Pilih Periode",

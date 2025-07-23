@@ -1313,8 +1313,8 @@ export const delete_all_inbox_button = {
 // Toasters
 export const layer_loading_toast = {
   title: {
-    id: "Sedang Memuat",
-    en: "Loading",
+    id: "Memuat layer",
+    en: "Loading layer",
   },
   description: {
     id: "Layer sedang dimuat ke peta.",
@@ -1323,8 +1323,8 @@ export const layer_loading_toast = {
 };
 export const layer_loaded_toast = {
   title: {
-    id: "Berhasil Dimuat",
-    en: "Loaded Successfully",
+    id: "Berhasil dimuat",
+    en: "Loaded successfully",
   },
   description: {
     id: "Layer siap digunakan di peta.",
@@ -1332,28 +1332,28 @@ export const layer_loaded_toast = {
   },
 };
 export const missing_layer_data_toast = {
-  title: { id: "Data Layer Tidak Ditemukan", en: "Layer Data Not Found" },
+  title: { id: "Data layer tidak ditemukan", en: "Layer data not found" },
   description: {
     id: "Silahkan perbarui data layer",
     en: "Please update the layer data",
   },
 };
 export const checking_payment_status_toast = {
-  title: { id: "Cek Status Pembayaran", en: "Checking Payment" },
+  title: { id: "Cek status pembayaran", en: "Checking payment" },
   description: {
     id: "Sedang memeriksa status pembayaran Anda.",
     en: "Checking your payment status.",
   },
 };
 export const payment_settled_toast = {
-  title: { id: "Pembayaran Sukses", en: "Payment Successful" },
+  title: { id: "Pembayaran sukses", en: "Payment successful" },
   description: {
     id: "Pembayaran sudah diterima.",
     en: "Payment has been received.",
   },
 };
 export const payment_unsettled_toast = {
-  title: { id: "Pembayaran Belum Selesai", en: "Payment Not Complete" },
+  title: { id: "Pembayaran belum selesai", en: "Payment not complete" },
   description: {
     id: "Pembayaran Anda belum selesai.",
     en: "Your payment is not complete.",

@@ -57,7 +57,7 @@ const translations = {
   "change": "Change",
   "change_password": "Change password",
   "checking_payment_status_toast": {
-    "title": "Checking Payment",
+    "title": "Checking payment",
     "description": "Checking your payment status."
   },
   "chrome_permissions_settings_link": "Settings → Privacy & Security → Site Settings → ",
@@ -228,11 +228,11 @@ const translations = {
   "last_updated": "Last updated",
   "layer_file_type": "Layer file type",
   "layer_loaded_toast": {
-    "title": "Loaded Successfully",
+    "title": "Loaded successfully",
     "description": "Layer is ready on the map."
   },
   "layer_loading_toast": {
-    "title": "Loading",
+    "title": "Loading layer",
     "description": "Layer is being loaded onto the map."
   },
   "layout_menu_helper": "These layout settings are stored locally on your device and will not be synced with your account.",
@@ -299,7 +299,7 @@ const translations = {
   },
   "min_char": "Minimum ${minChar} characters",
   "missing_layer_data_toast": {
-    "title": "Layer Data Not Found",
+    "title": "Layer data not found",
     "description": "Please update the layer data"
   },
   "missing_page": "The page you are looking for is not available. There may be an incorrect URL or the page is no longer available.",
@@ -369,7 +369,7 @@ const translations = {
   "payment_expired": "Payment has expired",
   "payment_method": "Payment method",
   "payment_settled_toast": {
-    "title": "Payment Successful",
+    "title": "Payment successful",
     "description": "Payment has been received."
   },
   "payment_status": "Payment status",
@@ -378,7 +378,7 @@ const translations = {
     "description": "Payments are securely processed via Midtrans and CoinPayment, ensuring trust and protection."
   },
   "payment_unsettled_toast": {
-    "title": "Payment Not Complete",
+    "title": "Payment not complete",
     "description": "Your payment is not complete."
   },
   "periode_picker_default_title": "Select Period",
