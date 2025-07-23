@@ -88,7 +88,7 @@ const UpdateLayer = (props: any) => {
       back();
 
       const payload = new FormData();
-      payload.append("workspace_layer_id", data?.id);
+      payload.append("workspace_id", data?.id);
       payload.append(
         LAYER_PROPS[
           values.layerFileType?.[0]?.label as keyof typeof LAYER_PROPS
