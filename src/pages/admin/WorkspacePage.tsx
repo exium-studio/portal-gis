@@ -45,7 +45,7 @@ const Create = () => {
   // Hooks
   const { l } = useLang();
   const { open, onOpen, onClose } = useDisclosure();
-  useBackOnClose(`add-workspace`, open, onOpen, onClose);
+  useBackOnClose(`edit-workspace`, open, onOpen, onClose);
   const { req } = useRequest({
     id: "crud-workspace",
   });
@@ -76,8 +76,8 @@ const Create = () => {
       back();
 
       const payload = new FormData();
-      payload.append("label", values.title);
       payload.append("title", values.title);
+      payload.append("description", values.description);
       if (values.thumbnail && values.thumbnail.length > 0) {
         values.thumbnail.forEach((file: File) => {
           payload.append("thumbnail", file);

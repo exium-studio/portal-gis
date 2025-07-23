@@ -41,6 +41,7 @@ export interface Interface__SelectOption {
   label: any;
   label2?: any;
   original_data?: any;
+  disabled?: boolean;
 }
 export interface Interface__Select extends ButtonProps {
   id?: string;

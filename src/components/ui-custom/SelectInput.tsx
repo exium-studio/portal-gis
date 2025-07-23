@@ -137,25 +137,33 @@ const SelectInput = ({
 
         {fl && fl.length > 0 && (
           <>
-            {fl?.map((item, i) => (
-              <BButton
-                unclicky
-                key={i}
-                variant={
-                  isSelected(item) ? "outline" : !multiple ? "ghost" : "outline"
-                }
-                size={"md"}
-                borderRadius={multiple ? "full" : ""}
-                borderColor={isSelected(item) ? themeConfig.primaryColor : ""}
-                justifyContent={"start"}
-                onClick={() => {
-                  handleSelect(item);
-                }}
-                {...props}
-              >
-                <Text lineClamp={1}>{item?.label}</Text>
-              </BButton>
-            ))}
+            {fl?.map((item, i) => {
+              console.log(item);
+              return (
+                <BButton
+                  unclicky
+                  key={i}
+                  variant={
+                    isSelected(item)
+                      ? "outline"
+                      : !multiple
+                      ? "ghost"
+                      : "outline"
+                  }
+                  size={"md"}
+                  borderRadius={multiple ? "full" : ""}
+                  borderColor={isSelected(item) ? themeConfig.primaryColor : ""}
+                  justifyContent={"start"}
+                  onClick={() => {
+                    handleSelect(item);
+                  }}
+                  disabled={item.disabled}
+                  {...props}
+                >
+                  <Text lineClamp={1}>{item?.label}</Text>
+                </BButton>
+              );
+            })}
           </>
         )}
       </>

@@ -235,8 +235,16 @@ export const layer_file_type = {
   id: "Tipe file layer",
   en: "Layer file type",
 };
+export const edit = {
+  id: "Edit",
+  en: "Edit",
+};
 
 // UI
+export const deleted_thumbnail = {
+  id: "Thumbnail dihapus",
+  en: "Deleted thumbnail",
+};
 export const load_workspace_to_map = {
   id: "Load workspace ke peta",
   en: "Load workspace to map",

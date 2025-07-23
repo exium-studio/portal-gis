@@ -8,7 +8,7 @@ import back from "@/utils/back";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import empty from "@/utils/empty";
 import { fileValidation } from "@/utils/validationSchemas";
-import { HStack, Icon, useDisclosure } from "@chakra-ui/react";
+import { FieldsetRoot, HStack, Icon, useDisclosure } from "@chakra-ui/react";
 import {
   IconArrowRight,
   IconEdit,
@@ -35,6 +35,10 @@ import { Field } from "../ui/field";
 import { Tooltip } from "../ui/tooltip";
 import SelectLayerFileType from "./SelectLayerFileType";
 import useRenderTrigger from "@/context/useRenderTrigger";
+import { OPTIONS_LAYER_FILE_TYPE } from "@/static/selectOptions";
+import Textarea from "../ui-custom/Textarea";
+import StringInput from "../ui-custom/StringInput";
+import ExistingFileItem from "./ExistingFIleItem";
 
 const CreateLayer = (props: any) => {
   // Props
@@ -53,19 +57,19 @@ const CreateLayer = (props: any) => {
 
   // States
   const URL = {
-    SHP: ``,
+    SHP: `/api/gis-bpn/workspace-layers/upload-shapefile`,
     GeoJSON: ``,
   };
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      layerFileType: undefined as any,
+      layerFileType: [OPTIONS_LAYER_FILE_TYPE[0]],
       docs: undefined as any,
     },
     validationSchema: yup.object().shape({
       layerFileType: yup.array().required(l.required_form),
       docs: fileValidation({
-        allowedExtensions: [".zip", ".shp"],
+        allowedExtensions: [".shp", ".zip"],
       }).required(l.required_form),
     }),
     onSubmit: (values) => {
@@ -74,12 +78,12 @@ const CreateLayer = (props: any) => {
       back();
 
       const payload = new FormData();
-      payload.append("layerFileType", values.layerFileType);
       payload.append("docs", values.docs);
-      const url = URL[values.layerFileType?.label as keyof typeof URL] || `SHP`;
+      const url =
+        URL[values.layerFileType?.[0]?.label as keyof typeof URL] || `SHP`;
       const config = {
         url,
-        method: "POST",
+        method: "PATCH",
         data: payload,
       };
 
@@ -147,6 +151,7 @@ const CreateLayer = (props: any) => {
                   }}
                   inputValue={formik.values.docs}
                   disabled={empty(formik.values.layerFileType)}
+                  accept=".zip, .shp"
                 />
               </Field>
             </form>
@@ -171,20 +176,216 @@ const CreateLayer = (props: any) => {
 const EditWorkspace = (props: any) => {
   // Props
   const { data } = props;
-  console.log("edit workspace", data);
 
   // Hooks
   const { l } = useLang();
+  const { open, onOpen, onClose } = useDisclosure();
+  useBackOnClose(`edit-workspace-${data?.id}`, open, onOpen, onClose);
+  const { req } = useRequest({
+    id: "crud_workspace",
+  });
+
+  // Contexts
+  const { themeConfig } = useThemeConfig();
+  const setRt = useRenderTrigger((s) => s.setRt);
+
+  // States
+  const [existingThumbnail, setExistingThumbnail] = useState<any[]>(
+    data?.thumbnail
+  );
+  const formik = useFormik({
+    validateOnChange: false,
+    initialValues: {
+      title: data?.title,
+      description: data?.description,
+      for_aqiqah: false,
+      thumbnail: undefined as any,
+      deleted_thumbnail: [],
+    },
+    validationSchema: yup.object().shape({
+      title: yup.string().required(l.required_form),
+      description: yup.string().required(l.required_form),
+      thumbnail:
+        existingThumbnail.length === 0
+          ? fileValidation({
+              allowedExtensions: ["jpg", "jpeg", "png", "svg"],
+            }).required(l.required_form)
+          : fileValidation({
+              allowedExtensions: ["jpg", "jpeg", "png", "svg"],
+            }),
+    }),
+    onSubmit: (values, { resetForm }) => {
+      // console.log(values);
+
+      back();
+
+      const payload = new FormData();
+      payload.append("title", values.title);
+      payload.append("description", values.description);
+      if (values.thumbnail && values.thumbnail.length > 0) {
+        values.thumbnail.forEach((file: File) => {
+          payload.append("thumbnail", file);
+        });
+      }
+
+      const url = `/api/gis-bpn/workspaces/update/${data?.id}`;
+      const config = {
+        url,
+        method: "PATCH",
+        data: payload,
+      };
+
+      req({
+        config,
+        onResolve: {
+          onSuccess: () => {
+            setRt((ps) => !ps);
+            resetForm();
+          },
+        },
+      });
+    },
+  });
 
   return (
     <>
       <Tooltip content={l.edit_workspace}>
-        <BButton unclicky iconButton variant={"ghost"} size={"sm"}>
+        <BButton
+          unclicky
+          iconButton
+          variant={"ghost"}
+          size={"sm"}
+          onClick={onOpen}
+        >
           <Icon>
             <IconEdit />
           </Icon>
         </BButton>
       </Tooltip>
+
+      <DisclosureRoot open={open} lazyLoad size={"xs"}>
+        <DisclosureContent>
+          <DisclosureHeader>
+            <DisclosureHeaderContent title={`${l.edit} Workspace`} />
+          </DisclosureHeader>
+
+          <DisclosureBody>
+            <FieldsetRoot>
+              <form id="edit_workspace_form" onSubmit={formik.handleSubmit}>
+                <Field
+                  label={"Thumbnail"}
+                  invalid={!!formik.errors.thumbnail}
+                  errorText={formik.errors.thumbnail as string}
+                  mb={4}
+                >
+                  {!empty(existingThumbnail) && (
+                    <CContainer>
+                      {existingThumbnail?.map((item: any, i: number) => {
+                        return (
+                          <ExistingFileItem
+                            key={i}
+                            data={item}
+                            onDelete={() => {
+                              setExistingThumbnail((prev) =>
+                                prev.filter((f) => f !== item)
+                              );
+                              formik.setFieldValue("deleted_thumbnail", [
+                                ...formik.values.deleted_thumbnail,
+                                item,
+                              ]);
+                            }}
+                          />
+                        );
+                      })}
+                    </CContainer>
+                  )}
+
+                  {empty(existingThumbnail) && (
+                    <FileInput
+                      dropzone
+                      name="thumbnail"
+                      onChangeSetter={(input) => {
+                        formik.setFieldValue("thumbnail", input);
+                      }}
+                      inputValue={formik.values.thumbnail}
+                      accept=".png, .jpg, .jpeg,"
+                    />
+                  )}
+
+                  {!empty(formik.values.deleted_thumbnail) && (
+                    <CContainer gap={2} mt={2}>
+                      <P color={"fg.muted"}>{l.deleted_thumbnail}</P>
+
+                      {formik.values.deleted_thumbnail?.map(
+                        (item: any, i: number) => {
+                          return (
+                            <ExistingFileItem
+                              key={i}
+                              data={item}
+                              withDeleteButton={false}
+                              withUndobutton
+                              onUndo={() => {
+                                setExistingThumbnail((prev) => [...prev, item]);
+
+                                formik.setFieldValue(
+                                  "deleted_thumbnail",
+                                  formik.values.deleted_thumbnail.filter(
+                                    (f: any) => f !== item
+                                  )
+                                );
+
+                                formik.setFieldValue("icon", undefined);
+                              }}
+                            />
+                          );
+                        }
+                      )}
+                    </CContainer>
+                  )}
+                </Field>
+
+                <Field
+                  label={l.title}
+                  invalid={!!formik.errors.title}
+                  errorText={formik.errors.title as string}
+                  mb={4}
+                >
+                  <StringInput
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("title", input);
+                    }}
+                    inputValue={formik.values.title}
+                  />
+                </Field>
+
+                <Field
+                  label={l.description}
+                  invalid={!!formik.errors.description}
+                  errorText={formik.errors.description as string}
+                >
+                  <Textarea
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("description", input);
+                    }}
+                    inputValue={formik.values.description}
+                  />
+                </Field>
+              </form>
+            </FieldsetRoot>
+          </DisclosureBody>
+
+          <DisclosureFooter>
+            <BackButton />
+            <BButton
+              colorPalette={themeConfig?.colorPalette}
+              type="submit"
+              form="edit_workspace_form"
+            >
+              {l.save}
+            </BButton>
+          </DisclosureFooter>
+        </DisclosureContent>
+      </DisclosureRoot>
     </>
   );
 };
