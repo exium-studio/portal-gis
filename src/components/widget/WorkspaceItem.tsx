@@ -10,7 +10,13 @@ import back from "@/utils/back";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import empty from "@/utils/empty";
 import { fileValidation } from "@/utils/validationSchemas";
-import { FieldsetRoot, HStack, Icon, useDisclosure } from "@chakra-ui/react";
+import {
+  FieldsetRoot,
+  HStack,
+  Icon,
+  Image,
+  useDisclosure,
+} from "@chakra-ui/react";
 import {
   IconArrowRight,
   IconEdit,
@@ -31,7 +37,6 @@ import {
 } from "../ui-custom/Disclosure";
 import DisclosureHeaderContent from "../ui-custom/DisclosureHeaderContent";
 import FileInput from "../ui-custom/FileInput";
-import Img from "../ui-custom/Img";
 import P from "../ui-custom/P";
 import StringInput from "../ui-custom/StringInput";
 import Textarea from "../ui-custom/Textarea";
@@ -523,7 +528,7 @@ const WorkspaceItem = (props: any) => {
       {...restProps}
     >
       <CContainer>
-        <Img src={data?.thumbnail?.file_url} aspectRatio={16 / 10} />
+        <Image src={data?.thumbnail?.file_url} aspectRatio={16 / 10} />
 
         <CContainer p={4} gap={1}>
           <P fontWeight={"semibold"}>{data?.title}</P>
