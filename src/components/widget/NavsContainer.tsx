@@ -331,8 +331,8 @@ const NavContainer = ({
           className="scrollY"
           overflowY={"auto"}
           bg={"body"}
-          borderRight={"1px solid"}
-          borderColor={"border.muted"}
+          // borderRight={"1px solid"}
+          // borderColor={"border.muted"}
           flexShrink={0}
         >
           <Link to={"/"}>

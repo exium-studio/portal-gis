@@ -238,7 +238,7 @@ const WorkspacePage = () => {
 
   return (
     <PageContainer flex={1}>
-      <ItemContainer flex={1} overflowY={"auto"}>
+      <ItemContainer flex={1} overflowY={"auto"} border={"none"}>
         <ItemHeaderContainer borderless py={2}>
           <HStack py={2} justify={"space-between"} w={"full"}>
             <SearchInput

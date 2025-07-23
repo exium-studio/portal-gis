@@ -316,7 +316,7 @@ const customConfig = defineConfig({
           muted: {
             value: {
               base: "#EBEBEC !important",
-              _dark: "#1f1f1f !important",
+              _dark: "#202020 !important",
             },
           },
         },

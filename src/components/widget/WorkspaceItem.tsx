@@ -1,9 +1,11 @@
 import CContainer from "@/components/ui-custom/CContainer";
 import useConfirmationDisclosure from "@/context/useConfirmationDisclosure";
 import useLang from "@/context/useLang";
+import useRenderTrigger from "@/context/useRenderTrigger";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useBackOnClose from "@/hooks/useBackOnClose";
 import useRequest from "@/hooks/useRequest";
+import { OPTIONS_LAYER_FILE_TYPE } from "@/static/selectOptions";
 import back from "@/utils/back";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import empty from "@/utils/empty";
@@ -31,14 +33,12 @@ import DisclosureHeaderContent from "../ui-custom/DisclosureHeaderContent";
 import FileInput from "../ui-custom/FileInput";
 import Img from "../ui-custom/Img";
 import P from "../ui-custom/P";
+import StringInput from "../ui-custom/StringInput";
+import Textarea from "../ui-custom/Textarea";
 import { Field } from "../ui/field";
 import { Tooltip } from "../ui/tooltip";
-import SelectLayerFileType from "./SelectLayerFileType";
-import useRenderTrigger from "@/context/useRenderTrigger";
-import { OPTIONS_LAYER_FILE_TYPE } from "@/static/selectOptions";
-import Textarea from "../ui-custom/Textarea";
-import StringInput from "../ui-custom/StringInput";
 import ExistingFileItem from "./ExistingFIleItem";
+import SelectLayerFileType from "./SelectLayerFileType";
 
 const CreateLayer = (props: any) => {
   // Props
@@ -449,13 +449,58 @@ const DeleteWorkspace = (props: any) => {
     </Tooltip>
   );
 };
+const LoadWorkspace = (props: any) => {
+  // Props
+  const { data } = props;
+  const { req, loading } = useRequest({
+    id: "load_workspace",
+  });
+
+  // Hooks
+  const { l } = useLang();
+
+  // Contexts
+  const { themeConfig } = useThemeConfig();
+
+  // Utils
+  function onLoad() {
+    const url = `/api/gis-bpn/workspaces/load/${data?.id}`;
+    const config = {
+      url,
+      method: "GET",
+    };
+
+    req({
+      config,
+      onResolve: {
+        onSuccess: () => {},
+      },
+    });
+  }
+
+  return (
+    <Tooltip content={l.load_workspace_to_map}>
+      <BButton
+        unclicky
+        iconButton
+        variant={"ghost"}
+        color={themeConfig.primaryColor}
+        size={"sm"}
+        ml={"auto"}
+        onClick={onLoad}
+        loading={loading}
+      >
+        <Icon>
+          <IconArrowRight />
+        </Icon>
+      </BButton>
+    </Tooltip>
+  );
+};
 
 const WorkspaceItem = (props: any) => {
   // Props
   const { initialData, ...restProps } = props;
-
-  // Hooks
-  const { l } = useLang();
 
   // Contexts
   const { themeConfig } = useThemeConfig();
@@ -501,20 +546,7 @@ const WorkspaceItem = (props: any) => {
 
         <DeleteWorkspace data={data} />
 
-        <Tooltip content={l.load_workspace_to_map}>
-          <BButton
-            unclicky
-            iconButton
-            variant={"ghost"}
-            colorPalette={themeConfig.colorPalette}
-            size={"sm"}
-            ml={"auto"}
-          >
-            <Icon>
-              <IconArrowRight />
-            </Icon>
-          </BButton>
-        </Tooltip>
+        <LoadWorkspace data={data} />
       </HStack>
     </CContainer>
   );
