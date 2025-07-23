@@ -287,6 +287,10 @@ const translations = {
     "description": "Izinkan aplikasi menggunakan mikrofon perangkat Anda untuk merekam audio."
   },
   "min_char": "Minimal ${minChar} karakter",
+  "missing_layer_data": {
+    "title": "Data Layer Tidak Ditemukan",
+    "description": "Silahkan perbarui data layer"
+  },
   "missing_page": "Halaman yang Anda cari tidak tersedia. Kemungkinan ada URL yang keliru atau halaman ini sudah tidak tersedia.",
   "mission": "Misi",
   "month": "Bulan",

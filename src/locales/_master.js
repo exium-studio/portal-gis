@@ -1247,6 +1247,13 @@ export const delete_all_inbox_button = {
 };
 
 // Toasters
+export const missing_layer_data = {
+  title: { id: "Data Layer Tidak Ditemukan", en: "Layer Data Not Found" },
+  description: {
+    id: "Silahkan perbarui data layer",
+    en: "Please update the layer data",
+  },
+};
 export const checking_payment_status_toast = {
   title: { id: "Cek Status Pembayaran", en: "Checking Payment" },
   description: {

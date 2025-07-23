@@ -287,6 +287,10 @@ const translations = {
     "description": "Allow the app to use your device's microphone for recording audio."
   },
   "min_char": "Minimum ${minChar} characters",
+  "missing_layer_data": {
+    "title": "Layer Data Not Found",
+    "description": "Please update the layer data"
+  },
   "missing_page": "The page you are looking for is not available. There may be an incorrect URL or the page is no longer available.",
   "mission": "Mission",
   "month": "Month",

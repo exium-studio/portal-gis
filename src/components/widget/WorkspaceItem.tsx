@@ -1,5 +1,5 @@
 import CContainer from "@/components/ui-custom/CContainer";
-import useActiveWMSLayers from "@/context/useActiveWMSLayers";
+import useActiveLayers from "@/context/useActiveLayers";
 import useConfirmationDisclosure from "@/context/useConfirmationDisclosure";
 import useLang from "@/context/useLang";
 import useRenderTrigger from "@/context/useRenderTrigger";
@@ -15,7 +15,8 @@ import { FieldsetRoot, HStack, Icon, useDisclosure } from "@chakra-ui/react";
 import {
   IconArrowRight,
   IconEdit,
-  IconPlus,
+  IconEye,
+  IconFilePlus,
   IconTrash,
 } from "@tabler/icons-react";
 import { useFormik } from "formik";
@@ -41,14 +42,14 @@ import { Tooltip } from "../ui/tooltip";
 import ExistingFileItem from "./ExistingFIleItem";
 import SelectLayerFileType from "./SelectLayerFileType";
 
-const CreateLayer = (props: any) => {
+const UpdateLayer = (props: any) => {
   // Props
   const { data } = props;
 
   // Hooks
   const { l } = useLang();
   const { open, onOpen, onClose } = useDisclosure();
-  useBackOnClose(`create-_layer_${data?.id}`, open, onOpen, onClose);
+  useBackOnClose(`create-layer-${data?.id}`, open, onOpen, onClose);
   const { req } = useRequest({
     id: "crud_layer",
   });
@@ -121,11 +122,11 @@ const CreateLayer = (props: any) => {
           unclicky
           iconButton
           variant={"ghost"}
-          size={"sm"}
+          // size={"sm"}
           onClick={onOpen}
         >
           <Icon>
-            <IconPlus />
+            <IconFilePlus />
           </Icon>
         </BButton>
       </Tooltip>
@@ -270,7 +271,7 @@ const EditWorkspace = (props: any) => {
           unclicky
           iconButton
           variant={"ghost"}
-          size={"sm"}
+          // size={"sm"}
           onClick={onOpen}
         >
           <Icon>
@@ -446,7 +447,7 @@ const DeleteWorkspace = (props: any) => {
         unclicky
         iconButton
         variant={"ghost"}
-        size={"sm"}
+        // size={"sm"}
         onClick={() => {
           setConfirmationData({
             title: `${capsFirstLetterEachWord(l.delete_workspace)}`,
@@ -477,7 +478,7 @@ const LoadWorkspace = (props: any) => {
 
   // Contexts
   const { themeConfig } = useThemeConfig();
-  const addActiveLayers = useActiveWMSLayers((s) => s.addLayer);
+  const addLayerGroup = useActiveLayers((s) => s.addLayerGroup);
 
   // Utils
   function onLoad() {
@@ -491,9 +492,13 @@ const LoadWorkspace = (props: any) => {
       config,
       onResolve: {
         onSuccess: (r: any) => {
-          console.log(data?.id);
-          console.log(r.data.data);
-          addActiveLayers(r.data.data);
+          // addLayerGroup(r.data.data);
+          const layerData = r.data.data;
+          addLayerGroup({
+            workspace: data,
+            layers: layerData,
+            visible: true,
+          });
         },
       },
     });
@@ -506,13 +511,46 @@ const LoadWorkspace = (props: any) => {
         iconButton
         variant={"ghost"}
         color={themeConfig.primaryColor}
-        size={"sm"}
+        // size={"sm"}
         ml={"auto"}
         onClick={onLoad}
         loading={loading}
       >
         <Icon>
           <IconArrowRight />
+        </Icon>
+      </BButton>
+    </Tooltip>
+  );
+};
+const WorkspaceVisibility = (props: any) => {
+  // Props
+  const { data } = props;
+
+  // Hooks
+  const { l } = useLang();
+
+  // Contexts
+  const toggleGroupVisibility = useActiveLayers((s) => s.toggleGroupVisibility);
+
+  // Utils
+  function onToggleGroupVisibility() {
+    toggleGroupVisibility(data.id);
+  }
+
+  return (
+    <Tooltip content={l.load_workspace_to_map}>
+      <BButton
+        unclicky
+        iconButton
+        variant={"ghost"}
+        // color={themeConfig.primaryColor}
+        // size={"sm"}
+        ml={"auto"}
+        onClick={onToggleGroupVisibility}
+      >
+        <Icon>
+          <IconEye />
         </Icon>
       </BButton>
     </Tooltip>
@@ -526,9 +564,15 @@ const WorkspaceItem = (props: any) => {
   // Contexts
   const { themeConfig } = useThemeConfig();
   const rt = useRenderTrigger((s) => s.rt);
+  const activeLayerGroups = useActiveLayers((s) => s.activeLayerGroups);
 
   // States
   const [data, setData] = useState<any>(initialData);
+  const layerLoaded = activeLayerGroups.some(
+    (layerData: any) => layerData.workspace.id === data.id
+  );
+
+  // console.log("layerLoaded", layerLoaded);
 
   useEffect(() => {
     setData(initialData);
@@ -562,13 +606,15 @@ const WorkspaceItem = (props: any) => {
         borderTop={"1px solid"}
         borderColor={"border.muted"}
       >
-        <CreateLayer data={data} />
+        <UpdateLayer data={data} />
 
         <EditWorkspace data={data} />
 
         <DeleteWorkspace data={data} />
 
-        <LoadWorkspace data={data} />
+        {layerLoaded && <WorkspaceVisibility data={data} />}
+
+        {!layerLoaded && <LoadWorkspace data={data} />}
       </HStack>
     </CContainer>
   );

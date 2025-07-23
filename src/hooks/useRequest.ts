@@ -196,6 +196,19 @@ const useRequest = (props: Props) => {
               title: l.error_403_toast.title,
               description: l.error_403_toast.description,
             };
+          } else if (statusCode === 404) {
+            switch (errorCase) {
+              default:
+                return {
+                  title: l.error_404_toast.title,
+                  description: l.error_404_toast.description,
+                };
+              case "SHAPEFILES_NOT_FOUND":
+                return {
+                  title: l.missing_layer_data.title,
+                  description: l.missing_layer_data.description,
+                };
+            }
           } else if (statusCode === 409) {
             switch (errorCase) {
               default:
