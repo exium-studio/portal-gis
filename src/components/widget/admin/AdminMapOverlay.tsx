@@ -573,7 +573,7 @@ const MapStyle = () => {
               <Image
                 src={mapStyle.img[colorMode as keyof typeof mapStyle.img]}
                 w={"36px"}
-                borderRadius={"lg"}
+                borderRadius={themeConfig.radii.component}
                 cursor={"pointer"}
                 _hover={{ opacity: 0.6 }}
                 transition={"200ms"}
