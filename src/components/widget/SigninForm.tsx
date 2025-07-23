@@ -72,7 +72,7 @@ const SigninForm = () => {
             );
             setAuthToken(r.data.data?.token);
             setPermissions(r.data.data?.permissions);
-            navigate("/dashboard");
+            navigate("/workspace");
           },
         },
       });
