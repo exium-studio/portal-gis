@@ -68,7 +68,6 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import useSearchMode from "./useSearchMode";
-import formatDate from "@/utils/formatDate";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -943,12 +942,12 @@ const DetailPolygon = () => {
 
         <ItemContainer>
           <P fontWeight={"semibold"}>{l.rights_published_date}</P>
-          <P>{`${data?.tglterbith ? formatDate(data?.tglterbith) : "-"}`}</P>
+          <P>{`${data?.tglterbith || "-"}`}</P>
         </ItemContainer>
 
         <ItemContainer>
           <P fontWeight={"semibold"}>{l.rights_expired_date}</P>
-          <P>{`${data?.berakhirha ? formatDate(data?.berakhirha) : "-"}`}</P>
+          <P>{`${data?.berakhirha || "-"}`}</P>
         </ItemContainer>
 
         <ItemContainer>
