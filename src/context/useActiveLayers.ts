@@ -16,12 +16,12 @@ interface Workspace {
 
 interface LayerGroup {
   workspace: Workspace;
-  layer: Layer[]; // Changed from single layer to array of layer
+  layer: Layer;
   visible: boolean;
 }
 
 interface GeoJSONLayerState {
-  activeLayerGroups: LayerGroup[]; // Renamed to better reflect the structure
+  activeLayerGroups: LayerGroup[];
   addLayerGroup: (group: LayerGroup) => void;
   addLayerToGroup: (workspaceId: string | number, layer: Layer) => void;
   toggleGroupVisibility: (workspaceId: string | number) => void;
@@ -62,35 +62,26 @@ const useActiveLayers = create<GeoJSONLayerState>((set) => ({
           ...state.activeLayerGroups,
           {
             ...newGroup,
-            visible: true,
-            layer: newGroup.layer,
+            visible: newGroup.visible !== undefined ? newGroup.visible : true,
           },
         ],
       };
     }),
 
-  // Add layer to existing group
+  // Add layer to existing group by creating a new group with the same workspace
   addLayerToGroup: (workspaceId, newLayer) =>
     set((state) => ({
-      activeLayerGroups: state.activeLayerGroups.map((group) => {
-        if (group.workspace.id !== workspaceId) return group;
-
-        const layerExists = group.layer.some(
-          (l) => l.layer_id === newLayer.layer_id
-        );
-
-        if (layerExists) {
-          console.warn(
-            `Layer ${newLayer.layer_id} already exists in workspace ${workspaceId}`
-          );
-          return group;
-        }
-
-        return {
-          ...group,
-          layer: [...group.layer, { ...newLayer, visible: true }],
-        };
-      }),
+      activeLayerGroups: [
+        ...state.activeLayerGroups.filter(
+          (g) => g.workspace.id !== workspaceId
+        ),
+        ...state.activeLayerGroups
+          .filter((g) => g.workspace.id === workspaceId)
+          .map((group) => ({
+            ...group,
+            layer: newLayer,
+          })),
+      ],
     })),
 
   // Toggle entire group visibility
@@ -107,31 +98,40 @@ const useActiveLayers = create<GeoJSONLayerState>((set) => ({
   toggleLayerVisibility: (workspaceId, layer_id) =>
     set((state) => ({
       activeLayerGroups: state.activeLayerGroups.map((group) => {
-        if (group.workspace.id !== workspaceId) return group;
+        if (
+          group.workspace.id !== workspaceId ||
+          group.layer.layer_id !== layer_id
+        ) {
+          return group;
+        }
 
         return {
           ...group,
-          layer: group.layer.map((layer) =>
-            layer.layer_id === layer_id
-              ? { ...layer, visible: !layer.visible }
-              : layer
-          ),
+          layer: {
+            ...group.layer,
+            visible: !group.layer.visible,
+          },
         };
       }),
     })),
 
-  // TODO layer id gausah karna dah pasti index 0
   // Update layer data
   updateLayerData: (workspaceId, layer_id, data) =>
     set((state) => ({
       activeLayerGroups: state.activeLayerGroups.map((group) => {
-        if (group.workspace.id !== workspaceId) return group;
+        if (
+          group.workspace.id !== workspaceId ||
+          group.layer.layer_id !== layer_id
+        ) {
+          return group;
+        }
 
         return {
           ...group,
-          layer: group.layer.map((layer) =>
-            layer.layer_id === layer_id ? { ...layer, data: data } : layer
-          ),
+          layer: {
+            ...group.layer,
+            data: data,
+          },
         };
       }),
     })),
@@ -144,17 +144,14 @@ const useActiveLayers = create<GeoJSONLayerState>((set) => ({
       ),
     })),
 
-  // Remove specific layer from group
+  // Remove specific layer from group (which removes the entire group since each group has only one layer)
   removeLayer: (workspaceId, layer_id) =>
     set((state) => ({
-      activeLayerGroups: state.activeLayerGroups.map((group) => {
-        if (group.workspace.id !== workspaceId) return group;
-
-        return {
-          ...group,
-          layer: group.layer.filter((l) => l.layer_id !== layer_id),
-        };
-      }),
+      activeLayerGroups: state.activeLayerGroups.filter(
+        (group) =>
+          group.workspace.id !== workspaceId ||
+          group.layer.layer_id !== layer_id
+      ),
     })),
 
   // Clear all layer groups

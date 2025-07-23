@@ -110,9 +110,7 @@ const AddLayer = (props: any) => {
       req({
         config,
         onResolve: {
-          onSuccess: () => {
-            // TODO rerender and reload workspace
-          },
+          onSuccess: () => {},
         },
       });
     },
@@ -482,7 +480,7 @@ const DeleteWorkspace = (props: any) => {
 };
 const LoadWorkspace = (props: any) => {
   // Props
-  const { data, setBboxCenter } = props;
+  const { data } = props;
 
   // Hooks
   const { l } = useLang();
@@ -523,10 +521,6 @@ const LoadWorkspace = (props: any) => {
             workspace: data,
             layer: layerData,
             visible: true,
-          });
-          setBboxCenter({
-            bbox: layerData?.data?.bbox,
-            center: layerData?.data?.center,
           });
         },
       },
@@ -607,10 +601,13 @@ const WorkspaceItem = (props: any) => {
 
   // States
   const [data, setData] = useState<any>(initialData);
-  const [bboxCenter, setBboxCenter] = useState<number[] | null>(null);
-  const layerLoaded = activeLayerGroups.some(
+  const loadedLayerData = activeLayerGroups.find(
     (layerData: any) => layerData.workspace.id === data.id
   );
+  const bboxCenter = {
+    bbox: loadedLayerData?.layer?.data?.bbox,
+    center: loadedLayerData?.layer?.data?.center,
+  };
 
   useEffect(() => {
     setData(initialData);
@@ -655,11 +652,9 @@ const WorkspaceItem = (props: any) => {
 
         <DeleteWorkspace data={data} />
 
-        {layerLoaded && <ViewLayers data={data} bboxCenter={bboxCenter} />}
+        {loadedLayerData && <ViewLayers data={data} bboxCenter={bboxCenter} />}
 
-        {!layerLoaded && (
-          <LoadWorkspace data={data} setBboxCenter={setBboxCenter} />
-        )}
+        {!loadedLayerData && <LoadWorkspace data={data} />}
       </HStack>
     </CContainer>
   );
