@@ -7,7 +7,7 @@ const LayerSource = (props: any) => {
 
   // States
   const layerData = data?.layers?.[0];
-  const geojson = data?.layers?.[0]?.geojson;
+  const geojson = data?.layers?.[0]?.data;
 
   console.log(layerData?.visible);
 
