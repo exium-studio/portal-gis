@@ -56,9 +56,15 @@ const CreateLayer = (props: any) => {
   const { themeConfig } = useThemeConfig();
 
   // States
-  const URL = {
-    SHP: `/api/gis-bpn/workspace-layers/upload-shapefile`,
-    GeoJSON: ``,
+  const LAYER_PROPS = {
+    SHP: {
+      url: `/api/gis-bpn/workspace-layers/upload-shapefile`,
+      key: "shapefile",
+    },
+    GeoJSON: {
+      url: ``,
+      key: "geojson",
+    },
   };
   const formik = useFormik({
     validateOnChange: false,
@@ -78,9 +84,18 @@ const CreateLayer = (props: any) => {
       back();
 
       const payload = new FormData();
-      payload.append("docs", values.docs);
+      payload.append("workspace_layer_id", data?.id);
+      payload.append(
+        LAYER_PROPS[
+          values.layerFileType?.[0]?.label as keyof typeof LAYER_PROPS
+        ].key,
+        values.docs
+      );
       const url =
-        URL[values.layerFileType?.[0]?.label as keyof typeof URL] || `SHP`;
+        LAYER_PROPS[
+          (values.layerFileType?.[0]?.label as keyof typeof LAYER_PROPS) ||
+            `SHP`
+        ].url;
       const config = {
         url,
         method: "PATCH",
