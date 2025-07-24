@@ -1519,11 +1519,6 @@ const FieldData = () => {
   // States
   const [data, setData] = useState<any>(selectedPolygon?.polygon?.properties);
 
-  // const data = useMemo(
-  //   () => selectedPolygon?.polygon?.properties,
-  //   [selectedPolygon?.polygon?.properties]
-  // );
-
   // Handle open
   useEffect(() => {
     if (selectedPolygon) {

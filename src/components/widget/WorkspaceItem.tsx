@@ -51,151 +51,67 @@ import { Tooltip } from "../ui/tooltip";
 import ExistingFileItem from "./ExistingFIleItem";
 import SelectLayerFileType from "./SelectLayerFileType";
 
-const AddLayer = (props: any) => {
+const DeleteWorkspace = (props: any) => {
   // Props
   const { data, ...restProps } = props;
 
-  // console.log(data);
-
   // Hooks
   const { l } = useLang();
-  const { open, onOpen, onClose } = useDisclosure();
-  useBackOnClose(`create-layer-${data?.id}`, open, onOpen, onClose);
   const { req } = useRequest({
-    id: "crud_layer",
+    id: "crud_workspace",
   });
 
   // Contexts
-  const { themeConfig } = useThemeConfig();
+  const setRt = useRenderTrigger((s) => s.setRt);
+  const { setConfirmationData, confirmationOnOpen } =
+    useConfirmationDisclosure();
+  const unloadWorkspace = useActiveLayers((s) => s.removeLayerGroup);
 
-  // States
-  const LAYER_PROPS = {
-    SHP: {
-      url: `/api/gis-bpn/workspace-layers/upload-shapefile`,
-      key: "shapefile",
-    },
-    GeoJSON: {
-      url: ``,
-      key: "geojson",
-    },
-  };
-  const formik = useFormik({
-    validateOnChange: false,
-    initialValues: {
-      layerFileType: [OPTIONS_LAYER_FILE_TYPE[0]],
-      docs: undefined as any,
-    },
-    validationSchema: yup.object().shape({
-      layerFileType: yup.array().required(l.required_form),
-      docs: fileValidation({
-        allowedExtensions: ["shp", "zip"],
-      }).required(l.required_form),
-    }),
-    onSubmit: (values) => {
-      // console.log(values.docs[0]);
+  // Utils
+  function onDelete() {
+    back();
 
-      back();
+    const url = `/api/gis-bpn/workspaces/delete/${data?.id}`;
+    const config = {
+      url,
+      method: "DELETE",
+    };
 
-      const payload = new FormData();
-      payload.append("workspace_id", data?.id);
-      payload.append(
-        LAYER_PROPS[
-          values.layerFileType?.[0]?.label as keyof typeof LAYER_PROPS
-        ].key,
-        values.docs[0]
-      );
-      const url =
-        LAYER_PROPS[
-          (values.layerFileType?.[0]?.label as keyof typeof LAYER_PROPS) ||
-            `SHP`
-        ].url;
-      const config = {
-        url,
-        method: "PATCH",
-        data: payload,
-      };
-
-      req({
-        config,
-        onResolve: {
-          onSuccess: () => {},
+    req({
+      config,
+      onResolve: {
+        onSuccess: () => {
+          setRt((ps) => !ps);
+          unloadWorkspace(data?.id);
         },
-      });
-    },
-  });
+      },
+    });
+  }
 
   return (
-    <>
-      <Tooltip content={l.add_workspace_layer}>
-        <BButton
-          unclicky
-          iconButton
-          variant={"ghost"}
-          // size={"sm"}
-          onClick={onOpen}
-          {...restProps}
-        >
-          <Icon>
-            <IconFilePlus />
-          </Icon>
-        </BButton>
-      </Tooltip>
-
-      <DisclosureRoot open={open} lazyLoad size={"xs"}>
-        <DisclosureContent>
-          <DisclosureHeader>
-            <DisclosureHeaderContent title={`${l.add} Layer`} />
-          </DisclosureHeader>
-
-          <DisclosureBody>
-            <form id="create_layer_form" onSubmit={formik.handleSubmit}>
-              <Field
-                label={l.layer_file_type}
-                invalid={!!formik.errors.layerFileType}
-                errorText={formik.errors.layerFileType as string}
-                mb={4}
-              >
-                <SelectLayerFileType
-                  onConfirm={(input) => {
-                    formik.setFieldValue("layerFileType", input);
-                  }}
-                  inputValue={formik.values.layerFileType}
-                />
-              </Field>
-
-              <Field
-                label={"File"}
-                invalid={!!formik.errors.docs}
-                errorText={formik.errors.docs as string}
-                disabled={empty(formik.values.layerFileType)}
-              >
-                <FileInput
-                  dropzone
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("docs", input);
-                  }}
-                  inputValue={formik.values.docs}
-                  disabled={empty(formik.values.layerFileType)}
-                  accept=".zip, .shp"
-                />
-              </Field>
-            </form>
-          </DisclosureBody>
-
-          <DisclosureFooter>
-            <BackButton />
-
-            <BButton
-              type="submit"
-              form={"create_layer_form"}
-              colorPalette={themeConfig?.colorPalette}
-            >
-              {l.add}
-            </BButton>
-          </DisclosureFooter>
-        </DisclosureContent>
-      </DisclosureRoot>
-    </>
+    <Tooltip content={l.delete_workspace}>
+      <BButton
+        unclicky
+        iconButton
+        variant={"ghost"}
+        // size={"sm"}
+        onClick={() => {
+          setConfirmationData({
+            title: `${capsFirstLetterEachWord(l.delete_workspace)}`,
+            description: l.perma_delete_confirmation,
+            confirmLabel: "Delete",
+            confirmButtonProps: { colorPalette: "red" },
+            onConfirm: onDelete,
+          });
+          confirmationOnOpen();
+        }}
+        {...restProps}
+      >
+        <Icon>
+          <IconTrash stroke={1.8} />
+        </Icon>
+      </BButton>
+    </Tooltip>
   );
 };
 const EditWorkspace = (props: any) => {
@@ -297,7 +213,7 @@ const EditWorkspace = (props: any) => {
           {...restProps}
         >
           <Icon>
-            <IconEdit />
+            <IconEdit stroke={1.8} />
           </Icon>
         </BButton>
       </Tooltip>
@@ -428,67 +344,151 @@ const EditWorkspace = (props: any) => {
     </>
   );
 };
-const DeleteWorkspace = (props: any) => {
+const AddLayer = (props: any) => {
   // Props
   const { data, ...restProps } = props;
 
+  // console.log(data);
+
   // Hooks
   const { l } = useLang();
+  const { open, onOpen, onClose } = useDisclosure();
+  useBackOnClose(`create-layer-${data?.id}`, open, onOpen, onClose);
   const { req } = useRequest({
-    id: "crud_workspace",
+    id: "crud_layer",
   });
 
   // Contexts
-  const setRt = useRenderTrigger((s) => s.setRt);
-  const { setConfirmationData, confirmationOnOpen } =
-    useConfirmationDisclosure();
-  const unloadWorkspace = useActiveLayers((s) => s.removeLayerGroup);
+  const { themeConfig } = useThemeConfig();
 
-  // Utils
-  function onDelete() {
-    back();
+  // States
+  const LAYER_PROPS = {
+    SHP: {
+      url: `/api/gis-bpn/workspace-layers/upload-shapefile`,
+      key: "shapefile",
+    },
+    GeoJSON: {
+      url: ``,
+      key: "geojson",
+    },
+  };
+  const formik = useFormik({
+    validateOnChange: false,
+    initialValues: {
+      layerFileType: [OPTIONS_LAYER_FILE_TYPE[0]],
+      docs: undefined as any,
+    },
+    validationSchema: yup.object().shape({
+      layerFileType: yup.array().required(l.required_form),
+      docs: fileValidation({
+        allowedExtensions: ["shp", "zip"],
+      }).required(l.required_form),
+    }),
+    onSubmit: (values) => {
+      // console.log(values.docs[0]);
 
-    const url = `/api/gis-bpn/workspaces/delete/${data?.id}`;
-    const config = {
-      url,
-      method: "DELETE",
-    };
+      back();
 
-    req({
-      config,
-      onResolve: {
-        onSuccess: () => {
-          setRt((ps) => !ps);
-          unloadWorkspace(data?.id);
+      const payload = new FormData();
+      payload.append("workspace_id", data?.id);
+      payload.append(
+        LAYER_PROPS[
+          values.layerFileType?.[0]?.label as keyof typeof LAYER_PROPS
+        ].key,
+        values.docs[0]
+      );
+      const url =
+        LAYER_PROPS[
+          (values.layerFileType?.[0]?.label as keyof typeof LAYER_PROPS) ||
+            `SHP`
+        ].url;
+      const config = {
+        url,
+        method: "PATCH",
+        data: payload,
+      };
+
+      req({
+        config,
+        onResolve: {
+          onSuccess: () => {},
         },
-      },
-    });
-  }
+      });
+    },
+  });
 
   return (
-    <Tooltip content={l.delete_workspace}>
-      <BButton
-        unclicky
-        iconButton
-        variant={"ghost"}
-        // size={"sm"}
-        onClick={() => {
-          setConfirmationData({
-            title: `${capsFirstLetterEachWord(l.delete_workspace)}`,
-            description: l.perma_delete_confirmation,
-            confirmLabel: "Delete",
-            confirmButtonProps: { colorPalette: "red" },
-            onConfirm: onDelete,
-          });
-          confirmationOnOpen();
-        }}
-        {...restProps}
-      >
-        <Icon>
-          <IconTrash />
-        </Icon>
-      </BButton>
-    </Tooltip>
+    <>
+      <Tooltip content={l.add_workspace_layer}>
+        <BButton
+          unclicky
+          iconButton
+          variant={"ghost"}
+          // size={"sm"}
+          onClick={onOpen}
+          {...restProps}
+        >
+          <Icon>
+            <IconFilePlus stroke={1.8} />
+          </Icon>
+        </BButton>
+      </Tooltip>
+
+      <DisclosureRoot open={open} lazyLoad size={"xs"}>
+        <DisclosureContent>
+          <DisclosureHeader>
+            <DisclosureHeaderContent title={`${l.add} Layer`} />
+          </DisclosureHeader>
+
+          <DisclosureBody>
+            <form id="create_layer_form" onSubmit={formik.handleSubmit}>
+              <Field
+                label={l.layer_file_type}
+                invalid={!!formik.errors.layerFileType}
+                errorText={formik.errors.layerFileType as string}
+                mb={4}
+              >
+                <SelectLayerFileType
+                  onConfirm={(input) => {
+                    formik.setFieldValue("layerFileType", input);
+                  }}
+                  inputValue={formik.values.layerFileType}
+                />
+              </Field>
+
+              <Field
+                label={"File"}
+                invalid={!!formik.errors.docs}
+                errorText={formik.errors.docs as string}
+                disabled={empty(formik.values.layerFileType)}
+              >
+                <FileInput
+                  dropzone
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("docs", input);
+                  }}
+                  inputValue={formik.values.docs}
+                  disabled={empty(formik.values.layerFileType)}
+                  accept=".zip, .shp"
+                />
+              </Field>
+            </form>
+          </DisclosureBody>
+
+          <DisclosureFooter>
+            <BackButton />
+
+            <BButton
+              type="submit"
+              form={"create_layer_form"}
+              colorPalette={themeConfig?.colorPalette}
+            >
+              {l.add}
+            </BButton>
+          </DisclosureFooter>
+        </DisclosureContent>
+      </DisclosureRoot>
+    </>
   );
 };
 const UnloadLayer = (props: any) => {
