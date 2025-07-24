@@ -275,6 +275,7 @@ const translations = {
   },
   "maintenance_page": "Kami sedang melakukan pemeliharaan untuk memberikan layanan yang lebih baik. Mohon maaf atas ketidaknyamanannya. Silakan cek kembali nanti.",
   "male": "Laki-laki",
+  "map_area": "Luas peta",
   "map_type": "Jenis peta",
   "mark_as_read": "Tandai dibaca semua",
   "mark_read_disclosure": {

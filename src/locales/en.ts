@@ -275,6 +275,7 @@ const translations = {
   },
   "maintenance_page": "We are currently performing maintenance to provide better service. Sorry for the inconvenience. Please check back later.",
   "male": "Male",
+  "map_area": "Map area",
   "map_type": "Map type",
   "mark_as_read": "Mark all as read",
   "mark_read_disclosure": {

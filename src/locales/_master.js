@@ -271,6 +271,10 @@ export const written_area = {
   id: "Luas tertulis",
   en: "Written area",
 };
+export const map_area = {
+  id: "Luas peta",
+  en: "Map area",
+};
 export const sk = {
   id: "SK",
   en: "SK",

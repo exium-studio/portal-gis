@@ -21,6 +21,7 @@ const LayerSource = (props: any) => {
   // States
   const layer = data?.layer;
   const geojson = data?.layer?.geojson;
+  console.log("geojson", geojson);
 
   // Default fill color
   const defaultFillColor = "#7e7e7e";

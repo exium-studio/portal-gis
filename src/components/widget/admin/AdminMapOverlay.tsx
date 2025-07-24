@@ -1060,6 +1060,20 @@ const EditField = (props: any) => {
               </Field>
 
               <Field
+                label={l.map_area}
+                invalid={!!formik.errors.luaspeta}
+                errorText={formik.errors.luaspeta as string}
+                mb={4}
+              >
+                <StringInput
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("luaspeta", input);
+                  }}
+                  inputValue={formik.values.luaspeta}
+                />
+              </Field>
+
+              <Field
                 label={l.written_area}
                 invalid={!!formik.errors.luastertul}
                 errorText={formik.errors.luastertul as string}
@@ -1275,6 +1289,11 @@ const DetailPolygon = () => {
         <ItemContainer>
           <P fontWeight={"semibold"}>{l.rights_expired_date}</P>
           <P>{`${data?.berakhirha || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"semibold"}>{l.map_area}</P>
+          <P>{`${data?.luaspeta || "-"}`}</P>
         </ItemContainer>
 
         <ItemContainer>
