@@ -126,7 +126,7 @@ const translations = {
   "dialy": "Harian",
   "display_settings_helper_text": "Pengaturan tampilan ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
   "displayed_data": "Data yang ditampilkan",
-  "dispute_parties": "Para pihak yg berselisih",
+  "dispute_parties": "Para pihak yang berselisih",
   "edge_permissions_settings_link": "Pengaturan → Cookie dan izin situs → ",
   "edit": "Edit",
   "edit_workspace": "Edit workspace",

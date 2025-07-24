@@ -300,7 +300,7 @@ export const problems = {
   en: "Problems",
 };
 export const dispute_parties = {
-  id: "Para pihak yg berselisih",
+  id: "Para pihak yang berselisih",
   en: "The parties to the dispute",
 };
 export const handling_and_follow_up = {

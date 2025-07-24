@@ -1204,6 +1204,7 @@ const DetailPolygon = () => {
         borderBottom={last ? "" : "1px solid"}
         borderColor={"border.muted"}
         p={2}
+        pb={last ? 0 : 2}
       >
         {children}
       </CContainer>
@@ -1219,6 +1220,7 @@ const DetailPolygon = () => {
         top: "68px",
         pointerEvents: "auto",
         w: iss ? "calc(100vw - 16px)" : "300px",
+        pb: 2,
       }}
       animationEntrance="top"
     >
