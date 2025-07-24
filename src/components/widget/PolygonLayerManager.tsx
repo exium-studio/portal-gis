@@ -108,9 +108,13 @@ const LayerSource = (props: any) => {
 const PolygonLayerManager = () => {
   const activeLayerGroups = useActiveLayers((s) => s.activeLayerGroups);
 
+  console.log("activeLayerGroups", activeLayerGroups);
+
   return (
     <>
       {activeLayerGroups?.map((data: any, i: number) => {
+        // console.log(data);
+
         return <LayerSource key={i} data={data} />;
       })}
     </>

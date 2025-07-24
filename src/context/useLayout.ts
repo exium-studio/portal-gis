@@ -8,9 +8,14 @@ const DEFAULT = LAYOUT_OPTIONS[0];
 interface Props {
   layout: Interface__Gens;
   setLayout: (newState: Interface__Gens) => void;
+
+  // Derived states
+  fullPanel: boolean;
+  halfPanel: boolean;
+  closedPanel: boolean;
 }
 
-const useLayout = create<Props>((set) => {
+const useLayout = create<Props>((set, get) => {
   const getStoredFormat = (): Interface__Gens => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
@@ -22,16 +27,27 @@ const useLayout = create<Props>((set) => {
     return DEFAULT;
   };
 
+  const setLayout = (newState: Interface__Gens) => {
+    const shouldUpdate = get().layout.id !== newState.id;
+    if (shouldUpdate) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(newState));
+      set(() => ({
+        layout: newState,
+        fullPanel: newState.id === 2,
+        halfPanel: newState.id === 1,
+        closedPanel: newState.id === 3,
+      }));
+    }
+  };
+
+  const initialLayout = getStoredFormat();
+
   return {
-    layout: getStoredFormat() || DEFAULT,
-    setLayout: (newState) =>
-      set((state) => {
-        if (state.layout !== newState) {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(newState));
-          return { layout: newState };
-        }
-        return state;
-      }),
+    layout: initialLayout,
+    setLayout,
+    halfPanel: initialLayout.id === 1,
+    fullPanel: initialLayout.id === 2,
+    closedPanel: initialLayout.id === 3,
   };
 });
 

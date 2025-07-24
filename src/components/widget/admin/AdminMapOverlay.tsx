@@ -92,6 +92,7 @@ import ExistingFileItem from "../ExistingFIleItem";
 import FileInput from "@/components/ui-custom/FileInput";
 import { fileValidation } from "@/utils/validationSchemas";
 import back from "@/utils/back";
+import useLayout from "@/context/useLayout";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -1496,6 +1497,7 @@ const FieldData = () => {
   const clearSelectedPolygon = useSelectedPolygon(
     (s) => s.clearSelectedPolygon
   );
+  const halfPanel = useLayout((s) => s.halfPanel);
 
   // States
   const data = useMemo(
@@ -1539,7 +1541,7 @@ const FieldData = () => {
         w: iss ? "calc(100vw - 16px)" : "300px",
         pb: 2,
         // maxH: "calc(60vh - 72px)",
-        maxH: "calc(100vh - 134px)",
+        maxH: iss ? (halfPanel ? "20vh" : "35vh") : "calc(100vh - 134px)",
       }}
       animationEntrance="top"
     >

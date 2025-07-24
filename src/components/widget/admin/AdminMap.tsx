@@ -245,11 +245,11 @@ const AdminMap = () => {
             </Marker>
           )}
 
-          {/* WMS Layers */}
-          {/* <WMSLayerManager /> */}
-
           {/* Polygon Layer */}
           <PolygonLayerManager />
+
+          {/* WMS Layers */}
+          {/* <WMSLayerManager /> */}
         </>
       )}
     </Map>
