@@ -512,7 +512,7 @@ const Legend = () => {
     empty: <FeedbackNoData />,
     notFound: <FeedbackNotFound />,
     loaded: (
-      <SimpleGrid gapX={4} gapY={1} px={"2px"} columns={1}>
+      <SimpleGrid gapX={4} gapY={1} px={"2px"} columns={2}>
         {legends.map((item) => {
           return (
             <HStack key={item?.label}>
@@ -555,7 +555,8 @@ const Legend = () => {
             bottom: "58px",
             pointerEvents: "auto",
             w: iss ? "calc(100vw - 16px)" : "300px",
-            maxH: "calc(50vh - 60px - 32px)",
+            pb: 2,
+            maxH: "calc(30vh - 72px)",
           }}
           animationEntrance="bottom"
         >
@@ -581,7 +582,7 @@ const Legend = () => {
             </HStack>
           </MenuHeaderContainer>
 
-          <CContainer p={3} className="scrollY">
+          <CContainer p={3} pb={1} className="scrollY">
             {loading && render.loading}
             {!loading && (
               <>
@@ -1296,10 +1297,11 @@ const FieldData = () => {
       containerProps={{
         position: "absolute",
         left: "8px",
-        top: "68px",
+        top: "66px",
         pointerEvents: "auto",
         w: iss ? "calc(100vw - 16px)" : "300px",
         pb: 2,
+        maxH: "calc(70vh - 72px)",
       }}
       animationEntrance="top"
     >
@@ -1331,12 +1333,7 @@ const FieldData = () => {
         </HStack>
       </MenuHeaderContainer>
 
-      <CContainer
-        px={1}
-        overflowY={"auto"}
-        className="scrollY"
-        maxH={"calc(50vh - 52px - 64px)"}
-      >
+      <CContainer px={1} overflowY={"auto"} className="scrollY">
         <ItemContainer>
           <P fontWeight={"semibold"}>{l.sertificate_number}</P>
           <P>{`${data?.hak || "-"}`}</P>
