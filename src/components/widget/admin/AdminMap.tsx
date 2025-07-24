@@ -56,13 +56,11 @@ const AdminMap = () => {
   // Handle current location
   useEffect(() => {
     if (mapRef.current && currentLocation) {
-      mapRef.current.easeTo({
-        center: {
-          lat: currentLocation.lat,
-          lon: currentLocation.lon,
-        },
-        zoom: 14,
+      mapRef.current?.flyTo({
+        center: [currentLocation.lon, currentLocation.lat],
+        zoom: 14, // atau sesuaikan dengan kebutuhan
         duration: MAP_TRANSITION_DURATION,
+        essential: true,
       });
     }
   }, [currentLocation]);

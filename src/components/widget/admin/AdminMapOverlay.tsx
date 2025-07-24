@@ -709,7 +709,9 @@ const MapStyle = () => {
                           w={"full"}
                         />
                       </Box>
+
                       <Text
+                        fontSize={"xs"}
                         textAlign={"center"}
                         color={active ? themeConfig.primaryColor : ""}
                       >
@@ -937,15 +939,15 @@ const EditField = (props: any) => {
   // Contexts
   const { themeConfig } = useThemeConfig();
   const { selectedPolygon } = useSelectedPolygon();
-  // const updateWorkspace = useActiveLayers((s) => s.updateLayerData);
-
-  // console.log(selectedPolygon?.data);
-  // console.log(data);
 
   // States
   const layerId = selectedPolygon?.data?.layer?.layer_id;
   const tableName = selectedPolygon?.data?.layer?.table_name;
   const propertiesId = selectedPolygon?.polygon?.properties?.id;
+  const featuresIndex =
+    selectedPolygon?.data?.layer?.geojson?.features.findIndex(
+      (f: any) => f.properties.id === propertiesId
+    );
   const [existingDocs, setExistingDocs] = useState<any[]>(data?.thumbnail);
   const formik = useFormik({
     validateOnChange: false,
@@ -1523,6 +1525,7 @@ const FieldData = () => {
   useEffect(() => {
     if (selectedPolygon) {
       onOpen();
+      setData(selectedPolygon?.polygon?.properties);
     } else {
       onClose();
     }

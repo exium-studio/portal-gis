@@ -17,6 +17,7 @@ import {
   FieldsetRoot,
   HStack,
   Icon,
+  Popover,
   Separator,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -675,9 +676,15 @@ const WorkspaceItem = (props: any) => {
         <CContainer p={4} gap={1}>
           <P fontWeight={"semibold"}>{data?.title}</P>
 
-          <P lineClamp={1} color={"fg.subtle"}>
-            {data?.description}
-          </P>
+          <Popover.Root>
+            <Popover.Trigger asChild>
+              <P lineClamp={1} color={"fg.subtle"}>
+                {data?.description}
+              </P>
+            </Popover.Trigger>
+
+            <Popover.Content>{data?.description}</Popover.Content>
+          </Popover.Root>
         </CContainer>
       </CContainer>
 
