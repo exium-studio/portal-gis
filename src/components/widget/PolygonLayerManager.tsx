@@ -66,13 +66,9 @@ const LayerSource = (props: any) => {
     const map = mapRef.current?.getMap();
     if (!map || !layer?.layer_id) return;
 
-    // Debug layer existence
-    console.log(`Registering layer: ${fillLayerId}`);
-
     map.on("click", fillLayerId, handleOnClickPolygon);
 
     return () => {
-      console.log(`Cleaning up layer: ${fillLayerId}`);
       map.off("click", fillLayerId, handleOnClickPolygon);
     };
   }, [mapRef, handleOnClickPolygon, fillLayerId]);
