@@ -512,7 +512,7 @@ const Legend = () => {
     empty: <FeedbackNoData />,
     notFound: <FeedbackNotFound />,
     loaded: (
-      <SimpleGrid gapX={4} px={"2px"} columns={2}>
+      <SimpleGrid gapX={4} gapY={1} px={"2px"} columns={1}>
         {legends.map((item) => {
           return (
             <HStack key={item?.label}>
@@ -555,6 +555,7 @@ const Legend = () => {
             bottom: "58px",
             pointerEvents: "auto",
             w: iss ? "calc(100vw - 16px)" : "300px",
+            maxH: "calc(50vh - 60px - 32px)",
           }}
           animationEntrance="bottom"
         >
@@ -580,7 +581,7 @@ const Legend = () => {
             </HStack>
           </MenuHeaderContainer>
 
-          <CContainer p={3}>
+          <CContainer p={3} className="scrollY">
             {loading && render.loading}
             {!loading && (
               <>
@@ -1223,40 +1224,12 @@ const EditField = (props: any) => {
                 label={l.usage}
                 invalid={!!formik.errors.penggunaan}
                 errorText={formik.errors.penggunaan as string}
-                mb={4}
               >
                 <StringInput
                   onChangeSetter={(input) => {
                     formik.setFieldValue("penggunaan", input);
                   }}
                   inputValue={formik.values.penggunaan}
-                />
-              </Field>
-
-              <Field
-                label={l.problems}
-                invalid={!!formik.errors.permasalah}
-                errorText={formik.errors.permasalah as string}
-                mb={4}
-              >
-                <StringInput
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("permasalah", input);
-                  }}
-                  inputValue={formik.values.permasalah}
-                />
-              </Field>
-
-              <Field
-                label={l.dispute_parties}
-                invalid={!!formik.errors.parapihakb}
-                errorText={formik.errors.parapihakb as string}
-              >
-                <StringInput
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("parapihakb", input);
-                  }}
-                  inputValue={formik.values.parapihakb}
                 />
               </Field>
             </form>
@@ -1274,7 +1247,7 @@ const EditField = (props: any) => {
   );
 };
 
-const DetailPolygon = () => {
+const FieldData = () => {
   // Hooks
   const { l } = useLang();
   const { open, onOpen, onClose } = useDisclosure();
@@ -1362,7 +1335,7 @@ const DetailPolygon = () => {
         px={1}
         overflowY={"auto"}
         className="scrollY"
-        maxH={"calc(50vh - 32px - 50px)"}
+        maxH={"calc(50vh - 52px - 64px)"}
       >
         <ItemContainer>
           <P fontWeight={"semibold"}>{l.sertificate_number}</P>
@@ -1461,7 +1434,7 @@ const AdminMapOverlay = () => {
       position={"absolute"}
       top={0}
     >
-      <DetailPolygon />
+      <FieldData />
 
       <CContainer flex={1} justify={"space-between"}>
         <Box p={2}>

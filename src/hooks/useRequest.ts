@@ -227,6 +227,14 @@ const useRequest = (props: Props) => {
                   description: l.error_duplicate_email_toast.description,
                 };
             }
+          } else if (statusCode === 413) {
+            switch (errorCase) {
+              default:
+                return {
+                  title: l.error_413_toast.title,
+                  description: l.error_413_toast.description,
+                };
+            }
           } else if (statusCode === 500) {
             return {
               title: l.error_500_toast.title,

@@ -154,6 +154,10 @@ const translations = {
     "title": "Duplicate data",
     "description": "Request could not be processed because the data already exists"
   },
+  "error_413_toast": {
+    "title": "Payload Too Large",
+    "description": "The data you're sending exceeds the allowed size limit. Please try again with smaller data or split it into multiple parts."
+  },
   "error_500_toast": {
     "title": "Server error",
     "description": "An error occurred on the server. Please try again later."

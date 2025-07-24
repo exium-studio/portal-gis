@@ -1482,6 +1482,16 @@ export const error_403_toast = {
     en: "You do not have permission to access this resource.",
   },
 };
+export const error_413_toast = {
+  title: {
+    id: "Batas Ukuran Dilampaui",
+    en: "Payload Too Large",
+  },
+  description: {
+    id: "Data yang Anda kirim melebihi batas ukuran yang diizinkan. Silakan coba lagi dengan data yang lebih kecil atau bagi menjadi beberapa bagian.",
+    en: "The data you're sending exceeds the allowed size limit. Please try again with smaller data or split it into multiple parts.",
+  },
+};
 export const error_404_toast = {
   title: { id: "Tidak ditemukan", en: "Not Found" },
   description: {
