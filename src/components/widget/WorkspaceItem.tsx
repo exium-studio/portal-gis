@@ -622,8 +622,8 @@ const ViewLayers = (props: any) => {
         onClick={onViewLayers}
         {...restProps}
       >
-        <Icon>
-          <IconEye />
+        <Icon boxSize={"26px"}>
+          <IconEye stroke={1.5} />
         </Icon>
       </BButton>
     </Tooltip>
