@@ -606,8 +606,8 @@ const WorkspaceItem = (props: any) => {
     (layerData: any) => layerData.workspace.id === data.id
   );
   const bboxCenter = {
-    bbox: loadedLayerData?.layer?.data?.bbox,
-    center: loadedLayerData?.layer?.data?.center,
+    bbox: loadedLayerData?.layer?.geojson?.bbox,
+    center: loadedLayerData?.layer?.geojson?.center,
   };
 
   useEffect(() => {

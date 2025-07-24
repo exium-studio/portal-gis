@@ -5,7 +5,7 @@ interface Layer {
   layer_name: string;
   description?: string;
   table_name?: string;
-  data: any;
+  geojson: any;
   visible?: boolean;
 }
 

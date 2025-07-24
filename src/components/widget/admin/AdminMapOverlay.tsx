@@ -54,6 +54,7 @@ import {
   IconClock,
   IconCurrentLocation,
   IconCurrentLocationFilled,
+  IconEdit,
   IconFlag,
   IconInfoCircle,
   IconMapCog,
@@ -68,6 +69,20 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import useSearchMode from "./useSearchMode";
+import {
+  DisclosureBody,
+  DisclosureContent,
+  DisclosureFooter,
+  DisclosureHeader,
+  DisclosureRoot,
+} from "@/components/ui-custom/Disclosure";
+import DisclosureHeaderContent from "@/components/ui-custom/DisclosureHeaderContent";
+import useBackOnClose from "@/hooks/useBackOnClose";
+import BackButton from "@/components/ui-custom/BackButton";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { Field } from "@/components/ui/field";
+import StringInput from "@/components/ui-custom/StringInput";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -840,6 +855,306 @@ const Compass = () => {
   );
 };
 
+const EditField = (props: any) => {
+  // Props
+  const { data } = props;
+
+  // Hooks
+  const { l } = useLang();
+  const { open, onOpen, onClose } = useDisclosure();
+  useBackOnClose(`edit-${data?.id}`, open, onOpen, onClose);
+
+  // Contexts
+  const { themeConfig } = useThemeConfig();
+
+  // States
+  const formik = useFormik({
+    validateOnChange: false,
+    initialValues: {
+      propinsi: "",
+      kabupaten: "",
+      nib: "",
+      su: "",
+      hak: "",
+      tipehak: "",
+      luastertul: "",
+      luaspeta: "",
+      sk: "",
+      tanggalsk: "",
+      tglterbith: "",
+      berakhirha: "",
+      pemilik: "",
+      tipepemili: "",
+      gunatanahk: "",
+      gunatanahu: "",
+      terpetakan: "",
+      keterangan: "",
+      dtipehak: "",
+      parapihakb: "",
+      permasalah: "",
+      tindaklanj: "",
+      hasil: "",
+      penggunaan: "",
+    },
+    validationSchema: yup.object().shape({}),
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
+
+  // Handle initial values
+  useEffect(() => {
+    formik.setValues({
+      propinsi: data?.propinsi,
+      kabupaten: data?.kabupaten,
+      nib: data?.nib,
+      su: data?.su,
+      hak: data?.hak,
+      tipehak: data?.tipehak,
+      luastertul: data?.luastertul,
+      luaspeta: data?.luaspeta,
+      sk: data?.sk,
+      tanggalsk: data?.tanggalsk,
+      tglterbith: data?.tglterbith,
+      berakhirha: data?.berakhirha,
+      pemilik: data?.pemilik,
+      tipepemili: data?.tipepemili,
+      gunatanahk: data?.gunatanahk,
+      gunatanahu: data?.gunatanahu,
+      terpetakan: data?.terpetakan,
+      keterangan: data?.keterangan,
+      dtipehak: data?.dtipehak,
+      parapihakb: data?.parapihakb,
+      permasalah: data?.permasalah,
+      tindaklanj: data?.tindaklanj,
+      hasil: data?.hasil,
+      penggunaan: data?.penggunaan,
+    });
+  }, []);
+
+  return (
+    <>
+      <BButton
+        iconButton
+        unclicky
+        size={"xs"}
+        variant={"ghost"}
+        onClick={onOpen}
+      >
+        <Icon>
+          <IconEdit stroke={1.5} />
+        </Icon>
+      </BButton>
+
+      <DisclosureRoot
+        open={open}
+        lazyLoad
+        size={"xs"}
+        scrollBehavior={"inside"}
+      >
+        <DisclosureContent>
+          <DisclosureHeader>
+            <DisclosureHeaderContent
+              title={`Edit ${capsFirstLetterEachWord(l.field_data)}`}
+            />
+          </DisclosureHeader>
+
+          <DisclosureBody>
+            <form>
+              <Field
+                label={l.sertificate_number}
+                invalid={!!formik.errors.hak}
+                errorText={formik.errors.hak as string}
+                mb={4}
+              >
+                <StringInput
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("hak", input);
+                  }}
+                  inputValue={formik.values.hak}
+                />
+              </Field>
+
+              <Field
+                label={"NIB"}
+                invalid={!!formik.errors.nib}
+                errorText={formik.errors.nib as string}
+                mb={4}
+              >
+                <StringInput
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("nib", input);
+                  }}
+                  inputValue={formik.values.nib}
+                />
+              </Field>
+
+              <Field
+                label={l.owner}
+                invalid={!!formik.errors.pemilik}
+                errorText={formik.errors.pemilik as string}
+                mb={4}
+              >
+                <StringInput
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("pemilik", input);
+                  }}
+                  inputValue={formik.values.pemilik}
+                />
+              </Field>
+
+              <Field
+                label={l.owner}
+                invalid={!!formik.errors.pemilik}
+                errorText={formik.errors.pemilik as string}
+                mb={4}
+              >
+                <StringInput
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("pemilik", input);
+                  }}
+                  inputValue={formik.values.pemilik}
+                />
+              </Field>
+
+              <Field
+                label={l.owner_type}
+                invalid={!!formik.errors.tipepemili}
+                errorText={formik.errors.tipepemili as string}
+                mb={4}
+              >
+                <StringInput
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("tipepemili", input);
+                  }}
+                  inputValue={formik.values.tipepemili}
+                />
+              </Field>
+
+              <Field
+                label={l.rights_published_date}
+                invalid={!!formik.errors.tglterbith}
+                errorText={formik.errors.tglterbith as string}
+                mb={4}
+              >
+                <StringInput
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("tglterbith", input);
+                  }}
+                  inputValue={formik.values.tglterbith}
+                />
+              </Field>
+
+              <Field
+                label={l.rights_expired_date}
+                invalid={!!formik.errors.berakhirha}
+                errorText={formik.errors.berakhirha as string}
+                mb={4}
+              >
+                <StringInput
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("berakhirha", input);
+                  }}
+                  inputValue={formik.values.berakhirha}
+                />
+              </Field>
+
+              <Field
+                label={l.written_area}
+                invalid={!!formik.errors.luastertul}
+                errorText={formik.errors.luastertul as string}
+                mb={4}
+              >
+                <StringInput
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("luastertul", input);
+                  }}
+                  inputValue={formik.values.luastertul}
+                />
+              </Field>
+
+              <Field
+                label={l.sk}
+                invalid={!!formik.errors.sk}
+                errorText={formik.errors.sk as string}
+                mb={4}
+              >
+                <StringInput
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("sk", input);
+                  }}
+                  inputValue={formik.values.sk}
+                />
+              </Field>
+
+              <Field
+                label={l.sk_date}
+                invalid={!!formik.errors.tanggalsk}
+                errorText={formik.errors.tanggalsk as string}
+                mb={4}
+              >
+                <StringInput
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("tanggalsk", input);
+                  }}
+                  inputValue={formik.values.tanggalsk}
+                />
+              </Field>
+
+              <Field
+                label={l.usage}
+                invalid={!!formik.errors.penggunaan}
+                errorText={formik.errors.penggunaan as string}
+                mb={4}
+              >
+                <StringInput
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("penggunaan", input);
+                  }}
+                  inputValue={formik.values.penggunaan}
+                />
+              </Field>
+
+              <Field
+                label={l.problems}
+                invalid={!!formik.errors.permasalah}
+                errorText={formik.errors.permasalah as string}
+                mb={4}
+              >
+                <StringInput
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("permasalah", input);
+                  }}
+                  inputValue={formik.values.permasalah}
+                />
+              </Field>
+
+              <Field
+                label={l.dispute_parties}
+                invalid={!!formik.errors.parapihakb}
+                errorText={formik.errors.parapihakb as string}
+              >
+                <StringInput
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("parapihakb", input);
+                  }}
+                  inputValue={formik.values.parapihakb}
+                />
+              </Field>
+            </form>
+          </DisclosureBody>
+
+          <DisclosureFooter>
+            <BackButton />
+
+            <BButton colorPalette={themeConfig.colorPalette}>{l.save}</BButton>
+          </DisclosureFooter>
+        </DisclosureContent>
+      </DisclosureRoot>
+    </>
+  );
+};
+
 const DetailPolygon = () => {
   // Hooks
   const { l } = useLang();
@@ -900,23 +1215,24 @@ const DetailPolygon = () => {
             {capsFirstLetterEachWord(l.field_data)}
           </Text>
 
-          <BButton
-            iconButton
-            unclicky
-            size={"xs"}
-            variant={"ghost"}
-            ml={"auto"}
-            mr={-1}
-            mt={"-2px"}
-            onClick={() => {
-              clearSelectedPolygon();
-              onClose();
-            }}
-          >
-            <Icon>
-              <IconX />
-            </Icon>
-          </BButton>
+          <HStack ml={"auto"} mt={"-2px"} mr={-1}>
+            <EditField data={data} />
+
+            <BButton
+              iconButton
+              unclicky
+              size={"xs"}
+              variant={"ghost"}
+              onClick={() => {
+                clearSelectedPolygon();
+                onClose();
+              }}
+            >
+              <Icon>
+                <IconX />
+              </Icon>
+            </BButton>
+          </HStack>
         </HStack>
       </MenuHeaderContainer>
 
@@ -924,7 +1240,7 @@ const DetailPolygon = () => {
         px={2}
         overflowY={"auto"}
         className="scrollY"
-        maxH={"calc(50vh - 32px)"}
+        maxH={"calc(50vh - 32px - 50px)"}
       >
         <ItemContainer>
           <P fontWeight={"semibold"}>{l.sertificate_number}</P>

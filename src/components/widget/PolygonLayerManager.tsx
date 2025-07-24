@@ -1,6 +1,6 @@
 import useActiveLayers from "@/context/useActiveLayers";
-import useSelectedPolygon from "@/context/useSelectedPolygon";
 import useMapViewState from "@/context/useMapViewState";
+import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import { useCallback, useEffect } from "react";
 import { Layer, Source } from "react-map-gl/mapbox";
@@ -20,7 +20,7 @@ const LayerSource = (props: any) => {
 
   // States
   const layer = data?.layer;
-  const geojson = data?.layer?.data;
+  const geojson = data?.layer?.geojson;
 
   // Default fill color
   const defaultFillColor = "#7e7e7e";
@@ -106,8 +106,8 @@ const PolygonLayerManager = () => {
 
   return (
     <>
-      {activeLayerGroups?.map((layerGroup: any, i: number) => {
-        return <LayerSource key={i} data={layerGroup} />;
+      {activeLayerGroups?.map((data: any, i: number) => {
+        return <LayerSource key={i} data={data} />;
       })}
     </>
   );
