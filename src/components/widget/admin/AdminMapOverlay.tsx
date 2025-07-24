@@ -94,6 +94,7 @@ import useSearchMode from "../../../context/useSearchMode";
 import ExistingFileItem from "../ExistingFIleItem";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import useActiveLayers from "@/context/useActiveLayers";
+import getLocation from "@/utils/getLocation";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -810,26 +811,20 @@ const CurrentLocation = () => {
     if (currentLocation) {
       setCurrentLocation(undefined);
     } else {
-      const tembalang = { lon: 110.43914667, lat: -7.05959528 };
       setLoading(true);
-      setCurrentLocation({
-        lat: tembalang.lat,
-        lon: tembalang.lon,
-      });
-      setLoading(false);
-      // getLocation()
-      //   .then((loc) => {
-      //     setCurrentLocation({
-      //       lat: loc.coords.latitude,
-      //       lon: loc.coords.longitude,
-      //     });
-      //   })
-      //   .catch((e) => {
-      //     console.log(e);
-      //   })
-      //   .finally(() => {
-      //     setLoading(false);
-      //   });
+      getLocation()
+        .then((loc) => {
+          setCurrentLocation({
+            lat: loc.coords.latitude,
+            lon: loc.coords.longitude,
+          });
+        })
+        .catch((e) => {
+          console.log(e);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   }
 
