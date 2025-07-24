@@ -944,10 +944,10 @@ const EditField = (props: any) => {
   const layerId = selectedPolygon?.data?.layer?.layer_id;
   const tableName = selectedPolygon?.data?.layer?.table_name;
   const propertiesId = selectedPolygon?.polygon?.properties?.id;
-  const featuresIndex =
-    selectedPolygon?.data?.layer?.geojson?.features.findIndex(
-      (f: any) => f.properties.id === propertiesId
-    );
+  // const featuresIndex =
+  //   selectedPolygon?.data?.layer?.geojson?.features.findIndex(
+  //     (f: any) => f.properties.id === propertiesId
+  //   );
   const [existingDocs, setExistingDocs] = useState<any[]>(data?.thumbnail);
   const formik = useFormik({
     validateOnChange: false,
