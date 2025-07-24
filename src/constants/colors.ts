@@ -1,4 +1,4 @@
-export const CHART_COLORS: string[] = [
+export const COLORS: string[] = [
   "#63B3ED", // Biru muda
   "#3182CE", // Biru
   "#5A67D8", // Ungu
