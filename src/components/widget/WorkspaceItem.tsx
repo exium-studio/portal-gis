@@ -513,7 +513,7 @@ const UnloadLayer = (props: any) => {
         }}
         {...restProps}
       >
-        <Icon boxSize={"26px"}>
+        <Icon boxSize={"25px"}>
           <IconStackPop stroke={1.5} />
         </Icon>
       </BButton>
@@ -581,7 +581,7 @@ const LoadWorkspace = (props: any) => {
         loading={loading}
         {...restProps}
       >
-        <Icon boxSize={"26px"}>
+        <Icon boxSize={"25px"}>
           <IconStackPush stroke={1.5} />
         </Icon>
       </BButton>
@@ -626,7 +626,7 @@ const ViewLayers = (props: any) => {
         onClick={onViewLayers}
         {...restProps}
       >
-        <Icon boxSize={"26px"}>
+        <Icon boxSize={"25px"}>
           <IconEye stroke={1.5} />
         </Icon>
       </BButton>
