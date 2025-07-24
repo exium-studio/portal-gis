@@ -13,6 +13,7 @@ import { useEffect, useRef, useState } from "react";
 import Map, { MapRef, Marker } from "react-map-gl/mapbox";
 import MapMarkerCircle from "../MapMarkerCircle";
 import PolygonLayerManager from "../PolygonLayerManager";
+import { MAP_TRANSITION_DURATION } from "@/constants/duration";
 
 const MIN_ZOOM = 0;
 const MAX_ZOOM = 22;
@@ -61,7 +62,7 @@ const AdminMap = () => {
           lon: currentLocation.lon,
         },
         zoom: 14,
-        duration: 3000, // ms
+        duration: MAP_TRANSITION_DURATION,
       });
     }
   }, [currentLocation]);

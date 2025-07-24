@@ -311,8 +311,24 @@ export const result = {
   id: "Hasil",
   en: "Result",
 };
+export const information = {
+  id: "Informasi",
+  en: "Information",
+};
+export const explanation = {
+  id: "Keterangan",
+  en: "Explanation",
+};
+export const document = {
+  id: "Dokumen",
+  en: "Document",
+};
 
 // UI
+export const deleted_docs = {
+  id: "Dokumen yang dihapus",
+  en: "Deleted docs",
+};
 export const view_layer = {
   id: "Lihat area layer",
   en: "View layer area",

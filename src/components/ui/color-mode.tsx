@@ -1,5 +1,6 @@
 "use client";
 
+import useADM from "@/context/useADM";
 import type { IconButtonProps, SpanProps } from "@chakra-ui/react";
 import { ClientOnly, IconButton, Skeleton, Span } from "@chakra-ui/react";
 import { IconMoon2 } from "@tabler/icons-react";
@@ -52,7 +53,12 @@ export const ColorModeButton = React.forwardRef<
   HTMLButtonElement,
   ColorModeButtonProps
 >(function ColorModeButton(props, ref) {
+  // Hooks
   const { toggleColorMode } = useColorMode();
+
+  // Contexts
+  const { ADM } = useADM();
+
   return (
     <ClientOnly fallback={<Skeleton boxSize="8" />}>
       <IconButton
@@ -60,6 +66,7 @@ export const ColorModeButton = React.forwardRef<
         variant="ghost"
         aria-label="Toggle color mode"
         size="sm"
+        disabled={!ADM}
         ref={ref}
         {...props}
       >

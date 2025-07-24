@@ -62,6 +62,7 @@ import {
   SimpleGrid,
   Stack,
   StackProps,
+  Tabs,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -85,7 +86,11 @@ import { useFormik } from "formik";
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as yup from "yup";
 import MenuHeaderContainer from "../MenuHeaderContainer";
-import useSearchMode from "./useSearchMode";
+import useSearchMode from "../../../context/useSearchMode";
+import Textarea from "@/components/ui-custom/Textarea";
+import ExistingFileItem from "../ExistingFIleItem";
+import FileInput from "@/components/ui-custom/FileInput";
+import { fileValidation } from "@/utils/validationSchemas";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -929,8 +934,11 @@ const EditField = (props: any) => {
 
   // Contexts
   const { themeConfig } = useThemeConfig();
+  const { selectedPolygon } = useSelectedPolygon();
+  console.log(selectedPolygon);
 
   // States
+  const [existingDocs, setExistingDocs] = useState<any[]>(data?.thumbnail);
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
@@ -958,8 +966,14 @@ const EditField = (props: any) => {
       tindaklanj: "",
       hasil: "",
       penggunaan: "",
+      docs: undefined as any,
+      deleted_docs: [],
     },
-    validationSchema: yup.object().shape({}),
+    validationSchema: yup.object().shape({
+      docs: fileValidation({
+        allowedExtensions: ["pdf", "doc", "docs"],
+      }),
+    }),
     onSubmit: (values) => {
       // console.log(values);
 
@@ -1035,6 +1049,8 @@ const EditField = (props: any) => {
       tindaklanj: data?.tindaklanj,
       hasil: data?.hasil,
       penggunaan: data?.penggunaan,
+      docs: [],
+      deleted_docs: [],
     });
   }, []);
 
@@ -1055,7 +1071,7 @@ const EditField = (props: any) => {
       <DisclosureRoot
         open={open}
         lazyLoad
-        size={"xs"}
+        size={"sm"}
         scrollBehavior={"inside"}
       >
         <DisclosureContent>
@@ -1065,182 +1081,401 @@ const EditField = (props: any) => {
             />
           </DisclosureHeader>
 
-          <DisclosureBody>
-            <form>
-              <Field
-                label={l.sertificate_number}
-                invalid={!!formik.errors.hak}
-                errorText={formik.errors.hak as string}
-                mb={4}
+          <DisclosureBody pt={0} px={0} pos={"relative"}>
+            <Tabs.Root
+              defaultValue="information"
+              top={0}
+              colorPalette={themeConfig.colorPalette}
+            >
+              <Tabs.List
+                bg={"body"}
+                w={"full"}
+                pos={"sticky"}
+                top={0}
+                zIndex={2}
               >
-                <StringInput
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("hak", input);
-                  }}
-                  inputValue={formik.values.hak}
-                />
-              </Field>
+                <Tabs.Trigger
+                  flex={1}
+                  justifyContent={"center"}
+                  value="information"
+                >
+                  {l.information}
+                </Tabs.Trigger>
 
-              <Field
-                label={"NIB"}
-                invalid={!!formik.errors.nib}
-                errorText={formik.errors.nib as string}
-                mb={4}
-              >
-                <StringInput
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("nib", input);
-                  }}
-                  inputValue={formik.values.nib}
-                />
-              </Field>
+                <Tabs.Trigger
+                  flex={1}
+                  justifyContent={"center"}
+                  value="explanation"
+                >
+                  {l.explanation}
+                </Tabs.Trigger>
 
-              <Field
-                label={l.owner}
-                invalid={!!formik.errors.pemilik}
-                errorText={formik.errors.pemilik as string}
-                mb={4}
-              >
-                <StringInput
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("pemilik", input);
-                  }}
-                  inputValue={formik.values.pemilik}
-                />
-              </Field>
+                <Tabs.Trigger
+                  flex={1}
+                  justifyContent={"center"}
+                  value="document"
+                >
+                  {l.document}
+                </Tabs.Trigger>
+              </Tabs.List>
 
-              <Field
-                label={l.owner}
-                invalid={!!formik.errors.pemilik}
-                errorText={formik.errors.pemilik as string}
-                mb={4}
-              >
-                <StringInput
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("pemilik", input);
-                  }}
-                  inputValue={formik.values.pemilik}
-                />
-              </Field>
+              {/* information content */}
+              <Tabs.Content value="information" pl={4} pr={3}>
+                {/* owner */}
+                <Field
+                  readOnly
+                  label={l.owner}
+                  invalid={!!formik.errors.pemilik}
+                  errorText={formik.errors.pemilik as string}
+                  mb={4}
+                >
+                  <StringInput
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("pemilik", input);
+                    }}
+                    inputValue={formik.values.pemilik}
+                  />
+                </Field>
 
-              <Field
-                label={l.owner_type}
-                invalid={!!formik.errors.tipepemili}
-                errorText={formik.errors.tipepemili as string}
-                mb={4}
-              >
-                <StringInput
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("tipepemili", input);
-                  }}
-                  inputValue={formik.values.tipepemili}
-                />
-              </Field>
+                {/* owner type */}
+                <Field
+                  readOnly
+                  label={l.owner_type}
+                  invalid={!!formik.errors.tipepemili}
+                  errorText={formik.errors.tipepemili as string}
+                  mb={4}
+                >
+                  <StringInput
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("tipepemili", input);
+                    }}
+                    inputValue={formik.values.tipepemili}
+                  />
+                </Field>
 
-              <Field
-                label={l.rights_published_date}
-                invalid={!!formik.errors.tglterbith}
-                errorText={formik.errors.tglterbith as string}
-                mb={4}
-              >
-                <StringInput
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("tglterbith", input);
-                  }}
-                  inputValue={formik.values.tglterbith}
-                />
-              </Field>
+                {/* usage */}
+                <Field
+                  readOnly
+                  label={l.usage}
+                  invalid={!!formik.errors.penggunaan}
+                  errorText={formik.errors.penggunaan as string}
+                  mb={4}
+                >
+                  <StringInput
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("penggunaan", input);
+                    }}
+                    inputValue={formik.values.penggunaan}
+                  />
+                </Field>
 
-              <Field
-                label={l.rights_expired_date}
-                invalid={!!formik.errors.berakhirha}
-                errorText={formik.errors.berakhirha as string}
-                mb={4}
-              >
-                <StringInput
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("berakhirha", input);
-                  }}
-                  inputValue={formik.values.berakhirha}
-                />
-              </Field>
+                <SimpleGrid columns={[1, null, 2]} gap={4} mb={4}>
+                  {/* no sertif */}
+                  <Field
+                    readOnly
+                    label={l.sertificate_number}
+                    invalid={!!formik.errors.hak}
+                    errorText={formik.errors.hak as string}
+                  >
+                    <StringInput
+                      onChangeSetter={(input) => {
+                        formik.setFieldValue("hak", input);
+                      }}
+                      inputValue={formik.values.hak}
+                    />
+                  </Field>
 
-              <Field
-                label={l.map_area}
-                invalid={!!formik.errors.luaspeta}
-                errorText={formik.errors.luaspeta as string}
-                mb={4}
-              >
-                <StringInput
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("luaspeta", input);
-                  }}
-                  inputValue={formik.values.luaspeta}
-                />
-              </Field>
+                  {/* nib */}
+                  <Field
+                    readOnly
+                    label={"NIB"}
+                    invalid={!!formik.errors.nib}
+                    errorText={formik.errors.nib as string}
+                  >
+                    <StringInput
+                      onChangeSetter={(input) => {
+                        formik.setFieldValue("nib", input);
+                      }}
+                      inputValue={formik.values.nib}
+                    />
+                  </Field>
+                </SimpleGrid>
 
-              <Field
-                label={l.written_area}
-                invalid={!!formik.errors.luastertul}
-                errorText={formik.errors.luastertul as string}
-                mb={4}
-              >
-                <StringInput
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("luastertul", input);
-                  }}
-                  inputValue={formik.values.luastertul}
-                />
-              </Field>
+                <SimpleGrid columns={[1, null, 2]} gap={4} mb={4}>
+                  {/* rights publish date */}
+                  <Field
+                    readOnly
+                    label={l.rights_published_date}
+                    invalid={!!formik.errors.tglterbith}
+                    errorText={formik.errors.tglterbith as string}
+                  >
+                    <StringInput
+                      onChangeSetter={(input) => {
+                        formik.setFieldValue("tglterbith", input);
+                      }}
+                      inputValue={formik.values.tglterbith}
+                    />
+                  </Field>
 
-              <Field
-                label={l.sk}
-                invalid={!!formik.errors.sk}
-                errorText={formik.errors.sk as string}
-                mb={4}
-              >
-                <StringInput
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("sk", input);
-                  }}
-                  inputValue={formik.values.sk}
-                />
-              </Field>
+                  {/* rights expired date */}
+                  <Field
+                    readOnly
+                    label={l.rights_expired_date}
+                    invalid={!!formik.errors.berakhirha}
+                    errorText={formik.errors.berakhirha as string}
+                  >
+                    <StringInput
+                      onChangeSetter={(input) => {
+                        formik.setFieldValue("berakhirha", input);
+                      }}
+                      inputValue={formik.values.berakhirha}
+                    />
+                  </Field>
+                </SimpleGrid>
 
-              <Field
-                label={l.sk_date}
-                invalid={!!formik.errors.tanggalsk}
-                errorText={formik.errors.tanggalsk as string}
-                mb={4}
-              >
-                <StringInput
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("tanggalsk", input);
-                  }}
-                  inputValue={formik.values.tanggalsk}
-                />
-              </Field>
+                <SimpleGrid columns={[1, null, 2]} gap={4} mb={4}>
+                  {/* map area */}
+                  <Field
+                    readOnly
+                    label={l.map_area}
+                    invalid={!!formik.errors.luaspeta}
+                    errorText={formik.errors.luaspeta as string}
+                  >
+                    <StringInput
+                      onChangeSetter={(input) => {
+                        formik.setFieldValue("luaspeta", input);
+                      }}
+                      inputValue={formik.values.luaspeta}
+                    />
+                  </Field>
 
-              <Field
-                label={l.usage}
-                invalid={!!formik.errors.penggunaan}
-                errorText={formik.errors.penggunaan as string}
-              >
-                <StringInput
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("penggunaan", input);
-                  }}
-                  inputValue={formik.values.penggunaan}
-                />
-              </Field>
-            </form>
+                  {/* written area */}
+                  <Field
+                    readOnly
+                    label={l.written_area}
+                    invalid={!!formik.errors.luastertul}
+                    errorText={formik.errors.luastertul as string}
+                  >
+                    <StringInput
+                      onChangeSetter={(input) => {
+                        formik.setFieldValue("luastertul", input);
+                      }}
+                      inputValue={formik.values.luastertul}
+                    />
+                    {/* written area */}
+                  </Field>
+                </SimpleGrid>
+
+                <SimpleGrid columns={[1, null, 2]} gap={4} mb={4}>
+                  {/* sk */}
+                  <Field
+                    readOnly
+                    label={l.sk}
+                    invalid={!!formik.errors.sk}
+                    errorText={formik.errors.sk as string}
+                  >
+                    <StringInput
+                      onChangeSetter={(input) => {
+                        formik.setFieldValue("sk", input);
+                      }}
+                      inputValue={formik.values.sk}
+                    />
+                  </Field>
+
+                  {/* sk date */}
+                  <Field
+                    readOnly
+                    label={l.sk_date}
+                    invalid={!!formik.errors.tanggalsk}
+                    errorText={formik.errors.tanggalsk as string}
+                  >
+                    <StringInput
+                      onChangeSetter={(input) => {
+                        formik.setFieldValue("tanggalsk", input);
+                      }}
+                      inputValue={formik.values.tanggalsk}
+                    />
+                  </Field>
+                </SimpleGrid>
+
+                <SimpleGrid columns={[1, null, 2]} gap={4}>
+                  {/* city */}
+                  <Field
+                    readOnly
+                    label={l.city}
+                    invalid={!!formik.errors.kabupaten}
+                    errorText={formik.errors.kabupaten as string}
+                  >
+                    <StringInput
+                      onChangeSetter={(input) => {
+                        formik.setFieldValue("kabupaten", input);
+                      }}
+                      inputValue={formik.values.kabupaten}
+                    />
+                  </Field>
+
+                  {/* province */}
+                  <Field
+                    readOnly
+                    label={l.province}
+                    invalid={!!formik.errors.propinsi}
+                    errorText={formik.errors.propinsi as string}
+                  >
+                    <StringInput
+                      onChangeSetter={(input) => {
+                        formik.setFieldValue("propinsi", input);
+                      }}
+                      inputValue={formik.values.propinsi}
+                    />
+                  </Field>
+                </SimpleGrid>
+              </Tabs.Content>
+
+              {/* explanation content */}
+              <Tabs.Content value="explanation" px={4}>
+                <Field
+                  label={l.dispute_parties}
+                  invalid={!!formik.errors.parapihakb}
+                  errorText={formik.errors.parapihakb as string}
+                  mb={4}
+                >
+                  <Textarea
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("parapihakb", input);
+                    }}
+                    inputValue={formik.values.parapihakb}
+                  />
+                </Field>
+
+                <Field
+                  label={l.problems}
+                  invalid={!!formik.errors.permasalah}
+                  errorText={formik.errors.permasalah as string}
+                  mb={4}
+                >
+                  <Textarea
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("permasalah", input);
+                    }}
+                    inputValue={formik.values.permasalah}
+                  />
+                </Field>
+
+                <Field
+                  label={l.handling_and_follow_up}
+                  invalid={!!formik.errors.tindaklanj}
+                  errorText={formik.errors.tindaklanj as string}
+                  mb={4}
+                >
+                  <Textarea
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("tindaklanj", input);
+                    }}
+                    inputValue={formik.values.tindaklanj}
+                  />
+                </Field>
+
+                <Field
+                  label={l.dispute_parties}
+                  invalid={!!formik.errors.hasil}
+                  errorText={formik.errors.hasil as string}
+                >
+                  <Textarea
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("hasil", input);
+                    }}
+                    inputValue={formik.values.hasil}
+                  />
+                </Field>
+              </Tabs.Content>
+
+              {/* document content */}
+              <Tabs.Content value="document" px={4}>
+                <Field
+                  label={l.document}
+                  invalid={!!formik.errors.docs}
+                  errorText={formik.errors.docs as string}
+                >
+                  {!empty(existingDocs) && (
+                    <CContainer>
+                      {existingDocs?.map((item: any, i: number) => {
+                        return (
+                          <ExistingFileItem
+                            key={i}
+                            data={item}
+                            onDelete={() => {
+                              setExistingDocs((prev) =>
+                                prev.filter((f) => f !== item)
+                              );
+                              formik.setFieldValue("deleted_docs", [
+                                ...formik.values.deleted_docs,
+                                item,
+                              ]);
+                            }}
+                          />
+                        );
+                      })}
+                    </CContainer>
+                  )}
+
+                  {empty(existingDocs) && (
+                    <FileInput
+                      dropzone
+                      name="docs"
+                      onChangeSetter={(input) => {
+                        formik.setFieldValue("docs", input);
+                      }}
+                      inputValue={formik.values.docs}
+                      accept=".pdf .doc .docx"
+                      maxFiles={5}
+                    />
+                  )}
+
+                  {!empty(formik.values.deleted_docs) && (
+                    <CContainer gap={2} mt={2}>
+                      <P color={"fg.muted"}>{l.deleted_docs}</P>
+
+                      {formik.values.deleted_docs?.map(
+                        (item: any, i: number) => {
+                          return (
+                            <ExistingFileItem
+                              key={i}
+                              data={item}
+                              withDeleteButton={false}
+                              withUndobutton
+                              onUndo={() => {
+                                setExistingDocs((prev) => [...prev, item]);
+
+                                formik.setFieldValue(
+                                  "deleted_docs",
+                                  formik.values.deleted_docs.filter(
+                                    (f: any) => f !== item
+                                  )
+                                );
+
+                                formik.setFieldValue("icon", undefined);
+                              }}
+                            />
+                          );
+                        }
+                      )}
+                    </CContainer>
+                  )}
+                </Field>
+              </Tabs.Content>
+            </Tabs.Root>
           </DisclosureBody>
 
           <DisclosureFooter>
             <BackButton />
 
             {/* TODO submit edit */}
-            <BButton colorPalette={themeConfig.colorPalette}>{l.save}</BButton>
+            <BButton
+              colorPalette={themeConfig.colorPalette}
+              onClick={formik.submitForm}
+            >
+              {l.save}
+            </BButton>
           </DisclosureFooter>
         </DisclosureContent>
       </DisclosureRoot>
@@ -1296,12 +1531,13 @@ const FieldData = () => {
       open={open}
       containerProps={{
         position: "absolute",
-        left: "8px",
+        right: "8px",
         top: "66px",
         pointerEvents: "auto",
         w: iss ? "calc(100vw - 16px)" : "300px",
         pb: 2,
-        maxH: "calc(60vh - 72px)",
+        // maxH: "calc(60vh - 72px)",
+        maxH: "calc(100vh - 134px)",
       }}
       animationEntrance="top"
     >
@@ -1335,83 +1571,129 @@ const FieldData = () => {
 
       <CContainer px={1} overflowY={"auto"} className="scrollY">
         <ItemContainer>
-          <P fontWeight={"semibold"}>{l.sertificate_number}</P>
-          <P>{`${data?.hak || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"semibold"}>NIB</P>
-          <P>{`${data?.nib || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"semibold"}>{l.owner}</P>
+          <P fontWeight={"medium"} color={"fg.subtle"}>
+            {l.owner}
+          </P>
           <P>{`${data?.pemilik || "-"}`}</P>
         </ItemContainer>
 
         <ItemContainer>
-          <P fontWeight={"semibold"}>{l.owner_type}</P>
+          <P fontWeight={"medium"} color={"fg.subtle"}>
+            {l.owner_type}
+          </P>
           <P>{`${data?.tipepemili || "-"}`}</P>
         </ItemContainer>
 
         <ItemContainer>
-          <P fontWeight={"semibold"}>{l.rights_type}</P>
-          <P>{`${data?.tipehak || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"semibold"}>{l.rights_published_date}</P>
-          <P>{`${data?.tglterbith || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"semibold"}>{l.rights_expired_date}</P>
-          <P>{`${data?.berakhirha || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"semibold"}>{l.map_area}</P>
-          <P>{`${data?.luaspeta || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"semibold"}>{l.written_area}</P>
-          <P>{`${data?.luastertul || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"semibold"}>{l.sk}</P>
-          <P>{`${data?.sk || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"semibold"}>{l.sk_date}</P>
-          <P>{`${data?.tanggalsk || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"semibold"}>{l.usage}</P>
+          <P fontWeight={"medium"} color={"fg.subtle"}>
+            {l.usage}
+          </P>
           <P>{`${data?.penggunaan || "-"}`}</P>
         </ItemContainer>
 
         <ItemContainer>
-          <P fontWeight={"semibold"}>{l.problems}</P>
+          <P fontWeight={"medium"} color={"fg.subtle"}>
+            {l.sertificate_number}
+          </P>
+          <P>{`${data?.hak || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"medium"} color={"fg.subtle"}>
+            NIB
+          </P>
+          <P>{`${data?.nib || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"medium"} color={"fg.subtle"}>
+            {l.rights_type}
+          </P>
+          <P>{`${data?.tipehak || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"medium"} color={"fg.subtle"}>
+            {l.rights_published_date}
+          </P>
+          <P>{`${data?.tglterbith || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"medium"} color={"fg.subtle"}>
+            {l.rights_expired_date}
+          </P>
+          <P>{`${data?.berakhirha || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"medium"} color={"fg.subtle"}>
+            {l.map_area}
+          </P>
+          <P>{`${data?.luaspeta || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"medium"} color={"fg.subtle"}>
+            {l.written_area}
+          </P>
+          <P>{`${data?.luastertul || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"medium"} color={"fg.subtle"}>
+            {l.sk}
+          </P>
+          <P>{`${data?.sk || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"medium"} color={"fg.subtle"}>
+            {l.sk_date}
+          </P>
+          <P>{`${data?.tanggalsk || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"medium"} color={"fg.subtle"}>
+            {l.city}
+          </P>
+          <P>{`${data?.kabupaten || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"medium"} color={"fg.subtle"}>
+            {l.province}
+          </P>
+          <P>{`${data?.propinsi || "-"}`}</P>
+        </ItemContainer>
+
+        <ItemContainer>
+          <P fontWeight={"medium"} color={"fg.subtle"}>
+            {l.problems}
+          </P>
           <P>{`${data?.permasalah || "-"}`}</P>
         </ItemContainer>
 
         <ItemContainer>
-          <P fontWeight={"semibold"}>{l.dispute_parties}</P>
+          <P fontWeight={"medium"} color={"fg.subtle"}>
+            {l.dispute_parties}
+          </P>
           {/* TODO kolom undefined */}
-          <P>{`-`}</P>
+          <P>{`${data?.parapihakb || "-"}`}</P>
         </ItemContainer>
 
         <ItemContainer>
-          <P fontWeight={"semibold"}>{l.handling_and_follow_up}</P>
+          <P fontWeight={"medium"} color={"fg.subtle"}>
+            {l.handling_and_follow_up}
+          </P>
           <P>{`${data?.tindaklanj || "-"}`}</P>
         </ItemContainer>
 
         <ItemContainer last>
-          <P fontWeight={"semibold"}>{l.result}</P>
+          <P fontWeight={"medium"} color={"fg.subtle"}>
+            {l.result}
+          </P>
           <P>{`${data?.hasil || "-"}`}</P>
         </ItemContainer>
       </CContainer>

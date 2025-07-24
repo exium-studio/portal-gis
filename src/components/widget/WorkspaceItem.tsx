@@ -42,6 +42,7 @@ import { Tooltip } from "../ui/tooltip";
 import ExistingFileItem from "./ExistingFIleItem";
 import SelectLayerFileType from "./SelectLayerFileType";
 import useMapViewState from "@/context/useMapViewState";
+import { MAP_TRANSITION_DURATION } from "@/constants/duration";
 
 const AddLayer = (props: any) => {
   // Props
@@ -568,7 +569,7 @@ const ViewLayers = (props: any) => {
         ],
         {
           padding: 20, // px
-          duration: 3000, // ms
+          duration: MAP_TRANSITION_DURATION,
           essential: true,
         }
       );

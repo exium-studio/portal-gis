@@ -9,7 +9,7 @@ const MenuHeaderContainer = ({ children, borderless, ...props }: Props) => {
     <CContainer px={1}>
       <CContainer
         px={2}
-        py={4}
+        py={"14px"}
         borderBottom={borderless ? "" : "1px solid {colors.border.muted}"}
         {...props}
       >

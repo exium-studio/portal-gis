@@ -54,7 +54,7 @@ const DisclosureRoot = ({ children, ...props }: any) => {
       {children}
     </DrawerRoot>
   ) : (
-    <DialogRoot placement={"center"} {...props}>
+    <DialogRoot placement={"center"} scrollBehavior={"inside"} {...props}>
       {children}
     </DialogRoot>
   );
@@ -155,10 +155,10 @@ const DisclosureBody = ({ children, ...props }: DisclosureBodyProps) => {
     </DrawerBody>
   ) : (
     <DialogBody
-      px={4}
       pr={3}
-      // pt={"0 !important"}
-      py={`${props.pb ?? 4} !important`}
+      px={`${props.px ?? 4} !important`}
+      pt={`${props.pt ?? 4} !important`}
+      pb={`${props.pb ?? 4} !important`}
       className={finalClassName}
       overflowX={"clip"}
       {...(props as DialogBodyProps)}
