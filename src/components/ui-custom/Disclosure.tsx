@@ -54,7 +54,7 @@ const DisclosureRoot = ({ children, ...props }: any) => {
       {children}
     </DrawerRoot>
   ) : (
-    <DialogRoot placement={"top"} scrollBehavior={"inside"} {...props}>
+    <DialogRoot placement={"center"} scrollBehavior={"inside"} {...props}>
       {children}
     </DialogRoot>
   );

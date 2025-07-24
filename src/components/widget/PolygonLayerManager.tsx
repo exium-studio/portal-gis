@@ -26,20 +26,24 @@ const LayerSource = (props: any) => {
   const geojson = data?.layer?.geojson;
   const selectedFeatureId = selectedPolygon?.polygon?.properties?.id;
   const defaultColor = "#7e7e7e";
+  const fillLayerId = `${layer?.layer_id}-fill`;
+  const outlineLayerId = `${layer?.layer_id}-outline`;
+  const sourceId = `${layer?.layer_id}-source`;
 
-  // Utils
+  // Modified click handler
   const handleOnClickPolygon = useCallback(
     (event: any) => {
-      const clickedFeature = event.features[0];
+      const clickedFeature = event.features?.[0];
       if (!clickedFeature) {
         clearSelectedPolygon();
         return;
       }
 
+      // Use layer_id instead of id for consistency
       const isAlreadySelected =
         selectedPolygon?.polygon?.properties?.id ===
           clickedFeature?.properties?.id &&
-        selectedPolygon?.polygon?.layer?.id === layer?.id;
+        selectedPolygon?.polygon?.layer?.id === layer?.layer_id; // Changed here
 
       if (isAlreadySelected) {
         clearSelectedPolygon();
@@ -48,31 +52,35 @@ const LayerSource = (props: any) => {
           data: data,
           polygon: {
             ...clickedFeature,
-            layer: { id: layer?.id },
+            layer: { id: layer?.layer_id }, // Changed here
           },
           fillColor: themeConfig.primaryColorHex,
         });
       }
     },
-    [selectedPolygon, layer?.id, themeConfig.primaryColorHex]
+    [selectedPolygon, layer?.layer_id, themeConfig.primaryColorHex]
   );
 
-  // Handle onClick event
+  // Enhanced layer effect
   useEffect(() => {
     const map = mapRef.current?.getMap();
-    if (!map) return;
+    if (!map || !layer?.layer_id) return;
 
-    map.on("click", `${layer?.id}`, handleOnClickPolygon);
+    // Debug layer existence
+    console.log(`Registering layer: ${fillLayerId}`);
+
+    map.on("click", fillLayerId, handleOnClickPolygon);
 
     return () => {
-      map.off("click", `${layer?.id}`, handleOnClickPolygon);
+      console.log(`Cleaning up layer: ${fillLayerId}`);
+      map.off("click", fillLayerId, handleOnClickPolygon);
     };
-  }, [mapRef, handleOnClickPolygon, layer?.id]);
+  }, [mapRef, handleOnClickPolygon, fillLayerId]);
 
   return (
-    <Source type="geojson" data={geojson}>
+    <Source id={sourceId} type="geojson" data={geojson}>
       <Layer
-        id={`${layer?.id}`}
+        id={fillLayerId}
         type="fill"
         paint={{
           "fill-color": [
@@ -81,7 +89,7 @@ const LayerSource = (props: any) => {
             themeConfig.primaryColorHex,
             [
               "match",
-              ["get", legendType], // Property to match against
+              ["get", legendType],
               ...legends.flatMap((legend) => [legend.label, legend.color]),
               defaultColor,
             ],
@@ -90,15 +98,11 @@ const LayerSource = (props: any) => {
         }}
       />
       <Layer
-        id={`${layer?.id}-outline`}
+        id={outlineLayerId}
         type="line"
         paint={{
           "line-color": "#ccc",
           "line-width": 1,
-        }}
-        layout={{
-          "line-cap": "round",
-          "line-join": "round",
         }}
       />
     </Source>
@@ -108,17 +112,12 @@ const LayerSource = (props: any) => {
 const PolygonLayerManager = () => {
   const activeLayerGroups = useActiveLayers((s) => s.activeLayerGroups);
 
-  console.log("activeLayerGroups", activeLayerGroups);
-
   return (
     <>
-      {activeLayerGroups?.map((data: any, i: number) => {
-        // console.log(data);
-
-        return <LayerSource key={i} data={data} />;
-      })}
+      {activeLayerGroups.map((data) => (
+        <LayerSource key={data.layer.layer_id} data={data} />
+      ))}
     </>
   );
 };
-
 export default PolygonLayerManager;
