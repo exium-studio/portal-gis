@@ -120,7 +120,7 @@ const DisclosureHeader = ({ children, ...props }: DisclosureHeaderProps) => {
   const iss = useIsSmScreenWidth();
 
   return iss ? (
-    <DrawerHeader px={5} pt={3} {...(props as DrawerHeaderProps)}>
+    <DrawerHeader px={5} pt={3} bg={"body"} {...(props as DrawerHeaderProps)}>
       {children}
     </DrawerHeader>
   ) : (
@@ -149,6 +149,7 @@ const DisclosureBody = ({ children, ...props }: DisclosureBodyProps) => {
       className={finalClassName}
       overflowY={"scroll"}
       overflowX={"clip"}
+      bg={"body"}
       {...(props as DrawerHeaderProps)}
     >
       {children}
@@ -175,7 +176,13 @@ const DisclosureFooter = ({ children, ...props }: DisclosureFooterProps) => {
   const iss = useIsSmScreenWidth();
 
   return iss ? (
-    <DrawerFooter px={4} pt={5} pb={6} {...(props as DrawerHeaderProps)}>
+    <DrawerFooter
+      px={4}
+      pt={5}
+      pb={6}
+      bg={"body"}
+      {...(props as DrawerHeaderProps)}
+    >
       <CContainer align={"stretch"} gap={2}>
         {children}
       </CContainer>
