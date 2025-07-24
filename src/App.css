@@ -16,12 +16,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-html {
-  overflow: hidden;
-}
-
 /* Custom Start*/
-
 .mapboxgl-ctrl-bottom-right,
 .mapboxgl-ctrl-bottom-left {
   display: none !important;
