@@ -18,6 +18,7 @@ import {
   HStack,
   Icon,
   Popover,
+  Portal,
   Separator,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -683,7 +684,13 @@ const WorkspaceItem = (props: any) => {
               </P>
             </Popover.Trigger>
 
-            <Popover.Content>{data?.description}</Popover.Content>
+            <Portal>
+              <Popover.Positioner>
+                <Popover.Content p={2} maxW={"200px"}>
+                  {data?.description}
+                </Popover.Content>
+              </Popover.Positioner>
+            </Portal>
           </Popover.Root>
         </CContainer>
       </CContainer>
