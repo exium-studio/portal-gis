@@ -442,6 +442,7 @@ const DeleteWorkspace = (props: any) => {
   const setRt = useRenderTrigger((s) => s.setRt);
   const { setConfirmationData, confirmationOnOpen } =
     useConfirmationDisclosure();
+  const unloadWorkspace = useActiveLayers((s) => s.removeLayerGroup);
 
   // Utils
   function onDelete() {
@@ -458,6 +459,7 @@ const DeleteWorkspace = (props: any) => {
       onResolve: {
         onSuccess: () => {
           setRt((ps) => !ps);
+          unloadWorkspace(data?.id);
         },
       },
     });
@@ -685,7 +687,7 @@ const WorkspaceItem = (props: any) => {
         borderTop={"1px solid"}
         borderColor={"border.muted"}
       >
-        <EditWorkspace data={data} flex={1} />
+        <EditWorkspace data={data} setData={setData} flex={1} />
 
         <DeleteWorkspace data={data} flex={1} />
 
