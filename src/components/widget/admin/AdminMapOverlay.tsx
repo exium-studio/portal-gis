@@ -920,7 +920,12 @@ const DetailPolygon = () => {
         </HStack>
       </MenuHeaderContainer>
 
-      <CContainer px={2} overflowY={"auto"} className="scrollY" maxH={"500px"}>
+      <CContainer
+        px={2}
+        overflowY={"auto"}
+        className="scrollY"
+        maxH={"calc(50vh - 32px)"}
+      >
         <ItemContainer>
           <P fontWeight={"semibold"}>{l.sertificate_number}</P>
           <P>{`${data?.hak || "-"}`}</P>
