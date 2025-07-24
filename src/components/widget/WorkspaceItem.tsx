@@ -1,7 +1,9 @@
 import CContainer from "@/components/ui-custom/CContainer";
+import { MAP_TRANSITION_DURATION } from "@/constants/duration";
 import useActiveLayers from "@/context/useActiveLayers";
 import useConfirmationDisclosure from "@/context/useConfirmationDisclosure";
 import useLang from "@/context/useLang";
+import useMapViewState from "@/context/useMapViewState";
 import useRenderTrigger from "@/context/useRenderTrigger";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useBackOnClose from "@/hooks/useBackOnClose";
@@ -19,11 +21,11 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import {
-  IconArrowLeft,
-  IconArrowRight,
   IconEdit,
   IconEye,
   IconFilePlus,
+  IconStackPop,
+  IconStackPush,
   IconTrash,
 } from "@tabler/icons-react";
 import { useFormik } from "formik";
@@ -48,8 +50,6 @@ import { Field } from "../ui/field";
 import { Tooltip } from "../ui/tooltip";
 import ExistingFileItem from "./ExistingFIleItem";
 import SelectLayerFileType from "./SelectLayerFileType";
-import useMapViewState from "@/context/useMapViewState";
-import { MAP_TRANSITION_DURATION } from "@/constants/duration";
 
 const AddLayer = (props: any) => {
   // Props
@@ -509,8 +509,8 @@ const UnloadLayer = (props: any) => {
         }}
         {...restProps}
       >
-        <Icon>
-          <IconArrowLeft />
+        <Icon boxSize={"26px"}>
+          <IconStackPop stroke={1.5} />
         </Icon>
       </BButton>
     </Tooltip>
@@ -577,8 +577,8 @@ const LoadWorkspace = (props: any) => {
         loading={loading}
         {...restProps}
       >
-        <Icon>
-          <IconArrowRight />
+        <Icon boxSize={"26px"}>
+          <IconStackPush stroke={1.5} />
         </Icon>
       </BButton>
     </Tooltip>
