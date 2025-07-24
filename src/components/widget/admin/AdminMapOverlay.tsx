@@ -1513,7 +1513,6 @@ const EditField = (props: any) => {
           <DisclosureFooter>
             <BackButton />
 
-            {/* TODO submit edit */}
             <BButton
               colorPalette={themeConfig.colorPalette}
               onClick={formik.submitForm}
@@ -1722,7 +1721,6 @@ const FieldData = () => {
           <P fontWeight={"medium"} color={"fg.subtle"}>
             {l.dispute_parties}
           </P>
-          {/* TODO kolom undefined */}
           <P>{`${data?.parapihakb || "-"}`}</P>
         </ItemContainer>
 

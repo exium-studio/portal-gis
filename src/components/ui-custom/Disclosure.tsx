@@ -158,7 +158,8 @@ const DisclosureBody = ({ children, ...props }: DisclosureBodyProps) => {
     <DialogBody
       pl={4}
       pr={3}
-      py={"4 !important"}
+      py={4}
+      pb={"4 !important"}
       className={finalClassName}
       overflowX={"clip"}
       {...(props as DialogBodyProps)}
