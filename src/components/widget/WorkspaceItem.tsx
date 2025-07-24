@@ -687,9 +687,9 @@ const WorkspaceItem = (props: any) => {
         borderTop={"1px solid"}
         borderColor={"border.muted"}
       >
-        <EditWorkspace data={data} setData={setData} flex={1} />
-
         <DeleteWorkspace data={data} flex={1} />
+
+        <EditWorkspace data={data} setData={setData} flex={1} />
 
         <Separator orientation={"vertical"} h={"full"} />
 
