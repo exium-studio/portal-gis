@@ -707,7 +707,7 @@ const WorkspaceItem = (props: any) => {
 
         <Separator orientation={"vertical"} h={"full"} />
 
-        <AddLayer data={data} flex={1} />
+        <AddLayer data={data} flex={1} disabled={!!loadedLayerData} />
 
         <UnloadLayer data={data} flex={1} disabled={!!!loadedLayerData} />
 
