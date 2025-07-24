@@ -201,7 +201,7 @@ const Data = (props: any) => {
   return (
     <CContainer px={4}>
       <SimpleGrid
-        columns={layoutHalfMap ? [1, null, null, 2] : [1, null, 4]}
+        columns={layoutHalfMap ? [1, null, null, null, 2] : [1, null, 2, 4]}
         gap={4}
       >
         {data?.map((item: any) => {

@@ -511,6 +511,7 @@ const translations = {
   "tomorrow": "Tomorrow",
   "transaction": "Transaction",
   "try_label": "Try",
+  "unload_workspace_from_map": "Unload workspace from map",
   "uom": {
     "mass": "Weight",
     "length": "Length",

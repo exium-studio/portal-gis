@@ -511,6 +511,7 @@ const translations = {
   "tomorrow": "Besok",
   "transaction": "Transaksi",
   "try_label": "Coba",
+  "unload_workspace_from_map": "Unload workspace dari peta",
   "uom": {
     "mass": "Berat",
     "length": "Panjang",

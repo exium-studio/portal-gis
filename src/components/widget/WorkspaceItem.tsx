@@ -11,8 +11,15 @@ import back from "@/utils/back";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import empty from "@/utils/empty";
 import { fileValidation } from "@/utils/validationSchemas";
-import { FieldsetRoot, HStack, Icon, useDisclosure } from "@chakra-ui/react";
 import {
+  FieldsetRoot,
+  HStack,
+  Icon,
+  Separator,
+  useDisclosure,
+} from "@chakra-ui/react";
+import {
+  IconArrowLeft,
   IconArrowRight,
   IconEdit,
   IconEye,
@@ -46,7 +53,7 @@ import { MAP_TRANSITION_DURATION } from "@/constants/duration";
 
 const AddLayer = (props: any) => {
   // Props
-  const { data } = props;
+  const { data, ...restProps } = props;
 
   // console.log(data);
 
@@ -126,6 +133,7 @@ const AddLayer = (props: any) => {
           variant={"ghost"}
           // size={"sm"}
           onClick={onOpen}
+          {...restProps}
         >
           <Icon>
             <IconFilePlus />
@@ -192,7 +200,7 @@ const AddLayer = (props: any) => {
 };
 const EditWorkspace = (props: any) => {
   // Props
-  const { data } = props;
+  const { data, ...restProps } = props;
 
   // Hooks
   const { l } = useLang();
@@ -286,6 +294,7 @@ const EditWorkspace = (props: any) => {
           variant={"ghost"}
           // size={"sm"}
           onClick={onOpen}
+          {...restProps}
         >
           <Icon>
             <IconEdit />
@@ -421,7 +430,7 @@ const EditWorkspace = (props: any) => {
 };
 const DeleteWorkspace = (props: any) => {
   // Props
-  const { data } = props;
+  const { data, ...restProps } = props;
 
   // Hooks
   const { l } = useLang();
@@ -471,6 +480,7 @@ const DeleteWorkspace = (props: any) => {
           });
           confirmationOnOpen();
         }}
+        {...restProps}
       >
         <Icon>
           <IconTrash />
@@ -479,9 +489,36 @@ const DeleteWorkspace = (props: any) => {
     </Tooltip>
   );
 };
+const UnloadLayer = (props: any) => {
+  // Props
+  const { data, ...restProps } = props;
+
+  // Hooks
+  const { l } = useLang();
+
+  // Contexts
+  const unloadWorkspace = useActiveLayers((s) => s.removeLayerGroup);
+
+  return (
+    <Tooltip content={l.unload_workspace_from_map}>
+      <BButton
+        iconButton
+        variant={"ghost"}
+        onClick={() => {
+          unloadWorkspace(data?.id);
+        }}
+        {...restProps}
+      >
+        <Icon>
+          <IconArrowLeft />
+        </Icon>
+      </BButton>
+    </Tooltip>
+  );
+};
 const LoadWorkspace = (props: any) => {
   // Props
-  const { data } = props;
+  const { data, ...restProps } = props;
 
   // Hooks
   const { l } = useLang();
@@ -536,9 +573,9 @@ const LoadWorkspace = (props: any) => {
         variant={"ghost"}
         color={themeConfig.primaryColor}
         // size={"sm"}
-        ml={"auto"}
         onClick={onLoad}
         loading={loading}
+        {...restProps}
       >
         <Icon>
           <IconArrowRight />
@@ -549,7 +586,7 @@ const LoadWorkspace = (props: any) => {
 };
 const ViewLayers = (props: any) => {
   // Props
-  const { bboxCenter } = props;
+  const { bboxCenter, ...restProps } = props;
 
   // Hooks
   const { l } = useLang();
@@ -582,8 +619,8 @@ const ViewLayers = (props: any) => {
         unclicky
         iconButton
         variant={"ghost"}
-        ml={"auto"}
         onClick={onViewLayers}
+        {...restProps}
       >
         <Icon>
           <IconEye />
@@ -644,19 +681,25 @@ const WorkspaceItem = (props: any) => {
 
       <HStack
         p={1}
-        gap={0}
+        gap={1}
         borderTop={"1px solid"}
         borderColor={"border.muted"}
       >
-        <AddLayer data={data} />
+        <EditWorkspace data={data} flex={1} />
 
-        <EditWorkspace data={data} />
+        <DeleteWorkspace data={data} flex={1} />
 
-        <DeleteWorkspace data={data} />
+        <Separator orientation={"vertical"} h={"full"} />
 
-        {loadedLayerData && <ViewLayers data={data} bboxCenter={bboxCenter} />}
+        <AddLayer data={data} flex={1} />
 
-        {!loadedLayerData && <LoadWorkspace data={data} />}
+        <UnloadLayer data={data} flex={1} disabled={!!!loadedLayerData} />
+
+        {loadedLayerData && (
+          <ViewLayers data={data} bboxCenter={bboxCenter} flex={1} />
+        )}
+
+        {!loadedLayerData && <LoadWorkspace data={data} flex={1} />}
       </HStack>
     </CContainer>
   );

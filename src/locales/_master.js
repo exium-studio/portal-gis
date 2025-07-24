@@ -369,6 +369,10 @@ export const load_workspace_to_map = {
   id: "Load workspace ke peta",
   en: "Load workspace to map",
 };
+export const unload_workspace_from_map = {
+  id: "Unload workspace dari peta",
+  en: "Unload workspace from map",
+};
 export const add_workspace_layer = {
   id: "Tambah layer workspace",
   en: "Add workspace layer",
