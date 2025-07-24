@@ -83,6 +83,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { Field } from "@/components/ui/field";
 import StringInput from "@/components/ui-custom/StringInput";
+import useRequest from "@/hooks/useRequest";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -863,6 +864,9 @@ const EditField = (props: any) => {
   const { l } = useLang();
   const { open, onOpen, onClose } = useDisclosure();
   useBackOnClose(`edit-${data?.id}`, open, onOpen, onClose);
+  const { req } = useRequest({
+    id: "crud-field",
+  });
 
   // Contexts
   const { themeConfig } = useThemeConfig();
@@ -898,7 +902,50 @@ const EditField = (props: any) => {
     },
     validationSchema: yup.object().shape({}),
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
+
+      const payload = {
+        table_name: "shp_workspace_1_layer_1",
+        properties: {
+          propinsi: values.propinsi,
+          kabupaten: values.kabupaten,
+          nib: values.nib,
+          su: values.su,
+          hak: values.hak,
+          tipehak: values.tipehak,
+          luastertul: values.luastertul,
+          luaspeta: values.luaspeta,
+          sk: values.sk,
+          tanggalsk: values.tanggalsk,
+          tglterbith: values.tglterbith,
+          berakhirha: values.berakhirha,
+          pemilik: values.pemilik,
+          tipepemili: values.tipepemili,
+          gunatanahk: values.gunatanahk,
+          gunatanahu: values.gunatanahu,
+          terpetakan: values.terpetakan,
+          keterangan: values.keterangan,
+          dtipehak: values.dtipehak,
+          parapihakb: values.parapihakb,
+          permasalah: values.permasalah,
+          tindaklanj: values.tindaklanj,
+          hasil: values.hasil,
+          penggunaan: values.penggunaan,
+        },
+      };
+      const url = ``;
+      const config = {
+        url,
+        method: "PUT",
+        data: payload,
+      };
+
+      req({
+        config,
+        onResolve: {
+          onSuccess: () => {},
+        },
+      });
     },
   });
 
@@ -1161,6 +1208,7 @@ const EditField = (props: any) => {
           <DisclosureFooter>
             <BackButton />
 
+            {/* TODO submit edit */}
             <BButton colorPalette={themeConfig.colorPalette}>{l.save}</BButton>
           </DisclosureFooter>
         </DisclosureContent>
