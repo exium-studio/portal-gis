@@ -93,6 +93,7 @@ import * as yup from "yup";
 import useSearchMode from "../../../context/useSearchMode";
 import ExistingFileItem from "../ExistingFIleItem";
 import MenuHeaderContainer from "../MenuHeaderContainer";
+import useActiveLayers from "@/context/useActiveLayers";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -938,16 +939,19 @@ const EditField = (props: any) => {
 
   // Contexts
   const { themeConfig } = useThemeConfig();
-  const { selectedPolygon } = useSelectedPolygon();
+  const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
+  const updateWorkspace = useActiveLayers((s) => s.updateLayerData);
 
   // States
+  const workspaceId = selectedPolygon?.data?.workspace?.id;
   const layerId = selectedPolygon?.data?.layer?.layer_id;
   const tableName = selectedPolygon?.data?.layer?.table_name;
   const propertiesId = selectedPolygon?.polygon?.properties?.id;
-  // const featuresIndex =
-  //   selectedPolygon?.data?.layer?.geojson?.features.findIndex(
-  //     (f: any) => f.properties.id === propertiesId
-  //   );
+  const geojson = selectedPolygon?.data?.layer?.geojson;
+  const featuresIndex =
+    selectedPolygon?.data?.layer?.geojson?.features.findIndex(
+      (f: any) => f.properties.id === propertiesId
+    );
   const [existingDocs, setExistingDocs] = useState<any[]>(data?.thumbnail);
   const formik = useFormik({
     validateOnChange: false,
@@ -988,7 +992,7 @@ const EditField = (props: any) => {
       // console.log(values);
       back();
 
-      const properties = {
+      const newProperties = {
         id: propertiesId,
         propinsi: values.propinsi,
         kabupaten: values.kabupaten,
@@ -1025,7 +1029,7 @@ const EditField = (props: any) => {
       } else if (values.docs) {
         payload.append("document", values.docs);
       }
-      payload.append("properties", JSON.stringify(properties));
+      payload.append("properties", JSON.stringify(newProperties));
       const url = `/api/gis-bpn/workspace-layers/shape-files/update`;
       const config = {
         url,
@@ -1033,11 +1037,29 @@ const EditField = (props: any) => {
         data: payload,
       };
 
+      // new geojson
+      const newGeojson = {
+        ...geojson,
+        features: geojson.features.map((feature: any, index: number) => {
+          if (index === featuresIndex) {
+            return {
+              ...feature,
+              properties: {
+                ...feature.properties,
+                ...newProperties,
+              },
+            };
+          }
+          return feature;
+        }),
+      };
+
       req({
         config,
         onResolve: {
           onSuccess: () => {
-            setData(properties);
+            updateWorkspace(workspaceId, layerId, newGeojson);
+            setData(newProperties);
           },
         },
       });

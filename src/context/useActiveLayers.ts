@@ -116,7 +116,7 @@ const useActiveLayers = create<GeoJSONLayerState>((set) => ({
     })),
 
   // Update layer data
-  updateLayerData: (workspaceId, layer_id, data) =>
+  updateLayerData: (workspaceId, layer_id, newGeojson) =>
     set((state) => ({
       activeLayerGroups: state.activeLayerGroups.map((group) => {
         if (
@@ -130,7 +130,7 @@ const useActiveLayers = create<GeoJSONLayerState>((set) => ({
           ...group,
           layer: {
             ...group.layer,
-            data: data,
+            geojson: newGeojson,
           },
         };
       }),
