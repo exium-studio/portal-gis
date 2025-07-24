@@ -13,12 +13,14 @@ import DisclosureHeaderContent from "@/components/ui-custom/DisclosureHeaderCont
 import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
 import FeedbackNotFound from "@/components/ui-custom/FeedbackNotFound";
 import FeedbackRetry from "@/components/ui-custom/FeedbackRetry";
+import FileInput from "@/components/ui-custom/FileInput";
 import FloatingContainer from "@/components/ui-custom/FloatingContainer";
 import HScroll from "@/components/ui-custom/HScroll";
 import NumberInput from "@/components/ui-custom/NumberInput";
 import P from "@/components/ui-custom/P";
 import SearchInput from "@/components/ui-custom/SearchInput";
 import StringInput from "@/components/ui-custom/StringInput";
+import Textarea from "@/components/ui-custom/Textarea";
 import { useColorMode } from "@/components/ui/color-mode";
 import { Field } from "@/components/ui/field";
 import {
@@ -34,6 +36,7 @@ import useActiveMapStyle from "@/context/useActiveMapStyle";
 import useMapsConfig from "@/context/useBasemap";
 import useCurrentLocation from "@/context/useCurrentLocation";
 import useLang from "@/context/useLang";
+import useLayout from "@/context/useLayout";
 import useLegend from "@/context/useLegend";
 import useMapStyle from "@/context/useMapStyle";
 import useMapViewState from "@/context/useMapViewState";
@@ -46,9 +49,11 @@ import useDataState from "@/hooks/useDataState";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import useRequest from "@/hooks/useRequest";
 import BASEMAP_CONFIG_LIST from "@/static/basemapConfigList";
+import back from "@/utils/back";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import empty from "@/utils/empty";
 import pluck from "@/utils/pluck";
+import { fileValidation } from "@/utils/validationSchemas";
 import {
   Box,
   Center,
@@ -83,16 +88,11 @@ import {
 } from "@tabler/icons-react";
 import chroma from "chroma-js";
 import { useFormik } from "formik";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as yup from "yup";
-import MenuHeaderContainer from "../MenuHeaderContainer";
 import useSearchMode from "../../../context/useSearchMode";
-import Textarea from "@/components/ui-custom/Textarea";
 import ExistingFileItem from "../ExistingFIleItem";
-import FileInput from "@/components/ui-custom/FileInput";
-import { fileValidation } from "@/utils/validationSchemas";
-import back from "@/utils/back";
-import useLayout from "@/context/useLayout";
+import MenuHeaderContainer from "../MenuHeaderContainer";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -924,7 +924,7 @@ const Compass = () => {
 
 const EditField = (props: any) => {
   // Props
-  const { data } = props;
+  const { data, setData } = props;
 
   // Hooks
   const { l } = useLang();
@@ -937,6 +937,10 @@ const EditField = (props: any) => {
   // Contexts
   const { themeConfig } = useThemeConfig();
   const { selectedPolygon } = useSelectedPolygon();
+  // const updateWorkspace = useActiveLayers((s) => s.updateLayerData);
+
+  // console.log(selectedPolygon?.data);
+  // console.log(data);
 
   // States
   const layerId = selectedPolygon?.data?.layer?.layer_id;
@@ -1030,7 +1034,9 @@ const EditField = (props: any) => {
       req({
         config,
         onResolve: {
-          onSuccess: () => {},
+          onSuccess: () => {
+            setData(properties);
+          },
         },
       });
     },
@@ -1038,37 +1044,35 @@ const EditField = (props: any) => {
 
   // Handle initial values
   useEffect(() => {
-    if (open) {
-      formik.setValues({
-        propinsi: data?.propinsi,
-        kabupaten: data?.kabupaten,
-        nib: data?.nib,
-        su: data?.su,
-        hak: data?.hak,
-        tipehak: data?.tipehak,
-        luastertul: data?.luastertul,
-        luaspeta: data?.luaspeta,
-        sk: data?.sk,
-        tanggalsk: data?.tanggalsk,
-        tglterbith: data?.tglterbith,
-        berakhirha: data?.berakhirha,
-        pemilik: data?.pemilik,
-        tipepemili: data?.tipepemili,
-        gunatanahk: data?.gunatanahk,
-        gunatanahu: data?.gunatanahu,
-        terpetakan: data?.terpetakan,
-        keterangan: data?.keterangan,
-        dtipehak: data?.dtipehak,
-        parapihakb: data?.parapihakb,
-        permasalah: data?.permasalah,
-        tindaklanj: data?.tindaklanj,
-        hasil: data?.hasil,
-        penggunaan: data?.penggunaan,
-        docs: [],
-        deleted_docs: [],
-      });
-    }
-  }, [open]);
+    formik.setValues({
+      propinsi: data?.propinsi,
+      kabupaten: data?.kabupaten,
+      nib: data?.nib,
+      su: data?.su,
+      hak: data?.hak,
+      tipehak: data?.tipehak,
+      luastertul: data?.luastertul,
+      luaspeta: data?.luaspeta,
+      sk: data?.sk,
+      tanggalsk: data?.tanggalsk,
+      tglterbith: data?.tglterbith,
+      berakhirha: data?.berakhirha,
+      pemilik: data?.pemilik,
+      tipepemili: data?.tipepemili,
+      gunatanahk: data?.gunatanahk,
+      gunatanahu: data?.gunatanahu,
+      terpetakan: data?.terpetakan,
+      keterangan: data?.keterangan,
+      dtipehak: data?.dtipehak,
+      parapihakb: data?.parapihakb,
+      permasalah: data?.permasalah,
+      tindaklanj: data?.tindaklanj,
+      hasil: data?.hasil,
+      penggunaan: data?.penggunaan,
+      docs: [],
+      deleted_docs: [],
+    });
+  }, [data]);
 
   return (
     <>
@@ -1392,7 +1396,7 @@ const EditField = (props: any) => {
                 </Field>
 
                 <Field
-                  label={l.dispute_parties}
+                  label={l.result}
                   invalid={!!formik.errors.hasil}
                   errorText={formik.errors.hasil as string}
                 >
@@ -1513,10 +1517,12 @@ const FieldData = () => {
   const halfPanel = useLayout((s) => s.halfPanel);
 
   // States
-  const data = useMemo(
-    () => selectedPolygon?.polygon?.properties,
-    [selectedPolygon?.polygon?.properties]
-  );
+  const [data, setData] = useState<any>(selectedPolygon?.polygon?.properties);
+
+  // const data = useMemo(
+  //   () => selectedPolygon?.polygon?.properties,
+  //   [selectedPolygon?.polygon?.properties]
+  // );
 
   // Handle open
   useEffect(() => {
@@ -1566,7 +1572,7 @@ const FieldData = () => {
           </Text>
 
           <HStack ml={"auto"} mt={"-2px"} mr={-1}>
-            <EditField data={data} />
+            <EditField data={data} setData={setData} />
 
             <BButton
               iconButton

@@ -28,6 +28,7 @@ import { useThemeConfig } from "@/context/useThemeConfig";
 import useBackOnClose from "@/hooks/useBackOnClose";
 import useDataState from "@/hooks/useDataState";
 import useRequest from "@/hooks/useRequest";
+import useScreen from "@/hooks/useScreen";
 import back from "@/utils/back";
 import { fileValidation } from "@/utils/validationSchemas";
 import {
@@ -192,6 +193,9 @@ const Data = (props: any) => {
   const { dataState } = props;
   const { data } = dataState;
 
+  // Hooks
+  const { sw } = useScreen();
+
   // Contexts
   const { layout } = useLayout();
 
@@ -201,7 +205,7 @@ const Data = (props: any) => {
   return (
     <CContainer px={4}>
       <SimpleGrid
-        columns={layoutHalfMap ? [1, null, null, null, 2] : [1, null, 2, 4]}
+        columns={layoutHalfMap ? (sw < 1200 ? 1 : 2) : [1, null, 2, 4]}
         gap={4}
       >
         {data?.map((item: any) => {
