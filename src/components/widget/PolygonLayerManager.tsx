@@ -1,4 +1,5 @@
 import useActiveLayers from "@/context/useActiveLayers";
+import useLegend from "@/context/useLegend";
 import useMapViewState from "@/context/useMapViewState";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
@@ -17,17 +18,14 @@ const LayerSource = (props: any) => {
     (s) => s.clearSelectedPolygon
   );
   const { themeConfig } = useThemeConfig();
+  const legends = useLegend((s) => s.legends);
+  const legendType = "penggunaan"; // properties key / column name
 
   // States
   const layer = data?.layer;
   const geojson = data?.layer?.geojson;
-  // console.log("geojson", geojson);
-
-  // Default fill color
-  const defaultFillColor = "#7e7e7e";
-
-  // Determine if current layer has selected polygon
   const selectedFeatureId = selectedPolygon?.polygon?.properties?.id;
+  const defaultColor = "#7e7e7e";
 
   // Utils
   const handleOnClickPolygon = useCallback(
@@ -38,7 +36,6 @@ const LayerSource = (props: any) => {
         return;
       }
 
-      // Check if clicked feature is already selected
       const isAlreadySelected =
         selectedPolygon?.polygon?.properties?.id ===
           clickedFeature?.properties?.id &&
@@ -50,7 +47,7 @@ const LayerSource = (props: any) => {
         setSelectedPolygon({
           polygon: {
             ...clickedFeature,
-            layer: { id: layer?.id }, // Store layer info with the feature
+            layer: { id: layer?.id },
           },
           fillColor: themeConfig.primaryColorHex,
         });
@@ -80,8 +77,13 @@ const LayerSource = (props: any) => {
           "fill-color": [
             "case",
             ["==", ["get", "id"], selectedFeatureId || ""],
-            themeConfig.primaryColorHex || "#000000",
-            defaultFillColor,
+            themeConfig.primaryColorHex,
+            [
+              "match",
+              ["get", legendType], // Property to match against
+              ...legends.flatMap((legend) => [legend.label, legend.color]),
+              defaultColor,
+            ],
           ],
           "fill-opacity": 0.8,
         }}

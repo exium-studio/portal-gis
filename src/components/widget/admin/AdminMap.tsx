@@ -61,7 +61,7 @@ const AdminMap = () => {
           lon: currentLocation.lon,
         },
         zoom: 14,
-        duration: 1200,
+        duration: 3000, // ms
       });
     }
   }, [currentLocation]);

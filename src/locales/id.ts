@@ -439,7 +439,7 @@ const translations = {
   "selected_time_zone": "Zona waktu dipilih",
   "selected_timezone": "Zona waktu dipilih",
   "send": "Kirim",
-  "sertificate_number": "Nomor sertifikat",
+  "sertificate_number": "Nomor sertipikat",
   "server_error_page": "Sistem kami saat ini sedang mengalami gangguan. Tim kami sedang bekerja untuk memperbaikinya.",
   "service_type": "Jenis layanan",
   "settings_navs": {

@@ -1,14 +1,26 @@
+import BackButton from "@/components/ui-custom/BackButton";
 import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
 import ComponentSpinner from "@/components/ui-custom/ComponentSpinner";
+import {
+  DisclosureBody,
+  DisclosureContent,
+  DisclosureFooter,
+  DisclosureHeader,
+  DisclosureRoot,
+} from "@/components/ui-custom/Disclosure";
+import DisclosureHeaderContent from "@/components/ui-custom/DisclosureHeaderContent";
+import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
 import FeedbackNotFound from "@/components/ui-custom/FeedbackNotFound";
+import FeedbackRetry from "@/components/ui-custom/FeedbackRetry";
 import FloatingContainer from "@/components/ui-custom/FloatingContainer";
-import HelperText from "@/components/ui-custom/HelperText";
 import HScroll from "@/components/ui-custom/HScroll";
 import NumberInput from "@/components/ui-custom/NumberInput";
 import P from "@/components/ui-custom/P";
 import SearchInput from "@/components/ui-custom/SearchInput";
+import StringInput from "@/components/ui-custom/StringInput";
 import { useColorMode } from "@/components/ui/color-mode";
+import { Field } from "@/components/ui/field";
 import {
   PopoverContent,
   PopoverRoot,
@@ -21,23 +33,25 @@ import useAdminSearchAddress from "@/constants/useSearchAddress";
 import useActiveMapStyle from "@/context/useActiveMapStyle";
 import useMapsConfig from "@/context/useBasemap";
 import useCurrentLocation from "@/context/useCurrentLocation";
-import useDisplayedData from "@/context/useDisplayedData";
 import useLang from "@/context/useLang";
+import useLegend from "@/context/useLegend";
 import useMapStyle from "@/context/useMapStyle";
 import useMapViewState from "@/context/useMapViewState";
 import useMapsZoom from "@/context/useMapZoom";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
+import useBackOnClose from "@/hooks/useBackOnClose";
 import useClickOutside from "@/hooks/useClickOutside";
+import useDataState from "@/hooks/useDataState";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
+import useRequest from "@/hooks/useRequest";
 import BASEMAP_CONFIG_LIST from "@/static/basemapConfigList";
-import DISPLAYED_DATA_LIST from "@/static/displayedDataList";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
+import empty from "@/utils/empty";
 import pluck from "@/utils/pluck";
 import {
   Box,
   Center,
-  chakra,
   Circle,
   Group,
   HStack,
@@ -45,6 +59,7 @@ import {
   Image,
   PopoverPositioner,
   Portal,
+  SimpleGrid,
   Stack,
   StackProps,
   Text,
@@ -59,31 +74,18 @@ import {
   IconInfoCircle,
   IconMapCog,
   IconMapPin,
-  IconMapPinCog,
   IconMinus,
   IconNavigationFilled,
   IconPlus,
   IconSearch,
   IconX,
 } from "@tabler/icons-react";
+import chroma from "chroma-js";
+import { useFormik } from "formik";
 import { useEffect, useMemo, useRef, useState } from "react";
+import * as yup from "yup";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import useSearchMode from "./useSearchMode";
-import {
-  DisclosureBody,
-  DisclosureContent,
-  DisclosureFooter,
-  DisclosureHeader,
-  DisclosureRoot,
-} from "@/components/ui-custom/Disclosure";
-import DisclosureHeaderContent from "@/components/ui-custom/DisclosureHeaderContent";
-import useBackOnClose from "@/hooks/useBackOnClose";
-import BackButton from "@/components/ui-custom/BackButton";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { Field } from "@/components/ui/field";
-import StringInput from "@/components/ui-custom/StringInput";
-import useRequest from "@/hooks/useRequest";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -480,10 +482,67 @@ const Legend = () => {
 
   // Contexts
   const { l } = useLang();
-  const { displayedData } = useDisplayedData();
+  const { legends, setLegends } = useLegend();
+
+  // States
+  const { error, loading, data, makeRequest } = useDataState<any>({
+    initialData: [
+      "Perkebunan",
+      "Ladang",
+      "Sawit",
+      "Ladang, Sa",
+      "Ladang,Pet",
+      "Ladang dan",
+      "Sekolah da",
+      "Pemukiman",
+      "Kelapa Saw",
+      "Masjid",
+      "Sawah",
+      "Jalan Tol",
+      "Irigasi",
+      "Jalan",
+    ],
+    // url: `/api/gis-bpn/workspace-layers/shape-files/penggunaan`,
+    noRt: true,
+    dataResource: false,
+  });
+  const render = {
+    loading: <ComponentSpinner />,
+    error: <FeedbackRetry onRetry={makeRequest} />,
+    empty: <FeedbackNoData />,
+    notFound: <FeedbackNotFound />,
+    loaded: (
+      <SimpleGrid gapX={4} px={"2px"} columns={2}>
+        {legends.map((item) => {
+          return (
+            <HStack key={item?.label}>
+              <Circle w={"10px"} h={"10px"} bg={item?.color} opacity={0.8} />
+              <Text>{item?.label}</Text>
+            </HStack>
+          );
+        })}
+      </SimpleGrid>
+    ),
+  };
 
   // Refs
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Handle set legends on fetched data
+  useEffect(() => {
+    if (data) {
+      const colors = chroma
+        .scale(["#d73027", "#fee08b", "#1a9850", "#4575b4", "#542788"])
+        .mode("lab")
+        .colors(data?.length || 0);
+
+      const newLegends = data.map((label: any, i: number) => ({
+        label: label,
+        color: colors[i],
+      }));
+      setLegends(newLegends);
+    }
+  }, [data]);
 
   return (
     <CContainer w={"fit"} fRef={containerRef} zIndex={1} position={"relative"}>
@@ -499,7 +558,7 @@ const Legend = () => {
           }}
           animationEntrance="bottom"
         >
-          <MenuHeaderContainer borderless>
+          <MenuHeaderContainer>
             <HStack h={"20px"}>
               <IconFlag stroke={1.5} size={20} />
               <Text fontWeight={"bold"}>{l.legend}</Text>
@@ -521,31 +580,29 @@ const Legend = () => {
             </HStack>
           </MenuHeaderContainer>
 
-          <CContainer px={3} pb={3}>
-            <HStack wrap={"wrap"} gapX={4} px={"2px"} mb={4}>
-              {DISPLAYED_DATA_LIST.map((item) => {
-                return displayedData[item.key]
-                  ? item.color.map((color: any, ii: number) => {
-                      return (
-                        <HStack key={ii}>
-                          <Circle w={"10px"} h={"10px"} bg={color.color} />
-                          <Text>{pluck(l, color.labelKey)}</Text>
-                        </HStack>
-                      );
-                    })
-                  : "";
-              })}
-            </HStack>
+          <CContainer p={3}>
+            {loading && render.loading}
+            {!loading && (
+              <>
+                {error && render.error}
+                {!error && (
+                  <>
+                    {data && render.loaded}
+                    {(!data || empty(data)) && render.empty}
+                  </>
+                )}
+              </>
+            )}
 
-            <HelperText>
+            {/* <HelperText>
               {l.legend_helper}
-              <chakra.span>
+              <Span>
                 <Icon mx={1}>
                   <IconMapPinCog size={18} stroke={1.5} />
                 </Icon>
                 {l.displayed_data}
-              </chakra.span>
-            </HelperText>
+              </Span>
+            </HelperText> */}
           </CContainer>
         </FloatingContainer>
       </Portal>
@@ -1251,7 +1308,8 @@ const DetailPolygon = () => {
       <CContainer
         borderBottom={last ? "" : "1px solid"}
         borderColor={"border.muted"}
-        p={2}
+        px={3}
+        pt={2}
         pb={last ? 0 : 2}
       >
         {children}
@@ -1272,7 +1330,7 @@ const DetailPolygon = () => {
       }}
       animationEntrance="top"
     >
-      <MenuHeaderContainer borderless>
+      <MenuHeaderContainer>
         <HStack h={"20px"}>
           <IconInfoCircle stroke={1.5} size={20} />
           <Text fontWeight={"bold"}>
@@ -1301,7 +1359,7 @@ const DetailPolygon = () => {
       </MenuHeaderContainer>
 
       <CContainer
-        px={2}
+        px={1}
         overflowY={"auto"}
         className="scrollY"
         maxH={"calc(50vh - 32px - 50px)"}

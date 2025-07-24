@@ -34,6 +34,7 @@
     "zustand": "^5.0.1"
   },
   "devDependencies": {
+    "@types/chroma-js": "^3.1.1",
     "@types/moment-timezone": "^0.5.13",
     "@types/node": "^22.9.0",
     "@types/react": "^19.0.12",

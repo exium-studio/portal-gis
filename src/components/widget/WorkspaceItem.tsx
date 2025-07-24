@@ -568,7 +568,7 @@ const ViewLayers = (props: any) => {
         ],
         {
           padding: 20, // px
-          duration: 1200, // ms
+          duration: 3000, // ms
           essential: true,
         }
       );

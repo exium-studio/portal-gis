@@ -252,7 +252,7 @@ export const verify = {
   en: "Verify",
 };
 export const sertificate_number = {
-  id: "Nomor sertifikat",
+  id: "Nomor sertipikat",
   en: "Certificate number",
 };
 export const owner = {
