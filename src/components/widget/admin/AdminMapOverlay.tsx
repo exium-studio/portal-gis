@@ -939,7 +939,9 @@ const EditField = (props: any) => {
   const { selectedPolygon } = useSelectedPolygon();
 
   // States
+  const layerId = selectedPolygon?.data?.layer?.layer_id;
   const tableName = selectedPolygon?.data?.layer?.table_name;
+  const propertiesId = selectedPolygon?.polygon?.properties?.id;
   const [existingDocs, setExistingDocs] = useState<any[]>(data?.thumbnail);
   const formik = useFormik({
     validateOnChange: false,
@@ -973,43 +975,52 @@ const EditField = (props: any) => {
     },
     validationSchema: yup.object().shape({
       docs: fileValidation({
-        allowedExtensions: ["pdf", "doc", "docs"],
+        allowedExtensions: ["pdf", "doc", "docx"],
       }),
     }),
     onSubmit: (values) => {
       // console.log(values);
       back();
 
-      const payload = {
-        table_name: tableName,
-        properties: {
-          propinsi: values.propinsi,
-          kabupaten: values.kabupaten,
-          nib: values.nib,
-          su: values.su,
-          hak: values.hak,
-          tipehak: values.tipehak,
-          luastertul: values.luastertul,
-          luaspeta: values.luaspeta,
-          sk: values.sk,
-          tanggalsk: values.tanggalsk,
-          tglterbith: values.tglterbith,
-          berakhirha: values.berakhirha,
-          pemilik: values.pemilik,
-          tipepemili: values.tipepemili,
-          gunatanahk: values.gunatanahk,
-          gunatanahu: values.gunatanahu,
-          terpetakan: values.terpetakan,
-          keterangan: values.keterangan,
-          dtipehak: values.dtipehak,
-          parapihakb: values.parapihakb,
-          permasalah: values.permasalah,
-          tindaklanj: values.tindaklanj,
-          hasil: values.hasil,
-          penggunaan: values.penggunaan,
-        },
+      const properties = {
+        id: propertiesId,
+        propinsi: values.propinsi,
+        kabupaten: values.kabupaten,
+        nib: values.nib,
+        su: values.su,
+        hak: values.hak,
+        tipehak: values.tipehak,
+        luastertul: values.luastertul,
+        luaspeta: values.luaspeta,
+        sk: values.sk,
+        tanggalsk: values.tanggalsk,
+        tglterbith: values.tglterbith,
+        berakhirha: values.berakhirha,
+        pemilik: values.pemilik,
+        tipepemili: values.tipepemili,
+        gunatanahk: values.gunatanahk,
+        gunatanahu: values.gunatanahu,
+        terpetakan: values.terpetakan,
+        keterangan: values.keterangan,
+        dtipehak: values.dtipehak,
+        parapihakb: values.parapihakb,
+        permasalah: values.permasalah,
+        tindaklanj: values.tindaklanj,
+        hasil: values.hasil,
+        penggunaan: values.penggunaan,
       };
-      const url = ``;
+      const payload = new FormData();
+      payload.append("layer_id", layerId);
+      payload.append("table_name", tableName);
+      if (Array.isArray(values.docs)) {
+        values.docs.forEach((file) => {
+          payload.append(`document`, file);
+        });
+      } else if (values.docs) {
+        payload.append("document", values.docs);
+      }
+      payload.append("properties", JSON.stringify(properties));
+      const url = `/api/gis-bpn/workspace-layers/shape-files/update`;
       const config = {
         url,
         method: "PUT",
@@ -1429,7 +1440,7 @@ const EditField = (props: any) => {
                         formik.setFieldValue("docs", input);
                       }}
                       inputValue={formik.values.docs}
-                      accept=".pdf .doc .docx"
+                      accept=".pdf, .doc, .docx"
                       maxFiles={5}
                     />
                   )}
