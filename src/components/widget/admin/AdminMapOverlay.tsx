@@ -91,6 +91,7 @@ import Textarea from "@/components/ui-custom/Textarea";
 import ExistingFileItem from "../ExistingFIleItem";
 import FileInput from "@/components/ui-custom/FileInput";
 import { fileValidation } from "@/utils/validationSchemas";
+import back from "@/utils/back";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -976,6 +977,7 @@ const EditField = (props: any) => {
     }),
     onSubmit: (values) => {
       // console.log(values);
+      back();
 
       const payload = {
         table_name: tableName,
