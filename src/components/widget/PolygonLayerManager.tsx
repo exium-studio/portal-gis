@@ -45,6 +45,7 @@ const LayerSource = (props: any) => {
         clearSelectedPolygon();
       } else {
         setSelectedPolygon({
+          data: data,
           polygon: {
             ...clickedFeature,
             layer: { id: layer?.id },

@@ -8,6 +8,8 @@ import type { ThemeProviderProps } from "next-themes";
 import { ThemeProvider, useTheme } from "next-themes";
 import * as React from "react";
 import { LuSun } from "react-icons/lu";
+import { Tooltip } from "./tooltip";
+import useLang from "@/context/useLang";
 
 export interface ColorModeProviderProps extends ThemeProviderProps {}
 
@@ -54,24 +56,30 @@ export const ColorModeButton = React.forwardRef<
   ColorModeButtonProps
 >(function ColorModeButton(props, ref) {
   // Hooks
+  const { l } = useLang();
   const { toggleColorMode } = useColorMode();
 
   // Contexts
   const { ADM } = useADM();
 
+  // States
+  const ADMActive = ADM === "true";
+
   return (
     <ClientOnly fallback={<Skeleton boxSize="8" />}>
-      <IconButton
-        onClick={toggleColorMode}
-        variant="ghost"
-        aria-label="Toggle color mode"
-        size="sm"
-        disabled={!ADM}
-        ref={ref}
-        {...props}
-      >
-        <ColorModeIcon />
-      </IconButton>
+      <Tooltip content={ADMActive ? l.adm_active : l.toggle_dark_mode}>
+        <IconButton
+          onClick={toggleColorMode}
+          variant="ghost"
+          aria-label="Toggle color mode"
+          size="sm"
+          disabled={ADMActive}
+          ref={ref}
+          {...props}
+        >
+          <ColorModeIcon />
+        </IconButton>
+      </Tooltip>
     </ClientOnly>
   );
 });

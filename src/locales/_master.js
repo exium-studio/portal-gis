@@ -325,6 +325,14 @@ export const document = {
 };
 
 // UI
+export const toggle_dark_mode = {
+  id: "Toggle mode gelap",
+  en: "Toggle dark mode",
+};
+export const adm_active = {
+  id: "Mode gelap adaptif aktif",
+  en: "Adaptive dark mode is active",
+};
 export const deleted_docs = {
   id: "Dokumen yang dihapus",
   en: "Deleted docs",

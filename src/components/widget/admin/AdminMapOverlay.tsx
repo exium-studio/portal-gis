@@ -935,9 +935,9 @@ const EditField = (props: any) => {
   // Contexts
   const { themeConfig } = useThemeConfig();
   const { selectedPolygon } = useSelectedPolygon();
-  console.log(selectedPolygon);
 
   // States
+  const tableName = selectedPolygon?.data?.layer?.table_name;
   const [existingDocs, setExistingDocs] = useState<any[]>(data?.thumbnail);
   const formik = useFormik({
     validateOnChange: false,
@@ -978,7 +978,7 @@ const EditField = (props: any) => {
       // console.log(values);
 
       const payload = {
-        table_name: "shp_workspace_1_layer_1",
+        table_name: tableName,
         properties: {
           propinsi: values.propinsi,
           kabupaten: values.kabupaten,
