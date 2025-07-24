@@ -506,6 +506,7 @@ const UnloadLayer = (props: any) => {
   return (
     <Tooltip content={l.unload_workspace_from_map}>
       <BButton
+        unclicky
         iconButton
         variant={"ghost"}
         onClick={() => {
