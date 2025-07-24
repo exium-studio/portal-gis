@@ -1038,35 +1038,37 @@ const EditField = (props: any) => {
 
   // Handle initial values
   useEffect(() => {
-    formik.setValues({
-      propinsi: data?.propinsi,
-      kabupaten: data?.kabupaten,
-      nib: data?.nib,
-      su: data?.su,
-      hak: data?.hak,
-      tipehak: data?.tipehak,
-      luastertul: data?.luastertul,
-      luaspeta: data?.luaspeta,
-      sk: data?.sk,
-      tanggalsk: data?.tanggalsk,
-      tglterbith: data?.tglterbith,
-      berakhirha: data?.berakhirha,
-      pemilik: data?.pemilik,
-      tipepemili: data?.tipepemili,
-      gunatanahk: data?.gunatanahk,
-      gunatanahu: data?.gunatanahu,
-      terpetakan: data?.terpetakan,
-      keterangan: data?.keterangan,
-      dtipehak: data?.dtipehak,
-      parapihakb: data?.parapihakb,
-      permasalah: data?.permasalah,
-      tindaklanj: data?.tindaklanj,
-      hasil: data?.hasil,
-      penggunaan: data?.penggunaan,
-      docs: [],
-      deleted_docs: [],
-    });
-  }, []);
+    if (open) {
+      formik.setValues({
+        propinsi: data?.propinsi,
+        kabupaten: data?.kabupaten,
+        nib: data?.nib,
+        su: data?.su,
+        hak: data?.hak,
+        tipehak: data?.tipehak,
+        luastertul: data?.luastertul,
+        luaspeta: data?.luaspeta,
+        sk: data?.sk,
+        tanggalsk: data?.tanggalsk,
+        tglterbith: data?.tglterbith,
+        berakhirha: data?.berakhirha,
+        pemilik: data?.pemilik,
+        tipepemili: data?.tipepemili,
+        gunatanahk: data?.gunatanahk,
+        gunatanahu: data?.gunatanahu,
+        terpetakan: data?.terpetakan,
+        keterangan: data?.keterangan,
+        dtipehak: data?.dtipehak,
+        parapihakb: data?.parapihakb,
+        permasalah: data?.permasalah,
+        tindaklanj: data?.tindaklanj,
+        hasil: data?.hasil,
+        penggunaan: data?.penggunaan,
+        docs: [],
+        deleted_docs: [],
+      });
+    }
+  }, [open]);
 
   return (
     <>
