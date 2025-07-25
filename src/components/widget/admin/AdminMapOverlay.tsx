@@ -492,6 +492,7 @@ const Legend = () => {
   // Contexts
   const { l } = useLang();
   const { legends, setLegends } = useLegend();
+  const halfPanel = useLayout((s) => s.halfPanel);
 
   // States
   const { error, loading, data, makeRequest } = useDataState<any>({
@@ -565,7 +566,12 @@ const Legend = () => {
             pointerEvents: "auto",
             w: iss ? "calc(100vw - 16px)" : "300px",
             pb: 2,
-            maxH: "calc(40vh - 72px)",
+            // maxH: "calc(40vh - 72px)",
+            maxH: iss
+              ? halfPanel
+                ? "calc(50vh - 174px)"
+                : "35vh"
+              : "calc(100vh - 72px)",
           }}
           animationEntrance="bottom"
         >
@@ -1574,7 +1580,11 @@ const FieldData = () => {
         w: iss ? "calc(100vw - 16px)" : "300px",
         pb: 2,
         // maxH: "calc(60vh - 72px)",
-        maxH: iss ? (halfPanel ? "20vh" : "35vh") : "calc(100vh - 134px)",
+        maxH: iss
+          ? halfPanel
+            ? "calc(50vh - 174px)"
+            : "35vh"
+          : "calc(100vh - 134px)",
       }}
       animationEntrance="top"
     >
