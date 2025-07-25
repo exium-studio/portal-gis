@@ -3,7 +3,6 @@ import { NAVS } from "@/constants/navs";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
 import { useThemeConfig } from "@/context/useThemeConfig";
-import useCallBackOnNavigate from "@/hooks/useCallBackOnNavigate";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import pluck from "@/utils/pluck";
 import {
@@ -56,15 +55,13 @@ const MainPanelUtils = () => {
   const { l } = useLang();
 
   // Contexts
-  const { layout, setLayout } = useLayout();
-
-  // States
-  const layoutFullMainPanel = layout.id === 2;
+  const fullPanel = useLayout((s) => s.fullPanel);
+  const setLayout = useLayout((s) => s.setLayout);
 
   function toggleFullMainPanel() {
-    if (!layoutFullMainPanel) {
+    if (!fullPanel) {
       setLayout(LAYOUT_OPTIONS[1]);
-    } else if (layoutFullMainPanel) {
+    } else if (fullPanel) {
       setLayout(LAYOUT_OPTIONS[0]);
     }
   }
@@ -75,9 +72,7 @@ const MainPanelUtils = () => {
 
       <CurrentUserTimeZone size={"sm"} />
 
-      <Tooltip
-        content={layoutFullMainPanel ? l.half_main_panel : l.full_main_panel}
-      >
+      <Tooltip content={fullPanel ? l.half_main_panel : l.full_main_panel}>
         <BButton
           iconButton
           variant={"ghost"}
@@ -85,7 +80,7 @@ const MainPanelUtils = () => {
           size={"sm"}
         >
           <Icon>
-            {layoutFullMainPanel ? (
+            {fullPanel ? (
               <IconMinimize stroke={1.5} />
             ) : (
               <IconMaximize stroke={1.5} />
@@ -134,11 +129,11 @@ const NavLinkContainer = (props: any) => {
   const { children, to, ...restProps } = props;
 
   // Contexts
-  const { layout, setLayout } = useLayout();
+  const halfPanel = useLayout((s) => s.halfPanel);
+  const closedPanel = useLayout((s) => s.closedPanel);
+  const setLayout = useLayout((s) => s.setLayout);
 
   // States
-  const layoutFullMap = layout.id === 3;
-  const layoutHalfMap = layout.id === 1;
   const location = useLocation();
   const cp = location.pathname;
 
@@ -146,8 +141,8 @@ const NavLinkContainer = (props: any) => {
     <Link
       to={to}
       onClick={() => {
-        if (layoutFullMap) setLayout(LAYOUT_OPTIONS[0]);
-        if (layoutHalfMap && cp === to) setLayout(LAYOUT_OPTIONS[2]);
+        if (closedPanel) setLayout(LAYOUT_OPTIONS[0]);
+        if (halfPanel && cp === to) setLayout(LAYOUT_OPTIONS[2]);
       }}
       {...restProps}
     >
@@ -160,10 +155,7 @@ const NavItemContainer = (props: Interface__NavItemContainer) => {
   const { children, active, ...restProps } = props;
   // Contexts
   const { themeConfig } = useThemeConfig();
-  const layout = useLayout((s) => s.layout);
-
-  // States
-  const layoutFullMap = layout.id === 3;
+  const closedPanel = useLayout((s) => s.closedPanel);
 
   return (
     <VStack
@@ -171,7 +163,7 @@ const NavItemContainer = (props: Interface__NavItemContainer) => {
       h={["60px", null, "40px"]}
       justify={"center"}
       position={"relative"}
-      color={active && !layoutFullMap ? "fg" : "fg.muted"}
+      color={active && !closedPanel ? "fg" : "fg.muted"}
       _hover={{ bg: "bg.muted" }}
       borderRadius={themeConfig.radii.component}
       transition={"200ms"}
@@ -179,7 +171,7 @@ const NavItemContainer = (props: Interface__NavItemContainer) => {
     >
       {children}
 
-      {active && !layoutFullMap && <ActiveNavIndicator bottom={[0, null, 0]} />}
+      {active && !closedPanel && <ActiveNavIndicator bottom={[0, null, 0]} />}
     </VStack>
   );
 };
@@ -321,20 +313,17 @@ const NavContainer = ({
   activePath,
   withMaps = false,
 }: Props) => {
+  // Hooks
+  const iss = useIsSmScreenWidth();
+
   // Contexts
   const { themeConfig } = useThemeConfig();
-  const layout = useLayout((s) => s.layout);
+  const halfPanel = useLayout((s) => s.halfPanel);
+  const fullPanel = useLayout((s) => s.fullPanel);
+  const closedPanel = useLayout((s) => s.closedPanel);
 
   // Refs
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // Utils
-  useCallBackOnNavigate(() => {
-    if (containerRef.current) {
-      containerRef.current.scrollTop = 0;
-    }
-  });
-  const iss = useIsSmScreenWidth();
 
   return (
     <Stack
@@ -386,7 +375,7 @@ const NavContainer = ({
         w={iss ? "full" : "calc(100vw - 76px)"}
       >
         {/* Main Panel */}
-        {(layout.id === 1 || layout.id === 2) && (
+        {(halfPanel || fullPanel) && (
           <CContainer
             fRef={containerRef}
             position={"relative"}
@@ -394,8 +383,8 @@ const NavContainer = ({
             className="scrollY"
             overflowX={"clip"}
             bg={"bgContent"}
-            w={layout.id === 1 && !iss && withMaps ? "50%" : ""}
-            h={layout.id === 1 && iss && withMaps ? "50%" : ""}
+            w={halfPanel && !iss && withMaps ? "50%" : ""}
+            h={halfPanel && iss && withMaps ? "50%" : ""}
             zIndex={3}
             borderRight={iss ? "" : "1px solid"}
             borderTop={iss ? "1px solid" : ""}
@@ -430,10 +419,10 @@ const NavContainer = ({
         )}
 
         {/* Maps */}
-        {(layout.id === 1 || layout.id === 3) && withMaps && (
+        {(halfPanel || closedPanel) && withMaps && (
           <CContainer
-            w={layout.id === 1 && !iss ? "50%" : "full"}
-            h={layout.id === 1 && iss ? "50%" : "full"}
+            w={halfPanel && !iss ? "50%" : "full"}
+            h={halfPanel && iss ? "50%" : "full"}
             position={"relative"}
           >
             <AdminMap />

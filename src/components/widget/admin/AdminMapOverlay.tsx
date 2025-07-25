@@ -93,7 +93,7 @@ import * as yup from "yup";
 import useSearchMode from "../../../context/useSearchMode";
 import ExistingFileItem from "../ExistingFIleItem";
 import MenuHeaderContainer from "../MenuHeaderContainer";
-import useActiveLayers from "@/context/useActiveLayers";
+import useActiveLayers from "@/context/useActiveWorkspaces";
 import getLocation from "@/utils/getLocation";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
@@ -583,14 +583,13 @@ const Legend = () => {
               <BButton
                 iconButton
                 unclicky
-                size={"xs"}
+                size={"sm"}
                 variant={"ghost"}
                 ml={"auto"}
                 mr={-1}
-                mt={"-2px"}
                 onClick={onClose}
               >
-                <Icon>
+                <Icon boxSize={5}>
                   <IconX />
                 </Icon>
               </BButton>
@@ -1104,11 +1103,11 @@ const EditField = (props: any) => {
       <BButton
         iconButton
         unclicky
-        size={"xs"}
+        size={"sm"}
         variant={"ghost"}
         onClick={onOpen}
       >
-        <Icon>
+        <Icon boxSize={5}>
           <IconEdit stroke={1.5} />
         </Icon>
       </BButton>
@@ -1595,20 +1594,20 @@ const FieldData = () => {
             {capsFirstLetterEachWord(l.field_data)}
           </Text>
 
-          <HStack ml={"auto"} mt={"-2px"} mr={-1}>
+          <HStack gap={1} ml={"auto"} mr={-1}>
             <EditField data={data} setData={setData} />
 
             <BButton
               iconButton
               unclicky
-              size={"xs"}
+              size={"sm"}
               variant={"ghost"}
               onClick={() => {
                 clearSelectedPolygon();
                 onClose();
               }}
             >
-              <Icon>
+              <Icon boxSize={5}>
                 <IconX />
               </Icon>
             </BButton>

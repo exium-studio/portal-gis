@@ -42,7 +42,7 @@ interface GeoJSONLayerState {
   clearAllLayers: () => void;
 }
 
-const useActiveLayers = create<GeoJSONLayerState>((set) => ({
+const useActiveWorkspaces = create<GeoJSONLayerState>((set) => ({
   activeLayerGroups: [],
 
   // Add a new layer group with initial layer
@@ -158,4 +158,4 @@ const useActiveLayers = create<GeoJSONLayerState>((set) => ({
   clearAllLayers: () => set({ activeLayerGroups: [] }),
 }));
 
-export default useActiveLayers;
+export default useActiveWorkspaces;

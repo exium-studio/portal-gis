@@ -1,6 +1,6 @@
 import CContainer from "@/components/ui-custom/CContainer";
 import { MAP_TRANSITION_DURATION } from "@/constants/duration";
-import useActiveLayers from "@/context/useActiveLayers";
+import useActiveLayers from "@/context/useActiveWorkspaces";
 import useConfirmationDisclosure from "@/context/useConfirmationDisclosure";
 import useLang from "@/context/useLang";
 import useMapViewState from "@/context/useMapViewState";

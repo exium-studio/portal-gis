@@ -1,4 +1,4 @@
-import useActiveLayers from "@/context/useActiveLayers";
+import useActiveLayers from "@/context/useActiveWorkspaces";
 import useLegend from "@/context/useLegend";
 import useMapViewState from "@/context/useMapViewState";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
