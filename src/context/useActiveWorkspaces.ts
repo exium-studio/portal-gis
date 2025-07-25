@@ -68,7 +68,7 @@ const useActiveWorkspaces = create<GeoJSONLayerState>((set) => ({
       };
     }),
 
-  // Add layer to existing group by creating a new group with the same workspace
+  // Add layer to existing group by crseating a new group with the same workspace
   addLayerToGroup: (workspaceId, newLayer) =>
     set((state) => ({
       activeLayerGroups: [

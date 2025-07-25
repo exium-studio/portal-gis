@@ -68,17 +68,12 @@ const MainPanelUtils = () => {
 
   return (
     <HStack flexShrink={0} gap={0}>
-      <ColorModeButton />
+      <ColorModeButton size={"md"} />
 
-      <CurrentUserTimeZone size={"sm"} />
+      <CurrentUserTimeZone />
 
       <Tooltip content={fullPanel ? l.half_main_panel : l.full_main_panel}>
-        <BButton
-          iconButton
-          variant={"ghost"}
-          onClick={toggleFullMainPanel}
-          size={"sm"}
-        >
+        <BButton iconButton variant={"ghost"} onClick={toggleFullMainPanel}>
           <Icon>
             {fullPanel ? (
               <IconMinimize stroke={1.5} />
@@ -99,7 +94,6 @@ const MainPanelUtils = () => {
           onClick={() => {
             setLayout(LAYOUT_OPTIONS[2]);
           }}
-          size={"sm"}
         >
           <Icon>
             <IconX />
