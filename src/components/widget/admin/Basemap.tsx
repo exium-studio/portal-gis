@@ -1,4 +1,5 @@
 import { useColorMode } from "@/components/ui/color-mode";
+import { MAP_TRANSITION_DURATION } from "@/constants/duration";
 import useSearchAddress from "@/constants/useSearchAddress";
 import useActiveMapStyle from "@/context/useActiveMapStyle";
 import useActiveWMSLayers from "@/context/useActiveWMSLayers";
@@ -13,12 +14,12 @@ import { useEffect, useRef, useState } from "react";
 import Map, { MapRef, Marker } from "react-map-gl/mapbox";
 import MapMarkerCircle from "../MapMarkerCircle";
 import PolygonLayerManager from "../PolygonLayerManager";
-import { MAP_TRANSITION_DURATION } from "@/constants/duration";
 
-const MIN_ZOOM = 0;
+const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
+const MIN_ZOOM = 1;
 const MAX_ZOOM = 22;
 
-const AdminMap = () => {
+const BaseMap = () => {
   // Hooks
   const { colorMode } = useColorMode();
 
@@ -38,6 +39,7 @@ const AdminMap = () => {
   const { activeMapStyle, setActiveMapStyle } = useActiveMapStyle();
   const [mapLoad, setMapLoad] = useState<boolean>(false);
   const { mapViewState, setMapViewState, setMapRef } = useMapViewState();
+  const mapKey = `${activeMapStyle?.id}${mapStyle}`;
 
   // Handle init mapRef
   useEffect(() => {
@@ -167,44 +169,57 @@ const AdminMap = () => {
   }
   useEffect(() => {
     if (mapStyle.id === 1) {
+      // Carto
       initializeBasemap();
     } else {
       setActiveMapStyle(mapStyle.tile[colorMode]);
     }
   }, [mapStyle, colorMode, activeLayers]);
+  // useEffect(() => {
+  //   if (!mapLoad || !mapboxStandardMaps || !mapRef.current) return;
 
-  // Handle rerender layer
-  useEffect(() => {
-    const timeoutRef: { first: number; second: number } = {
-      first: 0,
-      second: 0,
-    };
+  //   const map = mapRef.current.getMap();
 
-    timeoutRef.first = window.setTimeout(() => {
-      setMapViewState({
-        ...mapViewState,
-        latitude: mapViewState.latitude + 0.000000001,
-      });
-    }, 200);
+  //   const applyLightingFix = () => {
+  //     try {
+  //       // 1. Atur light preset untuk basemap
+  //       map.setConfigProperty(
+  //         "basemap",
+  //         "lightPreset",
+  //         colorMode === "dark" ? "night" : "day"
+  //       );
 
-    timeoutRef.second = window.setTimeout(() => {
-      setMapViewState({
-        ...mapViewState,
-        latitude: mapViewState.latitude - 0.000000001,
-      });
-    }, 400);
+  //       // 2. Pertahankan lighting netral untuk layer tambahan
+  //       map.setLight({
+  //         anchor: "viewport",
+  //         color: "#ffffff", // Cahaya putih netral
+  //         intensity: 1, // Intensitas penuh
+  //       });
+  //     } catch (error) {
+  //       console.error("Error applying lighting fix:", error);
+  //     }
+  //   };
 
-    // console.log(mapStyle);
+  //   if (map.isStyleLoaded()) {
+  //     applyLightingFix();
+  //   } else {
+  //     map.once("style.load", applyLightingFix);
+  //   }
 
-    return () => {
-      clearTimeout(timeoutRef.first);
-      clearTimeout(timeoutRef.second);
-    };
-  }, [activeMapStyle, mapStyle]);
+  //   return () => {
+  //     map.off("style.load", applyLightingFix);
+  //   };
+  // }, [mapboxStandardMaps, mapLoad, colorMode]);
 
   return (
     <Map
+      key={mapKey}
       ref={mapRef}
+      minZoom={MIN_ZOOM}
+      maxZoom={MAX_ZOOM}
+      projection="mercator"
+      // maxPitch={90}
+      // maxBounds={[-180, -85, 180, 85]}
       {...mapViewState}
       onLoad={() => {
         setMapLoad(true);
@@ -215,7 +230,7 @@ const AdminMap = () => {
       onMove={(evt) => setMapViewState(evt.viewState)}
       style={{ width: "100%", height: "100vh" }}
       mapStyle={activeMapStyle}
-      mapboxAccessToken={import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}
+      mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
       mapLib={mapboxgl}
       onZoomEnd={(e) => {
         handleZoomFromLevel(e.viewState.zoom);
@@ -254,4 +269,4 @@ const AdminMap = () => {
   );
 };
 
-export default AdminMap;
+export default BaseMap;

@@ -9,7 +9,7 @@ const DEFAULT_MAPS_VIEW_STATE = {
 interface Props {
   mapRef: any;
   setMapRef: (newState: any) => void;
-  mapViewState: typeof DEFAULT_MAPS_VIEW_STATE;
+  mapViewState: any;
   setMapViewState: (newState: Partial<typeof DEFAULT_MAPS_VIEW_STATE>) => void;
 }
 

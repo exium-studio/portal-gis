@@ -78,6 +78,7 @@ import {
   IconEdit,
   IconFlag,
   IconInfoCircle,
+  IconMap,
   IconMapCog,
   IconMapPin,
   IconMinus,
@@ -343,7 +344,7 @@ const SearchAddress = () => {
   );
 };
 
-const Basemap = () => {
+const BasemapFilter = () => {
   // Contexts
   const { themeConfig } = useThemeConfig();
   const { l } = useLang();
@@ -414,7 +415,7 @@ const Basemap = () => {
     <PopoverRoot open={open}>
       <PopoverTrigger asChild>
         <OverlayItemContainer>
-          <Tooltip content={l.basemap}>
+          <Tooltip content={l.basemap_filter}>
             <BButton
               ref={triggerRef}
               iconButton
@@ -422,7 +423,7 @@ const Basemap = () => {
               variant={"ghost"}
               w={"fit"}
               onClick={onToggle}
-              disabled={mapStyle.id === 2}
+              disabled={mapStyle.id !== 1}
             >
               <IconMapCog stroke={1.5} />
             </BButton>
@@ -442,7 +443,7 @@ const Basemap = () => {
             <MenuHeaderContainer>
               <HStack>
                 <IconMapCog stroke={1.5} size={20} />
-                <Text fontWeight={"bold"}>{l.basemap}</Text>
+                <Text fontWeight={"bold"}>{l.basemap_filter}</Text>
               </HStack>
             </MenuHeaderContainer>
 
@@ -634,7 +635,7 @@ const Legend = () => {
   );
 };
 
-const MapStyle = () => {
+const BasemapMapStyle = () => {
   // Contexts
   const { l } = useLang();
   const { themeConfig } = useThemeConfig();
@@ -651,7 +652,7 @@ const MapStyle = () => {
     <PopoverRoot open={open} positioning={{ placement: "top" }}>
       <PopoverTrigger asChild>
         <OverlayItemContainer>
-          <Tooltip content={l.map_type}>
+          <Tooltip content={l.basemap}>
             <Center
               ref={triggerRef}
               w={"40px"}
@@ -680,7 +681,10 @@ const MapStyle = () => {
             pointerEvents={"auto"}
           >
             <MenuHeaderContainer>
-              <Text fontWeight={"bold"}>{l.map_type}</Text>
+              <HStack h={"20px"}>
+                <IconMap stroke={1.5} size={20} />
+                <Text fontWeight={"bold"}>{l.basemap}</Text>
+              </HStack>
             </MenuHeaderContainer>
 
             <CContainer p={1} pt={2}>
@@ -722,7 +726,7 @@ const MapStyle = () => {
                         textAlign={"center"}
                         color={active ? themeConfig.primaryColor : ""}
                       >
-                        {item.label}
+                        {pluck(l, item.labelKey)}
                       </Text>
                     </CContainer>
                   );
@@ -900,6 +904,7 @@ const Compass = () => {
             <Text
               w={"38px"}
               ml={2}
+              mt={"2px"}
               textAlign={"center"}
               fontWeight={"semibold"}
             >
@@ -1775,7 +1780,7 @@ const AdminMapOverlay = () => {
             <HStack position={"absolute"} right={0}>
               {/* <DisplayedData /> */}
 
-              <Basemap />
+              <BasemapFilter />
 
               {/* <LayoutMenu /> */}
             </HStack>
@@ -1800,7 +1805,7 @@ const AdminMapOverlay = () => {
               right={0}
               pr={2}
             >
-              <MapStyle />
+              <BasemapMapStyle />
 
               <ZoomControl />
 

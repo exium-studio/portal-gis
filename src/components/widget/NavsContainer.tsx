@@ -35,8 +35,8 @@ import Logo from "../ui-custom/Logo";
 import { Avatar } from "../ui/avatar";
 import { ColorModeButton } from "../ui/color-mode";
 import { Tooltip } from "../ui/tooltip";
-import AdminMap from "./admin/AdminMap";
-import AdminMapOverlay from "./admin/AdminMapOverlay";
+import BaseMap from "./admin/Basemap";
+import BasemapMapOverlay from "./admin/BasemapMapOverlay";
 import CurrentUserTimeZone from "./CurrentUserTimeZone";
 
 interface Interface__NavItemContainer extends StackProps {
@@ -419,9 +419,9 @@ const NavContainer = ({
             h={halfPanel && iss ? "50%" : "full"}
             position={"relative"}
           >
-            <AdminMap />
+            <BaseMap />
 
-            <AdminMapOverlay />
+            <BasemapMapOverlay />
           </CContainer>
         )}
       </Stack>

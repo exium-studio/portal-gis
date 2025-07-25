@@ -323,6 +323,18 @@ export const document = {
   id: "Dokumen",
   en: "Document",
 };
+export const plain = {
+  id: "Polos",
+  en: "Plain",
+};
+export const colorful = {
+  id: "Warna",
+  en: "Colorful",
+};
+export const satellite = {
+  id: "Satelit",
+  en: "Satellite",
+};
 
 // UI
 export const toggle_dark_mode = {
@@ -572,6 +584,10 @@ export const mark_read_disclosure = {
 export const basemap = {
   id: "Peta dasar",
   en: "Basemap",
+};
+export const basemap_filter = {
+  id: "Filter peta dasar",
+  en: "Filter base map",
 };
 export const road = {
   id: "Jalan",

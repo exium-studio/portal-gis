@@ -580,6 +580,7 @@ const LoadWorkspace = (props: any) => {
         // size={"sm"}
         onClick={onLoad}
         loading={loading}
+        touchAction="none"
         {...restProps}
       >
         <Icon boxSize={"25px"}>
