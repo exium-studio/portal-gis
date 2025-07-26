@@ -10,6 +10,12 @@ const customConfig = defineConfig({
     // },
   },
   theme: {
+    breakpoints: {
+      sm: "320px",
+      md: "720px",
+      lg: "960px",
+      xl: "1200px",
+    },
     tokens: {
       colors: {
         light: { value: "#fff" },

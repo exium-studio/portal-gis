@@ -3,7 +3,7 @@ import useScreen from "./useScreen";
 const useIsSmScreenWidth = () => {
   const { sw } = useScreen();
 
-  return sw < 768;
+  return sw < 720;
 };
 
 export default useIsSmScreenWidth;

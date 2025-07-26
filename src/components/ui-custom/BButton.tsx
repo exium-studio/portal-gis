@@ -11,77 +11,75 @@ export interface BButtonProps extends ButtonProps {
   iconButton?: boolean;
 }
 
-const BButton = forwardRef<HTMLButtonElement, BButtonProps>(
-  (
-    {
-      fRef,
-      children,
-      unclicky = false,
-      iconButton = false,
-      className = "",
-      size,
-      ...props
-    },
-    ref
-  ) => {
-    // Contexts
-    const { themeConfig } = useThemeConfig();
+const BButton = forwardRef<HTMLButtonElement, BButtonProps>((props, ref) => {
+  // Props
+  const {
+    fRef,
+    children,
+    unclicky = false,
+    iconButton = false,
+    className = "",
+    size,
+    ...restProps
+  } = props;
 
-    // States, Refs
-    const finalClassName = `${unclicky ? "" : "clicky"} ${className}`.trim();
+  // Contexts
+  const { themeConfig } = useThemeConfig();
 
-    // Memoized Active Style
-    const activeBg = useMemo(() => {
-      if (props.colorPalette) {
-        switch (props?.variant) {
-          default:
-            return `${props.colorPalette}.solid`;
-          case "ghost":
-          case "outline":
-            return `${props.colorPalette}.subtle`;
-          case "subtle":
-          case "surface":
-            return `${props.colorPalette}.muted`;
-          case "plain":
-            return "";
-        }
-      } else {
-        switch (props?.variant) {
-          default:
-            return "gray.subtle";
-          case "subtle":
-          case "surface":
-            return "gray.muted";
-          case "plain":
-            return "";
-        }
+  // States, Refs
+  const finalClassName = `${unclicky ? "" : "clicky"} ${className}`.trim();
+
+  // Memoized Active Style
+  const activeBg = useMemo(() => {
+    if (props.colorPalette) {
+      switch (props?.variant) {
+        default:
+          return `${props.colorPalette}.solid`;
+        case "ghost":
+        case "outline":
+          return `${props.colorPalette}.subtle`;
+        case "subtle":
+        case "surface":
+          return `${props.colorPalette}.muted`;
+        case "plain":
+          return "";
       }
-    }, [props.variant, props.colorPalette]);
+    } else {
+      switch (props?.variant) {
+        default:
+          return "gray.subtle";
+        case "subtle":
+        case "surface":
+          return "gray.muted";
+        case "plain":
+          return "";
+      }
+    }
+  }, [props.variant, props.colorPalette]);
 
-    return iconButton ? (
-      <IconButton
-        ref={ref || fRef}
-        className={finalClassName}
-        size={size}
-        borderRadius={themeConfig.radii.component}
-        {...props}
-      >
-        {children}
-      </IconButton>
-    ) : (
-      <Button
-        ref={ref || fRef}
-        className={finalClassName}
-        fontWeight="semibold"
-        size={size || (MAIN_BUTTON_SIZE as any)}
-        borderRadius={themeConfig.radii.component}
-        _active={{ bg: activeBg }}
-        {...props}
-      >
-        {children}
-      </Button>
-    );
-  }
-);
+  return iconButton ? (
+    <IconButton
+      ref={ref || fRef}
+      className={finalClassName}
+      size={size}
+      borderRadius={themeConfig.radii.component}
+      {...restProps}
+    >
+      {children}
+    </IconButton>
+  ) : (
+    <Button
+      ref={ref || fRef}
+      className={finalClassName}
+      fontWeight="semibold"
+      size={size || (MAIN_BUTTON_SIZE as any)}
+      borderRadius={themeConfig.radii.component}
+      _active={{ bg: activeBg }}
+      {...restProps}
+    >
+      {children}
+    </Button>
+  );
+});
 
 export default BButton;
