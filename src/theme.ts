@@ -1,4 +1,5 @@
 import { createSystem, defineConfig, defaultConfig } from "@chakra-ui/react";
+import { SM_SCREEN_W_NUMBER } from "./constants/sizes";
 
 const customConfig = defineConfig({
   globalCss: {
@@ -12,7 +13,7 @@ const customConfig = defineConfig({
   theme: {
     breakpoints: {
       sm: "320px",
-      md: "720px",
+      md: `${SM_SCREEN_W_NUMBER}px`,
       lg: "960px",
       xl: "1200px",
     },

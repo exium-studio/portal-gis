@@ -43,11 +43,12 @@ import {
   DrawerTrigger,
 } from "../ui/drawer";
 import CContainer from "./CContainer";
+import { SM_SCREEN_W_NUMBER } from "@/constants/sizes";
 
 const DisclosureRoot = ({ children, ...props }: any) => {
   // Utils
   const { sw } = useScreen(0);
-  const iss = sw < 768;
+  const iss = sw < SM_SCREEN_W_NUMBER;
 
   return iss ? (
     <DrawerRoot placement={"bottom"} {...props}>

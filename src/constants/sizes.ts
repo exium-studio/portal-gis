@@ -4,3 +4,4 @@ export const MOBILE_NAVS_HEIGHT = "74px";
 export const R_GAP = ["10px", null, 4];
 export const R_ITEM_MAX_W = ["", null, "400px"];
 export const ITEM_BODY_H = "500px";
+export const SM_SCREEN_W_NUMBER = 720;

@@ -1,5 +1,6 @@
 "use client";
 
+import { SM_SCREEN_W_NUMBER } from "@/constants/sizes";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import {
   Toaster as ChakraToaster,
@@ -11,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 
 export const toaster = createToaster({
-  placement: window.innerWidth < 768 ? "top" : "bottom-end",
+  placement: window.innerWidth < SM_SCREEN_W_NUMBER ? "top" : "bottom-end",
   pauseOnPageIdle: true,
 });
 
