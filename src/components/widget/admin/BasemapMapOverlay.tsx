@@ -96,6 +96,7 @@ import ExistingFileItem from "../ExistingFIleItem";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import useActiveLayers from "@/context/useActiveWorkspaces";
 import getLocation from "@/utils/getLocation";
+import { useElementSize } from "@/hooks/useElementSize";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -485,15 +486,37 @@ const BasemapFilter = () => {
   );
 };
 
-const Legend = () => {
-  // Hooks
-  const { open, onToggle, onClose } = useDisclosure();
-  const iss = useIsSmScreenWidth();
-
+const LegendTrigger = () => {
   // Contexts
   const { l } = useLang();
-  const { legends, setLegends } = useLegend();
+  const onToggle = useLegend((s) => s.onToggle);
+
+  return (
+    <>
+      <CContainer w={"fit"} zIndex={1} position={"relative"}>
+        <OverlayItemContainer>
+          <Tooltip content={l.legend}>
+            <BButton iconButton unclicky variant={"ghost"} onClick={onToggle}>
+              <IconFlag stroke={1.5} />
+            </BButton>
+          </Tooltip>
+        </OverlayItemContainer>
+      </CContainer>
+    </>
+  );
+};
+const LegendContent = () => {
+  // Hooks
+  const { l } = useLang();
+  const iss = useIsSmScreenWidth();
+  const { ref: containerRef, size } = useElementSize<HTMLDivElement>();
+
+  // Contexts
   const halfPanel = useLayout((s) => s.halfPanel);
+  const open = useLegend((s) => s.open);
+  const onClose = useLegend((s) => s.onClose);
+  const legends = useLegend((s) => s.legends);
+  const setLegends = useLegend((s) => s.setLegends);
 
   // States
   const { error, loading, data, makeRequest } = useDataState<any>({
@@ -536,8 +559,9 @@ const Legend = () => {
     ),
   };
 
-  // Refs
-  const containerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    console.log("Current container height:", size.height);
+  }, [size]);
 
   // Handle set legends on fetched data
   useEffect(() => {
@@ -555,61 +579,63 @@ const Legend = () => {
     }
   }, [data]);
 
-  const Content = () => {
-    return (
-      <FloatingContainer
-        open={open}
-        containerProps={{
-          position: "absolute",
-          top: iss ? "calc(-100dvh + 66px + 66px + 74px)" : "",
-          bottom: iss ? "" : "58px",
-          pointerEvents: "auto",
-          w: iss ? "calc(50vw - 14px)" : "300px",
-          pb: 2,
-          maxH: iss
-            ? halfPanel
-              ? "calc(50dvh - 174px)"
-              : "35dvh"
-            : "calc(100dvh - 72px)",
-        }}
-        animationEntrance="left"
-      >
-        <MenuHeaderContainer>
-          <HStack h={"20px"}>
-            <IconFlag stroke={1.5} size={20} />
-            <Text fontWeight={"bold"}>{l.legend}</Text>
+  return (
+    <FloatingContainer
+      fRef={containerRef}
+      open={open}
+      containerProps={{
+        position: "absolute",
+        left: "8px",
+        // top: "66px",
+        top: iss ? "66px" : `calc(100dvh - 68px - ${size.height}px)`,
+        // bottom: iss ? "" : "66px",
+        pointerEvents: "auto",
+        w: iss ? "calc(50vw - 14px)" : "300px",
+        pb: 2,
+        maxH: iss
+          ? halfPanel
+            ? "calc(50dvh - 174px)"
+            : "35dvh"
+          : "calc(100dvh - 134px)",
+      }}
+      animationEntrance="left"
+    >
+      <MenuHeaderContainer>
+        <HStack h={"20px"}>
+          <IconFlag stroke={1.5} size={20} />
+          <Text fontWeight={"bold"}>{l.legend}</Text>
 
-            <BButton
-              iconButton
-              unclicky
-              size={["xs", null, "sm"]}
-              variant={"ghost"}
-              ml={"auto"}
-              mr={-1}
-              onClick={onClose}
-            >
-              <Icon boxSize={5}>
-                <IconX />
-              </Icon>
-            </BButton>
-          </HStack>
-        </MenuHeaderContainer>
+          <BButton
+            iconButton
+            unclicky
+            size={["xs", null, "sm"]}
+            variant={"ghost"}
+            ml={"auto"}
+            mr={-1}
+            onClick={onClose}
+          >
+            <Icon boxSize={5}>
+              <IconX />
+            </Icon>
+          </BButton>
+        </HStack>
+      </MenuHeaderContainer>
 
-        <CContainer p={3} pb={1} className="scrollY">
-          {loading && render.loading}
-          {!loading && (
-            <>
-              {error && render.error}
-              {!error && (
-                <>
-                  {data && render.loaded}
-                  {(!data || empty(data)) && render.empty}
-                </>
-              )}
-            </>
-          )}
+      <CContainer p={3} pb={1} className="scrollY">
+        {loading && render.loading}
+        {!loading && (
+          <>
+            {error && render.error}
+            {!error && (
+              <>
+                {data && render.loaded}
+                {(!data || empty(data)) && render.empty}
+              </>
+            )}
+          </>
+        )}
 
-          {/* <HelperText>
+        {/* <HelperText>
               {l.legend_helper}
               <Span>
                 <Icon mx={1}>
@@ -618,36 +644,8 @@ const Legend = () => {
                 {l.displayed_data}
               </Span>
             </HelperText> */}
-        </CContainer>
-      </FloatingContainer>
-    );
-  };
-
-  return (
-    <>
-      {iss && <Content />}
-
-      {!iss && (
-        <Portal container={containerRef}>
-          <Content />
-        </Portal>
-      )}
-
-      <CContainer
-        w={"fit"}
-        fRef={containerRef}
-        zIndex={1}
-        position={"relative"}
-      >
-        <OverlayItemContainer>
-          <Tooltip content={l.legend}>
-            <BButton iconButton unclicky variant={"ghost"} onClick={onToggle}>
-              <IconFlag stroke={1.5} />
-            </BButton>
-          </Tooltip>
-        </OverlayItemContainer>
       </CContainer>
-    </>
+    </FloatingContainer>
   );
 };
 
@@ -1791,6 +1789,7 @@ const AdminMapOverlay = () => {
       top={0}
     >
       <FieldData />
+      <LegendContent />
 
       <CContainer flex={1} justify={"space-between"}>
         <Box p={2}>
@@ -1822,7 +1821,7 @@ const AdminMapOverlay = () => {
             h={"calc(40px + 8px)"}
           >
             <HStack gap={0} align={"start"} w={"full"} zIndex={2}>
-              <Legend />
+              <LegendTrigger />
             </HStack>
 
             <HScroll

@@ -3,19 +3,24 @@ import CContainer from "./CContainer";
 import { useThemeConfig } from "@/context/useThemeConfig";
 
 interface Props extends PresenceProps {
+  fRef?: any;
   children?: any;
   open?: boolean;
   containerProps?: StackProps;
   animationEntrance?: "top" | "bottom" | "left" | "right" | "center";
 }
 
-const FloatingContainer = ({
-  children,
-  open,
-  containerProps,
-  animationEntrance = "top",
-  ...props
-}: Props) => {
+const FloatingContainer = (props: Props) => {
+  // Props
+  const {
+    fRef,
+    children,
+    open,
+    containerProps,
+    animationEntrance = "top",
+    ...restProps
+  } = props;
+
   // Components
   const { themeConfig } = useThemeConfig();
 
@@ -48,14 +53,14 @@ const FloatingContainer = ({
       present={open}
       animationName={animationName[animationEntrance]}
       animationDuration="moderate"
-      {...props}
+      {...restProps}
     >
       <CContainer
+        fRef={fRef}
         bg={"body"}
         border={"1px solid"}
         borderColor={"border.muted"}
         borderRadius={themeConfig.radii.container}
-        transition={"140ms"}
         pointerEvents={open ? "auto" : "none"}
         {...containerProps}
       >

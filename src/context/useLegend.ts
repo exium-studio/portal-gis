@@ -6,6 +6,13 @@ interface ColorObject {
 }
 
 interface ColorStore {
+  open: boolean;
+  data: any;
+  onOpen: () => void;
+  onToggle: () => void;
+  onClose: () => void;
+  setOpen: (newState: boolean) => void;
+  setData: (newState: any) => void;
   legends: ColorObject[];
   addLegend: (newColor: ColorObject) => void;
   removeLegend: (label: string) => void;
@@ -14,6 +21,14 @@ interface ColorStore {
 }
 
 const useLegend = create<ColorStore>((set) => ({
+  open: false,
+  data: null,
+  onOpen: () => set({ open: true }),
+  onToggle: () => set((state) => ({ open: !state.open })),
+  onClose: () => set({ open: false }),
+  setOpen: (newState) => set({ open: newState }),
+  setData: (newState) => set({ data: newState }),
+
   legends: [],
 
   // Add a new color object to the array
