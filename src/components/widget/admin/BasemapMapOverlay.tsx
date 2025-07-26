@@ -635,7 +635,6 @@ const Legend = () => {
 
       <CContainer
         w={"fit"}
-        bg={"red"}
         fRef={containerRef}
         zIndex={1}
         position={"relative"}
