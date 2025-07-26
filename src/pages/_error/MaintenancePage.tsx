@@ -10,7 +10,7 @@ export default function MaintenancePage() {
   const { l } = useLang();
 
   return (
-    <VStack h={"100vh"} gap={0}>
+    <VStack h={"100dvh"} gap={0}>
       <VStack p={8} flex={1} justify={"center"} gap={4} w={"full"}>
         <Text textAlign={"center"} fontSize={32} fontWeight={600}>
           503 Maintenance

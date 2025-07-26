@@ -567,12 +567,11 @@ const Legend = () => {
             pointerEvents: "auto",
             w: iss ? "calc(100vw - 16px)" : "300px",
             pb: 2,
-            // maxH: "calc(40vh - 72px)",
             maxH: iss
               ? halfPanel
-                ? "calc(50vh - 174px)"
-                : "35vh"
-              : "calc(100vh - 72px)",
+                ? "calc(50dvh - 174px)"
+                : "35dvh"
+              : "calc(100dvh - 72px)",
           }}
           animationEntrance="bottom"
         >
@@ -1583,12 +1582,11 @@ const FieldData = () => {
         pointerEvents: "auto",
         w: iss ? "calc(100vw - 16px)" : "300px",
         pb: 2,
-        // maxH: "calc(60vh - 72px)",
         maxH: iss
           ? halfPanel
-            ? "calc(50vh - 174px)"
-            : "35vh"
-          : "calc(100vh - 134px)",
+            ? "calc(50dvh - 174px)"
+            : "35dvh"
+          : "calc(100dvh - 134px)",
       }}
       animationEntrance="top"
     >

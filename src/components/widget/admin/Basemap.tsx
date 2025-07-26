@@ -228,7 +228,7 @@ const BaseMap = () => {
         setMapLoad(false);
       }}
       onMove={(evt) => setMapViewState(evt.viewState)}
-      style={{ width: "100%", height: "100vh" }}
+      style={{ width: "100%", height: "100dvh" }}
       mapStyle={activeMapStyle}
       mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
       mapLib={mapboxgl}

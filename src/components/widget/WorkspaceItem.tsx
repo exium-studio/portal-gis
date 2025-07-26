@@ -681,7 +681,7 @@ const WorkspaceItem = (props: any) => {
 
           <Popover.Root>
             <Popover.Trigger asChild>
-              <P lineClamp={1} color={"fg.subtle"}>
+              <P lineClamp={1} color={"fg.subtle"} w={"fit"}>
                 {data?.description}
               </P>
             </Popover.Trigger>
