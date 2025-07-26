@@ -25,8 +25,8 @@ const FloatingContainer = ({
       _closed: "slide-to-top, fade-out",
     },
     center: {
-      _open: "scale-up, fade-in",
-      _closed: "scale-down, fade-out",
+      _open: "scale-in, fade-in",
+      _closed: "scale-out, fade-out",
     },
     left: {
       _open: "slide-from-left, fade-in",

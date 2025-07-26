@@ -362,11 +362,11 @@ const NavContainer = ({
       {/* Content */}
       <Stack
         flex={1}
+        flexDir={iss ? "column-reverse" : "row"}
+        w={iss ? "full" : "calc(100vw - 76px)"}
         h={iss ? "calc(100dvh - 80px)" : "100dvh"}
         align={"stretch"}
         gap={0}
-        flexDir={iss ? "column-reverse" : "row"}
-        w={iss ? "full" : "calc(100vw - 76px)"}
       >
         {/* Main Panel */}
         {(halfPanel || fullPanel) && (

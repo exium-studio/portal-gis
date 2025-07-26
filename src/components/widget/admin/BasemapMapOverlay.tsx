@@ -523,7 +523,7 @@ const Legend = () => {
     empty: <FeedbackNoData />,
     notFound: <FeedbackNotFound />,
     loaded: (
-      <SimpleGrid gapX={4} gapY={1} px={"2px"} columns={2}>
+      <SimpleGrid gapX={4} gapY={1} px={"2px"} columns={[1, null, 2]}>
         {legends.map((item) => {
           return (
             <HStack key={item?.label}>
@@ -555,62 +555,61 @@ const Legend = () => {
     }
   }, [data]);
 
-  return (
-    <CContainer w={"fit"} fRef={containerRef} zIndex={1} position={"relative"}>
-      <Portal container={containerRef}>
-        <FloatingContainer
-          open={open}
-          containerProps={{
-            position: "absolute",
-            left: "0",
-            bottom: "58px",
-            pointerEvents: "auto",
-            w: iss ? "calc(100vw - 16px)" : "300px",
-            pb: 2,
-            maxH: iss
-              ? halfPanel
-                ? "calc(50dvh - 174px)"
-                : "35dvh"
-              : "calc(100dvh - 72px)",
-          }}
-          animationEntrance="bottom"
-        >
-          <MenuHeaderContainer>
-            <HStack h={"20px"}>
-              <IconFlag stroke={1.5} size={20} />
-              <Text fontWeight={"bold"}>{l.legend}</Text>
+  const Content = () => {
+    return (
+      <FloatingContainer
+        open={open}
+        containerProps={{
+          position: "absolute",
+          top: iss ? "calc(-100dvh + 66px + 66px + 74px)" : "",
+          bottom: iss ? "" : "58px",
+          pointerEvents: "auto",
+          w: iss ? "calc(50vw - 14px)" : "300px",
+          pb: 2,
+          maxH: iss
+            ? halfPanel
+              ? "calc(50dvh - 174px)"
+              : "35dvh"
+            : "calc(100dvh - 72px)",
+        }}
+        animationEntrance="left"
+      >
+        <MenuHeaderContainer>
+          <HStack h={"20px"}>
+            <IconFlag stroke={1.5} size={20} />
+            <Text fontWeight={"bold"}>{l.legend}</Text>
 
-              <BButton
-                iconButton
-                unclicky
-                size={"sm"}
-                variant={"ghost"}
-                ml={"auto"}
-                mr={-1}
-                onClick={onClose}
-              >
-                <Icon boxSize={5}>
-                  <IconX />
-                </Icon>
-              </BButton>
-            </HStack>
-          </MenuHeaderContainer>
+            <BButton
+              iconButton
+              unclicky
+              size={["xs", null, "sm"]}
+              variant={"ghost"}
+              ml={"auto"}
+              mr={-1}
+              onClick={onClose}
+            >
+              <Icon boxSize={5}>
+                <IconX />
+              </Icon>
+            </BButton>
+          </HStack>
+        </MenuHeaderContainer>
 
-          <CContainer p={3} pb={1} className="scrollY">
-            {loading && render.loading}
-            {!loading && (
-              <>
-                {error && render.error}
-                {!error && (
-                  <>
-                    {data && render.loaded}
-                    {(!data || empty(data)) && render.empty}
-                  </>
-                )}
-              </>
-            )}
+        <CContainer p={3} pb={1} className="scrollY">
+          {loading && render.loading}
+          {!loading && (
+            <>
+              {error && render.error}
+              {!error && (
+                <>
+                  {data && render.loaded}
+                  {(!data || empty(data)) && render.empty}
+                </>
+              )}
+            </>
+          )}
 
-            {/* <HelperText>
+          {/* <HelperText>
               {l.legend_helper}
               <Span>
                 <Icon mx={1}>
@@ -619,18 +618,37 @@ const Legend = () => {
                 {l.displayed_data}
               </Span>
             </HelperText> */}
-          </CContainer>
-        </FloatingContainer>
-      </Portal>
+        </CContainer>
+      </FloatingContainer>
+    );
+  };
 
-      <OverlayItemContainer>
-        <Tooltip content={l.legend}>
-          <BButton iconButton unclicky variant={"ghost"} onClick={onToggle}>
-            <IconFlag stroke={1.5} />
-          </BButton>
-        </Tooltip>
-      </OverlayItemContainer>
-    </CContainer>
+  return (
+    <>
+      {iss && <Content />}
+
+      {!iss && (
+        <Portal container={containerRef}>
+          <Content />
+        </Portal>
+      )}
+
+      <CContainer
+        w={"fit"}
+        bg={"red"}
+        fRef={containerRef}
+        zIndex={1}
+        position={"relative"}
+      >
+        <OverlayItemContainer>
+          <Tooltip content={l.legend}>
+            <BButton iconButton unclicky variant={"ghost"} onClick={onToggle}>
+              <IconFlag stroke={1.5} />
+            </BButton>
+          </Tooltip>
+        </OverlayItemContainer>
+      </CContainer>
+    </>
   );
 };
 
@@ -931,7 +949,7 @@ const Compass = () => {
 
 const EditField = (props: any) => {
   // Props
-  const { data, setData } = props;
+  const { data, setData, ...restProps } = props;
 
   // Hooks
   const { l } = useLang();
@@ -1110,6 +1128,7 @@ const EditField = (props: any) => {
         size={"sm"}
         variant={"ghost"}
         onClick={onOpen}
+        {...restProps}
       >
         <Icon boxSize={5}>
           <IconEdit stroke={1.5} />
@@ -1579,8 +1598,10 @@ const FieldData = () => {
         position: "absolute",
         right: "8px",
         top: "66px",
+        // top: iss ? "" : "66px",
+        // bottom: iss ? "66px" : "",
         pointerEvents: "auto",
-        w: iss ? "calc(100vw - 16px)" : "300px",
+        w: iss ? "calc(50vw - 14px)" : "300px",
         pb: 2,
         maxH: iss
           ? halfPanel
@@ -1588,22 +1609,31 @@ const FieldData = () => {
             : "35dvh"
           : "calc(100dvh - 134px)",
       }}
-      animationEntrance="top"
+      animationEntrance={"right"}
     >
       <MenuHeaderContainer>
         <HStack h={"20px"}>
-          <IconInfoCircle stroke={1.5} size={20} />
-          <Text fontWeight={"bold"}>
-            {capsFirstLetterEachWord(l.field_data)}
-          </Text>
+          <HStack>
+            <Icon>
+              <IconInfoCircle stroke={1.5} size={20} />
+            </Icon>
+
+            <Text fontWeight={"bold"} lineClamp={1}>
+              {capsFirstLetterEachWord(l.field_data)}
+            </Text>
+          </HStack>
 
           <HStack gap={1} ml={"auto"} mr={-1}>
-            <EditField data={data} setData={setData} />
+            <EditField
+              data={data}
+              setData={setData}
+              size={["xs", null, "sm"]}
+            />
 
             <BButton
               iconButton
               unclicky
-              size={"sm"}
+              size={["xs", null, "sm"]}
               variant={"ghost"}
               onClick={() => {
                 clearSelectedPolygon();
@@ -1792,7 +1822,7 @@ const AdminMapOverlay = () => {
             position={"relative"}
             h={"calc(40px + 8px)"}
           >
-            <HStack align={"start"} w={"full"} zIndex={2}>
+            <HStack gap={0} align={"start"} w={"full"} zIndex={2}>
               <Legend />
             </HStack>
 
