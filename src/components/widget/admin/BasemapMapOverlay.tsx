@@ -1802,6 +1802,7 @@ const AdminMapOverlay = () => {
               maxW={"calc(100% - 50px - 8px)"}
               right={0}
               pr={2}
+              className="noScroll"
             >
               <BasemapMapStyle />
 
