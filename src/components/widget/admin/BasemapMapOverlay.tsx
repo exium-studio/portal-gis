@@ -33,6 +33,7 @@ import { Tooltip } from "@/components/ui/tooltip";
 import MAPS_STYLES_OPTIONS from "@/constants/mapsStylesOptions";
 import useAdminSearchAddress from "@/constants/useSearchAddress";
 import useActiveMapStyle from "@/context/useActiveMapStyle";
+import useActiveLayers from "@/context/useActiveWorkspaces";
 import useMapsConfig from "@/context/useBasemap";
 import useCurrentLocation from "@/context/useCurrentLocation";
 import useLang from "@/context/useLang";
@@ -52,6 +53,7 @@ import BASEMAP_CONFIG_LIST from "@/static/basemapConfigList";
 import back from "@/utils/back";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import empty from "@/utils/empty";
+import getLocation from "@/utils/getLocation";
 import pluck from "@/utils/pluck";
 import { fileValidation } from "@/utils/validationSchemas";
 import {
@@ -94,9 +96,6 @@ import * as yup from "yup";
 import useSearchMode from "../../../context/useSearchMode";
 import ExistingFileItem from "../ExistingFIleItem";
 import MenuHeaderContainer from "../MenuHeaderContainer";
-import useActiveLayers from "@/context/useActiveWorkspaces";
-import getLocation from "@/utils/getLocation";
-import { useElementSize } from "@/hooks/useElementSize";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -487,13 +486,36 @@ const BasemapFilter = () => {
 };
 
 const LegendTrigger = () => {
+  // Hooks
+  const iss = useIsSmScreenWidth();
+
   // Contexts
   const { l } = useLang();
   const onToggle = useLegend((s) => s.onToggle);
 
+  // Refs
+  const containerRef = useRef<any>(null);
+
   return (
     <>
-      <CContainer w={"fit"} zIndex={1} position={"relative"}>
+      <CContainer
+        fRef={containerRef}
+        w={"fit"}
+        zIndex={1}
+        position={"relative"}
+      >
+        <Portal container={containerRef}>
+          {!iss && (
+            <LegendContent
+              containerProps={{
+                top: "",
+                bottom: "58px",
+                left: "",
+              }}
+            />
+          )}
+        </Portal>
+
         <OverlayItemContainer>
           <Tooltip content={l.legend}>
             <BButton iconButton unclicky variant={"ghost"} onClick={onToggle}>
@@ -505,11 +527,13 @@ const LegendTrigger = () => {
     </>
   );
 };
-const LegendContent = () => {
+const LegendContent = (props: any) => {
+  // Props
+  const { containerProps } = props;
+
   // Hooks
   const { l } = useLang();
   const iss = useIsSmScreenWidth();
-  const { ref: containerRef, size } = useElementSize<HTMLDivElement>();
 
   // Contexts
   const halfPanel = useLayout((s) => s.halfPanel);
@@ -559,10 +583,6 @@ const LegendContent = () => {
     ),
   };
 
-  useEffect(() => {
-    console.log("Current container height:", size.height);
-  }, [size]);
-
   // Handle set legends on fetched data
   useEffect(() => {
     if (data) {
@@ -581,13 +601,12 @@ const LegendContent = () => {
 
   return (
     <FloatingContainer
-      fRef={containerRef}
       open={open}
       containerProps={{
         position: "absolute",
         left: "8px",
+        top: "66px",
         // top: "66px",
-        top: iss ? "66px" : `calc(100dvh - 68px - ${size.height}px)`,
         // bottom: iss ? "" : "66px",
         pointerEvents: "auto",
         w: iss ? "calc(50vw - 14px)" : "300px",
@@ -597,6 +616,7 @@ const LegendContent = () => {
             ? "calc(50dvh - 174px)"
             : "35dvh"
           : "calc(100dvh - 134px)",
+        ...containerProps,
       }}
       animationEntrance="left"
     >
@@ -1777,6 +1797,9 @@ const FieldData = () => {
 };
 
 const AdminMapOverlay = () => {
+  // Hooks
+  const iss = useIsSmScreenWidth();
+
   return (
     <CContainer
       id="map_overlay"
@@ -1789,7 +1812,7 @@ const AdminMapOverlay = () => {
       top={0}
     >
       <FieldData />
-      <LegendContent />
+      {iss && <LegendContent />}
 
       <CContainer flex={1} justify={"space-between"}>
         <Box p={2}>

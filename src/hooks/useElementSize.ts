@@ -18,10 +18,18 @@ interface UseElementSizeResult<T extends HTMLElement> {
   refresh: () => void;
 }
 
+interface UseElementSizeResult<T extends HTMLElement> {
+  ref: RefObject<T | null>;
+  size: ElementSize;
+  refresh: () => void;
+  ready: boolean; // Tambahkan ini
+}
+
 export const useElementSize = <
   T extends HTMLElement
 >(): UseElementSizeResult<T> => {
   const ref = useRef<T>(null);
+  const [ready, setready] = useState(false); // Tambahkan state ini
   const [size, setSize] = useState<ElementSize>({
     width: 0,
     height: 0,
@@ -82,6 +90,7 @@ export const useElementSize = <
         isVisible,
       };
     });
+    setready(true); // Set ready menjadi true setelah update
   }, []);
 
   useEffect(() => {
@@ -96,5 +105,5 @@ export const useElementSize = <
     return () => observer.disconnect();
   }, [updateSize]);
 
-  return { ref, size, refresh: updateSize };
+  return { ref, size, refresh: updateSize, ready }; // Tambahkan ready di return
 };
