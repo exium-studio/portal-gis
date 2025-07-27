@@ -9,20 +9,20 @@ interface Layer {
   visible?: boolean;
 }
 
-interface Workspace {
+interface WorkspaceObject {
   id: string | number;
   [key: string]: any; // additional workspace properties
 }
 
-interface LayerGroup {
-  workspace: Workspace;
+interface Workspace {
+  workspace: WorkspaceObject;
   layer: Layer;
   visible: boolean;
 }
 
 interface GeoJSONLayerState {
-  activeLayerGroups: LayerGroup[];
-  addLayerGroup: (group: LayerGroup) => void;
+  activeLayerGroups: Workspace[];
+  loadWorkspace: (newWorkspace: Workspace) => void;
   addLayerToGroup: (workspaceId: string | number, layer: Layer) => void;
   toggleGroupVisibility: (workspaceId: string | number) => void;
   toggleLayerVisibility: (
@@ -46,14 +46,14 @@ const useActiveWorkspaces = create<GeoJSONLayerState>((set) => ({
   activeLayerGroups: [],
 
   // Add a new layer group with initial layer
-  addLayerGroup: (newGroup) =>
+  loadWorkspace: (newGroup) =>
     set((state) => {
       const groupExists = state.activeLayerGroups.some(
         (g) => g.workspace.id === newGroup.workspace.id
       );
 
       if (groupExists) {
-        console.warn(`Workspace ${newGroup.workspace.id} already exists`);
+        console.warn(`WorkspaceObject ${newGroup.workspace.id} already exists`);
         return state;
       }
 

@@ -175,41 +175,6 @@ const BaseMap = () => {
       setActiveMapStyle(mapStyle.tile[colorMode]);
     }
   }, [mapStyle, colorMode, activeLayers]);
-  // useEffect(() => {
-  //   if (!mapLoad || !mapboxStandardMaps || !mapRef.current) return;
-
-  //   const map = mapRef.current.getMap();
-
-  //   const applyLightingFix = () => {
-  //     try {
-  //       // 1. Atur light preset untuk basemap
-  //       map.setConfigProperty(
-  //         "basemap",
-  //         "lightPreset",
-  //         colorMode === "dark" ? "night" : "day"
-  //       );
-
-  //       // 2. Pertahankan lighting netral untuk layer tambahan
-  //       map.setLight({
-  //         anchor: "viewport",
-  //         color: "#ffffff", // Cahaya putih netral
-  //         intensity: 1, // Intensitas penuh
-  //       });
-  //     } catch (error) {
-  //       console.error("Error applying lighting fix:", error);
-  //     }
-  //   };
-
-  //   if (map.isStyleLoaded()) {
-  //     applyLightingFix();
-  //   } else {
-  //     map.once("style.load", applyLightingFix);
-  //   }
-
-  //   return () => {
-  //     map.off("style.load", applyLightingFix);
-  //   };
-  // }, [mapboxStandardMaps, mapLoad, colorMode]);
 
   return (
     <Map

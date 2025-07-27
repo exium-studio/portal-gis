@@ -28,7 +28,6 @@ import { useThemeConfig } from "@/context/useThemeConfig";
 import useBackOnClose from "@/hooks/useBackOnClose";
 import useDataState from "@/hooks/useDataState";
 import useRequest from "@/hooks/useRequest";
-import useScreen from "@/hooks/useScreen";
 import back from "@/utils/back";
 import { fileValidation } from "@/utils/validationSchemas";
 import {
@@ -193,9 +192,6 @@ const Data = (props: any) => {
   const { dataState } = props;
   const { data } = dataState;
 
-  // Hooks
-  const { sw } = useScreen();
-
   // Contexts
   const { layout } = useLayout();
 
@@ -203,11 +199,8 @@ const Data = (props: any) => {
   const layoutHalfMap = layout.id === 1;
 
   return (
-    <CContainer px={4}>
-      <SimpleGrid
-        columns={layoutHalfMap ? (sw < 1200 ? 1 : 2) : [1, null, 2, 4]}
-        gap={4}
-      >
+    <CContainer>
+      <SimpleGrid columns={layoutHalfMap ? 1 : [1, null, 2, 4]} gap={4}>
         {data?.map((item: any) => {
           return (
             <WorkspaceItem
@@ -246,9 +239,16 @@ const WorkspacePage = () => {
 
   return (
     <PageContainer flex={1}>
-      <ItemContainer flex={1} overflowY={"auto"} border={"none"}>
-        <ItemHeaderContainer borderless py={2}>
-          <HStack py={2} justify={"space-between"} w={"full"}>
+      <ItemContainer
+        flex={1}
+        overflowY={"auto"}
+        border={"none"}
+        p={[null, null, 4]}
+        gap={4}
+        bg={["", null, "body"]}
+      >
+        <ItemHeaderContainer borderless p={0}>
+          <HStack justify={"space-between"} w={"full"}>
             <SearchInput
               onChangeSetter={(input) => {
                 setFilterConfig({

@@ -17,19 +17,12 @@ import {
   FieldsetRoot,
   HStack,
   Icon,
+  Menu,
   Popover,
   Portal,
-  Separator,
   useDisclosure,
 } from "@chakra-ui/react";
-import {
-  IconEdit,
-  IconEye,
-  IconFilePlus,
-  IconStackPop,
-  IconStackPush,
-  IconTrash,
-} from "@tabler/icons-react";
+import { IconDots, IconEye, IconFilePlus } from "@tabler/icons-react";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import * as yup from "yup";
@@ -44,11 +37,14 @@ import {
 } from "../ui-custom/Disclosure";
 import DisclosureHeaderContent from "../ui-custom/DisclosureHeaderContent";
 import FileInput from "../ui-custom/FileInput";
+import HScroll from "../ui-custom/HScroll";
 import Img from "../ui-custom/Img";
 import P from "../ui-custom/P";
 import StringInput from "../ui-custom/StringInput";
 import Textarea from "../ui-custom/Textarea";
 import { Field } from "../ui/field";
+import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
+import { Switch } from "../ui/switch";
 import { Tooltip } from "../ui/tooltip";
 import ExistingFileItem from "./ExistingFIleItem";
 import SelectLayerFileType from "./SelectLayerFileType";
@@ -92,11 +88,12 @@ const DeleteWorkspace = (props: any) => {
 
   return (
     <Tooltip content={l.delete_workspace}>
-      <BButton
+      <MenuItem
+        value="delete"
         unclicky
         iconButton
         variant={"ghost"}
-        // size={"sm"}
+        color={"red.400"}
         onClick={() => {
           setConfirmationData({
             title: `${capsFirstLetterEachWord(l.delete_workspace)}`,
@@ -109,10 +106,11 @@ const DeleteWorkspace = (props: any) => {
         }}
         {...restProps}
       >
-        <Icon>
+        Delete...
+        {/* <Icon boxSize={5}>
           <IconTrash stroke={1.8} />
-        </Icon>
-      </BButton>
+        </Icon> */}
+      </MenuItem>
     </Tooltip>
   );
 };
@@ -205,19 +203,10 @@ const EditWorkspace = (props: any) => {
 
   return (
     <>
-      <Tooltip content={l.edit_workspace}>
-        <BButton
-          unclicky
-          iconButton
-          variant={"ghost"}
-          // size={"sm"}
-          onClick={onOpen}
-          {...restProps}
-        >
-          <Icon>
-            <IconEdit stroke={1.8} />
-          </Icon>
-        </BButton>
+      <Tooltip content={l.edit_workspace} {...restProps}>
+        <Menu.Item value="edit" onClick={onOpen}>
+          Edit
+        </Menu.Item>
       </Tooltip>
 
       <DisclosureRoot open={open} lazyLoad size={"xs"}>
@@ -493,104 +482,7 @@ const AddLayer = (props: any) => {
     </>
   );
 };
-const UnloadLayer = (props: any) => {
-  // Props
-  const { data, ...restProps } = props;
-
-  // Hooks
-  const { l } = useLang();
-
-  // Contexts
-  const unloadWorkspace = useActiveLayers((s) => s.removeLayerGroup);
-
-  return (
-    <Tooltip content={l.unload_workspace_from_map}>
-      <BButton
-        unclicky
-        iconButton
-        variant={"ghost"}
-        onClick={() => {
-          unloadWorkspace(data?.id);
-        }}
-        {...restProps}
-      >
-        <Icon boxSize={"25px"}>
-          <IconStackPop stroke={1.5} />
-        </Icon>
-      </BButton>
-    </Tooltip>
-  );
-};
-const LoadWorkspace = (props: any) => {
-  // Props
-  const { data, ...restProps } = props;
-
-  // Hooks
-  const { l } = useLang();
-  const { req, loading } = useRequest({
-    id: "load_workspace",
-    loadingMessage: {
-      ...l.layer_loading_toast,
-    },
-    successMessage: {
-      ...l.layer_loaded_toast,
-    },
-  });
-
-  // Contexts
-  const { themeConfig } = useThemeConfig();
-  const addLayerGroup = useActiveLayers((s) => s.addLayerGroup);
-
-  // Utils
-  function onLoad() {
-    const url = `/api/gis-bpn/workspace-layers/shape-files/${data.id}`;
-    const config = {
-      url,
-      method: "GET",
-    };
-
-    // addLayerGroup({
-    //   workspace: data,
-    //   layers: [{ layer_id: 1, layer_name: "dummy", data: dummyGeoJSON }],
-    //   visible: true,
-    // });
-
-    req({
-      config,
-      onResolve: {
-        onSuccess: (r: any) => {
-          const layerData = r.data.data?.[0];
-          addLayerGroup({
-            workspace: data,
-            layer: layerData,
-            visible: true,
-          });
-        },
-      },
-    });
-  }
-
-  return (
-    <Tooltip content={l.load_workspace_to_map}>
-      <BButton
-        unclicky
-        iconButton
-        variant={"ghost"}
-        color={themeConfig.primaryColor}
-        // size={"sm"}
-        onClick={onLoad}
-        loading={loading}
-        touchAction="none"
-        {...restProps}
-      >
-        <Icon boxSize={"25px"}>
-          <IconStackPush stroke={1.5} />
-        </Icon>
-      </BButton>
-    </Tooltip>
-  );
-};
-const ViewLayers = (props: any) => {
+const ViewWorkspace = (props: any) => {
   // Props
   const { bboxCenter, ...restProps } = props;
 
@@ -635,10 +527,80 @@ const ViewLayers = (props: any) => {
     </Tooltip>
   );
 };
+const ToggleLoadWorkspace = (props: any) => {
+  // Props
+  const { data, bboxCenter, loadedLayerData, ...restProps } = props;
+
+  // Hooks
+  const { l } = useLang();
+  const { req, loading } = useRequest({
+    id: "load_workspace",
+    loadingMessage: {
+      ...l.layer_loading_toast,
+    },
+    successMessage: {
+      ...l.layer_loaded_toast,
+    },
+  });
+
+  // Contexts
+  const { themeConfig } = useThemeConfig();
+  const loadWorkspace = useActiveLayers((s) => s.loadWorkspace);
+  const unloadWorkspace = useActiveLayers((s) => s.removeLayerGroup);
+
+  // States
+  const [checked, setChecked] = useState<boolean>(loadedLayerData);
+
+  // Utils
+  function onLoad() {
+    const url = `/api/gis-bpn/workspace-layers/shape-files/${data.id}`;
+    const config = {
+      url,
+      method: "GET",
+    };
+
+    req({
+      config,
+      onResolve: {
+        onSuccess: (r: any) => {
+          const layerData = r.data.data?.[0];
+          loadWorkspace({
+            workspace: data,
+            layer: layerData,
+            visible: true,
+          });
+        },
+      },
+    });
+  }
+
+  useEffect(() => {
+    if (checked && !loadedLayerData) {
+      onLoad();
+    } else if (!checked && loadedLayerData) {
+      unloadWorkspace(data.id);
+    }
+  }, [checked]);
+
+  return (
+    <Tooltip content={"Toggle load workspace"}>
+      <HStack px={2} justify={"center"} {...restProps}>
+        <Switch
+          colorPalette={themeConfig.colorPalette}
+          checked={checked}
+          onCheckedChange={(e) => {
+            setChecked(e.checked);
+          }}
+          disabled={loading}
+        />
+      </HStack>
+    </Tooltip>
+  );
+};
 
 const WorkspaceItem = (props: any) => {
   // Props
-  const { initialData, ...restProps } = props;
+  const { initialData, type = "grid", ...restProps } = props;
 
   // Contexts
   const { themeConfig } = useThemeConfig();
@@ -673,52 +635,83 @@ const WorkspaceItem = (props: any) => {
         <Img
           key={data?.thumbnail?.[0]?.file_url}
           src={data?.thumbnail?.[0]?.file_url}
-          aspectRatio={16 / 10}
+          aspectRatio={2 / 1}
         />
 
-        <CContainer p={4} gap={1}>
-          <P fontWeight={"semibold"}>{data?.title}</P>
+        <HStack align={"stretch"} gap={0} p={2}>
+          <CContainer p={1} gap={1}>
+            <Popover.Root>
+              <Popover.Trigger asChild>
+                <P fontWeight={"semibold"} w={"fit"} lineClamp={1}>
+                  {data?.title}
+                </P>
+              </Popover.Trigger>
 
-          <Popover.Root>
-            <Popover.Trigger asChild>
-              <P lineClamp={1} color={"fg.subtle"} w={"fit"}>
-                {data?.description}
-              </P>
-            </Popover.Trigger>
+              <Portal>
+                <Popover.Positioner>
+                  <Popover.Content p={2} maxW={"200px"}>
+                    {data?.title}
+                  </Popover.Content>
+                </Popover.Positioner>
+              </Portal>
+            </Popover.Root>
 
-            <Portal>
-              <Popover.Positioner>
-                <Popover.Content p={2} maxW={"200px"}>
+            <Popover.Root>
+              <Popover.Trigger asChild>
+                <P lineClamp={1} color={"fg.subtle"} w={"fit"}>
                   {data?.description}
-                </Popover.Content>
-              </Popover.Positioner>
-            </Portal>
-          </Popover.Root>
-        </CContainer>
+                </P>
+              </Popover.Trigger>
+
+              <Portal>
+                <Popover.Positioner>
+                  <Popover.Content p={2} maxW={"200px"}>
+                    {data?.description}
+                  </Popover.Content>
+                </Popover.Positioner>
+              </Portal>
+            </Popover.Root>
+          </CContainer>
+
+          <MenuRoot>
+            <MenuTrigger asChild>
+              <BButton iconButton variant={"ghost"} size={"xs"} ml={"auto"}>
+                <Icon boxSize={5}>
+                  <IconDots />
+                </Icon>
+              </BButton>
+            </MenuTrigger>
+
+            <MenuContent>
+              <EditWorkspace data={data} setData={setData} />
+
+              <DeleteWorkspace data={data} />
+            </MenuContent>
+          </MenuRoot>
+        </HStack>
       </CContainer>
 
-      <HStack
+      <HScroll
         p={1}
         gap={1}
         borderTop={"1px solid"}
         borderColor={"border.muted"}
       >
-        <DeleteWorkspace data={data} flex={1} />
+        <AddLayer data={data} disabled={!!loadedLayerData} />
 
-        <EditWorkspace data={data} setData={setData} flex={1} />
+        <ViewWorkspace
+          data={data}
+          bboxCenter={bboxCenter}
+          disabled={!loadedLayerData}
+        />
 
-        <Separator orientation={"vertical"} h={"full"} />
-
-        <AddLayer data={data} flex={1} disabled={!!loadedLayerData} />
-
-        <UnloadLayer data={data} flex={1} disabled={!!!loadedLayerData} />
-
-        {loadedLayerData && (
-          <ViewLayers data={data} bboxCenter={bboxCenter} flex={1} />
-        )}
-
-        {!loadedLayerData && <LoadWorkspace data={data} flex={1} />}
-      </HStack>
+        <ToggleLoadWorkspace
+          data={data}
+          bboxCenter={bboxCenter}
+          loadedLayerData={loadedLayerData}
+          ml={"auto"}
+        />
+      </HScroll>
     </CContainer>
   );
 };

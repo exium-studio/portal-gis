@@ -14,7 +14,6 @@ const ItemHeaderContainer = ({
       borderBottom={"1px solid"}
       borderColor={borderless ? "transparent" : "border.muted"}
       justify={"space-between"}
-      minH={"50px"}
       wrap={"wrap"}
       p={4}
       gapX={4}

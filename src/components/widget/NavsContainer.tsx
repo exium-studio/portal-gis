@@ -38,6 +38,7 @@ import { Tooltip } from "../ui/tooltip";
 import BaseMap from "./admin/Basemap";
 import BasemapMapOverlay from "./admin/BasemapMapOverlay";
 import CurrentUserTimeZone from "./CurrentUserTimeZone";
+import { PANEL_WIDTH_NUMBER } from "@/constants/sizes";
 
 interface Interface__NavItemContainer extends StackProps {
   active?: boolean;
@@ -332,7 +333,7 @@ const NavContainer = ({
           w={"fit"}
           align={"center"}
           px={2}
-          py={"26px"}
+          py={"22px"}
           overflowX={"clip"}
           className="scrollY"
           overflowY={"auto"}
@@ -377,7 +378,7 @@ const NavContainer = ({
             className="scrollY"
             overflowX={"clip"}
             bg={"bgContent"}
-            w={halfPanel && !iss && withMaps ? "50%" : ""}
+            w={halfPanel && !iss && withMaps ? `${PANEL_WIDTH_NUMBER}px` : ""}
             h={halfPanel && iss && withMaps ? "50%" : ""}
             zIndex={3}
             borderRight={iss ? "" : "1px solid"}
@@ -415,7 +416,11 @@ const NavContainer = ({
         {/* Maps */}
         {(halfPanel || closedPanel) && withMaps && (
           <CContainer
-            w={halfPanel && !iss ? "50%" : "full"}
+            w={
+              halfPanel && !iss
+                ? `calc(100% - ${PANEL_WIDTH_NUMBER}px)`
+                : "full"
+            }
             h={halfPanel && iss ? "50%" : "full"}
             position={"relative"}
           >

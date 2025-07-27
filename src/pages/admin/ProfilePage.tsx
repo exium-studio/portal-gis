@@ -55,7 +55,7 @@ const ProfilePage = () => {
         onClick={onSignout}
         w={"fit"}
         colorPalette={"red"}
-        variant={"subtle"}
+        variant={"ghost"}
         loading={loading}
       >
         Sign out

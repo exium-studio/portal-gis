@@ -1659,7 +1659,7 @@ const FieldData = () => {
         </HStack>
       </MenuHeaderContainer>
 
-      <CContainer px={1} overflowY={"auto"} className="scrollY">
+      <CContainer px={1} className="scrollY">
         <ItemContainer>
           <P fontWeight={"medium"} color={"fg.subtle"}>
             {l.owner}

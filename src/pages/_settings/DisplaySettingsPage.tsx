@@ -190,7 +190,7 @@ const Theme = () => {
 
     // Purples & Lavenders
     { palette: "lavender", primaryHex: "#7A42FF" },
-    { palette: "powderLavender", primaryHex: "#AB87FF" },
+    { palette: "powderLavender", primaryHex: "#8E8CD8" },
     { palette: "purple", primaryHex: "#9C27B0" },
   ];
   const [select, setSelect] = useState<any>();
@@ -211,7 +211,7 @@ const Theme = () => {
             layoutHalfMap
               ? iss
                 ? 5
-                : [6, null, null, null, null, 10]
+                : [3, null, null, 5, null, 10]
               : [5, 10, null, null, 15]
           }
           gap={2}
@@ -222,15 +222,11 @@ const Theme = () => {
             return (
               <Center
                 key={i}
-                p={color.palette === themeConfig.colorPalette ? 1 : 0}
-                border={"2px solid"}
-                borderColor={
-                  color.palette === themeConfig.colorPalette
-                    ? themeConfig.primaryColor
-                    : `${color.palette}.500`
-                }
+                bg={`${color.palette}.500`}
                 borderRadius={themeConfig.radii.container}
                 cursor={"pointer"}
+                w={"full"}
+                aspectRatio={1}
                 onClick={() => {
                   setThemeConfig({
                     colorPalette: color.palette,
@@ -239,20 +235,11 @@ const Theme = () => {
                   });
                 }}
               >
-                <Center
-                  w={"full"}
-                  aspectRatio={1}
-                  borderRadius={
-                    color.palette === themeConfig.colorPalette ? 5 : 6
-                  }
-                  bg={`${color.palette}.500`}
-                >
-                  {active && (
-                    <Icon color={`${themeConfig.colorPalette}.contrast`}>
-                      <IconCheck />
-                    </Icon>
-                  )}
-                </Center>
+                {active && (
+                  <Icon color={`${themeConfig.colorPalette}.contrast`}>
+                    <IconCheck />
+                  </Icon>
+                )}
               </Center>
             );
           })}

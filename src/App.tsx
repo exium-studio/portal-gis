@@ -106,6 +106,8 @@ function App() {
   // Handle adaptive dark mode (ADM)
   useEffect(() => {
     if (ADM === "true") {
+      updateDarkMode();
+
       const interval = setInterval(() => {
         const hour = new Date().getHours();
         if (hour === 6 || hour === 18) {
@@ -114,11 +116,6 @@ function App() {
       }, 60 * 1000);
 
       return () => clearInterval(interval);
-    }
-  }, []);
-  useEffect(() => {
-    if (ADM === "true") {
-      updateDarkMode();
     }
   }, [ADM]);
 
