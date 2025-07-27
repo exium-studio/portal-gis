@@ -62,6 +62,7 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
       pl={!compact ? 4 : ""}
       align={"start"}
       gap={0}
+      overflowY={"auto"}
       {...props}
     >
       {/* Settings Navs */}

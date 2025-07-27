@@ -508,7 +508,6 @@ const LegendTrigger = () => {
           {!iss && (
             <LegendContent
               containerProps={{
-                top: "",
                 bottom: "58px",
                 left: "",
               }}
@@ -605,11 +604,8 @@ const LegendContent = (props: any) => {
       containerProps={{
         position: "absolute",
         left: "8px",
-        top: "66px",
-        // top: "66px",
-        // bottom: iss ? "" : "66px",
         pointerEvents: "auto",
-        w: iss ? "calc(50vw - 14px)" : "300px",
+        w: iss ? "calc(50vw - 14px)" : "298px",
         pb: 2,
         maxH: iss
           ? halfPanel
@@ -1615,10 +1611,8 @@ const FieldData = () => {
         position: "absolute",
         right: "8px",
         top: "66px",
-        // top: iss ? "" : "66px",
-        // bottom: iss ? "66px" : "",
         pointerEvents: "auto",
-        w: iss ? "calc(50vw - 14px)" : "300px",
+        w: iss ? "calc(50vw - 14px)" : "298px",
         pb: 2,
         maxH: iss
           ? halfPanel
@@ -1812,7 +1806,7 @@ const AdminMapOverlay = () => {
       top={0}
     >
       <FieldData />
-      {iss && <LegendContent />}
+      {iss && <LegendContent containerProps={{ top: "66px" }} />}
 
       <CContainer flex={1} justify={"space-between"}>
         <Box p={2}>
