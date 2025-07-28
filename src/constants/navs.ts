@@ -1,25 +1,34 @@
 import {
-  IconChartBar,
+  IconChartPie,
   IconDeviceDesktop,
   IconExclamationCircle,
+  IconFolders,
   IconGavel,
   IconLanguage,
-  IconMapStar,
   IconServerCog,
   IconShieldHalf,
   IconShieldLock,
+  IconStack2,
 } from "@tabler/icons-react";
 
 export const NAVS = [
   {
     labelKey: "navs.workspace",
     path: "/workspace",
-    icon: IconMapStar,
+    icon: IconFolders,
+  },
+  {
+    labelKey: "navs.active_workspace",
+    path: "/active-workspace",
+    icon: IconStack2,
+    iconProps: {
+      boxSize: "22px",
+    },
   },
   {
     labelKey: "navs.dashboard",
     path: "/dashboard",
-    icon: IconChartBar,
+    icon: IconChartPie,
   },
   {
     labelKey: "navs.master_data",

@@ -105,7 +105,7 @@ const useRequest = (props: Props) => {
     request(config)
       .then((r) => {
         setStatus(r.status);
-        if (r.status === 200 || r.status === 201) {
+        if (r.status === 200 || r.status === 201 || r.status === 304) {
           setResponse(r);
           setLoading(false);
           if (onResolve?.onSuccess) {

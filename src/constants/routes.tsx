@@ -4,6 +4,7 @@ import PrivacyPolictPage from "@/pages/_settings/PrivacyPolictPage";
 import RegionalSettingsPage from "@/pages/_settings/RegionalSettingsPage";
 import ReportProblemPage from "@/pages/_settings/ReportProblemPage";
 import TermsOfServicePage from "@/pages/_settings/TermsOfServicePage";
+import ActiveWorkspacePage from "@/pages/admin/ActiveWorkspacePage";
 import DashboardPage from "@/pages/admin/DashboardPage";
 import MasterDataPage from "@/pages/admin/MasterDataPage";
 import ProfilePage from "@/pages/admin/ProfilePage";
@@ -26,6 +27,12 @@ export const PRIVATE_ROUTES: Interface__PrivateRoute[] = [
     activePath: "/workspace",
     titleKey: "navs.workspace",
     element: <WorkspacePage />,
+  },
+  {
+    path: "/active-workspace",
+    activePath: "/active-workspace",
+    titleKey: "navs.active_workspace",
+    element: <ActiveWorkspacePage />,
   },
   {
     path: "/dashboard",

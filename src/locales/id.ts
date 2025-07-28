@@ -328,15 +328,19 @@ const translations = {
   "my_order": "Pesanan saya",
   "name": "Nama",
   "navs": {
-    "dashboard": "Dasbor",
-    "administration": "Administrasi",
     "workspace": "Workspace",
+    "active_workspace": "Workspace Aktif",
+    "dashboard": "Dasbor",
     "master_data": "Master data",
     "settings": "Pengaturan",
     "profile": "Profil"
   },
   "next_month": "Bulan ini",
   "next_week": "Minggu ini",
+  "no_active_layers": {
+    "title": "Tidak ada layer aktif",
+    "description": "Load layer dahulu dari menu <b>Workspace</b>"
+  },
   "no_auth_toast": {
     "title": "Tidak memiliki autentikasi",
     "description": "Silahkan login dengan akun anda."

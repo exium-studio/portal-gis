@@ -18,15 +18,17 @@ const Routing = () => {
         <Route key={path} path={path} element={element} />
       ))}
 
-      {PRIVATE_ROUTES.map(
-        ({
+      {PRIVATE_ROUTES.map((route) => {
+        const {
           path,
           activePath,
           backPath,
           titleKey,
           element,
           allowedPermissions,
-        }) => (
+        } = route;
+
+        return (
           <Route
             key={path}
             path={path}
@@ -44,28 +46,8 @@ const Routing = () => {
               </AuthMiddleware>
             }
           />
-        )
-      )}
-
-      {/* {PRIVATE_ROUTES_NO_MAPS.map(
-        ({ path, activePath, backPath, titleKey, element }) => (
-          <Route
-            key={path}
-            path={path}
-            element={
-              // <AuthMiddleware allowedPermissions={permissions}>
-              <NavsContainer
-                activePath={activePath}
-                title={pluck(l, titleKey)}
-                backPath={backPath}
-              >
-                {element}
-              </NavsContainer>
-              // </AuthMiddleware>
-            }
-          />
-        )
-      )} */}
+        );
+      })}
 
       <Route path="*" element={<MissingPage />} />
       <Route path="/server-error" element={<ServerErrorPage />} />

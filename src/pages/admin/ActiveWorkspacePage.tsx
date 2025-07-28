@@ -4,7 +4,7 @@ import { R_GAP } from "@/constants/sizes";
 import useLang from "@/context/useLang";
 import { IconFoldersOff } from "@tabler/icons-react";
 
-const DashboardPage = () => {
+const ActiveWorkspacePage = () => {
   // Hooks
   const { l } = useLang();
 
@@ -19,4 +19,4 @@ const DashboardPage = () => {
   );
 };
 
-export default DashboardPage;
+export default ActiveWorkspacePage;

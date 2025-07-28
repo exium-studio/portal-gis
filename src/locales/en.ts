@@ -328,15 +328,19 @@ const translations = {
   "my_order": "My order",
   "name": "Name",
   "navs": {
-    "dashboard": "Dashboard",
-    "administration": "Administration",
     "workspace": "Workspace",
+    "active_workspace": "Active Workspace",
+    "dashboard": "Dashboard",
     "master_data": "Master data",
     "settings": "Settings",
     "profile": "Profile"
   },
   "next_month": "This month",
   "next_week": "This week",
+  "no_active_layers": {
+    "title": "No active layers",
+    "description": "Load layer first from <b>Workspace</b> menu"
+  },
   "no_auth_toast": {
     "title": "No authentication",
     "description": "Please login with your account."

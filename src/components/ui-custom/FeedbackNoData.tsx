@@ -1,8 +1,8 @@
+import useLang from "@/context/useLang";
 import { Icon, StackProps } from "@chakra-ui/react";
 import { IconDatabaseOff } from "@tabler/icons-react";
-import { EmptyState } from "../ui/empty-state";
 import CContainer from "./CContainer";
-import useLang from "@/context/useLang";
+import FeedbackState from "./FeedbackState";
 
 interface Props extends StackProps {
   title?: string;
@@ -30,7 +30,7 @@ export default function FeedbackNoData({
       gap={4}
       {...props}
     >
-      <EmptyState
+      <FeedbackState
         icon={<Icon mb={title ? -2 : 0}>{icon || <IconDatabaseOff />}</Icon>}
         title={title ?? l.no_data_feedback.title}
         description={description ?? l.no_data_feedback.description}

@@ -1,16 +1,16 @@
 // Navs
 export const navs = {
-  dashboard: {
-    id: "Dasbor",
-    en: "Dashboard",
-  },
-  administration: {
-    id: "Administrasi",
-    en: "Administration",
-  },
   workspace: {
     id: "Workspace",
     en: "Workspace",
+  },
+  active_workspace: {
+    id: "Workspace Aktif",
+    en: "Active Workspace",
+  },
+  dashboard: {
+    id: "Dasbor",
+    en: "Dashboard",
   },
   master_data: {
     id: "Master data",
@@ -337,6 +337,16 @@ export const satellite = {
 };
 
 // UI
+export const no_active_layers = {
+  title: {
+    id: "Tidak ada layer aktif",
+    en: "No active layers",
+  },
+  description: {
+    id: "Load layer dahulu dari menu <b>Workspace</b>",
+    en: "Load layer first from <b>Workspace</b> menu",
+  },
+};
 export const toggle_dark_mode = {
   id: "Toggle mode gelap",
   en: "Toggle dark mode",
