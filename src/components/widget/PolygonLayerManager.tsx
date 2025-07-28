@@ -25,7 +25,8 @@ const LayerSource = (props: any) => {
   const layer = data?.layer;
   const geojson = data?.layer?.geojson;
   const selectedFeatureId = selectedPolygon?.polygon?.properties?.id;
-  const defaultColor = "#7e7e7e";
+  const defaultFillColor = "#808080";
+  const defaultLineColor = "#ccc";
   const fillLayerId = `${layer?.layer_id}-fill`;
   const outlineLayerId = `${layer?.layer_id}-outline`;
   const sourceId = `${layer?.layer_id}-source`;
@@ -87,7 +88,7 @@ const LayerSource = (props: any) => {
               "match",
               ["get", legendType],
               ...legends.flatMap((legend) => [legend.label, legend.color]),
-              defaultColor,
+              defaultFillColor,
             ],
           ],
           "fill-opacity": 0.8,
@@ -97,8 +98,9 @@ const LayerSource = (props: any) => {
         id={outlineLayerId}
         type="line"
         paint={{
-          "line-color": "#ccc",
+          "line-color": defaultLineColor,
           "line-width": 1,
+          // "line-opacity": 0.5,
         }}
       />
     </Source>

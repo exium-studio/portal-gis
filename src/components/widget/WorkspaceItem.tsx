@@ -22,13 +22,7 @@ import {
   Portal,
   useDisclosure,
 } from "@chakra-ui/react";
-import {
-  IconDots,
-  IconEye,
-  IconFilePlus,
-  IconStackPop,
-  IconStackPush,
-} from "@tabler/icons-react";
+import { IconDots, IconFilePlus, IconZoomInArea } from "@tabler/icons-react";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import * as yup from "yup";
@@ -55,79 +49,15 @@ import { Tooltip } from "../ui/tooltip";
 import ExistingFileItem from "./ExistingFIleItem";
 import SelectLayerFileType from "./SelectLayerFileType";
 
-const DeleteWorkspace = (props: any) => {
-  // Props
-  const { data, ...restProps } = props;
-
-  // Hooks
-  const { l } = useLang();
-  const { req } = useRequest({
-    id: "crud_workspace",
-  });
-
-  // Contexts
-  const setRt = useRenderTrigger((s) => s.setRt);
-  const { setConfirmationData, confirmationOnOpen } =
-    useConfirmationDisclosure();
-  const unloadWorkspace = useActiveLayers((s) => s.removeLayerGroup);
-
-  // Utils
-  function onDelete() {
-    back();
-
-    const url = `/api/gis-bpn/workspaces/delete/${data?.id}`;
-    const config = {
-      url,
-      method: "DELETE",
-    };
-
-    req({
-      config,
-      onResolve: {
-        onSuccess: () => {
-          setRt((ps) => !ps);
-          unloadWorkspace(data?.id);
-        },
-      },
-    });
-  }
-
-  return (
-    <Tooltip content={l.delete_workspace}>
-      <MenuItem
-        value="delete"
-        unclicky
-        iconButton
-        variant={"ghost"}
-        color={"red.400"}
-        onClick={() => {
-          setConfirmationData({
-            title: `${capsFirstLetterEachWord(l.delete_workspace)}`,
-            description: l.perma_delete_confirmation,
-            confirmLabel: "Delete",
-            confirmButtonProps: { colorPalette: "red" },
-            onConfirm: onDelete,
-          });
-          confirmationOnOpen();
-        }}
-        {...restProps}
-      >
-        Delete...
-        {/* <Icon boxSize={5}>
-          <IconTrash stroke={1.8} />
-        </Icon> */}
-      </MenuItem>
-    </Tooltip>
-  );
-};
 const EditWorkspace = (props: any) => {
   // Props
-  const { data, ...restProps } = props;
+  const { workspace, ...restProps } = props;
+  // TODO localy setWorkspace on success edit
 
   // Hooks
   const { l } = useLang();
   const { open, onOpen, onClose } = useDisclosure();
-  useBackOnClose(`edit-workspace-${data?.id}`, open, onOpen, onClose);
+  useBackOnClose(`edit-workspace-${workspace?.id}`, open, onOpen, onClose);
   const { req } = useRequest({
     id: "crud_workspace",
   });
@@ -138,13 +68,13 @@ const EditWorkspace = (props: any) => {
 
   // States
   const [existingThumbnail, setExistingThumbnail] = useState<any[]>(
-    data?.thumbnail
+    workspace?.thumbnail
   );
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      title: data?.title,
-      description: data?.description,
+      title: workspace?.title,
+      description: workspace?.description,
       for_aqiqah: false,
       thumbnail: undefined as any,
       deleted_thumbnail: [],
@@ -175,7 +105,7 @@ const EditWorkspace = (props: any) => {
         });
       }
 
-      const url = `/api/gis-bpn/workspaces/update/${data?.id}`;
+      const url = `/api/gis-bpn/workspaces/update/${workspace?.id}`;
       const config = {
         url,
         method: "PATCH",
@@ -197,15 +127,15 @@ const EditWorkspace = (props: any) => {
   // Handle initial data
   useEffect(() => {
     formik.setValues({
-      title: data?.title,
-      description: data?.description,
-      for_aqiqah: data?.for_aqiqah,
+      title: workspace?.title,
+      description: workspace?.description,
+      for_aqiqah: workspace?.for_aqiqah,
       thumbnail: undefined as any,
       deleted_thumbnail: [],
     });
 
-    setExistingThumbnail(data?.thumbnail);
-  }, [data]);
+    setExistingThumbnail(workspace?.thumbnail);
+  }, [workspace]);
 
   return (
     <>
@@ -339,6 +269,71 @@ const EditWorkspace = (props: any) => {
         </DisclosureContent>
       </DisclosureRoot>
     </>
+  );
+};
+const DeleteWorkspace = (props: any) => {
+  // Props
+  const { workspace, ...restProps } = props;
+
+  // Hooks
+  const { l } = useLang();
+  const { req } = useRequest({
+    id: "crud_workspace",
+  });
+
+  // Contexts
+  const setRt = useRenderTrigger((s) => s.setRt);
+  const { setConfirmationData, confirmationOnOpen } =
+    useConfirmationDisclosure();
+  const unloadWorkspace = useActiveLayers((s) => s.removeLayerGroup);
+
+  // Utils
+  function onDelete() {
+    back();
+
+    const url = `/api/gis-bpn/workspaces/delete/${workspace?.id}`;
+    const config = {
+      url,
+      method: "DELETE",
+    };
+
+    req({
+      config,
+      onResolve: {
+        onSuccess: () => {
+          setRt((ps) => !ps);
+          unloadWorkspace(workspace?.id);
+        },
+      },
+    });
+  }
+
+  return (
+    <Tooltip content={l.delete_workspace}>
+      <MenuItem
+        value="delete"
+        unclicky
+        iconButton
+        variant={"ghost"}
+        color={"red.400"}
+        onClick={() => {
+          setConfirmationData({
+            title: `${capsFirstLetterEachWord(l.delete_workspace)}`,
+            description: l.perma_delete_confirmation,
+            confirmLabel: "Delete",
+            confirmButtonProps: { colorPalette: "red" },
+            onConfirm: onDelete,
+          });
+          confirmationOnOpen();
+        }}
+        {...restProps}
+      >
+        Delete...
+        {/* <Icon boxSize={5}>
+          <IconTrash stroke={1.8} />
+        </Icon> */}
+      </MenuItem>
+    </Tooltip>
   );
 };
 const AddLayer = (props: any) => {
@@ -526,8 +521,8 @@ const ViewWorkspace = (props: any) => {
         onClick={onViewLayers}
         {...restProps}
       >
-        <Icon boxSize={"25px"}>
-          <IconEye stroke={1.5} />
+        <Icon boxSize={5}>
+          <IconZoomInArea stroke={1.5} />
         </Icon>
       </BButton>
     </Tooltip>
@@ -603,28 +598,6 @@ const ToggleLoadWorkspace = (props: any) => {
     </Tooltip>
   );
 };
-const WorkspaceLayerLevel = (props: any) => {
-  // Props
-  const { data } = props;
-
-  console.log(data);
-
-  return (
-    <>
-      <BButton iconButton unclicky variant={"ghost"}>
-        <Icon boxSize={"25px"}>
-          <IconStackPush stroke={1.5} />
-        </Icon>
-      </BButton>
-
-      <BButton iconButton unclicky variant={"ghost"}>
-        <Icon boxSize={"25px"}>
-          <IconStackPop stroke={1.5} />
-        </Icon>
-      </BButton>
-    </>
-  );
-};
 
 const WorkspaceItem = (props: any) => {
   // Props
@@ -635,9 +608,9 @@ const WorkspaceItem = (props: any) => {
   const activeLayerGroups = useActiveLayers((s) => s.activeLayerGroups);
 
   // States
-  const [data, setData] = useState<any>(initialData);
+  const [workspace, setWorkspace] = useState<any>(initialData);
   const loadedLayerData = activeLayerGroups.find(
-    (layerData: any) => layerData.workspace.id === data.id
+    (layerData: any) => layerData.workspace.id === workspace.id
   );
   const bboxCenter = {
     bbox: loadedLayerData?.layer?.geojson?.bbox,
@@ -645,12 +618,12 @@ const WorkspaceItem = (props: any) => {
   };
 
   useEffect(() => {
-    setData(initialData);
+    setWorkspace(initialData);
   }, [initialData]);
 
   return (
     <CContainer
-      key={data.id}
+      key={workspace.id}
       borderRadius={themeConfig.radii.container}
       overflow={"clip"}
       border={"1px solid"}
@@ -661,8 +634,8 @@ const WorkspaceItem = (props: any) => {
     >
       <CContainer>
         <Img
-          key={data?.thumbnail?.[0]?.file_url}
-          src={data?.thumbnail?.[0]?.file_url}
+          key={workspace?.thumbnail?.[0]?.file_url}
+          src={workspace?.thumbnail?.[0]?.file_url}
           aspectRatio={2 / 1}
         />
 
@@ -671,14 +644,14 @@ const WorkspaceItem = (props: any) => {
             <Popover.Root>
               <Popover.Trigger asChild>
                 <P fontWeight={"semibold"} w={"fit"} lineClamp={1}>
-                  {data?.title}
+                  {workspace?.title}
                 </P>
               </Popover.Trigger>
 
               <Portal>
                 <Popover.Positioner>
                   <Popover.Content p={2} maxW={"200px"}>
-                    {data?.title}
+                    {workspace?.title}
                   </Popover.Content>
                 </Popover.Positioner>
               </Portal>
@@ -687,14 +660,14 @@ const WorkspaceItem = (props: any) => {
             <Popover.Root>
               <Popover.Trigger asChild>
                 <P lineClamp={1} color={"fg.subtle"} w={"fit"}>
-                  {data?.description}
+                  {workspace?.description}
                 </P>
               </Popover.Trigger>
 
               <Portal>
                 <Popover.Positioner>
                   <Popover.Content p={2} maxW={"200px"}>
-                    {data?.description}
+                    {workspace?.description}
                   </Popover.Content>
                 </Popover.Positioner>
               </Portal>
@@ -711,9 +684,12 @@ const WorkspaceItem = (props: any) => {
             </MenuTrigger>
 
             <MenuContent>
-              <EditWorkspace data={data} setData={setData} />
+              <EditWorkspace
+                workspace={workspace}
+                setWorkspace={setWorkspace}
+              />
 
-              <DeleteWorkspace data={data} />
+              <DeleteWorkspace workspace={workspace} />
             </MenuContent>
           </MenuRoot>
         </HStack>
@@ -725,18 +701,16 @@ const WorkspaceItem = (props: any) => {
         borderTop={"1px solid"}
         borderColor={"border.muted"}
       >
-        <AddLayer data={data} disabled={!!loadedLayerData} />
-
-        <WorkspaceLayerLevel data={data} disabled={!loadedLayerData} />
+        <AddLayer data={workspace} disabled={!!loadedLayerData} />
 
         <ViewWorkspace
-          data={data}
+          data={workspace}
           bboxCenter={bboxCenter}
           disabled={!loadedLayerData}
         />
 
         <ToggleLoadWorkspace
-          data={data}
+          data={workspace}
           bboxCenter={bboxCenter}
           loadedLayerData={loadedLayerData}
           ml={"auto"}

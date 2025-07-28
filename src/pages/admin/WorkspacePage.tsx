@@ -59,17 +59,18 @@ const Create = () => {
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
+      workspace_category: undefined as any,
+      thumbnail: undefined as any,
       title: "",
       description: "",
-      for_aqiqah: false,
-      thumbnail: undefined as any,
     },
     validationSchema: yup.object().shape({
-      title: yup.string().required(l.required_form),
-      description: yup.string().required(l.required_form),
+      // workspace_category: yup.array().required(l.required_form),
       thumbnail: fileValidation({
         allowedExtensions: ["jpg", "jpeg", "png"],
       }).required(l.required_form),
+      title: yup.string().required(l.required_form),
+      description: yup.string().required(l.required_form),
     }),
     onSubmit: (values, { resetForm }) => {
       // console.log(values);
@@ -77,13 +78,17 @@ const Create = () => {
       back();
 
       const payload = new FormData();
-      payload.append("title", values.title);
-      payload.append("description", values.description);
+      payload.append(
+        "workspace_category_id",
+        values.workspace_category?.[0]?.id
+      );
       if (values.thumbnail && values.thumbnail.length > 0) {
         values.thumbnail.forEach((file: File) => {
           payload.append("thumbnail", file);
         });
       }
+      payload.append("title", values.title);
+      payload.append("description", values.description);
 
       const url = `/api/gis-bpn/workspaces/create`;
       const config = {
@@ -225,8 +230,8 @@ const WorkspacePage = () => {
     method: "GET",
     payload: {
       search: filterConfig.search,
-      limit: 999999999999,
     },
+    initialLimit: 4,
     dependencies: [filterConfig],
   });
   const { data, initialLoading, error, makeRequest } = dataState;
