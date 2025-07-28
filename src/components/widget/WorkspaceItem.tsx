@@ -22,7 +22,13 @@ import {
   Portal,
   useDisclosure,
 } from "@chakra-ui/react";
-import { IconDots, IconEye, IconFilePlus } from "@tabler/icons-react";
+import {
+  IconDots,
+  IconEye,
+  IconFilePlus,
+  IconStackPop,
+  IconStackPush,
+} from "@tabler/icons-react";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import * as yup from "yup";
@@ -597,6 +603,28 @@ const ToggleLoadWorkspace = (props: any) => {
     </Tooltip>
   );
 };
+const WorkspaceLayerLevel = (props: any) => {
+  // Props
+  const { data } = props;
+
+  console.log(data);
+
+  return (
+    <>
+      <BButton iconButton unclicky variant={"ghost"}>
+        <Icon boxSize={"25px"}>
+          <IconStackPush stroke={1.5} />
+        </Icon>
+      </BButton>
+
+      <BButton iconButton unclicky variant={"ghost"}>
+        <Icon boxSize={"25px"}>
+          <IconStackPop stroke={1.5} />
+        </Icon>
+      </BButton>
+    </>
+  );
+};
 
 const WorkspaceItem = (props: any) => {
   // Props
@@ -698,6 +726,8 @@ const WorkspaceItem = (props: any) => {
         borderColor={"border.muted"}
       >
         <AddLayer data={data} disabled={!!loadedLayerData} />
+
+        <WorkspaceLayerLevel data={data} disabled={!loadedLayerData} />
 
         <ViewWorkspace
           data={data}

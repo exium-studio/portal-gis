@@ -9,7 +9,6 @@ import GlobalDisclosure from "./components/widget/GlobalDisclosure";
 import useADM from "./context/useADM";
 import useLang from "./context/useLang";
 import useOffline from "./context/useOffilne";
-import useScrollEffect from "./hooks/useScrollEffect";
 import Routing from "./routes/Routing";
 import theme from "./theme";
 import useStatusBarColor from "./utils/statusBarColor";
@@ -82,7 +81,7 @@ function App() {
   }
 
   // Handle scroll style
-  useScrollEffect();
+  // useScrollEffect();
 
   // Handle offline online
   useEffect(() => {

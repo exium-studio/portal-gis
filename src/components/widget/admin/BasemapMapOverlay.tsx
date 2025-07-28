@@ -1200,7 +1200,7 @@ const EditField = (props: any) => {
               </Tabs.List>
 
               {/* information content */}
-              <Tabs.Content value="information" pl={4} pr={3}>
+              <Tabs.Content value="information" px={4}>
                 {/* owner */}
                 <Field
                   readOnly

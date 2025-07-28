@@ -262,10 +262,13 @@ button {
 }
 .scrollX {
   overflow-x: auto;
+  scrollbar-gutter: auto;
 }
 .scrollY {
-  overflow-y: scroll;
+  overflow-y: auto;
+  scrollbar-gutter: auto;
 }
+
 /* WebKit (Chrome, Edge, Safari) */
 .scrollX::-webkit-scrollbar {
   height: 6px;
@@ -281,6 +284,7 @@ button {
 .scrollY::-webkit-scrollbar-thumb {
   background-color: transparent;
   transition: background-color 0.3s;
+  border-radius: 3px;
 }
 .scrollX.scrolling::-webkit-scrollbar-thumb,
 .scrollY.scrolling::-webkit-scrollbar-thumb {
@@ -295,16 +299,20 @@ button {
   background-color: transparent;
   border-radius: 0 0 8px 8px;
 }
-/* Non-webkit (Firefox??) */
-.scrollX.firefox,
-.scrollY.firefox {
+
+/* Firefox */
+.scrollX,
+.scrollY {
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
-  transition: scrollbar-color 0.3s;
 }
-.scrollX.firefox.scrolling,
-.scrollY.firefox.scrolling {
+.scrollX.scrolling,
+.scrollY.scrolling {
   scrollbar-color: var(--d2) transparent;
+}
+.scrollX:hover,
+.scrollY:hover {
+  scrollbar-color: var(--d3) transparent;
 }
 
 /* SVGs */
