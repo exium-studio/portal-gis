@@ -39,7 +39,7 @@ const BaseMap = () => {
   const { activeMapStyle, setActiveMapStyle } = useActiveMapStyle();
   const [mapLoad, setMapLoad] = useState<boolean>(false);
   const { mapViewState, setMapViewState, setMapRef } = useMapViewState();
-  const mapKey = `${activeMapStyle?.id}${mapStyle}`;
+  const mapKey = `${activeMapStyle?.id}${mapStyle.id}`;
 
   // Handle init mapRef
   useEffect(() => {
@@ -224,7 +224,7 @@ const BaseMap = () => {
           )}
 
           {/* Polygon Layer */}
-          <PolygonLayerManager />
+          <PolygonLayerManager key={mapKey} />
 
           {/* WMS Layers */}
           {/* <WMSLayerManager /> */}
