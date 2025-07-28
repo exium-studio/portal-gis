@@ -337,14 +337,14 @@ export const satellite = {
 };
 
 // UI
-export const no_active_layers = {
+export const no_active_workspaces = {
   title: {
-    id: "Tidak ada layer aktif",
-    en: "No active layers",
+    id: "Tidak ada workspace aktif",
+    en: "No active workspaces",
   },
   description: {
-    id: "Load layer dahulu dari menu <b>Workspace</b>",
-    en: "Load layer first from <b>Workspace</b> menu",
+    id: "Load workspace dahulu dari menu <b>Workspace</b>",
+    en: "Load workspace first from <b>Workspace</b> menu",
   },
 };
 export const toggle_dark_mode = {

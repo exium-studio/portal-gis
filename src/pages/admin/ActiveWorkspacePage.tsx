@@ -12,8 +12,8 @@ const ActiveWorkspacePage = () => {
     <PageContainer gap={R_GAP} pb={4} flex={1}>
       <FeedbackNoData
         icon={<IconFoldersOff />}
-        title={l.no_active_layers.title}
-        description={l.no_active_layers.description}
+        title={l.no_active_workspaces.title}
+        description={l.no_active_workspaces.description}
       />
     </PageContainer>
   );

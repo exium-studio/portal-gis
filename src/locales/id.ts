@@ -337,9 +337,9 @@ const translations = {
   },
   "next_month": "Bulan ini",
   "next_week": "Minggu ini",
-  "no_active_layers": {
-    "title": "Tidak ada layer aktif",
-    "description": "Load layer dahulu dari menu <b>Workspace</b>"
+  "no_active_workspaces": {
+    "title": "Tidak ada workspace aktif",
+    "description": "Load workspace dahulu dari menu <b>Workspace</b>"
   },
   "no_auth_toast": {
     "title": "Tidak memiliki autentikasi",
