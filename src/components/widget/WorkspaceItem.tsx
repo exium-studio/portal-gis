@@ -656,7 +656,13 @@ const LayerList = (props: {
         borderColor={"border.muted"}
         {...restProps}
       >
-        <AccordionItemTrigger p={1} pr={3}>
+        <AccordionItemTrigger
+          p={1}
+          pr={3}
+          borderBottom={"1px solid"}
+          borderColor={"border.muted"}
+          borderRadius={0}
+        >
           <HStack
             gap={1}
             w={"fit"}
@@ -680,15 +686,10 @@ const LayerList = (props: {
           </HStack>
         </AccordionItemTrigger>
 
-        <AccordionItemContent
-          p={1}
-          px={2}
-          borderTop={"1px solid"}
-          borderColor={"border.muted"}
-        >
+        <AccordionItemContent p={"0 !important"}>
           {layers?.map((layer) => {
             return (
-              <HStack key={layer.id} gap={4}>
+              <HStack key={layer.id} gap={4} p={1}>
                 <HStack pl={1}>
                   <Icon color={"fg.muted"}>
                     <IconStack stroke={1.5} />
