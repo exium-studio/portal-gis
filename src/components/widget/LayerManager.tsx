@@ -107,7 +107,7 @@ const LayerSource = (props: any) => {
   );
 };
 
-const PolygonLayerManager = () => {
+const LayerManager = () => {
   const activeLayerGroups = useActiveLayers((s) => s.activeLayerGroups);
 
   return (
@@ -118,4 +118,4 @@ const PolygonLayerManager = () => {
     </>
   );
 };
-export default PolygonLayerManager;
+export default LayerManager;

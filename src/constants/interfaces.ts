@@ -9,7 +9,6 @@ import {
 } from "@chakra-ui/react";
 import { Dispatch, SetStateAction } from "react";
 import {
-  MapRefType,
   Type__DateRange,
   Type__DateRangePresets,
   Type__DisclosureSizes,
@@ -17,19 +16,58 @@ import {
   Type__TimeRange,
 } from "./types";
 
-// WMS
-export interface Workspace {
+// CUD
+export interface Interface__CUD {
+  created_at?: string;
+  updated_at?: string;
+  deleted_at?: string;
+}
+
+// Storage
+export interface Interface__StorageFile extends Interface__CUD {
+  id: number;
+  file_name: string;
+  file_path: string;
+  file_url: string;
+  file_mime_type: string;
+  file_size: number;
+}
+
+// Maps related
+export interface Interface__LayerData extends Interface__CUD {
+  id: number;
+  layer_id: number;
+  documents: Interface__StorageFile[];
+  bbox: number[];
+  bbox_center: number[];
+  geojson: GeoJSON.FeatureCollection;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string;
+}
+export interface Interface__Layer extends Interface__CUD {
+  id: number;
+  workspace_id: number;
+  parent_layer_id: number;
+  name: string;
+  description?: string;
+  table_name?: string;
+  data: Interface__LayerData;
+}
+export interface Interface__WorkspaceCategory extends Interface__CUD {
+  id: number;
+  label: string;
+}
+export interface Interface__Workspace extends Interface__CUD {
   id: string;
   title: string;
   description: string;
-  thumbnail: object;
-}
-export interface MapOverlayProps {
-  mapRef: MapRefType;
+  workspace_category: Interface__WorkspaceCategory;
+  thumbnail?: Interface__StorageFile[];
 }
 
 // Gens
-export interface Interface__Gens {
+export interface Interface__Gens extends Interface__CUD {
   id: number;
   label: string;
 }

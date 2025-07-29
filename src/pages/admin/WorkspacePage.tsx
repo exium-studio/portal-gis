@@ -238,7 +238,11 @@ const ToggleDisplay = (props: any) => {
         {...restProps}
       >
         <Icon>
-          {displayMode === "rows" ? <IconLayoutBottombar /> : <IconList />}
+          {displayMode === "rows" ? (
+            <IconLayoutBottombar stroke={1.5} />
+          ) : (
+            <IconList stroke={1.5} />
+          )}
         </Icon>
       </BButton>
     </Tooltip>

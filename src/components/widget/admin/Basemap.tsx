@@ -13,7 +13,7 @@ import mapboxgl from "mapbox-gl";
 import { useEffect, useRef, useState } from "react";
 import Map, { MapRef, Marker } from "react-map-gl/mapbox";
 import MapMarkerCircle from "../MapMarkerCircle";
-import PolygonLayerManager from "../PolygonLayerManager";
+import LayerManager from "../LayerManager";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 const MIN_ZOOM = 1;
@@ -224,7 +224,7 @@ const BaseMap = () => {
           )}
 
           {/* Polygon Layer */}
-          <PolygonLayerManager key={mapKey} />
+          <LayerManager key={mapKey} />
 
           {/* WMS Layers */}
           {/* <WMSLayerManager /> */}
