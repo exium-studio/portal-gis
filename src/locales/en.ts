@@ -203,7 +203,7 @@ const translations = {
   "fiat": {
     "description": "Payment using official currencies (e.g., IDR, USD)."
   },
-  "field_data": "Field data",
+  "field_info": "Field info",
   "file_dropzone_label": "Drag and drop/click to upload files",
   "firefox_permissions_settings_link": "Preferences → Privacy & Security → Permissions → ",
   "for_gender": "For gender",

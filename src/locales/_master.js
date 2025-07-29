@@ -363,9 +363,9 @@ export const view_layer = {
   id: "Lihat area layer",
   en: "View layer area",
 };
-export const field_data = {
-  id: "Data bidang",
-  en: "Field data",
+export const field_info = {
+  id: "Info bidang",
+  en: "Field info",
 };
 export const password_confirmation_not_match = {
   id: "Konfirmasi password tidak cocok",
