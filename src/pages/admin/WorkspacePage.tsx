@@ -29,7 +29,6 @@ import {
 import { Tooltip } from "@/components/ui/tooltip";
 import PageContainer from "@/components/widget/PageContainer";
 import WorkspaceItem from "@/components/widget/WorkspaceItem";
-import { dummyWorkspaces } from "@/constants/dummyData";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
 import useRenderTrigger from "@/context/useRenderTrigger";
@@ -210,7 +209,7 @@ const Create = () => {
     </>
   );
 };
-const Data = (props: any) => {
+const Workspaces = (props: any) => {
   // Props
   const { dataState } = props;
   const { data, limit, setLimit, page, setPage, pagination } = dataState;
@@ -393,7 +392,6 @@ const WorkspacePage = () => {
       search: filterConfig.search,
     },
     initialLimit: 10,
-    initialData: dummyWorkspaces,
     dependencies: [filterConfig],
   });
   const { data, initialLoading, error, makeRequest } = dataState;
@@ -401,7 +399,7 @@ const WorkspacePage = () => {
     loading: <ComponentSpinner />,
     error: <FeedbackRetry onRetry={makeRequest} />,
     empty: <FeedbackNoData />,
-    loaded: <Data dataState={dataState} />,
+    loaded: <Workspaces dataState={dataState} />,
   };
 
   return (
