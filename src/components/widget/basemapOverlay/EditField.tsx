@@ -25,10 +25,11 @@ import empty from "@/utils/empty";
 import { fileValidation } from "@/utils/validationSchemas";
 import { Icon, SimpleGrid, Tabs, useDisclosure } from "@chakra-ui/react";
 import { IconEdit } from "@tabler/icons-react";
-import { Field, useFormik } from "formik";
+import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import * as yup from "yup";
 import ExistingFileItem from "../ExistingFIleItem";
+import { Field } from "@/components/ui/field";
 
 export const EditField = (props: any) => {
   // Props
@@ -227,7 +228,7 @@ export const EditField = (props: any) => {
         <DisclosureContent>
           <DisclosureHeader>
             <DisclosureHeaderContent
-              title={`Edit ${capsFirstLetterEachWord(l.field_data)}`}
+              title={`Edit ${capsFirstLetterEachWord(l.field_info)}`}
             />
           </DisclosureHeader>
 

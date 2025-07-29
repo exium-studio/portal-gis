@@ -19,12 +19,14 @@ import SearchInput from "@/components/ui-custom/SearchInput";
 import StringInput from "@/components/ui-custom/StringInput";
 import Textarea from "@/components/ui-custom/Textarea";
 import { Field } from "@/components/ui/field";
+import { Tooltip } from "@/components/ui/tooltip";
 import PageContainer from "@/components/widget/PageContainer";
 import WorkspaceItem from "@/components/widget/WorkspaceItem";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
 import useRenderTrigger from "@/context/useRenderTrigger";
 import { useThemeConfig } from "@/context/useThemeConfig";
+import useWorkspaceDisplay from "@/context/useWorkspaceDisplay";
 import useBackOnClose from "@/hooks/useBackOnClose";
 import useDataState from "@/hooks/useDataState";
 import useRequest from "@/hooks/useRequest";
@@ -37,7 +39,7 @@ import {
   SimpleGrid,
   useDisclosure,
 } from "@chakra-ui/react";
-import { IconPlus } from "@tabler/icons-react";
+import { IconLayoutBottombar, IconList, IconPlus } from "@tabler/icons-react";
 import { useFormik } from "formik";
 import { useState } from "react";
 import * as yup from "yup";
@@ -219,6 +221,29 @@ const Data = (props: any) => {
     </CContainer>
   );
 };
+const ToggleDisplay = (props: any) => {
+  // Props
+  const { ...restProps } = props;
+
+  // Contexts
+  const displayMode = useWorkspaceDisplay((s) => s.displayMode);
+  const toggleDisplayMode = useWorkspaceDisplay((s) => s.toggleDisplayMode);
+
+  return (
+    <Tooltip content={"Toggle display"}>
+      <BButton
+        iconButton
+        onClick={toggleDisplayMode}
+        variant={"outline"}
+        {...restProps}
+      >
+        <Icon>
+          {displayMode === "rows" ? <IconLayoutBottombar /> : <IconList />}
+        </Icon>
+      </BButton>
+    </Tooltip>
+  );
+};
 
 const WorkspacePage = () => {
   // States
@@ -263,6 +288,8 @@ const WorkspacePage = () => {
               }}
               inputValue={filterConfig.search}
             />
+
+            <ToggleDisplay />
 
             <Create />
           </HStack>

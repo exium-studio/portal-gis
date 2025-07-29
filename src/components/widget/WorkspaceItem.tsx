@@ -6,6 +6,7 @@ import useLang from "@/context/useLang";
 import useMapViewState from "@/context/useMapViewState";
 import useRenderTrigger from "@/context/useRenderTrigger";
 import { useThemeConfig } from "@/context/useThemeConfig";
+import useWorkspaceDisplay from "@/context/useWorkspaceDisplay";
 import useBackOnClose from "@/hooks/useBackOnClose";
 import useRequest from "@/hooks/useRequest";
 import { OPTIONS_LAYER_FILE_TYPE } from "@/static/selectOptions";
@@ -48,6 +49,12 @@ import { Switch } from "../ui/switch";
 import { Tooltip } from "../ui/tooltip";
 import ExistingFileItem from "./ExistingFIleItem";
 import SelectLayerFileType from "./SelectLayerFileType";
+import {
+  AccordionItem,
+  AccordionItemContent,
+  AccordionItemTrigger,
+  AccordionRoot,
+} from "../ui/accordion";
 
 const EditWorkspace = (props: any) => {
   // Props
@@ -598,28 +605,40 @@ const ToggleLoadWorkspace = (props: any) => {
     </Tooltip>
   );
 };
-
-const WorkspaceItem = (props: any) => {
+const WorkspaceMenu = (props: any) => {
   // Props
-  const { initialData, type = "grid", ...restProps } = props;
+  const { workspace, setWorkspace, ...restProps } = props;
+
+  return (
+    <MenuRoot>
+      <MenuTrigger asChild>
+        <BButton iconButton variant={"ghost"} {...restProps}>
+          <Icon boxSize={5}>
+            <IconDots />
+          </Icon>
+        </BButton>
+      </MenuTrigger>
+
+      <MenuContent>
+        <EditWorkspace workspace={workspace} setWorkspace={setWorkspace} />
+
+        <DeleteWorkspace workspace={workspace} />
+      </MenuContent>
+    </MenuRoot>
+  );
+};
+const RowItem = (props: any) => {
+  // Props
+  const { workspace, setWorkspace, loadedLayerData, ...restProps } = props;
 
   // Contexts
   const { themeConfig } = useThemeConfig();
-  const activeLayerGroups = useActiveLayers((s) => s.activeLayerGroups);
 
   // States
-  const [workspace, setWorkspace] = useState<any>(initialData);
-  const loadedLayerData = activeLayerGroups.find(
-    (layerData: any) => layerData.workspace.id === workspace.id
-  );
   const bboxCenter = {
     bbox: loadedLayerData?.layer?.geojson?.bbox,
     center: loadedLayerData?.layer?.geojson?.center,
   };
-
-  useEffect(() => {
-    setWorkspace(initialData);
-  }, [initialData]);
 
   return (
     <CContainer
@@ -674,24 +693,11 @@ const WorkspaceItem = (props: any) => {
             </Popover.Root>
           </CContainer>
 
-          <MenuRoot>
-            <MenuTrigger asChild>
-              <BButton iconButton variant={"ghost"} size={"xs"} ml={"auto"}>
-                <Icon boxSize={5}>
-                  <IconDots />
-                </Icon>
-              </BButton>
-            </MenuTrigger>
-
-            <MenuContent>
-              <EditWorkspace
-                workspace={workspace}
-                setWorkspace={setWorkspace}
-              />
-
-              <DeleteWorkspace workspace={workspace} />
-            </MenuContent>
-          </MenuRoot>
+          <WorkspaceMenu
+            workspace={workspace}
+            setWorkspace={setWorkspace}
+            size={"xs"}
+          />
         </HStack>
       </CContainer>
 
@@ -717,6 +723,107 @@ const WorkspaceItem = (props: any) => {
         />
       </HScroll>
     </CContainer>
+  );
+};
+const ListItem = (props: any) => {
+  // Props
+  const { workspace, setWorkspace, loadedLayerData, ...restProps } = props;
+
+  // Contexts
+  const { themeConfig } = useThemeConfig();
+
+  // States
+  const bboxCenter = {
+    bbox: loadedLayerData?.layer?.geojson?.bbox,
+    center: loadedLayerData?.layer?.geojson?.center,
+  };
+
+  return (
+    <CContainer
+      borderRadius={themeConfig.radii.container}
+      border={"1px solid"}
+      borderColor={"border.muted"}
+      bg={"body"}
+      {...restProps}
+    >
+      <HStack p={1}>
+        <WorkspaceMenu workspace={workspace} setWorkspace={setWorkspace} />
+
+        <P fontWeight={"semibold"} flexShrink={0}>
+          {workspace?.title}
+        </P>
+
+        <HScroll gap={1} justify={"end"}>
+          <AddLayer data={workspace} disabled={!!loadedLayerData} />
+
+          <ViewWorkspace
+            data={workspace}
+            bboxCenter={bboxCenter}
+            disabled={!loadedLayerData}
+          />
+
+          <ToggleLoadWorkspace
+            data={workspace}
+            bboxCenter={bboxCenter}
+            loadedLayerData={loadedLayerData}
+          />
+        </HScroll>
+      </HStack>
+
+      <AccordionRoot multiple>
+        <AccordionItem
+          value="layer"
+          px={3}
+          borderTop={"1px solid"}
+          borderBottom={"none"}
+          borderColor={"border.muted"}
+        >
+          <AccordionItemTrigger>
+            <HStack>
+              <P>Layer</P>
+            </HStack>
+          </AccordionItemTrigger>
+
+          <AccordionItemContent></AccordionItemContent>
+        </AccordionItem>
+      </AccordionRoot>
+    </CContainer>
+  );
+};
+
+const WorkspaceItem = (props: any) => {
+  // Props
+  const { initialData, ...restProps } = props;
+
+  // Contexts
+  const displayMode = useWorkspaceDisplay((s) => s.displayMode);
+  const activeLayerGroups = useActiveLayers((s) => s.activeLayerGroups);
+
+  // States
+  const [workspace, setWorkspace] = useState<any>(initialData);
+  const loadedLayerData = activeLayerGroups.find(
+    (layerData: any) => layerData.workspace.id === workspace.id
+  );
+
+  // Handle initialData
+  useEffect(() => {
+    setWorkspace(initialData);
+  }, [initialData]);
+
+  return displayMode === "rows" ? (
+    <RowItem
+      workspace={workspace}
+      setWorkspace={setWorkspace}
+      loadedLayerData={loadedLayerData}
+      {...restProps}
+    />
+  ) : (
+    <ListItem
+      workspace={workspace}
+      setWorkspace={setWorkspace}
+      loadedLayerData={loadedLayerData}
+      {...restProps}
+    />
   );
 };
 
