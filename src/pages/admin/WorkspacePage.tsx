@@ -22,6 +22,7 @@ import { Field } from "@/components/ui/field";
 import { Tooltip } from "@/components/ui/tooltip";
 import PageContainer from "@/components/widget/PageContainer";
 import WorkspaceItem from "@/components/widget/WorkspaceItem";
+import { dummyWorkspaces } from "@/constants/dummyData";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
 import useRenderTrigger from "@/context/useRenderTrigger";
@@ -84,7 +85,7 @@ const Create = () => {
         "workspace_category_id",
         values.workspace_category?.[0]?.id
       );
-      if (values.thumbnail && values.thumbnail.length > 0) {
+      if (values.thumbnail && values.thumbnail?.length > 0) {
         values.thumbnail.forEach((file: File) => {
           payload.append("thumbnail", file);
         });
@@ -255,12 +256,14 @@ const WorkspacePage = () => {
     search: "",
   });
   const dataState = useDataState<any>({
-    url: `/api/gis-bpn/workspaces/index`,
+    // TODO wait BE
+    // url: `/api/gis-bpn/workspaces/index`,
     method: "GET",
     payload: {
       search: filterConfig.search,
     },
     initialLimit: 4,
+    initialData: dummyWorkspaces,
     dependencies: [filterConfig],
   });
   const { data, initialLoading, error, makeRequest } = dataState;

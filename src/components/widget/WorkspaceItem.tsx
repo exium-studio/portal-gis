@@ -1,5 +1,6 @@
 import CContainer from "@/components/ui-custom/CContainer";
 import { MAP_TRANSITION_DURATION } from "@/constants/duration";
+import { Interface__Workspace } from "@/constants/interfaces";
 import useActiveLayers from "@/context/useActiveWorkspaces";
 import useConfirmationDisclosure from "@/context/useConfirmationDisclosure";
 import useLang from "@/context/useLang";
@@ -19,11 +20,16 @@ import {
   HStack,
   Icon,
   Menu,
-  Popover,
-  Portal,
   useDisclosure,
 } from "@chakra-ui/react";
-import { IconDots, IconFilePlus, IconZoomInArea } from "@tabler/icons-react";
+import {
+  IconDots,
+  IconEdit,
+  IconFilePlus,
+  IconStack,
+  IconTrash,
+  IconZoomInArea,
+} from "@tabler/icons-react";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import * as yup from "yup";
@@ -38,23 +44,23 @@ import {
 } from "../ui-custom/Disclosure";
 import DisclosureHeaderContent from "../ui-custom/DisclosureHeaderContent";
 import FileInput from "../ui-custom/FileInput";
-import HScroll from "../ui-custom/HScroll";
 import Img from "../ui-custom/Img";
 import P from "../ui-custom/P";
 import StringInput from "../ui-custom/StringInput";
 import Textarea from "../ui-custom/Textarea";
-import { Field } from "../ui/field";
-import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
-import { Switch } from "../ui/switch";
-import { Tooltip } from "../ui/tooltip";
-import ExistingFileItem from "./ExistingFIleItem";
-import SelectLayerFileType from "./SelectLayerFileType";
 import {
   AccordionItem,
   AccordionItemContent,
   AccordionItemTrigger,
   AccordionRoot,
 } from "../ui/accordion";
+import { Field } from "../ui/field";
+import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
+import { PopoverContent, PopoverRoot, PopoverTrigger } from "../ui/popover";
+import { Switch } from "../ui/switch";
+import { Tooltip } from "../ui/tooltip";
+import ExistingFileItem from "./ExistingFIleItem";
+import SelectLayerFileType from "./SelectLayerFileType";
 
 const EditWorkspace = (props: any) => {
   // Props
@@ -90,7 +96,7 @@ const EditWorkspace = (props: any) => {
       title: yup.string().required(l.required_form),
       description: yup.string().required(l.required_form),
       thumbnail:
-        existingThumbnail.length === 0
+        existingThumbnail?.length === 0
           ? fileValidation({
               allowedExtensions: ["jpg", "jpeg", "png", "svg"],
             }).required(l.required_form)
@@ -528,7 +534,7 @@ const ViewWorkspace = (props: any) => {
         onClick={onViewLayers}
         {...restProps}
       >
-        <Icon boxSize={5}>
+        <Icon boxSize={"22px"}>
           <IconZoomInArea stroke={1.5} />
         </Icon>
       </BButton>
@@ -627,18 +633,97 @@ const WorkspaceMenu = (props: any) => {
     </MenuRoot>
   );
 };
+const LayerList = (props: {
+  workspace: Interface__Workspace;
+  loadedLayerData: any;
+}) => {
+  // Props
+  const { workspace, loadedLayerData, ...restProps } = props;
+
+  // States
+  const layers = workspace?.layers;
+  const bboxCenter = {
+    bbox: loadedLayerData?.layer?.geojson?.bbox,
+    center: loadedLayerData?.layer?.geojson?.center,
+  };
+
+  return (
+    <AccordionRoot multiple>
+      <AccordionItem
+        value="layer"
+        borderTop={"1px solid"}
+        borderBottom={"none"}
+        borderColor={"border.muted"}
+        {...restProps}
+      >
+        <AccordionItemTrigger p={1} pr={3}>
+          <HStack
+            gap={1}
+            w={"fit"}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <ToggleLoadWorkspace
+              data={workspace}
+              bboxCenter={bboxCenter}
+              loadedLayerData={loadedLayerData}
+            />
+
+            <AddLayer data={workspace} disabled={!!loadedLayerData} />
+
+            <ViewWorkspace
+              data={workspace}
+              bboxCenter={bboxCenter}
+              disabled={!loadedLayerData}
+            />
+          </HStack>
+        </AccordionItemTrigger>
+
+        <AccordionItemContent
+          p={1}
+          px={2}
+          borderTop={"1px solid"}
+          borderColor={"border.muted"}
+        >
+          {layers?.map((layer) => {
+            return (
+              <HStack key={layer.id} gap={4}>
+                <HStack pl={1}>
+                  <Icon color={"fg.muted"}>
+                    <IconStack stroke={1.5} />
+                  </Icon>
+
+                  <P lineClamp={1}>{layer.name}</P>
+                </HStack>
+
+                <HStack ml={"auto"} gap={1}>
+                  <BButton iconButton unclicky size={"sm"} variant={"ghost"}>
+                    <Icon boxSize={5}>
+                      <IconEdit stroke={1.8} />
+                    </Icon>
+                  </BButton>
+
+                  <BButton iconButton unclicky size={"sm"} variant={"ghost"}>
+                    <Icon boxSize={5}>
+                      <IconTrash stroke={1.8} />
+                    </Icon>
+                  </BButton>
+                </HStack>
+              </HStack>
+            );
+          })}
+        </AccordionItemContent>
+      </AccordionItem>
+    </AccordionRoot>
+  );
+};
 const RowItem = (props: any) => {
   // Props
   const { workspace, setWorkspace, loadedLayerData, ...restProps } = props;
 
   // Contexts
   const { themeConfig } = useThemeConfig();
-
-  // States
-  const bboxCenter = {
-    bbox: loadedLayerData?.layer?.geojson?.bbox,
-    center: loadedLayerData?.layer?.geojson?.center,
-  };
 
   return (
     <CContainer
@@ -655,42 +740,30 @@ const RowItem = (props: any) => {
         <Img
           key={workspace?.thumbnail?.[0]?.file_url}
           src={workspace?.thumbnail?.[0]?.file_url}
-          aspectRatio={2 / 1}
+          aspectRatio={16 / 10}
         />
 
         <HStack align={"stretch"} gap={0} p={2}>
           <CContainer p={1} gap={1}>
-            <Popover.Root>
-              <Popover.Trigger asChild>
+            <PopoverRoot>
+              <PopoverTrigger asChild>
                 <P fontWeight={"semibold"} w={"fit"} lineClamp={1}>
                   {workspace?.title}
                 </P>
-              </Popover.Trigger>
+              </PopoverTrigger>
 
-              <Portal>
-                <Popover.Positioner>
-                  <Popover.Content p={2} maxW={"200px"}>
-                    {workspace?.title}
-                  </Popover.Content>
-                </Popover.Positioner>
-              </Portal>
-            </Popover.Root>
+              <PopoverContent p={2}>{workspace?.title}</PopoverContent>
+            </PopoverRoot>
 
-            <Popover.Root>
-              <Popover.Trigger asChild>
+            <PopoverRoot>
+              <PopoverTrigger asChild>
                 <P lineClamp={1} color={"fg.subtle"} w={"fit"}>
                   {workspace?.description}
                 </P>
-              </Popover.Trigger>
+              </PopoverTrigger>
 
-              <Portal>
-                <Popover.Positioner>
-                  <Popover.Content p={2} maxW={"200px"}>
-                    {workspace?.description}
-                  </Popover.Content>
-                </Popover.Positioner>
-              </Portal>
-            </Popover.Root>
+              <PopoverContent p={2}>{workspace?.description}</PopoverContent>
+            </PopoverRoot>
           </CContainer>
 
           <WorkspaceMenu
@@ -701,7 +774,7 @@ const RowItem = (props: any) => {
         </HStack>
       </CContainer>
 
-      <HScroll
+      {/* <HScroll
         p={1}
         gap={1}
         borderTop={"1px solid"}
@@ -721,7 +794,9 @@ const RowItem = (props: any) => {
           loadedLayerData={loadedLayerData}
           ml={"auto"}
         />
-      </HScroll>
+      </HScroll> */}
+
+      <LayerList workspace={workspace} loadedLayerData={loadedLayerData} />
     </CContainer>
   );
 };
@@ -732,12 +807,6 @@ const ListItem = (props: any) => {
   // Contexts
   const { themeConfig } = useThemeConfig();
 
-  // States
-  const bboxCenter = {
-    bbox: loadedLayerData?.layer?.geojson?.bbox,
-    center: loadedLayerData?.layer?.geojson?.center,
-  };
-
   return (
     <CContainer
       borderRadius={themeConfig.radii.container}
@@ -746,47 +815,25 @@ const ListItem = (props: any) => {
       bg={"body"}
       {...restProps}
     >
-      <HStack p={1}>
+      <HStack p={1} justify={"space-between"}>
+        <HStack truncate px={2}>
+          <PopoverRoot>
+            <PopoverTrigger asChild>
+              <P fontWeight={"semibold"} lineClamp={1}>
+                {workspace?.title}
+              </P>
+            </PopoverTrigger>
+
+            <PopoverContent>
+              <P>{workspace?.title}</P>
+            </PopoverContent>
+          </PopoverRoot>
+        </HStack>
+
         <WorkspaceMenu workspace={workspace} setWorkspace={setWorkspace} />
-
-        <P fontWeight={"semibold"} flexShrink={0}>
-          {workspace?.title}
-        </P>
-
-        <HScroll gap={1} justify={"end"}>
-          <AddLayer data={workspace} disabled={!!loadedLayerData} />
-
-          <ViewWorkspace
-            data={workspace}
-            bboxCenter={bboxCenter}
-            disabled={!loadedLayerData}
-          />
-
-          <ToggleLoadWorkspace
-            data={workspace}
-            bboxCenter={bboxCenter}
-            loadedLayerData={loadedLayerData}
-          />
-        </HScroll>
       </HStack>
 
-      <AccordionRoot multiple>
-        <AccordionItem
-          value="layer"
-          px={3}
-          borderTop={"1px solid"}
-          borderBottom={"none"}
-          borderColor={"border.muted"}
-        >
-          <AccordionItemTrigger>
-            <HStack>
-              <P>Layer</P>
-            </HStack>
-          </AccordionItemTrigger>
-
-          <AccordionItemContent></AccordionItemContent>
-        </AccordionItem>
-      </AccordionRoot>
+      <LayerList workspace={workspace} loadedLayerData={loadedLayerData} />
     </CContainer>
   );
 };

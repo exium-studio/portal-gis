@@ -48,11 +48,11 @@ export interface Interface__LayerData extends Interface__CUD {
 export interface Interface__Layer extends Interface__CUD {
   id: number;
   workspace_id: number;
-  parent_layer_id: number;
+  parent_layer_id?: number | null;
   name: string;
   description?: string;
   table_name?: string;
-  data: Interface__LayerData;
+  data?: Interface__LayerData;
 }
 export interface Interface__WorkspaceCategory extends Interface__CUD {
   id: number;
@@ -62,6 +62,7 @@ export interface Interface__Workspace extends Interface__CUD {
   id: string;
   title: string;
   description: string;
+  layers?: Interface__Layer[];
   workspace_category: Interface__WorkspaceCategory;
   thumbnail?: Interface__StorageFile[];
 }

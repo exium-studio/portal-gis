@@ -161,6 +161,11 @@ const useDataState = <T = any>(props: Props<T>) => {
     setLimit(initialLimit);
   }, [initialLimit]);
 
+  // Handle initial loading when no url
+  useEffect(() => {
+    setInitialLoading(false);
+  }, []);
+
   return {
     makeRequest,
     data,
