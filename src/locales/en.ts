@@ -552,6 +552,7 @@ const translations = {
     "sun": "Sunday"
   },
   "weekly": "Weekly",
+  "workspace_detail": "Workspace detail",
   "written_area": "Written area",
   "year": "Year",
   "yes": "Yes"

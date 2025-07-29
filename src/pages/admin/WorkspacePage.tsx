@@ -40,7 +40,11 @@ import {
   SimpleGrid,
   useDisclosure,
 } from "@chakra-ui/react";
-import { IconLayoutBottombar, IconList, IconPlus } from "@tabler/icons-react";
+import {
+  IconLayoutBottombar,
+  IconLayoutList,
+  IconPlus,
+} from "@tabler/icons-react";
 import { useFormik } from "formik";
 import { useState } from "react";
 import * as yup from "yup";
@@ -201,7 +205,7 @@ const Data = (props: any) => {
   const { data } = dataState;
 
   // Contexts
-  const { layout } = useLayout();
+  const layout = useLayout((s) => s.layout);
 
   // States
   const layoutHalfMap = layout.id === 1;
@@ -242,7 +246,7 @@ const ToggleDisplay = (props: any) => {
           {displayMode === "rows" ? (
             <IconLayoutBottombar stroke={1.5} />
           ) : (
-            <IconList stroke={1.5} />
+            <IconLayoutList stroke={1.5} />
           )}
         </Icon>
       </BButton>

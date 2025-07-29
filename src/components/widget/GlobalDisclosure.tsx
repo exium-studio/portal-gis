@@ -1,5 +1,6 @@
 import ConfirmationDisclosure from "./ConfirmationDisclosure";
 import OfflineDisclosure from "./OfflineDisclosure";
+import WorkspaceDetailGlobalDisclosure from "./WorkspaceDetailGlobalDisclosure";
 // import ToasterDetailDisclosure from "./ToasterDetailDisclosure";
 
 const GlobalDisclosure = () => {
@@ -8,6 +9,8 @@ const GlobalDisclosure = () => {
       <OfflineDisclosure />
 
       <ConfirmationDisclosure />
+
+      <WorkspaceDetailGlobalDisclosure />
 
       {/* <ToasterDetailDisclosure /> */}
     </>

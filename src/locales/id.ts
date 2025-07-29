@@ -552,6 +552,7 @@ const translations = {
     "sun": "Minggu"
   },
   "weekly": "Mingguan",
+  "workspace_detail": "Detail workspace",
   "written_area": "Luas tertulis",
   "year": "Tahun",
   "yes": "Ya"

@@ -335,6 +335,10 @@ export const satellite = {
   id: "Satelit",
   en: "Satellite",
 };
+export const workspace_detail = {
+  id: "Detail workspace",
+  en: "Workspace detail",
+};
 
 // UI
 export const no_active_workspaces = {

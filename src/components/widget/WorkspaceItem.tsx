@@ -7,6 +7,7 @@ import useLang from "@/context/useLang";
 import useMapViewState from "@/context/useMapViewState";
 import useRenderTrigger from "@/context/useRenderTrigger";
 import { useThemeConfig } from "@/context/useThemeConfig";
+import useWorkspaceDetail from "@/context/useWorkspaceDetail";
 import useWorkspaceDisplay from "@/context/useWorkspaceDisplay";
 import useBackOnClose from "@/hooks/useBackOnClose";
 import useRequest from "@/hooks/useRequest";
@@ -24,10 +25,8 @@ import {
 } from "@chakra-ui/react";
 import {
   IconDots,
-  IconEdit,
   IconFilePlus,
   IconStack,
-  IconTrash,
   IconZoomInArea,
 } from "@tabler/icons-react";
 import { useFormik } from "formik";
@@ -48,12 +47,6 @@ import Img from "../ui-custom/Img";
 import P from "../ui-custom/P";
 import StringInput from "../ui-custom/StringInput";
 import Textarea from "../ui-custom/Textarea";
-import {
-  AccordionItem,
-  AccordionItemContent,
-  AccordionItemTrigger,
-  AccordionRoot,
-} from "../ui/accordion";
 import { Field } from "../ui/field";
 import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
 import { PopoverContent, PopoverRoot, PopoverTrigger } from "../ui/popover";
@@ -633,90 +626,68 @@ const WorkspaceMenu = (props: any) => {
     </MenuRoot>
   );
 };
-const LayerList = (props: {
+const WorkspaceLayersUtils = (props: {
   workspace: Interface__Workspace;
   loadedLayerData: any;
 }) => {
   // Props
   const { workspace, loadedLayerData, ...restProps } = props;
 
+  // Contexts
+  const setWorkspaceDetailData = useWorkspaceDetail((s) => s.setData);
+  const workspaceDetailOnOpen = useWorkspaceDetail((s) => s.onOpen);
+
   // States
-  const layers = workspace?.layers;
   const bboxCenter = {
     bbox: loadedLayerData?.layer?.geojson?.bbox,
     center: loadedLayerData?.layer?.geojson?.center,
   };
 
   return (
-    <AccordionRoot multiple>
-      <AccordionItem
-        value="layer"
-        borderTop={"1px solid"}
-        borderBottom={"none"}
-        borderColor={"border.muted"}
-        {...restProps}
-      >
-        <AccordionItemTrigger
-          p={1}
-          pr={3}
-          borderBottom={"1px solid"}
-          borderColor={"border.muted"}
-          borderRadius={0}
+    <HStack
+      gap={1}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+      p={1}
+      borderTop={"1px solid"}
+      borderColor={"border.muted"}
+      {...restProps}
+    >
+      <Tooltip content={"Workspace layers"}>
+        <BButton
+          iconButton
+          unclicky
+          variant={"ghost"}
+          onClick={() => {
+            setWorkspaceDetailData({
+              ...workspace,
+              layersOnly: true,
+            });
+            workspaceDetailOnOpen();
+          }}
         >
-          <HStack
-            gap={1}
-            w={"fit"}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <ToggleLoadWorkspace
-              data={workspace}
-              bboxCenter={bboxCenter}
-              loadedLayerData={loadedLayerData}
-            />
+          <Icon boxSize={"24px"}>
+            <IconStack stroke={1.5} />
+          </Icon>
+        </BButton>
+      </Tooltip>
 
-            <AddLayer data={workspace} disabled={!!loadedLayerData} />
+      <AddLayer data={workspace} disabled={!!loadedLayerData} />
 
-            <ViewWorkspace
-              data={workspace}
-              bboxCenter={bboxCenter}
-              disabled={!loadedLayerData}
-            />
-          </HStack>
-        </AccordionItemTrigger>
+      <ViewWorkspace
+        data={workspace}
+        bboxCenter={bboxCenter}
+        disabled={!loadedLayerData}
+      />
 
-        <AccordionItemContent p={"0 !important"}>
-          {layers?.map((layer) => {
-            return (
-              <HStack key={layer.id} gap={4} p={1}>
-                <HStack pl={1}>
-                  <Icon color={"fg.muted"}>
-                    <IconStack stroke={1.5} />
-                  </Icon>
-
-                  <P lineClamp={1}>{layer.name}</P>
-                </HStack>
-
-                <HStack ml={"auto"} gap={1}>
-                  <BButton iconButton unclicky size={"sm"} variant={"ghost"}>
-                    <Icon boxSize={5}>
-                      <IconEdit stroke={1.8} />
-                    </Icon>
-                  </BButton>
-
-                  <BButton iconButton unclicky size={"sm"} variant={"ghost"}>
-                    <Icon boxSize={5}>
-                      <IconTrash stroke={1.8} />
-                    </Icon>
-                  </BButton>
-                </HStack>
-              </HStack>
-            );
-          })}
-        </AccordionItemContent>
-      </AccordionItem>
-    </AccordionRoot>
+      <ToggleLoadWorkspace
+        data={workspace}
+        bboxCenter={bboxCenter}
+        loadedLayerData={loadedLayerData}
+        ml={"auto"}
+      />
+    </HStack>
   );
 };
 const RowItem = (props: any) => {
@@ -797,7 +768,10 @@ const RowItem = (props: any) => {
         />
       </HScroll> */}
 
-      <LayerList workspace={workspace} loadedLayerData={loadedLayerData} />
+      <WorkspaceLayersUtils
+        workspace={workspace}
+        loadedLayerData={loadedLayerData}
+      />
     </CContainer>
   );
 };
@@ -834,7 +808,10 @@ const ListItem = (props: any) => {
         <WorkspaceMenu workspace={workspace} setWorkspace={setWorkspace} />
       </HStack>
 
-      <LayerList workspace={workspace} loadedLayerData={loadedLayerData} />
+      <WorkspaceLayersUtils
+        workspace={workspace}
+        loadedLayerData={loadedLayerData}
+      />
     </CContainer>
   );
 };
@@ -858,20 +835,24 @@ const WorkspaceItem = (props: any) => {
     setWorkspace(initialData);
   }, [initialData]);
 
-  return displayMode === "rows" ? (
-    <RowItem
-      workspace={workspace}
-      setWorkspace={setWorkspace}
-      loadedLayerData={loadedLayerData}
-      {...restProps}
-    />
-  ) : (
-    <ListItem
-      workspace={workspace}
-      setWorkspace={setWorkspace}
-      loadedLayerData={loadedLayerData}
-      {...restProps}
-    />
+  return (
+    <>
+      {displayMode === "rows" ? (
+        <RowItem
+          workspace={workspace}
+          setWorkspace={setWorkspace}
+          loadedLayerData={loadedLayerData}
+          {...restProps}
+        />
+      ) : (
+        <ListItem
+          workspace={workspace}
+          setWorkspace={setWorkspace}
+          loadedLayerData={loadedLayerData}
+          {...restProps}
+        />
+      )}
+    </>
   );
 };
 
