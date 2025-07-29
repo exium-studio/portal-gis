@@ -166,6 +166,11 @@ const useDataState = <T = any>(props: Props<T>) => {
     setInitialLoading(false);
   }, []);
 
+  // Handle initial loading to tru when limit & page changes
+  useEffect(() => {
+    setInitialLoading(true);
+  }, [limit, page]);
+
   return {
     makeRequest,
     data,

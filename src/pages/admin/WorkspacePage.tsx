@@ -15,10 +15,17 @@ import FeedbackRetry from "@/components/ui-custom/FeedbackRetry";
 import FileInput from "@/components/ui-custom/FileInput";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
+import NumberInput from "@/components/ui-custom/NumberInput";
 import SearchInput from "@/components/ui-custom/SearchInput";
 import StringInput from "@/components/ui-custom/StringInput";
 import Textarea from "@/components/ui-custom/Textarea";
 import { Field } from "@/components/ui/field";
+import {
+  MenuContent,
+  MenuItem,
+  MenuRoot,
+  MenuTrigger,
+} from "@/components/ui/menu";
 import { Tooltip } from "@/components/ui/tooltip";
 import PageContainer from "@/components/widget/PageContainer";
 import WorkspaceItem from "@/components/widget/WorkspaceItem";
@@ -41,6 +48,10 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import {
+  IconCheck,
+  IconChevronDown,
+  IconChevronLeft,
+  IconChevronRight,
   IconLayoutBottombar,
   IconLayoutList,
   IconPlus,
@@ -202,16 +213,22 @@ const Create = () => {
 const Data = (props: any) => {
   // Props
   const { dataState } = props;
-  const { data } = dataState;
+  const { data, limit, setLimit, page, setPage, pagination } = dataState;
+
+  console.log("pagination", pagination);
+
+  // Hooks
+  const { l } = useLang();
 
   // Contexts
+  const { themeConfig } = useThemeConfig();
   const layout = useLayout((s) => s.layout);
 
   // States
   const layoutHalfMap = layout.id === 1;
 
   return (
-    <CContainer>
+    <CContainer flex={1}>
       <SimpleGrid columns={layoutHalfMap ? 1 : [1, null, 2, 4]} gap={4}>
         {data?.map((item: any) => {
           return (
@@ -223,6 +240,116 @@ const Data = (props: any) => {
           );
         })}
       </SimpleGrid>
+
+      <HStack mt={"auto"} pt={4} justify={"space-between"}>
+        {/* Limit */}
+        <MenuRoot>
+          <MenuTrigger asChild>
+            <BButton unclicky variant={"ghost"} size={"xs"}>
+              {l.show} {limit !== Infinity ? limit : l.all}
+              <Icon>
+                <IconChevronDown />
+              </Icon>
+            </BButton>
+          </MenuTrigger>
+
+          <MenuContent>
+            <MenuItem
+              color={limit === 10 ? themeConfig.primaryColor : ""}
+              value="10"
+              onClick={() => setLimit(10)}
+            >
+              10
+              {limit === 10 && (
+                <Icon ml={"auto"} boxSize={4}>
+                  <IconCheck />
+                </Icon>
+              )}
+            </MenuItem>
+            <MenuItem
+              color={limit === 50 ? themeConfig.primaryColor : ""}
+              value="50"
+              onClick={() => setLimit(50)}
+            >
+              50
+              {limit === 50 && (
+                <Icon ml={"auto"} boxSize={4}>
+                  <IconCheck />
+                </Icon>
+              )}
+            </MenuItem>
+            <MenuItem
+              color={limit === 100 ? themeConfig.primaryColor : ""}
+              value="100"
+              onClick={() => setLimit(100)}
+            >
+              100
+              {limit === 100 && (
+                <Icon ml={"auto"} boxSize={4}>
+                  <IconCheck />
+                </Icon>
+              )}
+            </MenuItem>
+            <MenuItem
+              color={limit === Infinity ? themeConfig.primaryColor : ""}
+              value="Infinity"
+              onClick={() => setLimit(Infinity)}
+            >
+              Semua
+              {limit === Infinity && (
+                <Icon ml={"auto"} boxSize={4}>
+                  <IconCheck />
+                </Icon>
+              )}
+            </MenuItem>
+          </MenuContent>
+        </MenuRoot>
+
+        {/* Pagination */}
+        <HStack gap={0}>
+          <BButton
+            iconButton
+            size={"xs"}
+            variant={"ghost"}
+            disabled={page === 1}
+            onClick={() => {
+              if (page > 1) {
+                setPage(page - 1);
+              }
+            }}
+          >
+            <Icon>
+              <IconChevronLeft />
+            </Icon>
+          </BButton>
+
+          <NumberInput
+            w={"40px"}
+            textAlign={"center"}
+            size={"xs"}
+            fontSize={"14px"}
+            border={"none"}
+            inputValue={page}
+            onChangeSetter={(input) => setPage(input)}
+          />
+
+          <BButton
+            iconButton
+            size={"xs"}
+            variant={"ghost"}
+            disabled={page === pagination?.meta?.last_page}
+            onClick={() => {
+              if (page < pagination?.meta?.last_page) {
+                setPage(page + 1);
+              }
+            }}
+          >
+            <Icon>
+              <IconChevronRight />
+            </Icon>
+          </BButton>
+        </HStack>
+      </HStack>
     </CContainer>
   );
 };
@@ -260,13 +387,12 @@ const WorkspacePage = () => {
     search: "",
   });
   const dataState = useDataState<any>({
-    // TODO wait BE
-    // url: `/api/gis-bpn/workspaces/index`,
+    url: `/api/gis-bpn/workspaces/index`,
     method: "GET",
     payload: {
       search: filterConfig.search,
     },
-    initialLimit: 4,
+    initialLimit: 10,
     initialData: dummyWorkspaces,
     dependencies: [filterConfig],
   });
