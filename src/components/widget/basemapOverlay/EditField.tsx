@@ -48,16 +48,17 @@ export const EditField = (props: any) => {
   const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
   const updateWorkspace = useActiveWorkspaces((s) => s.updateLayerData);
 
+  console.log(selectedPolygon);
+
   // States
-  const workspaceId = selectedPolygon?.data?.workspace?.id;
-  const layerId = selectedPolygon?.data?.layer?.layer_id;
-  const tableName = selectedPolygon?.data?.layer?.table_name;
+  const workspaceId = selectedPolygon?.activeWorkspace?.id;
+  const layerId = selectedPolygon?.activeLayer?.id;
+  const tableName = selectedPolygon?.activeLayer?.table_name;
   const propertiesId = selectedPolygon?.polygon?.properties?.id;
-  const geojson = selectedPolygon?.data?.layer?.geojson;
-  const featuresIndex =
-    selectedPolygon?.data?.layer?.geojson?.features.findIndex(
-      (f: any) => f.properties.id === propertiesId
-    );
+  const geojson = selectedPolygon?.activeLayer?.data?.geojson;
+  const featuresIndex = geojson?.features?.findIndex(
+    (f: any) => f.properties.id === propertiesId
+  );
   const [existingDocs, setExistingDocs] = useState<any[]>(data?.thumbnail);
   const formik = useFormik({
     validateOnChange: false,
@@ -126,8 +127,8 @@ export const EditField = (props: any) => {
         penggunaan: values.penggunaan,
       };
       const payload = new FormData();
-      payload.append("layer_id", layerId);
-      payload.append("table_name", tableName);
+      payload.append("layer_id", `${layerId}`);
+      payload.append("table_name", `${tableName}`);
       if (Array.isArray(values.docs)) {
         values.docs.forEach((file) => {
           payload.append(`document`, file);
@@ -146,7 +147,7 @@ export const EditField = (props: any) => {
       // new geojson
       const newGeojson = {
         ...geojson,
-        features: geojson.features.map((feature: any, index: number) => {
+        features: geojson?.features.map((feature: any, index: number) => {
           if (index === featuresIndex) {
             return {
               ...feature,
@@ -164,7 +165,9 @@ export const EditField = (props: any) => {
         config,
         onResolve: {
           onSuccess: () => {
-            updateWorkspace(workspaceId, layerId, newGeojson);
+            if (workspaceId && layerId) {
+              updateWorkspace(workspaceId, layerId, newGeojson as any);
+            }
             setData(newProperties);
           },
         },
