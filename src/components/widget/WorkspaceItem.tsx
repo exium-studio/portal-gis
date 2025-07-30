@@ -476,7 +476,8 @@ const AddLayer = (props: any) => {
       layer_type: yup.array().required(l.required_form),
       file_type: yup.array().required(l.required_form),
       file: fileValidation({
-        allowedExtensions: ["shp", "zip"],
+        allowedExtensions: ["zip"],
+        maxSizeMB: 50,
       }).required(l.required_form),
     }),
     onSubmit: (values, { resetForm }) => {
@@ -609,7 +610,8 @@ const AddLayer = (props: any) => {
                   }}
                   inputValue={formik.values.file}
                   disabled={empty(formik.values.file_type)}
-                  accept=".zip, .shp"
+                  accept=".zip"
+                  maxFileSize={50}
                 />
               </Field>
             </FieldRoot>

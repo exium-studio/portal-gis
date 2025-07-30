@@ -79,7 +79,7 @@ const EditLayer = (props: any) => {
       layer_type: yup.array().required(l.required_form),
       file_type: yup.array(),
       file: fileValidation({
-        allowedExtensions: ["shp", "zip"],
+        allowedExtensions: ["zip"],
       }),
     }),
     onSubmit: (values, { resetForm }) => {
@@ -91,7 +91,7 @@ const EditLayer = (props: any) => {
       payload.append("workspace_id", workspace?.id);
       payload.append(
         "table_name",
-        `${formatTableName(values.name)}${workspace?.id}`
+        `${formatTableName(values.name)}_${workspace?.id}`
       );
       payload.append("name", values.name);
       payload.append("description", values.description);
@@ -243,7 +243,7 @@ const EditLayer = (props: any) => {
                   }}
                   inputValue={formik.values.file}
                   disabled={empty(formik.values.file_type)}
-                  accept=".zip, .shp"
+                  accept=".zip"
                 />
               </Field>
             </FieldRoot>

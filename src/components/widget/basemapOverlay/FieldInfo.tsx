@@ -31,6 +31,9 @@ export const FieldInfo = () => {
 
   // States
   const [data, setData] = useState<any>(selectedPolygon?.polygon?.properties);
+  const excludedKeysCount = EXCLUDED_KEYS.filter(
+    (key) => data && Object.keys(data).includes(key)
+  ).length;
 
   // Handle open
   useEffect(() => {
@@ -108,8 +111,7 @@ export const FieldInfo = () => {
       <CContainer px={1} className="scrollY">
         {data &&
           Object?.keys(data)?.map((key, i) => {
-            const last =
-              i === Object?.keys(data)?.length - EXCLUDED_KEYS.length;
+            const last = i === Object?.keys(data)?.length - excludedKeysCount;
 
             return EXCLUDED_KEYS.includes(key) ? null : (
               <ItemContainer key={key} last={last}>
