@@ -1,4 +1,8 @@
-import useActiveLayers from "@/context/useActiveWorkspaces";
+import {
+  Interface__ActiveLayer,
+  Interface__ActiveWorkspace,
+} from "@/constants/interfaces";
+import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useLegend from "@/context/useLegend";
 import useMapViewState from "@/context/useMapViewState";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
@@ -6,9 +10,14 @@ import { useThemeConfig } from "@/context/useThemeConfig";
 import { useCallback, useEffect } from "react";
 import { Layer, Source } from "react-map-gl/mapbox";
 
-const LayerSource = (props: any) => {
+interface LayerSourceProps {
+  activeWorkspace: Interface__ActiveWorkspace;
+  activeLayer: Interface__ActiveLayer;
+}
+
+const LayerSource = (props: LayerSourceProps) => {
   // Props
-  const { data } = props;
+  const { activeWorkspace, activeLayer } = props;
 
   // Contexts
   const { mapRef } = useMapViewState();
@@ -22,14 +31,13 @@ const LayerSource = (props: any) => {
   const legendType = "penggunaan"; // properties key / column name
 
   // States
-  const layer = data?.layer;
-  const geojson = data?.layer?.geojson;
+  const geojson = activeLayer?.data?.geojson;
   const selectedFeatureId = selectedPolygon?.polygon?.properties?.id;
   const defaultFillColor = "#808080";
   const defaultLineColor = "#ccc";
-  const fillLayerId = `${layer?.layer_id}-fill`;
-  const outlineLayerId = `${layer?.layer_id}-outline`;
-  const sourceId = `${layer?.layer_id}-source`;
+  const fillLayerId = `${activeLayer?.id}-fill`;
+  const outlineLayerId = `${activeLayer?.id}-outline`;
+  const sourceId = `${activeLayer?.id}-source`;
 
   // Modified click handler
   const handleOnClickPolygon = useCallback(
@@ -40,39 +48,39 @@ const LayerSource = (props: any) => {
         return;
       }
 
-      // Use layer_id instead of id for consistency
       const isAlreadySelected =
         selectedPolygon?.polygon?.properties?.id ===
           clickedFeature?.properties?.id &&
-        selectedPolygon?.polygon?.layer?.id === layer?.layer_id; // Changed here
+        selectedPolygon?.workspaceId === activeWorkspace?.id &&
+        selectedPolygon?.layerId === activeLayer?.id;
 
       if (isAlreadySelected) {
         clearSelectedPolygon();
       } else {
         setSelectedPolygon({
-          data: data,
-          polygon: {
-            ...clickedFeature,
-            layer: { id: layer?.layer_id }, // Changed here
-          },
+          activeWorkspace: activeWorkspace,
+          activeLayer: activeLayer,
+          polygon: clickedFeature,
           fillColor: themeConfig.primaryColorHex,
         });
       }
     },
-    [selectedPolygon, layer?.layer_id, themeConfig.primaryColorHex]
+    [selectedPolygon, activeWorkspace, activeLayer, themeConfig.primaryColorHex]
   );
 
   // Enhanced layer effect
   useEffect(() => {
     const map = mapRef.current?.getMap();
-    if (!map || !layer?.layer_id) return;
+    if (!map || !activeLayer?.id) return;
 
     map.on("click", fillLayerId, handleOnClickPolygon);
 
     return () => {
       map.off("click", fillLayerId, handleOnClickPolygon);
     };
-  }, [mapRef, handleOnClickPolygon, fillLayerId]);
+  }, [mapRef, handleOnClickPolygon, fillLayerId, activeLayer?.id]);
+
+  if (!activeLayer.visible || !geojson) return null;
 
   return (
     <Source id={sourceId} type="geojson" data={geojson}>
@@ -100,7 +108,6 @@ const LayerSource = (props: any) => {
         paint={{
           "line-color": defaultLineColor,
           "line-width": 1,
-          // "line-opacity": 0.5,
         }}
       />
     </Source>
@@ -108,14 +115,25 @@ const LayerSource = (props: any) => {
 };
 
 const LayerManager = () => {
-  const activeLayerGroups = useActiveLayers((s) => s.activeLayerGroups);
+  const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
 
   return (
     <>
-      {activeLayerGroups.map((data) => (
-        <LayerSource key={data.layer.layer_id} data={data} />
-      ))}
+      {activeWorkspaces
+        .filter((activeWorkspace) => activeWorkspace.visible)
+        .map((activeWorkspace) =>
+          activeWorkspace.layers
+            ?.filter((layer) => layer.visible)
+            ?.map((activeLayer) => (
+              <LayerSource
+                key={`${activeWorkspace.id}-${activeLayer.id}`}
+                activeWorkspace={activeWorkspace}
+                activeLayer={activeLayer}
+              />
+            ))
+        )}
     </>
   );
 };
+
 export default LayerManager;

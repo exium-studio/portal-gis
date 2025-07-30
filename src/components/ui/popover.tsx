@@ -20,11 +20,7 @@ export const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
           <ChakraPopover.Content
             ref={ref}
             bg={"body"}
-            // w={"fit"}
             p={3}
-            minW={"fit"}
-            w={"fit"}
-            maxW={"280px"}
             borderRadius={themeConfig.radii.container}
             border={"1px solid"}
             borderColor={"border.subtle"}

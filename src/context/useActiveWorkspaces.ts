@@ -1,161 +1,165 @@
+import {
+  Interface__ActiveWorkspace,
+  Interface__Layer,
+  Interface__LayerData,
+} from "@/constants/interfaces";
 import { create } from "zustand";
 
-interface Layer {
-  layer_id: string | number;
-  layer_name: string;
-  description?: string;
-  table_name?: string;
-  geojson: any;
-  visible?: boolean;
-}
-
-interface WorkspaceObject {
-  id: string | number;
-  [key: string]: any; // additional workspace properties
-}
-
-interface Workspace {
-  workspace: WorkspaceObject;
-  layer: Layer;
-  visible: boolean;
-}
-
-interface GeoJSONLayerState {
-  activeLayerGroups: Workspace[];
-  loadWorkspace: (newWorkspace: Workspace) => void;
-  addLayerToGroup: (workspaceId: string | number, layer: Layer) => void;
-  toggleGroupVisibility: (workspaceId: string | number) => void;
-  toggleLayerVisibility: (
-    workspaceId: string | number,
-    layer_id: string | number
+interface Interface__ActiveWorkspaces {
+  activeWorkspaces: Interface__ActiveWorkspace[];
+  loadWorkspace: (newWorkspace: Interface__ActiveWorkspace) => void;
+  addLayerToActiveWorkspace: (
+    workspaceId: string,
+    layer: Interface__Layer
   ) => void;
+  toggleActiveWorkspaceVisibility: (workspaceId: string) => void;
+  toggleLayerVisibility: (workspaceId: string, layerId: number) => void;
   updateLayerData: (
-    workspaceId: string | number,
-    layer_id: string | number,
-    data: any
+    workspaceId: string,
+    layerId: number,
+    data: Interface__LayerData
   ) => void;
-  removeLayer: (
-    workspaceId: string | number,
-    layer_id: string | number
-  ) => void;
-  removeLayerGroup: (workspaceId: string | number) => void;
-  clearAllLayers: () => void;
+  removeLayer: (workspaceId: string, layerId: number) => void;
+  unloadWorkspace: (workspaceId: string) => void;
+  clearAllWorkspaces: () => void;
+  workspaceActive: (workspaceId: string) => boolean;
 }
 
-const useActiveWorkspaces = create<GeoJSONLayerState>((set) => ({
-  activeLayerGroups: [],
+const useActiveWorkspaces = create<Interface__ActiveWorkspaces>((set, get) => ({
+  activeWorkspaces: [],
 
-  // Add a new layer group with initial layer
-  loadWorkspace: (newGroup) =>
+  // Add a new workspace
+  loadWorkspace: (newActiveWorkspace) =>
     set((state) => {
-      const groupExists = state.activeLayerGroups.some(
-        (g) => g.workspace.id === newGroup.workspace.id
+      const workspaceExists = state.activeWorkspaces.some(
+        (workspace) => workspace.id === newActiveWorkspace.id
       );
 
-      if (groupExists) {
-        console.warn(`WorkspaceObject ${newGroup.workspace.id} already exists`);
+      if (workspaceExists) {
+        console.warn(`Workspace ${newActiveWorkspace.id} already exists`);
         return state;
       }
 
       return {
-        activeLayerGroups: [
-          ...state.activeLayerGroups,
+        activeWorkspaces: [
+          ...state.activeWorkspaces,
           {
-            ...newGroup,
-            visible: newGroup.visible !== undefined ? newGroup.visible : true,
+            ...newActiveWorkspace,
+            visible: newActiveWorkspace.visible ?? true,
+            layers: newActiveWorkspace.layers?.map((layer) => ({
+              ...layer,
+              visible: layer.visible ?? true,
+            })),
           },
         ],
       };
     }),
 
-  // Add layer to existing group by crseating a new group with the same workspace
-  addLayerToGroup: (workspaceId, newLayer) =>
+  // Add layer to existing workspace
+  addLayerToActiveWorkspace: (workspaceId, newLayer) =>
     set((state) => ({
-      activeLayerGroups: [
-        ...state.activeLayerGroups.filter(
-          (g) => g.workspace.id !== workspaceId
-        ),
-        ...state.activeLayerGroups
-          .filter((g) => g.workspace.id === workspaceId)
-          .map((group) => ({
-            ...group,
-            layer: newLayer,
-          })),
-      ],
-    })),
-
-  // Toggle entire group visibility
-  toggleGroupVisibility: (workspaceId) =>
-    set((state) => ({
-      activeLayerGroups: state.activeLayerGroups.map((group) =>
-        group.workspace.id === workspaceId
-          ? { ...group, visible: !group.visible }
-          : group
+      activeWorkspaces: state.activeWorkspaces.map((workspace) =>
+        workspace.id === workspaceId
+          ? {
+              ...workspace,
+              layers: [
+                ...(workspace.layers || []),
+                {
+                  ...newLayer,
+                  visible: true,
+                },
+              ],
+            }
+          : workspace
       ),
     })),
 
-  // Toggle specific layer visibility within a group
-  toggleLayerVisibility: (workspaceId, layer_id) =>
+  // Toggle entire workspace visibility
+  toggleActiveWorkspaceVisibility: (workspaceId) =>
     set((state) => ({
-      activeLayerGroups: state.activeLayerGroups.map((group) => {
-        if (
-          group.workspace.id !== workspaceId ||
-          group.layer.layer_id !== layer_id
-        ) {
-          return group;
+      activeWorkspaces: state.activeWorkspaces.map((workspace) =>
+        workspace.id === workspaceId
+          ? { ...workspace, visible: !workspace.visible }
+          : workspace
+      ),
+    })),
+
+  // Toggle specific layer visibility within a workspace
+  toggleLayerVisibility: (workspaceId, layerId) =>
+    set((state) => ({
+      activeWorkspaces: state.activeWorkspaces.map((workspace) => {
+        if (workspace.id !== workspaceId) {
+          return workspace;
         }
 
         return {
-          ...group,
-          layer: {
-            ...group.layer,
-            visible: !group.layer.visible,
-          },
+          ...workspace,
+          layers: workspace.layers?.map((layer) =>
+            layer.id === layerId
+              ? {
+                  ...layer,
+                  visible: !layer.visible,
+                }
+              : layer
+          ),
         };
       }),
     })),
 
   // Update layer data
-  updateLayerData: (workspaceId, layer_id, newGeojson) =>
+  updateLayerData: (workspaceId, layerId, newData) =>
     set((state) => ({
-      activeLayerGroups: state.activeLayerGroups.map((group) => {
-        if (
-          group.workspace.id !== workspaceId ||
-          group.layer.layer_id !== layer_id
-        ) {
-          return group;
+      activeWorkspaces: state.activeWorkspaces.map((workspace) => {
+        if (workspace.id !== workspaceId) {
+          return workspace;
         }
 
         return {
-          ...group,
-          layer: {
-            ...group.layer,
-            geojson: newGeojson,
-          },
+          ...workspace,
+          layers: workspace.layers?.map((layer) =>
+            layer.id === layerId
+              ? {
+                  ...layer,
+                  data: newData,
+                }
+              : layer
+          ),
         };
       }),
     })),
 
-  // Remove entire layer group
-  removeLayerGroup: (workspaceId) =>
+  // Remove specific layer from workspace
+  removeLayer: (workspaceId, layerId) =>
     set((state) => ({
-      activeLayerGroups: state.activeLayerGroups.filter(
-        (g) => g.workspace.id !== workspaceId
+      activeWorkspaces: state.activeWorkspaces.map((workspace) => {
+        if (workspace.id !== workspaceId) {
+          return workspace;
+        }
+
+        return {
+          ...workspace,
+          layers: workspace.layers?.filter((layer) => layer.id !== layerId),
+        };
+      }),
+    })),
+
+  // Remove entire workspace
+  unloadWorkspace: (workspaceId) =>
+    set((state) => ({
+      activeWorkspaces: state.activeWorkspaces.filter(
+        (workspace) => workspace.id !== workspaceId
       ),
     })),
 
-  // Remove specific layer from group (which removes the entire group since each group has only one layer)
-  removeLayer: (workspaceId, layer_id) =>
-    set((state) => ({
-      activeLayerGroups: state.activeLayerGroups.filter(
-        (group) =>
-          group.workspace.id !== workspaceId ||
-          group.layer.layer_id !== layer_id
-      ),
-    })),
+  // Clear all workspaces
+  clearAllWorkspaces: () => set({ activeWorkspaces: [] }),
 
-  // Clear all layer groups
-  clearAllLayers: () => set({ activeLayerGroups: [] }),
+  // Check if workspace is active
+  workspaceActive: (workspaceId) => {
+    return get().activeWorkspaces.some(
+      (activeWorkspace) => activeWorkspace.id === workspaceId
+    );
+  },
 }));
 
 export default useActiveWorkspaces;

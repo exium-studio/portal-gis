@@ -54,7 +54,30 @@ import { Switch } from "../ui/switch";
 import { Tooltip } from "../ui/tooltip";
 import ExistingFileItem from "./ExistingFIleItem";
 import SelectLayerFileType from "./SelectLayerFileType";
+import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 
+const WorkspaceMenu = (props: any) => {
+  // Props
+  const { workspace, setWorkspace, ...restProps } = props;
+
+  return (
+    <MenuRoot>
+      <MenuTrigger asChild>
+        <BButton iconButton variant={"ghost"} {...restProps}>
+          <Icon boxSize={5}>
+            <IconDots />
+          </Icon>
+        </BButton>
+      </MenuTrigger>
+
+      <MenuContent>
+        <EditWorkspace workspace={workspace} setWorkspace={setWorkspace} />
+
+        <DeleteWorkspace workspace={workspace} />
+      </MenuContent>
+    </MenuRoot>
+  );
+};
 const EditWorkspace = (props: any) => {
   // Props
   const { workspace, ...restProps } = props;
@@ -291,7 +314,7 @@ const DeleteWorkspace = (props: any) => {
   const setRt = useRenderTrigger((s) => s.setRt);
   const { setConfirmationData, confirmationOnOpen } =
     useConfirmationDisclosure();
-  const unloadWorkspace = useActiveLayers((s) => s.removeLayerGroup);
+  const unloadWorkspace = useActiveLayers((s) => s.unloadWorkspace);
 
   // Utils
   function onDelete() {
@@ -340,6 +363,73 @@ const DeleteWorkspace = (props: any) => {
         </Icon> */}
       </MenuItem>
     </Tooltip>
+  );
+};
+
+const WorkspaceLayersUtils = (props: {
+  workspace: Interface__Workspace;
+  loadedLayerData: any;
+}) => {
+  // Props
+  const { workspace, loadedLayerData, ...restProps } = props;
+
+  // Contexts
+  const setWorkspaceDetailData = useWorkspaceDetail((s) => s.setData);
+  const workspaceDetailOnOpen = useWorkspaceDetail((s) => s.onOpen);
+
+  console.log("loadedLayerData", loadedLayerData);
+
+  // States
+  const bboxCenter = {
+    bbox: loadedLayerData?.bbox,
+    center: loadedLayerData?.center,
+  };
+
+  return (
+    <HStack
+      gap={1}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+      p={1}
+      borderTop={"1px solid"}
+      borderColor={"border.muted"}
+      {...restProps}
+    >
+      <Tooltip content={"Workspace layers"}>
+        <BButton
+          iconButton
+          unclicky
+          variant={"ghost"}
+          onClick={() => {
+            setWorkspaceDetailData({
+              ...workspace,
+              layersOnly: true,
+            });
+            workspaceDetailOnOpen();
+          }}
+        >
+          <Icon boxSize={"24px"}>
+            <IconStack stroke={1.5} />
+          </Icon>
+        </BButton>
+      </Tooltip>
+
+      <AddLayer data={workspace} disabled={!!loadedLayerData} />
+
+      <ViewWorkspace
+        workspace={workspace}
+        bboxCenter={bboxCenter}
+        disabled={!loadedLayerData}
+      />
+
+      <ToggleLoadWorkspace
+        workspace={workspace}
+        bboxCenter={bboxCenter}
+        loadedLayerData={loadedLayerData}
+        ml={"auto"}
+      />
+    </HStack>
   );
 };
 const AddLayer = (props: any) => {
@@ -536,7 +626,7 @@ const ViewWorkspace = (props: any) => {
 };
 const ToggleLoadWorkspace = (props: any) => {
   // Props
-  const { data, bboxCenter, loadedLayerData, ...restProps } = props;
+  const { workspace, bboxCenter, loadedLayerData, ...restProps } = props;
 
   // Hooks
   const { l } = useLang();
@@ -553,14 +643,14 @@ const ToggleLoadWorkspace = (props: any) => {
   // Contexts
   const { themeConfig } = useThemeConfig();
   const loadWorkspace = useActiveLayers((s) => s.loadWorkspace);
-  const unloadWorkspace = useActiveLayers((s) => s.removeLayerGroup);
+  const unloadWorkspace = useActiveLayers((s) => s.unloadWorkspace);
 
   // States
   const [checked, setChecked] = useState<boolean>(loadedLayerData);
 
   // Utils
   function onLoad() {
-    const url = `/api/gis-bpn/workspace-layers/shape-files/${data.id}`;
+    const url = `/api/gis-bpn/workspace-layers/shape-files/${workspace.id}`;
     const config = {
       url,
       method: "GET",
@@ -570,12 +660,15 @@ const ToggleLoadWorkspace = (props: any) => {
       config,
       onResolve: {
         onSuccess: (r: any) => {
-          const layerData = r.data.data?.[0];
-          loadWorkspace({
-            workspace: data,
-            layer: layerData,
+          const layers = r.data.data;
+          const newActiveWorkspace = {
+            ...workspace,
+            layers: layers,
+            bbox: [],
+            center: [],
             visible: true,
-          });
+          };
+          loadWorkspace(newActiveWorkspace);
         },
       },
     });
@@ -585,7 +678,7 @@ const ToggleLoadWorkspace = (props: any) => {
     if (checked && !loadedLayerData) {
       onLoad();
     } else if (!checked && loadedLayerData) {
-      unloadWorkspace(data.id);
+      unloadWorkspace(workspace.id);
     }
   }, [checked]);
 
@@ -604,92 +697,8 @@ const ToggleLoadWorkspace = (props: any) => {
     </Tooltip>
   );
 };
-const WorkspaceMenu = (props: any) => {
-  // Props
-  const { workspace, setWorkspace, ...restProps } = props;
 
-  return (
-    <MenuRoot>
-      <MenuTrigger asChild>
-        <BButton iconButton variant={"ghost"} {...restProps}>
-          <Icon boxSize={5}>
-            <IconDots />
-          </Icon>
-        </BButton>
-      </MenuTrigger>
-
-      <MenuContent>
-        <EditWorkspace workspace={workspace} setWorkspace={setWorkspace} />
-
-        <DeleteWorkspace workspace={workspace} />
-      </MenuContent>
-    </MenuRoot>
-  );
-};
-const WorkspaceLayersUtils = (props: {
-  workspace: Interface__Workspace;
-  loadedLayerData: any;
-}) => {
-  // Props
-  const { workspace, loadedLayerData, ...restProps } = props;
-
-  // Contexts
-  const setWorkspaceDetailData = useWorkspaceDetail((s) => s.setData);
-  const workspaceDetailOnOpen = useWorkspaceDetail((s) => s.onOpen);
-
-  // States
-  const bboxCenter = {
-    bbox: loadedLayerData?.layer?.geojson?.bbox,
-    center: loadedLayerData?.layer?.geojson?.center,
-  };
-
-  return (
-    <HStack
-      gap={1}
-      onClick={(e) => {
-        e.stopPropagation();
-      }}
-      p={1}
-      borderTop={"1px solid"}
-      borderColor={"border.muted"}
-      {...restProps}
-    >
-      <Tooltip content={"Workspace layers"}>
-        <BButton
-          iconButton
-          unclicky
-          variant={"ghost"}
-          onClick={() => {
-            setWorkspaceDetailData({
-              ...workspace,
-              layersOnly: true,
-            });
-            workspaceDetailOnOpen();
-          }}
-        >
-          <Icon boxSize={"24px"}>
-            <IconStack stroke={1.5} />
-          </Icon>
-        </BButton>
-      </Tooltip>
-
-      <AddLayer data={workspace} disabled={!!loadedLayerData} />
-
-      <ViewWorkspace
-        data={workspace}
-        bboxCenter={bboxCenter}
-        disabled={!loadedLayerData}
-      />
-
-      <ToggleLoadWorkspace
-        data={workspace}
-        bboxCenter={bboxCenter}
-        loadedLayerData={loadedLayerData}
-        ml={"auto"}
-      />
-    </HStack>
-  );
-};
+// Item variants
 const RowItem = (props: any) => {
   // Props
   const { workspace, setWorkspace, loadedLayerData, ...restProps } = props;
@@ -822,13 +831,19 @@ const WorkspaceItem = (props: any) => {
 
   // Contexts
   const displayMode = useWorkspaceDisplay((s) => s.displayMode);
-  const activeLayerGroups = useActiveLayers((s) => s.activeLayerGroups);
+  const activeWorkspaces = useActiveLayers((s) => s.activeWorkspaces);
 
   // States
   const [workspace, setWorkspace] = useState<any>(initialData);
-  const loadedLayerData = activeLayerGroups.find(
-    (layerData: any) => layerData.workspace.id === workspace.id
+  const workspaceActive = useActiveWorkspaces((s) =>
+    s.workspaceActive(workspace?.id)
   );
+  console.log("workspaceActive", workspace.id, workspaceActive);
+  const loadedLayerData = activeWorkspaces.find(
+    (activeWorkspace: any) => activeWorkspace?.id === workspace?.id
+  );
+
+  // console.log(activeWorkspaces);
 
   // Handle initialData
   useEffect(() => {

@@ -59,7 +59,10 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import * as yup from "yup";
 
-const Create = () => {
+const Create = (props: any) => {
+  // Props
+  const { children, ...restProps } = props;
+
   // Hooks
   const { l } = useLang();
   const { open, onOpen, onClose } = useDisclosure();
@@ -132,10 +135,12 @@ const Create = () => {
         iconButton
         colorPalette={themeConfig?.colorPalette}
         onClick={onOpen}
+        {...restProps}
       >
         <Icon>
           <IconPlus />
         </Icon>
+        {children}
       </BButton>
 
       <DisclosureRoot open={open} lazyLoad size={"xs"}>
@@ -213,8 +218,6 @@ const Workspaces = (props: any) => {
   // Props
   const { dataState } = props;
   const { data, limit, setLimit, page, setPage, pagination } = dataState;
-
-  console.log("pagination", pagination);
 
   // Hooks
   const { l } = useLang();
@@ -381,6 +384,9 @@ const ToggleDisplay = (props: any) => {
 };
 
 const WorkspacePage = () => {
+  // Hooks
+  const { l } = useLang();
+
   // States
   const [filterConfig, setFilterConfig] = useState<any>({
     search: "",
@@ -398,52 +404,61 @@ const WorkspacePage = () => {
   const render = {
     loading: <ComponentSpinner />,
     error: <FeedbackRetry onRetry={makeRequest} />,
-    empty: <FeedbackNoData />,
+    empty: (
+      <FeedbackNoData>
+        <Create iconButton={false} pl={3}>
+          {l.add}
+        </Create>
+      </FeedbackNoData>
+    ),
     loaded: <Workspaces dataState={dataState} />,
   };
 
   return (
     <PageContainer flex={1}>
-      <ItemContainer
-        flex={1}
-        overflowY={"auto"}
-        border={"none"}
-        p={[null, null, 4]}
-        gap={4}
-        bg={["", null, "body"]}
-      >
-        <ItemHeaderContainer borderless p={0}>
-          <HStack justify={"space-between"} w={"full"}>
-            <SearchInput
-              onChangeSetter={(input) => {
-                setFilterConfig({
-                  ...filterConfig,
-                  search: input,
-                });
-              }}
-              inputValue={filterConfig.search}
-            />
+      {initialLoading && render.loading}
 
-            <ToggleDisplay />
+      {!initialLoading && (
+        <>
+          {!data && render.empty}
 
-            <Create />
-          </HStack>
-        </ItemHeaderContainer>
+          {data && (
+            <ItemContainer
+              flex={1}
+              overflowY={"auto"}
+              border={"none"}
+              p={[null, null, 4]}
+              gap={4}
+              bg={["", null, "body"]}
+            >
+              <ItemHeaderContainer borderless p={0}>
+                <HStack justify={"space-between"} w={"full"}>
+                  <SearchInput
+                    onChangeSetter={(input) => {
+                      setFilterConfig({
+                        ...filterConfig,
+                        search: input,
+                      });
+                    }}
+                    inputValue={filterConfig.search}
+                  />
 
-        {initialLoading && render.loading}
-        {!initialLoading && (
-          <>
-            {error && render.error}
-            {!error && (
-              <>
-                {data && render.loaded}
+                  <ToggleDisplay />
 
-                {!data && render.empty}
-              </>
-            )}
-          </>
-        )}
-      </ItemContainer>
+                  <Create />
+                </HStack>
+              </ItemHeaderContainer>
+
+              {!initialLoading && (
+                <>
+                  {error && render.error}
+                  {!error && <>{data && render.loaded}</>}
+                </>
+              )}
+            </ItemContainer>
+          )}
+        </>
+      )}
     </PageContainer>
   );
 };
