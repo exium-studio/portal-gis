@@ -113,7 +113,7 @@ const FileInput = (props: Props) => {
           </FileUploadTrigger>
         )}
 
-        <FileUploadList showSize clearable />
+        <FileUploadList showSize clearable opacity={disabled ? 0.5 : 1} />
       </>
     </FileUploadRoot>
   );

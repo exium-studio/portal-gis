@@ -349,6 +349,10 @@ export const deleted_file = {
 };
 
 // UI
+export const edit_layer_alert = {
+  id: "File layer baru akan menimpa data layer lama",
+  en: "The new layer file will overwrite the old layer data",
+};
 export const delete_layer = {
   id: "Hapus layer",
   en: "Delete layer",

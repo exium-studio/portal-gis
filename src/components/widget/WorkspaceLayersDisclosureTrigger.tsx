@@ -6,7 +6,6 @@ import useRenderTrigger from "@/context/useRenderTrigger";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useBackOnClose from "@/hooks/useBackOnClose";
 import useRequest from "@/hooks/useRequest";
-import { OPTIONS_LAYER_FILE_TYPE } from "@/static/selectOptions";
 import back from "@/utils/back";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import empty from "@/utils/empty";
@@ -67,17 +66,17 @@ const EditLayer = (props: any) => {
     initialValues: {
       name: "",
       description: "",
-      file_type: [OPTIONS_LAYER_FILE_TYPE[0]],
+      file_type: undefined as any,
       file: undefined as any,
       deleted_file: [],
     },
     validationSchema: yup.object().shape({
       name: yup.string().required(l.required_form),
       description: yup.string().required(l.required_form),
-      file_type: yup.array().required(l.required_form),
+      file_type: yup.array(),
       file: fileValidation({
         allowedExtensions: ["shp", "zip"],
-      }).required(l.required_form),
+      }),
     }),
     onSubmit: (values, { resetForm }) => {
       // console.log(values.file[0]);
@@ -94,10 +93,11 @@ const EditLayer = (props: any) => {
       payload.append("description", values.description);
       payload.append("file_type", values.file_type?.[0]?.id);
       payload.append("file", values.file?.[0]);
-      const url = `/api/gis-bpn/workspaces-layers/create`;
+
+      const url = `/api/gis-bpn/workspaces-layers/update/${layer?.id}`;
       const config = {
         url,
-        method: "POST",
+        method: "PATCH",
         data: payload,
       };
 
@@ -114,14 +114,23 @@ const EditLayer = (props: any) => {
 
   // Handle initial data
   useEffect(() => {
-    formik.setValues({
-      name: layer?.name,
-      description: layer?.description,
-      file_type: [OPTIONS_LAYER_FILE_TYPE[0]],
-      file: undefined,
-      deleted_file: [],
-    });
-  }, [workspace]);
+    if (open) {
+      formik.setValues({
+        name: layer?.name,
+        description: layer?.description,
+        file_type: undefined,
+        file: undefined,
+        deleted_file: [],
+      });
+    }
+  }, [layer, open]);
+
+  // Handle if file type null, remove file
+  useEffect(() => {
+    if (empty(formik.values.file_type)) {
+      formik.setFieldValue("file", undefined);
+    }
+  }, [formik.values.file_type]);
 
   return (
     <>
@@ -146,9 +155,9 @@ const EditLayer = (props: any) => {
           </DisclosureHeader>
 
           <DisclosureBody>
-            <AlertRoot status="neutral" title="This is the alert title" mb={4}>
+            <AlertRoot status="warning" mb={4}>
               <AlertIndicator />
-              <AlertTitle>This is the alert title</AlertTitle>
+              <AlertTitle>{l.edit_layer_alert}</AlertTitle>
             </AlertRoot>
 
             <FieldRoot>
@@ -185,6 +194,7 @@ const EditLayer = (props: any) => {
                 invalid={!!formik.errors.file_type}
                 errorText={formik.errors.file_type as string}
                 mb={4}
+                optional
               >
                 <SelectLayerFileType
                   onConfirm={(input) => {
@@ -199,6 +209,7 @@ const EditLayer = (props: any) => {
                 invalid={!!formik.errors.file}
                 errorText={formik.errors.file as string}
                 disabled={empty(formik.values.file_type)}
+                optional
               >
                 <FileInput
                   dropzone

@@ -136,6 +136,7 @@ const translations = {
   "document": "Dokumen",
   "edge_permissions_settings_link": "Pengaturan → Cookie dan izin situs → ",
   "edit": "Edit",
+  "edit_layer_alert": "File layer baru akan menimpa data layer lama",
   "edit_workspace": "Edit workspace",
   "education": "Pendidikan",
   "empty": "Kosong",

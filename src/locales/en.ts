@@ -136,6 +136,7 @@ const translations = {
   "document": "Document",
   "edge_permissions_settings_link": "Settings → Cookies and site permissions → ",
   "edit": "Edit",
+  "edit_layer_alert": "The new layer file will overwrite the old layer data",
   "edit_workspace": "Edit workspace",
   "education": "Education",
   "empty": "Empty",
