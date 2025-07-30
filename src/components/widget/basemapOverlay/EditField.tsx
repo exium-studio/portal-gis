@@ -48,7 +48,7 @@ export const EditField = (props: any) => {
   const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
   const updateWorkspace = useActiveWorkspaces((s) => s.updateLayerData);
 
-  console.log(selectedPolygon);
+  // console.log(selectedPolygon);
 
   // States
   const workspaceId = selectedPolygon?.activeWorkspace?.id;

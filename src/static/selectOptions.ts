@@ -11,3 +11,8 @@ export const OPTIONS_LAYER_FILE_TYPE = [
   { id: "shp", label: "SHP" },
   { id: "geojson", label: "GeoJSON", disabled: true },
 ];
+
+export const OPTIONS_LAYER_TYPE = [
+  { id: "fill", label: "Fill" },
+  { id: "line", label: "Line" },
+];

@@ -349,6 +349,10 @@ export const deleted_file = {
 };
 
 // UI
+export const default_layer_type = {
+  id: "Tipe layer default",
+  en: "Default layer type",
+};
 export const edit_layer_alert = {
   id: "File layer baru akan menimpa data layer lama",
   en: "The new layer file will overwrite the old layer data",
@@ -1588,6 +1592,16 @@ export const error_413_toast = {
   description: {
     id: "Data yang Anda kirim melebihi batas ukuran yang diizinkan. Silakan coba lagi dengan data yang lebih kecil atau bagi menjadi beberapa bagian.",
     en: "The data you're sending exceeds the allowed size limit. Please try again with smaller data or split it into multiple parts.",
+  },
+};
+export const error_429_toast = {
+  title: {
+    id: "Spam terdeteksi",
+    en: "Spam detected",
+  },
+  description: {
+    id: "Permintaan Anda terlalu banyak. Silahkan coba lagi nanti.",
+    en: "You have made too many requests. Please try again later.",
   },
 };
 export const error_404_toast = {

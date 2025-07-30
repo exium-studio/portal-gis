@@ -63,6 +63,7 @@ import ExistingFileItem from "./ExistingFIleItem";
 import SelectLayerFileType from "./SelectLayerFileType";
 import SelectWorkspaceCategory from "./SelectWorkspaceCategort";
 import WorkspaceLayersDisclosureTrigger from "./WorkspaceLayersDisclosureTrigger";
+import SelectLayerType from "./SelectLayerType";
 
 const WorkspaceMenu = (props: any) => {
   // Props
@@ -457,6 +458,7 @@ const AddLayer = (props: any) => {
 
   // Contexts
   const { themeConfig } = useThemeConfig();
+  const setRt = useRenderTrigger((s) => s.setRt);
 
   // States
   const formik = useFormik({
@@ -464,12 +466,14 @@ const AddLayer = (props: any) => {
     initialValues: {
       name: "",
       description: "",
+      layer_type: undefined as any,
       file_type: [OPTIONS_LAYER_FILE_TYPE[0]],
       file: undefined as any,
     },
     validationSchema: yup.object().shape({
       name: yup.string().required(l.required_form),
       description: yup.string().required(l.required_form),
+      layer_type: yup.array().required(l.required_form),
       file_type: yup.array().required(l.required_form),
       file: fileValidation({
         allowedExtensions: ["shp", "zip"],
@@ -488,6 +492,7 @@ const AddLayer = (props: any) => {
       );
       payload.append("name", values.name);
       payload.append("description", values.description);
+      payload.append("layer_type", values.layer_type?.[0]?.id);
       payload.append("file_type", values.file_type?.[0]?.id);
       payload.append("file", values.file?.[0]);
       const url = `/api/gis-bpn/workspaces-layers/create`;
@@ -501,6 +506,7 @@ const AddLayer = (props: any) => {
         config,
         onResolve: {
           onSuccess: () => {
+            setRt((ps) => !ps);
             resetForm();
           },
         },
@@ -558,6 +564,20 @@ const AddLayer = (props: any) => {
                     formik.setFieldValue("description", input);
                   }}
                   inputValue={formik.values.description}
+                />
+              </Field>
+
+              <Field
+                label={l.default_layer_type}
+                invalid={!!formik.errors.layer_type}
+                errorText={formik.errors.layer_type as string}
+                mb={4}
+              >
+                <SelectLayerType
+                  onConfirm={(input) => {
+                    formik.setFieldValue("layer_type", input);
+                  }}
+                  inputValue={formik.values.layer_type}
                 />
               </Field>
 
@@ -683,6 +703,8 @@ const ToggleLoadWorkspace = (props: any) => {
 
   // States
   const [checked, setChecked] = useState<boolean>(workspaceActive);
+  const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
+  const activeWorkspace = useActiveWorkspaces((s) => s.getActiveWorkspace);
 
   // Utils
   function onLoad() {
@@ -731,7 +753,7 @@ const ToggleLoadWorkspace = (props: any) => {
     });
   }
 
-  // Handle switch UI on toggled
+  // Handle load/unload on toggled
   useEffect(() => {
     if (checked && !workspaceActive) {
       setTimeout(() => {
@@ -741,6 +763,11 @@ const ToggleLoadWorkspace = (props: any) => {
       unloadWorkspace(workspace.id);
     }
   }, [checked]);
+
+  // Handle toggle on load/unload
+  useEffect(() => {
+    if (empty(activeWorkspace(workspace.id)?.layers)) setChecked(false);
+  }, [activeWorkspaces]);
 
   return (
     <Tooltip content={"Toggle load workspace"}>

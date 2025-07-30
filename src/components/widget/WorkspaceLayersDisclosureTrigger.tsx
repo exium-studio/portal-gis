@@ -59,6 +59,7 @@ const EditLayer = (props: any) => {
 
   // Contexts
   const { themeConfig } = useThemeConfig();
+  const setRt = useRenderTrigger((s) => s.setRt);
 
   // States
   const formik = useFormik({
@@ -105,6 +106,7 @@ const EditLayer = (props: any) => {
         config,
         onResolve: {
           onSuccess: () => {
+            setRt((ps) => !ps);
             resetForm();
           },
         },

@@ -128,7 +128,7 @@ const useRequest = (props: Props) => {
       .catch((e) => {
         switch (e.code) {
           default:
-            console.log(e);
+            console.error(e);
             setError(true);
             break;
           case "ERR_CANCELED":
@@ -248,6 +248,14 @@ const useRequest = (props: Props) => {
                 return {
                   title: l.error_413_toast.title,
                   description: l.error_413_toast.description,
+                };
+            }
+          } else if (statusCode === 429) {
+            switch (errorCase) {
+              default:
+                return {
+                  title: l.error_429_toast.title,
+                  description: l.error_429_toast.description,
                 };
             }
           } else if (statusCode === 500) {

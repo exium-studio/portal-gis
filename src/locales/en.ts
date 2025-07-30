@@ -100,6 +100,7 @@ const translations = {
     "description": "Must not exceed the maximum range"
   },
   "date_range_picker_max_range_alert": "Maximum date range is ${maxRange} days",
+  "default_layer_type": "Default layer type",
   "default_permissions_settings_link": "Open browser settings to change permissions.",
   "default_request_error_toast": {
     "title": "An error occurred",
@@ -169,6 +170,10 @@ const translations = {
   "error_422_toast": {
     "title": "Validation failed",
     "description": "The submitted data is invalid. Please review your form entries."
+  },
+  "error_429_toast": {
+    "title": "Spam detected",
+    "description": "You have made too many requests. Please try again later."
   },
   "error_500_toast": {
     "title": "Server error",

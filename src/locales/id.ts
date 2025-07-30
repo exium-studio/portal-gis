@@ -100,6 +100,7 @@ const translations = {
     "description": "Tidak boleh melebihi rentang maksimum"
   },
   "date_range_picker_max_range_alert": "Maksimal rentang tanggal ${maxRange} hari",
+  "default_layer_type": "Tipe layer default",
   "default_permissions_settings_link": "Buka pengaturan browser untuk mengubah izin.",
   "default_request_error_toast": {
     "title": "Terjadi kesalahan",
@@ -169,6 +170,10 @@ const translations = {
   "error_422_toast": {
     "title": "Validasi gagal",
     "description": "Data yang dikirim tidak valid. Silakan periksa kembali formulir Anda."
+  },
+  "error_429_toast": {
+    "title": "Spam terdeteksi",
+    "description": "Permintaan Anda terlalu banyak. Silahkan coba lagi nanti."
   },
   "error_500_toast": {
     "title": "Kesalahan server",
