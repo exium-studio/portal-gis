@@ -31,7 +31,6 @@ import {
 } from "./Disclosure";
 import DisclosureHeaderContent from "./DisclosureHeaderContent";
 import FeedbackNoData from "./FeedbackNoData";
-import FeedbackNotFound from "./FeedbackNotFound";
 import SearchInput from "./SearchInput";
 
 const SelectInput = ({
@@ -129,11 +128,9 @@ const SelectInput = ({
       <>
         {fl === undefined && <ComponentSpinner mb={2} />}
 
-        {fl === null && <FeedbackNoData mb={8} />}
+        {fl === null && <FeedbackNoData />}
 
-        {fl && fl.length === 0 && (
-          <FeedbackNotFound title="Opsi tidak ditemukan" mb={5} />
-        )}
+        {fl && fl.length === 0 && <FeedbackNoData />}
 
         {fl && fl.length > 0 && (
           <>
@@ -278,7 +275,7 @@ const SelectInput = ({
           </DisclosureHeader>
 
           <DisclosureBody
-            pb={0}
+            pb={"0 !important"}
             // pt={"4 !important"}
             className="scrollY"
             // bg={"red"}

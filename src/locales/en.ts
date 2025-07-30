@@ -163,6 +163,10 @@ const translations = {
     "title": "Payload Too Large",
     "description": "The data you're sending exceeds the allowed size limit. Please try again with smaller data or split it into multiple parts."
   },
+  "error_422_toast": {
+    "title": "Validation failed",
+    "description": "The submitted data is invalid. Please review your form entries."
+  },
   "error_500_toast": {
     "title": "Server error",
     "description": "An error occurred on the server. Please try again later."
@@ -552,6 +556,7 @@ const translations = {
     "sun": "Sunday"
   },
   "weekly": "Weekly",
+  "workspace_category": "Workspace category",
   "workspace_detail": "Workspace detail",
   "written_area": "Written area",
   "year": "Year",

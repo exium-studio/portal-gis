@@ -177,8 +177,8 @@ const useRequest = (props: Props) => {
                 };
               case "FAILED_VALIDATION":
                 return {
-                  title: l.error_400_toast.title,
-                  description: l.error_400_toast.description,
+                  title: l.error_422_toast.title,
+                  description: l.error_422_toast.description,
                 };
               case "STEP_NOT_ALLOWED":
                 return {

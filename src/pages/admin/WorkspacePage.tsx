@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/menu";
 import { Tooltip } from "@/components/ui/tooltip";
 import PageContainer from "@/components/widget/PageContainer";
+import SelectWorkspaceCategory from "@/components/widget/SelectWorkspaceCategort";
 import WorkspaceItem from "@/components/widget/WorkspaceItem";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
@@ -63,7 +64,7 @@ const Create = () => {
   const { l } = useLang();
   const { open, onOpen, onClose } = useDisclosure();
   useBackOnClose(`edit-workspace`, open, onOpen, onClose);
-  const { req } = useRequest({
+  const { req, loading } = useRequest({
     id: "crud-workspace",
   });
 
@@ -81,10 +82,10 @@ const Create = () => {
       description: "",
     },
     validationSchema: yup.object().shape({
-      // workspace_category: yup.array().required(l.required_form),
+      workspace_category: yup.array().required(l.required_form),
       thumbnail: fileValidation({
         allowedExtensions: ["jpg", "jpeg", "png"],
-      }).required(l.required_form),
+      }),
       title: yup.string().required(l.required_form),
       description: yup.string().required(l.required_form),
     }),
@@ -144,9 +145,10 @@ const Create = () => {
           </DisclosureHeader>
 
           <DisclosureBody>
-            <FieldsetRoot>
+            <FieldsetRoot disabled={loading}>
               <form id="add_workspace_form" onSubmit={formik.handleSubmit}>
                 <Field
+                  optional
                   label={"Thumbnail"}
                   invalid={!!formik.errors.thumbnail}
                   errorText={formik.errors.thumbnail as string}
@@ -160,6 +162,20 @@ const Create = () => {
                     }}
                     inputValue={formik.values.thumbnail}
                     accept=".png, .jpg, .jpeg,"
+                  />
+                </Field>
+
+                <Field
+                  label={l.workspace_category}
+                  invalid={!!formik.errors.workspace_category}
+                  errorText={formik.errors.workspace_category as string}
+                  mb={4}
+                >
+                  <SelectWorkspaceCategory
+                    onConfirm={(input) => {
+                      formik.setFieldValue("workspace_category", input);
+                    }}
+                    inputValue={formik.values.workspace_category}
                   />
                 </Field>
 

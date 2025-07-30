@@ -339,6 +339,10 @@ export const workspace_detail = {
   id: "Detail workspace",
   en: "Workspace detail",
 };
+export const workspace_category = {
+  id: "Kategori workspace",
+  en: "Workspace category",
+};
 
 // UI
 export const no_active_workspaces = {
@@ -1524,6 +1528,16 @@ export const error_400_toast = {
   description: {
     id: "Server tidak dapat memproses permintaan karena kesalahan klien.",
     en: "The server could not process the request due to client error.",
+  },
+};
+export const error_422_toast = {
+  title: {
+    id: "Validasi gagal",
+    en: "Validation failed",
+  },
+  description: {
+    id: "Data yang dikirim tidak valid. Silakan periksa kembali formulir Anda.",
+    en: "The submitted data is invalid. Please review your form entries.",
   },
 };
 export const error_401_toast = {

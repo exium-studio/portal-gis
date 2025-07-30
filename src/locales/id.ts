@@ -163,6 +163,10 @@ const translations = {
     "title": "Batas Ukuran Dilampaui",
     "description": "Data yang Anda kirim melebihi batas ukuran yang diizinkan. Silakan coba lagi dengan data yang lebih kecil atau bagi menjadi beberapa bagian."
   },
+  "error_422_toast": {
+    "title": "Validasi gagal",
+    "description": "Data yang dikirim tidak valid. Silakan periksa kembali formulir Anda."
+  },
   "error_500_toast": {
     "title": "Kesalahan server",
     "description": "Terjadi kesalahan pada server. Silakan coba beberapa saat lagi."
@@ -552,6 +556,7 @@ const translations = {
     "sun": "Minggu"
   },
   "weekly": "Mingguan",
+  "workspace_category": "Kategori workspace",
   "workspace_detail": "Detail workspace",
   "written_area": "Luas tertulis",
   "year": "Tahun",
