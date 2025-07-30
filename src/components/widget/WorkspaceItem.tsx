@@ -615,7 +615,7 @@ const ViewWorkspace = (props: any) => {
   );
 
   // console.log("workspace", workspace);
-  console.log("activeWorkspace", activeWorkspace);
+  // console.log("activeWorkspace", activeWorkspace);
 
   // Utils
   function onViewLayers() {

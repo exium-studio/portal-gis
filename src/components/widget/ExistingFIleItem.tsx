@@ -6,6 +6,7 @@ import CContainer from "../ui-custom/CContainer";
 import FileIcon from "../ui-custom/FileIcon";
 import P from "../ui-custom/P";
 import { Link } from "react-router-dom";
+import formatBytes from "@/utils/formatBytes";
 
 interface Props extends StackProps {
   data: any;
@@ -53,9 +54,9 @@ const ExistingFileItem = (props: Props) => {
           <FileIcon flexShrink={0} mimeType={data?.file_mime_type} />
 
           <CContainer flex={1}>
-            <P lineClamp={1}>{data?.file_name}</P>
+            <P lineClamp={1}>{`${data?.file_name}`}</P>
             <P fontSize={"xs"} color={"fg.muted"}>
-              {data?.file_size}
+              {`${formatBytes(data?.file_size)}`}
             </P>
           </CContainer>
         </HStack>
