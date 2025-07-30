@@ -8,6 +8,6 @@ export const OPTIONS_RELIGION = [
 ];
 
 export const OPTIONS_LAYER_FILE_TYPE = [
-  { id: 1, label: "SHP" },
-  { id: 2, label: "GeoJSON", disabled: true },
+  { id: "shp", label: "SHP" },
+  { id: "geojson", label: "GeoJSON", disabled: true },
 ];

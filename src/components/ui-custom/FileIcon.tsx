@@ -82,7 +82,7 @@ const FileIcon = forwardRef<SVGSVGElement, Props>(
 
     return (
       <ChakraIcon color={iconColor} ref={ref} {...props}>
-        <IconComponent {...iconProps} />
+        <IconComponent stroke={1.5} {...iconProps} />
       </ChakraIcon>
     );
   }

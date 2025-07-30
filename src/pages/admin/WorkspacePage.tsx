@@ -38,6 +38,7 @@ import useBackOnClose from "@/hooks/useBackOnClose";
 import useDataState from "@/hooks/useDataState";
 import useRequest from "@/hooks/useRequest";
 import back from "@/utils/back";
+import empty from "@/utils/empty";
 import { fileValidation } from "@/utils/validationSchemas";
 import {
   FieldsetRoot,
@@ -146,75 +147,73 @@ const Create = () => {
 
           <DisclosureBody>
             <FieldsetRoot>
-              <form id="add_workspace_form" onSubmit={formik.handleSubmit}>
-                <Field
-                  label={l.workspace_category}
-                  invalid={!!formik.errors.workspace_category}
-                  errorText={formik.errors.workspace_category as string}
-                  mb={4}
-                >
-                  <SelectWorkspaceCategory
-                    onConfirm={(input) => {
-                      formik.setFieldValue("workspace_category", input);
-                    }}
-                    inputValue={formik.values.workspace_category}
-                  />
-                </Field>
+              <Field
+                label={l.workspace_category}
+                invalid={!!formik.errors.workspace_category}
+                errorText={formik.errors.workspace_category as string}
+                mb={4}
+              >
+                <SelectWorkspaceCategory
+                  onConfirm={(input) => {
+                    formik.setFieldValue("workspace_category", input);
+                  }}
+                  inputValue={formik.values.workspace_category}
+                />
+              </Field>
 
-                <Field
-                  optional
-                  label={"Thumbnail"}
-                  invalid={!!formik.errors.thumbnail}
-                  errorText={formik.errors.thumbnail as string}
-                  mb={4}
-                >
-                  <FileInput
-                    dropzone
-                    name="thumbnail"
-                    onChangeSetter={(input) => {
-                      formik.setFieldValue("thumbnail", input);
-                    }}
-                    inputValue={formik.values.thumbnail}
-                    accept=".png, .jpg, .jpeg,"
-                  />
-                </Field>
+              <Field
+                optional
+                label={"Thumbnail"}
+                invalid={!!formik.errors.thumbnail}
+                errorText={formik.errors.thumbnail as string}
+                mb={4}
+              >
+                <FileInput
+                  dropzone
+                  name="thumbnail"
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("thumbnail", input);
+                  }}
+                  inputValue={formik.values.thumbnail}
+                  accept=".png, .jpg, .jpeg,"
+                />
+              </Field>
 
-                <Field
-                  label={l.title}
-                  invalid={!!formik.errors.title}
-                  errorText={formik.errors.title as string}
-                  mb={4}
-                >
-                  <StringInput
-                    onChangeSetter={(input) => {
-                      formik.setFieldValue("title", input);
-                    }}
-                    inputValue={formik.values.title}
-                  />
-                </Field>
+              <Field
+                label={l.title}
+                invalid={!!formik.errors.title}
+                errorText={formik.errors.title as string}
+                mb={4}
+              >
+                <StringInput
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("title", input);
+                  }}
+                  inputValue={formik.values.title}
+                />
+              </Field>
 
-                <Field
-                  label={l.description}
-                  invalid={!!formik.errors.description}
-                  errorText={formik.errors.description as string}
-                >
-                  <Textarea
-                    onChangeSetter={(input) => {
-                      formik.setFieldValue("description", input);
-                    }}
-                    inputValue={formik.values.description}
-                  />
-                </Field>
-              </form>
+              <Field
+                label={l.description}
+                invalid={!!formik.errors.description}
+                errorText={formik.errors.description as string}
+              >
+                <Textarea
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("description", input);
+                  }}
+                  inputValue={formik.values.description}
+                />
+              </Field>
             </FieldsetRoot>
           </DisclosureBody>
 
           <DisclosureFooter>
             <BackButton />
+
             <BButton
               colorPalette={themeConfig?.colorPalette}
-              type="submit"
-              form="add_workspace_form"
+              onClick={formik.submitForm}
             >
               {l.add}
             </BButton>
@@ -417,46 +416,38 @@ const WorkspacePage = () => {
 
   return (
     <PageContainer flex={1}>
-      {initialLoading && render.loading}
+      <CContainer flex={1} gap={4}>
+        <ItemHeaderContainer borderless p={0}>
+          <HStack justify={"space-between"} w={"full"}>
+            <SearchInput
+              onChangeSetter={(input) => {
+                setFilterConfig({
+                  ...filterConfig,
+                  search: input,
+                });
+              }}
+              inputValue={filterConfig.search}
+            />
 
-      {!initialLoading && (
-        <>
-          {data && (
-            <CContainer flex={1} gap={4}>
-              <ItemHeaderContainer borderless p={0}>
-                <HStack justify={"space-between"} w={"full"}>
-                  <SearchInput
-                    onChangeSetter={(input) => {
-                      setFilterConfig({
-                        ...filterConfig,
-                        search: input,
-                      });
-                    }}
-                    inputValue={filterConfig.search}
-                  />
+            <ToggleDisplay />
 
-                  <ToggleDisplay />
+            <Create />
+          </HStack>
+        </ItemHeaderContainer>
 
-                  <Create />
-                </HStack>
-              </ItemHeaderContainer>
-
-              {!initialLoading && (
-                <>
-                  {error && render.error}
-                  {!error && (
-                    <>
-                      {data && render.loaded}
-
-                      {!data && render.empty}
-                    </>
-                  )}
-                </>
-              )}
-            </CContainer>
-          )}
-        </>
-      )}
+        {initialLoading && render.loading}
+        {!initialLoading && (
+          <>
+            {error && render.error}
+            {!error && (
+              <>
+                {data && render.loaded}
+                {(!data || empty(data)) && render.empty}
+              </>
+            )}
+          </>
+        )}
+      </CContainer>
     </PageContainer>
   );
 };

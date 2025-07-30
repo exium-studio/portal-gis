@@ -119,11 +119,13 @@ const translations = {
     "description": "Delete all of the read inboxes."
   },
   "delete_label": "Delete",
+  "delete_layer": "Delete layer",
   "delete_order": "Delete order",
   "delete_previous_attachment": "Will delete this file when submitted.",
   "delete_status": "Delete status",
   "delete_workspace": "Delete workspace",
   "deleted_docs": "Deleted docs",
+  "deleted_file": "Deleted file",
   "deleted_thumbnail": "Deleted thumbnail",
   "delivery_address": "Delivery address",
   "description": "Description",

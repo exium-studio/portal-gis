@@ -4,7 +4,6 @@ import useConfirmationDisclosure from "@/context/useConfirmationDisclosure";
 import useLang from "@/context/useLang";
 import useRenderTrigger from "@/context/useRenderTrigger";
 import { useThemeConfig } from "@/context/useThemeConfig";
-import useWorkspaceDetail from "@/context/useWorkspaceDetail";
 import useBackOnClose from "@/hooks/useBackOnClose";
 import useRequest from "@/hooks/useRequest";
 import { OPTIONS_LAYER_FILE_TYPE } from "@/static/selectOptions";
@@ -13,8 +12,17 @@ import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import empty from "@/utils/empty";
 import { formatTableName } from "@/utils/formatTableName";
 import { fileValidation } from "@/utils/validationSchemas";
-import { FieldRoot, HStack, Icon, useDisclosure } from "@chakra-ui/react";
-import { IconEdit, IconStack, IconTrash } from "@tabler/icons-react";
+import {
+  AlertIndicator,
+  AlertRoot,
+  AlertTitle,
+  Box,
+  FieldRoot,
+  HStack,
+  Icon,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { IconEdit, IconTrash } from "@tabler/icons-react";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import * as yup from "yup";
@@ -31,7 +39,6 @@ import {
 import DisclosureHeaderContent from "../ui-custom/DisclosureHeaderContent";
 import FeedbackNoData from "../ui-custom/FeedbackNoData";
 import FileInput from "../ui-custom/FileInput";
-import Img from "../ui-custom/Img";
 import P from "../ui-custom/P";
 import SearchInput from "../ui-custom/SearchInput";
 import StringInput from "../ui-custom/StringInput";
@@ -135,10 +142,15 @@ const EditLayer = (props: any) => {
       <DisclosureRoot open={open} lazyLoad size={"xs"}>
         <DisclosureContent>
           <DisclosureHeader>
-            <DisclosureHeaderContent title={`${l.edit} Workspace`} />
+            <DisclosureHeaderContent title={`${l.edit} Layer`} />
           </DisclosureHeader>
 
           <DisclosureBody>
+            <AlertRoot status="info" title="This is the alert title">
+              <AlertIndicator />
+              <AlertTitle>This is the alert title</AlertTitle>
+            </AlertRoot>
+
             <FieldRoot>
               <Field
                 label={l.name}
@@ -277,21 +289,19 @@ const DeleteLayer = (props: any) => {
   );
 };
 
-const WorkspaceDetailGlobalDisclosure = () => {
+const WorkspaceLayersDisclosureTrigger = (props: any) => {
+  // Props
+  const { children, workspace, ...restProps } = props;
+
   // Hooks
-  const { l } = useLang();
-  const workspace = useWorkspaceDetail((s) => s.data);
-  const open = useWorkspaceDetail((s) => s.open);
-  const onOpen = useWorkspaceDetail((s) => s.onOpen);
-  const onClose = useWorkspaceDetail((s) => s.onClose);
+  const { open, onOpen, onClose } = useDisclosure();
   useBackOnClose(`workspace-detail`, open, onOpen, onClose);
 
   // Contexts
   const { themeConfig } = useThemeConfig();
 
   // States
-  const layers = workspace?.layers;
-  const layersOnly = workspace?.layersOnly;
+  const layers = workspace?.layers as Interface__Layer[];
   const [search, setSearch] = useState<string>("");
   const filteredLayers = layers?.filter((layer: Interface__Layer) => {
     const searchTerm = search?.toLowerCase();
@@ -303,107 +313,84 @@ const WorkspaceDetailGlobalDisclosure = () => {
   });
 
   return (
-    <DisclosureRoot open={open} lazyLoad size={"xs"} scrollBehavior={"inside"}>
-      <DisclosureContent>
-        <DisclosureHeader>
-          <DisclosureHeaderContent
-            title={layersOnly ? "Workspace Layers" : l.workspace_detail}
-          />
-        </DisclosureHeader>
+    <>
+      <Box onClick={onOpen} {...restProps}>
+        {children}
+      </Box>
 
-        <DisclosureBody p={"0 !important"}>
-          {!layersOnly && (
-            <>
-              <Img
-                src={workspace?.thumbnail?.[0]?.file_url}
-                aspectRatio={16 / 10}
-                w={"full"}
-              />
+      <DisclosureRoot
+        open={open}
+        lazyLoad
+        size={"xs"}
+        scrollBehavior={"inside"}
+      >
+        <DisclosureContent>
+          <DisclosureHeader>
+            <DisclosureHeaderContent title={`Workspace Layers`} />
+          </DisclosureHeader>
 
-              <CContainer p={4} gap={1}>
-                <P fontWeight={"semibold"}>{workspace?.title}</P>
+          <DisclosureBody p={"0 !important"}>
+            <CContainer px={4} py={4} gap={2}>
+              <HStack mb={2}>
+                <SearchInput
+                  onChangeSetter={(inputValue) => {
+                    setSearch(inputValue);
+                  }}
+                  inputProps={{
+                    borderTop: "none",
+                    borderLeft: "none",
+                    borderRight: "none",
+                    borderRadius: 0,
+                  }}
+                  inputValue={search}
+                  invalid={false}
+                />
 
-                <P color={"fg.subtle"}>{workspace?.description}</P>
-              </CContainer>
-            </>
-          )}
-
-          <CContainer
-            px={4}
-            py={4}
-            borderTop={layersOnly ? "" : "1px solid"}
-            borderColor={"border.muted"}
-            gap={2}
-          >
-            {!layersOnly && (
-              <HStack>
-                <Icon color={"fg.muted"}>
-                  <IconStack stroke={1.5} />
-                </Icon>
-
-                <P fontWeight={"semibold"}>Layers</P>
-              </HStack>
-            )}
-
-            <HStack mb={2}>
-              <SearchInput
-                onChangeSetter={(inputValue) => {
-                  setSearch(inputValue);
-                }}
-                inputProps={{
-                  borderTop: "none",
-                  borderLeft: "none",
-                  borderRight: "none",
-                  borderRadius: 0,
-                }}
-                inputValue={search}
-                invalid={false}
-              />
-
-              {/* <BButton iconButton colorPalette={themeConfig.colorPalette}>
+                {/* <BButton iconButton colorPalette={themeConfig.colorPalette}>
                 <Icon>
                   <IconPlus stroke={1.5} />
                 </Icon>
               </BButton> */}
-            </HStack>
+              </HStack>
 
-            <CContainer gap={2} className="scrollY">
-              {empty(filteredLayers) && <FeedbackNoData />}
+              <CContainer gap={2} className="scrollY">
+                {empty(filteredLayers) && <FeedbackNoData />}
 
-              {filteredLayers && (
-                <>
-                  {filteredLayers?.map((layer) => {
-                    return (
-                      <HStack
-                        key={layer.id}
-                        border={"1px solid"}
-                        borderColor={"border.muted"}
-                        pl={3}
-                        pr={1}
-                        py={1}
-                        borderRadius={themeConfig.radii.component}
-                      >
-                        <P>{layer?.name}</P>
+                {filteredLayers && (
+                  <>
+                    {filteredLayers?.map((layer) => {
+                      return (
+                        <HStack
+                          key={layer.id}
+                          border={"1px solid"}
+                          borderColor={"border.muted"}
+                          pl={3}
+                          pr={1}
+                          py={1}
+                          borderRadius={themeConfig.radii.component}
+                        >
+                          <P>{layer?.name}</P>
 
-                        <HStack gap={1} ml={"auto"}>
-                          <EditLayer workspace={workspace} layer={layer} />
-                          <DeleteLayer workspace={workspace} layer={layer} />
+                          <HStack gap={1} ml={"auto"}>
+                            <EditLayer workspace={workspace} layer={layer} />
+                            <DeleteLayer workspace={workspace} layer={layer} />
+                          </HStack>
                         </HStack>
-                      </HStack>
-                    );
-                  })}
-                </>
-              )}
+                      );
+                    })}
+                  </>
+                )}
+              </CContainer>
             </CContainer>
-          </CContainer>
-        </DisclosureBody>
+          </DisclosureBody>
 
-        <DisclosureFooter>
-          <BackButton />
-        </DisclosureFooter>
-      </DisclosureContent>
-    </DisclosureRoot>
+          <DisclosureFooter>
+            <BackButton />
+          </DisclosureFooter>
+        </DisclosureContent>
+      </DisclosureRoot>
+    </>
   );
 };
 
-export default WorkspaceDetailGlobalDisclosure;
+export default WorkspaceLayersDisclosureTrigger;

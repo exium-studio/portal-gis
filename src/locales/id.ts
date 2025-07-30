@@ -119,11 +119,13 @@ const translations = {
     "description": "Hapus semua inbox yang sudah dibaca."
   },
   "delete_label": "Hapus",
+  "delete_layer": "Hapus layer",
   "delete_order": "Hapus pesanan",
   "delete_previous_attachment": "Akan menghapus file ini saat submit.",
   "delete_status": "Status dihapus",
   "delete_workspace": "Delete workspace",
   "deleted_docs": "Dokumen yang dihapus",
+  "deleted_file": "File yang dihapus",
   "deleted_thumbnail": "Thumbnail dihapus",
   "delivery_address": "Alamat pengiriman",
   "description": "Deskripsi",

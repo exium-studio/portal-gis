@@ -90,6 +90,7 @@ const FileInput = (props: Props) => {
           <FileUploadDropzone
             description={`${description} ${accept ? `(${accept})` : ""}`}
             label={l.file_dropzone_label}
+            border={"2px dashed"}
             borderColor={
               invalid ?? fc?.invalid ? "border.error" : "border.muted"
             }

@@ -343,8 +343,16 @@ export const workspace_category = {
   id: "Kategori workspace",
   en: "Workspace category",
 };
+export const deleted_file = {
+  id: "File yang dihapus",
+  en: "Deleted file",
+};
 
 // UI
+export const delete_layer = {
+  id: "Hapus layer",
+  en: "Delete layer",
+};
 export const no_active_workspaces = {
   title: {
     id: "Tidak ada workspace aktif",
