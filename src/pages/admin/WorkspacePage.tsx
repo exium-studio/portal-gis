@@ -13,7 +13,6 @@ import DisclosureHeaderContent from "@/components/ui-custom/DisclosureHeaderCont
 import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
 import FeedbackRetry from "@/components/ui-custom/FeedbackRetry";
 import FileInput from "@/components/ui-custom/FileInput";
-import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import NumberInput from "@/components/ui-custom/NumberInput";
 import SearchInput from "@/components/ui-custom/SearchInput";
@@ -59,10 +58,7 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import * as yup from "yup";
 
-const Create = (props: any) => {
-  // Props
-  const { children, ...restProps } = props;
-
+const Create = () => {
   // Hooks
   const { l } = useLang();
   const { open, onOpen, onClose } = useDisclosure();
@@ -135,12 +131,10 @@ const Create = (props: any) => {
         iconButton
         colorPalette={themeConfig?.colorPalette}
         onClick={onOpen}
-        {...restProps}
       >
         <Icon>
           <IconPlus />
         </Icon>
-        {children}
       </BButton>
 
       <DisclosureRoot open={open} lazyLoad size={"xs"}>
@@ -384,9 +378,6 @@ const ToggleDisplay = (props: any) => {
 };
 
 const WorkspacePage = () => {
-  // Hooks
-  const { l } = useLang();
-
   // States
   const [filterConfig, setFilterConfig] = useState<any>({
     search: "",
@@ -404,13 +395,7 @@ const WorkspacePage = () => {
   const render = {
     loading: <ComponentSpinner />,
     error: <FeedbackRetry onRetry={makeRequest} />,
-    empty: (
-      <FeedbackNoData>
-        <Create iconButton={false} pl={3}>
-          {l.add}
-        </Create>
-      </FeedbackNoData>
-    ),
+    empty: <FeedbackNoData />,
     loaded: <Workspaces dataState={dataState} />,
   };
 
@@ -420,17 +405,8 @@ const WorkspacePage = () => {
 
       {!initialLoading && (
         <>
-          {!data && render.empty}
-
           {data && (
-            <ItemContainer
-              flex={1}
-              overflowY={"auto"}
-              border={"none"}
-              p={[null, null, 4]}
-              gap={4}
-              bg={["", null, "body"]}
-            >
+            <CContainer flex={1} gap={4}>
               <ItemHeaderContainer borderless p={0}>
                 <HStack justify={"space-between"} w={"full"}>
                   <SearchInput
@@ -452,10 +428,16 @@ const WorkspacePage = () => {
               {!initialLoading && (
                 <>
                   {error && render.error}
-                  {!error && <>{data && render.loaded}</>}
+                  {!error && (
+                    <>
+                      {data && render.loaded}
+
+                      {!data && render.empty}
+                    </>
+                  )}
                 </>
               )}
-            </ItemContainer>
+            </CContainer>
           )}
         </>
       )}
