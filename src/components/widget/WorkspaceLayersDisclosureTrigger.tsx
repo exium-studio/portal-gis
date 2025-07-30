@@ -45,6 +45,8 @@ import Textarea from "../ui-custom/Textarea";
 import { Field } from "../ui/field";
 import { Tooltip } from "../ui/tooltip";
 import SelectLayerFileType from "./SelectLayerFileType";
+import SelectLayerType from "./SelectLayerType";
+import { OPTIONS_LAYER_TYPE } from "@/static/selectOptions";
 
 const EditLayer = (props: any) => {
   // Props
@@ -67,13 +69,14 @@ const EditLayer = (props: any) => {
     initialValues: {
       name: "",
       description: "",
+      layer_type: undefined as any,
       file_type: undefined as any,
       file: undefined as any,
-      deleted_file: [],
     },
     validationSchema: yup.object().shape({
       name: yup.string().required(l.required_form),
       description: yup.string().required(l.required_form),
+      layer_type: yup.array().required(l.required_form),
       file_type: yup.array(),
       file: fileValidation({
         allowedExtensions: ["shp", "zip"],
@@ -92,8 +95,10 @@ const EditLayer = (props: any) => {
       );
       payload.append("name", values.name);
       payload.append("description", values.description);
-      payload.append("file_type", values.file_type?.[0]?.id);
-      payload.append("file", values.file?.[0]);
+      payload.append("layer_type", values.layer_type?.[0]?.id);
+      if (values.file_type)
+        payload.append("file_type", values.file_type?.[0]?.id);
+      if (values.file) payload.append("file", values.file?.[0]);
 
       const url = `/api/gis-bpn/workspaces-layers/update/${layer?.id}`;
       const config = {
@@ -120,9 +125,13 @@ const EditLayer = (props: any) => {
       formik.setValues({
         name: layer?.name,
         description: layer?.description,
+        layer_type: [
+          OPTIONS_LAYER_TYPE.find(
+            (layerType) => layerType.id === layer?.layer_type
+          ),
+        ],
         file_type: undefined,
         file: undefined,
-        deleted_file: [],
       });
     }
   }, [layer, open]);
@@ -188,6 +197,20 @@ const EditLayer = (props: any) => {
                     formik.setFieldValue("description", input);
                   }}
                   inputValue={formik.values.description}
+                />
+              </Field>
+
+              <Field
+                label={l.default_layer_type}
+                invalid={!!formik.errors.layer_type}
+                errorText={formik.errors.layer_type as string}
+                mb={4}
+              >
+                <SelectLayerType
+                  onConfirm={(input) => {
+                    formik.setFieldValue("layer_type", input);
+                  }}
+                  inputValue={formik.values.layer_type}
                 />
               </Field>
 

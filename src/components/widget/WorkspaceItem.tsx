@@ -494,7 +494,8 @@ const AddLayer = (props: any) => {
       payload.append("description", values.description);
       payload.append("layer_type", values.layer_type?.[0]?.id);
       payload.append("file_type", values.file_type?.[0]?.id);
-      payload.append("file", values.file?.[0]);
+      if (values.file) payload.append("file", values.file?.[0]);
+
       const url = `/api/gis-bpn/workspaces-layers/create`;
       const config = {
         url,
