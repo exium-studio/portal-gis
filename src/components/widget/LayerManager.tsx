@@ -48,13 +48,12 @@ const LayerSource = (props: LayerSourceProps) => {
         return;
       }
 
-      const isAlreadySelected =
-        selectedPolygon?.polygon?.properties?.id ===
-          clickedFeature?.properties?.id &&
-        selectedPolygon?.workspaceId === activeWorkspace?.id &&
-        selectedPolygon?.layerId === activeLayer?.id;
+      const alreadySelected =
+        selectedFeatureId === clickedFeature?.properties?.id &&
+        selectedPolygon?.activeWorkspace?.id === activeWorkspace?.id &&
+        selectedPolygon?.activeLayer?.id === activeLayer?.id;
 
-      if (isAlreadySelected) {
+      if (alreadySelected) {
         clearSelectedPolygon();
       } else {
         setSelectedPolygon({

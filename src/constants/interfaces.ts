@@ -34,6 +34,12 @@ export interface Interface__StorageFile extends Interface__CUD {
 }
 
 // Maps related
+export interface Type_SelectedPolygon {
+  activeWorkspace: Interface__ActiveWorkspace;
+  activeLayer: Interface__ActiveLayer;
+  polygon: GeoJSON.Feature<GeoJSON.Polygon>;
+  fillColor: string;
+}
 export interface Interface__WorkspaceCategory extends Interface__CUD {
   id: number;
   label: string;
