@@ -23,6 +23,9 @@ interface Interface__ActiveWorkspaces {
   unloadWorkspace: (workspaceId: string) => void;
   clearAllWorkspaces: () => void;
   workspaceActive: (workspaceId: string) => boolean;
+  getActiveWorkspace: (
+    workspaceId: string
+  ) => Interface__ActiveWorkspace | undefined;
 }
 
 const useActiveWorkspaces = create<Interface__ActiveWorkspaces>((set, get) => ({
@@ -158,6 +161,11 @@ const useActiveWorkspaces = create<Interface__ActiveWorkspaces>((set, get) => ({
   workspaceActive: (workspaceId) => {
     return get().activeWorkspaces.some(
       (activeWorkspace) => activeWorkspace.id === workspaceId
+    );
+  },
+  getActiveWorkspace: (workspaceId) => {
+    return get().activeWorkspaces.find(
+      (workspace) => workspace.id === workspaceId
     );
   },
 }));

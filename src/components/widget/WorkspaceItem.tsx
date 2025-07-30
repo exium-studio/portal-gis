@@ -1,7 +1,14 @@
 import CContainer from "@/components/ui-custom/CContainer";
 import { MAP_TRANSITION_DURATION } from "@/constants/duration";
-import { Interface__Workspace } from "@/constants/interfaces";
-import useActiveLayers from "@/context/useActiveWorkspaces";
+import {
+  Interface__ActiveWorkspace,
+  Interface__Layer,
+  Interface__Workspace,
+} from "@/constants/interfaces";
+import {
+  default as useActiveLayers,
+  default as useActiveWorkspaces,
+} from "@/context/useActiveWorkspaces";
 import useConfirmationDisclosure from "@/context/useConfirmationDisclosure";
 import useLang from "@/context/useLang";
 import useMapViewState from "@/context/useMapViewState";
@@ -15,6 +22,7 @@ import { OPTIONS_LAYER_FILE_TYPE } from "@/static/selectOptions";
 import back from "@/utils/back";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import empty from "@/utils/empty";
+import { computeBboxAndCenter } from "@/utils/geospatial";
 import { fileValidation } from "@/utils/validationSchemas";
 import {
   FieldsetRoot,
@@ -54,7 +62,6 @@ import { Switch } from "../ui/switch";
 import { Tooltip } from "../ui/tooltip";
 import ExistingFileItem from "./ExistingFIleItem";
 import SelectLayerFileType from "./SelectLayerFileType";
-import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 
 const WorkspaceMenu = (props: any) => {
   // Props
@@ -368,22 +375,16 @@ const DeleteWorkspace = (props: any) => {
 
 const WorkspaceLayersUtils = (props: {
   workspace: Interface__Workspace;
-  loadedLayerData: any;
+  workspaceActive: boolean;
 }) => {
   // Props
-  const { workspace, loadedLayerData, ...restProps } = props;
+  const { workspace, workspaceActive, ...restProps } = props;
 
   // Contexts
   const setWorkspaceDetailData = useWorkspaceDetail((s) => s.setData);
   const workspaceDetailOnOpen = useWorkspaceDetail((s) => s.onOpen);
 
-  console.log("loadedLayerData", loadedLayerData);
-
-  // States
-  const bboxCenter = {
-    bbox: loadedLayerData?.bbox,
-    center: loadedLayerData?.center,
-  };
+  // console.log("workspaceActive", workspaceActive, workspace.id);
 
   return (
     <HStack
@@ -415,18 +416,13 @@ const WorkspaceLayersUtils = (props: {
         </BButton>
       </Tooltip>
 
-      <AddLayer data={workspace} disabled={!!loadedLayerData} />
+      <AddLayer data={workspace} disabled={!!workspaceActive} />
 
-      <ViewWorkspace
-        workspace={workspace}
-        bboxCenter={bboxCenter}
-        disabled={!loadedLayerData}
-      />
+      <ViewWorkspace workspace={workspace} disabled={!workspaceActive} />
 
       <ToggleLoadWorkspace
         workspace={workspace}
-        bboxCenter={bboxCenter}
-        loadedLayerData={loadedLayerData}
+        workspaceActive={workspaceActive}
         ml={"auto"}
       />
     </HStack>
@@ -581,18 +577,23 @@ const AddLayer = (props: any) => {
 };
 const ViewWorkspace = (props: any) => {
   // Props
-  const { bboxCenter, ...restProps } = props;
+  const { workspace, ...restProps } = props;
 
   // Hooks
   const { l } = useLang();
 
   // Contexts
-  const { mapRef } = useMapViewState();
+  const mapRef = useMapViewState((s) => s.mapRef);
+  const activeWorkspace = useActiveWorkspaces((s) =>
+    s.getActiveWorkspace(workspace.id)
+  );
+
+  // console.log("workspace", getActiveWorkspace(workspace.id));
 
   // Utils
   function onViewLayers() {
-    if (mapRef.current && bboxCenter?.bbox) {
-      const [minLng, minLat, maxLng, maxLat] = bboxCenter.bbox;
+    if (mapRef.current && workspace?.bbox) {
+      const [minLng, minLat, maxLng, maxLat] = workspace.bbox;
 
       mapRef.current.fitBounds(
         [
@@ -626,7 +627,7 @@ const ViewWorkspace = (props: any) => {
 };
 const ToggleLoadWorkspace = (props: any) => {
   // Props
-  const { workspace, bboxCenter, loadedLayerData, ...restProps } = props;
+  const { workspace, workspaceActive, ...restProps } = props;
 
   // Hooks
   const { l } = useLang();
@@ -646,11 +647,11 @@ const ToggleLoadWorkspace = (props: any) => {
   const unloadWorkspace = useActiveLayers((s) => s.unloadWorkspace);
 
   // States
-  const [checked, setChecked] = useState<boolean>(loadedLayerData);
+  const [checked, setChecked] = useState<boolean>(workspaceActive);
 
   // Utils
   function onLoad() {
-    const url = `/api/gis-bpn/workspace-layers/shape-files/${workspace.id}`;
+    const url = `/api/gis-bpn/workspaces-layers/load/${workspace.id}`;
     const config = {
       url,
       method: "GET",
@@ -660,24 +661,47 @@ const ToggleLoadWorkspace = (props: any) => {
       config,
       onResolve: {
         onSuccess: (r: any) => {
-          const layers = r.data.data;
-          const newActiveWorkspace = {
+          const layers = r.data.data as Interface__Layer[];
+
+          // 1. Get all GeoJSON FeatureCollections from layers
+          const featureCollections = layers
+            .map((layer: Interface__Layer) => layer.data?.geojson)
+            .filter(
+              (geojson): geojson is GeoJSON.FeatureCollection => !!geojson
+            );
+
+          // 2. Calculate combined bbox and center
+          const { bbox, center } = computeBboxAndCenter(featureCollections);
+
+          console.log(layers);
+
+          // 3. Create the workspace with calculated bounds
+          const newActiveWorkspace: Interface__ActiveWorkspace = {
             ...workspace,
-            layers: layers,
-            bbox: [],
-            center: [],
+            layers: layers.map((layer) => ({
+              ...layer,
+              visible: true, // Set all layers visible by default
+            })),
+            bbox: bbox || [],
+            bbox_center: center || [],
             visible: true,
           };
+
           loadWorkspace(newActiveWorkspace);
+        },
+        onError: () => {
+          setChecked(false);
         },
       },
     });
   }
 
   useEffect(() => {
-    if (checked && !loadedLayerData) {
-      onLoad();
-    } else if (!checked && loadedLayerData) {
+    if (checked && !workspaceActive) {
+      setTimeout(() => {
+        onLoad();
+      }, 1); // flushsync error fix trick
+    } else if (!checked && workspaceActive) {
       unloadWorkspace(workspace.id);
     }
   }, [checked]);
@@ -701,7 +725,7 @@ const ToggleLoadWorkspace = (props: any) => {
 // Item variants
 const RowItem = (props: any) => {
   // Props
-  const { workspace, setWorkspace, loadedLayerData, ...restProps } = props;
+  const { workspace, setWorkspace, workspaceActive, ...restProps } = props;
 
   // Contexts
   const { themeConfig } = useThemeConfig();
@@ -755,38 +779,16 @@ const RowItem = (props: any) => {
         </HStack>
       </CContainer>
 
-      {/* <HScroll
-        p={1}
-        gap={1}
-        borderTop={"1px solid"}
-        borderColor={"border.muted"}
-      >
-        <AddLayer data={workspace} disabled={!!loadedLayerData} />
-
-        <ViewWorkspace
-          data={workspace}
-          bboxCenter={bboxCenter}
-          disabled={!loadedLayerData}
-        />
-
-        <ToggleLoadWorkspace
-          data={workspace}
-          bboxCenter={bboxCenter}
-          loadedLayerData={loadedLayerData}
-          ml={"auto"}
-        />
-      </HScroll> */}
-
       <WorkspaceLayersUtils
         workspace={workspace}
-        loadedLayerData={loadedLayerData}
+        workspaceActive={workspaceActive}
       />
     </CContainer>
   );
 };
 const ListItem = (props: any) => {
   // Props
-  const { workspace, setWorkspace, loadedLayerData, ...restProps } = props;
+  const { workspace, setWorkspace, workspaceActive, ...restProps } = props;
 
   // Contexts
   const { themeConfig } = useThemeConfig();
@@ -819,7 +821,7 @@ const ListItem = (props: any) => {
 
       <WorkspaceLayersUtils
         workspace={workspace}
-        loadedLayerData={loadedLayerData}
+        workspaceActive={workspaceActive}
       />
     </CContainer>
   );
@@ -831,19 +833,12 @@ const WorkspaceItem = (props: any) => {
 
   // Contexts
   const displayMode = useWorkspaceDisplay((s) => s.displayMode);
-  const activeWorkspaces = useActiveLayers((s) => s.activeWorkspaces);
 
   // States
   const [workspace, setWorkspace] = useState<any>(initialData);
   const workspaceActive = useActiveWorkspaces((s) =>
     s.workspaceActive(workspace?.id)
   );
-  console.log("workspaceActive", workspace.id, workspaceActive);
-  const loadedLayerData = activeWorkspaces.find(
-    (activeWorkspace: any) => activeWorkspace?.id === workspace?.id
-  );
-
-  // console.log(activeWorkspaces);
 
   // Handle initialData
   useEffect(() => {
@@ -856,14 +851,14 @@ const WorkspaceItem = (props: any) => {
         <RowItem
           workspace={workspace}
           setWorkspace={setWorkspace}
-          loadedLayerData={loadedLayerData}
+          workspaceActive={workspaceActive}
           {...restProps}
         />
       ) : (
         <ListItem
           workspace={workspace}
           setWorkspace={setWorkspace}
-          loadedLayerData={loadedLayerData}
+          workspaceActive={workspaceActive}
           {...restProps}
         />
       )}

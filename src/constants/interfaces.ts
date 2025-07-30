@@ -34,9 +34,6 @@ export interface Interface__StorageFile extends Interface__CUD {
 }
 
 // Maps related
-export interface Interface__ActiveLayer extends Interface__Layer {
-  visible: boolean;
-}
 export interface Interface__WorkspaceCategory extends Interface__CUD {
   id: number;
   label: string;
@@ -48,6 +45,8 @@ export interface Interface__Workspace extends Interface__CUD {
   layers?: Interface__Layer[];
   workspace_category: Interface__WorkspaceCategory;
   thumbnail?: Interface__StorageFile[];
+  bbox?: number[];
+  bbox_center?: number[];
 }
 export interface Interface__Layer extends Interface__CUD {
   id: number;
@@ -57,21 +56,26 @@ export interface Interface__Layer extends Interface__CUD {
   description?: string;
   table_name?: string;
   data?: Interface__LayerData;
-}
-export interface Interface__ActiveWorkspace extends Interface__Workspace {
-  visible: boolean;
-  layers?: Interface__ActiveLayer[];
+  bbox?: number[];
+  bbox_center?: number[];
 }
 export interface Interface__LayerData extends Interface__CUD {
   id: number;
   layer_id: number;
   documents: Interface__StorageFile[];
-  bbox: number[];
-  bbox_center: number[];
+  bbox?: number[];
+  bbox_center?: number[];
   geojson: GeoJSON.FeatureCollection;
   created_at: string;
   updated_at: string;
   deleted_at: string;
+}
+export interface Interface__ActiveWorkspace extends Interface__Workspace {
+  visible: boolean;
+  layers?: Interface__ActiveLayer[];
+}
+export interface Interface__ActiveLayer extends Interface__Layer {
+  visible: boolean;
 }
 
 // Gens
