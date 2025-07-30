@@ -185,6 +185,21 @@ const useRequest = (props: Props) => {
                   title: l.error_403_toast.title,
                   description: l.error_403_toast.description,
                 };
+              case "DUPLICATE_LAYER_NAME":
+                return {
+                  title: l.error_duplicate_layer_name_toast.title,
+                  description: l.error_duplicate_layer_name_toast.description,
+                };
+              case "DUPLICATE_NAME":
+                return {
+                  title: l.error_duplicate_name_toast.title,
+                  description: l.error_duplicate_name_toast.description,
+                };
+              case "DUPLICATE_EMAIL":
+                return {
+                  title: l.error_duplicate_email_toast.title,
+                  description: l.error_duplicate_email_toast.description,
+                };
             }
           } else if (statusCode === 401) {
             return {
@@ -203,10 +218,10 @@ const useRequest = (props: Props) => {
                   title: l.error_404_toast.title,
                   description: l.error_404_toast.description,
                 };
-              case "SHAPEFILES_NOT_FOUND":
+              case "LAYERS_NOT_FOUND":
                 return {
-                  title: l.missing_layer_data_toast.title,
-                  description: l.missing_layer_data_toast.description,
+                  title: l.missing_layers_data_toast.title,
+                  description: l.missing_layers_data_toast.description,
                 };
             }
           } else if (statusCode === 409) {

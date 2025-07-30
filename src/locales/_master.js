@@ -1397,7 +1397,7 @@ export const layer_loaded_toast = {
     en: "Layer is ready on the map.",
   },
 };
-export const missing_layer_data_toast = {
+export const missing_layers_data_toast = {
   title: { id: "Data layer tidak ditemukan", en: "Layer data not found" },
   description: {
     id: "Silahkan perbarui data layer",
@@ -1457,6 +1457,16 @@ export const error_default_toast = {
   description: {
     id: "Terjadi kesalahan yang tidak diketahui. Silakan coba lagi.",
     en: "An unknown error occurred. Please try again.",
+  },
+};
+export const error_duplicate_layer_name_toast = {
+  title: {
+    id: "Data duplikat",
+    en: "Duplicate data",
+  },
+  description: {
+    id: "Nama layer sudah terdaftar di workspace ini",
+    en: "Layer name is already registered in this workspace",
   },
 };
 export const error_duplicate_name_toast = {

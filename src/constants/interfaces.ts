@@ -43,7 +43,7 @@ export interface Interface__Workspace extends Interface__CUD {
   title: string;
   description: string;
   layers?: Interface__Layer[];
-  workspace_category: Interface__WorkspaceCategory;
+  workspace_category: Interface__Gens;
   thumbnail?: Interface__StorageFile[];
   bbox?: number[];
   bbox_center?: number[];

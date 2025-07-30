@@ -64,7 +64,7 @@ const Create = () => {
   const { l } = useLang();
   const { open, onOpen, onClose } = useDisclosure();
   useBackOnClose(`edit-workspace`, open, onOpen, onClose);
-  const { req, loading } = useRequest({
+  const { req } = useRequest({
     id: "crud-workspace",
   });
 
@@ -145,8 +145,22 @@ const Create = () => {
           </DisclosureHeader>
 
           <DisclosureBody>
-            <FieldsetRoot disabled={loading}>
+            <FieldsetRoot>
               <form id="add_workspace_form" onSubmit={formik.handleSubmit}>
+                <Field
+                  label={l.workspace_category}
+                  invalid={!!formik.errors.workspace_category}
+                  errorText={formik.errors.workspace_category as string}
+                  mb={4}
+                >
+                  <SelectWorkspaceCategory
+                    onConfirm={(input) => {
+                      formik.setFieldValue("workspace_category", input);
+                    }}
+                    inputValue={formik.values.workspace_category}
+                  />
+                </Field>
+
                 <Field
                   optional
                   label={"Thumbnail"}
@@ -162,20 +176,6 @@ const Create = () => {
                     }}
                     inputValue={formik.values.thumbnail}
                     accept=".png, .jpg, .jpeg,"
-                  />
-                </Field>
-
-                <Field
-                  label={l.workspace_category}
-                  invalid={!!formik.errors.workspace_category}
-                  errorText={formik.errors.workspace_category as string}
-                  mb={4}
-                >
-                  <SelectWorkspaceCategory
-                    onConfirm={(input) => {
-                      formik.setFieldValue("workspace_category", input);
-                    }}
-                    inputValue={formik.values.workspace_category}
                   />
                 </Field>
 

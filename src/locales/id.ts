@@ -183,6 +183,10 @@ const translations = {
     "title": "Data duplikat",
     "description": "Email sudah terdaftar"
   },
+  "error_duplicate_layer_name_toast": {
+    "title": "Data duplikat",
+    "description": "Nama layer sudah terdaftar di workspace ini"
+  },
   "error_duplicate_name_toast": {
     "title": "Data duplikat",
     "description": "Nama sudah terdaftar"
@@ -314,7 +318,7 @@ const translations = {
     "description": "Izinkan aplikasi menggunakan mikrofon perangkat Anda untuk merekam audio."
   },
   "min_char": "Minimal ${minChar} karakter",
-  "missing_layer_data_toast": {
+  "missing_layers_data_toast": {
     "title": "Data layer tidak ditemukan",
     "description": "Silahkan perbarui data layer"
   },

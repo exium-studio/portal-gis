@@ -3,6 +3,7 @@ import { MAP_TRANSITION_DURATION } from "@/constants/duration";
 import {
   Interface__ActiveWorkspace,
   Interface__Layer,
+  Interface__StorageFile,
   Interface__Workspace,
 } from "@/constants/interfaces";
 import {
@@ -62,6 +63,7 @@ import { Switch } from "../ui/switch";
 import { Tooltip } from "../ui/tooltip";
 import ExistingFileItem from "./ExistingFIleItem";
 import SelectLayerFileType from "./SelectLayerFileType";
+import SelectWorkspaceCategory from "./SelectWorkspaceCategort";
 
 const WorkspaceMenu = (props: any) => {
   // Props
@@ -88,8 +90,6 @@ const WorkspaceMenu = (props: any) => {
 const EditWorkspace = (props: any) => {
   // Props
   const { workspace, ...restProps } = props;
-  // TODO localy setWorkspace on success edit
-
   // Hooks
   const { l } = useLang();
   const { open, onOpen, onClose } = useDisclosure();
@@ -109,23 +109,19 @@ const EditWorkspace = (props: any) => {
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
+      workspace_category: undefined as any,
+      thumbnail: undefined as any,
       title: workspace?.title,
       description: workspace?.description,
-      for_aqiqah: false,
-      thumbnail: undefined as any,
-      deleted_thumbnail: [],
+      deleted_thumbnail: [] as Interface__StorageFile[],
     },
     validationSchema: yup.object().shape({
+      workspace_category: yup.array().required(l.required_form),
+      thumbnail: fileValidation({
+        allowedExtensions: ["jpg", "jpeg", "png", "svg"],
+      }),
       title: yup.string().required(l.required_form),
       description: yup.string().required(l.required_form),
-      thumbnail:
-        existingThumbnail?.length === 0
-          ? fileValidation({
-              allowedExtensions: ["jpg", "jpeg", "png", "svg"],
-            }).required(l.required_form)
-          : fileValidation({
-              allowedExtensions: ["jpg", "jpeg", "png", "svg"],
-            }),
     }),
     onSubmit: (values, { resetForm }) => {
       // console.log(values);
@@ -133,11 +129,20 @@ const EditWorkspace = (props: any) => {
       back();
 
       const payload = new FormData();
-      payload.append("title", values.title);
-      payload.append("description", values.description);
+      payload.append(
+        "workspace_category_id",
+        values.workspace_category?.[0]?.id
+      );
       if (values.thumbnail && values.thumbnail.length > 0) {
         values.thumbnail.forEach((file: File) => {
           payload.append("thumbnail", file);
+        });
+      }
+      payload.append("title", values.title);
+      payload.append("description", values.description);
+      if (values.deleted_thumbnail && values.deleted_thumbnail.length > 0) {
+        values.deleted_thumbnail.forEach((thumbnail) => {
+          payload.append("delete_document_ids[]", thumbnail.id.toString());
         });
       }
 
@@ -153,6 +158,7 @@ const EditWorkspace = (props: any) => {
         onResolve: {
           onSuccess: () => {
             setRt((ps) => !ps);
+            // TODO localy setWorkspace on success edit
             resetForm();
           },
         },
@@ -163,9 +169,15 @@ const EditWorkspace = (props: any) => {
   // Handle initial data
   useEffect(() => {
     formik.setValues({
+      workspace_category: [
+        {
+          id: workspace?.workspace_category?.id || workspace?.category?.id,
+          label:
+            workspace?.workspace_category?.label || workspace?.category?.label,
+        },
+      ],
       title: workspace?.title,
       description: workspace?.description,
-      for_aqiqah: workspace?.for_aqiqah,
       thumbnail: undefined as any,
       deleted_thumbnail: [],
     });
@@ -190,6 +202,20 @@ const EditWorkspace = (props: any) => {
           <DisclosureBody>
             <FieldsetRoot>
               <form id="edit_workspace_form" onSubmit={formik.handleSubmit}>
+                <Field
+                  label={l.workspace_category}
+                  invalid={!!formik.errors.workspace_category}
+                  errorText={formik.errors.workspace_category as string}
+                  mb={4}
+                >
+                  <SelectWorkspaceCategory
+                    onConfirm={(input) => {
+                      formik.setFieldValue("workspace_category", input);
+                    }}
+                    inputValue={formik.values.workspace_category}
+                  />
+                </Field>
+
                 <Field
                   label={"Thumbnail"}
                   invalid={!!formik.errors.thumbnail}
@@ -660,11 +686,11 @@ const ToggleLoadWorkspace = (props: any) => {
       config,
       onResolve: {
         onSuccess: (r: any) => {
-          const layers = r.data.data as Interface__Layer[];
+          const layers = r?.data?.data as Interface__Layer[];
 
           // 1. Get all GeoJSON FeatureCollections from layers
           const featureCollections = layers
-            .map((layer: Interface__Layer) => layer.data?.geojson)
+            .map((layer: Interface__Layer) => layer?.data?.geojson)
             .filter(
               (geojson): geojson is GeoJSON.FeatureCollection => !!geojson
             );
@@ -695,6 +721,7 @@ const ToggleLoadWorkspace = (props: any) => {
     });
   }
 
+  // Handle switch UI on toggled
   useEffect(() => {
     if (checked && !workspaceActive) {
       setTimeout(() => {

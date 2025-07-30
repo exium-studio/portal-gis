@@ -183,6 +183,10 @@ const translations = {
     "title": "Duplicate data",
     "description": "Email is already registered"
   },
+  "error_duplicate_layer_name_toast": {
+    "title": "Duplicate data",
+    "description": "Layer name is already registered in this workspace"
+  },
   "error_duplicate_name_toast": {
     "title": "Duplicate data",
     "description": "Name is already registered"
@@ -314,7 +318,7 @@ const translations = {
     "description": "Allow the app to use your device's microphone for recording audio."
   },
   "min_char": "Minimum ${minChar} characters",
-  "missing_layer_data_toast": {
+  "missing_layers_data_toast": {
     "title": "Layer data not found",
     "description": "Please update the layer data"
   },
