@@ -413,17 +413,9 @@ const WorkspaceLayersUtils = (props: {
       borderColor={"border.muted"}
       {...restProps}
     >
-      <WorkspaceLayersDisclosureTrigger workspace={workspace}>
-        <Tooltip content={"Workspace layers"}>
-          <BButton iconButton unclicky variant={"ghost"}>
-            <Icon boxSize={"24px"}>
-              <IconStack stroke={1.5} />
-            </Icon>
-          </BButton>
-        </Tooltip>
-      </WorkspaceLayersDisclosureTrigger>
-
       <AddLayer workspace={workspace} disabled={!!workspaceActive} />
+
+      <WorkspaceLayers workspace={workspace} />
 
       <ViewWorkspace workspace={workspace} disabled={!workspaceActive} />
 
@@ -433,6 +425,22 @@ const WorkspaceLayersUtils = (props: {
         ml={"auto"}
       />
     </HStack>
+  );
+};
+const WorkspaceLayers = (props: any) => {
+  // Props
+  const { workspace, ...restProps } = props;
+
+  return (
+    <WorkspaceLayersDisclosureTrigger workspace={workspace}>
+      <Tooltip content={"Workspace layers"}>
+        <BButton iconButton unclicky variant={"ghost"} {...restProps}>
+          <Icon boxSize={"24px"}>
+            <IconStack stroke={1.5} />
+          </Icon>
+        </BButton>
+      </Tooltip>
+    </WorkspaceLayersDisclosureTrigger>
   );
 };
 const AddLayer = (props: any) => {
