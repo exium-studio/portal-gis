@@ -154,7 +154,7 @@ const EditLayer = (props: any) => {
           {...restProps}
         >
           <Icon>
-            <IconEdit />
+            <IconEdit stroke={1.5} />
           </Icon>
         </BButton>
       </Tooltip>
@@ -318,7 +318,7 @@ const DeleteLayer = (props: any) => {
         {...restProps}
       >
         <Icon>
-          <IconTrash />
+          <IconTrash stroke={1.5} />
         </Icon>
       </BButton>
     </Tooltip>
@@ -347,6 +347,9 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
 
     return layers;
   });
+  const workspaceActive = useActiveWorkspaces((s) =>
+    s.workspaceActive(workspace?.id)
+  );
 
   return (
     <>
@@ -381,12 +384,6 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                   inputValue={search}
                   invalid={false}
                 />
-
-                {/* <BButton iconButton colorPalette={themeConfig.colorPalette}>
-                <Icon>
-                  <IconPlus stroke={1.5} />
-                </Icon>
-              </BButton> */}
               </HStack>
 
               <CContainer gap={2} className="scrollY">
@@ -408,7 +405,12 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                           <P>{layer?.name}</P>
 
                           <HStack gap={1} ml={"auto"}>
-                            <EditLayer workspace={workspace} layer={layer} />
+                            <EditLayer
+                              workspace={workspace}
+                              layer={layer}
+                              disabled={workspaceActive}
+                            />
+
                             <DeleteLayer workspace={workspace} layer={layer} />
                           </HStack>
                         </HStack>

@@ -35,13 +35,18 @@ export const BasemapMapStyle = () => {
   const { mapStyle, setMapStyle } = useMapStyle();
 
   // Utils
+  const displaySrc = mapStyle.img[colorMode as keyof typeof mapStyle.img];
   const { open, onToggle, onClose } = useDisclosure();
   const triggerRef = useRef(null);
   const contentRef = useRef(null);
   useClickOutside([triggerRef, contentRef], onClose);
 
   return (
-    <PopoverRoot open={open} positioning={{ placement: "top" }}>
+    <PopoverRoot
+      key={displaySrc}
+      open={open}
+      positioning={{ placement: "top" }}
+    >
       <PopoverTrigger asChild>
         <OverlayItemContainer>
           <Tooltip content={l.basemap}>
@@ -52,7 +57,7 @@ export const BasemapMapStyle = () => {
               onClick={onToggle}
             >
               <Img
-                src={mapStyle.img[colorMode as keyof typeof mapStyle.img]}
+                src={displaySrc}
                 w={"36px"}
                 borderRadius={themeConfig.radii.component}
                 cursor={"pointer"}
