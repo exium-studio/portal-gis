@@ -21,8 +21,9 @@ const SelectWorkspaceCategory = (props: Props) => {
   function fetch(setOptions: any) {
     const config = {
       url: `/api/gis-bpn/master-data/categories/index`,
-      method: "get",
-      payload: {
+      method: "GET",
+      params: {
+        with_trashed: 0,
         limit: Infinity,
       },
     };

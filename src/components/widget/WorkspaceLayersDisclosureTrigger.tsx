@@ -146,7 +146,7 @@ const EditLayer = (props: any) => {
           </DisclosureHeader>
 
           <DisclosureBody>
-            <AlertRoot status="info" title="This is the alert title">
+            <AlertRoot status="neutral" title="This is the alert title" mb={4}>
               <AlertIndicator />
               <AlertTitle>This is the alert title</AlertTitle>
             </AlertRoot>
@@ -295,7 +295,7 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
 
   // Hooks
   const { open, onOpen, onClose } = useDisclosure();
-  useBackOnClose(`workspace-detail`, open, onOpen, onClose);
+  useBackOnClose(`workspace-detail-${workspace.id}`, open, onOpen, onClose);
 
   // Contexts
   const { themeConfig } = useThemeConfig();
