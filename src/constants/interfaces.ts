@@ -63,12 +63,9 @@ export interface Interface__LayerData extends Interface__CUD {
   id: number;
   layer_id: number;
   documents: Interface__StorageFile[];
-  bbox?: number[];
-  bbox_center?: number[];
   geojson: GeoJSON.FeatureCollection;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string;
+  bbox: number[];
+  bbox_center: number[];
 }
 export interface Interface__ActiveWorkspace extends Interface__Workspace {
   visible: boolean;

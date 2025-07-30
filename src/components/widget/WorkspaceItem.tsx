@@ -613,12 +613,14 @@ const ViewWorkspace = (props: any) => {
   const activeWorkspace = useActiveWorkspaces((s) =>
     s.getActiveWorkspace(workspace.id)
   );
+
+  // console.log("workspace", workspace);
   console.log("activeWorkspace", activeWorkspace);
 
   // Utils
   function onViewLayers() {
-    if (mapRef.current && workspace?.bbox) {
-      const [minLng, minLat, maxLng, maxLat] = workspace.bbox;
+    if (mapRef.current && activeWorkspace?.bbox) {
+      const [minLng, minLat, maxLng, maxLat] = activeWorkspace.bbox;
 
       mapRef.current.fitBounds(
         [
