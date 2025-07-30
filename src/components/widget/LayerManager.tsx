@@ -28,7 +28,7 @@ const LayerSource = (props: LayerSourceProps) => {
   );
   const { themeConfig } = useThemeConfig();
   const legends = useLegend((s) => s.legends);
-  const legendType = "penggunaan"; // properties key / column name
+  const legendType = "PENGGUNAAN"; // properties key / column name
 
   // States
   const geojson = activeLayer?.data?.geojson;
