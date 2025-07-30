@@ -1,18 +1,20 @@
 import CContainer from "@/components/ui-custom/CContainer";
 import FloatingContainer from "@/components/ui-custom/FloatingContainer";
+import P from "@/components/ui-custom/P";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
+import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import { HStack, Icon, useDisclosure } from "@chakra-ui/react";
+import { IconInfoCircle } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import MenuHeaderContainer from "../MenuHeaderContainer";
-import { IconInfoCircle } from "@tabler/icons-react";
-import P from "@/components/ui-custom/P";
+import PropertyValue from "../PropertyValue";
 import { EditField } from "./EditField";
 import FloatingContainerCloseButton from "./FloatingContainerCloseButton";
-import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
-import PropertyValue from "../PropertyValue";
+
+const EXCLUDED_KEYS = ["id", "layer_id", "document_ids"];
 
 export const FieldInfo = () => {
   // Hooks
@@ -105,9 +107,12 @@ export const FieldInfo = () => {
 
       <CContainer px={1} className="scrollY">
         {data &&
-          Object?.keys(data)?.map((key) => {
-            return (
-              <ItemContainer key={key}>
+          Object?.keys(data)?.map((key, i) => {
+            const last =
+              i === Object?.keys(data)?.length - EXCLUDED_KEYS.length;
+
+            return EXCLUDED_KEYS.includes(key) ? null : (
+              <ItemContainer key={key} last={last}>
                 <P fontWeight={"medium"} color={"fg.subtle"}>
                   {`${key}`}
                 </P>
