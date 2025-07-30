@@ -2,7 +2,6 @@ import { useColorMode } from "@/components/ui/color-mode";
 import { MAP_TRANSITION_DURATION } from "@/constants/duration";
 import useSearchAddress from "@/constants/useSearchAddress";
 import useActiveMapStyle from "@/context/useActiveMapStyle";
-import useActiveWMSLayers from "@/context/useActiveWMSLayers";
 import useBasemap from "@/context/useBasemap";
 import useCurrentLocation from "@/context/useCurrentLocation";
 import useLayout from "@/context/useLayout";
@@ -24,7 +23,6 @@ const BaseMap = () => {
   const { colorMode } = useColorMode();
 
   // Contexts
-  const activeLayers = useActiveWMSLayers((s) => s.activeLayers);
   const { mapStyle } = useMapStyle();
   const { layout } = useLayout();
   const { currentLocation } = useCurrentLocation();
@@ -174,7 +172,7 @@ const BaseMap = () => {
     } else {
       setActiveMapStyle(mapStyle.tile[colorMode]);
     }
-  }, [mapStyle, colorMode, activeLayers]);
+  }, [mapStyle, colorMode]);
 
   return (
     <Map
