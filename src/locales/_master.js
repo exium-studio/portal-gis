@@ -367,6 +367,10 @@ export const deleted_docs = {
   id: "Dokumen yang dihapus",
   en: "Deleted docs",
 };
+export const view_workspace = {
+  id: "Lihat area workspace",
+  en: "View layer workspace",
+};
 export const view_layer = {
   id: "Lihat area layer",
   en: "View layer area",

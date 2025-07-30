@@ -637,7 +637,7 @@ const ViewWorkspace = (props: any) => {
   }
 
   return (
-    <Tooltip content={l.view_layer}>
+    <Tooltip content={l.view_workspace}>
       <BButton
         unclicky
         iconButton
@@ -785,7 +785,9 @@ const RowItem = (props: any) => {
                 </P>
               </PopoverTrigger>
 
-              <PopoverContent p={2}>{workspace?.title}</PopoverContent>
+              <PopoverContent p={2} minW={"fit"} w={"fit"} maxW={"280px"}>
+                {workspace?.title}
+              </PopoverContent>
             </PopoverRoot>
 
             <PopoverRoot>
@@ -795,7 +797,9 @@ const RowItem = (props: any) => {
                 </P>
               </PopoverTrigger>
 
-              <PopoverContent p={2}>{workspace?.description}</PopoverContent>
+              <PopoverContent p={2} minW={"fit"} w={"fit"} maxW={"280px"}>
+                {workspace?.description}
+              </PopoverContent>
             </PopoverRoot>
           </CContainer>
 

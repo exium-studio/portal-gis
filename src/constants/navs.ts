@@ -22,7 +22,7 @@ export const NAVS = [
     path: "/active-workspace",
     icon: IconStack2,
     iconProps: {
-      boxSize: "22px",
+      boxSize: ["", null, "22px"],
     },
   },
   {

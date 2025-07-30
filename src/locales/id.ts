@@ -546,6 +546,7 @@ const translations = {
   "verify_email": "Verifikasi email",
   "view": "Lihat",
   "view_layer": "Lihat area layer",
+  "view_workspace": "Lihat area workspace",
   "village_asset": "Aset desa",
   "vision": "Visi",
   "wa_number": "Nomor WA",

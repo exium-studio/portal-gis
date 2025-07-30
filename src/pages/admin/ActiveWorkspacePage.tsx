@@ -1,5 +1,5 @@
+import CContainer from "@/components/ui-custom/CContainer";
 import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
-import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import P from "@/components/ui-custom/P";
 import SearchInput from "@/components/ui-custom/SearchInput";
@@ -55,14 +55,7 @@ const ActiveWorkspacePage = () => {
       )}
 
       {!empty(filteredActiveWorkspaces) && (
-        <ItemContainer
-          flex={1}
-          overflowY={"auto"}
-          border={"none"}
-          p={[null, null, 4]}
-          gap={4}
-          bg={["", null, "body"]}
-        >
+        <CContainer flex={1} gap={4}>
           <ItemHeaderContainer borderless p={0}>
             <HStack justify={"space-between"} w={"full"}>
               <SearchInput
@@ -95,7 +88,7 @@ const ActiveWorkspacePage = () => {
               );
             })}
           </AccordionRoot>
-        </ItemContainer>
+        </CContainer>
       )}
     </PageContainer>
   );

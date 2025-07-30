@@ -12,6 +12,7 @@ import P from "@/components/ui-custom/P";
 import { EditField } from "./EditField";
 import FloatingContainerCloseButton from "./FloatingContainerCloseButton";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
+import PropertyValue from "../PropertyValue";
 
 export const FieldInfo = () => {
   // Hooks
@@ -103,7 +104,19 @@ export const FieldInfo = () => {
       </MenuHeaderContainer>
 
       <CContainer px={1} className="scrollY">
-        <ItemContainer>
+        {data &&
+          Object?.keys(data)?.map((key) => {
+            return (
+              <ItemContainer key={key}>
+                <P fontWeight={"medium"} color={"fg.subtle"}>
+                  {`${key}`}
+                </P>
+                <PropertyValue>{`${data?.[key] || "-"}`}</PropertyValue>
+              </ItemContainer>
+            );
+          })}
+
+        {/* <ItemContainer>
           <P fontWeight={"medium"} color={"fg.subtle"}>
             {l.owner}
           </P>
@@ -227,7 +240,7 @@ export const FieldInfo = () => {
             {l.result}
           </P>
           <P>{`${data?.hasil || "-"}`}</P>
-        </ItemContainer>
+        </ItemContainer> */}
       </CContainer>
     </FloatingContainer>
   );
