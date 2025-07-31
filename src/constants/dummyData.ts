@@ -1,6 +1,4 @@
-import { Interface__Workspace } from "./interfaces";
-
-export const dummyWorkspaces: Interface__Workspace[] = [
+export const dummyWorkspaces: any[] = [
   {
     id: "workspace-1",
     title: "Urban Planning",
