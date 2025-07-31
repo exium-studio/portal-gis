@@ -175,11 +175,15 @@ const BaseMap = () => {
     } else {
       setActiveMapStyle(mapStyle.tile[colorMode]);
     }
-    setMapKey((ps) => ps + 1);
+    setTimeout(() => {
+      setMapKey((ps) => ps + 1);
+    }, 1);
   }, [mapStyle, colorMode]);
 
   useEffect(() => {
-    setLayerKey((ps) => ps + 1);
+    setTimeout(() => {
+      setLayerKey((ps) => ps + 1);
+    }, 1);
   }, [activeWorkspaces]);
 
   return (

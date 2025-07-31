@@ -7,7 +7,7 @@ import useLegend from "@/context/useLegend";
 import useMapViewState from "@/context/useMapViewState";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { Layer, Source } from "react-map-gl/mapbox";
 
 interface LayerSourceProps {
@@ -120,41 +120,23 @@ const LayerSource = (props: LayerSourceProps) => {
 };
 
 const LayerManager = () => {
-  // Contexts
-  const activeWorkspacesOri = useActiveWorkspaces((s) => s.activeWorkspaces);
-
-  // States
-  const [activeWorkspaces, setActiveWorkspaces] = useState<
-    Interface__ActiveWorkspace[]
-  >([]);
-
-  useEffect(() => {
-    // console.log("activeWorkspacesOri changes");
-    const newActiveWorkspaces = [...activeWorkspacesOri]
-      .filter((activeWorkspace) => activeWorkspace.visible)
-      .sort((a, b) => a.zIndex - b.zIndex);
-    setActiveWorkspaces(newActiveWorkspaces);
-  }, [activeWorkspacesOri]);
-
-  // console.log(activeWorkspaces);
+  const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
 
   return (
     <>
-      {activeWorkspaces?.map((activeWorkspace) =>
-        activeWorkspace.layers
-          ?.filter((layer) => {
-            return layer.visible;
-          })
-          ?.map((activeLayer) => {
-            return (
+      {activeWorkspaces
+        .filter((workspace) => workspace.visible)
+        .map((workspace) =>
+          workspace.layers
+            ?.filter((layer) => layer.visible)
+            ?.map((layer) => (
               <LayerSource
-                key={`${activeWorkspace.id}-${activeLayer.id}`}
-                activeWorkspace={activeWorkspace}
-                activeLayer={activeLayer}
+                key={`${workspace.id}-${layer.id}`}
+                activeWorkspace={workspace}
+                activeLayer={layer}
               />
-            );
-          })
-      )}
+            ))
+        )}
     </>
   );
 };

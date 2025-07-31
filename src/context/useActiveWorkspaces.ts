@@ -205,9 +205,11 @@ const useActiveWorkspaces = create<Interface__ActiveWorkspaces>((set, get) => ({
       const currentIndex = workspaces.findIndex((w) => w.id === workspaceId);
 
       if (currentIndex < workspaces.length - 1) {
-        const nextZ = workspaces[currentIndex + 1].zIndex;
-        workspaces[currentIndex + 1].zIndex = workspaces[currentIndex].zIndex;
-        workspaces[currentIndex].zIndex = nextZ;
+        // Swap positions
+        [workspaces[currentIndex], workspaces[currentIndex + 1]] = [
+          workspaces[currentIndex + 1],
+          workspaces[currentIndex],
+        ];
       }
 
       return { activeWorkspaces: workspaces };
@@ -215,29 +217,29 @@ const useActiveWorkspaces = create<Interface__ActiveWorkspaces>((set, get) => ({
 
   moveWorkspaceDown: (workspaceId) =>
     set((state) => {
-      const newActiveWorkspaces = [...state.activeWorkspaces];
-      const currentIndex = newActiveWorkspaces.findIndex(
-        (w) => w.id === workspaceId
-      );
+      const workspaces = [...state.activeWorkspaces];
+      const currentIndex = workspaces.findIndex((w) => w.id === workspaceId);
 
       if (currentIndex > 0) {
-        const prevZ = newActiveWorkspaces[currentIndex - 1].zIndex;
-        newActiveWorkspaces[currentIndex - 1].zIndex =
-          newActiveWorkspaces[currentIndex].zIndex;
-        newActiveWorkspaces[currentIndex].zIndex = prevZ;
+        // Swap positions
+        [workspaces[currentIndex], workspaces[currentIndex - 1]] = [
+          workspaces[currentIndex - 1],
+          workspaces[currentIndex],
+        ];
       }
 
-      return { activeWorkspaces: newActiveWorkspaces };
+      return { activeWorkspaces: workspaces };
     }),
 
   bringWorkspaceToFront: (workspaceId) =>
     set((state) => {
       const workspaces = [...state.activeWorkspaces];
-      const workspace = workspaces.find((w) => w.id === workspaceId);
+      const currentIndex = workspaces.findIndex((w) => w.id === workspaceId);
 
-      if (workspace) {
-        const maxZIndex = Math.max(...workspaces.map((w) => w.zIndex));
-        workspace.zIndex = maxZIndex + 1;
+      if (currentIndex !== -1) {
+        // Remove from current position and add to end
+        const [workspace] = workspaces.splice(currentIndex, 1);
+        workspaces.push(workspace);
       }
 
       return { activeWorkspaces: workspaces };
@@ -246,17 +248,18 @@ const useActiveWorkspaces = create<Interface__ActiveWorkspaces>((set, get) => ({
   sendWorkspaceToBack: (workspaceId) =>
     set((state) => {
       const workspaces = [...state.activeWorkspaces];
-      const workspace = workspaces.find((w) => w.id === workspaceId);
+      const currentIndex = workspaces.findIndex((w) => w.id === workspaceId);
 
-      if (workspace) {
-        const minZIndex = Math.min(...workspaces.map((w) => w.zIndex));
-        workspace.zIndex = minZIndex - 1;
+      if (currentIndex !== -1) {
+        // Remove from current position and add to beginning
+        const [workspace] = workspaces.splice(currentIndex, 1);
+        workspaces.unshift(workspace);
       }
 
       return { activeWorkspaces: workspaces };
     }),
 
-  // Layer z-index management
+  // Layer ordering within workspace
   moveLayerUp: (workspaceId, layerId) =>
     set((state) => ({
       activeWorkspaces: state.activeWorkspaces.map((workspace) => {
@@ -266,9 +269,11 @@ const useActiveWorkspaces = create<Interface__ActiveWorkspaces>((set, get) => ({
         const currentIndex = layers.findIndex((l) => l.id === layerId);
 
         if (currentIndex < layers.length - 1) {
-          const nextZ = layers[currentIndex + 1].zIndex;
-          layers[currentIndex + 1].zIndex = layers[currentIndex].zIndex;
-          layers[currentIndex].zIndex = nextZ;
+          // Swap positions
+          [layers[currentIndex], layers[currentIndex + 1]] = [
+            layers[currentIndex + 1],
+            layers[currentIndex],
+          ];
         }
 
         return { ...workspace, layers };
@@ -284,9 +289,11 @@ const useActiveWorkspaces = create<Interface__ActiveWorkspaces>((set, get) => ({
         const currentIndex = layers.findIndex((l) => l.id === layerId);
 
         if (currentIndex > 0) {
-          const prevZ = layers[currentIndex - 1].zIndex;
-          layers[currentIndex - 1].zIndex = layers[currentIndex].zIndex;
-          layers[currentIndex].zIndex = prevZ;
+          // Swap positions
+          [layers[currentIndex], layers[currentIndex - 1]] = [
+            layers[currentIndex - 1],
+            layers[currentIndex],
+          ];
         }
 
         return { ...workspace, layers };
@@ -298,13 +305,16 @@ const useActiveWorkspaces = create<Interface__ActiveWorkspaces>((set, get) => ({
       activeWorkspaces: state.activeWorkspaces.map((workspace) => {
         if (workspace.id !== workspaceId || !workspace.layers) return workspace;
 
-        const maxZIndex = Math.max(...workspace.layers.map((l) => l.zIndex));
-        return {
-          ...workspace,
-          layers: workspace.layers.map((layer) =>
-            layer.id === layerId ? { ...layer, zIndex: maxZIndex + 1 } : layer
-          ),
-        };
+        const layers = [...workspace.layers];
+        const currentIndex = layers.findIndex((l) => l.id === layerId);
+
+        if (currentIndex !== -1) {
+          // Remove from current position and add to end
+          const [layer] = layers.splice(currentIndex, 1);
+          layers.push(layer);
+        }
+
+        return { ...workspace, layers };
       }),
     })),
 
@@ -313,13 +323,16 @@ const useActiveWorkspaces = create<Interface__ActiveWorkspaces>((set, get) => ({
       activeWorkspaces: state.activeWorkspaces.map((workspace) => {
         if (workspace.id !== workspaceId || !workspace.layers) return workspace;
 
-        const minZIndex = Math.min(...workspace.layers.map((l) => l.zIndex));
-        return {
-          ...workspace,
-          layers: workspace.layers.map((layer) =>
-            layer.id === layerId ? { ...layer, zIndex: minZIndex - 1 } : layer
-          ),
-        };
+        const layers = [...workspace.layers];
+        const currentIndex = layers.findIndex((l) => l.id === layerId);
+
+        if (currentIndex !== -1) {
+          // Remove from current position and add to beginning
+          const [layer] = layers.splice(currentIndex, 1);
+          layers.unshift(layer);
+        }
+
+        return { ...workspace, layers };
       }),
     })),
 }));

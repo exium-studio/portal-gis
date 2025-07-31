@@ -22,6 +22,7 @@ import ActiveLayerListItem from "./ActiveLayerListItem";
 
 interface Props {
   activeWorkspace: Interface__ActiveWorkspace;
+  index?: number;
 }
 
 const ActiveWorkspaceUtils = (props: any) => {
@@ -157,7 +158,7 @@ const ActiveWorkspaceListItem = (props: Props) => {
         </HStack>
       </AccordionItemTrigger>
 
-      <AccordionItemContent py={1}>
+      <AccordionItemContent py={0} pb={2}>
         <CContainer gap={1}>
           {activeWorkspace?.layers?.map((activeLayer) => {
             return (

@@ -20,15 +20,12 @@ const ActiveWorkspacePage = () => {
 
   // Contexts
   const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
-  const sortedActiveWorkspaces = [...activeWorkspaces].sort(
-    (a, b) => a.zIndex - b.zIndex
-  );
 
   // States
   const [filterConfig, setFilterConfig] = useState<any>({
     search: "",
   });
-  const filteredActiveWorkspaces = sortedActiveWorkspaces
+  const filteredActiveWorkspaces = [...activeWorkspaces]
     ?.reverse()
     ?.filter((workspace: Interface__Workspace) => {
       const searchTerm = filterConfig?.search?.toLowerCase();
@@ -40,7 +37,7 @@ const ActiveWorkspacePage = () => {
 
       if (searchTerm) return titleMatch || layerNameMatch;
 
-      return sortedActiveWorkspaces;
+      return activeWorkspaces;
     });
   return (
     <PageContainer gap={R_GAP} pb={4} flex={1}>
@@ -69,11 +66,12 @@ const ActiveWorkspacePage = () => {
 
         {!empty(filteredActiveWorkspaces) && (
           <AccordionRoot multiple>
-            {filteredActiveWorkspaces.map((activeWorkspace) => {
+            {filteredActiveWorkspaces.map((activeWorkspace, i) => {
               return (
                 <ActiveWorkspaceListItem
                   key={activeWorkspace.id}
                   activeWorkspace={activeWorkspace}
+                  index={i}
                 />
               );
             })}

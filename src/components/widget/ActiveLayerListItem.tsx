@@ -155,7 +155,7 @@ const ActiveLayerListItem = (props: Props) => {
           iconButton
           unclicky
           variant={"ghost"}
-          // size={"xs"}
+          size={"xs"}
           minW={"28px"}
           opacity={hover ? 1 : 0}
           pointerEvents={hover ? "auto" : "none"}
@@ -168,8 +168,8 @@ const ActiveLayerListItem = (props: Props) => {
 
       <HStack
         // bg={hover ? "d1" : ""}
-        borderRadius={themeConfig.radii.component}
         // p={1}
+        borderRadius={themeConfig.radii.component}
         pl={iss ? 6 : 0}
         w={"full"}
       >
