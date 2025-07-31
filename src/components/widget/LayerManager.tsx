@@ -34,10 +34,12 @@ const LayerSource = (props: LayerSourceProps) => {
   const geojson = activeLayer?.data?.geojson;
   const selectedFeatureId = selectedPolygon?.polygon?.properties?.id;
   const defaultFillColor = "#808080";
-  const defaultLineColor = "#ccc";
+  const defaultLineColor = "5E5E5E";
   const fillLayerId = `${activeLayer?.id}-fill`;
   const outlineLayerId = `${activeLayer?.id}-outline`;
   const sourceId = `${activeLayer?.id}-source`;
+  const fillLayer = activeLayer.layer_type === "fill";
+  const lineLayer = activeLayer.layer_type === "line";
 
   // Modified click handler
   const handleOnClickPolygon = useCallback(
@@ -83,32 +85,36 @@ const LayerSource = (props: LayerSourceProps) => {
 
   return (
     <Source id={sourceId} type="geojson" data={geojson}>
-      <Layer
-        id={fillLayerId}
-        type="fill"
-        paint={{
-          "fill-color": [
-            "case",
-            ["==", ["get", "id"], selectedFeatureId || ""],
-            themeConfig.primaryColorHex,
-            [
-              "match",
-              ["get", legendType],
-              ...legends.flatMap((legend) => [legend.label, legend.color]),
-              defaultFillColor,
+      {fillLayer && (
+        <Layer
+          id={fillLayerId}
+          type="fill"
+          paint={{
+            "fill-color": [
+              "case",
+              ["==", ["get", "id"], selectedFeatureId || ""],
+              themeConfig.primaryColorHex,
+              [
+                "match",
+                ["get", legendType],
+                ...legends.flatMap((legend) => [legend.label, legend.color]),
+                defaultFillColor,
+              ],
             ],
-          ],
-          "fill-opacity": 0.8,
-        }}
-      />
-      <Layer
-        id={outlineLayerId}
-        type="line"
-        paint={{
-          "line-color": defaultLineColor,
-          "line-width": 1,
-        }}
-      />
+            "fill-opacity": 0.8,
+          }}
+        />
+      )}
+      {lineLayer && (
+        <Layer
+          id={outlineLayerId}
+          type="line"
+          paint={{
+            "line-color": defaultLineColor,
+            "line-width": 1,
+          }}
+        />
+      )}
     </Source>
   );
 };
