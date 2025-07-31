@@ -223,9 +223,6 @@ const BaseMap = () => {
 
           {/* Polygon Layer */}
           <LayerManager key={mapKey} />
-
-          {/* WMS Layers */}
-          {/* <WMSLayerManager /> */}
         </>
       )}
     </Map>
