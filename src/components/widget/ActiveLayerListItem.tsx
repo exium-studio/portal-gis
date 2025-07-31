@@ -27,14 +27,14 @@ interface Props {
 
 const ActiveLayerUtils = (props: any) => {
   // Props
-  const { activeLayer } = props;
+  const { activeLayer, ...restProps } = props;
 
   // Hooks
   // const iss = useIsSmScreenWidth();
   // const halfPanel = useLayout((s) => s.halfPanel);
 
   return (
-    <HStack ml={"auto"} gap={1}>
+    <HStack gap={1} {...restProps}>
       <DecreaseLayerLevel activeLayer={activeLayer} />
 
       <IncreaseLayerLevel activeLayer={activeLayer} />
@@ -148,9 +148,9 @@ const ActiveLayerListItem = (props: Props) => {
       )}
 
       <HStack
-        bg={hover ? "d1" : ""}
+        // bg={hover ? "d1" : ""}
         borderRadius={themeConfig.radii.component}
-        p={1}
+        // p={1}
         pl={iss ? 6 : 1}
         w={"full"}
       >
@@ -190,7 +190,7 @@ const ActiveLayerListItem = (props: Props) => {
           </HStack>
         </SimplePopover>
 
-        <ActiveLayerUtils activeLayer={activeLayer} />
+        <ActiveLayerUtils activeLayer={activeLayer} ml={"auto"} />
       </HStack>
     </HStack>
   );
