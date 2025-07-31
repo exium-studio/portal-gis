@@ -7,6 +7,7 @@ import { useThemeConfig } from "@/context/useThemeConfig";
 import useBackOnClose from "@/hooks/useBackOnClose";
 import useRequest from "@/hooks/useRequest";
 import back from "@/utils/back";
+import capsFirstLetter from "@/utils/capsFirstLetter";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import empty from "@/utils/empty";
 import { formatTableName } from "@/utils/formatTableName";
@@ -21,7 +22,12 @@ import {
   Icon,
   useDisclosure,
 } from "@chakra-ui/react";
-import { IconEdit, IconTrash } from "@tabler/icons-react";
+import {
+  IconEdit,
+  IconLine,
+  IconPolygon,
+  IconTrash,
+} from "@tabler/icons-react";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import * as yup from "yup";
@@ -46,7 +52,7 @@ import { Field } from "../ui/field";
 import { Tooltip } from "../ui/tooltip";
 import SelectLayerFileType from "./SelectLayerFileType";
 import SelectLayerType from "./SelectLayerType";
-import { OPTIONS_LAYER_TYPE } from "@/static/selectOptions";
+import SimplePopover from "./SimplePopover";
 
 const EditLayer = (props: any) => {
   // Props
@@ -126,9 +132,10 @@ const EditLayer = (props: any) => {
         name: layer?.name,
         description: layer?.description,
         layer_type: [
-          OPTIONS_LAYER_TYPE.find(
-            (layerType) => layerType.id === layer?.layer_type
-          ),
+          {
+            id: layer?.layer_type,
+            label: capsFirstLetter(layer?.layer_type),
+          },
         ],
         file_type: undefined,
         file: undefined,
@@ -153,7 +160,7 @@ const EditLayer = (props: any) => {
           variant={"ghost"}
           {...restProps}
         >
-          <Icon>
+          <Icon boxSize={restProps.boxSize || 5}>
             <IconEdit stroke={1.5} />
           </Icon>
         </BButton>
@@ -317,7 +324,7 @@ const DeleteLayer = (props: any) => {
         }}
         {...restProps}
       >
-        <Icon>
+        <Icon boxSize={restProps.boxSize || 5}>
           <IconTrash stroke={1.5} />
         </Icon>
       </BButton>
@@ -402,16 +409,45 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                           py={1}
                           borderRadius={themeConfig.radii.component}
                         >
-                          <P>{layer?.name}</P>
+                          <SimplePopover
+                            content={
+                              <CContainer gap={1}>
+                                <P w={"full"}>{layer?.name}</P>
+
+                                <P w={"full"} color={"fg.subtle"}>
+                                  {layer?.description}
+                                </P>
+                              </CContainer>
+                            }
+                          >
+                            <HStack>
+                              <Icon boxSize={5} color={"fg.subtle"}>
+                                {layer?.layer_type === "fill" ? (
+                                  <IconPolygon stroke={1.5} />
+                                ) : (
+                                  <IconLine stroke={1.5} />
+                                )}
+                              </Icon>
+
+                              <P w={"full"} lineClamp={1}>
+                                {layer?.name}
+                              </P>
+                            </HStack>
+                          </SimplePopover>
 
                           <HStack gap={1} ml={"auto"}>
                             <EditLayer
                               workspace={workspace}
                               layer={layer}
                               disabled={workspaceActive}
+                              size={"sm"}
                             />
 
-                            <DeleteLayer workspace={workspace} layer={layer} />
+                            <DeleteLayer
+                              workspace={workspace}
+                              layer={layer}
+                              size={"sm"}
+                            />
                           </HStack>
                         </HStack>
                       );

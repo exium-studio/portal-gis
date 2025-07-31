@@ -51,27 +51,28 @@ export interface Interface__Workspace extends Interface__CUD {
   layers?: Interface__Layer[];
   workspace_category: Interface__Gens;
   thumbnail?: Interface__StorageFile[];
-  bbox?: number[];
-  bbox_center?: number[];
+  bbox: number[];
+  bbox_center: number[];
 }
 export interface Interface__Layer extends Interface__CUD {
   id: number;
   workspace_id: number;
   parent_layer_id?: number | null;
   name: string;
-  description?: string;
-  table_name?: string;
+  description: string;
+  table_name: string;
+  layer_type: string;
   data?: Interface__LayerData;
-  bbox?: number[];
-  bbox_center?: number[];
+  bbox: number[];
+  bbox_center: number[];
 }
 export interface Interface__LayerData extends Interface__CUD {
   id: number;
   layer_id: number;
   documents: Interface__StorageFile[];
   geojson: GeoJSON.FeatureCollection;
-  bbox: number[];
-  bbox_center: number[];
+  bbox?: number[];
+  bbox_center?: number[];
 }
 export interface Interface__ActiveWorkspace extends Interface__Workspace {
   visible: boolean;
