@@ -1,3 +1,6 @@
+import useLang from "@/context/useLang";
+import empty from "@/utils/empty";
+import formatBytes from "@/utils/formatBytes";
 import { Icon, useFieldContext } from "@chakra-ui/react";
 import { IconUpload } from "@tabler/icons-react";
 import {
@@ -7,9 +10,9 @@ import {
   FileUploadRootProps,
   FileUploadTrigger,
 } from "../ui/file-button";
-import BButton from "./BButton";
-import useLang from "@/context/useLang";
 import { toaster } from "../ui/toaster";
+import BButton from "./BButton";
+import FileIcon from "./FileIcon";
 
 interface Props extends FileUploadRootProps {
   name?: string;
@@ -53,6 +56,19 @@ const FileInput = (props: Props) => {
   // Contexts
   const fc = useFieldContext();
 
+  // States
+  const singleFileInputted = maxFiles === 1 && !empty(inputValue);
+  const singleFile = inputValue?.[0] as File;
+  const finalIcon = singleFileInputted ? (
+    <FileIcon name={singleFile.name} mimeType={singleFile.type} size={"2xl"} />
+  ) : undefined;
+  const finalLabel = singleFileInputted
+    ? singleFile?.name
+    : l.file_dropzone_label;
+  const finalDescription = singleFileInputted
+    ? formatBytes(singleFile?.size)
+    : `${description} ${accept ? `(${accept})` : ""}`;
+
   // Utils
   const handleFileChange = (details: any) => {
     let files = details.acceptedFiles || [];
@@ -88,8 +104,9 @@ const FileInput = (props: Props) => {
       <>
         {dropzone ? (
           <FileUploadDropzone
-            description={`${description} ${accept ? `(${accept})` : ""}`}
-            label={l.file_dropzone_label}
+            icon={finalIcon}
+            label={finalLabel}
+            description={finalDescription}
             border={"2px dashed"}
             borderColor={
               invalid ?? fc?.invalid ? "border.error" : "border.muted"
@@ -113,7 +130,7 @@ const FileInput = (props: Props) => {
           </FileUploadTrigger>
         )}
 
-        <FileUploadList showSize clearable opacity={disabled ? 0.5 : 1} />
+        {!singleFileInputted && <FileUploadList files={inputValue as File[]} />}
       </>
     </FileUploadRoot>
   );

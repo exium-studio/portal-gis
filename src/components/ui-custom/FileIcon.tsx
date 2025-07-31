@@ -5,83 +5,69 @@ import {
   IconFileTypeDoc,
   IconFileTypePdf,
   IconFileTypeXls,
+  IconFileZip,
   IconPhoto,
-  IconPresentation,
 } from "@tabler/icons-react";
 import { forwardRef } from "react";
 
 interface Props extends IconProps {
+  name?: string;
   mimeType?: string;
   iconProps?: any;
 }
 
 const FileIcon = forwardRef<SVGSVGElement, Props>(
-  ({ mimeType, iconProps, ...props }, ref) => {
-    let iconColor = "current";
-    let IconComponent;
+  ({ name, mimeType, iconProps, ...restProps }, ref) => {
+    const extension = name?.toLowerCase().split(".").pop() as string;
+    const mime = mimeType?.toLowerCase();
 
-    switch (mimeType?.toLowerCase()) {
-      default:
-        IconComponent = IconFile;
-        break;
-      case "pdf":
-      case "application/pdf":
+    let iconColor = "current";
+    let IconComponent = IconFile;
+
+    // Prioritize mimeType first, then fallback to extension
+    switch (true) {
+      // PDF Files
+      case mime === "application/pdf" || extension === "pdf":
         iconColor = "red.500";
         IconComponent = IconFileTypePdf;
         break;
-      case "docx":
-      case "doc":
-      case "vnd.ms-word":
-      case "vnd.openxmlformats-officedocument.wordprocessingml.document":
-      case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+
+      // Word Documents
+      case mime === "application/msword" ||
+        mime ===
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+        ["doc", "docx"].includes(extension):
         iconColor = "blue.500";
         IconComponent = IconFileTypeDoc;
         break;
-      case "xls":
-      case "xlsx":
-      case "vnd.ms-excel":
-      case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
-        iconColor = "green.500";
-        IconComponent = IconFileTypeXls;
+
+      // Excel Files
+      case mime === "application/vnd.ms-excel" ||
+        mime ===
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+        ["xls", "xlsx", "csv"].includes(extension):
+        iconColor = extension === "csv" ? "green.600" : "green.500";
+        IconComponent = extension === "csv" ? IconFileTypeCsv : IconFileTypeXls;
         break;
-      case "ppt":
-      case "pptx":
-      case "vnd.ms-presentation":
-      case "vnd.openxmlformats-officedocument.presentationml.presentation":
-        iconColor = "green.500";
-        IconComponent = IconPresentation;
-        break;
-      case "csv":
-        iconColor = "green.500";
-        IconComponent = IconFileTypeCsv;
-        break;
-      case "jpg":
-      case "jpeg":
-      case "png":
-      case "svg":
-      case "svg+xml":
-      case "heic":
-      case "webp":
-      case "gif":
-      case "tiff":
-      case "tif":
-      case "image/jpg":
-      case "image/jpeg":
-      case "image/png":
-      case "image/svg":
-      case "image/svg+xml":
-      case "image/heic":
-      case "image/webp":
-      case "image/gif":
-      case "image/tiff":
-      case "image/tif":
+
+      // Images
+      case mime?.startsWith("image/") ||
+        ["jpg", "jpeg", "png", "gif", "webp", "svg"].includes(extension):
         iconColor = "purple.500";
         IconComponent = IconPhoto;
+        break;
+
+      // ZIP Archives
+      case mime === "application/zip" ||
+        mime === "application/x-zip-compressed" ||
+        extension === "zip":
+        iconColor = "orange.500";
+        IconComponent = IconFileZip;
         break;
     }
 
     return (
-      <ChakraIcon color={iconColor} ref={ref} {...props}>
+      <ChakraIcon ref={ref} color={`${iconColor} !important`} {...restProps}>
         <IconComponent stroke={1.5} {...iconProps} />
       </ChakraIcon>
     );
