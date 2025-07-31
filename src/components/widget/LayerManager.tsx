@@ -143,15 +143,9 @@ const LayerManager = () => {
       {activeWorkspaces?.map((activeWorkspace) =>
         activeWorkspace.layers
           ?.filter((layer) => {
-            // console.log(
-            //   `${activeWorkspace.title}- ${layer.name} - ${layer?.visible}`
-            // );
-
             return layer.visible;
           })
           ?.map((activeLayer) => {
-            // console.log(`${activeWorkspace.title}- ${activeLayer.name}`);
-
             return (
               <LayerSource
                 key={`${activeWorkspace.id}-${activeLayer.id}`}

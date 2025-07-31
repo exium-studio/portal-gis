@@ -215,16 +215,19 @@ const useActiveWorkspaces = create<Interface__ActiveWorkspaces>((set, get) => ({
 
   moveWorkspaceDown: (workspaceId) =>
     set((state) => {
-      const workspaces = [...state.activeWorkspaces];
-      const currentIndex = workspaces.findIndex((w) => w.id === workspaceId);
+      const newActiveWorkspaces = [...state.activeWorkspaces];
+      const currentIndex = newActiveWorkspaces.findIndex(
+        (w) => w.id === workspaceId
+      );
 
       if (currentIndex > 0) {
-        const prevZ = workspaces[currentIndex - 1].zIndex;
-        workspaces[currentIndex - 1].zIndex = workspaces[currentIndex].zIndex;
-        workspaces[currentIndex].zIndex = prevZ;
+        const prevZ = newActiveWorkspaces[currentIndex - 1].zIndex;
+        newActiveWorkspaces[currentIndex - 1].zIndex =
+          newActiveWorkspaces[currentIndex].zIndex;
+        newActiveWorkspaces[currentIndex].zIndex = prevZ;
       }
 
-      return { activeWorkspaces: workspaces };
+      return { activeWorkspaces: newActiveWorkspaces };
     }),
 
   bringWorkspaceToFront: (workspaceId) =>

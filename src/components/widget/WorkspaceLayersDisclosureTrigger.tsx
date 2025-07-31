@@ -403,7 +403,7 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                         <HStack
                           key={layer.id}
                           // border={"1px solid"}
-                          _hover={{ bg: "bg.subtle" }}
+                          // _hover={{ bg: "bg.subtle" }}
                           borderColor={"border.muted"}
                           pl={2}
                           pr={1}

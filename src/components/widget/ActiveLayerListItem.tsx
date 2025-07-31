@@ -1,5 +1,6 @@
 import { Interface__ActiveLayer } from "@/constants/interfaces";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
+import useLang from "@/context/useLang";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import capsFirstLetter from "@/utils/capsFirstLetter";
@@ -10,16 +11,13 @@ import {
   IconGripVertical,
   IconLine,
   IconPolygon,
-  IconStackPop,
-  IconStackPush,
 } from "@tabler/icons-react";
 import { useState } from "react";
 import BButton from "../ui-custom/BButton";
 import CContainer from "../ui-custom/CContainer";
 import P from "../ui-custom/P";
-import SimplePopover from "./SimplePopover";
 import { Tooltip } from "../ui/tooltip";
-import useLang from "@/context/useLang";
+import SimplePopover from "./SimplePopover";
 
 interface Props {
   activeLayer: Interface__ActiveLayer;
@@ -29,76 +27,74 @@ const ActiveLayerUtils = (props: any) => {
   // Props
   const { activeLayer, ...restProps } = props;
 
-  // Hooks
-  // const iss = useIsSmScreenWidth();
-  // const halfPanel = useLayout((s) => s.halfPanel);
+  // TODO dev control zindex for workspace layers
 
   return (
     <HStack gap={1} {...restProps}>
-      <DecreaseLayerLevel activeLayer={activeLayer} />
+      {/* <DecreaseLayerLevel activeLayer={activeLayer} /> */}
 
-      <IncreaseLayerLevel activeLayer={activeLayer} />
+      {/* <IncreaseLayerLevel activeLayer={activeLayer} /> */}
 
       <ToggleVisibility activeLayer={activeLayer} />
     </HStack>
   );
 };
-const DecreaseLayerLevel = (props: any) => {
-  // Props
-  const { activeLayer } = props;
+// const DecreaseLayerLevel = (props: any) => {
+//   // Props
+//   const { activeLayer } = props;
 
-  // Hooks
-  const { l } = useLang();
+//   // Hooks
+//   const { l } = useLang();
 
-  // Contexts
-  const decreaseLayerLevel = useActiveWorkspaces((s) => s.moveLayerDown);
+//   // Contexts
+//   const decreaseLayerLevel = useActiveWorkspaces((s) => s.moveLayerDown);
 
-  return (
-    <Tooltip content={l.move_down_layer_level}>
-      <BButton
-        iconButton
-        unclicky
-        size={"xs"}
-        variant={"ghost"}
-        onClick={() => {
-          decreaseLayerLevel(activeLayer?.workspace?.id, activeLayer?.id);
-        }}
-      >
-        <Icon boxSize={5}>
-          <IconStackPush stroke={1.5} />
-        </Icon>
-      </BButton>
-    </Tooltip>
-  );
-};
-const IncreaseLayerLevel = (props: any) => {
-  // Props
-  const { activeLayer } = props;
+//   return (
+//     <Tooltip content={l.move_down_layer_level}>
+//       <BButton
+//         iconButton
+//         unclicky
+//         size={"xs"}
+//         variant={"ghost"}
+//         onClick={() => {
+//           decreaseLayerLevel(activeLayer?.workspace?.id, activeLayer?.id);
+//         }}
+//       >
+//         <Icon boxSize={5}>
+//           <IconStackPush stroke={1.5} />
+//         </Icon>
+//       </BButton>
+//     </Tooltip>
+//   );
+// };
+// const IncreaseLayerLevel = (props: any) => {
+//   // Props
+//   const { activeLayer } = props;
 
-  // Hooks
-  const { l } = useLang();
+//   // Hooks
+//   const { l } = useLang();
 
-  // Contexts
-  const increaseLayerLevel = useActiveWorkspaces((s) => s.moveLayerUp);
+//   // Contexts
+//   const increaseLayerLevel = useActiveWorkspaces((s) => s.moveLayerUp);
 
-  return (
-    <Tooltip content={l.move_up_layer_level}>
-      <BButton
-        iconButton
-        unclicky
-        size={"xs"}
-        variant={"ghost"}
-        onClick={() => {
-          increaseLayerLevel(activeLayer?.workspace?.id, activeLayer?.id);
-        }}
-      >
-        <Icon boxSize={5}>
-          <IconStackPop stroke={1.5} />
-        </Icon>
-      </BButton>
-    </Tooltip>
-  );
-};
+//   return (
+//     <Tooltip content={l.move_up_layer_level}>
+//       <BButton
+//         iconButton
+//         unclicky
+//         size={"xs"}
+//         variant={"ghost"}
+//         onClick={() => {
+//           increaseLayerLevel(activeLayer?.workspace?.id, activeLayer?.id);
+//         }}
+//       >
+//         <Icon boxSize={5}>
+//           <IconStackPop stroke={1.5} />
+//         </Icon>
+//       </BButton>
+//     </Tooltip>
+//   );
+// };
 const ToggleVisibility = (props: any) => {
   // Props
   const { activeLayer } = props;
