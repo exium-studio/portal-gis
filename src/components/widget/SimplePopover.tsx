@@ -16,7 +16,7 @@ const SimplePopover = (props: Props) => {
       <PopoverTrigger asChild>{children}</PopoverTrigger>
 
       <PopoverContent
-        p={2}
+        p={3}
         minW={"fit"}
         w={"fit"}
         maxW={"280px"}

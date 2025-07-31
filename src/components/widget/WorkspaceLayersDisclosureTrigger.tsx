@@ -418,6 +418,20 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                                 <P w={"full"} color={"fg.subtle"}>
                                   {layer?.description}
                                 </P>
+
+                                <HStack color={"fg.subtle"} mt={1}>
+                                  <Icon boxSize={5}>
+                                    {layer?.layer_type === "fill" ? (
+                                      <IconPolygon stroke={1.5} />
+                                    ) : (
+                                      <IconLine stroke={1.5} />
+                                    )}
+                                  </Icon>
+
+                                  <P lineClamp={1}>
+                                    {capsFirstLetter(layer?.layer_type)}
+                                  </P>
+                                </HStack>
                               </CContainer>
                             }
                           >
