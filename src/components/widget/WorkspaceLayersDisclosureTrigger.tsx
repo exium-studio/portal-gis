@@ -398,7 +398,7 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
 
                 {filteredLayers && (
                   <>
-                    {filteredLayers?.map((layer) => {
+                    {filteredLayers?.reverse().map((layer) => {
                       return (
                         <HStack
                           key={layer.id}

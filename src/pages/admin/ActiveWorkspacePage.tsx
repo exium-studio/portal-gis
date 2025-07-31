@@ -24,14 +24,13 @@ const ActiveWorkspacePage = () => {
     (a, b) => a.zIndex - b.zIndex
   );
 
-  console.log(sortedActiveWorkspaces);
-
   // States
   const [filterConfig, setFilterConfig] = useState<any>({
     search: "",
   });
-  const filteredActiveWorkspaces = activeWorkspaces?.filter(
-    (workspace: Interface__Workspace) => {
+  const filteredActiveWorkspaces = sortedActiveWorkspaces
+    ?.reverse()
+    ?.filter((workspace: Interface__Workspace) => {
       const searchTerm = filterConfig?.search?.toLowerCase();
       const titleTerm = workspace?.title?.toLowerCase();
       const titleMatch = titleTerm?.includes(searchTerm);
@@ -41,9 +40,8 @@ const ActiveWorkspacePage = () => {
 
       if (searchTerm) return titleMatch || layerNameMatch;
 
-      return activeWorkspaces;
-    }
-  );
+      return sortedActiveWorkspaces;
+    });
   return (
     <PageContainer gap={R_GAP} pb={4} flex={1}>
       <CContainer flex={1} gap={4}>
