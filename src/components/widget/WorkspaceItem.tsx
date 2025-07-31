@@ -58,13 +58,13 @@ import StringInput from "../ui-custom/StringInput";
 import Textarea from "../ui-custom/Textarea";
 import { Field } from "../ui/field";
 import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
-import { PopoverContent, PopoverRoot, PopoverTrigger } from "../ui/popover";
 import { Switch } from "../ui/switch";
 import { Tooltip } from "../ui/tooltip";
 import ExistingFileItem from "./ExistingFIleItem";
 import SelectLayerFileType from "./SelectLayerFileType";
 import SelectLayerType from "./SelectLayerType";
 import SelectWorkspaceCategory from "./SelectWorkspaceCategort";
+import SimplePopover from "./SimplePopover";
 import WorkspaceLayersDisclosureTrigger from "./WorkspaceLayersDisclosureTrigger";
 
 const WorkspaceMenu = (props: any) => {
@@ -821,20 +821,8 @@ const RowItem = (props: any) => {
         />
 
         <HStack align={"stretch"} gap={0} p={2}>
-          <PopoverRoot>
-            <PopoverTrigger asChild>
-              <CContainer p={1} gap={1}>
-                <P fontWeight={"semibold"} w={"fit"} lineClamp={1}>
-                  {workspace?.title}
-                </P>
-
-                <P color={"fg.subtle"} w={"fit"} lineClamp={1}>
-                  {workspace?.description}
-                </P>
-              </CContainer>
-            </PopoverTrigger>
-
-            <PopoverContent p={2} minW={"fit"} w={"fit"} maxW={"280px"}>
+          <SimplePopover
+            content={
               <CContainer gap={1}>
                 <P fontWeight={"semibold"} w={"fit"}>
                   {workspace?.title}
@@ -844,8 +832,18 @@ const RowItem = (props: any) => {
                   {workspace?.description}
                 </P>
               </CContainer>
-            </PopoverContent>
-          </PopoverRoot>
+            }
+          >
+            <CContainer p={1} gap={1}>
+              <P fontWeight={"semibold"} w={"fit"} lineClamp={1}>
+                {workspace?.title}
+              </P>
+
+              <P color={"fg.subtle"} w={"fit"} lineClamp={1}>
+                {workspace?.description}
+              </P>
+            </CContainer>
+          </SimplePopover>
 
           <WorkspaceMenu
             workspace={workspace}
@@ -878,16 +876,8 @@ const ListItem = (props: any) => {
       {...restProps}
     >
       <HStack p={1} justify={"space-between"}>
-        <PopoverRoot>
-          <PopoverTrigger asChild>
-            <HStack truncate px={2} w={"full"}>
-              <P fontWeight={"semibold"} lineClamp={1}>
-                {workspace?.title}
-              </P>
-            </HStack>
-          </PopoverTrigger>
-
-          <PopoverContent p={2} minW={"fit"} w={"fit"} maxW={"280px"}>
+        <SimplePopover
+          content={
             <CContainer gap={1}>
               <P fontWeight={"semibold"} w={"fit"}>
                 {workspace?.title}
@@ -897,10 +887,20 @@ const ListItem = (props: any) => {
                 {workspace?.description}
               </P>
             </CContainer>
-          </PopoverContent>
-        </PopoverRoot>
+          }
+        >
+          <CContainer p={1} gap={1} pl={2}>
+            <P fontWeight={"semibold"} w={"fit"} lineClamp={1}>
+              {workspace?.title}
+            </P>
+          </CContainer>
+        </SimplePopover>
 
-        <WorkspaceMenu workspace={workspace} setWorkspace={setWorkspace} />
+        <WorkspaceMenu
+          workspace={workspace}
+          setWorkspace={setWorkspace}
+          size={"xs"}
+        />
       </HStack>
 
       <WorkspaceLayersUtils
