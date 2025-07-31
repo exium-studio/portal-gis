@@ -15,7 +15,10 @@ import { useThemeConfig } from "@/context/useThemeConfig";
 import useWorkspaceDisplay from "@/context/useWorkspaceDisplay";
 import useBackOnClose from "@/hooks/useBackOnClose";
 import useRequest from "@/hooks/useRequest";
-import { OPTIONS_LAYER_FILE_TYPE } from "@/static/selectOptions";
+import {
+  OPTIONS_LAYER_FILE_TYPE,
+  OPTIONS_LAYER_TYPE,
+} from "@/static/selectOptions";
 import back from "@/utils/back";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import empty from "@/utils/empty";
@@ -431,22 +434,6 @@ const WorkspaceLayersUtils = (props: {
     </HStack>
   );
 };
-const WorkspaceLayers = (props: any) => {
-  // Props
-  const { workspace, ...restProps } = props;
-
-  return (
-    <WorkspaceLayersDisclosureTrigger workspace={workspace}>
-      <Tooltip content={"Workspace layers"}>
-        <BButton iconButton unclicky variant={"ghost"} {...restProps}>
-          <Icon boxSize={"24px"}>
-            <IconStack stroke={1.5} />
-          </Icon>
-        </BButton>
-      </Tooltip>
-    </WorkspaceLayersDisclosureTrigger>
-  );
-};
 const AddLayer = (props: any) => {
   // Props
   const { workspace, ...restProps } = props;
@@ -469,7 +456,7 @@ const AddLayer = (props: any) => {
     initialValues: {
       name: "",
       description: "",
-      layer_type: undefined as any,
+      layer_type: [OPTIONS_LAYER_TYPE[0]],
       file_type: [OPTIONS_LAYER_FILE_TYPE[0]],
       file: undefined as any,
     },
@@ -633,6 +620,22 @@ const AddLayer = (props: any) => {
         </DisclosureContent>
       </DisclosureRoot>
     </>
+  );
+};
+const WorkspaceLayers = (props: any) => {
+  // Props
+  const { workspace, ...restProps } = props;
+
+  return (
+    <WorkspaceLayersDisclosureTrigger workspace={workspace}>
+      <Tooltip content={"Workspace layers"}>
+        <BButton iconButton unclicky variant={"ghost"} {...restProps}>
+          <Icon boxSize={"24px"}>
+            <IconStack stroke={1.5} />
+          </Icon>
+        </BButton>
+      </Tooltip>
+    </WorkspaceLayersDisclosureTrigger>
   );
 };
 const ViewWorkspace = (props: any) => {
