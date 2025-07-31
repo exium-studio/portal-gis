@@ -27,7 +27,6 @@ import {
   FieldsetRoot,
   HStack,
   Icon,
-  Menu,
   useDisclosure,
 } from "@chakra-ui/react";
 import {
@@ -61,9 +60,9 @@ import { Switch } from "../ui/switch";
 import { Tooltip } from "../ui/tooltip";
 import ExistingFileItem from "./ExistingFIleItem";
 import SelectLayerFileType from "./SelectLayerFileType";
+import SelectLayerType from "./SelectLayerType";
 import SelectWorkspaceCategory from "./SelectWorkspaceCategort";
 import WorkspaceLayersDisclosureTrigger from "./WorkspaceLayersDisclosureTrigger";
-import SelectLayerType from "./SelectLayerType";
 
 const WorkspaceMenu = (props: any) => {
   // Props
@@ -187,10 +186,14 @@ const EditWorkspace = (props: any) => {
 
   return (
     <>
-      <Tooltip content={l.edit_workspace} {...restProps}>
-        <Menu.Item value="edit" onClick={onOpen}>
+      <Tooltip
+        positioning={{ placement: "right" }}
+        content={l.edit_workspace}
+        {...restProps}
+      >
+        <MenuItem value="edit" onClick={onOpen}>
           Edit
-        </Menu.Item>
+        </MenuItem>
       </Tooltip>
 
       <DisclosureRoot open={open} lazyLoad size={"xs"}>
@@ -368,7 +371,7 @@ const DeleteWorkspace = (props: any) => {
   }
 
   return (
-    <Tooltip content={l.delete_workspace}>
+    <Tooltip positioning={{ placement: "right" }} content={l.delete_workspace}>
       <MenuItem
         value="delete"
         unclicky
@@ -815,31 +818,31 @@ const RowItem = (props: any) => {
         />
 
         <HStack align={"stretch"} gap={0} p={2}>
-          <CContainer p={1} gap={1}>
-            <PopoverRoot>
-              <PopoverTrigger asChild>
+          <PopoverRoot>
+            <PopoverTrigger asChild>
+              <CContainer p={1} gap={1}>
                 <P fontWeight={"semibold"} w={"fit"} lineClamp={1}>
                   {workspace?.title}
                 </P>
-              </PopoverTrigger>
 
-              <PopoverContent p={2} minW={"fit"} w={"fit"} maxW={"280px"}>
-                {workspace?.title}
-              </PopoverContent>
-            </PopoverRoot>
-
-            <PopoverRoot>
-              <PopoverTrigger asChild>
-                <P lineClamp={1} color={"fg.subtle"} w={"fit"}>
+                <P color={"fg.subtle"} w={"fit"} lineClamp={1}>
                   {workspace?.description}
                 </P>
-              </PopoverTrigger>
+              </CContainer>
+            </PopoverTrigger>
 
-              <PopoverContent p={2} minW={"fit"} w={"fit"} maxW={"280px"}>
-                {workspace?.description}
-              </PopoverContent>
-            </PopoverRoot>
-          </CContainer>
+            <PopoverContent p={2} minW={"fit"} w={"fit"} maxW={"280px"}>
+              <CContainer gap={1}>
+                <P fontWeight={"semibold"} w={"fit"}>
+                  {workspace?.title}
+                </P>
+
+                <P color={"fg.subtle"} w={"fit"}>
+                  {workspace?.description}
+                </P>
+              </CContainer>
+            </PopoverContent>
+          </PopoverRoot>
 
           <WorkspaceMenu
             workspace={workspace}
@@ -872,19 +875,27 @@ const ListItem = (props: any) => {
       {...restProps}
     >
       <HStack p={1} justify={"space-between"}>
-        <HStack truncate px={2}>
-          <PopoverRoot>
-            <PopoverTrigger asChild>
+        <PopoverRoot>
+          <PopoverTrigger asChild>
+            <HStack truncate px={2} w={"full"}>
               <P fontWeight={"semibold"} lineClamp={1}>
                 {workspace?.title}
               </P>
-            </PopoverTrigger>
+            </HStack>
+          </PopoverTrigger>
 
-            <PopoverContent>
-              <P>{workspace?.title}</P>
-            </PopoverContent>
-          </PopoverRoot>
-        </HStack>
+          <PopoverContent p={2} minW={"fit"} w={"fit"} maxW={"280px"}>
+            <CContainer gap={1}>
+              <P fontWeight={"semibold"} w={"fit"}>
+                {workspace?.title}
+              </P>
+
+              <P color={"fg.subtle"} w={"fit"}>
+                {workspace?.description}
+              </P>
+            </CContainer>
+          </PopoverContent>
+        </PopoverRoot>
 
         <WorkspaceMenu workspace={workspace} setWorkspace={setWorkspace} />
       </HStack>
