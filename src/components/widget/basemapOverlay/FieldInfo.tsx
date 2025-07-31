@@ -45,6 +45,7 @@ export const FieldInfo = () => {
     }
   }, [selectedPolygon]);
 
+  // Components
   const ItemContainer = (props: any) => {
     const { children, last } = props;
 

@@ -2,13 +2,13 @@ import {
   IconChartPie,
   IconDeviceDesktop,
   IconExclamationCircle,
+  IconFolderOpen,
   IconFolders,
   IconGavel,
   IconLanguage,
   IconServerCog,
   IconShieldHalf,
   IconShieldLock,
-  IconStack2,
 } from "@tabler/icons-react";
 
 export const NAVS = [
@@ -20,9 +20,9 @@ export const NAVS = [
   {
     labelKey: "navs.active_workspace",
     path: "/active-workspace",
-    icon: IconStack2,
+    icon: IconFolderOpen,
     iconProps: {
-      boxSize: ["", null, "22px"],
+      // boxSize: ["", null, "22px"],
     },
   },
   {
