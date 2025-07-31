@@ -20,6 +20,11 @@ const ActiveWorkspacePage = () => {
 
   // Contexts
   const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
+  const sortedActiveWorkspaces = [...activeWorkspaces].sort(
+    (a, b) => a.zIndex - b.zIndex
+  );
+
+  console.log(sortedActiveWorkspaces);
 
   // States
   const [filterConfig, setFilterConfig] = useState<any>({

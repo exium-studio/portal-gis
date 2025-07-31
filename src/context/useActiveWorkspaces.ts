@@ -1,5 +1,4 @@
 import {
-  Interface__ActiveLayer,
   Interface__ActiveWorkspace,
   Interface__Layer,
   Interface__LayerData,
@@ -8,8 +7,6 @@ import { create } from "zustand";
 
 interface Interface__ActiveWorkspaces {
   activeWorkspaces: Interface__ActiveWorkspace[];
-  getOrderedWorkspaces: () => Interface__ActiveWorkspace[]; // Auto sort by zIndex
-  getOrderedLayers: (workspaceId: string) => Interface__ActiveLayer[]; // Auto sort by zIndex
   loadWorkspace: (newWorkspace: Interface__ActiveWorkspace) => void;
   addLayerToActiveWorkspace: (
     workspaceId: string,
@@ -43,38 +40,41 @@ interface Interface__ActiveWorkspaces {
 const useActiveWorkspaces = create<Interface__ActiveWorkspaces>((set, get) => ({
   activeWorkspaces: [],
 
-  // Helper to get sorted workspaces
-  getOrderedWorkspaces: () => {
-    const { activeWorkspaces } = get();
-    return [...activeWorkspaces].sort((a, b) => a.zIndex - b.zIndex);
-  },
-
-  // Helper to get sorted layers
-  getOrderedLayers: (workspaceId) => {
-    const { activeWorkspaces } = get();
-    const workspace = activeWorkspaces.find((ws) => ws.id === workspaceId);
-    return [...(workspace?.layers || [])].sort((a, b) => a.zIndex - b.zIndex);
-  },
-
-  // Load workspace with new zIndex initialization
-  loadWorkspace: (newWorkspace) =>
+  // Add a new workspace
+  loadWorkspace: (newActiveWorkspace) =>
     set((state) => {
-      const maxZIndex = state.activeWorkspaces.reduce(
-        (max, ws) => Math.max(max, ws.zIndex),
+      const workspaceExists = state.activeWorkspaces.some(
+        (workspace) => workspace.id === newActiveWorkspace.id
+      );
+
+      if (workspaceExists) {
+        console.warn(`Workspace ${newActiveWorkspace.id} already exists`);
+        return state;
+      }
+
+      // Calculate next zIndex for workspace
+      const maxWorkspaceZIndex = state.activeWorkspaces.reduce(
+        (max, ws) => Math.max(max, ws.zIndex || 0),
         0
+      );
+
+      // Initialize layers with zIndex
+      const layersWithZIndex = newActiveWorkspace.layers?.map(
+        (layer, index) => ({
+          ...layer,
+          visible: layer.visible ?? true,
+          zIndex: index, // Initial zIndex based on array position
+        })
       );
 
       return {
         activeWorkspaces: [
           ...state.activeWorkspaces,
           {
-            ...newWorkspace,
-            zIndex: maxZIndex + 1,
-            layers: newWorkspace.layers?.map((layer, i) => ({
-              ...layer,
-              zIndex: i,
-              visible: layer.visible ?? true,
-            })),
+            ...newActiveWorkspace,
+            visible: newActiveWorkspace.visible ?? true,
+            zIndex: maxWorkspaceZIndex + 1,
+            layers: layersWithZIndex,
           },
         ],
       };

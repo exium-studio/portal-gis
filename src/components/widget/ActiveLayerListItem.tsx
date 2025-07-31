@@ -57,6 +57,7 @@ const DecreaseLayerLevel = (props: any) => {
     <Tooltip content={l.move_down_layer_level}>
       <BButton
         iconButton
+        unclicky
         size={"xs"}
         variant={"ghost"}
         onClick={() => {
@@ -84,6 +85,7 @@ const IncreaseLayerLevel = (props: any) => {
     <Tooltip content={l.move_up_layer_level}>
       <BButton
         iconButton
+        unclicky
         size={"xs"}
         variant={"ghost"}
         onClick={() => {
@@ -111,6 +113,7 @@ const ToggleVisibility = (props: any) => {
     <Tooltip content={l.toggle_visibility}>
       <BButton
         iconButton
+        unclicky
         size={"xs"}
         variant={"ghost"}
         onClick={() => {
