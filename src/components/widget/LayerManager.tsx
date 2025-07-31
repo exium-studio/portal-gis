@@ -28,7 +28,7 @@ const LayerSource = (props: LayerSourceProps) => {
   );
   const { themeConfig } = useThemeConfig();
   const legends = useLegend((s) => s.legends);
-  const legendType = "GUNATANAHU"; // properties key / column name
+  const legendType = "GUNATANAHK"; // properties key / column name
 
   // States
   const geojson = activeLayer?.data?.geojson;
@@ -116,32 +116,9 @@ const LayerSource = (props: LayerSourceProps) => {
 const LayerManager = () => {
   const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
 
-  // Sort by zIndex (ascending)
-  const sortedWorkspaces = [...activeWorkspaces].sort(
-    (a, b) => a.zIndex - b.zIndex
-  );
-
   return (
     <>
-      {sortedWorkspaces
-        .filter((activeWorkspace) => activeWorkspace.visible)
-        .map((activeWorkspace) => {
-          const sortedLayers = [...(activeWorkspace.layers || [])].sort(
-            (a, b) => a.zIndex - b.zIndex
-          );
-
-          return sortedLayers
-            .filter((activeLayer) => activeLayer.visible)
-            .map((activeLayer) => (
-              <LayerSource
-                key={`${activeWorkspace.id}-${activeLayer.id}`}
-                activeWorkspace={activeWorkspace}
-                activeLayer={activeLayer}
-              />
-            ));
-        })}
-
-      {/* {activeWorkspaces
+      {activeWorkspaces
         .filter((activeWorkspace) => activeWorkspace.visible)
         .map((activeWorkspace) =>
           activeWorkspace.layers
@@ -153,7 +130,7 @@ const LayerManager = () => {
                 activeLayer={activeLayer}
               />
             ))
-        )} */}
+        )}
     </>
   );
 };
