@@ -824,9 +824,7 @@ const RowItem = (props: any) => {
           <SimplePopover
             content={
               <CContainer gap={1}>
-                <P fontWeight={"semibold"} w={"fit"}>
-                  {workspace?.title}
-                </P>
+                <P w={"fit"}>{workspace?.title}</P>
 
                 <P color={"fg.subtle"} w={"fit"}>
                   {workspace?.description}
@@ -834,7 +832,7 @@ const RowItem = (props: any) => {
               </CContainer>
             }
           >
-            <CContainer p={1} gap={1}>
+            <CContainer p={1} gap={1} w={"fit"} cursor={"pointer"}>
               <P fontWeight={"semibold"} w={"fit"} lineClamp={1}>
                 {workspace?.title}
               </P>
@@ -849,6 +847,7 @@ const RowItem = (props: any) => {
             workspace={workspace}
             setWorkspace={setWorkspace}
             size={"xs"}
+            ml={"auto"}
           />
         </HStack>
       </CContainer>
@@ -879,9 +878,7 @@ const ListItem = (props: any) => {
         <SimplePopover
           content={
             <CContainer gap={1}>
-              <P fontWeight={"semibold"} w={"fit"}>
-                {workspace?.title}
-              </P>
+              <P w={"fit"}>{workspace?.title}</P>
 
               <P color={"fg.subtle"} w={"fit"}>
                 {workspace?.description}
@@ -889,7 +886,7 @@ const ListItem = (props: any) => {
             </CContainer>
           }
         >
-          <CContainer p={1} gap={1} pl={2}>
+          <CContainer p={1} gap={1} pl={2} w={"fit"} cursor={"pointer"}>
             <P fontWeight={"semibold"} w={"fit"} lineClamp={1}>
               {workspace?.title}
             </P>

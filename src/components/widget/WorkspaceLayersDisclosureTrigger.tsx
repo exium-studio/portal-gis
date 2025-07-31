@@ -405,7 +405,7 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                           // border={"1px solid"}
                           _hover={{ bg: "bg.subtle" }}
                           borderColor={"border.muted"}
-                          pl={3}
+                          pl={2}
                           pr={1}
                           py={1}
                           borderRadius={themeConfig.radii.component}
@@ -435,7 +435,7 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                               </CContainer>
                             }
                           >
-                            <HStack w={"full"}>
+                            <HStack cursor={"pointer"}>
                               <Icon boxSize={5} color={"fg.subtle"}>
                                 {layer?.layer_type === "fill" ? (
                                   <IconPolygon stroke={1.5} />
@@ -453,13 +453,13 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                               workspace={workspace}
                               layer={layer}
                               disabled={workspaceActive}
-                              size={"sm"}
+                              size={"xs"}
                             />
 
                             <DeleteLayer
                               workspace={workspace}
                               layer={layer}
-                              size={"sm"}
+                              size={"xs"}
                             />
                           </HStack>
                         </HStack>

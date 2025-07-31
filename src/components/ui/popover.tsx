@@ -24,7 +24,7 @@ export const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
             borderRadius={themeConfig.radii.container}
             border={"1px solid"}
             borderColor={"border.subtle"}
-            shadow={"none"}
+            // shadow={"none"}
             className="ss"
             {...rest}
           />
