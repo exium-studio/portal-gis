@@ -349,6 +349,26 @@ export const deleted_file = {
 };
 
 // UI
+export const toggle_visibility = {
+  id: "Toggle visibilitas",
+  en: "Toggle visibility",
+};
+export const bring_to_front_layer_level = {
+  id: "Lettakkan di depan",
+  en: "Bring to front",
+};
+export const send_to_back_layer_level = {
+  id: "Letakkan di belakang",
+  en: "Send to back",
+};
+export const move_up_layer_level = {
+  id: "Naikkan satu tingkat",
+  en: "Move up one level",
+};
+export const move_down_layer_level = {
+  id: "Turunkan satu tingkat",
+  en: "Move down one level",
+};
 export const default_layer_type = {
   id: "Tipe layer default",
   en: "Default layer type",

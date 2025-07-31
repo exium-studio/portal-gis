@@ -18,6 +18,8 @@ import BButton from "../ui-custom/BButton";
 import CContainer from "../ui-custom/CContainer";
 import P from "../ui-custom/P";
 import SimplePopover from "./SimplePopover";
+import { Tooltip } from "../ui/tooltip";
+import useLang from "@/context/useLang";
 
 interface Props {
   activeLayer: Interface__ActiveLayer;
@@ -33,46 +35,77 @@ const ActiveLayerUtils = (props: any) => {
 
   return (
     <HStack ml={"auto"} gap={1}>
+      <DecreaseLayerLevel activeLayer={activeLayer} />
+
+      <IncreaseLayerLevel activeLayer={activeLayer} />
+
+      <ToggleVisibility activeLayer={activeLayer} />
+    </HStack>
+  );
+};
+const DecreaseLayerLevel = (props: any) => {
+  // Props
+  const { activeLayer } = props;
+
+  // Hooks
+  const { l } = useLang();
+
+  return (
+    <Tooltip content={l.move_down_layer_level}>
       <BButton iconButton size={"xs"} variant={"ghost"}>
         <Icon boxSize={5}>
           <IconStackPush stroke={1.5} />
         </Icon>
       </BButton>
+    </Tooltip>
+  );
+};
+const IncreaseLayerLevel = (props: any) => {
+  // Props
+  const { activeLayer } = props;
 
+  // Hooks
+  const { l } = useLang();
+
+  return (
+    <Tooltip content={l.move_up_layer_level}>
       <BButton iconButton size={"xs"} variant={"ghost"}>
         <Icon boxSize={5}>
           <IconStackPop stroke={1.5} />
         </Icon>
       </BButton>
-
-      <ToggleVisibility activeLayer={activeLayer} />
-    </HStack>
+    </Tooltip>
   );
 };
 const ToggleVisibility = (props: any) => {
   // Props
   const { activeLayer } = props;
 
+  // Hooks
+  const { l } = useLang();
+
   // Contexts
   const toggleVisibility = useActiveWorkspaces((s) => s.toggleLayerVisibility);
 
   return (
-    <BButton
-      iconButton
-      size={"xs"}
-      variant={"ghost"}
-      onClick={() => {
-        toggleVisibility(activeLayer?.workspace?.id, activeLayer?.id);
-      }}
-    >
-      <Icon boxSize={5}>
-        {activeLayer?.visible ? (
-          <IconEye stroke={1.5} />
-        ) : (
-          <IconEyeOff stroke={1.5} />
-        )}
-      </Icon>
-    </BButton>
+    <Tooltip content={l.toggle_visibility}>
+      <BButton
+        iconButton
+        size={"xs"}
+        variant={"ghost"}
+        onClick={() => {
+          toggleVisibility(activeLayer?.workspace?.id, activeLayer?.id);
+        }}
+      >
+        <Icon boxSize={5}>
+          {activeLayer?.visible ? (
+            <IconEye stroke={1.5} />
+          ) : (
+            <IconEyeOff stroke={1.5} />
+          )}
+        </Icon>
+      </BButton>
+    </Tooltip>
   );
 };
 
