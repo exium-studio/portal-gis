@@ -402,7 +402,8 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                       return (
                         <HStack
                           key={layer.id}
-                          border={"1px solid"}
+                          // border={"1px solid"}
+                          _hover={{ bg: "bg.subtle" }}
                           borderColor={"border.muted"}
                           pl={3}
                           pr={1}
@@ -420,7 +421,7 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                               </CContainer>
                             }
                           >
-                            <HStack>
+                            <HStack w={"full"}>
                               <Icon boxSize={5} color={"fg.subtle"}>
                                 {layer?.layer_type === "fill" ? (
                                   <IconPolygon stroke={1.5} />
@@ -429,9 +430,7 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                                 )}
                               </Icon>
 
-                              <P w={"full"} lineClamp={1}>
-                                {layer?.name}
-                              </P>
+                              <P lineClamp={1}>{layer?.name}</P>
                             </HStack>
                           </SimplePopover>
 
