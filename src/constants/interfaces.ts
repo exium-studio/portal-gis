@@ -77,9 +77,11 @@ export interface Interface__LayerData extends Interface__CUD {
 export interface Interface__ActiveWorkspace extends Interface__Workspace {
   visible: boolean;
   layers?: Interface__ActiveLayer[];
+  zIndex: number;
 }
 export interface Interface__ActiveLayer extends Interface__Layer {
   visible: boolean;
+  zIndex: number;
 }
 
 // Gens

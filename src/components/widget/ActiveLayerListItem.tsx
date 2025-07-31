@@ -50,9 +50,19 @@ const DecreaseLayerLevel = (props: any) => {
   // Hooks
   const { l } = useLang();
 
+  // Contexts
+  const decreaseLayerLevel = useActiveWorkspaces((s) => s.moveLayerDown);
+
   return (
     <Tooltip content={l.move_down_layer_level}>
-      <BButton iconButton size={"xs"} variant={"ghost"}>
+      <BButton
+        iconButton
+        size={"xs"}
+        variant={"ghost"}
+        onClick={() => {
+          decreaseLayerLevel(activeLayer?.workspace?.id, activeLayer?.id);
+        }}
+      >
         <Icon boxSize={5}>
           <IconStackPush stroke={1.5} />
         </Icon>
@@ -67,9 +77,19 @@ const IncreaseLayerLevel = (props: any) => {
   // Hooks
   const { l } = useLang();
 
+  // Contexts
+  const increaseLayerLevel = useActiveWorkspaces((s) => s.moveLayerUp);
+
   return (
     <Tooltip content={l.move_up_layer_level}>
-      <BButton iconButton size={"xs"} variant={"ghost"}>
+      <BButton
+        iconButton
+        size={"xs"}
+        variant={"ghost"}
+        onClick={() => {
+          increaseLayerLevel(activeLayer?.workspace?.id, activeLayer?.id);
+        }}
+      >
         <Icon boxSize={5}>
           <IconStackPop stroke={1.5} />
         </Icon>
@@ -128,7 +148,7 @@ const ActiveLayerListItem = (props: Props) => {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       transition={"200ms"}
-      gap={1}
+      gap={0}
     >
       {/* Dnd button */}
       {!iss && (
@@ -151,7 +171,7 @@ const ActiveLayerListItem = (props: Props) => {
         // bg={hover ? "d1" : ""}
         borderRadius={themeConfig.radii.component}
         // p={1}
-        pl={iss ? 6 : 1}
+        pl={iss ? 6 : 0}
         w={"full"}
       >
         <SimplePopover

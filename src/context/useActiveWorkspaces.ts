@@ -1,4 +1,5 @@
 import {
+  Interface__ActiveLayer,
   Interface__ActiveWorkspace,
   Interface__Layer,
   Interface__LayerData,
@@ -7,6 +8,8 @@ import { create } from "zustand";
 
 interface Interface__ActiveWorkspaces {
   activeWorkspaces: Interface__ActiveWorkspace[];
+  getOrderedWorkspaces: () => Interface__ActiveWorkspace[]; // Auto sort by zIndex
+  getOrderedLayers: (workspaceId: string) => Interface__ActiveLayer[]; // Auto sort by zIndex
   loadWorkspace: (newWorkspace: Interface__ActiveWorkspace) => void;
   addLayerToActiveWorkspace: (
     workspaceId: string,
@@ -26,31 +29,50 @@ interface Interface__ActiveWorkspaces {
   getActiveWorkspace: (
     workspaceId: string
   ) => Interface__ActiveWorkspace | undefined;
+  // New z-index management functions
+  moveWorkspaceUp: (workspaceId: string) => void;
+  moveWorkspaceDown: (workspaceId: string) => void;
+  bringWorkspaceToFront: (workspaceId: string) => void;
+  sendWorkspaceToBack: (workspaceId: string) => void;
+  moveLayerUp: (workspaceId: string, layerId: number) => void;
+  moveLayerDown: (workspaceId: string, layerId: number) => void;
+  bringLayerToFront: (workspaceId: string, layerId: number) => void;
+  sendLayerToBack: (workspaceId: string, layerId: number) => void;
 }
 
 const useActiveWorkspaces = create<Interface__ActiveWorkspaces>((set, get) => ({
   activeWorkspaces: [],
 
-  // Add a new workspace
-  loadWorkspace: (newActiveWorkspace) =>
-    set((state) => {
-      const workspaceExists = state.activeWorkspaces.some(
-        (workspace) => workspace.id === newActiveWorkspace.id
-      );
+  // Helper to get sorted workspaces
+  getOrderedWorkspaces: () => {
+    const { activeWorkspaces } = get();
+    return [...activeWorkspaces].sort((a, b) => a.zIndex - b.zIndex);
+  },
 
-      if (workspaceExists) {
-        console.warn(`Workspace ${newActiveWorkspace.id} already exists`);
-        return state;
-      }
+  // Helper to get sorted layers
+  getOrderedLayers: (workspaceId) => {
+    const { activeWorkspaces } = get();
+    const workspace = activeWorkspaces.find((ws) => ws.id === workspaceId);
+    return [...(workspace?.layers || [])].sort((a, b) => a.zIndex - b.zIndex);
+  },
+
+  // Load workspace with new zIndex initialization
+  loadWorkspace: (newWorkspace) =>
+    set((state) => {
+      const maxZIndex = state.activeWorkspaces.reduce(
+        (max, ws) => Math.max(max, ws.zIndex),
+        0
+      );
 
       return {
         activeWorkspaces: [
           ...state.activeWorkspaces,
           {
-            ...newActiveWorkspace,
-            visible: newActiveWorkspace.visible ?? true,
-            layers: newActiveWorkspace.layers?.map((layer) => ({
+            ...newWorkspace,
+            zIndex: maxZIndex + 1,
+            layers: newWorkspace.layers?.map((layer, i) => ({
               ...layer,
+              zIndex: i,
               visible: layer.visible ?? true,
             })),
           },
@@ -61,20 +83,27 @@ const useActiveWorkspaces = create<Interface__ActiveWorkspaces>((set, get) => ({
   // Add layer to existing workspace
   addLayerToActiveWorkspace: (workspaceId, newLayer) =>
     set((state) => ({
-      activeWorkspaces: state.activeWorkspaces.map((workspace) =>
-        workspace.id === workspaceId
-          ? {
-              ...workspace,
-              layers: [
-                ...(workspace.layers || []),
-                {
-                  ...newLayer,
-                  visible: true,
-                },
-              ],
-            }
-          : workspace
-      ),
+      activeWorkspaces: state.activeWorkspaces.map((workspace) => {
+        if (workspace.id !== workspaceId) return workspace;
+
+        const existingLayers = workspace.layers || [];
+        const maxLayerZIndex = existingLayers.reduce(
+          (max, layer) => Math.max(max, layer.zIndex || 0),
+          0
+        );
+
+        return {
+          ...workspace,
+          layers: [
+            ...existingLayers,
+            {
+              ...newLayer,
+              visible: true,
+              zIndex: maxLayerZIndex + 1,
+            },
+          ],
+        };
+      }),
     })),
 
   // Toggle entire workspace visibility
@@ -168,6 +197,128 @@ const useActiveWorkspaces = create<Interface__ActiveWorkspaces>((set, get) => ({
       (workspace) => workspace.id === workspaceId
     );
   },
+
+  // Workspace z-index management
+  moveWorkspaceUp: (workspaceId) =>
+    set((state) => {
+      const workspaces = [...state.activeWorkspaces];
+      const currentIndex = workspaces.findIndex((w) => w.id === workspaceId);
+
+      if (currentIndex < workspaces.length - 1) {
+        const nextZ = workspaces[currentIndex + 1].zIndex;
+        workspaces[currentIndex + 1].zIndex = workspaces[currentIndex].zIndex;
+        workspaces[currentIndex].zIndex = nextZ;
+      }
+
+      return { activeWorkspaces: workspaces };
+    }),
+
+  moveWorkspaceDown: (workspaceId) =>
+    set((state) => {
+      const workspaces = [...state.activeWorkspaces];
+      const currentIndex = workspaces.findIndex((w) => w.id === workspaceId);
+
+      if (currentIndex > 0) {
+        const prevZ = workspaces[currentIndex - 1].zIndex;
+        workspaces[currentIndex - 1].zIndex = workspaces[currentIndex].zIndex;
+        workspaces[currentIndex].zIndex = prevZ;
+      }
+
+      return { activeWorkspaces: workspaces };
+    }),
+
+  bringWorkspaceToFront: (workspaceId) =>
+    set((state) => {
+      const workspaces = [...state.activeWorkspaces];
+      const workspace = workspaces.find((w) => w.id === workspaceId);
+
+      if (workspace) {
+        const maxZIndex = Math.max(...workspaces.map((w) => w.zIndex));
+        workspace.zIndex = maxZIndex + 1;
+      }
+
+      return { activeWorkspaces: workspaces };
+    }),
+
+  sendWorkspaceToBack: (workspaceId) =>
+    set((state) => {
+      const workspaces = [...state.activeWorkspaces];
+      const workspace = workspaces.find((w) => w.id === workspaceId);
+
+      if (workspace) {
+        const minZIndex = Math.min(...workspaces.map((w) => w.zIndex));
+        workspace.zIndex = minZIndex - 1;
+      }
+
+      return { activeWorkspaces: workspaces };
+    }),
+
+  // Layer z-index management
+  moveLayerUp: (workspaceId, layerId) =>
+    set((state) => ({
+      activeWorkspaces: state.activeWorkspaces.map((workspace) => {
+        if (workspace.id !== workspaceId || !workspace.layers) return workspace;
+
+        const layers = [...workspace.layers];
+        const currentIndex = layers.findIndex((l) => l.id === layerId);
+
+        if (currentIndex < layers.length - 1) {
+          const nextZ = layers[currentIndex + 1].zIndex;
+          layers[currentIndex + 1].zIndex = layers[currentIndex].zIndex;
+          layers[currentIndex].zIndex = nextZ;
+        }
+
+        return { ...workspace, layers };
+      }),
+    })),
+
+  moveLayerDown: (workspaceId, layerId) =>
+    set((state) => ({
+      activeWorkspaces: state.activeWorkspaces.map((workspace) => {
+        if (workspace.id !== workspaceId || !workspace.layers) return workspace;
+
+        const layers = [...workspace.layers];
+        const currentIndex = layers.findIndex((l) => l.id === layerId);
+
+        if (currentIndex > 0) {
+          const prevZ = layers[currentIndex - 1].zIndex;
+          layers[currentIndex - 1].zIndex = layers[currentIndex].zIndex;
+          layers[currentIndex].zIndex = prevZ;
+        }
+
+        return { ...workspace, layers };
+      }),
+    })),
+
+  bringLayerToFront: (workspaceId, layerId) =>
+    set((state) => ({
+      activeWorkspaces: state.activeWorkspaces.map((workspace) => {
+        if (workspace.id !== workspaceId || !workspace.layers) return workspace;
+
+        const maxZIndex = Math.max(...workspace.layers.map((l) => l.zIndex));
+        return {
+          ...workspace,
+          layers: workspace.layers.map((layer) =>
+            layer.id === layerId ? { ...layer, zIndex: maxZIndex + 1 } : layer
+          ),
+        };
+      }),
+    })),
+
+  sendLayerToBack: (workspaceId, layerId) =>
+    set((state) => ({
+      activeWorkspaces: state.activeWorkspaces.map((workspace) => {
+        if (workspace.id !== workspaceId || !workspace.layers) return workspace;
+
+        const minZIndex = Math.min(...workspace.layers.map((l) => l.zIndex));
+        return {
+          ...workspace,
+          layers: workspace.layers.map((layer) =>
+            layer.id === layerId ? { ...layer, zIndex: minZIndex - 1 } : layer
+          ),
+        };
+      }),
+    })),
 }));
 
 export default useActiveWorkspaces;

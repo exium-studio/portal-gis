@@ -19,7 +19,6 @@ import {
 } from "../ui/accordion";
 import { Tooltip } from "../ui/tooltip";
 import ActiveLayerListItem from "./ActiveLayerListItem";
-import SimplePopover from "./SimplePopover";
 
 interface Props {
   activeWorkspace: Interface__ActiveWorkspace;
@@ -55,9 +54,19 @@ const DecreaseLayerLevel = (props: any) => {
   // Hooks
   const { l } = useLang();
 
+  // Contexts
+  const decreaseLayerLevel = useActiveWorkspaces((s) => s.moveWorkspaceDown);
+
   return (
     <Tooltip content={l.move_down_layer_level}>
-      <BButton iconButton size={"xs"} variant={"ghost"}>
+      <BButton
+        iconButton
+        size={"xs"}
+        variant={"ghost"}
+        onClick={() => {
+          decreaseLayerLevel(activeWorkspace?.id);
+        }}
+      >
         <Icon boxSize={5}>
           <IconStackPush stroke={1.5} />
         </Icon>
@@ -72,9 +81,16 @@ const IncreaseLayerLevel = (props: any) => {
   // Hooks
   const { l } = useLang();
 
+  const increaseLayerLevel = useActiveWorkspaces((s) => s.moveWorkspaceUp);
+
   return (
     <Tooltip content={l.move_up_layer_level}>
-      <BButton iconButton size={"xs"} variant={"ghost"}>
+      <BButton
+        iconButton
+        size={"xs"}
+        variant={"ghost"}
+        onClick={() => increaseLayerLevel(activeWorkspace?.id)}
+      >
         <Icon boxSize={5}>
           <IconStackPop stroke={1.5} />
         </Icon>
