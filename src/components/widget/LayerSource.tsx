@@ -51,21 +51,23 @@ const LayerSource = (props: LayerSourceProps) => {
       defaultFillColor,
     ],
   ];
-  const fillOpacity = [
-    "case",
-    ["==", ["get", "id"], selectedPolygonId], // Kondisi selected polygon
-    0.8,
-    [
-      "case",
-      [
-        "all",
-        ["==", ["literal", activeLayer.visible], true],
-        ["!", ["==", ["literal", isLineLayer], true]],
-      ],
-      0.8,
-      0,
-    ],
-  ];
+  const fillOpacity = !activeLayer?.visible
+    ? 0
+    : [
+        "case",
+        ["==", ["get", "id"], selectedPolygonId],
+        0.8,
+        [
+          "case",
+          [
+            "all",
+            ["==", ["literal", activeLayer.visible], true],
+            ["!", ["==", ["literal", isLineLayer], true]],
+          ],
+          0.8,
+          0,
+        ],
+      ];
 
   // Utils
   const handleOnClickPolygon = useCallback(
@@ -133,14 +135,9 @@ const LayerSource = (props: LayerSourceProps) => {
           },
         });
       } else {
+        console.log(activeLayer?.visible);
         map.setPaintProperty(fillLayerId, "fill-color", fillColor);
-        // map.setPaintProperty(fillLayerId, "fill-opacity", fillOpacity);
-
-        if (!activeLayer.visible) {
-          if (selectedPolygon?.activeLayer?.id === activeLayer.id) {
-            clearSelectedPolygon();
-          }
-        }
+        map.setPaintProperty(fillLayerId, "fill-opacity", fillOpacity);
       }
     }
 
@@ -165,14 +162,6 @@ const LayerSource = (props: LayerSourceProps) => {
           "line-opacity",
           activeLayer.visible ? 1 : 0
         );
-        // console.log(selectedPolygon?.activeLayer?.id, activeLayer.id);
-        // console.log(selectedPolygon);
-
-        if (!activeLayer.visible) {
-          if (selectedPolygon?.activeLayer?.id === activeLayer.id) {
-            clearSelectedPolygon();
-          }
-        }
       }
     }
 
