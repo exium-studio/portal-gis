@@ -20,6 +20,7 @@ import { useEffect, useRef } from "react";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import { OverlayItemContainer } from "../OverlayItemContainer";
 import FloatingContainerCloseButton from "./FloatingContainerCloseButton";
+import SimplePopover from "../SimplePopover";
 
 export const LegendTrigger = () => {
   // Hooks
@@ -112,7 +113,9 @@ export const LegendContent = (props: any) => {
           return (
             <HStack key={item?.label}>
               <Circle w={"10px"} h={"10px"} bg={item?.color} opacity={0.8} />
-              <P>{item?.label}</P>
+              <SimplePopover content={item?.label}>
+                <P lineClamp={1}>{item?.label}</P>
+              </SimplePopover>
             </HStack>
           );
         })}
