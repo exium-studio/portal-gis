@@ -255,14 +255,6 @@ const translations = {
   "last_step": "Last step",
   "last_updated": "Last updated",
   "layer_file_type": "Layer file type",
-  "layer_loaded_toast": {
-    "title": "Loaded successfully",
-    "description": "Layer is ready on the map."
-  },
-  "layer_loading_toast": {
-    "title": "Loading layer",
-    "description": "Layer is being loaded onto the map."
-  },
   "layout_menu_helper": "These layout settings are stored locally on your device and will not be synced with your account.",
   "legend": "Legend",
   "legend_helper": "The legend displayed here depends on the",
@@ -578,6 +570,14 @@ const translations = {
   "with_explanation_helper": "Check if you need to add details of disputing parties, issues, handling efforts & follow-up, and results",
   "workspace_category": "Workspace category",
   "workspace_detail": "Workspace detail",
+  "workspace_loaded_toast": {
+    "title": "WOrkspace ${workspaceTitle} loaded successfully",
+    "description": "Workspace is ready on the map."
+  },
+  "workspace_loading_toast": {
+    "title": "Loading workspace ${workspaceTitle}",
+    "description": "Workspace is being loaded onto the map."
+  },
   "written_area": "Written area",
   "year": "Year",
   "yes": "Yes"

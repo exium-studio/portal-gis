@@ -8,6 +8,7 @@ import {
   IconFolders,
   IconStackPop,
   IconStackPush,
+  IconZoomInArea,
 } from "@tabler/icons-react";
 import BButton from "../ui-custom/BButton";
 import CContainer from "../ui-custom/CContainer";
@@ -19,6 +20,8 @@ import {
 } from "../ui/accordion";
 import { Tooltip } from "../ui/tooltip";
 import ActiveLayerListItem from "./ActiveLayerListItem";
+import useMapViewState from "@/context/useMapViewState";
+import { MAP_TRANSITION_DURATION } from "@/constants/duration";
 
 interface Props {
   activeWorkspace: Interface__ActiveWorkspace;
@@ -28,10 +31,6 @@ interface Props {
 const ActiveWorkspaceUtils = (props: any) => {
   // Props
   const { activeWorkspace, ...restProps } = props;
-
-  // Hooks
-  // const iss = useIsSmScreenWidth();
-  // const halfPanel = useLayout((s) => s.halfPanel);
 
   return (
     <HStack
@@ -45,6 +44,8 @@ const ActiveWorkspaceUtils = (props: any) => {
       <IncreaseLayerLevel activeWorkspace={activeWorkspace} />
 
       <ToggleVisibility activeWorkspace={activeWorkspace} />
+
+      <ViewWorkspace activeWorkspace={activeWorkspace} />
     </HStack>
   );
 };
@@ -130,6 +131,51 @@ const ToggleVisibility = (props: any) => {
           ) : (
             <IconEyeOff stroke={1.5} />
           )}
+        </Icon>
+      </BButton>
+    </Tooltip>
+  );
+};
+const ViewWorkspace = (props: any) => {
+  // Props
+  const { activeWorkspace, ...restProps } = props;
+
+  // Hooks
+  const { l } = useLang();
+
+  // Contexts
+  const mapRef = useMapViewState((s) => s.mapRef);
+
+  // Utils
+  function onViewLayers() {
+    if (mapRef.current && activeWorkspace?.bbox) {
+      const [minLng, minLat, maxLng, maxLat] = activeWorkspace.bbox;
+
+      mapRef.current.fitBounds(
+        [
+          [minLng, minLat],
+          [maxLng, maxLat],
+        ],
+        {
+          padding: 20, // px
+          duration: MAP_TRANSITION_DURATION,
+          essential: true,
+        }
+      );
+    }
+  }
+
+  return (
+    <Tooltip content={l.view_workspace}>
+      <BButton
+        unclicky
+        iconButton
+        variant={"ghost"}
+        onClick={onViewLayers}
+        {...restProps}
+      >
+        <Icon boxSize={5}>
+          <IconZoomInArea stroke={1.5} />
         </Icon>
       </BButton>
     </Tooltip>

@@ -255,14 +255,6 @@ const translations = {
   "last_step": "Tahap terakhir",
   "last_updated": "Terakhir diperbarui",
   "layer_file_type": "Tipe file layer",
-  "layer_loaded_toast": {
-    "title": "Berhasil dimuat",
-    "description": "Layer siap digunakan di peta."
-  },
-  "layer_loading_toast": {
-    "title": "Memuat layer",
-    "description": "Layer sedang dimuat ke peta."
-  },
   "layout_menu_helper": "Pengaturan layout ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
   "legend": "Legenda",
   "legend_helper": "Legenda yang tampil disini bergantung pada daftar",
@@ -578,6 +570,14 @@ const translations = {
   "with_explanation_helper": "Centang jika perlu menambahkan detail pihak yang bersengketa, permasalahan, upaya penanganan & tindak lanjut, serta hasil",
   "workspace_category": "Kategori workspace",
   "workspace_detail": "Detail workspace",
+  "workspace_loaded_toast": {
+    "title": "Workspace ${workspaceTitle} berhasil dimuat",
+    "description": "Workspace siap digunakan di peta."
+  },
+  "workspace_loading_toast": {
+    "title": "Memuat workspace ${workspaceTitle}",
+    "description": "Workspace sedang dimuat ke peta."
+  },
   "written_area": "Luas tertulis",
   "year": "Tahun",
   "yes": "Ya"

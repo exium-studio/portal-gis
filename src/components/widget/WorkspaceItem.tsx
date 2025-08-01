@@ -67,6 +67,7 @@ import SelectWorkspaceCategory from "./SelectWorkspaceCategort";
 import SimplePopover from "./SimplePopover";
 import WorkspaceLayersDisclosureTrigger from "./WorkspaceLayersDisclosureTrigger";
 import { Checkbox } from "../ui/checkbox";
+import interpolate from "@/utils/interpolate";
 
 const WorkspaceMenu = (props: any) => {
   // Props
@@ -708,7 +709,7 @@ const ViewWorkspace = (props: any) => {
         onClick={onViewLayers}
         {...restProps}
       >
-        <Icon boxSize={"22px"}>
+        <Icon boxSize={5}>
           <IconZoomInArea stroke={1.5} />
         </Icon>
       </BButton>
@@ -722,12 +723,18 @@ const ToggleLoadWorkspace = (props: any) => {
   // Hooks
   const { l } = useLang();
   const { req, loading } = useRequest({
-    id: "load_workspace",
+    id: `load_workspace_${workspace.id}`,
     loadingMessage: {
-      ...l.layer_loading_toast,
+      title: interpolate(l.workspace_loading_toast.title, {
+        workspaceTitle: workspace.title,
+      }),
+      description: l.workspace_loading_toast.description,
     },
     successMessage: {
-      ...l.layer_loaded_toast,
+      title: interpolate(l.workspace_loaded_toast.title, {
+        workspaceTitle: workspace.title,
+      }),
+      description: l.workspace_loaded_toast.description,
     },
   });
 

@@ -2,17 +2,14 @@ import { Interface__ActiveLayer } from "@/constants/interfaces";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useLang from "@/context/useLang";
 import { useThemeConfig } from "@/context/useThemeConfig";
-import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import capsFirstLetter from "@/utils/capsFirstLetter";
 import { HStack, Icon } from "@chakra-ui/react";
 import {
   IconEye,
   IconEyeOff,
-  IconGripVertical,
   IconLine,
   IconPolygon,
 } from "@tabler/icons-react";
-import { useState } from "react";
 import BButton from "../ui-custom/BButton";
 import CContainer from "../ui-custom/CContainer";
 import P from "../ui-custom/P";
@@ -133,24 +130,24 @@ const ActiveLayerListItem = (props: Props) => {
   const { activeLayer } = props;
 
   // Hooks
-  const iss = useIsSmScreenWidth();
+  // const iss = useIsSmScreenWidth();
 
   // Contexts
   const { themeConfig } = useThemeConfig();
 
   // States
-  const [hover, setHover] = useState<boolean>(false);
+  // const [hover, setHover] = useState<boolean>(false);
 
   return (
     <HStack
       borderRadius={themeConfig.radii.container}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
+      // onMouseEnter={() => setHover(true)}
+      // onMouseLeave={() => setHover(false)}
       transition={"200ms"}
       gap={0}
     >
       {/* Dnd button */}
-      {!iss && (
+      {/* {!iss && (
         <BButton
           iconButton
           unclicky
@@ -164,13 +161,13 @@ const ActiveLayerListItem = (props: Props) => {
             <IconGripVertical />
           </Icon>
         </BButton>
-      )}
+      )} */}
 
       <HStack
         // bg={hover ? "d1" : ""}
         // p={1}
         borderRadius={themeConfig.radii.component}
-        pl={iss ? 6 : 0}
+        pl={6}
         w={"full"}
       >
         <SimplePopover

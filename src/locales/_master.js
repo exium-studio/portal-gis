@@ -1425,24 +1425,24 @@ export const delete_all_inbox_button = {
 };
 
 // Toasters
-export const layer_loading_toast = {
+export const workspace_loading_toast = {
   title: {
-    id: "Memuat layer",
-    en: "Loading layer",
+    id: "Memuat workspace ${workspaceTitle}",
+    en: "Loading workspace ${workspaceTitle}",
   },
   description: {
-    id: "Layer sedang dimuat ke peta.",
-    en: "Layer is being loaded onto the map.",
+    id: "Workspace sedang dimuat ke peta.",
+    en: "Workspace is being loaded onto the map.",
   },
 };
-export const layer_loaded_toast = {
+export const workspace_loaded_toast = {
   title: {
-    id: "Berhasil dimuat",
-    en: "Loaded successfully",
+    id: "Workspace ${workspaceTitle} berhasil dimuat",
+    en: "WOrkspace ${workspaceTitle} loaded successfully",
   },
   description: {
-    id: "Layer siap digunakan di peta.",
-    en: "Layer is ready on the map.",
+    id: "Workspace siap digunakan di peta.",
+    en: "Workspace is ready on the map.",
   },
 };
 export const missing_layers_data_toast = {
