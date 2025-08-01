@@ -138,7 +138,7 @@ const translations = {
   "document": "Document",
   "edge_permissions_settings_link": "Settings → Cookies and site permissions → ",
   "edit": "Edit",
-  "edit_layer_alert": "The new layer file will overwrite the old layer data",
+  "edit_layer_alert": "If you send a layer file, the layer file you send will overwrite the old layer data",
   "edit_workspace": "Edit workspace",
   "education": "Education",
   "empty": "Empty",
@@ -574,6 +574,8 @@ const translations = {
     "sun": "Sunday"
   },
   "weekly": "Weekly",
+  "with_explanation": "With explanation",
+  "with_explanation_helper": "Check if you need to add details of disputing parties, issues, handling efforts & follow-up, and results",
   "workspace_category": "Workspace category",
   "workspace_detail": "Workspace detail",
   "written_area": "Written area",

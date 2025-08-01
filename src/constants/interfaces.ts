@@ -58,6 +58,7 @@ export interface Interface__Layer extends Interface__CUD {
   id: number;
   workspace_id: number;
   parent_layer_id?: number | null;
+  with_explanation: boolean;
   name: string;
   description: string;
   table_name: string;

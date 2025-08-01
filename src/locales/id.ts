@@ -138,7 +138,7 @@ const translations = {
   "document": "Dokumen",
   "edge_permissions_settings_link": "Pengaturan → Cookie dan izin situs → ",
   "edit": "Edit",
-  "edit_layer_alert": "File layer baru akan menimpa data layer lama",
+  "edit_layer_alert": "Jika mengirim file layer, file layer yang dikirim akan menimpa data layer lama",
   "edit_workspace": "Edit workspace",
   "education": "Pendidikan",
   "empty": "Kosong",
@@ -574,6 +574,8 @@ const translations = {
     "sun": "Minggu"
   },
   "weekly": "Mingguan",
+  "with_explanation": "Dengan keterangan",
+  "with_explanation_helper": "Centang jika perlu menambahkan detail pihak yang bersengketa, permasalahan, upaya penanganan & tindak lanjut, serta hasil",
   "workspace_category": "Kategori workspace",
   "workspace_detail": "Detail workspace",
   "written_area": "Luas tertulis",

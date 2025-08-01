@@ -349,6 +349,14 @@ export const deleted_file = {
 };
 
 // UI
+export const with_explanation = {
+  id: "Dengan keterangan",
+  en: "With explanation",
+};
+export const with_explanation_helper = {
+  id: "Centang jika perlu menambahkan detail pihak yang bersengketa, permasalahan, upaya penanganan & tindak lanjut, serta hasil",
+  en: "Check if you need to add details of disputing parties, issues, handling efforts & follow-up, and results",
+};
 export const toggle_visibility = {
   id: "Toggle visibilitas",
   en: "Toggle visibility",
@@ -374,8 +382,8 @@ export const default_layer_type = {
   en: "Default layer type",
 };
 export const edit_layer_alert = {
-  id: "File layer baru akan menimpa data layer lama",
-  en: "The new layer file will overwrite the old layer data",
+  id: "Jika mengirim file layer, file layer yang dikirim akan menimpa data layer lama",
+  en: "If you send a layer file, the layer file you send will overwrite the old layer data",
 };
 export const delete_layer = {
   id: "Hapus layer",

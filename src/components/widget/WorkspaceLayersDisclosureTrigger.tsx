@@ -53,6 +53,7 @@ import { Tooltip } from "../ui/tooltip";
 import SelectLayerFileType from "./SelectLayerFileType";
 import SelectLayerType from "./SelectLayerType";
 import SimplePopover from "./SimplePopover";
+import { Checkbox } from "../ui/checkbox";
 
 const EditLayer = (props: any) => {
   // Props
@@ -73,6 +74,7 @@ const EditLayer = (props: any) => {
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
+      with_explanation: false,
       name: "",
       description: "",
       layer_type: undefined as any,
@@ -80,6 +82,7 @@ const EditLayer = (props: any) => {
       file: undefined as any,
     },
     validationSchema: yup.object().shape({
+      with_explanation: yup.boolean(),
       name: yup.string().required(l.required_form),
       description: yup.string().required(l.required_form),
       layer_type: yup.array().required(l.required_form),
@@ -99,6 +102,7 @@ const EditLayer = (props: any) => {
         "table_name",
         `${formatTableName(values.name)}_${workspace?.id}`
       );
+      payload.append("with_explanation", values.with_explanation.toString());
       payload.append("name", values.name);
       payload.append("description", values.description);
       payload.append("layer_type", values.layer_type?.[0]?.id);
@@ -129,6 +133,7 @@ const EditLayer = (props: any) => {
   useEffect(() => {
     if (open) {
       formik.setValues({
+        with_explanation: layer?.with_explanation,
         name: layer?.name,
         description: layer?.description,
         layer_type: [
@@ -178,89 +183,111 @@ const EditLayer = (props: any) => {
               <AlertTitle>{l.edit_layer_alert}</AlertTitle>
             </AlertRoot>
 
-            <FieldRoot>
-              <Field
-                label={l.name}
-                invalid={!!formik.errors.name}
-                errorText={formik.errors.name as string}
-                mb={4}
-              >
-                <StringInput
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("name", input);
-                  }}
-                  inputValue={formik.values.name}
-                />
-              </Field>
+            <form id="edit_layer" onSubmit={formik.handleSubmit}>
+              <FieldRoot>
+                <Field
+                  invalid={!!formik.errors.with_explanation}
+                  errorText={formik.errors.with_explanation as string}
+                  helperText={l.with_explanation_helper}
+                  mb={4}
+                >
+                  <Checkbox
+                    onChange={(e: any) => {
+                      formik.setFieldValue(
+                        "with_explanation",
+                        e.target.checked
+                      );
+                    }}
+                    checked={formik.values.with_explanation}
+                  >
+                    {l.with_explanation}
+                  </Checkbox>
+                </Field>
 
-              <Field
-                label={l.description}
-                invalid={!!formik.errors.description}
-                errorText={formik.errors.description as string}
-                mb={4}
-              >
-                <Textarea
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("description", input);
-                  }}
-                  inputValue={formik.values.description}
-                />
-              </Field>
+                <Field
+                  label={l.name}
+                  invalid={!!formik.errors.name}
+                  errorText={formik.errors.name as string}
+                  mb={4}
+                >
+                  <StringInput
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("name", input);
+                    }}
+                    inputValue={formik.values.name}
+                  />
+                </Field>
 
-              <Field
-                label={l.default_layer_type}
-                invalid={!!formik.errors.layer_type}
-                errorText={formik.errors.layer_type as string}
-                mb={4}
-              >
-                <SelectLayerType
-                  onConfirm={(input) => {
-                    formik.setFieldValue("layer_type", input);
-                  }}
-                  inputValue={formik.values.layer_type}
-                />
-              </Field>
+                <Field
+                  label={l.description}
+                  invalid={!!formik.errors.description}
+                  errorText={formik.errors.description as string}
+                  mb={4}
+                >
+                  <Textarea
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("description", input);
+                    }}
+                    inputValue={formik.values.description}
+                  />
+                </Field>
 
-              <Field
-                label={l.layer_file_type}
-                invalid={!!formik.errors.file_type}
-                errorText={formik.errors.file_type as string}
-                mb={4}
-                optional
-              >
-                <SelectLayerFileType
-                  onConfirm={(input) => {
-                    formik.setFieldValue("file_type", input);
-                  }}
-                  inputValue={formik.values.file_type}
-                />
-              </Field>
+                <Field
+                  label={l.default_layer_type}
+                  invalid={!!formik.errors.layer_type}
+                  errorText={formik.errors.layer_type as string}
+                  mb={4}
+                >
+                  <SelectLayerType
+                    onConfirm={(input) => {
+                      formik.setFieldValue("layer_type", input);
+                    }}
+                    inputValue={formik.values.layer_type}
+                  />
+                </Field>
 
-              <Field
-                label={"File"}
-                invalid={!!formik.errors.file}
-                errorText={formik.errors.file as string}
-                disabled={empty(formik.values.file_type)}
-                optional
-              >
-                <FileInput
-                  dropzone
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("file", input);
-                  }}
-                  inputValue={formik.values.file}
+                <Field
+                  label={l.layer_file_type}
+                  invalid={!!formik.errors.file_type}
+                  errorText={formik.errors.file_type as string}
+                  mb={4}
+                  optional
+                >
+                  <SelectLayerFileType
+                    onConfirm={(input) => {
+                      formik.setFieldValue("file_type", input);
+                    }}
+                    inputValue={formik.values.file_type}
+                  />
+                </Field>
+
+                <Field
+                  label={"File"}
+                  invalid={!!formik.errors.file}
+                  errorText={formik.errors.file as string}
                   disabled={empty(formik.values.file_type)}
-                  accept=".zip"
-                />
-              </Field>
-            </FieldRoot>
+                  optional
+                >
+                  <FileInput
+                    dropzone
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("file", input);
+                    }}
+                    inputValue={formik.values.file}
+                    disabled={empty(formik.values.file_type)}
+                    accept=".zip"
+                  />
+                </Field>
+              </FieldRoot>
+            </form>
           </DisclosureBody>
 
           <DisclosureFooter>
             <BackButton />
             <BButton
+              type="submit"
+              form="edit_layer"
               colorPalette={themeConfig?.colorPalette}
-              onClick={formik.submitForm}
             >
               {l.save}
             </BButton>
