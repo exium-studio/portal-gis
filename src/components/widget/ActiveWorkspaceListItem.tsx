@@ -194,8 +194,6 @@ const ActiveWorkspaceListItem = (props: Props) => {
   // Props
   const { activeWorkspace, index } = props;
 
-  console.log(activeWorkspace?.layers);
-
   return (
     <AccordionItem value={`${activeWorkspace.id}`} py={2}>
       <AccordionItemTrigger indicatorPlacement="none" py={0}>
