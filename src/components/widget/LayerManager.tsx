@@ -113,7 +113,7 @@ const LayerSource = (props: LayerSourceProps) => {
     }
 
     // Fill layer
-    if (isFillLayer && !map.getLayer(fillLayerId)) {
+    if ((isFillLayer || isLineLayer) && !map.getLayer(fillLayerId)) {
       map.addLayer({
         id: fillLayerId,
         type: "fill",
@@ -129,7 +129,7 @@ const LayerSource = (props: LayerSourceProps) => {
     }
 
     // Outline layer
-    if (isLineLayer && !map.getLayer(lineLayerId)) {
+    if ((isFillLayer || isLineLayer) && !map.getLayer(lineLayerId)) {
       map.addLayer({
         id: lineLayerId,
         type: "line",
