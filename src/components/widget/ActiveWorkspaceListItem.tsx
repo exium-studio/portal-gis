@@ -221,7 +221,7 @@ const ActiveWorkspaceListItem = (props: Props) => {
       <AccordionItemContent py={0} pb={2}>
         <CContainer gap={1}>
           {activeWorkspace?.layers &&
-            [...activeWorkspace?.layers]?.map((activeLayer) => {
+            [...activeWorkspace?.layers]?.reverse()?.map((activeLayer) => {
               return (
                 <ActiveLayerListItem
                   key={activeLayer.id}
