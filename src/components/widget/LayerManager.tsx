@@ -15,8 +15,11 @@ interface LayerSourceProps {
 }
 
 const LayerSource = (props: LayerSourceProps) => {
+  // Props
   const { activeWorkspace, activeLayer } = props;
 
+  // Contexts
+  const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
   const { mapRef } = useMapViewState();
   const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
   const setSelectedPolygon = useSelectedPolygon((s) => s.setSelectedPolygon);
@@ -26,11 +29,11 @@ const LayerSource = (props: LayerSourceProps) => {
   const { themeConfig } = useThemeConfig();
   const legends = useLegend((s) => s.legends);
 
+  // States
   const legendType = "GUNATANAHK";
   const geojson = activeLayer?.data?.geojson;
   const defaultFillColor = "#9E9E9E";
   const defaultLineColor = "#ccc";
-
   const fillLayerId = `${activeLayer.id}-fill`;
   const lineLayerId = `${activeLayer.id}-outline`;
   const sourceId = `${activeLayer.id}-source`;
@@ -64,6 +67,7 @@ const LayerSource = (props: LayerSourceProps) => {
     ],
   ];
 
+  // Utils
   const handleOnClickPolygon = useCallback(
     (event: any) => {
       if (!activeLayer.visible) return;
@@ -97,6 +101,7 @@ const LayerSource = (props: LayerSourceProps) => {
     ]
   );
 
+  // Handle initialize layers
   useEffect(() => {
     const map = mapRef.current?.getMap();
     if (!map || !geojson) return;
@@ -129,13 +134,15 @@ const LayerSource = (props: LayerSourceProps) => {
     }
 
     // Outline layer
-    if ((isFillLayer || isLineLayer) && !map.getLayer(lineLayerId)) {
+    if (isLineLayer && !map.getLayer(lineLayerId)) {
       map.addLayer({
         id: lineLayerId,
         type: "line",
         source: sourceId,
         paint: {
-          "line-color": isLineLayer ? "orange" : defaultLineColor,
+          "line-color": isLineLayer
+            ? themeConfig.primaryColorHex
+            : defaultLineColor,
           "line-width": 1,
           "line-opacity": activeLayer.visible ? 1 : 0,
         },
@@ -166,6 +173,7 @@ const LayerSource = (props: LayerSourceProps) => {
     selectedPolygon,
     fillColor,
     fillOpacity,
+    activeWorkspaces,
   ]);
 
   // Cleanup on layer unmount
