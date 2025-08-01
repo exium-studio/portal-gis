@@ -11,9 +11,8 @@ import useMapsZoom from "@/context/useMapZoom";
 import mapboxgl from "mapbox-gl";
 import { useEffect, useRef, useState } from "react";
 import Map, { MapRef, Marker } from "react-map-gl/mapbox";
-import MapMarkerCircle from "../MapMarkerCircle";
 import LayerManager from "../LayerManager";
-import useActiveWorkspaces from "@/context/useActiveWorkspaces";
+import MapMarkerCircle from "../MapMarkerCircle";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 const MIN_ZOOM = 1;
@@ -30,7 +29,7 @@ const BaseMap = () => {
   const { mapZoomPercent, setMapZoomPercent } = useMapsZoom();
   const { basemap } = useBasemap();
   const { selectedSearchResult } = useSearchAddress(); // long = 0, lat = 1 (center)
-  const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
+  // const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
 
   // Refs
   const mapRef = useRef<MapRef>(null);
@@ -40,7 +39,7 @@ const BaseMap = () => {
   const [mapLoad, setMapLoad] = useState<boolean>(false);
   const { mapViewState, setMapViewState, setMapRef } = useMapViewState();
   const [mapKey, setMapKey] = useState<number>(1);
-  const [layerKey, setLayerKey] = useState<number>(1);
+  // const [layerKey, setLayerKey] = useState<number>(1);
 
   // Handle init mapRef
   useEffect(() => {
@@ -181,12 +180,9 @@ const BaseMap = () => {
   }, [mapStyle, colorMode]);
 
   // Handle rerender layer
-  useEffect(() => {
-    setLayerKey((prev) => prev + 1);
-  }, [activeWorkspaces]);
-
-  // console.log(activeWorkspaces?.[0]?.title, activeWorkspaces?.[0]?.visible);
-  // console.log("1", activeWorkspaces?.[1]?.visible);
+  // useEffect(() => {
+  //   setLayerKey((prev) => prev + 1);
+  // }, [activeWorkspaces]);
 
   return (
     <Map
@@ -237,7 +233,7 @@ const BaseMap = () => {
           )}
 
           {/* Polygon Layer */}
-          <LayerManager key={`${layerKey}${mapKey}`} />
+          <LayerManager />
         </>
       )}
     </Map>

@@ -7,7 +7,7 @@ import useLegend from "@/context/useLegend";
 import useMapViewState from "@/context/useMapViewState";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 interface LayerSourceProps {
   activeWorkspace: Interface__ActiveWorkspace;
@@ -15,10 +15,8 @@ interface LayerSourceProps {
 }
 
 const LayerSource = (props: LayerSourceProps) => {
-  // Props
   const { activeWorkspace, activeLayer } = props;
 
-  // Contexts
   const { mapRef } = useMapViewState();
   const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
   const setSelectedPolygon = useSelectedPolygon((s) => s.setSelectedPolygon);
@@ -27,17 +25,44 @@ const LayerSource = (props: LayerSourceProps) => {
   );
   const { themeConfig } = useThemeConfig();
   const legends = useLegend((s) => s.legends);
-  const legendType = "GUNATANAHK";
 
-  // States
+  const legendType = "GUNATANAHK";
   const geojson = activeLayer?.data?.geojson;
   const defaultFillColor = "#9E9E9E";
   const defaultLineColor = "#ccc";
-  const fillLayerId = `${activeLayer?.id}-fill`;
-  const outlineLayerId = `${activeLayer?.id}-outline`;
-  const sourceId = `${activeLayer?.id}-source`;
+
+  const fillLayerId = `${activeLayer.id}-fill`;
+  const lineLayerId = `${activeLayer.id}-outline`;
+  const sourceId = `${activeLayer.id}-source`;
   const isFillLayer = activeLayer.layer_type === "fill";
   const isLineLayer = activeLayer.layer_type === "line";
+  const selectedPolygonId = selectedPolygon?.polygon?.properties?.id || null;
+  const fillColor = [
+    "case",
+    ["==", ["get", "id"], selectedPolygonId],
+    themeConfig.primaryColorHex,
+    [
+      "match",
+      ["get", legendType],
+      ...legends.flatMap((legend) => [legend.label, legend.color]),
+      defaultFillColor,
+    ],
+  ];
+  const fillOpacity = [
+    "case",
+    ["==", ["get", "id"], selectedPolygonId], // Kondisi selected polygon
+    0.8,
+    [
+      "case",
+      [
+        "all",
+        ["==", ["literal", activeLayer.visible], true],
+        ["!", ["==", ["literal", isLineLayer], true]],
+      ],
+      0.8,
+      0,
+    ],
+  ];
 
   const handleOnClickPolygon = useCallback(
     (event: any) => {
@@ -49,21 +74,34 @@ const LayerSource = (props: LayerSourceProps) => {
         return;
       }
 
-      setSelectedPolygon({
-        polygon: clickedFeature,
-        activeLayer,
-        activeWorkspace,
-        fillColor: themeConfig.primaryColorHex,
-      });
+      const selectedId = selectedPolygon?.polygon?.properties?.id;
+      const clickedId = clickedFeature.properties?.id;
+
+      if (selectedId === clickedId) {
+        clearSelectedPolygon();
+      } else {
+        setSelectedPolygon({
+          polygon: clickedFeature,
+          activeLayer,
+          activeWorkspace,
+          fillColor: themeConfig.primaryColorHex,
+        });
+      }
     },
-    [selectedPolygon, activeWorkspace, activeLayer, themeConfig.primaryColorHex]
+    [
+      selectedPolygon?.polygon?.properties?.id,
+      activeWorkspace,
+      activeLayer,
+      themeConfig.primaryColorHex,
+      fillColor,
+    ]
   );
 
   useEffect(() => {
     const map = mapRef.current?.getMap();
-    if (!map || !activeLayer?.id || !geojson) return;
+    if (!map || !geojson) return;
 
-    // Source
+    // Add or update source
     const existingSource = map.getSource(sourceId);
     if (existingSource) {
       (existingSource as any).setData(geojson);
@@ -75,58 +113,44 @@ const LayerSource = (props: LayerSourceProps) => {
     }
 
     // Fill layer
-    if (isFillLayer || isLineLayer) {
-      if (!map.getLayer(fillLayerId)) {
-        map.addLayer({
-          id: fillLayerId,
-          type: "fill",
-          source: sourceId,
-          paint: {
-            "fill-color": [
-              "match",
-              ["get", legendType],
-              ...legends.flatMap((legend) => [legend.label, legend.color]),
-              defaultFillColor,
-            ],
-            "fill-opacity": activeLayer.visible && !isLineLayer ? 0.8 : 0,
-          },
-        });
-      } else {
-        map.setPaintProperty(
-          fillLayerId,
-          "fill-opacity",
-          activeLayer.visible && !isLineLayer ? 0.8 : 0
-        );
-      }
+    if (isFillLayer && !map.getLayer(fillLayerId)) {
+      map.addLayer({
+        id: fillLayerId,
+        type: "fill",
+        source: sourceId,
+        paint: {
+          "fill-color": fillColor,
+          "fill-opacity": fillOpacity,
+        },
+      });
+    } else {
+      map.setPaintProperty(fillLayerId, "fill-color", fillColor);
+      map.setPaintProperty(fillLayerId, "fill-opacity", fillOpacity);
     }
 
     // Outline layer
-    if (isFillLayer || isLineLayer) {
-      if (!map.getLayer(outlineLayerId)) {
-        map.addLayer({
-          id: outlineLayerId,
-          type: "line",
-          source: sourceId,
-          paint: {
-            "line-color": isLineLayer ? "orange" : defaultLineColor,
-            "line-width": 1,
-            "line-opacity": activeLayer.visible ? 1 : 0,
-          },
-        });
-      } else {
-        map.setPaintProperty(
-          outlineLayerId,
-          "line-opacity",
-          activeLayer.visible ? 1 : 0
-        );
-      }
+    if (isLineLayer && !map.getLayer(lineLayerId)) {
+      map.addLayer({
+        id: lineLayerId,
+        type: "line",
+        source: sourceId,
+        paint: {
+          "line-color": isLineLayer ? "orange" : defaultLineColor,
+          "line-width": 1,
+          "line-opacity": activeLayer.visible ? 1 : 0,
+        },
+      });
+    } else {
+      map.setPaintProperty(
+        lineLayerId,
+        "line-opacity",
+        activeLayer.visible ? 1 : 0
+      );
     }
 
-    // Click handler
+    // Click event
     if (activeLayer.visible) {
       map.on("click", fillLayerId, handleOnClickPolygon);
-    } else {
-      map.off("click", fillLayerId, handleOnClickPolygon);
     }
 
     return () => {
@@ -134,89 +158,65 @@ const LayerSource = (props: LayerSourceProps) => {
     };
   }, [
     geojson,
-    activeLayer?.id,
+    activeLayer.id,
     activeLayer.visible,
     activeLayer.layer_type,
     legends,
     themeConfig.primaryColorHex,
+    selectedPolygon,
+    fillColor,
+    fillOpacity,
   ]);
 
+  // Cleanup on layer unmount
   useEffect(() => {
     return () => {
       const map = mapRef.current?.getMap();
-      if (!map || !activeLayer?.id) return;
+      if (!map) return;
       if (map.getLayer(fillLayerId)) map.removeLayer(fillLayerId);
-      if (map.getLayer(outlineLayerId)) map.removeLayer(outlineLayerId);
+      if (map.getLayer(lineLayerId)) map.removeLayer(lineLayerId);
       if (map.getSource(sourceId)) map.removeSource(sourceId);
     };
-  }, [activeLayer?.id]);
+  }, [activeLayer.id]);
 
   return null;
 };
 
 const LayerManager = () => {
-  const { mapRef } = useMapViewState();
-  const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
-  const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
-  const { themeConfig } = useThemeConfig();
+  const { activeWorkspaces } = useActiveWorkspaces(); // Context yang bisa dimutasi
+  const map = useMapViewState().mapRef.current?.getMap();
+
+  const layerOrderRef = useRef<(string | undefined)[] | undefined>([]);
 
   useEffect(() => {
-    const map = mapRef.current?.getMap();
-    const fillId = "selected-polygon-fill";
-    const selectedPolygonSourceId = "selected-polygon-source";
-
     if (!map) return;
 
-    // Cleanup previous
-    if (map.getLayer(fillId)) map.removeLayer(fillId);
-    if (map.getSource(selectedPolygonSourceId))
-      map.removeSource(selectedPolygonSourceId);
+    const newLayerOrder = activeWorkspaces
+      .filter((ws) => ws.visible)
+      .flatMap((ws) => ws.layers?.map((layer) => `${layer.id}-fill`));
 
-    if (!selectedPolygon?.polygon) return;
+    if (
+      JSON.stringify(newLayerOrder) !== JSON.stringify(layerOrderRef.current)
+    ) {
+      newLayerOrder.forEach((layerId) => {
+        if (map.getLayer(layerId)) {
+          map.moveLayer(layerId);
+        }
+      });
 
-    const selectedFeature = selectedPolygon.polygon;
-
-    map.addSource("selected-polygon-source", {
-      type: "geojson",
-      data: {
-        type: "FeatureCollection",
-        features: [selectedFeature],
-      },
-      promoteId: "id",
-    });
-
-    map.addLayer({
-      id: fillId,
-      type: "fill",
-      source: selectedPolygonSourceId,
-      paint: {
-        "fill-color": themeConfig.primaryColorHex,
-        "fill-opacity": 0.6,
-      },
-      layout: {
-        "fill-antialias": false, // ← cobain ini
-      },
-    });
-
-    // Always bring to front
-    map.moveLayer(fillId);
-
-    return () => {
-      if (map.getLayer(fillId)) map.removeLayer(fillId);
-      if (map.getSource(selectedPolygonSourceId))
-        map.removeSource(selectedPolygonSourceId);
-    };
-  }, [selectedPolygon, themeConfig.primaryColorHex]);
+      layerOrderRef.current = newLayerOrder;
+    }
+  }, [activeWorkspaces, map]);
 
   return (
     <>
       {activeWorkspaces
-        .filter((workspace) => workspace.visible)
-        .flatMap((workspace) =>
-          (workspace.layers || []).map((layer) => (
+        .filter((ws) => ws.visible)
+        .flatMap((ws) =>
+          ws.layers?.map((layer) => (
             <LayerSource
-              key={`${workspace.id}-${layer.id}`}
-              activeWorkspace={workspace}
+              key={`${ws.id}-${layer.id}`}
+              activeWorkspace={ws}
               activeLayer={layer}
             />
           ))
