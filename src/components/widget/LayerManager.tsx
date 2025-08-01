@@ -95,7 +95,7 @@ const LayerSource = (props: LayerSourceProps) => {
         map.setPaintProperty(
           fillLayerId,
           "fill-opacity",
-          activeLayer.visible ? 0.8 : 0
+          activeLayer.visible && !isLineLayer ? 0.8 : 0
         );
       }
     }
@@ -125,15 +125,12 @@ const LayerSource = (props: LayerSourceProps) => {
     // Click handler
     if (activeLayer.visible) {
       map.on("click", fillLayerId, handleOnClickPolygon);
-      map.on("click", outlineLayerId, handleOnClickPolygon);
     } else {
       map.off("click", fillLayerId, handleOnClickPolygon);
-      map.off("click", outlineLayerId, handleOnClickPolygon);
     }
 
     return () => {
       map.off("click", fillLayerId, handleOnClickPolygon);
-      map.off("click", outlineLayerId, handleOnClickPolygon);
     };
   }, [
     geojson,
@@ -165,14 +162,13 @@ const LayerManager = () => {
 
   useEffect(() => {
     const map = mapRef.current?.getMap();
-    const selectedPolygonLayerId = "selected-polygon-fill";
+    const fillId = "selected-polygon-fill";
     const selectedPolygonSourceId = "selected-polygon-source";
 
     if (!map) return;
 
     // Cleanup previous
-    if (map.getLayer(selectedPolygonLayerId))
-      map.removeLayer(selectedPolygonLayerId);
+    if (map.getLayer(fillId)) map.removeLayer(fillId);
     if (map.getSource(selectedPolygonSourceId))
       map.removeSource(selectedPolygonSourceId);
 
@@ -180,34 +176,33 @@ const LayerManager = () => {
 
     const selectedFeature = selectedPolygon.polygon;
 
-    map.addSource(selectedPolygonSourceId, {
+    map.addSource("selected-polygon-source", {
       type: "geojson",
       data: {
         type: "FeatureCollection",
         features: [selectedFeature],
       },
-      generateId: true,
+      promoteId: "id",
     });
 
     map.addLayer({
-      id: selectedPolygonLayerId,
+      id: fillId,
       type: "fill",
       source: selectedPolygonSourceId,
       paint: {
         "fill-color": themeConfig.primaryColorHex,
         "fill-opacity": 0.6,
       },
-      layout: {},
-      minzoom: 0,
-      maxzoom: 24,
+      layout: {
+        "fill-antialias": false, // ← cobain ini
+      },
     });
 
     // Always bring to front
-    map.moveLayer(selectedPolygonLayerId);
+    map.moveLayer(fillId);
 
     return () => {
-      if (map.getLayer(selectedPolygonLayerId))
-        map.removeLayer(selectedPolygonLayerId);
+      if (map.getLayer(fillId)) map.removeLayer(fillId);
       if (map.getSource(selectedPolygonSourceId))
         map.removeSource(selectedPolygonSourceId);
     };
