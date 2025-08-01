@@ -135,7 +135,6 @@ const LayerSource = (props: LayerSourceProps) => {
           },
         });
       } else {
-        console.log(activeLayer?.visible);
         map.setPaintProperty(fillLayerId, "fill-color", fillColor);
         map.setPaintProperty(fillLayerId, "fill-opacity", fillOpacity);
       }
