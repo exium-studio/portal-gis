@@ -180,11 +180,13 @@ const BaseMap = () => {
     }, 1);
   }, [mapStyle, colorMode]);
 
+  // Handle rerender layer
   useEffect(() => {
-    setTimeout(() => {
-      setLayerKey((ps) => ps + 1);
-    }, 1);
+    setLayerKey((prev) => prev + 1);
   }, [activeWorkspaces]);
+
+  // console.log(activeWorkspaces?.[0]?.title, activeWorkspaces?.[0]?.visible);
+  // console.log("1", activeWorkspaces?.[1]?.visible);
 
   return (
     <Map
@@ -234,7 +236,7 @@ const BaseMap = () => {
           )}
 
           {/* Polygon Layer */}
-          <LayerManager key={layerKey} />
+          <LayerManager key={`${layerKey}${mapKey}`} />
         </>
       )}
     </Map>

@@ -1427,8 +1427,8 @@ export const delete_all_inbox_button = {
 // Toasters
 export const workspace_loading_toast = {
   title: {
-    id: "Memuat workspace ${workspaceTitle}",
-    en: "Loading workspace ${workspaceTitle}",
+    id: "Memuat ${workspaceTitle}",
+    en: "Loading ${workspaceTitle}",
   },
   description: {
     id: "Workspace sedang dimuat ke peta.",
@@ -1437,8 +1437,8 @@ export const workspace_loading_toast = {
 };
 export const workspace_loaded_toast = {
   title: {
-    id: "Workspace ${workspaceTitle} berhasil dimuat",
-    en: "WOrkspace ${workspaceTitle} loaded successfully",
+    id: "${workspaceTitle} berhasil dimuat",
+    en: "${workspaceTitle} loaded successfully",
   },
   description: {
     id: "Workspace siap digunakan di peta.",

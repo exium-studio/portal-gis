@@ -571,11 +571,11 @@ const translations = {
   "workspace_category": "Workspace category",
   "workspace_detail": "Workspace detail",
   "workspace_loaded_toast": {
-    "title": "WOrkspace ${workspaceTitle} loaded successfully",
+    "title": "${workspaceTitle} loaded successfully",
     "description": "Workspace is ready on the map."
   },
   "workspace_loading_toast": {
-    "title": "Loading workspace ${workspaceTitle}",
+    "title": "Loading ${workspaceTitle}",
     "description": "Workspace is being loaded onto the map."
   },
   "written_area": "Written area",

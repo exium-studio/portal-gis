@@ -571,11 +571,11 @@ const translations = {
   "workspace_category": "Kategori workspace",
   "workspace_detail": "Detail workspace",
   "workspace_loaded_toast": {
-    "title": "Workspace ${workspaceTitle} berhasil dimuat",
+    "title": "${workspaceTitle} berhasil dimuat",
     "description": "Workspace siap digunakan di peta."
   },
   "workspace_loading_toast": {
-    "title": "Memuat workspace ${workspaceTitle}",
+    "title": "Memuat ${workspaceTitle}",
     "description": "Workspace sedang dimuat ke peta."
   },
   "written_area": "Luas tertulis",

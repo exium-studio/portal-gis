@@ -188,17 +188,12 @@ const EditLayer = (props: any) => {
                 <Field
                   invalid={!!formik.errors.with_explanation}
                   errorText={formik.errors.with_explanation as string}
-                  helperText={l.with_explanation_helper}
                   mb={4}
                 >
                   <Checkbox
-                    onChange={(e: any) => {
-                      formik.setFieldValue(
-                        "with_explanation",
-                        e.target.checked
-                      );
-                    }}
+                    disabled
                     checked={formik.values.with_explanation}
+                    cursor={"disabled"}
                   >
                     {l.with_explanation}
                   </Checkbox>

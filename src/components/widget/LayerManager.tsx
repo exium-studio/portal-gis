@@ -7,19 +7,16 @@ import useLegend from "@/context/useLegend";
 import useMapViewState from "@/context/useMapViewState";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
-import { useCallback, useEffect } from "react";
-import { Layer, Source } from "react-map-gl/mapbox";
+import { useCallback, useEffect, useMemo } from "react";
 
 interface LayerSourceProps {
   activeWorkspace: Interface__ActiveWorkspace;
   activeLayer: Interface__ActiveLayer;
+  layersToRender: any[];
 }
 
 const LayerSource = (props: LayerSourceProps) => {
-  // Props
   const { activeWorkspace, activeLayer } = props;
-
-  // Contexts
   const { mapRef } = useMapViewState();
   const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
   const setSelectedPolygon = useSelectedPolygon((s) => s.setSelectedPolygon);
@@ -28,9 +25,8 @@ const LayerSource = (props: LayerSourceProps) => {
   );
   const { themeConfig } = useThemeConfig();
   const legends = useLegend((s) => s.legends);
-  const legendType = "GUNATANAHK"; // properties key / column name
+  const legendType = "GUNATANAHK";
 
-  // States
   const geojson = activeLayer?.data?.geojson;
   const selectedFeatureId = selectedPolygon?.polygon?.properties?.id;
   const defaultFillColor = "#9E9E9E";
@@ -41,7 +37,6 @@ const LayerSource = (props: LayerSourceProps) => {
   const fillLayer = activeLayer.layer_type === "fill";
   const lineLayer = activeLayer.layer_type === "line";
 
-  // Modified click handler
   const handleOnClickPolygon = useCallback(
     (event: any) => {
       const clickedFeature = event.features?.[0];
@@ -59,8 +54,8 @@ const LayerSource = (props: LayerSourceProps) => {
         clearSelectedPolygon();
       } else {
         setSelectedPolygon({
-          activeWorkspace: activeWorkspace,
-          activeLayer: activeLayer,
+          activeWorkspace,
+          activeLayer,
           polygon: clickedFeature,
           fillColor: themeConfig.primaryColorHex,
         });
@@ -69,74 +64,113 @@ const LayerSource = (props: LayerSourceProps) => {
     [selectedPolygon, activeWorkspace, activeLayer, themeConfig.primaryColorHex]
   );
 
-  // Enhanced layer effect
+  // Single comprehensive useEffect untuk handle semua layer operations
   useEffect(() => {
     const map = mapRef.current?.getMap();
-    if (!map || !activeLayer?.id) return;
+    if (!map || !activeLayer?.id || !geojson || !activeLayer.visible) return;
 
+    // Handle source
+    const existingSource = map.getSource(sourceId);
+    if (existingSource) {
+      if ("setData" in existingSource) {
+        existingSource.setData(geojson);
+      }
+    } else {
+      map.addSource(sourceId, {
+        type: "geojson",
+        data: geojson,
+      });
+    }
+
+    // Remove existing layers if any
+    if (map.getLayer(fillLayerId)) map.removeLayer(fillLayerId);
+    if (map.getLayer(outlineLayerId)) map.removeLayer(outlineLayerId);
+
+    // Add new layers
+    if (fillLayer) {
+      map.addLayer({
+        id: fillLayerId,
+        type: "fill",
+        source: sourceId,
+        paint: {
+          "fill-color": [
+            "case",
+            ["==", ["get", "id"], selectedFeatureId || ""],
+            themeConfig.primaryColorHex,
+            [
+              "match",
+              ["get", legendType],
+              ...legends.flatMap((legend) => [legend.label, legend.color]),
+              defaultFillColor,
+            ],
+          ],
+          "fill-opacity": 0.8,
+        },
+      });
+    }
+
+    if (fillLayer || lineLayer) {
+      map.addLayer({
+        id: outlineLayerId,
+        type: "line",
+        source: sourceId,
+        paint: {
+          "line-color": defaultLineColor,
+          "line-width": 1,
+        },
+      });
+    }
+
+    // Add event listeners
     map.on("click", fillLayerId, handleOnClickPolygon);
 
     return () => {
       map.off("click", fillLayerId, handleOnClickPolygon);
     };
-  }, [mapRef, handleOnClickPolygon, fillLayerId, activeLayer?.id]);
+  }, [
+    geojson,
+    activeLayer?.id,
+    activeLayer?.visible,
+    activeLayer?.layer_type,
+    selectedFeatureId,
+    themeConfig.primaryColorHex,
+  ]);
 
-  if (!activeLayer.visible || !geojson) return null;
-
-  return (
-    <Source id={sourceId} type="geojson" data={geojson}>
-      {fillLayer && (
-        <Layer
-          id={fillLayerId}
-          type="fill"
-          paint={{
-            "fill-color": [
-              "case",
-              ["==", ["get", "id"], selectedFeatureId || ""],
-              themeConfig.primaryColorHex,
-              [
-                "match",
-                ["get", legendType],
-                ...legends.flatMap((legend) => [legend.label, legend.color]),
-                defaultFillColor,
-              ],
-            ],
-            "fill-opacity": 0.8,
-          }}
-        />
-      )}
-      {(fillLayer || lineLayer) && (
-        <Layer
-          id={outlineLayerId}
-          type="line"
-          paint={{
-            "line-color": defaultLineColor,
-            "line-width": 1,
-          }}
-        />
-      )}
-    </Source>
-  );
+  return null; // Render handled by Mapbox directly
 };
 
 const LayerManager = () => {
   const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
 
+  const layersToRender = useMemo(() => {
+    return [...activeWorkspaces]
+      .filter((workspace) => workspace.visible)
+      .flatMap((workspace) =>
+        (workspace.layers || [])
+          .filter((layer) => layer.visible)
+          .map((layer) => ({ workspace, layer }))
+      );
+  }, [activeWorkspaces]);
+
+  // useEffect(() => {
+  //   console.log("Active layers updated:", layersToRender.length);
+  //   console.log("layersToRender", layersToRender);
+  //   console.log("activeWorkspaces", activeWorkspaces);
+  // }, [layersToRender]);
+
   return (
     <>
-      {activeWorkspaces
-        .filter((workspace) => workspace.visible)
-        .map((workspace) =>
-          workspace.layers
-            ?.filter((layer) => layer.visible)
-            ?.map((layer) => (
-              <LayerSource
-                key={`${workspace.id}-${layer.id}`}
-                activeWorkspace={workspace}
-                activeLayer={layer}
-              />
-            ))
-        )}
+      {layersToRender.map(({ workspace, layer }) => {
+        // console.log(`${workspace.id}-${layer.id}-${layer.visible}`);
+        return (
+          <LayerSource
+            key={`${workspace.id}-${layer.id}-${layer.visible}`}
+            activeWorkspace={workspace}
+            activeLayer={layer}
+            layersToRender={layersToRender}
+          />
+        );
+      })}
     </>
   );
 };
