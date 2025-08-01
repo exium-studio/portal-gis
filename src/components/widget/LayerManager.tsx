@@ -7,16 +7,14 @@ import useLegend from "@/context/useLegend";
 import useMapViewState from "@/context/useMapViewState";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect } from "react";
 
 interface LayerSourceProps {
   activeWorkspace: Interface__ActiveWorkspace;
   activeLayer: Interface__ActiveLayer;
-  layersToRender: any[];
 }
 
-const LayerSource = (props: LayerSourceProps) => {
-  const { activeWorkspace, activeLayer } = props;
+const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
   const { mapRef } = useMapViewState();
   const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
   const setSelectedPolygon = useSelectedPolygon((s) => s.setSelectedPolygon);
@@ -28,53 +26,46 @@ const LayerSource = (props: LayerSourceProps) => {
   const legendType = "GUNATANAHK";
 
   const geojson = activeLayer?.data?.geojson;
-  const selectedFeatureId = selectedPolygon?.polygon?.properties?.id;
   const defaultFillColor = "#9E9E9E";
   const defaultLineColor = "#ccc";
   const fillLayerId = `${activeLayer?.id}-fill`;
   const outlineLayerId = `${activeLayer?.id}-outline`;
   const sourceId = `${activeLayer?.id}-source`;
-  const fillLayer = activeLayer.layer_type === "fill";
-  const lineLayer = activeLayer.layer_type === "line";
+  const isFillLayer = activeLayer.layer_type === "fill";
+  const isLineLayer = activeLayer.layer_type === "line";
 
   const handleOnClickPolygon = useCallback(
     (event: any) => {
+      if (!activeLayer.visible) return;
+
+      console.log(outlineLayerId);
+
       const clickedFeature = event.features?.[0];
       if (!clickedFeature) {
         clearSelectedPolygon();
         return;
       }
 
-      const alreadySelected =
-        selectedFeatureId === clickedFeature?.properties?.id &&
-        selectedPolygon?.activeWorkspace?.id === activeWorkspace?.id &&
-        selectedPolygon?.activeLayer?.id === activeLayer?.id;
+      console.log(clickedFeature);
 
-      if (alreadySelected) {
-        clearSelectedPolygon();
-      } else {
-        setSelectedPolygon({
-          activeWorkspace,
-          activeLayer,
-          polygon: clickedFeature,
-          fillColor: themeConfig.primaryColorHex,
-        });
-      }
+      setSelectedPolygon({
+        polygon: clickedFeature,
+        activeLayer,
+        activeWorkspace,
+        fillColor: themeConfig.primaryColorHex,
+      });
     },
     [selectedPolygon, activeWorkspace, activeLayer, themeConfig.primaryColorHex]
   );
 
-  // Single comprehensive useEffect untuk handle semua layer operations
   useEffect(() => {
     const map = mapRef.current?.getMap();
-    if (!map || !activeLayer?.id || !geojson || !activeLayer.visible) return;
+    if (!map || !activeLayer?.id || !geojson) return;
 
-    // Handle source
+    // Source
     const existingSource = map.getSource(sourceId);
     if (existingSource) {
-      if ("setData" in existingSource) {
-        existingSource.setData(geojson);
-      }
+      (existingSource as any).setData(geojson);
     } else {
       map.addSource(sourceId, {
         type: "geojson",
@@ -82,95 +73,158 @@ const LayerSource = (props: LayerSourceProps) => {
       });
     }
 
-    // Remove existing layers if any
-    if (map.getLayer(fillLayerId)) map.removeLayer(fillLayerId);
-    if (map.getLayer(outlineLayerId)) map.removeLayer(outlineLayerId);
-
-    // Add new layers
-    if (fillLayer) {
-      map.addLayer({
-        id: fillLayerId,
-        type: "fill",
-        source: sourceId,
-        paint: {
-          "fill-color": [
-            "case",
-            ["==", ["get", "id"], selectedFeatureId || ""],
-            themeConfig.primaryColorHex,
-            [
+    // Fill layer
+    if (isFillLayer) {
+      if (!map.getLayer(fillLayerId)) {
+        map.addLayer({
+          id: fillLayerId,
+          type: "fill",
+          source: sourceId,
+          paint: {
+            "fill-color": [
               "match",
               ["get", legendType],
               ...legends.flatMap((legend) => [legend.label, legend.color]),
               defaultFillColor,
             ],
-          ],
-          "fill-opacity": 0.8,
-        },
-      });
+            "fill-opacity": activeLayer.visible ? 0.8 : 0,
+          },
+        });
+      } else {
+        map.setPaintProperty(
+          fillLayerId,
+          "fill-opacity",
+          activeLayer.visible ? 0.8 : 0
+        );
+      }
     }
 
-    if (fillLayer || lineLayer) {
-      map.addLayer({
-        id: outlineLayerId,
-        type: "line",
-        source: sourceId,
-        paint: {
-          "line-color": defaultLineColor,
-          "line-width": 1,
-        },
-      });
+    // Outline layer
+    if (isFillLayer || isLineLayer) {
+      if (!map.getLayer(outlineLayerId)) {
+        map.addLayer({
+          id: outlineLayerId,
+          type: "line",
+          source: sourceId,
+          paint: {
+            "line-color": isLineLayer ? "orange" : defaultLineColor,
+            "line-width": 1,
+            "line-opacity": activeLayer.visible ? 1 : 0,
+          },
+        });
+      } else {
+        map.setPaintProperty(
+          outlineLayerId,
+          "line-opacity",
+          activeLayer.visible ? 1 : 0
+        );
+      }
     }
 
-    // Add event listeners
-    map.on("click", fillLayerId, handleOnClickPolygon);
+    // Click handler
+    if (activeLayer.visible) {
+      map.on("click", fillLayerId, handleOnClickPolygon);
+      map.on("click", outlineLayerId, handleOnClickPolygon);
+    } else {
+      map.off("click", fillLayerId, handleOnClickPolygon);
+      map.off("click", outlineLayerId, handleOnClickPolygon);
+    }
 
     return () => {
       map.off("click", fillLayerId, handleOnClickPolygon);
+      map.off("click", outlineLayerId, handleOnClickPolygon);
     };
   }, [
     geojson,
     activeLayer?.id,
-    activeLayer?.visible,
-    activeLayer?.layer_type,
-    selectedFeatureId,
+    activeLayer.visible,
+    activeLayer.layer_type,
+    legends,
     themeConfig.primaryColorHex,
   ]);
 
-  return null; // Render handled by Mapbox directly
+  useEffect(() => {
+    return () => {
+      const map = mapRef.current?.getMap();
+      if (!map || !activeLayer?.id) return;
+      if (map.getLayer(fillLayerId)) map.removeLayer(fillLayerId);
+      if (map.getLayer(outlineLayerId)) map.removeLayer(outlineLayerId);
+      if (map.getSource(sourceId)) map.removeSource(sourceId);
+    };
+  }, [activeLayer?.id]);
+
+  return null;
 };
 
 const LayerManager = () => {
+  const { mapRef } = useMapViewState();
   const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
+  const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
+  const { themeConfig } = useThemeConfig();
 
-  const layersToRender = useMemo(() => {
-    return [...activeWorkspaces]
-      .filter((workspace) => workspace.visible)
-      .flatMap((workspace) =>
-        (workspace.layers || [])
-          .filter((layer) => layer.visible)
-          .map((layer) => ({ workspace, layer }))
-      );
-  }, [activeWorkspaces]);
+  useEffect(() => {
+    const map = mapRef.current?.getMap();
+    const selectedPolygonLayerId = "selected-polygon-fill";
+    const selectedPolygonSourceId = "selected-polygon-source";
 
-  // useEffect(() => {
-  //   console.log("Active layers updated:", layersToRender.length);
-  //   console.log("layersToRender", layersToRender);
-  //   console.log("activeWorkspaces", activeWorkspaces);
-  // }, [layersToRender]);
+    if (!map) return;
+
+    // Cleanup previous
+    if (map.getLayer(selectedPolygonLayerId))
+      map.removeLayer(selectedPolygonLayerId);
+    if (map.getSource(selectedPolygonSourceId))
+      map.removeSource(selectedPolygonSourceId);
+
+    if (!selectedPolygon?.polygon) return;
+
+    const selectedFeature = selectedPolygon.polygon;
+
+    map.addSource(selectedPolygonSourceId, {
+      type: "geojson",
+      data: {
+        type: "FeatureCollection",
+        features: [selectedFeature],
+      },
+      generateId: true,
+    });
+
+    map.addLayer({
+      id: selectedPolygonLayerId,
+      type: "fill",
+      source: selectedPolygonSourceId,
+      paint: {
+        "fill-color": themeConfig.primaryColorHex,
+        "fill-opacity": 0.6,
+      },
+      layout: {},
+      minzoom: 0,
+      maxzoom: 24,
+    });
+
+    // Always bring to front
+    map.moveLayer(selectedPolygonLayerId);
+
+    return () => {
+      if (map.getLayer(selectedPolygonLayerId))
+        map.removeLayer(selectedPolygonLayerId);
+      if (map.getSource(selectedPolygonSourceId))
+        map.removeSource(selectedPolygonSourceId);
+    };
+  }, [selectedPolygon, themeConfig.primaryColorHex]);
 
   return (
     <>
-      {layersToRender.map(({ workspace, layer }) => {
-        // console.log(`${workspace.id}-${layer.id}-${layer.visible}`);
-        return (
-          <LayerSource
-            key={`${workspace.id}-${layer.id}-${layer.visible}`}
-            activeWorkspace={workspace}
-            activeLayer={layer}
-            layersToRender={layersToRender}
-          />
-        );
-      })}
+      {activeWorkspaces
+        .filter((workspace) => workspace.visible)
+        .flatMap((workspace) =>
+          (workspace.layers || []).map((layer) => (
+            <LayerSource
+              key={`${workspace.id}-${layer.id}`}
+              activeWorkspace={workspace}
+              activeLayer={layer}
+            />
+          ))
+        )}
     </>
   );
 };

@@ -103,7 +103,7 @@ export const EditField = (props: any) => {
       const url = `/api/gis-bpn/workspaces-layers/update-field`;
       const config = {
         url,
-        method: "PUT",
+        method: "PATCH",
         data: payload,
       };
 
