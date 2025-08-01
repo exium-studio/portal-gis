@@ -30,7 +30,13 @@ interface Props {
 
 const ActiveWorkspaceUtils = (props: any) => {
   // Props
-  const { activeWorkspace, ...restProps } = props;
+  const { activeWorkspace, index, ...restProps } = props;
+
+  // Contexts
+  const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
+
+  const first = index === 0;
+  const last = index === activeWorkspaces?.length - 1;
 
   return (
     <HStack
@@ -39,9 +45,9 @@ const ActiveWorkspaceUtils = (props: any) => {
       onClick={(e) => e.stopPropagation()}
       {...restProps}
     >
-      <DecreaseLayerLevel activeWorkspace={activeWorkspace} />
+      <DecreaseLayerLevel activeWorkspace={activeWorkspace} disabled={last} />
 
-      <IncreaseLayerLevel activeWorkspace={activeWorkspace} />
+      <IncreaseLayerLevel activeWorkspace={activeWorkspace} disabled={first} />
 
       <ToggleVisibility activeWorkspace={activeWorkspace} />
 
@@ -51,7 +57,7 @@ const ActiveWorkspaceUtils = (props: any) => {
 };
 const DecreaseLayerLevel = (props: any) => {
   // Props
-  const { activeWorkspace } = props;
+  const { activeWorkspace, ...restProps } = props;
 
   // Hooks
   const { l } = useLang();
@@ -69,6 +75,7 @@ const DecreaseLayerLevel = (props: any) => {
         onClick={() => {
           decreaseLayerLevel(activeWorkspace?.id);
         }}
+        {...restProps}
       >
         <Icon boxSize={5}>
           <IconStackPush stroke={1.5} />
@@ -79,7 +86,7 @@ const DecreaseLayerLevel = (props: any) => {
 };
 const IncreaseLayerLevel = (props: any) => {
   // Props
-  const { activeWorkspace } = props;
+  const { activeWorkspace, ...restProps } = props;
 
   // Hooks
   const { l } = useLang();
@@ -94,6 +101,7 @@ const IncreaseLayerLevel = (props: any) => {
         size={"xs"}
         variant={"ghost"}
         onClick={() => increaseLayerLevel(activeWorkspace?.id)}
+        {...restProps}
       >
         <Icon boxSize={5}>
           <IconStackPop stroke={1.5} />
@@ -184,7 +192,7 @@ const ViewWorkspace = (props: any) => {
 
 const ActiveWorkspaceListItem = (props: Props) => {
   // Props
-  const { activeWorkspace } = props;
+  const { activeWorkspace, index } = props;
 
   return (
     <AccordionItem value={`${activeWorkspace.id}`}>
@@ -200,7 +208,11 @@ const ActiveWorkspaceListItem = (props: Props) => {
             </P>
           </HStack>
 
-          <ActiveWorkspaceUtils activeWorkspace={activeWorkspace} ml={"auto"} />
+          <ActiveWorkspaceUtils
+            activeWorkspace={activeWorkspace}
+            index={index}
+            ml={"auto"}
+          />
         </HStack>
       </AccordionItemTrigger>
 
