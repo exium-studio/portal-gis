@@ -96,6 +96,7 @@ export const FieldInfo = () => {
             <EditField
               data={data}
               setData={setData}
+              selectedPolygon={selectedPolygon}
               size={["xs", null, "sm"]}
             />
 
@@ -114,141 +115,17 @@ export const FieldInfo = () => {
           Object?.keys(data)?.map((key, i) => {
             const last = i === Object?.keys(data)?.length - excludedKeysCount;
 
-            return EXCLUDED_KEYS.includes(key) ? null : (
-              <ItemContainer key={key} last={last}>
-                <P fontWeight={"medium"} color={"fg.subtle"}>
-                  {`${key}`}
-                </P>
-                <PropertyValue>{`${data?.[key] || "-"}`}</PropertyValue>
-              </ItemContainer>
+            return (
+              !EXCLUDED_KEYS.includes(key) && (
+                <ItemContainer key={key} last={last}>
+                  <P fontWeight={"medium"} color={"fg.subtle"}>
+                    {`${key}`}
+                  </P>
+                  <PropertyValue>{`${data?.[key] || "-"}`}</PropertyValue>
+                </ItemContainer>
+              )
             );
           })}
-
-        {/* <ItemContainer>
-          <P fontWeight={"medium"} color={"fg.subtle"}>
-            {l.owner}
-          </P>
-          <P>{`${data?.pemilik || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"medium"} color={"fg.subtle"}>
-            {l.owner_type}
-          </P>
-          <P>{`${data?.tipepemili || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"medium"} color={"fg.subtle"}>
-            {l.usage}
-          </P>
-          <P>{`${data?.penggunaan || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"medium"} color={"fg.subtle"}>
-            {l.sertificate_number}
-          </P>
-          <P>{`${data?.hak || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"medium"} color={"fg.subtle"}>
-            NIB
-          </P>
-          <P>{`${data?.nib || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"medium"} color={"fg.subtle"}>
-            {l.rights_type}
-          </P>
-          <P>{`${data?.tipehak || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"medium"} color={"fg.subtle"}>
-            {l.rights_published_date}
-          </P>
-          <P>{`${data?.tglterbith || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"medium"} color={"fg.subtle"}>
-            {l.rights_expired_date}
-          </P>
-          <P>{`${data?.berakhirha || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"medium"} color={"fg.subtle"}>
-            {l.map_area}
-          </P>
-          <P>{`${data?.luaspeta || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"medium"} color={"fg.subtle"}>
-            {l.written_area}
-          </P>
-          <P>{`${data?.luastertul || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"medium"} color={"fg.subtle"}>
-            {l.sk}
-          </P>
-          <P>{`${data?.sk || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"medium"} color={"fg.subtle"}>
-            {l.sk_date}
-          </P>
-          <P>{`${data?.tanggalsk || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"medium"} color={"fg.subtle"}>
-            {l.city}
-          </P>
-          <P>{`${data?.kabupaten || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"medium"} color={"fg.subtle"}>
-            {l.province}
-          </P>
-          <P>{`${data?.propinsi || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"medium"} color={"fg.subtle"}>
-            {l.problems}
-          </P>
-          <P>{`${data?.permasalah || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"medium"} color={"fg.subtle"}>
-            {l.dispute_parties}
-          </P>
-          <P>{`${data?.parapihakb || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer>
-          <P fontWeight={"medium"} color={"fg.subtle"}>
-            {l.handling_and_follow_up}
-          </P>
-          <P>{`${data?.tindaklanj || "-"}`}</P>
-        </ItemContainer>
-
-        <ItemContainer last>
-          <P fontWeight={"medium"} color={"fg.subtle"}>
-            {l.result}
-          </P>
-          <P>{`${data?.hasil || "-"}`}</P>
-        </ItemContainer> */}
       </CContainer>
     </FloatingContainer>
   );
