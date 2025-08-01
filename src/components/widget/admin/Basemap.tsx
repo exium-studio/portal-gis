@@ -195,6 +195,7 @@ const BaseMap = () => {
       minZoom={MIN_ZOOM}
       maxZoom={MAX_ZOOM}
       projection="mercator"
+      doubleClickZoom={false}
       // maxPitch={90}
       // maxBounds={[-180, -85, 180, 85]}
       {...mapViewState}

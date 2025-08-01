@@ -14,7 +14,11 @@ interface LayerSourceProps {
   activeLayer: Interface__ActiveLayer;
 }
 
-const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
+const LayerSource = (props: LayerSourceProps) => {
+  // Props
+  const { activeWorkspace, activeLayer } = props;
+
+  // Contexts
   const { mapRef } = useMapViewState();
   const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
   const setSelectedPolygon = useSelectedPolygon((s) => s.setSelectedPolygon);
@@ -25,6 +29,7 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
   const legends = useLegend((s) => s.legends);
   const legendType = "GUNATANAHK";
 
+  // States
   const geojson = activeLayer?.data?.geojson;
   const defaultFillColor = "#9E9E9E";
   const defaultLineColor = "#ccc";
@@ -38,15 +43,11 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
     (event: any) => {
       if (!activeLayer.visible) return;
 
-      console.log(outlineLayerId);
-
       const clickedFeature = event.features?.[0];
       if (!clickedFeature) {
         clearSelectedPolygon();
         return;
       }
-
-      console.log(clickedFeature);
 
       setSelectedPolygon({
         polygon: clickedFeature,
@@ -74,7 +75,7 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
     }
 
     // Fill layer
-    if (isFillLayer) {
+    if (isFillLayer || isLineLayer) {
       if (!map.getLayer(fillLayerId)) {
         map.addLayer({
           id: fillLayerId,
@@ -87,7 +88,7 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
               ...legends.flatMap((legend) => [legend.label, legend.color]),
               defaultFillColor,
             ],
-            "fill-opacity": activeLayer.visible ? 0.8 : 0,
+            "fill-opacity": activeLayer.visible && !isLineLayer ? 0.8 : 0,
           },
         });
       } else {
