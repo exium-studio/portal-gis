@@ -194,9 +194,11 @@ const ActiveWorkspaceListItem = (props: Props) => {
   // Props
   const { activeWorkspace, index } = props;
 
+  console.log(activeWorkspace?.layers);
+
   return (
-    <AccordionItem value={`${activeWorkspace.id}`}>
-      <AccordionItemTrigger indicatorPlacement="none">
+    <AccordionItem value={`${activeWorkspace.id}`} py={2}>
+      <AccordionItemTrigger indicatorPlacement="none" py={0}>
         <HStack pl={1} w={"full"}>
           <HStack cursor={"pointer"}>
             <Icon boxSize={5}>
@@ -218,14 +220,15 @@ const ActiveWorkspaceListItem = (props: Props) => {
 
       <AccordionItemContent py={0} pb={2}>
         <CContainer gap={1}>
-          {activeWorkspace?.layers?.reverse()?.map((activeLayer) => {
-            return (
-              <ActiveLayerListItem
-                key={activeLayer.id}
-                activeLayer={activeLayer}
-              />
-            );
-          })}
+          {activeWorkspace?.layers &&
+            [...activeWorkspace?.layers]?.map((activeLayer) => {
+              return (
+                <ActiveLayerListItem
+                  key={activeLayer.id}
+                  activeLayer={activeLayer}
+                />
+              );
+            })}
         </CContainer>
       </AccordionItemContent>
     </AccordionItem>
