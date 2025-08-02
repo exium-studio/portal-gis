@@ -30,7 +30,17 @@ import { useEffect, useState } from "react";
 import * as yup from "yup";
 import ExistingFileItem from "../ExistingFIleItem";
 
-const EXCLUDED_KEYS = ["id", "layer_id", "document_ids", "docs", "delete_docs"];
+const EXCLUDED_KEYS = [
+  "id",
+  "layer_id",
+  "document_ids",
+  "docs",
+  "deleted_docs",
+  "PARAPIHAKB",
+  "PERMASALAH",
+  "TINDAKLANJ",
+  "HASIL",
+];
 
 export const EditField = (props: any) => {
   // Props
@@ -63,7 +73,9 @@ export const EditField = (props: any) => {
   const withExplanation = selectedPolygon?.activeLayer?.with_explanation;
   const [existingDocs, setExistingDocs] = useState<any[]>(data?.thumbnail);
   const finalData = Object.fromEntries(
-    Object.entries(data).filter(([key]) => !EXCLUDED_KEYS.includes(key))
+    Object.entries(data)
+      .filter(([key]) => !EXCLUDED_KEYS.includes(key))
+      .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
   );
   const withExplanationValues = {
     PARAPIHAKB: "",
@@ -236,23 +248,12 @@ export const EditField = (props: any) => {
               {/* information content */}
               <Tabs.Content value="information" px={4}>
                 <SimpleGrid columns={[1, null, 2]} gap={4}>
-                  {!empty(data) &&
-                    Object.keys(data).map((key) => {
+                  {!empty(finalData) &&
+                    Object.keys(finalData).map((key) => {
                       return (
                         !EXCLUDED_KEYS.includes(key) && (
-                          <Field
-                            key={key}
-                            readOnly
-                            label={key}
-                            // invalid={!!formik.errors?.[key]}
-                            // errorText={formik.errors?.[key] as string}
-                          >
-                            <StringInput
-                              // onChangeSetter={(input) => {
-                              //   formik.setFieldValue(key, input);
-                              // }}
-                              inputValue={data[key]}
-                            />
+                          <Field key={key} readOnly label={key}>
+                            <StringInput inputValue={data[key]} />
                           </Field>
                         )
                       );

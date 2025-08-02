@@ -14,7 +14,13 @@ import PropertyValue from "../PropertyValue";
 import { EditField } from "./EditField";
 import FloatingContainerCloseButton from "./FloatingContainerCloseButton";
 
-const EXCLUDED_KEYS = ["id", "layer_id", "document_ids"];
+const EXCLUDED_KEYS = [
+  "id",
+  "layer_id",
+  "document_ids",
+  "docs",
+  "deleted_docs",
+];
 
 export const FieldInfo = () => {
   // Hooks
@@ -31,6 +37,11 @@ export const FieldInfo = () => {
 
   // States
   const [data, setData] = useState<any>(selectedPolygon?.polygon?.properties);
+  const finalData = Object.fromEntries(
+    Object.entries(data)
+      .filter(([key]) => !EXCLUDED_KEYS.includes(key))
+      .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
+  );
   const excludedKeysCount = EXCLUDED_KEYS.filter(
     (key) => data && Object.keys(data).includes(key)
   ).length;
@@ -112,18 +123,17 @@ export const FieldInfo = () => {
 
       <CContainer px={1} className="scrollY">
         {data &&
-          Object?.keys(data)?.map((key, i) => {
-            const last = i === Object?.keys(data)?.length - excludedKeysCount;
+          Object?.keys(finalData)?.map((key, i) => {
+            const last =
+              i === Object?.keys(data)?.length - excludedKeysCount - 1;
 
             return (
-              !EXCLUDED_KEYS.includes(key) && (
-                <ItemContainer key={key} last={last}>
-                  <P fontWeight={"medium"} color={"fg.subtle"}>
-                    {`${key}`}
-                  </P>
-                  <PropertyValue>{`${data?.[key] || "-"}`}</PropertyValue>
-                </ItemContainer>
-              )
+              <ItemContainer key={key} last={last}>
+                <P fontWeight={"medium"} color={"fg.subtle"}>
+                  {`${key}`}
+                </P>
+                <PropertyValue>{`${data?.[key] || "-"}`}</PropertyValue>
+              </ItemContainer>
             );
           })}
       </CContainer>
