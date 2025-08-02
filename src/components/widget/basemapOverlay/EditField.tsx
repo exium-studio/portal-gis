@@ -36,6 +36,9 @@ export const EditField = (props: any) => {
   // Props
   const { data, setData, selectedPolygon, ...restProps } = props;
 
+  // TODO handle crud docs
+  console.log(data.document_ids);
+
   // Hooks
   const { l } = useLang();
   const { open, onOpen, onClose } = useDisclosure();
