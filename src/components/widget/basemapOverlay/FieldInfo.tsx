@@ -37,11 +37,13 @@ export const FieldInfo = () => {
 
   // States
   const [data, setData] = useState<any>(selectedPolygon?.polygon?.properties);
-  const finalData = Object.fromEntries(
-    Object.entries(data)
-      .filter(([key]) => !EXCLUDED_KEYS.includes(key))
-      .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
-  );
+  const finalData =
+    data &&
+    Object.fromEntries(
+      Object.entries(data)
+        .filter(([key]) => !EXCLUDED_KEYS.includes(key))
+        .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
+    );
   const excludedKeysCount = EXCLUDED_KEYS.filter(
     (key) => data && Object.keys(data).includes(key)
   ).length;
