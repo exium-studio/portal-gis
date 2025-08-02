@@ -62,6 +62,8 @@ export const FieldInfo = () => {
     );
   };
 
+  console.log(selectedPolygon?.polygon?.properties);
+
   return (
     <FloatingContainer
       open={open}

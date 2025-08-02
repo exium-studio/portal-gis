@@ -49,9 +49,9 @@ const ActiveWorkspaceUtils = (props: any) => {
 
       <IncreaseLayerLevel activeWorkspace={activeWorkspace} disabled={first} />
 
-      <ToggleVisibility activeWorkspace={activeWorkspace} />
-
       <ViewWorkspace activeWorkspace={activeWorkspace} />
+
+      <ToggleVisibility activeWorkspace={activeWorkspace} />
     </HStack>
   );
 };
@@ -217,7 +217,7 @@ const ActiveWorkspaceListItem = (props: Props) => {
         </HStack>
       </AccordionItemTrigger>
 
-      <AccordionItemContent py={0}>
+      <AccordionItemContent py={0} pt={1}>
         <CContainer gap={1}>
           {activeWorkspace?.layers &&
             [...activeWorkspace?.layers]?.reverse()?.map((activeLayer) => {
