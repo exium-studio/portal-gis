@@ -180,6 +180,7 @@ const ViewWorkspace = (props: any) => {
         iconButton
         variant={"ghost"}
         onClick={onViewLayers}
+        size={"xs"}
         {...restProps}
       >
         <Icon boxSize={5}>
@@ -216,7 +217,7 @@ const ActiveWorkspaceListItem = (props: Props) => {
         </HStack>
       </AccordionItemTrigger>
 
-      <AccordionItemContent py={0} pb={"2px"}>
+      <AccordionItemContent py={0}>
         <CContainer gap={1}>
           {activeWorkspace?.layers &&
             [...activeWorkspace?.layers]?.reverse()?.map((activeLayer) => {
