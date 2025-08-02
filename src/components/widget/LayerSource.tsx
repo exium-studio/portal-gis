@@ -52,9 +52,9 @@ const LayerSource = (props: LayerSourceProps) => {
   const defaultLineColor = plainLight
     ? "#555"
     : plainDark
-    ? "#aaa"
+    ? "#ddd"
     : colorful
-    ? "#555"
+    ? "#333"
     : satellite
     ? "#555"
     : "#ccc";
@@ -195,6 +195,8 @@ const LayerSource = (props: LayerSourceProps) => {
       map.on("click", fillLayerId, handleOnClickPolygon);
     }
 
+    map.moveLayer(lineLayerId, fillLayerId);
+
     return () => {
       map.off("click", fillLayerId, handleOnClickPolygon);
     };
@@ -210,6 +212,13 @@ const LayerSource = (props: LayerSourceProps) => {
     fillOpacity,
     activeWorkspaces,
   ]);
+
+  useEffect(() => {
+    const map = mapRef.current?.getMap();
+    if (!map || !geojson) return;
+
+    map.moveLayer(lineLayerId, fillLayerId);
+  }, [activeWorkspaces]);
 
   // Cleanup on layer unmount
   useEffect(() => {

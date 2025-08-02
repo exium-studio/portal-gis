@@ -1,7 +1,7 @@
 import { Interface__ActiveWorkspace } from "@/constants/interfaces";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useLang from "@/context/useLang";
-import { HStack, Icon } from "@chakra-ui/react";
+import { Badge, HStack, Icon } from "@chakra-ui/react";
 import {
   IconEye,
   IconEyeOff,
@@ -199,14 +199,20 @@ const ActiveWorkspaceListItem = (props: Props) => {
     <AccordionItem value={`${activeWorkspace.id}`} py={2}>
       <AccordionItemTrigger indicatorPlacement="none" py={0}>
         <HStack pl={1} w={"full"}>
-          <HStack cursor={"pointer"}>
-            <Icon boxSize={5}>
-              <IconFolders stroke={1.5} />
-            </Icon>
+          <HStack cursor={"pointer"} gap={1}>
+            <HStack truncate>
+              <Icon boxSize={5}>
+                <IconFolders stroke={1.5} />
+              </Icon>
 
-            <P fontWeight={"semibold"} lineClamp={1}>
-              {activeWorkspace.title}
-            </P>
+              <P fontWeight={"semibold"} lineHeight={1.4} lineClamp={1}>
+                {activeWorkspace.title}
+              </P>
+            </HStack>
+
+            <Badge w={"fit"}>
+              {activeWorkspace?.workspace_category?.label}
+            </Badge>
           </HStack>
 
           <ActiveWorkspaceUtils

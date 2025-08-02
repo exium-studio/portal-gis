@@ -1,6 +1,6 @@
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useMapViewState from "@/context/useMapViewState";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import LayerSource from "./LayerSource";
 
 const LayerManager = () => {
@@ -11,7 +11,7 @@ const LayerManager = () => {
   const layerOrderRef = useRef<(string | undefined)[] | undefined>([]);
 
   // States
-  const [brutalKey, setBrutalKey] = useState<number>(1);
+  // const [brutalKey, setBrutalKey] = useState<number>(1);
 
   useEffect(() => {
     if (!map) return;
@@ -31,7 +31,7 @@ const LayerManager = () => {
 
       layerOrderRef.current = newLayerOrder;
     }
-    setBrutalKey((ps) => ps + 1);
+    // setBrutalKey((ps) => ps + 1);
   }, [activeWorkspaces, map]);
 
   return (
@@ -43,7 +43,7 @@ const LayerManager = () => {
             // console.log(layer);
             return (
               <LayerSource
-                key={`${ws.id}-${layer.id}-${brutalKey}`}
+                key={`${ws.id}-${layer.id}`}
                 activeWorkspace={ws}
                 activeLayer={layer}
               />
