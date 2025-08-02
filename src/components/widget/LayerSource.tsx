@@ -40,7 +40,15 @@ const LayerSource = (props: LayerSourceProps) => {
   const plainDark = colorMode === "dark" && mapStyle?.id === 1;
   const colorful = mapStyle?.id === 2;
   const satellite = mapStyle?.id === 3;
-  const defaultFillColor = "#9E9E9E";
+  const defaultFillColor = plainLight
+    ? "#bbb"
+    : plainDark
+    ? "#444"
+    : colorful
+    ? "#bbb"
+    : satellite
+    ? "#bbb"
+    : "#fff";
   const defaultLineColor = plainLight
     ? "#555"
     : plainDark
