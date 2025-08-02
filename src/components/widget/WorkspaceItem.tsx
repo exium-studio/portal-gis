@@ -25,13 +25,7 @@ import empty from "@/utils/empty";
 import { formatTableName } from "@/utils/formatTableName";
 import { computeBboxAndCenter } from "@/utils/geospatial";
 import { fileValidation } from "@/utils/validationSchemas";
-import {
-  FieldRoot,
-  FieldsetRoot,
-  HStack,
-  Icon,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { FieldsetRoot, HStack, Icon, useDisclosure } from "@chakra-ui/react";
 import {
   IconDots,
   IconFilePlus,
@@ -213,7 +207,6 @@ const EditWorkspace = (props: any) => {
                 label={l.workspace_category}
                 invalid={!!formik.errors.workspace_category}
                 errorText={formik.errors.workspace_category as string}
-                mb={4}
               >
                 <SelectWorkspaceCategory
                   onConfirm={(input) => {
@@ -227,7 +220,6 @@ const EditWorkspace = (props: any) => {
                 label={"Thumbnail"}
                 invalid={!!formik.errors.thumbnail}
                 errorText={formik.errors.thumbnail as string}
-                mb={4}
               >
                 {!empty(existingThumbnail) && (
                   <CContainer>
@@ -299,7 +291,6 @@ const EditWorkspace = (props: any) => {
                 label={l.title}
                 invalid={!!formik.errors.title}
                 errorText={formik.errors.title as string}
-                mb={4}
               >
                 <StringInput
                   onChangeSetter={(input) => {
@@ -483,7 +474,7 @@ const AddLayer = (props: any) => {
       payload.append("workspace_id", workspace?.id);
       payload.append(
         "table_name",
-        `${formatTableName(values.name)}${workspace?.id}`
+        `${formatTableName(values.name)}_${workspace?.id}`
       );
       payload.append("with_explanation", values.with_explanation.toString());
       payload.append("name", values.name);
@@ -536,12 +527,11 @@ const AddLayer = (props: any) => {
 
           <DisclosureBody>
             <form id="add_layer" onSubmit={formik.handleSubmit}>
-              <FieldRoot>
+              <FieldsetRoot>
                 <Field
                   invalid={!!formik.errors.with_explanation}
                   errorText={formik.errors.with_explanation as string}
                   helperText={l.with_explanation_helper}
-                  mb={4}
                 >
                   <Checkbox
                     onChange={(e: any) => {
@@ -560,7 +550,6 @@ const AddLayer = (props: any) => {
                   label={l.name}
                   invalid={!!formik.errors.name}
                   errorText={formik.errors.name as string}
-                  mb={4}
                 >
                   <StringInput
                     onChangeSetter={(input) => {
@@ -574,7 +563,6 @@ const AddLayer = (props: any) => {
                   label={l.description}
                   invalid={!!formik.errors.description}
                   errorText={formik.errors.description as string}
-                  mb={4}
                 >
                   <Textarea
                     onChangeSetter={(input) => {
@@ -588,7 +576,6 @@ const AddLayer = (props: any) => {
                   label={l.default_layer_type}
                   invalid={!!formik.errors.layer_type}
                   errorText={formik.errors.layer_type as string}
-                  mb={4}
                 >
                   <SelectLayerType
                     onConfirm={(input) => {
@@ -602,7 +589,6 @@ const AddLayer = (props: any) => {
                   label={l.layer_file_type}
                   invalid={!!formik.errors.file_type}
                   errorText={formik.errors.file_type as string}
-                  mb={4}
                 >
                   <SelectLayerFileType
                     onConfirm={(input) => {
@@ -629,7 +615,7 @@ const AddLayer = (props: any) => {
                     maxFileSize={50}
                   />
                 </Field>
-              </FieldRoot>
+              </FieldsetRoot>
             </form>
           </DisclosureBody>
 

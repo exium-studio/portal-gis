@@ -46,7 +46,7 @@ export const EditField = (props: any) => {
 
   // Contexts
   const { themeConfig } = useThemeConfig();
-  const updateWorkspace = useActiveWorkspaces((s) => s.updateLayerData);
+  const updateActiveLayerData = useActiveWorkspaces((s) => s.updateLayerData);
 
   // States
   const workspaceId = selectedPolygon?.activeWorkspace?.id;
@@ -85,9 +85,15 @@ export const EditField = (props: any) => {
       // console.log(values);
       back();
 
+      const explanationProperties = {
+        PARAPIHAKB: values?.PARAPIHAKB,
+        PERMASALAH: values?.PERMASALAH,
+        TINDAKLANJ: values?.TINDAKLANJ,
+        HASIL: values?.HASIL,
+      };
       const newProperties = {
         id: propertiesId,
-        ...values,
+        ...(withExplanation ? explanationProperties : {}),
       };
       const payload = new FormData();
       payload.append("layer_id", `${layerId}`);
@@ -123,13 +129,17 @@ export const EditField = (props: any) => {
           return feature;
         }),
       };
+      const newData = {
+        ...selectedPolygon?.activeLayer?.data,
+        geojson: newGeojson,
+      };
 
       req({
         config,
         onResolve: {
           onSuccess: () => {
             if (workspaceId && layerId) {
-              updateWorkspace(workspaceId, layerId, newGeojson as any);
+              updateActiveLayerData(workspaceId, layerId, newData);
             }
             setData(newProperties);
           },

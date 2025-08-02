@@ -152,7 +152,6 @@ const Create = () => {
                   label={l.workspace_category}
                   invalid={!!formik.errors.workspace_category}
                   errorText={formik.errors.workspace_category as string}
-                  mb={4}
                 >
                   <SelectWorkspaceCategory
                     onConfirm={(input) => {
@@ -167,7 +166,6 @@ const Create = () => {
                   label={"Thumbnail"}
                   invalid={!!formik.errors.thumbnail}
                   errorText={formik.errors.thumbnail as string}
-                  mb={4}
                 >
                   <FileInput
                     dropzone
@@ -184,7 +182,6 @@ const Create = () => {
                   label={l.title}
                   invalid={!!formik.errors.title}
                   errorText={formik.errors.title as string}
-                  mb={4}
                 >
                   <StringInput
                     onChangeSetter={(input) => {

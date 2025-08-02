@@ -17,7 +17,7 @@ import {
   AlertRoot,
   AlertTitle,
   Box,
-  FieldRoot,
+  FieldsetRoot,
   HStack,
   Icon,
   useDisclosure,
@@ -48,12 +48,12 @@ import P from "../ui-custom/P";
 import SearchInput from "../ui-custom/SearchInput";
 import StringInput from "../ui-custom/StringInput";
 import Textarea from "../ui-custom/Textarea";
+import { Checkbox } from "../ui/checkbox";
 import { Field } from "../ui/field";
 import { Tooltip } from "../ui/tooltip";
 import SelectLayerFileType from "./SelectLayerFileType";
 import SelectLayerType from "./SelectLayerType";
 import SimplePopover from "./SimplePopover";
-import { Checkbox } from "../ui/checkbox";
 
 const EditLayer = (props: any) => {
   // Props
@@ -184,11 +184,11 @@ const EditLayer = (props: any) => {
             </AlertRoot>
 
             <form id="edit_layer" onSubmit={formik.handleSubmit}>
-              <FieldRoot>
+              <FieldsetRoot>
                 <Field
                   invalid={!!formik.errors.with_explanation}
                   errorText={formik.errors.with_explanation as string}
-                  mb={4}
+                  // helperText={l.with_explanation_helper}
                 >
                   <Checkbox readOnly checked={formik.values.with_explanation}>
                     {l.with_explanation}
@@ -199,7 +199,6 @@ const EditLayer = (props: any) => {
                   label={l.name}
                   invalid={!!formik.errors.name}
                   errorText={formik.errors.name as string}
-                  mb={4}
                 >
                   <StringInput
                     onChangeSetter={(input) => {
@@ -213,7 +212,6 @@ const EditLayer = (props: any) => {
                   label={l.description}
                   invalid={!!formik.errors.description}
                   errorText={formik.errors.description as string}
-                  mb={4}
                 >
                   <Textarea
                     onChangeSetter={(input) => {
@@ -227,7 +225,6 @@ const EditLayer = (props: any) => {
                   label={l.default_layer_type}
                   invalid={!!formik.errors.layer_type}
                   errorText={formik.errors.layer_type as string}
-                  mb={4}
                 >
                   <SelectLayerType
                     onConfirm={(input) => {
@@ -241,7 +238,6 @@ const EditLayer = (props: any) => {
                   label={l.layer_file_type}
                   invalid={!!formik.errors.file_type}
                   errorText={formik.errors.file_type as string}
-                  mb={4}
                   optional
                 >
                   <SelectLayerFileType
@@ -269,7 +265,7 @@ const EditLayer = (props: any) => {
                     accept=".zip"
                   />
                 </Field>
-              </FieldRoot>
+              </FieldsetRoot>
             </form>
           </DisclosureBody>
 
