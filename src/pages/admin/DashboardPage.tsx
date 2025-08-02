@@ -12,9 +12,9 @@ import { IconFoldersOff } from "@tabler/icons-react";
 
 // TODO dev the dashboard
 
-const RightsTypeAreaPercentage = () => {
-  return <></>;
-};
+// const RightsTypeAreaPercentage = () => {
+//   return <></>;
+// };
 
 const DashboardPage = () => {
   // Hooks
