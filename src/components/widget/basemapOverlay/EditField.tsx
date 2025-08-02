@@ -30,7 +30,7 @@ import { useEffect, useState } from "react";
 import * as yup from "yup";
 import ExistingFileItem from "../ExistingFIleItem";
 
-const EXCLUDED_KEYS = ["id", "layer_id", "document_ids"];
+const EXCLUDED_KEYS = ["id", "layer_id", "document_ids", "docs", "delete_docs"];
 
 export const EditField = (props: any) => {
   // Props
@@ -96,6 +96,11 @@ export const EditField = (props: any) => {
       };
       const newProperties = {
         id: propertiesId,
+        ...values,
+        ...(withExplanation ? explanationProperties : {}),
+      };
+      const newPropertiesPayload = {
+        id: propertiesId,
         ...(withExplanation ? explanationProperties : {}),
       };
       const payload = new FormData();
@@ -108,7 +113,7 @@ export const EditField = (props: any) => {
       } else if (values.docs) {
         payload.append("document", values.docs);
       }
-      payload.append("properties", JSON.stringify(newProperties));
+      payload.append("properties", JSON.stringify(newPropertiesPayload));
       const url = `/api/gis-bpn/workspaces-layers/update-field`;
       const config = {
         url,

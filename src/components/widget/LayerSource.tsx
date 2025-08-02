@@ -111,8 +111,11 @@ const LayerSource = (props: LayerSourceProps) => {
       if (selectedId === clickedId) {
         clearSelectedPolygon();
       } else {
+        const clickedPolygon = activeLayer?.data?.geojson?.features?.find(
+          (feature) => feature?.properties?.id === clickedId
+        );
         setSelectedPolygon({
-          polygon: clickedFeature,
+          polygon: clickedPolygon,
           activeLayer,
           activeWorkspace,
           fillColor: themeConfig.primaryColorHex,
