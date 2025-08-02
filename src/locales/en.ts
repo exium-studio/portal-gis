@@ -303,6 +303,12 @@ const translations = {
     "description": "All inboxes will be marked as read"
   },
   "married_status": "Maried status",
+  "master_data_navs": {
+    "workspace_categories": "Workspace Categories"
+  },
+  "master_data_navs_group": {
+    "workspace": "Workspace"
+  },
   "master_data_page": {
     "title": "Master Data",
     "description": "Please select the master data menu."
@@ -440,7 +446,7 @@ const translations = {
   "religion": "Religion",
   "required_form": "Cannot be empty",
   "requried_date_time": "Please fill in the date and time, as they are one entity.",
-  "restore_confirmation": "Restore this data?",
+  "restore_confirmation": "This data will be restored.",
   "result": "Result",
   "retry": "Retry now",
   "retry_feedback": {

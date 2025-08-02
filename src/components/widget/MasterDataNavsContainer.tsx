@@ -1,9 +1,9 @@
-import { SETTINGS_NAVS } from "@/constants/navs";
+import { MASTER_DATA_NAVS } from "@/constants/navs";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
-import { useSettingsContent } from "@/hooks/useSettingsContent";
+import { useMasterDataContent } from "@/hooks/useMasterDataContent";
 import pluck from "@/utils/pluck";
 import {
   Circle,
@@ -24,12 +24,12 @@ interface Props extends StackProps {
   activePath?: string;
 }
 
-const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
+const MasterDataNavsContainer = ({ children, activePath, ...props }: Props) => {
   // Hooks
   const { l } = useLang();
   // const { sw } = useScreen();
   const iss = useIsSmScreenWidth();
-  const { settingsRoute } = useSettingsContent();
+  const { masterDataRoute } = useMasterDataContent();
 
   // Contexts
   const { themeConfig } = useThemeConfig();
@@ -55,7 +55,7 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
 
   return (
     <HStack
-      id="settingsNavsContainer"
+      id="masterDataNavsContainer"
       w={"full"}
       h={"full"}
       pl={!compact ? 4 : ""}
@@ -65,10 +65,10 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
       {...props}
     >
       {/* Settings Navs */}
-      {(!compact || settingsRoute) && (
+      {(!compact || masterDataRoute) && (
         <CContainer
-          pl={compact && settingsRoute ? 4 : 0}
-          pr={compact && settingsRoute ? 3 : 0}
+          pl={compact && masterDataRoute ? 4 : 0}
+          pr={compact && masterDataRoute ? 3 : 0}
           pt={4}
           pb={4}
           w={compact ? "full" : "200px"}
@@ -88,7 +88,7 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
             maxH={"full"}
           >
             <CContainer className="scrollY" pl={2} pr={1} gap={4}>
-              {SETTINGS_NAVS.map((item, i) => {
+              {MASTER_DATA_NAVS.map((item, i) => {
                 return (
                   <CContainer key={i}>
                     <Text fontWeight={"bold"} color={"fg.subtle"} mx={2} mb={2}>
@@ -134,11 +134,11 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
       )}
 
       {/* Content */}
-      <PageContainer display={compact && settingsRoute ? "none" : "flex"}>
+      <PageContainer display={compact && masterDataRoute ? "none" : "flex"}>
         {children}
       </PageContainer>
     </HStack>
   );
 };
 
-export default SettingsNavsContainer;
+export default MasterDataNavsContainer;

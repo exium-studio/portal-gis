@@ -399,7 +399,13 @@ const NavContainer = ({
               borderBottom={iss ? "1px solid {colors.border.subtle}" : ""}
             >
               <HStack>
-                {backPath && <BackButton iconButton backPath={backPath} />}
+                {backPath && (
+                  <BackButton
+                    iconButton
+                    backPath={backPath}
+                    borderRadius={themeConfig.radii.component}
+                  />
+                )}
 
                 <Heading6 fontWeight={"bold"} truncate>
                   {title}

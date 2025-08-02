@@ -57,7 +57,7 @@ const useDataState = <T = any>(props: Props<T>) => {
   };
 
   const baseConfig = {
-    url: `${url}${`?page=${page}`}`,
+    url: url,
     method,
     data: payloadData,
     params: payloadData,

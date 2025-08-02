@@ -59,6 +59,8 @@ export type Type__TableOptions = (
       label: string;
       icon?: any;
       callback?: (dataParams: any) => void;
+      independent?: boolean;
+      component?: any;
       confirmation?: (dataParams: any) => {
         id: string;
         title: string;

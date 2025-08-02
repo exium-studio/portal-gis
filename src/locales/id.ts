@@ -303,6 +303,12 @@ const translations = {
     "description": "Semua inbox akan ditandai sudah dibaca"
   },
   "married_status": "Status pernikahan",
+  "master_data_navs": {
+    "workspace_categories": "Kategori Workspace"
+  },
+  "master_data_navs_group": {
+    "workspace": "Workspace"
+  },
   "master_data_page": {
     "title": "Master Data",
     "description": "Silahkan pilih menu master data."
@@ -440,7 +446,7 @@ const translations = {
   "religion": "Agama",
   "required_form": "Tidak boleh kosong",
   "requried_date_time": "Harap isi tanggal dan waktu, karena ini satu kesatuan.",
-  "restore_confirmation": "Pulihkan data ini?",
+  "restore_confirmation": "Data ini akan dikembalikan.",
   "result": "Hasil",
   "retry": "Muat ulang",
   "retry_feedback": {

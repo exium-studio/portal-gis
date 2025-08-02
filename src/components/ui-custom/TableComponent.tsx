@@ -65,7 +65,7 @@ const BatchOptions = ({
       title: option.confirmation(selectedRows).title,
       description: option.confirmation(selectedRows).description,
       confirmLabel: option.confirmation(selectedRows).confirmLabel,
-      confirmCallback: option.confirmation(selectedRows).confirmCallback,
+      onConfirm: option.confirmation(selectedRows).onConfirm,
       confirmButtonProps: option.confirmation(selectedRows).confirmButtonProps,
     });
     confirmationOnOpen();
@@ -197,7 +197,7 @@ const RowOptions = ({
       title: option.confirmation(rowData).title,
       description: option.confirmation(rowData).description,
       confirmLabel: option.confirmation(rowData).confirmLabel,
-      confirmCallback: option.confirmation(rowData).confirmCallback,
+      onConfirm: option.confirmation(rowData).onConfirm,
       confirmButtonProps: option.confirmation(rowData).confirmButtonProps,
       loading: option.confirmation(rowData).loading,
     });
@@ -218,6 +218,10 @@ const RowOptions = ({
         <MenuContent zIndex={10} className="rowOptionsList" minW={"140px"}>
           {rowOptions?.map((option, i) => {
             if (option === "divider") return <MenuSeparator key={i} />;
+
+            if (option.independent) {
+              return option?.component?.(rowData);
+            }
 
             if (option.confirmation) {
               const disabled =
@@ -716,7 +720,7 @@ const TableComponent = ({
   return (
     <CContainer
       borderColor={"border.muted"}
-      minH={props?.minH || sh < 625 ? "400px" : ""}
+      minH={props?.minH || sh < 625 ? "400px" : "fit"}
       overflowY={"auto"}
       flex={1}
     >
@@ -725,12 +729,12 @@ const TableComponent = ({
         borderBottom={"1px solid"}
         borderColor={borderColor}
         minW={"full"}
+        minH={"fit"}
+        h={"fit"}
+        maxH={"full"}
         className="scrollX scrollY"
         overflow={"scroll"}
-        // mb={"-6px"}
-        // mr={"-6px"}
-
-        flex={1}
+        flexShrink={0}
         {...props}
       >
         <Table.Root
@@ -952,7 +956,7 @@ const TableComponent = ({
       {((limitControl && setLimitControl) ||
         (pageControl && setPageControl) ||
         footerContent) && (
-        <>
+        <CContainer mt={"auto"}>
           {iss && (
             <CContainer gap={4} my={2} px={2}>
               <HStack wrap={"wrap"}>
@@ -1006,7 +1010,7 @@ const TableComponent = ({
               />
             </SimpleGrid>
           )}
-        </>
+        </CContainer>
       )}
     </CContainer>
   );

@@ -64,9 +64,9 @@ const Create = () => {
   // Hooks
   const { l } = useLang();
   const { open, onOpen, onClose } = useDisclosure();
-  useBackOnClose(`edit-workspace`, open, onOpen, onClose);
+  useBackOnClose(`create-workspace`, open, onOpen, onClose);
   const { req } = useRequest({
-    id: "crud-workspace",
+    id: "crud_workspace",
   });
 
   // Contexts
@@ -146,74 +146,77 @@ const Create = () => {
           </DisclosureHeader>
 
           <DisclosureBody>
-            <FieldsetRoot>
-              <Field
-                label={l.workspace_category}
-                invalid={!!formik.errors.workspace_category}
-                errorText={formik.errors.workspace_category as string}
-                mb={4}
-              >
-                <SelectWorkspaceCategory
-                  onConfirm={(input) => {
-                    formik.setFieldValue("workspace_category", input);
-                  }}
-                  inputValue={formik.values.workspace_category}
-                />
-              </Field>
+            <form id="create_workspace" onSubmit={formik.handleSubmit}>
+              <FieldsetRoot>
+                <Field
+                  label={l.workspace_category}
+                  invalid={!!formik.errors.workspace_category}
+                  errorText={formik.errors.workspace_category as string}
+                  mb={4}
+                >
+                  <SelectWorkspaceCategory
+                    onConfirm={(input) => {
+                      formik.setFieldValue("workspace_category", input);
+                    }}
+                    inputValue={formik.values.workspace_category}
+                  />
+                </Field>
 
-              <Field
-                optional
-                label={"Thumbnail"}
-                invalid={!!formik.errors.thumbnail}
-                errorText={formik.errors.thumbnail as string}
-                mb={4}
-              >
-                <FileInput
-                  dropzone
-                  name="thumbnail"
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("thumbnail", input);
-                  }}
-                  inputValue={formik.values.thumbnail}
-                  accept=".png, .jpg, .jpeg,"
-                />
-              </Field>
+                <Field
+                  optional
+                  label={"Thumbnail"}
+                  invalid={!!formik.errors.thumbnail}
+                  errorText={formik.errors.thumbnail as string}
+                  mb={4}
+                >
+                  <FileInput
+                    dropzone
+                    name="thumbnail"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("thumbnail", input);
+                    }}
+                    inputValue={formik.values.thumbnail}
+                    accept=".png, .jpg, .jpeg,"
+                  />
+                </Field>
 
-              <Field
-                label={l.title}
-                invalid={!!formik.errors.title}
-                errorText={formik.errors.title as string}
-                mb={4}
-              >
-                <StringInput
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("title", input);
-                  }}
-                  inputValue={formik.values.title}
-                />
-              </Field>
+                <Field
+                  label={l.title}
+                  invalid={!!formik.errors.title}
+                  errorText={formik.errors.title as string}
+                  mb={4}
+                >
+                  <StringInput
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("title", input);
+                    }}
+                    inputValue={formik.values.title}
+                  />
+                </Field>
 
-              <Field
-                label={l.description}
-                invalid={!!formik.errors.description}
-                errorText={formik.errors.description as string}
-              >
-                <Textarea
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("description", input);
-                  }}
-                  inputValue={formik.values.description}
-                />
-              </Field>
-            </FieldsetRoot>
+                <Field
+                  label={l.description}
+                  invalid={!!formik.errors.description}
+                  errorText={formik.errors.description as string}
+                >
+                  <Textarea
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("description", input);
+                    }}
+                    inputValue={formik.values.description}
+                  />
+                </Field>
+              </FieldsetRoot>
+            </form>
           </DisclosureBody>
 
           <DisclosureFooter>
             <BackButton />
 
             <BButton
+              type="submit"
+              form="create_workspace"
               colorPalette={themeConfig?.colorPalette}
-              onClick={formik.submitForm}
             >
               {l.add}
             </BButton>

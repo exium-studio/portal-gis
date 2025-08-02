@@ -61,6 +61,18 @@ export const settings_navs = {
     en: "Privacy Policy",
   },
 };
+export const master_data_navs_group = {
+  workspace: {
+    id: "Workspace",
+    en: "Workspace",
+  },
+};
+export const master_data_navs = {
+  workspace_categories: {
+    id: "Kategori Workspace",
+    en: "Workspace Categories",
+  },
+};
 
 // Semantic
 export const pay = {
@@ -576,8 +588,8 @@ export const auto_timezone = {
   en: "Local time zone (auto)",
 };
 export const restore_confirmation = {
-  id: "Pulihkan data ini?",
-  en: "Restore this data?",
+  id: "Data ini akan dikembalikan.",
+  en: "This data will be restored.",
 };
 export const signin_form = {
   title: {

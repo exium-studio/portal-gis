@@ -1,4 +1,5 @@
 import {
+  IconCategory2,
   IconChartPie,
   IconDeviceDesktop,
   IconExclamationCircle,
@@ -75,6 +76,19 @@ export const SETTINGS_NAVS = [
         icon: IconShieldLock,
         labelKey: "settings_navs.privacy_policy",
         path: "/settings/privacy-policy",
+      },
+    ],
+  },
+];
+
+export const MASTER_DATA_NAVS = [
+  {
+    groupLabelKey: "master_data_navs_group.workspace",
+    list: [
+      {
+        icon: IconCategory2,
+        labelKey: "master_data_navs.workspace_categories",
+        path: "/master-data/workspace-categories",
       },
     ],
   },

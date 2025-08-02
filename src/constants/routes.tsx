@@ -12,6 +12,7 @@ import WorkspacePage from "@/pages/admin/WorkspacePage";
 import RootPage from "@/pages/RootPage";
 import SettingsPage from "@/pages/SettingsPage";
 import { Interface__PrivateRoute, Interface__Route } from "./interfaces";
+import MasterDataWorkspaceCategoriesPage from "@/pages/admin/MasterDataWorkspaceCategoriesPage";
 
 export const ROUTES: Interface__Route[] = [
   {
@@ -40,73 +41,23 @@ export const PRIVATE_ROUTES: Interface__PrivateRoute[] = [
     titleKey: "navs.dashboard",
     element: <DashboardPage />,
   },
+
+  // Master Settings
   {
     path: "/master-data",
     activePath: "/master-data",
     titleKey: "navs.master_data",
     element: <MasterDataPage />,
   },
+  {
+    path: "/master-data/workspace-categories",
+    activePath: "/master-data",
+    backPath: "/master-data",
+    titleKey: "master_data_navs.workspace_categories",
+    element: <MasterDataWorkspaceCategoriesPage />,
+  },
 
   // Profile
-  {
-    path: "/profile",
-    activePath: "/profile",
-    titleKey: "navs.profile",
-    element: <ProfilePage />,
-  },
-
-  // Settings
-  {
-    path: "/settings",
-    activePath: "/settings",
-    titleKey: "navs.settings",
-    element: <SettingsPage />,
-  },
-  {
-    path: "/settings/display",
-    activePath: "/settings",
-    titleKey: "settings_navs.display",
-    backPath: "/settings",
-    element: <DisplaySettingsPage />,
-  },
-  {
-    path: "/settings/regional",
-    activePath: "/settings",
-    titleKey: "settings_navs.regional",
-    backPath: "/settings",
-    element: <RegionalSettingsPage />,
-  },
-  {
-    path: "/settings/permissions",
-    activePath: "/settings",
-    titleKey: "settings_navs.permissions",
-    backPath: "/settings",
-    element: <PermissionsSettingsPage />,
-  },
-  {
-    path: "/settings/report-problem",
-    activePath: "/settings",
-    titleKey: "settings_navs.report_problem",
-    backPath: "/settings",
-    element: <ReportProblemPage />,
-  },
-  {
-    path: "/settings/terms-of-service",
-    activePath: "/settings",
-    titleKey: "settings_navs.terms_of_service",
-    backPath: "/settings",
-    element: <TermsOfServicePage />,
-  },
-  {
-    path: "/settings/privacy-policy",
-    activePath: "/settings",
-    titleKey: "settings_navs.privacy_policy",
-    backPath: "/settings",
-    element: <PrivacyPolictPage />,
-  },
-];
-
-export const PRIVATE_ROUTES_NO_MAPS: Interface__PrivateRoute[] = [
   {
     path: "/profile",
     activePath: "/profile",

@@ -15,7 +15,7 @@ const DeleteStatus = (props: Props) => {
   // Props
   const { deletedAt, ...restProps } = props;
 
-  return (
+  return deletedAt ? (
     <HStack {...restProps}>
       <StatusRoot colorPalette={"red"} size={"sm"}>
         <StatusIndicator />
@@ -23,6 +23,8 @@ const DeleteStatus = (props: Props) => {
 
       <P color={"fg.subtle"}>{formatDate(deletedAt)}</P>
     </HStack>
+  ) : (
+    "-"
   );
 };
 
