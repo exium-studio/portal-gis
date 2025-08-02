@@ -112,7 +112,7 @@ export const LegendContent = (props: any) => {
         {legends.map((item) => {
           return (
             <HStack key={item?.label}>
-              <Circle w={"10px"} h={"10px"} bg={item?.color} opacity={0.8} />
+              <Circle w={"10px"} h={"10px"} bg={item?.color} opacity={0.6} />
               <SimplePopover content={item?.label}>
                 <P lineClamp={1}>{item?.label}</P>
               </SimplePopover>

@@ -81,7 +81,7 @@ const LayerSource = (props: LayerSourceProps) => {
     : [
         "case",
         ["==", ["get", "id"], selectedPolygonId],
-        0.8,
+        0.6,
         [
           "case",
           [
@@ -89,7 +89,7 @@ const LayerSource = (props: LayerSourceProps) => {
             ["==", ["literal", activeLayer.visible], true],
             ["!", ["==", ["literal", isLineLayer], true]],
           ],
-          0.8,
+          0.6,
           0,
         ],
       ];
