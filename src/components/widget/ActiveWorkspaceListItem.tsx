@@ -216,7 +216,7 @@ const ActiveWorkspaceListItem = (props: Props) => {
         </HStack>
       </AccordionItemTrigger>
 
-      <AccordionItemContent py={0} pb={2}>
+      <AccordionItemContent py={0} pb={1}>
         <CContainer gap={1}>
           {activeWorkspace?.layers &&
             [...activeWorkspace?.layers]?.reverse()?.map((activeLayer) => {
