@@ -1,5 +1,6 @@
 import { SETTINGS_NAVS } from "@/constants/navs";
 import useLang from "@/context/useLang";
+import useLayout from "@/context/useLayout";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import { useSettingsContent } from "@/hooks/useSettingsContent";
@@ -17,8 +18,6 @@ import { Link } from "react-router-dom";
 import BButton from "../ui-custom/BButton";
 import CContainer from "../ui-custom/CContainer";
 import PageContainer from "./PageContainer";
-import useScreen from "@/hooks/useScreen";
-import useLayout from "@/context/useLayout";
 
 interface Props extends StackProps {
   children?: any;
@@ -28,7 +27,7 @@ interface Props extends StackProps {
 const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
   // Hooks
   const { l } = useLang();
-  const { sw } = useScreen();
+  // const { sw } = useScreen();
   const iss = useIsSmScreenWidth();
   const { settingsRoute } = useSettingsContent();
 
@@ -37,8 +36,8 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
   const { layout } = useLayout();
 
   // States
-  const ciss = sw < 1440;
-  const compact = (ciss && layout.id !== 2) || iss;
+  // const ciss = sw < 1440;
+  const compact = layout.id !== 2 || iss;
 
   // Components
   const ActiveNavIndicator = ({ ...props }: CircleProps) => {
