@@ -772,8 +772,6 @@ const ToggleLoadWorkspace = (props: any) => {
           // 2. Calculate combined bbox and center
           const { bbox, center } = computeBboxAndCenter(featureCollections);
 
-          console.log("layers", layers);
-
           // 3. Create the workspace with calculated bounds
           const newActiveWorkspace: Interface__ActiveWorkspace = {
             ...workspace,

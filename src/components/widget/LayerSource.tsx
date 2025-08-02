@@ -4,10 +4,12 @@ import {
 } from "@/constants/interfaces";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useLegend from "@/context/useLegend";
+import useMapStyle from "@/context/useMapStyle";
 import useMapViewState from "@/context/useMapViewState";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import { useCallback, useEffect } from "react";
+import { useColorMode } from "../ui/color-mode";
 
 interface LayerSourceProps {
   activeWorkspace: Interface__ActiveWorkspace;
@@ -20,7 +22,7 @@ const LayerSource = (props: LayerSourceProps) => {
 
   // Contexts
   const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
-  const { mapRef } = useMapViewState();
+  const mapRef = useMapViewState((s) => s.mapRef);
   const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
   const setSelectedPolygon = useSelectedPolygon((s) => s.setSelectedPolygon);
   const clearSelectedPolygon = useSelectedPolygon(
@@ -28,22 +30,37 @@ const LayerSource = (props: LayerSourceProps) => {
   );
   const { themeConfig } = useThemeConfig();
   const legends = useLegend((s) => s.legends);
+  const mapStyle = useMapStyle((s) => s.mapStyle);
+  const { colorMode } = useColorMode();
 
   // States
   const legendType = "GUNATANAHK";
   const geojson = activeLayer?.data?.geojson;
+  const plainLight = colorMode === "light" && mapStyle?.id === 1;
+  const plainDark = colorMode === "dark" && mapStyle?.id === 1;
+  const colorful = mapStyle?.id === 2;
+  const satellite = mapStyle?.id === 3;
   const defaultFillColor = "#9E9E9E";
-  const defaultLineColor = "#ccc";
+  const defaultLineColor = plainLight
+    ? "#555"
+    : plainDark
+    ? "#aaa"
+    : colorful
+    ? "#555"
+    : satellite
+    ? "#555"
+    : "#ccc";
   const fillLayerId = `${activeLayer.id}-fill`;
   const lineLayerId = `${activeLayer.id}-outline`;
   const sourceId = `${activeLayer.id}-source`;
   const isFillLayer = activeLayer.layer_type === "fill";
   const isLineLayer = activeLayer.layer_type === "line";
   const selectedPolygonId = selectedPolygon?.polygon?.properties?.id || null;
+
   const fillColor = [
     "case",
     ["==", ["get", "id"], selectedPolygonId],
-    themeConfig.primaryColorHex,
+    selectedPolygon?.fillColor || defaultFillColor,
     [
       "match",
       ["get", legendType],
@@ -123,7 +140,7 @@ const LayerSource = (props: LayerSourceProps) => {
     }
 
     // Fill layer
-    if (isFillLayer) {
+    if (isFillLayer || isLineLayer) {
       if (!existingFill) {
         map.addLayer({
           id: fillLayerId,
@@ -141,17 +158,15 @@ const LayerSource = (props: LayerSourceProps) => {
     }
 
     // Outline layer
-    if (isLineLayer) {
+    if (isFillLayer || isLineLayer) {
       if (!existingLine) {
         map.addLayer({
           id: lineLayerId,
           type: "line",
           source: sourceId,
           paint: {
-            "line-color": isLineLayer
-              ? themeConfig.primaryColorHex
-              : defaultLineColor,
-            "line-width": 1,
+            "line-color": defaultLineColor,
+            "line-width": isLineLayer ? 2 : 1,
             "line-opacity": activeLayer.visible ? 1 : 0,
           },
         });

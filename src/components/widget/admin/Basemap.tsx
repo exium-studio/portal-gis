@@ -23,12 +23,12 @@ const BaseMap = () => {
   const { colorMode } = useColorMode();
 
   // Contexts
-  const { mapStyle } = useMapStyle();
-  const { layout } = useLayout();
-  const { currentLocation } = useCurrentLocation();
+  const mapStyle = useMapStyle((s) => s.mapStyle);
+  const layout = useLayout((s) => s.layout);
+  const currentLocation = useCurrentLocation((s) => s.currentLocation);
   const { mapZoomPercent, setMapZoomPercent } = useMapsZoom();
-  const { basemap } = useBasemap();
-  const { selectedSearchResult } = useSearchAddress(); // long = 0, lat = 1 (center)
+  const basemap = useBasemap((s) => s.basemap);
+  const selectedSearchResult = useSearchAddress((s) => s.selectedSearchResult);
   // const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
 
   // Refs
