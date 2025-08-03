@@ -202,7 +202,7 @@ const ActiveWorkspaceListItem = (props: Props) => {
       <AccordionItemTrigger indicatorPlacement="start" py={0}>
         <HStack pl={1} w={"full"} gap={4}>
           <HStack w={"full"} truncate align={"start"}>
-            <CContainer gap={"2px"}>
+            <CContainer>
               <P fontWeight={"semibold"} lineHeight={1.4} lineClamp={1}>
                 {activeWorkspace.title}
               </P>
