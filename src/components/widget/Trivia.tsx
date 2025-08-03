@@ -1,36 +1,30 @@
+import useMapStyle from "@/context/useMapStyle";
 import useMapViewState from "@/context/useMapViewState";
 import autoTimeZone from "@/utils/autoTimeZone";
 import { HStack } from "@chakra-ui/react";
-import P from "../ui-custom/P";
-import Clock from "./Clock";
 import { useEffect, useState } from "react";
-import useMapStyle from "@/context/useMapStyle";
+import P from "../ui-custom/P";
 import { useColorMode } from "../ui/color-mode";
+import Clock from "./Clock";
 
 const CurrentCenter = (props: any) => {
   // Props
   const { ...restProps } = props;
 
-  const mapRef = useMapViewState((s) => s.mapRef);
-  const [currentCenter, setCurrentCenter] = useState<any>(
-    mapRef?.current?.getCenter()
-  );
+  const mapViewState = useMapViewState((s) => s.mapViewState);
+  const [currentCenter, setCurrentCenter] = useState<any>({
+    lng: mapViewState?.longitude,
+    lat: mapViewState?.latitude,
+  });
 
   useEffect(() => {
-    const map = mapRef?.current?.getMap();
-    if (!map) return;
+    if (!mapViewState) return;
 
-    const updateCenter = () => {
-      setCurrentCenter(map.getCenter());
-    };
-
-    map.on("move", updateCenter); // or "moveend" for after drag ends
-    updateCenter(); // init once
-
-    return () => {
-      map.off("move", updateCenter);
-    };
-  }, [mapRef]);
+    setCurrentCenter({
+      lng: mapViewState?.longitude,
+      lat: mapViewState?.latitude,
+    });
+  }, [mapViewState]);
 
   return (
     <HStack {...restProps}>
