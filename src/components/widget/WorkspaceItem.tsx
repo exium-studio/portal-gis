@@ -27,6 +27,7 @@ import { computeBboxAndCenter } from "@/utils/geospatial";
 import { fileValidation } from "@/utils/validationSchemas";
 import { FieldsetRoot, HStack, Icon, useDisclosure } from "@chakra-ui/react";
 import {
+  IconCategory2,
   IconDots,
   IconFilePlus,
   IconStack,
@@ -810,6 +811,29 @@ const ToggleLoadWorkspace = (props: any) => {
   );
 };
 
+const DetailWorkspacePopoverContent = (props: any) => {
+  // Props
+  const { workspace } = props;
+
+  return (
+    <CContainer gap={1}>
+      <P w={"fit"}>{workspace?.title}</P>
+
+      <P color={"fg.subtle"} w={"fit"}>
+        {workspace?.description}
+      </P>
+
+      <HStack mt={2} color={"fg.subtle"}>
+        <Icon boxSize={5}>
+          <IconCategory2 stroke={1.5} />
+        </Icon>
+
+        <P>{workspace?.workspace_category?.label}</P>
+      </HStack>
+    </CContainer>
+  );
+};
+
 // Item variants
 const RowItem = (props: any) => {
   // Props
@@ -838,15 +862,7 @@ const RowItem = (props: any) => {
 
         <HStack align={"stretch"} gap={0} p={2}>
           <SimplePopover
-            content={
-              <CContainer gap={1}>
-                <P w={"fit"}>{workspace?.title}</P>
-
-                <P color={"fg.subtle"} w={"fit"}>
-                  {workspace?.description}
-                </P>
-              </CContainer>
-            }
+            content={<DetailWorkspacePopoverContent workspace={workspace} />}
           >
             <CContainer p={1} gap={1} w={"fit"} cursor={"pointer"}>
               <P fontWeight={"semibold"} w={"fit"} lineClamp={1}>
@@ -892,15 +908,7 @@ const ListItem = (props: any) => {
     >
       <HStack p={1} justify={"space-between"}>
         <SimplePopover
-          content={
-            <CContainer gap={1}>
-              <P w={"fit"}>{workspace?.title}</P>
-
-              <P color={"fg.subtle"} w={"fit"}>
-                {workspace?.description}
-              </P>
-            </CContainer>
-          }
+          content={<DetailWorkspacePopoverContent workspace={workspace} />}
         >
           <CContainer p={1} gap={1} pl={2} w={"fit"} cursor={"pointer"}>
             <P fontWeight={"semibold"} w={"fit"} lineClamp={1}>
