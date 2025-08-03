@@ -3,7 +3,6 @@ import getAuthToken from "./getAuthToken";
 
 const request = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  // TODO make it true
   // withCredentials: true,
   xsrfCookieName: "XSRF-TOKEN",
   xsrfHeaderName: "X-XSRF-TOKEN",

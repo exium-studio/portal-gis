@@ -156,7 +156,6 @@ const EditWorkspace = (props: any) => {
         onResolve: {
           onSuccess: () => {
             setRt((ps) => !ps);
-            // TODO localy setWorkspace on success edit
             resetForm();
           },
         },

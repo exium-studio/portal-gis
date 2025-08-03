@@ -24,7 +24,7 @@ const ActiveLayerUtils = (props: any) => {
   // Props
   const { activeLayer, ...restProps } = props;
 
-  // TODO dev control zindex for workspace layers
+  // TODO dev control zindex for workspace layer
 
   return (
     <HStack gap={1} {...restProps}>
