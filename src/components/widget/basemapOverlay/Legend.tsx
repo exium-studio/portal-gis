@@ -90,6 +90,7 @@ export const LegendContent = (props: any) => {
       "Ladang dan",
       "Sekolah da",
       "Ladang dan Pemukiman",
+      "Perkebunan dan Pemukiman",
       "Pemukiman",
       "Kelapa Saw",
       "Masjid",
