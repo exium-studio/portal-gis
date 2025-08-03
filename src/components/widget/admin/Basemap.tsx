@@ -190,7 +190,7 @@ const BaseMap = () => {
       ref={mapRef}
       minZoom={MIN_ZOOM}
       maxZoom={MAX_ZOOM}
-      projection="mercator"
+      projection="globe"
       doubleClickZoom={false}
       // maxPitch={90}
       // maxBounds={[-180, -85, 180, 85]}
