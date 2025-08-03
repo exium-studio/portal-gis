@@ -66,16 +66,16 @@ const Trivia = () => {
 
   return (
     <HStack
-      position={"fixed"}
-      zIndex={99999999999}
+      position={"absolute"}
+      zIndex={2}
       top={"50%"}
       right={"-225px"}
       rotate={"90deg"}
       justify={"center"}
-      // bg={"red"}
       flexShrink={0}
       w={"460px"}
       color={color}
+      // bg={"red"}
     >
       <CurrentCenter />
 
