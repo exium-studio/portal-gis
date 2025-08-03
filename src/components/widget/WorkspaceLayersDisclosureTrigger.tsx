@@ -434,7 +434,7 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                                 </P>
 
                                 <HStack color={"fg.subtle"} mt={1}>
-                                  <Icon boxSize={5}>
+                                  <Icon boxSize={4}>
                                     {layer?.layer_type === "fill" ? (
                                       <IconPolygon stroke={1.5} />
                                     ) : (
@@ -442,7 +442,7 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                                     )}
                                   </Icon>
 
-                                  <P lineClamp={1}>
+                                  <P lineClamp={1} fontSize={"xs"}>
                                     {capsFirstLetter(layer?.layer_type)}
                                   </P>
                                 </HStack>

@@ -824,11 +824,11 @@ const DetailWorkspacePopoverContent = (props: any) => {
       </P>
 
       <HStack mt={2} color={"fg.subtle"}>
-        <Icon boxSize={5}>
+        <Icon boxSize={4}>
           <IconCategory2 stroke={1.5} />
         </Icon>
 
-        <P>{workspace?.workspace_category?.label}</P>
+        <P fontSize={"xs"}>{workspace?.workspace_category?.label}</P>
       </HStack>
     </CContainer>
   );
