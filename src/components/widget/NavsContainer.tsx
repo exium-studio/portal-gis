@@ -1,5 +1,6 @@
 import { LAYOUT_OPTIONS } from "@/constants/layoutOptions";
 import { NAVS } from "@/constants/navs";
+import { PANEL_WIDTH_NUMBER } from "@/constants/sizes";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
 import { useThemeConfig } from "@/context/useThemeConfig";
@@ -38,7 +39,7 @@ import { Tooltip } from "../ui/tooltip";
 import BaseMap from "./admin/Basemap";
 import BasemapMapOverlay from "./admin/BasemapMapOverlay";
 import CurrentUserTimeZone from "./CurrentUserTimeZone";
-import { PANEL_WIDTH_NUMBER } from "@/constants/sizes";
+import Trivia from "./Trivia";
 
 interface Interface__NavItemContainer extends StackProps {
   active?: boolean;
@@ -321,145 +322,150 @@ const NavContainer = ({
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <Stack
-      flexDir={iss ? "column" : "row"}
-      h={"100dvh"}
-      gap={0}
-      overflow={"clip"}
-    >
-      {/* Lg screen nav */}
-      {!iss && (
-        <VStack
-          w={"fit"}
-          align={"center"}
-          px={2}
-          py={"22px"}
-          overflowX={"clip"}
-          className="scrollY"
-          overflowY={"auto"}
-          bg={"body"}
-          // borderRight={"1px solid"}
-          // borderColor={"border.muted"}
-          flexShrink={0}
-        >
-          <Link to={"/"}>
-            {themeConfig.colorPalette === "gray" ? (
-              <BnwLogo />
-            ) : (
-              <Logo size={16} color={themeConfig.primaryColorHex} />
-            )}
-          </Link>
+    <CContainer position={"relative"}>
+      <Trivia />
 
-          <VStack justify={"center"} flex={1}>
-            <NavList activePath={activePath} />
-          </VStack>
-
-          <VStack mt={"auto"}>
-            <NavList2 activePath={activePath} />
-          </VStack>
-        </VStack>
-      )}
-
-      {/* Content */}
       <Stack
-        flex={1}
-        flexDir={iss ? "column-reverse" : "row"}
-        w={iss ? "full" : "calc(100vw - 76px)"}
-        h={iss ? "calc(100dvh - 80px)" : "100dvh"}
-        align={"stretch"}
+        flexDir={iss ? "column" : "row"}
+        h={"100dvh"}
         gap={0}
+        overflow={"clip"}
+        pos={"relative"}
       >
-        {/* Main Panel */}
-        {(halfPanel || fullPanel) && (
-          <CContainer
-            fRef={containerRef}
-            position={"relative"}
-            flex={1}
-            className="scrollY"
+        {/* Lg screen nav */}
+        {!iss && (
+          <VStack
+            w={"fit"}
+            align={"center"}
+            px={2}
+            py={"22px"}
             overflowX={"clip"}
-            bg={"bgContent"}
-            w={halfPanel && !iss && withMaps ? `${PANEL_WIDTH_NUMBER}px` : ""}
-            h={halfPanel && iss && withMaps ? "50%" : ""}
-            zIndex={3}
-            borderRight={iss ? "" : "1px solid"}
-            borderTop={iss ? "1px solid" : ""}
-            borderColor={"border.muted"}
+            className="scrollY"
+            overflowY={"auto"}
+            bg={"body"}
+            // borderRight={"1px solid"}
+            // borderColor={"border.muted"}
+            flexShrink={0}
           >
-            <HStack
-              // h={"67px"}
-              justify={"space-between"}
-              px={4}
-              pr={3}
-              py={"9px"}
-              flexShrink={0}
-              position={"sticky"}
-              top={0}
-              zIndex={2}
-              bg={iss ? "body" : "bgContent"}
-              borderBottom={iss ? "1px solid {colors.border.subtle}" : ""}
-            >
-              <HStack>
-                {backPath && (
-                  <BackButton
-                    iconButton
-                    backPath={backPath}
-                    borderRadius={themeConfig.radii.component}
-                  />
-                )}
+            <Link to={"/"}>
+              {themeConfig.colorPalette === "gray" ? (
+                <BnwLogo />
+              ) : (
+                <Logo size={16} color={themeConfig.primaryColorHex} />
+              )}
+            </Link>
 
-                <Heading6 fontWeight={"bold"} truncate>
-                  {title}
-                </Heading6>
+            <VStack justify={"center"} flex={1}>
+              <NavList activePath={activePath} />
+            </VStack>
+
+            <VStack mt={"auto"}>
+              <NavList2 activePath={activePath} />
+            </VStack>
+          </VStack>
+        )}
+
+        {/* Content */}
+        <Stack
+          flex={1}
+          flexDir={iss ? "column-reverse" : "row"}
+          w={iss ? "full" : "calc(100vw - 76px)"}
+          h={iss ? "calc(100dvh - 80px)" : "100dvh"}
+          align={"stretch"}
+          gap={0}
+        >
+          {/* Main Panel */}
+          {(halfPanel || fullPanel) && (
+            <CContainer
+              fRef={containerRef}
+              position={"relative"}
+              flex={1}
+              className="scrollY"
+              overflowX={"clip"}
+              bg={"bgContent"}
+              w={halfPanel && !iss && withMaps ? `${PANEL_WIDTH_NUMBER}px` : ""}
+              h={halfPanel && iss && withMaps ? "50%" : ""}
+              zIndex={3}
+              borderRight={iss ? "" : "1px solid"}
+              borderTop={iss ? "1px solid" : ""}
+              borderColor={"border.muted"}
+            >
+              <HStack
+                // h={"67px"}
+                justify={"space-between"}
+                px={4}
+                pr={3}
+                py={"9px"}
+                flexShrink={0}
+                position={"sticky"}
+                top={0}
+                zIndex={2}
+                bg={iss ? "body" : "bgContent"}
+                borderBottom={iss ? "1px solid {colors.border.subtle}" : ""}
+              >
+                <HStack>
+                  {backPath && (
+                    <BackButton
+                      iconButton
+                      backPath={backPath}
+                      borderRadius={themeConfig.radii.component}
+                    />
+                  )}
+
+                  <Heading6 fontWeight={"bold"} truncate>
+                    {title}
+                  </Heading6>
+                </HStack>
+
+                <MainPanelUtils />
               </HStack>
 
-              <MainPanelUtils />
-            </HStack>
+              {children}
+            </CContainer>
+          )}
 
-            {children}
-          </CContainer>
-        )}
+          {/* Maps */}
+          {(halfPanel || closedPanel) && withMaps && (
+            <CContainer
+              w={
+                halfPanel && !iss
+                  ? `calc(100% - ${PANEL_WIDTH_NUMBER}px)`
+                  : "full"
+              }
+              h={halfPanel && iss ? "50%" : "full"}
+              position={"relative"}
+            >
+              <BaseMap />
 
-        {/* Maps */}
-        {(halfPanel || closedPanel) && withMaps && (
-          <CContainer
-            w={
-              halfPanel && !iss
-                ? `calc(100% - ${PANEL_WIDTH_NUMBER}px)`
-                : "full"
-            }
-            h={halfPanel && iss ? "50%" : "full"}
-            position={"relative"}
+              <BasemapMapOverlay />
+            </CContainer>
+          )}
+        </Stack>
+
+        {/* Sm screen nav */}
+        {iss && (
+          <HScroll
+            h={"80px"}
+            justify={"space-between"}
+            pt={1}
+            pb={2}
+            px={4}
+            borderTop={"1px solid"}
+            borderColor={"d2"}
+            overflowX={"auto"}
+            flexShrink={0}
+            position={"sticky"}
+            bottom={0}
+            bg={"body"}
+            gap={2}
           >
-            <BaseMap />
+            <NavList activePath={activePath} />
 
-            <BasemapMapOverlay />
-          </CContainer>
+            <NavList2 activePath={activePath} />
+          </HScroll>
         )}
       </Stack>
-
-      {/* Sm screen nav */}
-      {iss && (
-        <HScroll
-          h={"80px"}
-          justify={"space-between"}
-          pt={1}
-          pb={2}
-          px={4}
-          borderTop={"1px solid"}
-          borderColor={"d2"}
-          overflowX={"auto"}
-          flexShrink={0}
-          position={"sticky"}
-          bottom={0}
-          bg={"body"}
-          gap={2}
-        >
-          <NavList activePath={activePath} />
-
-          <NavList2 activePath={activePath} />
-        </HScroll>
-      )}
-    </Stack>
+    </CContainer>
   );
 };
 
