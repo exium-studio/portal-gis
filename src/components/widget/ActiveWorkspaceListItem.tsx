@@ -3,8 +3,7 @@ import { Interface__ActiveWorkspace } from "@/constants/interfaces";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useLang from "@/context/useLang";
 import useMapViewState from "@/context/useMapViewState";
-import { useThemeConfig } from "@/context/useThemeConfig";
-import { Badge, HStack, Icon } from "@chakra-ui/react";
+import { HStack, Icon } from "@chakra-ui/react";
 import {
   IconEye,
   IconEyeOff,
@@ -196,7 +195,7 @@ const ActiveWorkspaceListItem = (props: Props) => {
   const { activeWorkspace, index } = props;
 
   // Contexts
-  const { themeConfig } = useThemeConfig();
+  // const { themeConfig } = useThemeConfig();
 
   return (
     <AccordionItem value={`${activeWorkspace.id}`} py={2}>
@@ -207,22 +206,14 @@ const ActiveWorkspaceListItem = (props: Props) => {
               <P fontWeight={"semibold"} lineHeight={1.4} lineClamp={1}>
                 {activeWorkspace.title}
               </P>
-              <P color={"fg.subtle"} lineClamp={1}>
-                {activeWorkspace.description}
+
+              <P w={"fit"} color={"fg.subtle"} fontSize={"xs"}>
+                {activeWorkspace?.workspace_category?.label}
               </P>
             </CContainer>
           </HStack>
 
           <CContainer w={"fit"} gap={"2px"}>
-            <Badge
-              w={"fit"}
-              ml={"auto"}
-              mb={"2px"}
-              colorPalette={themeConfig.colorPalette}
-            >
-              {activeWorkspace?.workspace_category?.label}
-            </Badge>
-
             <ActiveWorkspaceUtils
               activeWorkspace={activeWorkspace}
               index={index}
