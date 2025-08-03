@@ -199,7 +199,11 @@ const ActiveWorkspaceListItem = (props: Props) => {
     <AccordionItem value={`${activeWorkspace.id}`} py={2}>
       <AccordionItemTrigger indicatorPlacement="none" py={0}>
         <HStack pl={1} w={"full"}>
-          <HStack cursor={"pointer"} gap={1}>
+          <CContainer cursor={"pointer"} gap={1}>
+            <Badge w={"fit"} ml={-1} mb={"2px"}>
+              {activeWorkspace?.workspace_category?.label}
+            </Badge>
+
             <HStack truncate>
               <Icon boxSize={5}>
                 <IconFolders stroke={1.5} />
@@ -209,11 +213,7 @@ const ActiveWorkspaceListItem = (props: Props) => {
                 {activeWorkspace.title}
               </P>
             </HStack>
-
-            <Badge w={"fit"}>
-              {activeWorkspace?.workspace_category?.label}
-            </Badge>
-          </HStack>
+          </CContainer>
 
           <ActiveWorkspaceUtils
             activeWorkspace={activeWorkspace}

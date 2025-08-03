@@ -288,12 +288,13 @@ const WorkspaceCategoriesTable = (props: any) => {
       originalData: item,
       columnsFormat: [
         {
+          value: item.label,
           td: item.label,
-          dataType: "string",
         },
         {
+          value: item.deleted_at,
           td: <DeleteStatus deletedAt={item.deleted_at} />,
-          dataType: "boolean",
+          dataType: "date",
         },
       ],
     };
