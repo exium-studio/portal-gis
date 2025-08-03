@@ -4,8 +4,13 @@ import { HStack } from "@chakra-ui/react";
 import P from "../ui-custom/P";
 import Clock from "./Clock";
 import { useEffect, useState } from "react";
+import useMapStyle from "@/context/useMapStyle";
+import { useColorMode } from "../ui/color-mode";
 
-const CurrentCenter = () => {
+const CurrentCenter = (props: any) => {
+  // Props
+  const { ...restProps } = props;
+
   const mapRef = useMapViewState((s) => s.mapRef);
   const [currentCenter, setCurrentCenter] = useState<any>(
     mapRef?.current?.getCenter()
@@ -28,7 +33,7 @@ const CurrentCenter = () => {
   }, [mapRef]);
 
   return (
-    <HStack>
+    <HStack {...restProps}>
       <P fontSize={"12px"} opacity={0.5}>
         Current Center :
       </P>
@@ -40,16 +45,37 @@ const CurrentCenter = () => {
 };
 
 const Trivia = () => {
+  // Contexts
+  const { colorMode } = useColorMode();
+  const mapStyle = useMapStyle((s) => s.mapStyle);
+
+  // States
+  const plainLight = colorMode === "light" && mapStyle?.id === 1;
+  const plainDark = colorMode === "dark" && mapStyle?.id === 1;
+  const colorful = mapStyle?.id === 2;
+  const satellite = mapStyle?.id === 3;
+  const color = plainLight
+    ? "black"
+    : plainDark
+    ? "white"
+    : colorful
+    ? "black"
+    : satellite
+    ? "white"
+    : "white";
+
   return (
     <HStack
       position={"fixed"}
       zIndex={99999999999}
       top={"50%"}
-      right={"-218px"}
+      right={"-225px"}
       rotate={"90deg"}
+      justify={"center"}
       // bg={"red"}
       flexShrink={0}
-      w={"444px"}
+      w={"460px"}
+      color={color}
     >
       <CurrentCenter />
 
