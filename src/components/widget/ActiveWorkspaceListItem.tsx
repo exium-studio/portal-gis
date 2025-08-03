@@ -1,11 +1,13 @@
+import { MAP_TRANSITION_DURATION } from "@/constants/duration";
 import { Interface__ActiveWorkspace } from "@/constants/interfaces";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useLang from "@/context/useLang";
+import useMapViewState from "@/context/useMapViewState";
+import { useThemeConfig } from "@/context/useThemeConfig";
 import { Badge, HStack, Icon } from "@chakra-ui/react";
 import {
   IconEye,
   IconEyeOff,
-  IconFolders,
   IconStackPop,
   IconStackPush,
   IconZoomInArea,
@@ -20,8 +22,6 @@ import {
 } from "../ui/accordion";
 import { Tooltip } from "../ui/tooltip";
 import ActiveLayerListItem from "./ActiveLayerListItem";
-import useMapViewState from "@/context/useMapViewState";
-import { MAP_TRANSITION_DURATION } from "@/constants/duration";
 
 interface Props {
   activeWorkspace: Interface__ActiveWorkspace;
@@ -195,31 +195,41 @@ const ActiveWorkspaceListItem = (props: Props) => {
   // Props
   const { activeWorkspace, index } = props;
 
+  // Contexts
+  const { themeConfig } = useThemeConfig();
+
   return (
     <AccordionItem value={`${activeWorkspace.id}`} py={2}>
-      <AccordionItemTrigger indicatorPlacement="none" py={0}>
-        <HStack pl={1} w={"full"}>
-          <CContainer cursor={"pointer"} gap={1}>
-            <Badge w={"fit"} ml={-1} mb={"2px"}>
-              {activeWorkspace?.workspace_category?.label}
-            </Badge>
-
-            <HStack truncate>
-              <Icon boxSize={5}>
-                <IconFolders stroke={1.5} />
-              </Icon>
-
+      <AccordionItemTrigger indicatorPlacement="start" py={0}>
+        <HStack pl={1} w={"full"} gap={4}>
+          <HStack w={"full"} truncate align={"start"}>
+            <CContainer>
               <P fontWeight={"semibold"} lineHeight={1.4} lineClamp={1}>
                 {activeWorkspace.title}
               </P>
-            </HStack>
-          </CContainer>
+              <P color={"fg.subtle"} lineClamp={1}>
+                {activeWorkspace.description}
+              </P>
+            </CContainer>
+          </HStack>
 
-          <ActiveWorkspaceUtils
-            activeWorkspace={activeWorkspace}
-            index={index}
-            ml={"auto"}
-          />
+          <CContainer w={"fit"} gap={"2px"}>
+            <Badge
+              w={"fit"}
+              ml={"auto"}
+              mb={"2px"}
+              colorPalette={themeConfig.colorPalette}
+            >
+              {activeWorkspace?.workspace_category?.label}
+            </Badge>
+
+            <ActiveWorkspaceUtils
+              activeWorkspace={activeWorkspace}
+              index={index}
+              ml={"auto"}
+              // mt={"auto"}
+            />
+          </CContainer>
         </HStack>
       </AccordionItemTrigger>
 
