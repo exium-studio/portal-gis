@@ -5,7 +5,6 @@ import useLang from "@/context/useLang";
 import useMapViewState from "@/context/useMapViewState";
 import { HStack, Icon } from "@chakra-ui/react";
 import {
-  IconCategory2,
   IconEye,
   IconEyeOff,
   IconStackPop,
@@ -209,13 +208,7 @@ const ActiveWorkspaceListItem = (props: Props) => {
               </P>
 
               <HStack color={"fg.subtle"}>
-                <Icon boxSize={4}>
-                  <IconCategory2 stroke={1.5} />
-                </Icon>
-
-                <P fontSize={"xs"}>
-                  {activeWorkspace?.workspace_category?.label}
-                </P>
+                <P>{activeWorkspace?.workspace_category?.label}</P>
               </HStack>
             </CContainer>
           </HStack>
@@ -231,7 +224,7 @@ const ActiveWorkspaceListItem = (props: Props) => {
         </HStack>
       </AccordionItemTrigger>
 
-      <AccordionItemContent py={0} pt={1}>
+      <AccordionItemContent py={0} pt={1} pl={7}>
         <CContainer gap={1}>
           {activeWorkspace?.layers &&
             [...activeWorkspace?.layers]?.reverse()?.map((activeLayer) => {

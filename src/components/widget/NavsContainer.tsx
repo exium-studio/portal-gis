@@ -323,8 +323,6 @@ const NavContainer = ({
 
   return (
     <CContainer position={"relative"}>
-      <Trivia />
-
       <Stack
         flexDir={iss ? "column" : "row"}
         h={"100dvh"}
@@ -435,6 +433,8 @@ const NavContainer = ({
               h={halfPanel && iss ? "50%" : "full"}
               position={"relative"}
             >
+              <Trivia />
+
               <BaseMap />
 
               <BasemapMapOverlay />

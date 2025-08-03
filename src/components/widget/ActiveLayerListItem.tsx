@@ -167,7 +167,6 @@ const ActiveLayerListItem = (props: Props) => {
         // bg={hover ? "d1" : ""}
         // p={1}
         borderRadius={themeConfig.radii.component}
-        pl={6}
         w={"full"}
       >
         <SimplePopover
