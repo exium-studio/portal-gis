@@ -29,12 +29,12 @@ const LayerSource = (props: LayerSourceProps) => {
     (s) => s.clearSelectedPolygon
   );
   const { themeConfig } = useThemeConfig();
-  const legends = useLegend((s) => s.legends);
+  const legend = useLegend((s) => s.legend);
   const mapStyle = useMapStyle((s) => s.mapStyle);
   const { colorMode } = useColorMode();
 
   // States
-  const legendType = "GUNATANAHK";
+  const legendType = legend?.label;
   const geojson = activeLayer?.data?.geojson;
   const plainLight = colorMode === "light" && mapStyle?.id === 1;
   const plainDark = colorMode === "dark" && mapStyle?.id === 1;
@@ -72,7 +72,7 @@ const LayerSource = (props: LayerSourceProps) => {
     [
       "match",
       ["get", legendType],
-      ...legends.flatMap((legend) => [legend.label, legend.color]),
+      ...legend.list.flatMap((legend) => [legend.label, legend.color]),
       defaultFillColor,
     ],
   ];
@@ -205,7 +205,7 @@ const LayerSource = (props: LayerSourceProps) => {
     activeLayer.id,
     activeLayer.visible,
     activeLayer.layer_type,
-    legends,
+    legend,
     themeConfig.primaryColorHex,
     selectedPolygon,
     fillColor,

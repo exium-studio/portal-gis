@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/menu";
 import { Tooltip } from "@/components/ui/tooltip";
 import PageContainer from "@/components/widget/PageContainer";
-import SelectWorkspaceCategory from "@/components/widget/SelectWorkspaceCategort";
+import SelectWorkspaceCategory from "@/components/widget/SelectWorkspaceCategory";
 import WorkspaceItem from "@/components/widget/WorkspaceItem";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";

@@ -58,7 +58,7 @@ import { Tooltip } from "../ui/tooltip";
 import ExistingFileItem from "./ExistingFIleItem";
 import SelectLayerFileType from "./SelectLayerFileType";
 import SelectLayerType from "./SelectLayerType";
-import SelectWorkspaceCategory from "./SelectWorkspaceCategort";
+import SelectWorkspaceCategory from "./SelectWorkspaceCategory";
 import SimplePopover from "./SimplePopover";
 import WorkspaceLayersDisclosureTrigger from "./WorkspaceLayersDisclosureTrigger";
 import { Checkbox } from "../ui/checkbox";

@@ -179,7 +179,7 @@ const SelectInput = ({
       <Tooltip
         content={
           inputValue && inputValue.length > 0
-            ? `${inputValue && inputValue.map((item) => ` ${item.label}`)}`
+            ? `${inputValue && inputValue?.map((item) => ` ${item.label}`)}`
             : finalPlaceholder
         }
       >
@@ -275,6 +275,7 @@ const SelectInput = ({
           </DisclosureHeader>
 
           <DisclosureBody
+            py={"0 !important"}
             pb={"0 !important"}
             // pt={"4 !important"}
             className="scrollY"
@@ -300,7 +301,7 @@ const SelectInput = ({
             )}
 
             {!multiple && (
-              <CContainer gap={1} pt={4} pb={[2, null, 4]}>
+              <CContainer gap={1} py={2}>
                 <OptionsList />
               </CContainer>
             )}

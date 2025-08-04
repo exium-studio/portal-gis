@@ -1,55 +1,34 @@
 import { create } from "zustand";
 
-interface ColorObject {
+interface LegendObject {
   label: string;
-  color: string;
+  list: {
+    label: string;
+    color: string;
+  }[];
 }
 
-interface ColorStore {
+interface LegendStore {
   open: boolean;
-  data: any;
   onOpen: () => void;
   onToggle: () => void;
   onClose: () => void;
   setOpen: (newState: boolean) => void;
-  setData: (newState: any) => void;
-  legends: ColorObject[];
-  addLegend: (newColor: ColorObject) => void;
-  removeLegend: (label: string) => void;
-  updateLegend: (label: string, updatedColor: Partial<ColorObject>) => void;
-  setLegends: (newColors: ColorObject[]) => void;
+  legend: LegendObject;
+  setLegend: (newLegend: LegendObject) => void;
 }
 
-const useLegend = create<ColorStore>((set) => ({
+const useLegend = create<LegendStore>((set) => ({
   open: false,
-  data: null,
   onOpen: () => set({ open: true }),
   onToggle: () => set((state) => ({ open: !state.open })),
   onClose: () => set({ open: false }),
   setOpen: (newState) => set({ open: newState }),
-  setData: (newState) => set({ data: newState }),
-  legends: [],
-
-  // Add a new color object to the array
-  addLegend: (newColor) =>
-    set((state) => ({ legends: [...state.legends, newColor] })),
-
-  // Remove a color object by its label
-  removeLegend: (label) =>
-    set((state) => ({
-      legends: state.legends.filter((color) => color.label !== label),
-    })),
-
-  // Update a color object by its label
-  updateLegend: (label, updatedColor) =>
-    set((state) => ({
-      legends: state.legends.map((color) =>
-        color.label === label ? { ...color, ...updatedColor } : color
-      ),
-    })),
-
-  // Replace the entire array
-  setLegends: (newColors) => set({ legends: newColors }),
+  legend: {
+    label: "",
+    list: [],
+  },
+  setLegend: (newLegend) => set({ legend: newLegend }),
 }));
 
 export default useLegend;
