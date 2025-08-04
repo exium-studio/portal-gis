@@ -69,12 +69,14 @@ const LayerSource = (props: LayerSourceProps) => {
     "case",
     ["==", ["get", "id"], selectedPolygonId],
     selectedPolygon?.fillColor || defaultFillColor,
-    [
-      "match",
-      ["get", legendType],
-      ...legend.list.flatMap((legend) => [legend.label, legend.color]),
-      defaultFillColor,
-    ],
+    legend.list.length > 0
+      ? [
+          "match",
+          ["get", legendType],
+          ...legend.list.flatMap((legend) => [legend.label, legend.color]),
+          defaultFillColor,
+        ]
+      : defaultFillColor,
   ];
   const fillOpacity = !activeLayer?.visible
     ? 0
