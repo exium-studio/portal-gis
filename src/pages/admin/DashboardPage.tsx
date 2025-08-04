@@ -414,9 +414,6 @@ const DashboardPage = () => {
     setDashboardData(summarizeDashboard(activeWorkspaces));
   }, [activeWorkspaces]);
 
-  // console.log("activeWorkspaces", activeWorkspaces);
-  console.log("dashboard data", summarizeDashboard(activeWorkspaces));
-
   return (
     <PageContainer gap={R_GAP} pb={4} flex={1}>
       {empty(activeWorkspaces) && (
@@ -428,7 +425,7 @@ const DashboardPage = () => {
       )}
 
       {!empty(activeWorkspaces) && (
-        <HStack wrap={"wrap"} align={"stretch"}>
+        <HStack wrap={"wrap"} align={"stretch"} gap={4}>
           <HGUArea data={dashboardData?.areaByTipeHak} flex={"1 1 300px"} />
 
           <HGUCount data={dashboardData?.countByTipeHak} flex={"1 1 300px"} />
