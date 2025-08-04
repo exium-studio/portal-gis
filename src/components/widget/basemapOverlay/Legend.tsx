@@ -325,7 +325,7 @@ const ColorwayOptions = (props: any) => {
                 setColorway(localColorway);
                 const newLegendOptions = generateLegendsFromWorkspaces(
                   activeWorkspaces,
-                  colorway?.colors
+                  localColorway?.colors
                 )
                   ?.filter((item) => !EXCLUDED_KEYS.includes(item.propertyKey))
                   .map((item) => ({
