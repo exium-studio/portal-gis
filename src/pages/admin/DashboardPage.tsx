@@ -190,8 +190,8 @@ const HGUArea = (props: any) => {
         </Chart.Root>
       </CContainer>
 
-      <CContainer px={4}>
-        <CContainer maxH={"150px"} className="scrollY" px={4} gap={2}>
+      <CContainer>
+        <CContainer maxH={"150px"} className="scrollY" px={8} gap={2}>
           {chart.data.map((item: any) => {
             return (
               <HStack key={item?.name}>
@@ -279,8 +279,8 @@ const HGUCount = (props: any) => {
         </Chart.Root>
       </CContainer>
 
-      <CContainer px={4}>
-        <CContainer maxH={"150px"} className="scrollY" px={4} gap={2}>
+      <CContainer>
+        <CContainer maxH={"150px"} className="scrollY" px={8} gap={2}>
           {chart.data.map((item: any) => {
             return (
               <HStack key={item?.name}>
@@ -378,8 +378,8 @@ const HGUAreaByKabupaten = (props: any) => {
         </Chart.Root>
       </CContainer>
 
-      <CContainer px={4}>
-        <CContainer maxH={"150px"} className="scrollY" px={4} gap={2}>
+      <CContainer>
+        <CContainer maxH={"150px"} className="scrollY" px={8} gap={2}>
           {chart.data.map((item: any) => {
             return (
               <HStack key={item?.name}>
