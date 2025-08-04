@@ -1,5 +1,6 @@
 import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
+import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
 import FloatingContainer from "@/components/ui-custom/FloatingContainer";
 import P from "@/components/ui-custom/P";
 import SelectInput from "@/components/ui-custom/SelectInput";
@@ -19,7 +20,6 @@ import MenuHeaderContainer from "../MenuHeaderContainer";
 import { OverlayItemContainer } from "../OverlayItemContainer";
 import SimplePopover from "../SimplePopover";
 import FloatingContainerCloseButton from "./FloatingContainerCloseButton";
-import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
 
 interface LegendEntry {
   label: string;
@@ -167,7 +167,13 @@ const LegendOptions = () => {
           list: input?.[0]?.legends,
         });
       }}
-      inputValue={[legend as any]}
+      inputValue={[
+        {
+          id: legend?.label,
+          label: legend?.label,
+          list: legend?.list,
+        } as any,
+      ]}
       // border={"none"}
       // borderRadius={"0"}
       // borderBottom={"1px solid {colors.border.muted}"}
@@ -223,23 +229,27 @@ export const LegendContent = (props: any) => {
         {empty(legend.list) && <FeedbackNoData />}
 
         {!empty(legend.list) && (
-          <SimpleGrid gapX={4} gapY={1} px={"2px"} columns={[1, null, 2]}>
-            {legend.list.map((item) => {
-              return (
-                <SimplePopover key={item?.label} content={item?.label}>
-                  <HStack cursor={"pointer"}>
-                    <Circle
-                      w={"10px"}
-                      h={"10px"}
-                      bg={item?.color}
-                      opacity={0.6}
-                    />
-                    <P lineClamp={1}>{item?.label}</P>
-                  </HStack>
-                </SimplePopover>
-              );
-            })}
-          </SimpleGrid>
+          <>
+            {/* <Checkbox mb={3}>1 Line</Checkbox> */}
+
+            <SimpleGrid gapX={4} gapY={1} px={"2px"} columns={[1, null, null]}>
+              {legend.list.map((item) => {
+                return (
+                  <SimplePopover key={item?.label} content={item?.label}>
+                    <HStack cursor={"pointer"}>
+                      <Circle
+                        w={"10px"}
+                        h={"10px"}
+                        bg={item?.color}
+                        opacity={0.6}
+                      />
+                      <P lineClamp={1}>{item?.label}</P>
+                    </HStack>
+                  </SimplePopover>
+                );
+              })}
+            </SimpleGrid>
+          </>
         )}
       </CContainer>
     </FloatingContainer>
