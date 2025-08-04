@@ -2,7 +2,7 @@ import useBackOnDefaultPage from "@/hooks/useBackOnDefaultPage";
 import useScreen from "@/hooks/useScreen";
 import back from "@/utils/back";
 import { Dialog as ChakraDialog, Portal } from "@chakra-ui/react";
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import { CloseButton } from "./close-button";
 
 interface DialogContentProps extends ChakraDialog.ContentProps {
@@ -21,6 +21,10 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
       ...rest
     } = props;
 
+    const [mouseDownTarget, setMouseDownTarget] = useState<EventTarget | null>(
+      null
+    );
+
     // Utils
     const handleBackOnDefaultPage = useBackOnDefaultPage();
     const { sh } = useScreen();
@@ -35,23 +39,24 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
         )}
         <ChakraDialog.Positioner
           pointerEvents="auto"
-          onClick={() => {
-            back();
-            handleBackOnDefaultPage();
-          }}
           py={4}
+          onMouseDown={(e) => setMouseDownTarget(e.target)}
+          onMouseUp={(e) => {
+            if (mouseDownTarget === e.target) {
+              // klik mulai dan selesai di posisi yang sama
+              back();
+              handleBackOnDefaultPage();
+            }
+            setMouseDownTarget(null);
+          }}
         >
           <ChakraDialog.Content
             ref={ref}
             minH={sh < 500 ? "90dvh" : ""}
-            bg={"body"}
-            shadow={"none"}
-            // border={"1px solid {colors.border.subtle}"}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
+            bg="body"
+            shadow="none"
+            onClick={(e) => e.stopPropagation()}
             {...rest}
-            asChild={false}
           >
             {children}
           </ChakraDialog.Content>
