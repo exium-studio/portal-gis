@@ -361,6 +361,18 @@ export const deleted_file = {
 };
 
 // UI
+export const hgu_area_by_kabupaten = {
+  id: "Luas HGU berdasarkan kabupaten",
+  en: "HGU Area by kabupaten",
+};
+export const hgu_area = {
+  id: "Luas HGU",
+  en: "HGU Area",
+};
+export const hgu_count = {
+  id: "Jumlah HGU",
+  en: "HGU Count",
+};
 export const with_explanation = {
   id: "Dengan keterangan",
   en: "With explanation",

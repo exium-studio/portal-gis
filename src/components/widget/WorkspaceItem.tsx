@@ -410,7 +410,7 @@ const WorkspaceLayersUtils = (props: {
       }}
       p={1}
       borderTop={"1px solid"}
-      borderColor={"border.muted"}
+      borderColor={"border.subtle"}
       {...restProps}
     >
       <AddLayer workspace={workspace} disabled={!!workspaceActive} />
@@ -848,7 +848,7 @@ const RowItem = (props: any) => {
       borderRadius={themeConfig.radii.container}
       overflow={"clip"}
       border={"1px solid"}
-      borderColor={"border.muted"}
+      borderColor={"border.subtle"}
       bg={"body"}
       pos={"relative"}
       {...restProps}
@@ -902,7 +902,7 @@ const ListItem = (props: any) => {
     <CContainer
       borderRadius={themeConfig.radii.container}
       border={"1px solid"}
-      borderColor={"border.muted"}
+      borderColor={"border.subtle"}
       bg={"body"}
       {...restProps}
     >

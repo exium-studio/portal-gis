@@ -12,6 +12,7 @@ import { useThemeConfig } from "@/context/useThemeConfig";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import useScreen from "@/hooks/useScreen";
 import {
+  Box,
   Center,
   HStack,
   Icon,
@@ -220,7 +221,7 @@ const RowOptions = ({
             if (option === "divider") return <MenuSeparator key={i} />;
 
             if (option.independent) {
-              return option?.component?.(rowData);
+              return <Box key={i}>{option?.component?.(rowData)}</Box>;
             }
 
             if (option.confirmation) {

@@ -28,7 +28,6 @@ const useLegend = create<ColorStore>((set) => ({
   onClose: () => set({ open: false }),
   setOpen: (newState) => set({ open: newState }),
   setData: (newState) => set({ data: newState }),
-
   legends: [],
 
   // Add a new color object to the array
