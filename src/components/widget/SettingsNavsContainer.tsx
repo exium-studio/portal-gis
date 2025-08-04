@@ -71,7 +71,7 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
           pr={compact && settingsRoute ? 3 : 0}
           pt={4}
           pb={4}
-          w={compact ? "full" : "200px"}
+          w={compact ? "full" : "240px"}
           flexShrink={0}
           overflowY={"auto"}
           maxH={"full"}

@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 import BButton from "../ui-custom/BButton";
 import CContainer from "../ui-custom/CContainer";
 import PageContainer from "./PageContainer";
+import P from "../ui-custom/P";
 
 interface Props extends StackProps {
   children?: any;
@@ -71,7 +72,7 @@ const MasterDataNavsContainer = ({ children, activePath, ...props }: Props) => {
           pr={compact && masterDataRoute ? 3 : 0}
           pt={4}
           pb={4}
-          w={compact ? "full" : "200px"}
+          w={compact ? "full" : "240px"}
           flexShrink={0}
           overflowY={"auto"}
           maxH={"full"}
@@ -114,7 +115,9 @@ const MasterDataNavsContainer = ({ children, activePath, ...props }: Props) => {
                               <nav.icon stroke={1.5} />
                             </Icon>
 
-                            {pluck(l, nav.labelKey)}
+                            <P lineClamp={1} textAlign={"left"}>
+                              {pluck(l, nav.labelKey)}
+                            </P>
 
                             {compact && (
                               <Icon ml={"auto"} mr={-1}>
