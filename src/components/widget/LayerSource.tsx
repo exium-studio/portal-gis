@@ -10,6 +10,7 @@ import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import { useCallback, useEffect } from "react";
 import { useColorMode } from "../ui/color-mode";
+import empty from "@/utils/empty";
 
 interface LayerSourceProps {
   activeWorkspace: Interface__ActiveWorkspace;
@@ -30,6 +31,7 @@ const LayerSource = (props: LayerSourceProps) => {
   );
   const { themeConfig } = useThemeConfig();
   const legend = useLegend((s) => s.legend);
+  const colorway = useLegend((s) => s.colorway);
   const mapStyle = useMapStyle((s) => s.mapStyle);
   const { colorMode } = useColorMode();
 
@@ -40,6 +42,7 @@ const LayerSource = (props: LayerSourceProps) => {
   const plainDark = colorMode === "dark" && mapStyle?.id === 1;
   const colorful = mapStyle?.id === 2;
   const satellite = mapStyle?.id === 3;
+  const legendList = empty(legend.list) ? [] : legend.list;
   const defaultFillColor = plainLight
     ? "#bbb"
     : plainDark
@@ -69,7 +72,7 @@ const LayerSource = (props: LayerSourceProps) => {
     "case",
     ["==", ["get", "id"], selectedPolygonId],
     selectedPolygon?.fillColor || defaultFillColor,
-    legend.list.length > 0
+    legendList.length > 0
       ? [
           "match",
           ["get", legendType],
@@ -213,6 +216,7 @@ const LayerSource = (props: LayerSourceProps) => {
     fillColor,
     fillOpacity,
     activeWorkspaces,
+    colorway,
   ]);
 
   useEffect(() => {
@@ -221,6 +225,13 @@ const LayerSource = (props: LayerSourceProps) => {
 
     map.moveLayer(lineLayerId, fillLayerId);
   }, [activeWorkspaces]);
+
+  useEffect(() => {
+    const map = mapRef.current?.getMap();
+    if (!map || !geojson) return;
+
+    map.triggerRepaint();
+  }, [colorway]);
 
   // Cleanup on layer unmount
   useEffect(() => {

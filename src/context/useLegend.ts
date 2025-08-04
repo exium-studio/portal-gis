@@ -1,3 +1,4 @@
+import { LEGEND_COLOR_OPTIONS } from "@/constants/colors";
 import { create } from "zustand";
 
 interface LegendObject {
@@ -16,6 +17,8 @@ interface LegendStore {
   setOpen: (newState: boolean) => void;
   legend: LegendObject;
   setLegend: (newLegend: LegendObject) => void;
+  colorway: any;
+  setColorway: (colors: string[]) => void;
 }
 
 const useLegend = create<LegendStore>((set) => ({
@@ -29,6 +32,8 @@ const useLegend = create<LegendStore>((set) => ({
     list: [],
   },
   setLegend: (newLegend) => set({ legend: newLegend }),
+  colorway: LEGEND_COLOR_OPTIONS[0],
+  setColorway: (colors) => set({ colorway: colors }),
 }));
 
 export default useLegend;

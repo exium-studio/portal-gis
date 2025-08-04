@@ -32,6 +32,7 @@ import {
 import DisclosureHeaderContent from "./DisclosureHeaderContent";
 import FeedbackNoData from "./FeedbackNoData";
 import SearchInput from "./SearchInput";
+import empty from "@/utils/empty";
 
 const SelectInput = ({
   id,
@@ -200,7 +201,7 @@ const SelectInput = ({
           {...props}
         >
           <HStack w={"full"} justify={"space-between"}>
-            {inputValue ? (
+            {!empty(inputValue) && inputValue?.[0]?.id !== undefined ? (
               <Text fontWeight={"normal"} lineClamp={1} textAlign={"left"}>
                 {inputValue?.map((item) => item.label).join(", ")}
               </Text>
@@ -216,7 +217,7 @@ const SelectInput = ({
 
             <Icon
               maxH={"14px"}
-              color={props?._placeholder?.color || "var(--placeholder)"}
+              color={props?._placeholder?.color || "fg.subtle"}
             >
               <IconCaretDownFilled stroke={1.5} />
             </Icon>

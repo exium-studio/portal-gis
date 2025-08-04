@@ -18,6 +18,7 @@ export const COLORS: string[] = [
   "#D53F8C", // Merah muda gelap
   "#E53E3E", // Merah kecokelatan
 ];
+
 export const ABS_COLORS = {
   green: "#22c55e",
   orange: "#F6AD55",
@@ -30,3 +31,123 @@ export const ABS_COLORS = {
   d3: "#7e7e7e36",
   dt: "#858585c1",
 };
+
+export const LEGEND_COLOR_OPTIONS = [
+  {
+    label: "Set2",
+    colors: [
+      "#66c2a5",
+      "#fc8d62",
+      "#8da0cb",
+      "#e78ac3",
+      "#a6d854",
+      "#ffd92f",
+      "#e5c494",
+      "#b3b3b3",
+    ],
+  },
+  {
+    label: "Set1",
+    colors: [
+      "#e41a1c",
+      "#377eb8",
+      "#4daf4a",
+      "#984ea3",
+      "#ff7f00",
+      "#ffff33",
+      "#a65628",
+      "#f781bf",
+    ],
+  },
+  {
+    label: "Set3",
+    colors: [
+      "#8dd3c7",
+      "#ffffb3",
+      "#bebada",
+      "#fb8072",
+      "#80b1d3",
+      "#fdb462",
+      "#b3de69",
+      "#fccde5",
+    ],
+  },
+  {
+    label: "Paired",
+    colors: [
+      "#a6cee3",
+      "#1f78b4",
+      "#b2df8a",
+      "#33a02c",
+      "#fb9a99",
+      "#e31a1c",
+      "#fdbf6f",
+      "#ff7f00",
+    ],
+  },
+  {
+    label: "Dark2",
+    colors: [
+      "#1b9e77",
+      "#d95f02",
+      "#7570b3",
+      "#e7298a",
+      "#66a61e",
+      "#e6ab02",
+      "#a6761d",
+      "#666666",
+    ],
+  },
+  {
+    label: "Blue Gradient",
+    colors: [
+      "#e3f2fd",
+      "#bbdefb",
+      "#90caf9",
+      "#64b5f6",
+      "#42a5f5",
+      "#2196f3",
+      "#1e88e5",
+      "#1976d2",
+    ],
+  },
+  {
+    label: "Green Gradient",
+    colors: [
+      "#e8f5e9",
+      "#c8e6c9",
+      "#a5d6a7",
+      "#81c784",
+      "#66bb6a",
+      "#4caf50",
+      "#43a047",
+      "#388e3c",
+    ],
+  },
+  {
+    label: "Orange Gradient",
+    colors: [
+      "#fff3e0",
+      "#ffe0b2",
+      "#ffcc80",
+      "#ffb74d",
+      "#ffa726",
+      "#ff9800",
+      "#fb8c00",
+      "#f57c00",
+    ],
+  },
+  {
+    label: "Purple Gradient",
+    colors: [
+      "#f2f2ff",
+      "#d6d5f5",
+      "#bbb9ec",
+      "#a09de3",
+      "#8e8cd8", // base tone
+      "#7c7ac4",
+      "#6a68b0",
+      "#58569c",
+    ],
+  },
+];

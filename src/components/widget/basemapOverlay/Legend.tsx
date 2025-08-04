@@ -1,25 +1,46 @@
+import BackButton from "@/components/ui-custom/BackButton";
 import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
+import {
+  DisclosureBody,
+  DisclosureContent,
+  DisclosureFooter,
+  DisclosureHeader,
+  DisclosureRoot,
+} from "@/components/ui-custom/Disclosure";
+import DisclosureHeaderContent from "@/components/ui-custom/DisclosureHeaderContent";
 import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
 import FloatingContainer from "@/components/ui-custom/FloatingContainer";
 import P from "@/components/ui-custom/P";
 import SelectInput from "@/components/ui-custom/SelectInput";
 import { Tooltip } from "@/components/ui/tooltip";
+import { LEGEND_COLOR_OPTIONS } from "@/constants/colors";
 import { Interface__ActiveWorkspace } from "@/constants/interfaces";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
 import useLegend from "@/context/useLegend";
+import { useThemeConfig } from "@/context/useThemeConfig";
+import useBackOnClose from "@/hooks/useBackOnClose";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import empty from "@/utils/empty";
-import { Circle, HStack, Portal, SimpleGrid } from "@chakra-ui/react";
-import { IconFlag } from "@tabler/icons-react";
+import {
+  Box,
+  Circle,
+  HStack,
+  Icon,
+  Portal,
+  SimpleGrid,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { IconCaretDownFilled, IconFlag } from "@tabler/icons-react";
 import chroma from "chroma-js";
 import { useEffect, useRef, useState } from "react";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import { OverlayItemContainer } from "../OverlayItemContainer";
 import SimplePopover from "../SimplePopover";
 import FloatingContainerCloseButton from "./FloatingContainerCloseButton";
+import back from "@/utils/back";
 
 interface LegendEntry {
   label: string;
@@ -31,7 +52,8 @@ interface PropertyLegend {
 }
 
 function generateLegendsFromWorkspaces(
-  workspaces: Interface__ActiveWorkspace[]
+  workspaces: Interface__ActiveWorkspace[],
+  colorway?: string[]
 ): PropertyLegend[] {
   const valueMap: Record<string, Set<string>> = {};
 
@@ -55,7 +77,7 @@ function generateLegendsFromWorkspaces(
 
   for (const key in valueMap) {
     const labels = Array.from(valueMap[key]);
-    const colors = chroma.scale("Set2").colors(labels.length);
+    const colors = chroma.scale(colorway).colors(labels.length);
 
     const legends: LegendEntry[] = labels.map((label, i) => ({
       label,
@@ -118,13 +140,17 @@ export const LegendTrigger = () => {
   );
 };
 
-const LegendOptions = () => {
+const LegendOptions = (props: any) => {
+  // Props
+  const { ...restProps } = props;
+
   // Hooks
   const { l } = useLang();
 
   // Contexts
   const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
   const legend = useLegend((s) => s.legend);
+  const colorway = useLegend((s) => s.colorway);
   const setLegend = useLegend((s) => s.setLegend);
 
   // States
@@ -136,7 +162,10 @@ const LegendOptions = () => {
   }
 
   useEffect(() => {
-    const newLegendOptions = generateLegendsFromWorkspaces(activeWorkspaces)
+    const newLegendOptions = generateLegendsFromWorkspaces(
+      activeWorkspaces,
+      colorway?.colors
+    )
       ?.filter((item) => !EXCLUDED_KEYS.includes(item.propertyKey))
       .map((item) => ({
         id: item.propertyKey,
@@ -145,16 +174,16 @@ const LegendOptions = () => {
       }));
 
     setLegendOptions(newLegendOptions);
-  }, [activeWorkspaces]);
+  }, [activeWorkspaces, colorway]);
 
-  useEffect(() => {
-    if (empty(legend?.list) && !empty(legendOptions)) {
-      setLegend({
-        label: legendOptions[0]?.label,
-        list: legendOptions[0]?.legends,
-      });
-    }
-  }, [legendOptions]);
+  // useEffect(() => {
+  //   if (empty(legend?.list) && !empty(legendOptions)) {
+  //     setLegend({
+  //       label: legendOptions[0]?.label,
+  //       list: legendOptions[0]?.legends,
+  //     });
+  //   }
+  // }, [legendOptions]);
 
   return (
     <SelectInput
@@ -174,10 +203,153 @@ const LegendOptions = () => {
           list: legend?.list,
         } as any,
       ]}
+      {...restProps}
       // border={"none"}
       // borderRadius={"0"}
       // borderBottom={"1px solid {colors.border.muted}"}
     />
+  );
+};
+const ColorwayOptions = (props: any) => {
+  // Props
+  const { ...restProps } = props;
+
+  // Hooks
+  const { l } = useLang();
+  const { open, onOpen, onClose } = useDisclosure();
+  useBackOnClose(`select-legend-colorway`, open, onOpen, onClose);
+
+  // Contexts
+  const { themeConfig } = useThemeConfig();
+  const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
+  const colorway = useLegend((s) => s.colorway);
+  const setColorway = useLegend((s) => s.setColorway);
+  const legend = useLegend((s) => s.legend);
+  const setLegend = useLegend((s) => s.setLegend);
+
+  // States
+  const [localColorway, setLocalColorway] = useState<any>(colorway);
+
+  return (
+    <>
+      <BButton
+        unclicky
+        variant={"outline"}
+        pl={1}
+        onClick={onOpen}
+        {...restProps}
+      >
+        <HStack
+          w={"full"}
+          borderRadius={4}
+          overflow={"clip"}
+          gap={0}
+          h={"30px"}
+          mr={2}
+        >
+          {colorway?.colors?.map((color: string) => {
+            return (
+              <Box
+                key={color}
+                bg={color}
+                flex={"1 1 20px"}
+                h={"full"}
+                opacity={0.8}
+              />
+            );
+          })}
+        </HStack>
+
+        <Icon boxSize={"14px"} color={"fg.subtle"} ml={"auto"}>
+          <IconCaretDownFilled />
+        </Icon>
+      </BButton>
+
+      <DisclosureRoot open={open} lazyLoad size={"xs"}>
+        <DisclosureContent>
+          <DisclosureHeader>
+            <DisclosureHeaderContent title={`Colorway`} />
+          </DisclosureHeader>
+
+          <DisclosureBody>
+            <CContainer gap={4}>
+              {LEGEND_COLOR_OPTIONS?.map((item) => {
+                const active = item?.label === localColorway?.label;
+
+                return (
+                  <HStack
+                    key={item?.label}
+                    w={"full"}
+                    h={"40px"}
+                    borderRadius={5}
+                    overflow={"clip"}
+                    gap={0}
+                    _hover={{ bg: "bg,subtle" }}
+                    cursor={"pointer"}
+                    border={active ? "1px solid" : ""}
+                    borderColor={themeConfig.primaryColor}
+                    p={active ? 1 : 0}
+                    onClick={() => setLocalColorway(item)}
+                  >
+                    <HStack
+                      h={"full"}
+                      w={"full"}
+                      gap={0}
+                      borderRadius={3}
+                      overflow={"clip"}
+                    >
+                      {item?.colors?.map((color: string) => {
+                        return (
+                          <Box
+                            key={color}
+                            bg={color}
+                            flex={"1 1 20px"}
+                            h={"full"}
+                            opacity={0.8}
+                          />
+                        );
+                      })}
+                    </HStack>
+                  </HStack>
+                );
+              })}
+            </CContainer>
+          </DisclosureBody>
+
+          <DisclosureFooter>
+            <BackButton />
+
+            <BButton
+              colorPalette={themeConfig.colorPalette}
+              onClick={() => {
+                setColorway(localColorway);
+                const newLegendOptions = generateLegendsFromWorkspaces(
+                  activeWorkspaces,
+                  colorway?.colors
+                )
+                  ?.filter((item) => !EXCLUDED_KEYS.includes(item.propertyKey))
+                  .map((item) => ({
+                    id: item.propertyKey,
+                    label: item.propertyKey,
+                    legends: item.legends,
+                  }));
+
+                const legendIndex = newLegendOptions.findIndex(
+                  (item) => item.label === legend?.label
+                );
+                setLegend({
+                  label: newLegendOptions[legendIndex]?.label,
+                  list: newLegendOptions[legendIndex]?.legends,
+                });
+                back();
+              }}
+            >
+              {l.confirm}
+            </BButton>
+          </DisclosureFooter>
+        </DisclosureContent>
+      </DisclosureRoot>
+    </>
   );
 };
 export const LegendContent = (props: any) => {
@@ -221,11 +393,13 @@ export const LegendContent = (props: any) => {
         </HStack>
       </MenuHeaderContainer>
 
-      <CContainer px={3}>
-        <LegendOptions />
-      </CContainer>
+      <CContainer px={3} mb={1} className="scrollY" gap={3}>
+        <CContainer gap={2}>
+          <LegendOptions />
 
-      <CContainer mt={3} px={3} mb={1} className="scrollY">
+          <ColorwayOptions />
+        </CContainer>
+
         {empty(legend.list) && <FeedbackNoData />}
 
         {!empty(legend.list) && (
