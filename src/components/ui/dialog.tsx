@@ -2,7 +2,7 @@ import useBackOnDefaultPage from "@/hooks/useBackOnDefaultPage";
 import useScreen from "@/hooks/useScreen";
 import back from "@/utils/back";
 import { Dialog as ChakraDialog, Portal } from "@chakra-ui/react";
-import { forwardRef, useState } from "react";
+import { forwardRef, useRef, useState } from "react";
 import { CloseButton } from "./close-button";
 
 interface DialogContentProps extends ChakraDialog.ContentProps {
@@ -21,9 +21,11 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
       ...rest
     } = props;
 
-    const [mouseDownTarget, setMouseDownTarget] = useState<EventTarget | null>(
-      null
-    );
+    const [isMouseDownInsideContent, setIsMouseDownInsideContent] =
+      useState(false);
+
+    // Refs
+    const contentRef = useRef<HTMLDivElement>(null);
 
     // Utils
     const handleBackOnDefaultPage = useBackOnDefaultPage();
@@ -31,27 +33,32 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
 
     return (
       <Portal disabled={!portalled} container={portalRef}>
-        {backdrop && (
-          <ChakraDialog.Backdrop
-          // bg={"d1"}
-          // backdropFilter={"blur(5px)"}
-          />
-        )}
+        {backdrop && <ChakraDialog.Backdrop />}
         <ChakraDialog.Positioner
           pointerEvents="auto"
           py={4}
-          onMouseDown={(e) => setMouseDownTarget(e.target)}
+          onMouseDown={(e) => {
+            if (contentRef.current?.contains(e.target as Node)) {
+              setIsMouseDownInsideContent(true);
+            } else {
+              setIsMouseDownInsideContent(false);
+            }
+          }}
           onMouseUp={(e) => {
-            if (mouseDownTarget === e.target) {
-              // klik mulai dan selesai di posisi yang sama
+            if (!isMouseDownInsideContent && e.currentTarget === e.target) {
+              // Click langsung di area kosong Positioner
               back();
               handleBackOnDefaultPage();
             }
-            setMouseDownTarget(null);
+            setIsMouseDownInsideContent(false);
           }}
         >
           <ChakraDialog.Content
-            ref={ref}
+            ref={(node) => {
+              contentRef.current = node;
+              if (typeof ref === "function") ref(node);
+              else if (ref) ref.current = node;
+            }}
             minH={sh < 500 ? "90dvh" : ""}
             bg="body"
             shadow="none"
