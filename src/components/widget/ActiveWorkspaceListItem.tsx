@@ -199,7 +199,7 @@ const ActiveWorkspaceListItem = (props: Props) => {
 
   return (
     <AccordionItem value={`${activeWorkspace.id}`} py={2}>
-      <AccordionItemTrigger indicatorPlacement="start" py={0}>
+      <AccordionItemTrigger asChild indicatorPlacement="start" py={0}>
         <HStack pl={1} w={"full"} gap={4}>
           <HStack w={"full"} truncate align={"start"}>
             <CContainer>
