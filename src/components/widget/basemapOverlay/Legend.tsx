@@ -232,7 +232,7 @@ export const LegendContent = (props: any) => {
           <>
             {/* <Checkbox mb={3}>1 Line</Checkbox> */}
 
-            <SimpleGrid gapX={4} gapY={1} px={"2px"} columns={[1, null, null]}>
+            <SimpleGrid gapX={4} gapY={1} px={"2px"} columns={[1, null, 2]}>
               {legend.list.map((item) => {
                 return (
                   <SimplePopover key={item?.label} content={item?.label}>
