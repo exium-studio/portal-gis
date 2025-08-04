@@ -206,7 +206,7 @@ export const LegendContent = (props: any) => {
       }}
       animationEntrance="left"
     >
-      <MenuHeaderContainer>
+      <MenuHeaderContainer borderless>
         <HStack h={"20px"}>
           <IconFlag stroke={1.5} size={20} />
           <P fontWeight={"bold"}>{l.legend}</P>
@@ -215,7 +215,7 @@ export const LegendContent = (props: any) => {
         </HStack>
       </MenuHeaderContainer>
 
-      <CContainer px={3} mt={"14px"}>
+      <CContainer px={3}>
         <LegendOptions />
       </CContainer>
 
