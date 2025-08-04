@@ -19,7 +19,6 @@ import TableComponent from "@/components/ui-custom/TableComponent";
 import { Field } from "@/components/ui/field";
 import { MenuItem } from "@/components/ui/menu";
 import DeleteStatus from "@/components/widget/DeleteStatus";
-import PageContainer from "@/components/widget/PageContainer";
 import useLang from "@/context/useLang";
 import useRenderTrigger from "@/context/useRenderTrigger";
 import { useThemeConfig } from "@/context/useThemeConfig";
@@ -415,38 +414,36 @@ const MasterDataWorkspaceCategoriesPage = () => {
   };
 
   return (
-    <PageContainer flex={1}>
-      <CContainer flex={1} gap={4}>
-        <ItemHeaderContainer borderless p={0}>
-          <HStack justify={"space-between"} w={"full"}>
-            <SearchInput
-              onChangeSetter={(input) => {
-                setFilterConfig({
-                  ...filterConfig,
-                  search: input,
-                });
-              }}
-              inputValue={filterConfig.search}
-            />
+    <CContainer flex={1} gap={4}>
+      <ItemHeaderContainer borderless p={0}>
+        <HStack justify={"space-between"} w={"full"}>
+          <SearchInput
+            onChangeSetter={(input) => {
+              setFilterConfig({
+                ...filterConfig,
+                search: input,
+              });
+            }}
+            inputValue={filterConfig.search}
+          />
 
-            <Create />
-          </HStack>
-        </ItemHeaderContainer>
+          <Create />
+        </HStack>
+      </ItemHeaderContainer>
 
-        {initialLoading && render.loading}
-        {!initialLoading && (
-          <>
-            {error && render.error}
-            {!error && (
-              <>
-                {data && render.loaded}
-                {(!data || empty(data)) && render.empty}
-              </>
-            )}
-          </>
-        )}
-      </CContainer>
-    </PageContainer>
+      {initialLoading && render.loading}
+      {!initialLoading && (
+        <>
+          {error && render.error}
+          {!error && (
+            <>
+              {data && render.loaded}
+              {(!data || empty(data)) && render.empty}
+            </>
+          )}
+        </>
+      )}
+    </CContainer>
   );
 };
 

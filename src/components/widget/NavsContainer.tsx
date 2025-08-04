@@ -40,6 +40,7 @@ import BaseMap from "./admin/Basemap";
 import BasemapMapOverlay from "./admin/BasemapMapOverlay";
 import CurrentUserTimeZone from "./CurrentUserTimeZone";
 import Trivia from "./Trivia";
+import SimplePopover from "./SimplePopover";
 
 interface Interface__NavItemContainer extends StackProps {
   active?: boolean;
@@ -410,9 +411,15 @@ const NavContainer = ({
                     />
                   )}
 
-                  <Heading6 fontWeight={"bold"} truncate>
-                    {title}
-                  </Heading6>
+                  <SimplePopover content={title}>
+                    <Heading6
+                      fontWeight={"bold"}
+                      lineClamp={1}
+                      cursor={"pointer"}
+                    >
+                      {title}
+                    </Heading6>
+                  </SimplePopover>
                 </HStack>
 
                 <MainPanelUtils />

@@ -42,7 +42,17 @@ export const PRIVATE_ROUTES: Interface__PrivateRoute[] = [
     element: <DashboardPage />,
   },
 
-  // Master Settings
+  // Profile
+  {
+    path: "/profile",
+    activePath: "/profile",
+    titleKey: "navs.profile",
+    element: <ProfilePage />,
+  },
+];
+
+// Master Settings
+export const PRIVATE_ROUTES_MASTER_DATA: Interface__PrivateRoute[] = [
   {
     path: "/master-data",
     activePath: "/master-data",
@@ -56,16 +66,10 @@ export const PRIVATE_ROUTES: Interface__PrivateRoute[] = [
     titleKey: "master_data_navs.workspace_categories",
     element: <MasterDataWorkspaceCategoriesPage />,
   },
+];
 
-  // Profile
-  {
-    path: "/profile",
-    activePath: "/profile",
-    titleKey: "navs.profile",
-    element: <ProfilePage />,
-  },
-
-  // Settings
+// Settings
+export const PRIVATE_ROUTES_SETTINGS: Interface__PrivateRoute[] = [
   {
     path: "/settings",
     activePath: "/settings",

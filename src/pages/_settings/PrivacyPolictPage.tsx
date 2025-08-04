@@ -1,9 +1,7 @@
-import SettingsNavsContainer from "@/components/widget/SettingsNavsContainer";
+import CContainer from "@/components/ui-custom/CContainer";
 
 const PrivacyPolictPage = () => {
-  return (
-    <SettingsNavsContainer activePath="/settings/privacy-policy"></SettingsNavsContainer>
-  );
+  return <CContainer></CContainer>;
 };
 
 export default PrivacyPolictPage;

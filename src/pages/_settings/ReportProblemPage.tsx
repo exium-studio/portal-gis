@@ -1,9 +1,7 @@
-import SettingsNavsContainer from "@/components/widget/SettingsNavsContainer";
+import CContainer from "@/components/ui-custom/CContainer";
 
 const ReportProblemPage = () => {
-  return (
-    <SettingsNavsContainer activePath="/settings/report-problem"></SettingsNavsContainer>
-  );
+  return <CContainer></CContainer>;
 };
 
 export default ReportProblemPage;

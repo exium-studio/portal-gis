@@ -15,7 +15,6 @@ import { Switch } from "@/components/ui/switch";
 import { toaster } from "@/components/ui/toaster";
 import MicVolumeBar from "@/components/widget/MicVolumeBar";
 import SettingsItemContainer from "@/components/widget/SettingsItemContainer";
-import SettingsNavsContainer from "@/components/widget/SettingsNavsContainer";
 import useCameraPermission from "@/context/useCameraPermissions";
 import useLang from "@/context/useLang";
 import useLocationPermissions from "@/context/useLocationPermissions";
@@ -621,7 +620,7 @@ const PermissionsSettingsPage = () => {
   const { l } = useLang();
 
   return (
-    <SettingsNavsContainer align={"stretch"} activePath="/settings/permissions">
+    <CContainer>
       <CContainer gap={4}>
         <Camera />
 
@@ -633,7 +632,7 @@ const PermissionsSettingsPage = () => {
       <HelperText px={2} mt={4}>
         {l.permissions_settings_helper_text}
       </HelperText>
-    </SettingsNavsContainer>
+    </CContainer>
   );
 };
 

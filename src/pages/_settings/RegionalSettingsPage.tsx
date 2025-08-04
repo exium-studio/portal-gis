@@ -7,7 +7,6 @@ import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import ItemHeaderTitle from "@/components/ui-custom/ItemHeaderTitle";
 import SearchInput from "@/components/ui-custom/SearchInput";
-import SettingsNavsContainer from "@/components/widget/SettingsNavsContainer";
 import { DATE_FORMATS } from "@/constants/dateFormats";
 import { LANGUAGES } from "@/constants/languages";
 import { TIME_FORMATS } from "@/constants/timeFormats";
@@ -433,7 +432,7 @@ const RegionalSettingsPage = () => {
   const { l } = useLang();
 
   return (
-    <SettingsNavsContainer align={"stretch"} activePath="/settings/regional">
+    <CContainer>
       <CContainer gap={4}>
         {/* Language */}
         <Language />
@@ -454,7 +453,7 @@ const RegionalSettingsPage = () => {
       <HelperText px={2} mt={4}>
         {l.regional_settings_helper_text}
       </HelperText>
-    </SettingsNavsContainer>
+    </CContainer>
   );
 };
 

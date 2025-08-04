@@ -1,9 +1,7 @@
-import SettingsNavsContainer from "@/components/widget/SettingsNavsContainer";
+import CContainer from "@/components/ui-custom/CContainer";
 
 const TermsOfServicePage = () => {
-  return (
-    <SettingsNavsContainer activePath="/settings/terms-of-service"></SettingsNavsContainer>
-  );
+  return <CContainer></CContainer>;
 };
 
 export default TermsOfServicePage;

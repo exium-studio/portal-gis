@@ -9,7 +9,6 @@ import StringInput from "@/components/ui-custom/StringInput";
 import { useColorMode } from "@/components/ui/color-mode";
 import { Switch } from "@/components/ui/switch";
 import SettingsItemContainer from "@/components/widget/SettingsItemContainer";
-import SettingsNavsContainer from "@/components/widget/SettingsNavsContainer";
 import useADM from "@/context/useADM";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
@@ -287,7 +286,7 @@ const DisplaySettingsPage = () => {
   const { l } = useLang();
 
   return (
-    <SettingsNavsContainer align={"stretch"} activePath="/settings/display">
+    <CContainer>
       <CContainer gap={4}>
         <DarkMode />
 
@@ -297,7 +296,7 @@ const DisplaySettingsPage = () => {
       <HelperText px={2} mt={4}>
         {l.display_settings_helper_text}
       </HelperText>
-    </SettingsNavsContainer>
+    </CContainer>
   );
 };
 
