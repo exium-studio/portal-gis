@@ -168,6 +168,9 @@ const LegendOptions = () => {
         });
       }}
       inputValue={[legend as any]}
+      // border={"none"}
+      // borderRadius={"0"}
+      // borderBottom={"1px solid {colors.border.muted}"}
     />
   );
 };
@@ -212,7 +215,7 @@ export const LegendContent = (props: any) => {
         </HStack>
       </MenuHeaderContainer>
 
-      <CContainer px={3} mt={3}>
+      <CContainer px={3} mt={"14px"}>
         <LegendOptions />
       </CContainer>
 
