@@ -142,7 +142,7 @@ const HGUArea = (props: any) => {
   }, [data, percentageView]);
 
   return (
-    <ItemContainer pb={6} {...restProps}>
+    <ItemContainer pb={4} {...restProps}>
       <ItemHeaderContainer>
         <HStack w={"full"} justify={"space-between"}>
           <P fontWeight={"semibold"}>{l.hgu_area}</P>
@@ -334,7 +334,7 @@ const HGUAreaByKabupaten = (props: any) => {
   }, [data, percentageView]);
 
   return (
-    <ItemContainer pb={6} {...restProps}>
+    <ItemContainer pb={4} {...restProps}>
       <ItemHeaderContainer>
         <HStack w={"full"} justify={"space-between"}>
           <P fontWeight={"semibold"}>{l.hgu_area_by_kabupaten}</P>
