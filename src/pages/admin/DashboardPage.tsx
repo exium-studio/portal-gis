@@ -191,7 +191,7 @@ const HGUArea = (props: any) => {
         </Chart.Root>
       </CContainer>
 
-      <CContainer>
+      <CContainer mt={4}>
         <CContainer maxH={"150px"} className="scrollY" px={8} gap={2}>
           {chart.data.map((item: any) => {
             return (
@@ -208,7 +208,7 @@ const HGUArea = (props: any) => {
         </CContainer>
       </CContainer>
 
-      <CContainer px={4} align={"center"} mt={4}>
+      <CContainer px={4} align={"center"} mt={"auto"} pt={4}>
         <HelperText textAlign={"center"}>{l.data_unit_ha}</HelperText>
       </CContainer>
     </ItemContainer>
@@ -284,7 +284,7 @@ const HGUCount = (props: any) => {
         </Chart.Root>
       </CContainer>
 
-      <CContainer>
+      <CContainer mt={4}>
         <CContainer maxH={"150px"} className="scrollY" px={8} gap={2}>
           {chart.data.map((item: any) => {
             return (
@@ -383,7 +383,7 @@ const HGUAreaByKabupaten = (props: any) => {
         </Chart.Root>
       </CContainer>
 
-      <CContainer>
+      <CContainer mt={4}>
         <CContainer maxH={"150px"} className="scrollY" px={8} gap={2}>
           {chart.data.map((item: any) => {
             return (
@@ -400,7 +400,7 @@ const HGUAreaByKabupaten = (props: any) => {
         </CContainer>
       </CContainer>
 
-      <CContainer px={4} align={"center"} mt={4}>
+      <CContainer px={4} align={"center"} mt={"auto"} pt={4}>
         <HelperText textAlign={"center"}>{l.data_unit_ha}</HelperText>
       </CContainer>
     </ItemContainer>
