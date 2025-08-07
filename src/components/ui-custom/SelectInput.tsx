@@ -181,7 +181,7 @@ const SelectInput = ({
     <>
       <Tooltip
         content={
-          inputValue && inputValue.length > 0
+          inputValue && inputValue.length > 0 && inputValue?.[0]?.id
             ? `${inputValue && inputValue?.map((item) => ` ${item.label}`)}`
             : finalPlaceholder
         }
