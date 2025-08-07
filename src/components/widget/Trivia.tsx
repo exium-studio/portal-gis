@@ -1,6 +1,5 @@
 import useMapStyle from "@/context/useMapStyle";
 import useMapViewState from "@/context/useMapViewState";
-import autoTimeZone from "@/utils/autoTimeZone";
 import { HStack } from "@chakra-ui/react";
 import P from "../ui-custom/P";
 import { useColorMode } from "../ui/color-mode";
@@ -65,12 +64,12 @@ const Trivia = () => {
         <Clock fontSize={"xs"} />
       </HStack>
 
-      <HStack>
+      {/* <HStack>
         <P fontSize={"10px"} opacity={0.5}>
           Local Time :
         </P>
         <Clock fontSize={"xs"} timeZoneKey={autoTimeZone().key} />
-      </HStack>
+      </HStack> */}
     </HStack>
   );
 };
