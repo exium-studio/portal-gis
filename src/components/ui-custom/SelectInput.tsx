@@ -175,8 +175,6 @@ const SelectInput = ({
     }
   };
 
-  console.log(inputValue);
-
   return (
     <>
       <Tooltip
