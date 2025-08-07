@@ -3,7 +3,7 @@ import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useLang from "@/context/useLang";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import capsFirstLetter from "@/utils/capsFirstLetter";
-import { HStack, Icon } from "@chakra-ui/react";
+import { HStack, Icon, StackProps } from "@chakra-ui/react";
 import {
   IconEye,
   IconEyeOff,
@@ -16,7 +16,7 @@ import P from "../ui-custom/P";
 import { Tooltip } from "../ui/tooltip";
 import SimplePopover from "./SimplePopover";
 
-interface Props {
+interface Props extends StackProps {
   activeLayer: Interface__ActiveLayer;
 }
 
@@ -127,48 +127,19 @@ const ToggleVisibility = (props: any) => {
 
 const ActiveLayerListItem = (props: Props) => {
   // Props
-  const { activeLayer } = props;
-
-  // Hooks
-  // const iss = useIsSmScreenWidth();
+  const { activeLayer, ...restProps } = props;
 
   // Contexts
   const { themeConfig } = useThemeConfig();
 
-  // States
-  // const [hover, setHover] = useState<boolean>(false);
-
   return (
     <HStack
       borderRadius={themeConfig.radii.container}
-      // onMouseEnter={() => setHover(true)}
-      // onMouseLeave={() => setHover(false)}
       transition={"200ms"}
       gap={0}
+      {...restProps}
     >
-      {/* Dnd button */}
-      {/* {!iss && (
-        <BButton
-          iconButton
-          unclicky
-          variant={"ghost"}
-          size={"xs"}
-          minW={"28px"}
-          opacity={hover ? 1 : 0}
-          pointerEvents={hover ? "auto" : "none"}
-        >
-          <Icon boxSize={"18px"}>
-            <IconGripVertical />
-          </Icon>
-        </BButton>
-      )} */}
-
-      <HStack
-        // bg={hover ? "d1" : ""}
-        // p={1}
-        borderRadius={themeConfig.radii.component}
-        w={"full"}
-      >
+      <HStack borderRadius={themeConfig.radii.component} w={"full"}>
         <SimplePopover
           content={
             <CContainer gap={1}>
