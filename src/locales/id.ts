@@ -91,6 +91,7 @@ const translations = {
     "label": "UI mode gelap",
     "description": "Mode gelap untuk UI, default mengikuti system"
   },
+  "data_unit_ha": "Data ditampilkan dalam satuan ha",
   "date_format_settings_title": "Format Tanggal",
   "date_picker_default_placeholder": "Pilih tanggal...",
   "date_picker_default_title": "Pilih Tanggal",

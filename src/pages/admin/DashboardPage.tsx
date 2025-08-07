@@ -5,6 +5,7 @@
 
 import CContainer from "@/components/ui-custom/CContainer";
 import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
+import HelperText from "@/components/ui-custom/HelperText";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import P from "@/components/ui-custom/P";
@@ -161,7 +162,7 @@ const HGUArea = (props: any) => {
               content={<Chart.Tooltip hideLabel />}
             />
             <Pie
-              innerRadius={80}
+              innerRadius={70}
               outerRadius={100}
               isAnimationActive={false}
               data={chart.data}
@@ -205,6 +206,10 @@ const HGUArea = (props: any) => {
             );
           })}
         </CContainer>
+      </CContainer>
+
+      <CContainer px={4} align={"center"} mt={4}>
+        <HelperText textAlign={"center"}>{l.data_unit_ha}</HelperText>
       </CContainer>
     </ItemContainer>
   );
@@ -260,7 +265,7 @@ const HGUCount = (props: any) => {
               content={<Chart.Tooltip hideLabel />}
             />
             <Pie
-              innerRadius={80}
+              innerRadius={70}
               outerRadius={100}
               isAnimationActive={false}
               data={chart.data}
@@ -349,7 +354,7 @@ const HGUAreaByKabupaten = (props: any) => {
               content={<Chart.Tooltip hideLabel />}
             />
             <Pie
-              innerRadius={80}
+              innerRadius={70}
               outerRadius={100}
               isAnimationActive={false}
               data={chart.data}
@@ -393,6 +398,10 @@ const HGUAreaByKabupaten = (props: any) => {
             );
           })}
         </CContainer>
+      </CContainer>
+
+      <CContainer px={4} align={"center"} mt={4}>
+        <HelperText textAlign={"center"}>{l.data_unit_ha}</HelperText>
       </CContainer>
     </ItemContainer>
   );

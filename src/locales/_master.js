@@ -361,6 +361,10 @@ export const deleted_file = {
 };
 
 // UI
+export const data_unit_ha = {
+  id: "Data ditampilkan dalam satuan ha",
+  en: "Data displayed in ha units",
+};
 export const hgu_area_by_kabupaten = {
   id: "Luas HGU berdasarkan kabupaten",
   en: "HGU Area by kabupaten",

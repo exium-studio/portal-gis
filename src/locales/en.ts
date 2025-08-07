@@ -91,6 +91,7 @@ const translations = {
     "label": "Dark mode UI",
     "description": "Dark mode for UI, defaults to system settings"
   },
+  "data_unit_ha": "Data displayed in ha units",
   "date_format_settings_title": "Date Format",
   "date_picker_default_placeholder": "Select date...",
   "date_picker_default_title": "Select Date",
