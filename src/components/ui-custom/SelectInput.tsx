@@ -175,6 +175,8 @@ const SelectInput = ({
     }
   };
 
+  console.log(inputValue);
+
   return (
     <>
       <Tooltip
@@ -201,7 +203,7 @@ const SelectInput = ({
           {...props}
         >
           <HStack w={"full"} justify={"space-between"}>
-            {!empty(inputValue) && inputValue?.[0]?.id !== undefined ? (
+            {!empty(inputValue) && inputValue?.[0]?.id ? (
               <Text fontWeight={"normal"} lineClamp={1} textAlign={"left"}>
                 {inputValue?.map((item) => item.label).join(", ")}
               </Text>
