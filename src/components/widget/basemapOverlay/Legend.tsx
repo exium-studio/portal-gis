@@ -236,6 +236,7 @@ const ColorwayOptions = (props: any) => {
         unclicky
         variant={"outline"}
         pl={1}
+        size={"md"}
         onClick={onOpen}
         {...restProps}
       >

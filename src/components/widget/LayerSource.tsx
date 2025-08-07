@@ -200,8 +200,6 @@ const LayerSource = (props: LayerSourceProps) => {
       map.on("click", fillLayerId, handleOnClickPolygon);
     }
 
-    map.moveLayer(lineLayerId, fillLayerId);
-
     return () => {
       map.off("click", fillLayerId, handleOnClickPolygon);
     };
@@ -219,20 +217,6 @@ const LayerSource = (props: LayerSourceProps) => {
     colorway,
   ]);
 
-  useEffect(() => {
-    const map = mapRef.current?.getMap();
-    if (!map || !geojson) return;
-
-    map.moveLayer(lineLayerId, fillLayerId);
-  }, [activeWorkspaces]);
-
-  useEffect(() => {
-    const map = mapRef.current?.getMap();
-    if (!map || !geojson) return;
-
-    map.triggerRepaint();
-  }, [colorway]);
-
   // Cleanup on layer unmount
   useEffect(() => {
     return () => {
@@ -246,4 +230,5 @@ const LayerSource = (props: LayerSourceProps) => {
 
   return null;
 };
+
 export default LayerSource;

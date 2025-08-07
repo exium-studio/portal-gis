@@ -48,6 +48,9 @@ export const FieldInfo = () => {
     (key) => data && Object.keys(data).includes(key)
   ).length;
 
+  // console.log(selectedPolygon?.polygon?.geometry?.coordinates?.length);
+  // console.log(selectedPolygon?.polygon?.geometry?.coordinates?.length);
+
   // Handle open
   useEffect(() => {
     if (selectedPolygon) {

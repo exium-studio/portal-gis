@@ -225,7 +225,7 @@ const ActiveWorkspaceListItem = (props: Props) => {
       </AccordionItemTrigger>
 
       <AccordionItemContent py={0} pt={1} pl={7}>
-        <CContainer gap={1}>
+        <CContainer gap={2}>
           {activeWorkspace?.layers &&
             [...activeWorkspace?.layers]?.reverse()?.map((activeLayer) => {
               return (
