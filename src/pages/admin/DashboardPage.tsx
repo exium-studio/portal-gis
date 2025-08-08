@@ -15,6 +15,7 @@ import SimplePopover from "@/components/widget/SimplePopover";
 import { Interface__ActiveWorkspace } from "@/constants/interfaces";
 import { R_GAP } from "@/constants/sizes";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
+import { useFilterGeoJSON } from "@/context/useFilterGeoJSON";
 import useLang from "@/context/useLang";
 import { addOpacityToHex } from "@/utils/addOpacityToHex";
 import empty from "@/utils/empty";
@@ -36,8 +37,12 @@ type DashboardSummary = {
   areaByKabupaten: DashboardStat[];
 };
 
+const FILTER_KEYS = ["KABUPATEN", "TIPEHAK", "GUNATANAHK"] as const;
+type FilterKey = (typeof FILTER_KEYS)[number];
+
 function summarizeDashboard(
-  workspaces: Interface__ActiveWorkspace[]
+  workspaces: Interface__ActiveWorkspace[],
+  filter: { [K in FilterKey]: string[] } // pakai FilterGeoJSON juga boleh
 ): DashboardSummary {
   const areaRaw: Record<string, number> = {};
   const countRaw: Record<string, number> = {};
@@ -46,17 +51,44 @@ function summarizeDashboard(
   let totalArea = 0;
   let totalCount = 0;
 
-  for (const ws of workspaces) {
-    for (const layer of ws.layers || []) {
-      const features = layer.data?.geojson.features || [];
+  const norm = (s: unknown) => (typeof s === "string" ? s.trim() : "");
+  const parseNum = (n: unknown) => {
+    const x = Number(n);
+    return Number.isFinite(x) ? x : NaN;
+  };
 
+  // Buat lookup Set untuk tiap property (cepat)
+  const lookup: Record<FilterKey, Set<string>> = {
+    KABUPATEN: new Set(filter?.KABUPATEN ?? []),
+    TIPEHAK: new Set(filter?.TIPEHAK ?? []),
+    GUNATANAHK: new Set(filter?.GUNATANAHK ?? []),
+  };
+
+  // Helper: cek apakah feature lolos filter
+  const passFilter = (props: Record<string, unknown>) => {
+    for (const key of FILTER_KEYS) {
+      const activeSet = lookup[key];
+      // empty array = semua lolos di property itu
+      if (activeSet.size === 0) continue;
+
+      const val = norm(props[key]);
+      if (!val || !activeSet.has(val)) return false;
+    }
+    return true;
+  };
+
+  for (const ws of workspaces ?? []) {
+    for (const layer of ws.layers ?? []) {
+      const features = layer.data?.geojson?.features ?? [];
       for (const feature of features) {
-        const props = feature.properties as Record<string, any>;
-        const tipeHak = props.TIPEHAK;
-        const luas = Number(props.LUASPETA);
-        const kabupaten = props.KABUPATEN;
+        const props = (feature?.properties ?? {}) as Record<string, unknown>;
+        if (!passFilter(props)) continue;
 
-        if (!tipeHak || isNaN(luas)) continue;
+        const tipeHak = norm(props.TIPEHAK);
+        const kabupaten = norm(props.KABUPATEN);
+        const luas = parseNum(props.LUASPETA);
+
+        if (!tipeHak || !Number.isFinite(luas)) continue;
 
         // Sum area
         areaRaw[tipeHak] = (areaRaw[tipeHak] || 0) + luas;
@@ -67,48 +99,51 @@ function summarizeDashboard(
         totalCount++;
 
         // Area by Kabupaten
-        if (!areaByKabupatenRaw[kabupaten]) areaByKabupatenRaw[kabupaten] = {};
-        areaByKabupatenRaw[kabupaten][tipeHak] =
-          (areaByKabupatenRaw[kabupaten][tipeHak] || 0) + luas;
+        if (kabupaten) {
+          areaByKabupatenRaw[kabupaten] ||= {};
+          areaByKabupatenRaw[kabupaten][tipeHak] =
+            (areaByKabupatenRaw[kabupaten][tipeHak] || 0) + luas;
+        }
       }
     }
   }
 
-  const areaByTipeHak: DashboardStat[] = Object.entries(areaRaw).map(
-    ([name, value]) => ({
+  const byNameAsc = <T extends { name: string }>(a: T, b: T) =>
+    a.name.localeCompare(b.name, "id", { sensitivity: "base" });
+  const toFixedNum = (v: number, d: number) =>
+    Number.isFinite(v) ? parseFloat(v.toFixed(d)) : 0;
+
+  const areaByTipeHak: DashboardStat[] = Object.entries(areaRaw)
+    .map(([name, value]) => ({
       name,
-      value: parseFloat(value.toFixed(2)),
-      percentage: parseFloat(((value / totalArea) * 100).toFixed(2)),
-    })
-  );
+      value: toFixedNum(value, 2),
+      percentage: toFixedNum((value / (totalArea || 1)) * 100, 2),
+    }))
+    .sort(byNameAsc);
 
-  const countByTipeHak: DashboardStat[] = Object.entries(countRaw).map(
-    ([name, value]) => ({
+  const countByTipeHak: DashboardStat[] = Object.entries(countRaw)
+    .map(([name, value]) => ({
       name,
-      value: parseFloat(value.toFixed(2)),
-      percentage: parseFloat(((value / totalCount) * 100).toFixed(2)),
+      value: toFixedNum(value, 2),
+      percentage: toFixedNum((value / (totalCount || 1)) * 100, 2),
+    }))
+    .sort(byNameAsc);
+
+  const areaByKabupaten: DashboardStat[] = Object.entries(areaByKabupatenRaw)
+    .map(([kabupaten, tipeData]) => {
+      const totalKabupaten = Object.values(tipeData).reduce(
+        (sum, v) => sum + v,
+        0
+      );
+      return {
+        name: kabupaten,
+        value: toFixedNum(totalKabupaten, 1),
+        percentage: toFixedNum((totalKabupaten / (totalArea || 1)) * 100, 1),
+      };
     })
-  );
+    .sort(byNameAsc);
 
-  const areaByKabupaten: DashboardStat[] = Object.entries(
-    areaByKabupatenRaw
-  ).map(([kabupaten, tipeData]) => {
-    const totalKabupaten = Object.values(tipeData).reduce(
-      (sum, v) => sum + v,
-      0
-    );
-    return {
-      name: kabupaten,
-      value: parseFloat(totalKabupaten.toFixed(1)),
-      percentage: parseFloat(((totalKabupaten / totalArea) * 100).toFixed(1)),
-    };
-  });
-
-  return {
-    areaByTipeHak,
-    countByTipeHak,
-    areaByKabupaten,
-  };
+  return { areaByTipeHak, countByTipeHak, areaByKabupaten };
 }
 
 const HGUArea = (props: any) => {
@@ -128,7 +163,7 @@ const HGUArea = (props: any) => {
   useEffect(() => {
     const newChartData = data?.map((item: any, i: number) => {
       const colors = chroma
-        .scale(["#d73027", "#fee08b", "#1a9850", "#4575b4", "#542788"])
+        .scale("Set2")
         .mode("lab")
         .colors(data?.length || 0);
 
@@ -231,7 +266,7 @@ const HGUCount = (props: any) => {
   useEffect(() => {
     const newChartData = data?.map((item: any, i: number) => {
       const colors = chroma
-        .scale(["#d73027", "#fee08b", "#1a9850", "#4575b4", "#542788"])
+        .scale("Set2")
         .mode("lab")
         .colors(data?.length || 0);
 
@@ -320,7 +355,7 @@ const HGUAreaByKabupaten = (props: any) => {
   useEffect(() => {
     const newChartData = data?.map((item: any, i: number) => {
       const colors = chroma
-        .scale(["#d73027", "#fee08b", "#1a9850", "#4575b4", "#542788"])
+        .scale("Set2")
         .mode("lab")
         .colors(data?.length || 0);
 
@@ -408,20 +443,20 @@ const HGUAreaByKabupaten = (props: any) => {
 };
 
 const DashboardPage = () => {
-  // Hooks
   const { l } = useLang();
 
   // Contexts
   const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
+  const filterGeoJSON = useFilterGeoJSON((s) => s.filterGeoJSON);
 
   // States
   const [dashboardData, setDashboardData] = useState<DashboardSummary>(
-    summarizeDashboard(activeWorkspaces)
+    summarizeDashboard(activeWorkspaces, filterGeoJSON)
   );
 
   useEffect(() => {
-    setDashboardData(summarizeDashboard(activeWorkspaces));
-  }, [activeWorkspaces]);
+    setDashboardData(summarizeDashboard(activeWorkspaces, filterGeoJSON));
+  }, [activeWorkspaces, filterGeoJSON]);
 
   return (
     <PageContainer gap={R_GAP} pb={4} flex={1}>

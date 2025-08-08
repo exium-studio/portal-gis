@@ -15,6 +15,17 @@ import {
   Type__TableOptions,
   Type__TimeRange,
 } from "./types";
+import { FilterGeoJSON } from "@/context/useFilterGeoJSON";
+
+export interface Interface__FilterOptionValue {
+  value: string;
+  active: boolean;
+}
+
+export interface Interface__FilterOptionGroup {
+  property: keyof FilterGeoJSON; // "KABUPATEN" | "TIPEHAK" | "GUNATANAHK"
+  values: Interface__FilterOptionValue[]; // unik, urut A–Z
+}
 
 // CUD
 export interface Interface__CUD {

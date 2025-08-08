@@ -240,7 +240,7 @@ const DisclosureCloseTrigger = ({
 
   return iss ? (
     <DrawerCloseTrigger
-      mt={"2px"}
+      mt={"1px"}
       onClick={back}
       {...(props as DrawerCloseTriggerProps)}
     >

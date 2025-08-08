@@ -47,7 +47,7 @@ const Trivia = () => {
       zIndex={2}
       top={"50%"}
       transform={"translateY(-50%)"}
-      right={"-215px"}
+      right={"-212px"}
       rotate={"90deg"}
       justify={"center"}
       flexShrink={0}

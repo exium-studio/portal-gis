@@ -15,7 +15,6 @@ import P from "@/components/ui-custom/P";
 import SelectInput from "@/components/ui-custom/SelectInput";
 import { Tooltip } from "@/components/ui/tooltip";
 import { LEGEND_COLOR_OPTIONS } from "@/constants/colors";
-import { Interface__ActiveWorkspace } from "@/constants/interfaces";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
@@ -23,7 +22,9 @@ import useLegend from "@/context/useLegend";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useBackOnClose from "@/hooks/useBackOnClose";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
+import back from "@/utils/back";
 import empty from "@/utils/empty";
+import { generateLegendsFromWorkspaces } from "@/utils/generateLegendsFromWorkspace";
 import {
   Box,
   Circle,
@@ -34,61 +35,11 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { IconCaretDownFilled, IconFlag } from "@tabler/icons-react";
-import chroma from "chroma-js";
 import { useEffect, useRef, useState } from "react";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import { OverlayItemContainer } from "../OverlayItemContainer";
 import SimplePopover from "../SimplePopover";
 import FloatingContainerCloseButton from "./FloatingContainerCloseButton";
-import back from "@/utils/back";
-
-interface LegendEntry {
-  label: string;
-  color: string;
-}
-interface PropertyLegend {
-  propertyKey: string;
-  legends: LegendEntry[];
-}
-
-function generateLegendsFromWorkspaces(
-  workspaces: Interface__ActiveWorkspace[],
-  colorway?: string[]
-): PropertyLegend[] {
-  const valueMap: Record<string, Set<string>> = {};
-
-  for (const ws of workspaces) {
-    for (const layer of ws.layers || []) {
-      const features = layer.data?.geojson.features || [];
-
-      for (const feature of features) {
-        const props = feature.properties || {};
-
-        for (const key in props) {
-          if (!valueMap[key]) valueMap[key] = new Set();
-          const val = props[key];
-          if (val != null && val !== "") valueMap[key].add(String(val));
-        }
-      }
-    }
-  }
-
-  const result: PropertyLegend[] = [];
-
-  for (const key in valueMap) {
-    const labels = Array.from(valueMap[key]);
-    const colors = chroma.scale(colorway).colors(labels.length);
-
-    const legends: LegendEntry[] = labels.map((label, i) => ({
-      label,
-      color: colors[i],
-    }));
-
-    result.push({ propertyKey: key, legends });
-  }
-
-  return result;
-}
 
 const EXCLUDED_KEYS = [
   "id",
@@ -171,19 +122,13 @@ const LegendOptions = (props: any) => {
         id: item.propertyKey,
         label: item.propertyKey,
         legends: item.legends,
-      }));
+      }))
+      .sort((a, b) =>
+        a.label.localeCompare(b.label, "id", { sensitivity: "base" })
+      );
 
     setLegendOptions(newLegendOptions);
   }, [activeWorkspaces, colorway]);
-
-  // useEffect(() => {
-  //   if (empty(legend?.list) && !empty(legendOptions)) {
-  //     setLegend({
-  //       label: legendOptions[0]?.label,
-  //       list: legendOptions[0]?.legends,
-  //     });
-  //   }
-  // }, [legendOptions]);
 
   return (
     <SelectInput

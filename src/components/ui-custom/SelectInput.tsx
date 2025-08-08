@@ -254,8 +254,8 @@ const SelectInput = ({
                       unclicky
                       iconButton
                       variant={"ghost"}
-                      mr={3}
-                      size={"2xs"}
+                      mr={[4, null, 3]}
+                      size={["xs", null, "2xs"]}
                       borderRadius={"full"}
                       position={"absolute"}
                       right={"30px"}

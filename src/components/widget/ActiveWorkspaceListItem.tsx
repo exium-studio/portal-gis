@@ -201,12 +201,12 @@ const ActiveWorkspaceListItem = (props: Props) => {
     <AccordionItem value={`${activeWorkspace.id}`} py={2}>
       <AccordionItemTrigger indicatorPlacement="start" py={0}>
         <HStack pl={1} w={"full"} gap={4}>
-          <CContainer truncate>
+          <CContainer truncate justify={"center"} gap={"5px"}>
             <P fontWeight={"semibold"} lineClamp={1} lineHeight={1}>
               {activeWorkspace.title}
             </P>
 
-            <P color={"fg.subtle"} fontSize={"xs"} lineClamp={1}>
+            <P color={"fg.subtle"} fontSize={"xs"} lineClamp={1} lineHeight={1}>
               {activeWorkspace?.workspace_category?.label}
             </P>
           </CContainer>
@@ -222,7 +222,7 @@ const ActiveWorkspaceListItem = (props: Props) => {
         </HStack>
       </AccordionItemTrigger>
 
-      <AccordionItemContent py={0} pt={1} pl={7}>
+      <AccordionItemContent py={0} pt={"10px"} pl={7}>
         <CContainer gap={2}>
           {activeWorkspace?.layers &&
             [...activeWorkspace?.layers]?.reverse()?.map((activeLayer) => {

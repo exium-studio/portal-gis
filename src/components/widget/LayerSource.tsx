@@ -182,7 +182,7 @@ const LayerSource = (props: LayerSourceProps) => {
           source: sourceId,
           paint: {
             "line-color": defaultLineColor,
-            "line-width": isLineLayer ? 2 : 1,
+            "line-width": 1,
             "line-opacity": activeLayer.visible ? 1 : 0,
           },
         });
