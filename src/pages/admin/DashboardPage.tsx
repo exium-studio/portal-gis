@@ -30,23 +30,37 @@ type DashboardStat = {
   name: string;
   value: number;
   percentage: number;
+  active: boolean; // NEW
 };
 type DashboardSummary = {
   areaByTipeHak: DashboardStat[];
   countByTipeHak: DashboardStat[];
   areaByKabupaten: DashboardStat[];
 };
+type FilterKey = (typeof FILTER_KEYS)[number];
 
 const FILTER_KEYS = ["KABUPATEN", "TIPEHAK", "GUNATANAHK"] as const;
-type FilterKey = (typeof FILTER_KEYS)[number];
+const COLORWAY = [
+  "#66c2a5",
+  "#fc8d62",
+  "#8da0cb",
+  "#e78ac3",
+  "#a6d854",
+  "#ffd92f",
+  "#e5c494",
+  "#b3b3b3",
+].reverse();
 
 function summarizeDashboard(
   workspaces: Interface__ActiveWorkspace[],
-  filter: { [K in FilterKey]: string[] } // pakai FilterGeoJSON juga boleh
+  filter: { [K in FilterKey]: string[] }
 ): DashboardSummary {
   const areaRaw: Record<string, number> = {};
   const countRaw: Record<string, number> = {};
   const areaByKabupatenRaw: Record<string, Record<string, number>> = {};
+
+  const domainTipeHak = new Set<string>();
+  const domainKabupaten = new Set<string>();
 
   let totalArea = 0;
   let totalCount = 0;
@@ -57,20 +71,16 @@ function summarizeDashboard(
     return Number.isFinite(x) ? x : NaN;
   };
 
-  // Buat lookup Set untuk tiap property (cepat)
   const lookup: Record<FilterKey, Set<string>> = {
     KABUPATEN: new Set(filter?.KABUPATEN ?? []),
     TIPEHAK: new Set(filter?.TIPEHAK ?? []),
     GUNATANAHK: new Set(filter?.GUNATANAHK ?? []),
   };
 
-  // Helper: cek apakah feature lolos filter
   const passFilter = (props: Record<string, unknown>) => {
     for (const key of FILTER_KEYS) {
       const activeSet = lookup[key];
-      // empty array = semua lolos di property itu
-      if (activeSet.size === 0) continue;
-
+      if (activeSet.size === 0) continue; // empty = semua lolos utk key tsb
       const val = norm(props[key]);
       if (!val || !activeSet.has(val)) return false;
     }
@@ -82,23 +92,23 @@ function summarizeDashboard(
       const features = layer.data?.geojson?.features ?? [];
       for (const feature of features) {
         const props = (feature?.properties ?? {}) as Record<string, unknown>;
-        if (!passFilter(props)) continue;
 
         const tipeHak = norm(props.TIPEHAK);
         const kabupaten = norm(props.KABUPATEN);
-        const luas = parseNum(props.LUASPETA);
+        if (tipeHak) domainTipeHak.add(tipeHak);
+        if (kabupaten) domainKabupaten.add(kabupaten);
 
+        if (!passFilter(props)) continue;
+
+        const luas = parseNum(props.LUASPETA);
         if (!tipeHak || !Number.isFinite(luas)) continue;
 
-        // Sum area
         areaRaw[tipeHak] = (areaRaw[tipeHak] || 0) + luas;
         totalArea += luas;
 
-        // Count
         countRaw[tipeHak] = (countRaw[tipeHak] || 0) + 1;
         totalCount++;
 
-        // Area by Kabupaten
         if (kabupaten) {
           areaByKabupatenRaw[kabupaten] ||= {};
           areaByKabupatenRaw[kabupaten][tipeHak] =
@@ -113,32 +123,46 @@ function summarizeDashboard(
   const toFixedNum = (v: number, d: number) =>
     Number.isFinite(v) ? parseFloat(v.toFixed(d)) : 0;
 
-  const areaByTipeHak: DashboardStat[] = Object.entries(areaRaw)
-    .map(([name, value]) => ({
-      name,
-      value: toFixedNum(value, 2),
-      percentage: toFixedNum((value / (totalArea || 1)) * 100, 2),
-    }))
+  const areaByTipeHak: DashboardStat[] = Array.from(domainTipeHak)
+    .map((name) => {
+      const value = areaRaw[name] || 0;
+      const active =
+        lookup.TIPEHAK.size === 0 ? true : lookup.TIPEHAK.has(name);
+      return {
+        name,
+        value: toFixedNum(value, 2),
+        percentage: toFixedNum((value / (totalArea || 1)) * 100, 2),
+        active,
+      };
+    })
     .sort(byNameAsc);
 
-  const countByTipeHak: DashboardStat[] = Object.entries(countRaw)
-    .map(([name, value]) => ({
-      name,
-      value: toFixedNum(value, 2),
-      percentage: toFixedNum((value / (totalCount || 1)) * 100, 2),
-    }))
+  const countByTipeHak: DashboardStat[] = Array.from(domainTipeHak)
+    .map((name) => {
+      const value = countRaw[name] || 0;
+      const active =
+        lookup.TIPEHAK.size === 0 ? true : lookup.TIPEHAK.has(name);
+      return {
+        name,
+        value: toFixedNum(value, 2),
+        percentage: toFixedNum((value / (totalCount || 1)) * 100, 2),
+        active,
+      };
+    })
     .sort(byNameAsc);
 
-  const areaByKabupaten: DashboardStat[] = Object.entries(areaByKabupatenRaw)
-    .map(([kabupaten, tipeData]) => {
-      const totalKabupaten = Object.values(tipeData).reduce(
-        (sum, v) => sum + v,
-        0
-      );
+  const areaByKabupaten: DashboardStat[] = Array.from(domainKabupaten)
+    .map((kabupaten) => {
+      const totalKabupaten = Object.values(
+        areaByKabupatenRaw[kabupaten] ?? []
+      ).reduce((sum, v) => sum + v, 0);
+      const active =
+        lookup.KABUPATEN.size === 0 ? true : lookup.KABUPATEN.has(kabupaten);
       return {
         name: kabupaten,
         value: toFixedNum(totalKabupaten, 1),
         percentage: toFixedNum((totalKabupaten / (totalArea || 1)) * 100, 1),
+        active,
       };
     })
     .sort(byNameAsc);
@@ -163,7 +187,7 @@ const HGUArea = (props: any) => {
   useEffect(() => {
     const newChartData = data?.map((item: any, i: number) => {
       const colors = chroma
-        .scale("Set2")
+        .scale(COLORWAY)
         .mode("lab")
         .colors(data?.length || 0);
 
@@ -266,7 +290,7 @@ const HGUCount = (props: any) => {
   useEffect(() => {
     const newChartData = data?.map((item: any, i: number) => {
       const colors = chroma
-        .scale("Set2")
+        .scale(COLORWAY)
         .mode("lab")
         .colors(data?.length || 0);
 
@@ -355,7 +379,7 @@ const HGUAreaByKabupaten = (props: any) => {
   useEffect(() => {
     const newChartData = data?.map((item: any, i: number) => {
       const colors = chroma
-        .scale("Set2")
+        .scale(COLORWAY)
         .mode("lab")
         .colors(data?.length || 0);
 
