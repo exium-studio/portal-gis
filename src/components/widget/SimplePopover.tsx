@@ -15,13 +15,7 @@ const SimplePopover = (props: Props) => {
     <PopoverRoot>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
 
-      <PopoverContent
-        p={3}
-        minW={"fit"}
-        w={"fit"}
-        maxW={"280px"}
-        {...restProps}
-      >
+      <PopoverContent p={3} w={"full"} maxW={"280px !important"} {...restProps}>
         {content}
       </PopoverContent>
     </PopoverRoot>
