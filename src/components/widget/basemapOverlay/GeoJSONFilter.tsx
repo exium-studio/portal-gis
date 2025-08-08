@@ -143,7 +143,9 @@ const GeoJSONFilter = () => {
                             }
                             aria-label={`${option.property}-${v.value}`}
                           >
-                            <P>{v.value}</P>
+                            <Tooltip content={v.value}>
+                              <P lineClamp={1}>{v.value}</P>
+                            </Tooltip>
                           </Checkbox>
                         ))}
                       </CContainer>
