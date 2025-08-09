@@ -29,7 +29,6 @@ import {
 import { IconFilter } from "@tabler/icons-react";
 import { useMemo, useRef } from "react";
 import MenuHeaderContainer from "../MenuHeaderContainer";
-import { OverlayItemContainer } from "../OverlayItemContainer";
 
 const GeoJSONFilter = () => {
   // Hooks
@@ -71,23 +70,23 @@ const GeoJSONFilter = () => {
 
   return (
     <PopoverRoot open={open}>
-      <PopoverTrigger asChild>
-        <OverlayItemContainer>
-          <Tooltip content={l.basemap_filter}>
-            <BButton
-              ref={triggerRef}
-              iconButton
-              unclicky
-              variant={"ghost"}
-              w={"fit"}
-              onClick={onToggle}
-            >
-              <Icon boxSize={5}>
-                <IconFilter stroke={1.5} />
-              </Icon>
-            </BButton>
-          </Tooltip>
-        </OverlayItemContainer>
+      <PopoverTrigger>
+        {/* <OverlayItemContainer> */}
+        <Tooltip content={l.basemap_filter}>
+          <BButton
+            ref={triggerRef}
+            unclicky
+            iconButton
+            variant={"outline"}
+            w={"fit"}
+            onClick={onToggle}
+          >
+            <Icon boxSize={5}>
+              <IconFilter stroke={1.5} />
+            </Icon>
+          </BButton>
+        </Tooltip>
+        {/* </OverlayItemContainer> */}
       </PopoverTrigger>
 
       <Portal>
@@ -104,7 +103,7 @@ const GeoJSONFilter = () => {
                 <Icon boxSize={5} mb={"1px"}>
                   <IconFilter stroke={1.5} />
                 </Icon>
-                <P fontWeight={"bold"}>Filter GeoJSON</P>
+                <P fontWeight={"bold"}>Filter Dashboard</P>
               </HStack>
             </MenuHeaderContainer>
 

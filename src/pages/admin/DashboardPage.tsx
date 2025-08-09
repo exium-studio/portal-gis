@@ -10,6 +10,7 @@ import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import P from "@/components/ui-custom/P";
 import { Checkbox } from "@/components/ui/checkbox";
+import GeoJSONFilter from "@/components/widget/basemapOverlay/GeoJSONFilter";
 import PageContainer from "@/components/widget/PageContainer";
 import SimplePopover from "@/components/widget/SimplePopover";
 import { Interface__ActiveWorkspace } from "@/constants/interfaces";
@@ -464,6 +465,11 @@ const DashboardPage = () => {
 
   return (
     <PageContainer gap={R_GAP} pb={4} flex={1}>
+      <HStack justify={"end"}>
+        {/* <SearchInput /> */}
+        <GeoJSONFilter />
+      </HStack>
+
       {empty(activeWorkspaces) && (
         <FeedbackNoData
           icon={<IconFoldersOff />}

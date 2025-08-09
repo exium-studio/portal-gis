@@ -10,7 +10,6 @@ import { LegendContent, LegendTrigger } from "../basemapOverlay/Legend";
 import { SearchAddress } from "../basemapOverlay/SearchAddress";
 import { ZoomControl } from "../basemapOverlay/ZoomControl";
 import { Compass } from "../Compass";
-import GeoJSONFilter from "../basemapOverlay/GeoJSONFilter";
 
 const AdminMapOverlay = () => {
   // Hooks
@@ -45,7 +44,7 @@ const AdminMapOverlay = () => {
             <HStack position={"absolute"} right={0}>
               {/* <DisplayedData /> */}
 
-              <GeoJSONFilter />
+              {/* <GeoJSONFilter /> */}
 
               <BasemapFilter />
 
