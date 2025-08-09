@@ -465,11 +465,6 @@ const DashboardPage = () => {
 
   return (
     <PageContainer gap={R_GAP} pb={4} flex={1}>
-      <HStack justify={"end"}>
-        {/* <SearchInput /> */}
-        <GeoJSONFilter />
-      </HStack>
-
       {empty(activeWorkspaces) && (
         <FeedbackNoData
           icon={<IconFoldersOff />}
@@ -479,16 +474,22 @@ const DashboardPage = () => {
       )}
 
       {!empty(activeWorkspaces) && (
-        <HStack wrap={"wrap"} align={"stretch"} gap={4}>
-          <HGUArea data={dashboardData?.areaByTipeHak} flex={"1 1 300px"} />
+        <>
+          <HStack justify={"end"}>
+            {/* <SearchInput /> */}
+            <GeoJSONFilter />
+          </HStack>
+          <HStack wrap={"wrap"} align={"stretch"} gap={4}>
+            <HGUArea data={dashboardData?.areaByTipeHak} flex={"1 1 300px"} />
 
-          <HGUCount data={dashboardData?.countByTipeHak} flex={"1 1 300px"} />
+            <HGUCount data={dashboardData?.countByTipeHak} flex={"1 1 300px"} />
 
-          <HGUAreaByKabupaten
-            data={dashboardData?.areaByKabupaten}
-            flex={"1 1 300px"}
-          />
-        </HStack>
+            <HGUAreaByKabupaten
+              data={dashboardData?.areaByKabupaten}
+              flex={"1 1 300px"}
+            />
+          </HStack>
+        </>
       )}
     </PageContainer>
   );
