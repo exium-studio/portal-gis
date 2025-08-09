@@ -734,7 +734,7 @@ const TableComponent = ({
         h={"fit"}
         maxH={"full"}
         className="scrollX scrollY"
-        overflow={"scroll"}
+        overflow={"auto"}
         flexShrink={0}
         {...props}
       >
