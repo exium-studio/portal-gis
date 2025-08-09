@@ -113,13 +113,14 @@ const GeoJSONFilter = () => {
               className="scrollY"
               maxH={"calc(50dvh - 56px)"}
               w={"calc(100% + 6px)"}
+              px={1}
             >
               <AccordionRoot multiple>
                 {filterOptions?.map((option, i) => (
                   <AccordionItem
                     key={option.property}
                     value={option.property}
-                    px={3}
+                    px={2}
                     border={i === filterOptions.length - 1 ? "none" : ""}
                   >
                     <AccordionItemTrigger>

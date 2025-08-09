@@ -24,7 +24,7 @@ import { Circle, HStack } from "@chakra-ui/react";
 import { IconFoldersOff } from "@tabler/icons-react";
 import chroma from "chroma-js";
 import { useEffect, useState } from "react";
-import { Cell, Label, Pie, PieChart, Tooltip } from "recharts";
+import { Cell, Pie, PieChart, Tooltip } from "recharts";
 
 type DashboardStat = {
   name: string;
@@ -228,16 +228,6 @@ const HGUArea = (props: any) => {
               dataKey={chart.key("value")}
               nameKey="name"
             >
-              <Label
-                content={({ viewBox }) => (
-                  <Chart.RadialText
-                    viewBox={viewBox}
-                    title={chart.getTotal("value").toLocaleString()}
-                    description="users"
-                  />
-                )}
-              />
-
               {chart.data.map((item) => (
                 <Cell
                   key={item.name}
@@ -420,16 +410,6 @@ const HGUAreaByKabupaten = (props: any) => {
               dataKey={chart.key("value")}
               nameKey="name"
             >
-              <Label
-                content={({ viewBox }) => (
-                  <Chart.RadialText
-                    viewBox={viewBox}
-                    title={chart.getTotal("value").toLocaleString()}
-                    description="users"
-                  />
-                )}
-              />
-
               {chart.data.map((item) => (
                 <Cell
                   key={item.color}
