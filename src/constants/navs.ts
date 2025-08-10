@@ -2,14 +2,11 @@ import {
   IconCategory2,
   IconChartPie,
   IconDeviceDesktop,
-  IconExclamationCircle,
   IconFolderOpen,
   IconFolders,
-  IconGavel,
   IconLanguage,
   IconServerCog,
   IconShieldHalf,
-  IconShieldLock,
 } from "@tabler/icons-react";
 
 export const NAVS = [
@@ -59,26 +56,26 @@ export const SETTINGS_NAVS = [
       },
     ],
   },
-  {
-    groupLabelKey: "settings_navs_group.others",
-    list: [
-      {
-        icon: IconExclamationCircle,
-        labelKey: "settings_navs.report_problem",
-        path: "/settings/report-problem",
-      },
-      {
-        icon: IconGavel,
-        labelKey: "settings_navs.terms_of_service",
-        path: "/settings/terms-of-service",
-      },
-      {
-        icon: IconShieldLock,
-        labelKey: "settings_navs.privacy_policy",
-        path: "/settings/privacy-policy",
-      },
-    ],
-  },
+  // {
+  //   groupLabelKey: "settings_navs_group.others",
+  //   list: [
+  //     {
+  //       icon: IconExclamationCircle,
+  //       labelKey: "settings_navs.report_problem",
+  //       path: "/settings/report-problem",
+  //     },
+  //     {
+  //       icon: IconGavel,
+  //       labelKey: "settings_navs.terms_of_service",
+  //       path: "/settings/terms-of-service",
+  //     },
+  //     {
+  //       icon: IconShieldLock,
+  //       labelKey: "settings_navs.privacy_policy",
+  //       path: "/settings/privacy-policy",
+  //     },
+  //   ],
+  // },
 ];
 
 export const MASTER_DATA_NAVS = [
