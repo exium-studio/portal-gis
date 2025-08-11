@@ -1,6 +1,7 @@
-import { TooltipContentProps } from "@chakra-ui/react";
+import { TooltipContentProps, useDisclosure } from "@chakra-ui/react";
 import { PopoverContent, PopoverRoot, PopoverTrigger } from "../ui/popover";
-import { ReactNode } from "react";
+import { ReactNode, useRef } from "react";
+import useClickOutside from "@/hooks/useClickOutside";
 
 interface Props extends Omit<TooltipContentProps, "content"> {
   children: ReactNode;
@@ -11,11 +12,30 @@ const SimplePopover = (props: Props) => {
   // Props
   const { children, content, ...restProps } = props;
 
-  return (
-    <PopoverRoot>
-      <PopoverTrigger asChild>{children}</PopoverTrigger>
+  // Hooks
+  const { open, onOpen, onClose } = useDisclosure();
 
-      <PopoverContent p={3} w={"full"} maxW={"280px !important"} {...restProps}>
+  // Refs
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useClickOutside([containerRef], onClose);
+
+  return (
+    <PopoverRoot open={open}>
+      <PopoverTrigger asChild onClick={onOpen}>
+        {children}
+      </PopoverTrigger>
+
+      <PopoverContent
+        ref={containerRef}
+        p={3}
+        w={"full"}
+        maxW={"280px !important"}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        {...restProps}
+      >
         {content}
       </PopoverContent>
     </PopoverRoot>

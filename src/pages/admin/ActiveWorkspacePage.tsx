@@ -1,80 +1,82 @@
+import { HStack } from "@chakra-ui/react";
+import { IconFoldersOff } from "@tabler/icons-react";
+import { useState } from "react";
+
 import CContainer from "@/components/ui-custom/CContainer";
 import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import SearchInput from "@/components/ui-custom/SearchInput";
 import { AccordionRoot } from "@/components/ui/accordion";
-import ActiveWorkspaceListItem from "@/components/widget/ActiveWorkspaceListItem";
+import ActiveWorkspaceByCategoryListItem from "@/components/widget/ActiveWorkspaceByCategoryListItem";
 import PageContainer from "@/components/widget/PageContainer";
-import { Interface__Workspace } from "@/constants/interfaces";
 import { R_GAP } from "@/constants/sizes";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useLang from "@/context/useLang";
-import empty from "@/utils/empty";
-import { HStack } from "@chakra-ui/react";
-import { IconFoldersOff } from "@tabler/icons-react";
-import { useState } from "react";
 
 const ActiveWorkspacePage = () => {
-  // Hooks
   const { l } = useLang();
-
-  // Contexts
-  const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
+  const activeWorkspacesByCategory = useActiveWorkspaces(
+    (s) => s.activeWorkspaces
+  );
 
   // States
-  const [filterConfig, setFilterConfig] = useState<any>({
-    search: "",
-  });
-  const filteredActiveWorkspaces = [...activeWorkspaces]
+  const [searchTerm, setSearchTerm] = useState("");
+  const [value, setValue] = useState<string[]>([]);
+  const filteredWorkspacesByCategory = [...activeWorkspacesByCategory]
     ?.reverse()
-    ?.filter((workspace: Interface__Workspace) => {
-      const searchTerm = filterConfig?.search?.toLowerCase();
-      const titleTerm = workspace?.title?.toLowerCase();
-      const titleMatch = titleTerm?.includes(searchTerm);
-      const layerNameMatch = workspace?.layers?.some((layer) =>
-        layer?.name?.toLowerCase()?.includes(searchTerm)
-      );
+    .map((category) => {
+      const filteredWorkspaces = category.workspaces.filter((workspace) => {
+        if (!searchTerm) return true;
 
-      if (searchTerm) return titleMatch || layerNameMatch;
+        const lowerSearch = searchTerm.toLowerCase();
+        const titleMatch = workspace.title.toLowerCase().includes(lowerSearch);
+        const layerNameMatch = workspace.layers?.some((layer) =>
+          layer.name.toLowerCase().includes(lowerSearch)
+        );
+        return titleMatch || layerNameMatch;
+      });
 
-      return activeWorkspaces;
-    });
+      return {
+        ...category,
+        workspaces: filteredWorkspaces,
+      };
+    })
+    .filter((category) => category.workspaces.length > 0);
+  const empty = filteredWorkspacesByCategory.length === 0;
+
   return (
     <PageContainer gap={R_GAP} pb={4} flex={1}>
       <CContainer flex={1} gap={4}>
         <ItemHeaderContainer borderless p={0}>
-          <HStack justify={"space-between"} w={"full"}>
+          <HStack justify="space-between" w="full">
             <SearchInput
-              onChangeSetter={(input) => {
-                setFilterConfig({
-                  ...filterConfig,
-                  search: input,
-                });
-              }}
-              inputValue={filterConfig.search}
+              inputValue={searchTerm}
+              onChangeSetter={(input) => setSearchTerm(input)}
             />
           </HStack>
         </ItemHeaderContainer>
 
-        {empty(filteredActiveWorkspaces) && (
+        {empty ? (
           <FeedbackNoData
             icon={<IconFoldersOff />}
             title={l.no_active_workspaces.title}
             description={l.no_active_workspaces.description}
           />
-        )}
-
-        {!empty(filteredActiveWorkspaces) && (
-          <AccordionRoot multiple>
-            {filteredActiveWorkspaces.map((activeWorkspace, i) => {
-              return (
-                <ActiveWorkspaceListItem
-                  key={activeWorkspace.id}
+        ) : (
+          <AccordionRoot
+            multiple
+            value={value}
+            onValueChange={(e) => setValue(e.value)}
+          >
+            <CContainer gap={4}>
+              {filteredWorkspacesByCategory.map((activeWorkspace, i) => (
+                <ActiveWorkspaceByCategoryListItem
+                  key={activeWorkspace.workspace_category.id}
                   activeWorkspace={activeWorkspace}
                   index={i}
                 />
-              );
-            })}
+              ))}
+            </CContainer>
           </AccordionRoot>
         )}
       </CContainer>

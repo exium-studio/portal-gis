@@ -16,6 +16,7 @@ import {
   AlertIndicator,
   AlertRoot,
   AlertTitle,
+  Badge,
   Box,
   FieldsetRoot,
   HStack,
@@ -298,7 +299,8 @@ const DeleteLayer = (props: any) => {
   const setRt = useRenderTrigger((s) => s.setRt);
   const { setConfirmationData, confirmationOnOpen } =
     useConfirmationDisclosure();
-  const removeLayer = useActiveWorkspaces((s) => s.removeLayer);
+  // TODO handle remove layer
+  // const removeLayer = useActiveWorkspaces((s) => s.removeLayer);
 
   // Utils
   function onDelete() {
@@ -315,7 +317,8 @@ const DeleteLayer = (props: any) => {
       onResolve: {
         onSuccess: () => {
           setRt((ps) => !ps);
-          removeLayer(workspace?.id, layer.id);
+          // TODO handle remove layer
+          // removeLayer(workspace?.id, layer.id);
         },
       },
     });
@@ -351,11 +354,9 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
   const { children, workspace, ...restProps } = props;
 
   // Hooks
+  const { l } = useLang();
   const { open, onOpen, onClose } = useDisclosure();
   useBackOnClose(`workspace-detail-${workspace.id}`, open, onOpen, onClose);
-
-  // Contexts
-  const { themeConfig } = useThemeConfig();
 
   // States
   const layers = workspace?.layers as Interface__Layer[];
@@ -368,8 +369,8 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
 
     return layers;
   });
-  const workspaceActive = useActiveWorkspaces((s) =>
-    s.workspaceActive(workspace?.id)
+  const workspaceActive = !!useActiveWorkspaces((s) =>
+    s.getActiveWorkspace(workspace?.id)
   );
 
   return (
@@ -391,6 +392,15 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
 
           <DisclosureBody p={"0 !important"}>
             <CContainer px={4} py={4} gap={2}>
+              {workspaceActive && (
+                <AlertRoot status="warning" mb={2}>
+                  <AlertIndicator />
+                  <AlertTitle>
+                    {l.edit_delete_cannot_be_active_workspace}
+                  </AlertTitle>
+                </AlertRoot>
+              )}
+
               <HStack mb={2}>
                 <SearchInput
                   onChangeSetter={(inputValue) => {
@@ -407,44 +417,49 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                 />
               </HStack>
 
-              <CContainer gap={2} className="scrollY">
+              <CContainer gap={2} px={3} className="scrollY">
                 {empty(filteredLayers) && <FeedbackNoData />}
 
                 {filteredLayers && (
                   <>
                     {filteredLayers?.reverse().map((layer) => {
                       return (
-                        <HStack
-                          key={layer.id}
-                          // border={"1px solid"}
-                          // _hover={{ bg: "bg.subtle" }}
-                          borderColor={"border.muted"}
-                          pl={2}
-                          pr={1}
-                          py={1}
-                          borderRadius={themeConfig.radii.component}
-                        >
+                        <HStack key={layer.id} py={1}>
                           <SimplePopover
                             content={
                               <CContainer gap={1}>
-                                <P w={"full"}>{layer?.name}</P>
+                                <CContainer>
+                                  <P w={"full"}>{layer?.name}</P>
 
-                                <P w={"full"} color={"fg.subtle"}>
-                                  {layer?.description}
-                                </P>
-
-                                <HStack color={"fg.subtle"} mt={1}>
-                                  <Icon boxSize={4}>
-                                    {layer?.layer_type === "fill" ? (
-                                      <IconPolygon stroke={1.5} />
-                                    ) : (
-                                      <IconLine stroke={1.5} />
-                                    )}
-                                  </Icon>
-
-                                  <P lineClamp={1} fontSize={"xs"}>
-                                    {capsFirstLetter(layer?.layer_type)}
+                                  <P w={"full"} color={"fg.subtle"}>
+                                    {layer?.description}
                                   </P>
+                                </CContainer>
+
+                                <HStack wrap={"wrap"} mt={2}>
+                                  <Badge color={"fg.muted"}>
+                                    <Icon boxSize={4}>
+                                      {layer?.layer_type === "fill" ? (
+                                        <IconPolygon stroke={1.5} />
+                                      ) : (
+                                        <IconLine stroke={1.5} />
+                                      )}
+                                    </Icon>
+
+                                    <P lineClamp={1} fontSize={"xs"}>
+                                      {capsFirstLetter(layer?.layer_type)}
+                                    </P>
+                                  </Badge>
+
+                                  <Badge color={"fg.muted"}>
+                                    <P lineClamp={1} fontSize={"xs"}>
+                                      {capsFirstLetter(
+                                        layer?.with_explanation
+                                          ? l.with_explanation
+                                          : l.without_explanation
+                                      )}
+                                    </P>
+                                  </Badge>
                                 </HStack>
                               </CContainer>
                             }
@@ -473,6 +488,7 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                             <DeleteLayer
                               workspace={workspace}
                               layer={layer}
+                              disabled={workspaceActive}
                               size={"xs"}
                             />
                           </HStack>

@@ -63,6 +63,7 @@ import SimplePopover from "./SimplePopover";
 import WorkspaceLayersDisclosureTrigger from "./WorkspaceLayersDisclosureTrigger";
 import { Checkbox } from "../ui/checkbox";
 import interpolate from "@/utils/interpolate";
+import { FIT_BOUNDS_PADDING } from "@/constants/sizes";
 
 const WorkspaceMenu = (props: any) => {
   // Props
@@ -71,7 +72,7 @@ const WorkspaceMenu = (props: any) => {
   return (
     <MenuRoot>
       <MenuTrigger asChild>
-        <BButton iconButton variant={"ghost"} {...restProps}>
+        <BButton iconButton unclicky variant={"ghost"} {...restProps}>
           <Icon boxSize={5}>
             <IconDots />
           </Icon>
@@ -204,6 +205,32 @@ const EditWorkspace = (props: any) => {
           <DisclosureBody>
             <FieldsetRoot>
               <Field
+                label={l.title}
+                invalid={!!formik.errors.title}
+                errorText={formik.errors.title as string}
+              >
+                <StringInput
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("title", input);
+                  }}
+                  inputValue={formik.values.title}
+                />
+              </Field>
+
+              <Field
+                label={l.description}
+                invalid={!!formik.errors.description}
+                errorText={formik.errors.description as string}
+              >
+                <Textarea
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("description", input);
+                  }}
+                  inputValue={formik.values.description}
+                />
+              </Field>
+
+              <Field
                 label={l.workspace_category}
                 invalid={!!formik.errors.workspace_category}
                 errorText={formik.errors.workspace_category as string}
@@ -286,32 +313,6 @@ const EditWorkspace = (props: any) => {
                   </CContainer>
                 )}
               </Field>
-
-              <Field
-                label={l.title}
-                invalid={!!formik.errors.title}
-                errorText={formik.errors.title as string}
-              >
-                <StringInput
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("title", input);
-                  }}
-                  inputValue={formik.values.title}
-                />
-              </Field>
-
-              <Field
-                label={l.description}
-                invalid={!!formik.errors.description}
-                errorText={formik.errors.description as string}
-              >
-                <Textarea
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("description", input);
-                  }}
-                  inputValue={formik.values.description}
-                />
-              </Field>
             </FieldsetRoot>
           </DisclosureBody>
 
@@ -360,7 +361,7 @@ const DeleteWorkspace = (props: any) => {
       onResolve: {
         onSuccess: () => {
           setRt((ps) => !ps);
-          unloadWorkspace(workspace?.id);
+          unloadWorkspace(workspace?.workspace_category?.id, workspace?.id);
         },
       },
     });
@@ -370,8 +371,6 @@ const DeleteWorkspace = (props: any) => {
     <Tooltip positioning={{ placement: "right" }} content={l.delete_workspace}>
       <MenuItem
         value="delete"
-        unclicky
-        iconButton
         variant={"ghost"}
         color={"red.400"}
         onClick={() => {
@@ -678,7 +677,7 @@ const ViewWorkspace = (props: any) => {
           [maxLng, maxLat],
         ],
         {
-          padding: 20, // px
+          padding: FIT_BOUNDS_PADDING,
           duration: MAP_TRANSITION_DURATION,
           essential: true,
         }
@@ -770,7 +769,10 @@ const ToggleLoadWorkspace = (props: any) => {
             visible: true,
           };
 
-          loadWorkspace(newActiveWorkspace);
+          loadWorkspace(
+            newActiveWorkspace?.workspace_category?.id,
+            newActiveWorkspace
+          );
         },
         onError: () => {
           setChecked(false);
@@ -786,7 +788,7 @@ const ToggleLoadWorkspace = (props: any) => {
         onLoad();
       }, 1); // flushsync error fix trick
     } else if (!checked && workspaceActive) {
-      unloadWorkspace(workspace.id);
+      unloadWorkspace(workspace?.workspace_category?.id, workspace.id);
     }
   }, [checked]);
 
@@ -941,8 +943,8 @@ const WorkspaceItem = (props: any) => {
 
   // States
   const [workspace, setWorkspace] = useState<any>(initialData);
-  const workspaceActive = useActiveWorkspaces((s) =>
-    s.workspaceActive(workspace?.id)
+  const workspaceActive = !!useActiveWorkspaces((s) =>
+    s.getActiveWorkspace(workspace?.id)
   );
 
   // Handle initialData

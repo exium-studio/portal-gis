@@ -17,11 +17,11 @@ import {
 } from "./types";
 import { FilterGeoJSON } from "@/context/useFilterGeoJSON";
 
+// Dashboard
 export interface Interface__FilterOptionValue {
   value: string;
   active: boolean;
 }
-
 export interface Interface__FilterOptionGroup {
   property: keyof FilterGeoJSON; // "KABUPATEN" | "TIPEHAK" | "GUNATANAHK"
   values: Interface__FilterOptionValue[]; // unik, urut A–Z
@@ -88,14 +88,17 @@ export interface Interface__LayerData extends Interface__CUD {
 export interface Interface__GeoJSONData extends GeoJSON.FeatureCollection {
   documents: Interface__StorageFile[];
 }
+export interface Interface__ActiveWorkspacesByWorkspaceCategory {
+  workspace_category: Interface__WorkspaceCategory;
+  workspaces: Interface__ActiveWorkspace[];
+  visible: boolean;
+}
 export interface Interface__ActiveWorkspace extends Interface__Workspace {
   visible: boolean;
-  layers?: Interface__ActiveLayer[];
-  zIndex: number;
+  layers: Interface__ActiveLayer[];
 }
 export interface Interface__ActiveLayer extends Interface__Layer {
   visible: boolean;
-  zIndex: number;
 }
 
 // Gens

@@ -4,21 +4,32 @@ import { useEffect, useRef } from "react";
 import LayerSource from "./LayerSource";
 
 const LayerManager = () => {
-  const { activeWorkspaces } = useActiveWorkspaces(); // Context yang bisa dimutasi
-  const map = useMapViewState().mapRef.current?.getMap();
+  // Contexts
+  const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
+  const map = useMapViewState().mapRef?.current?.getMap();
 
   // Refs
-  const layerOrderRef = useRef<(string | undefined)[] | undefined>([]);
+  const layerOrderRef = useRef<string[]>([]);
 
-  // States
-  // const [brutalKey, setBrutalKey] = useState<number>(1);
-
+  // Handle layer order when changes
   useEffect(() => {
     if (!map) return;
 
-    const newLayerOrder = activeWorkspaces
-      .filter((ws) => ws.visible)
-      .flatMap((ws) => ws.layers?.map((layer) => `${layer.id}-fill`));
+    const newLayerOrder: string[] = [];
+
+    activeWorkspaces
+      .filter((cat) => cat.visible)
+      .forEach((cat) => {
+        cat.workspaces
+          .filter((ws) => ws.visible)
+          .forEach((ws) => {
+            ws.layers
+              ?.filter((l) => l.visible)
+              .forEach((layer) => {
+                newLayerOrder.push(`${layer.id}-fill`);
+              });
+          });
+      });
 
     if (
       JSON.stringify(newLayerOrder) !== JSON.stringify(layerOrderRef.current)
@@ -28,27 +39,28 @@ const LayerManager = () => {
           map.moveLayer(layerId);
         }
       });
-
       layerOrderRef.current = newLayerOrder;
     }
-    // setBrutalKey((ps) => ps + 1);
   }, [activeWorkspaces, map]);
 
   return (
     <>
       {activeWorkspaces
-        .filter((ws) => ws.visible)
-        .flatMap((ws) =>
-          ws.layers?.map((layer) => {
-            // console.log(layer);
-            return (
-              <LayerSource
-                key={`${ws.id}-${layer.id}`}
-                activeWorkspace={ws}
-                activeLayer={layer}
-              />
-            );
-          })
+        .filter((cat) => cat.visible)
+        .flatMap((cat) =>
+          cat.workspaces
+            .filter((ws) => ws.visible)
+            .flatMap((ws) =>
+              ws.layers
+                ?.filter((l) => l.visible)
+                .map((layer) => (
+                  <LayerSource
+                    key={`${ws.id}-${layer.id}`}
+                    activeWorkspace={ws}
+                    activeLayer={layer}
+                  />
+                ))
+            )
         )}
     </>
   );

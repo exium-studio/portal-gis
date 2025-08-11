@@ -19,90 +19,86 @@ const MIN_ZOOM = 1;
 const MAX_ZOOM = 22;
 
 const BaseMap = () => {
-  // Hooks
   const { colorMode } = useColorMode();
 
-  // Contexts
   const mapStyle = useMapStyle((s) => s.mapStyle);
   const layout = useLayout((s) => s.layout);
   const currentLocation = useCurrentLocation((s) => s.currentLocation);
   const { mapZoomPercent, setMapZoomPercent } = useMapsZoom();
   const basemap = useBasemap((s) => s.basemap);
   const selectedSearchResult = useSearchAddress((s) => s.selectedSearchResult);
-  // const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
 
-  // Refs
   const mapRef = useRef<MapRef>(null);
 
-  // States
   const { activeMapStyle, setActiveMapStyle } = useActiveMapStyle();
-  const [mapLoad, setMapLoad] = useState<boolean>(false);
+  const [mapLoad, setMapLoad] = useState(false);
   const { mapViewState, setMapViewState, setMapRef } = useMapViewState();
-  const [mapKey, setMapKey] = useState<number>(1);
-  // const [layerKey, setLayerKey] = useState<number>(1);
+  const [mapKey, setMapKey] = useState(1);
 
-  // Handle init mapRef
+  // Set mapRef in zustand only once mapRef.current is ready
   useEffect(() => {
-    if (mapRef) {
+    if (mapRef.current) {
       setMapRef(mapRef);
     }
-  }, [mapRef]);
+  }, [mapRef.current]);
 
-  // Handle resize on layout change
+  // Resize on layout changes
   useEffect(() => {
-    setTimeout(() => {
-      mapRef.current?.getMap().resize();
-    }, 1);
+    if (mapRef.current) {
+      setTimeout(() => {
+        mapRef?.current?.getMap().resize();
+      }, 1);
+    }
   }, [layout]);
 
-  // Handle current location
+  // Fly to current location if available
   useEffect(() => {
     if (mapRef.current && currentLocation) {
-      mapRef.current?.flyTo({
+      mapRef.current.flyTo({
         center: [currentLocation.lon, currentLocation.lat],
-        zoom: 14, // atau sesuaikan dengan kebutuhan
+        zoom: 14,
         duration: MAP_TRANSITION_DURATION,
         essential: true,
       });
     }
   }, [currentLocation]);
 
-  // Handle search address
+  // Ease to search result if available
   useEffect(() => {
     if (mapRef.current && selectedSearchResult) {
       mapRef.current.easeTo({
-        center: {
-          lat: selectedSearchResult.center[1],
-          lon: selectedSearchResult.center[0],
-        },
+        center: [
+          selectedSearchResult.center[0],
+          selectedSearchResult.center[1],
+        ],
         zoom: 11,
         duration: 1000,
       });
     }
   }, [selectedSearchResult]);
 
-  // Handle zoom percent
+  // Zoom from percent (0-100)
   function handleZoomFromPercent(percent: number) {
     const zoomLevel = (percent / 100) * (MAX_ZOOM - MIN_ZOOM) + MIN_ZOOM;
-
     if (mapRef.current) {
-      mapRef.current?.getMap().easeTo({
+      mapRef.current.getMap().easeTo({
         zoom: zoomLevel,
         duration: 300,
       });
     }
   }
-  function handleZoomFromLevel(zoomLevel: number) {
-    const mapZoomPercent =
-      ((zoomLevel - MIN_ZOOM) / (MAX_ZOOM - MIN_ZOOM)) * 100;
 
-    setMapZoomPercent(mapZoomPercent);
+  // Update zoom percent from zoom level
+  function handleZoomFromLevel(zoomLevel: number) {
+    const zoomPercent = ((zoomLevel - MIN_ZOOM) / (MAX_ZOOM - MIN_ZOOM)) * 100;
+    setMapZoomPercent(zoomPercent);
   }
+
   useEffect(() => {
     handleZoomFromPercent(mapZoomPercent);
   }, [mapZoomPercent]);
 
-  // Handle activeMapStyle url to json object w/ basemap filter
+  // Initialize basemap style
   async function initializeBasemap() {
     let styleJson;
 
@@ -154,7 +150,7 @@ const BaseMap = () => {
     );
 
     const updatedLayers = styleJson.layers.map((layer: any) =>
-      filteredLayers?.includes(layer.id) || layer.id === "building"
+      filteredLayers.includes(layer.id) || layer.id === "building"
         ? {
             ...layer,
             layout: {
@@ -167,22 +163,18 @@ const BaseMap = () => {
 
     setActiveMapStyle({ ...styleJson, layers: updatedLayers });
   }
+
   useEffect(() => {
     if (mapStyle.id === 1) {
-      // Carto
       initializeBasemap();
     } else {
       setActiveMapStyle(mapStyle.tile[colorMode]);
     }
+
     setTimeout(() => {
-      setMapKey((ps) => ps + 1);
+      setMapKey((prev) => prev + 1);
     }, 1);
   }, [mapStyle, colorMode]);
-
-  // Handle rerender layer
-  // useEffect(() => {
-  //   setLayerKey((prev) => prev + 1);
-  // }, [activeWorkspaces]);
 
   return (
     <Map
@@ -192,27 +184,22 @@ const BaseMap = () => {
       maxZoom={MAX_ZOOM}
       projection="globe"
       doubleClickZoom={false}
-      // maxPitch={90}
-      // maxBounds={[-180, -85, 180, 85]}
       {...mapViewState}
-      onLoad={() => {
-        setMapLoad(true);
+      onLoad={() => setMapLoad(true)}
+      onRemove={() => setMapLoad(false)}
+      onMove={(evt) => {
+        if (evt.viewState) setMapViewState(evt.viewState);
       }}
-      onRemove={() => {
-        setMapLoad(false);
-      }}
-      onMove={(evt) => setMapViewState(evt.viewState)}
       style={{ width: "100%", height: "100dvh" }}
       mapStyle={activeMapStyle}
       mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
       mapLib={mapboxgl}
       onZoomEnd={(e) => {
-        handleZoomFromLevel(e.viewState.zoom);
+        if (e.viewState) handleZoomFromLevel(e.viewState.zoom);
       }}
     >
       {mapLoad && (
         <>
-          {/* Current LocationMarker */}
           {currentLocation && (
             <Marker
               longitude={currentLocation.lon}
@@ -221,18 +208,14 @@ const BaseMap = () => {
               <MapMarkerCircle />
             </Marker>
           )}
-
-          {/* Search Marker */}
           {selectedSearchResult && (
             <Marker
-              longitude={selectedSearchResult?.center[0]}
-              latitude={selectedSearchResult?.center[1]}
+              longitude={selectedSearchResult.center[0]}
+              latitude={selectedSearchResult.center[1]}
             >
               <MapMarkerCircle color="fg" />
             </Marker>
           )}
-
-          {/* Polygon Layer */}
           <LayerManager />
         </>
       )}

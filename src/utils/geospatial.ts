@@ -1,3 +1,4 @@
+import { Interface__ActiveLayer } from "@/constants/interfaces";
 import * as turf from "@turf/turf";
 
 /**
@@ -49,4 +50,20 @@ export function computeBboxAndCenter(
     .coordinates;
 
   return { bbox, center };
+}
+
+export function computeCombinedBboxAndCenterFromActiveWorkspace(activeWorkspace: {
+  workspaces: { layers?: Interface__ActiveLayer[] }[];
+}) {
+  const featureCollections: GeoJSON.FeatureCollection[] = [];
+
+  activeWorkspace.workspaces.forEach((workspace) => {
+    workspace.layers?.forEach((layer) => {
+      if (layer.data?.geojson) {
+        featureCollections.push(layer.data.geojson);
+      }
+    });
+  });
+
+  return computeBboxAndCenter(featureCollections);
 }

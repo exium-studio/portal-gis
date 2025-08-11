@@ -1,339 +1,320 @@
+import { create } from "zustand";
+import useMapViewState from "./useMapViewState";
 import {
   Interface__ActiveWorkspace,
-  Interface__Layer,
-  Interface__LayerData,
+  Interface__ActiveWorkspacesByWorkspaceCategory,
 } from "@/constants/interfaces";
-import { create } from "zustand";
 
-interface Interface__ActiveWorkspaces {
-  activeWorkspaces: Interface__ActiveWorkspace[];
-  loadWorkspace: (newWorkspace: Interface__ActiveWorkspace) => void;
-  addLayerToActiveWorkspace: (
-    workspaceId: string,
-    layer: Interface__Layer
-  ) => void;
-  toggleActiveWorkspaceVisibility: (workspaceId: string) => void;
-  toggleLayerVisibility: (workspaceId: string, layerId: number) => void;
-  updateLayerData: (
-    workspaceId: string,
-    layerId: number,
-    data: Interface__LayerData
-  ) => void;
-  removeLayer: (workspaceId: string, layerId: number) => void;
-  unloadWorkspace: (workspaceId: string) => void;
-  clearAllWorkspaces: () => void;
-  workspaceActive: (workspaceId: string) => boolean;
+// Generic helper to toggle visibility in an array
+function toggleVisibility<T extends { visible: boolean }>(
+  list: T[],
+  matchFn: (item: T) => boolean
+) {
+  return list.map((item) =>
+    matchFn(item) ? { ...item, visible: !item.visible } : item
+  );
+}
+
+// Generic helper to rearrange array order
+function rearrange<T>(
+  list: T[],
+  matchFn: (item: T) => boolean,
+  action: "front" | "back" | "up" | "down"
+) {
+  const index = list.findIndex(matchFn);
+  if (index === -1) return list;
+
+  const item = list[index];
+  list.splice(index, 1);
+
+  switch (action) {
+    case "front":
+      list.push(item); // move to last position
+      break;
+    case "back":
+      list.unshift(item); // move to first position
+      break;
+    case "up":
+      list.splice(Math.min(index + 1, list.length), 0, item); // move one step forward
+      break;
+    case "down":
+      list.splice(Math.max(index - 1, 0), 0, item); // move one step backward
+      break;
+  }
+  return list;
+}
+
+interface ActiveWorkspacesStore {
+  activeWorkspaces: Interface__ActiveWorkspacesByWorkspaceCategory[];
+
   getActiveWorkspace: (
     workspaceId: string
   ) => Interface__ActiveWorkspace | undefined;
-  // New z-index management functions
-  moveWorkspaceUp: (workspaceId: string) => void;
-  moveWorkspaceDown: (workspaceId: string) => void;
-  bringWorkspaceToFront: (workspaceId: string) => void;
-  sendWorkspaceToBack: (workspaceId: string) => void;
-  moveLayerUp: (workspaceId: string, layerId: number) => void;
-  moveLayerDown: (workspaceId: string, layerId: number) => void;
-  bringLayerToFront: (workspaceId: string, layerId: number) => void;
-  sendLayerToBack: (workspaceId: string, layerId: number) => void;
+
+  loadWorkspace: (
+    categoryId: number,
+    workspace: Interface__ActiveWorkspace
+  ) => void;
+  unloadWorkspace: (categoryId: number, workspaceId: string) => void;
+
+  toggleCategoryVisibility: (categoryId: number) => void;
+  toggleWorkspaceVisibility: (categoryId: number, workspaceId: string) => void;
+  toggleLayerVisibility: (workspaceId: string, layerId: number) => void;
+
+  rearrangeCategory: (
+    categoryId: number,
+    action: "front" | "back" | "up" | "down"
+  ) => void;
+  rearrangeWorkspace: (
+    categoryId: number,
+    workspaceId: string,
+    action: "front" | "back" | "up" | "down"
+  ) => void;
+  rearrangeLayer: (
+    workspaceId: string,
+    layerId: number,
+    action: "front" | "back" | "up" | "down"
+  ) => void;
 }
 
-const useActiveWorkspaces = create<Interface__ActiveWorkspaces>((set, get) => ({
+const useActiveWorkspaces = create<ActiveWorkspacesStore>((set, get) => ({
   activeWorkspaces: [],
 
-  // Add a new workspace
-  loadWorkspace: (newActiveWorkspace) =>
+  // Get active workspace by workspace id
+  getActiveWorkspace: (workspaceId) => {
+    const state = get();
+    for (const category of state.activeWorkspaces) {
+      const workspace = category.workspaces.find((ws) => ws.id === workspaceId);
+      if (workspace) return workspace;
+    }
+    return undefined;
+  },
+
+  // Add a workspace into a category
+  loadWorkspace: (categoryId, workspace) =>
     set((state) => {
-      const workspaceExists = state.activeWorkspaces.some(
-        (workspace) => workspace.id === newActiveWorkspace.id
+      const category = state.activeWorkspaces.find(
+        (c) => c.workspace_category.id === categoryId
       );
 
-      if (workspaceExists) {
-        console.warn(`Workspace ${newActiveWorkspace.id} already exists`);
-        return state;
-      }
-
-      // Calculate next zIndex for workspace
-      const maxWorkspaceZIndex = state.activeWorkspaces.reduce(
-        (max, ws) => Math.max(max, ws.zIndex || 0),
-        0
-      );
-
-      // Initialize layers with zIndex
-      const layersWithZIndex = newActiveWorkspace.layers?.map(
-        (layer, index) => ({
-          ...layer,
-          visible: layer.visible ?? true,
-          zIndex: index, // Initial zIndex based on array position
-        })
-      );
-
-      return {
-        activeWorkspaces: [
-          ...state.activeWorkspaces,
-          {
-            ...newActiveWorkspace,
-            visible: newActiveWorkspace.visible ?? true,
-            zIndex: maxWorkspaceZIndex + 1,
-            layers: layersWithZIndex,
+      if (category) {
+        category.workspaces.push(workspace);
+      } else {
+        state.activeWorkspaces.push({
+          workspace_category: {
+            id: categoryId,
+            label: workspace?.workspace_category?.label,
           },
-        ],
-      };
+          workspaces: [workspace],
+          visible: true,
+        } as Interface__ActiveWorkspacesByWorkspaceCategory);
+      }
+      return { activeWorkspaces: [...state.activeWorkspaces] };
     }),
 
-  // Add layer to existing workspace
-  addLayerToActiveWorkspace: (workspaceId, newLayer) =>
-    set((state) => ({
-      activeWorkspaces: state.activeWorkspaces.map((workspace) => {
-        if (workspace.id !== workspaceId) return workspace;
+  // Remove a workspace from a category
+  unloadWorkspace: (categoryId, workspaceId) =>
+    set((state) => {
+      const updatedCategories = state.activeWorkspaces
+        .map((category) => {
+          if (category.workspace_category.id !== categoryId) return category;
 
-        const existingLayers = workspace.layers || [];
-        const maxLayerZIndex = existingLayers.reduce(
-          (max, layer) => Math.max(max, layer.zIndex || 0),
-          0
+          const remainingWorkspaces = category.workspaces.filter(
+            (ws) => ws.id !== workspaceId
+          );
+
+          // Kalau masih ada workspace, return category yang diperbarui
+          if (remainingWorkspaces.length > 0) {
+            return { ...category, workspaces: remainingWorkspaces };
+          }
+
+          // Kalau udah gak ada workspace, return null untuk dihapus
+          return null;
+        })
+        .filter(
+          (c): c is Interface__ActiveWorkspacesByWorkspaceCategory => c !== null
         );
 
-        return {
-          ...workspace,
-          layers: [
-            ...existingLayers,
-            {
-              ...newLayer,
-              visible: true,
-              zIndex: maxLayerZIndex + 1,
-            },
-          ],
-        };
-      }),
-    })),
+      return { activeWorkspaces: updatedCategories };
+    }),
 
-  // Toggle entire workspace visibility
-  toggleActiveWorkspaceVisibility: (workspaceId) =>
-    set((state) => ({
-      activeWorkspaces: state.activeWorkspaces.map((workspace) =>
-        workspace.id === workspaceId
-          ? { ...workspace, visible: !workspace.visible }
-          : workspace
-      ),
-    })),
+  // Toggle category visibility and update all related layers in the map
+  toggleCategoryVisibility: (categoryId) =>
+    set((state) => {
+      const mapRef = useMapViewState.getState().mapRef;
 
-  // Toggle specific layer visibility within a workspace
+      const newState = {
+        activeWorkspaces: toggleVisibility(
+          state.activeWorkspaces,
+          (c) => c.workspace_category.id === categoryId
+        ),
+      };
+
+      const category = newState.activeWorkspaces.find(
+        (c) => c.workspace_category.id === categoryId
+      );
+
+      if (mapRef?.current && category) {
+        const map = mapRef.current.getMap();
+        category.workspaces.forEach((ws) =>
+          ws.layers?.forEach((layer) => {
+            const layerIdStr = String(layer.id);
+            if (map.getLayer(layerIdStr)) {
+              map.setLayoutProperty(
+                layerIdStr,
+                "visibility",
+                category.visible ? "visible" : "none"
+              );
+            } else {
+              console.warn(
+                `Layer ${layerIdStr} does not exist in the map's style. (Category toggle)`
+              );
+            }
+          })
+        );
+      }
+      return newState;
+    }),
+
+  // Toggle workspace visibility and update all layers inside it
+  toggleWorkspaceVisibility: (categoryId, workspaceId) =>
+    set((state) => {
+      const mapRef = useMapViewState.getState().mapRef;
+
+      const newState = {
+        activeWorkspaces: state.activeWorkspaces.map((c) =>
+          c.workspace_category.id === categoryId
+            ? {
+                ...c,
+                workspaces: toggleVisibility(
+                  c.workspaces,
+                  (ws) => ws.id === workspaceId
+                ),
+              }
+            : c
+        ),
+      };
+
+      const category = newState.activeWorkspaces.find(
+        (c) => c.workspace_category.id === categoryId
+      );
+      const workspace = category?.workspaces.find(
+        (ws) => ws.id === workspaceId
+      );
+
+      if (mapRef?.current && workspace) {
+        const map = mapRef.current.getMap();
+        workspace.layers?.forEach((layer) => {
+          const layerIdStr = String(layer.id);
+          if (map.getLayer(layerIdStr)) {
+            map.setLayoutProperty(
+              layerIdStr,
+              "visibility",
+              workspace.visible ? "visible" : "none"
+            );
+          } else {
+            console.warn(
+              `Layer ${layerIdStr} does not exist in the map's style. (Workspace toggle)`
+            );
+          }
+        });
+      }
+      return newState;
+    }),
+
+  // Toggle single layer visibility
   toggleLayerVisibility: (workspaceId, layerId) =>
-    set((state) => ({
-      activeWorkspaces: state.activeWorkspaces.map((workspace) => {
-        if (workspace.id !== workspaceId) {
-          return workspace;
-        }
+    set((state) => {
+      const mapRef = useMapViewState.getState().mapRef;
 
-        return {
-          ...workspace,
-          layers: workspace.layers?.map((layer) =>
-            layer.id === layerId
+      const newState = {
+        activeWorkspaces: state.activeWorkspaces.map((c) => ({
+          ...c,
+          workspaces: c.workspaces.map((ws) =>
+            ws.id === workspaceId
               ? {
-                  ...layer,
-                  visible: !layer.visible,
+                  ...ws,
+                  layers: toggleVisibility(
+                    ws.layers ?? [],
+                    (l) => l.id === layerId
+                  ),
                 }
-              : layer
+              : ws
           ),
-        };
-      }),
-    })),
+        })),
+      };
 
-  // Update layer data
-  updateLayerData: (workspaceId, layerId, newData) =>
-    set((state) => ({
-      activeWorkspaces: state.activeWorkspaces.map((workspace) => {
-        if (workspace.id !== workspaceId) {
-          return workspace;
+      if (mapRef?.current) {
+        const map = mapRef.current.getMap();
+        const layer = newState.activeWorkspaces
+          .flatMap((c) => c.workspaces)
+          .find((ws) => ws.id === workspaceId)
+          ?.layers?.find((l) => l.id === layerId);
+
+        if (layer) {
+          const layerIdStr = String(layer.id);
+          if (map.getLayer(layerIdStr)) {
+            map.setLayoutProperty(
+              layerIdStr,
+              "visibility",
+              layer.visible ? "visible" : "none"
+            );
+          } else {
+            console.warn(
+              `Layer ${layerIdStr} does not exist in the map's style. (Layer toggle)`
+            );
+          }
         }
+      }
 
-        return {
-          ...workspace,
-          layers: workspace.layers?.map((layer) =>
-            layer.id === layerId
-              ? {
-                  ...layer,
-                  data: newData,
-                }
-              : layer
-          ),
-        };
-      }),
-    })),
+      return newState;
+    }),
 
-  // Remove specific layer from workspace
-  removeLayer: (workspaceId, layerId) =>
+  // Rearrange category order
+  rearrangeCategory: (categoryId, action) =>
     set((state) => ({
-      activeWorkspaces: state.activeWorkspaces.map((workspace) => {
-        if (workspace.id !== workspaceId) {
-          return workspace;
-        }
-
-        return {
-          ...workspace,
-          layers: workspace.layers?.filter((layer) => layer.id !== layerId),
-        };
-      }),
-    })),
-
-  // Remove entire workspace
-  unloadWorkspace: (workspaceId) =>
-    set((state) => ({
-      activeWorkspaces: state.activeWorkspaces.filter(
-        (workspace) => workspace.id !== workspaceId
+      activeWorkspaces: rearrange(
+        [...state.activeWorkspaces],
+        (c) => c.workspace_category.id === categoryId,
+        action
       ),
     })),
 
-  // Clear all workspaces
-  clearAllWorkspaces: () => set({ activeWorkspaces: [] }),
-
-  // Check if workspace is active
-  workspaceActive: (workspaceId) => {
-    return get().activeWorkspaces.some(
-      (activeWorkspace) => activeWorkspace.id === workspaceId
-    );
-  },
-  getActiveWorkspace: (workspaceId) => {
-    return get().activeWorkspaces.find(
-      (workspace) => workspace.id === workspaceId
-    );
-  },
-
-  // Workspace z-index management
-  moveWorkspaceUp: (workspaceId) =>
-    set((state) => {
-      const workspaces = [...state.activeWorkspaces];
-      const currentIndex = workspaces.findIndex((w) => w.id === workspaceId);
-
-      if (currentIndex < workspaces.length - 1) {
-        // Swap positions
-        [workspaces[currentIndex], workspaces[currentIndex + 1]] = [
-          workspaces[currentIndex + 1],
-          workspaces[currentIndex],
-        ];
-      }
-
-      return { activeWorkspaces: workspaces };
-    }),
-
-  moveWorkspaceDown: (workspaceId) =>
-    set((state) => {
-      const workspaces = [...state.activeWorkspaces];
-      const currentIndex = workspaces.findIndex((w) => w.id === workspaceId);
-
-      if (currentIndex > 0) {
-        // Swap positions
-        [workspaces[currentIndex], workspaces[currentIndex - 1]] = [
-          workspaces[currentIndex - 1],
-          workspaces[currentIndex],
-        ];
-      }
-
-      return { activeWorkspaces: workspaces };
-    }),
-
-  bringWorkspaceToFront: (workspaceId) =>
-    set((state) => {
-      const workspaces = [...state.activeWorkspaces];
-      const currentIndex = workspaces.findIndex((w) => w.id === workspaceId);
-
-      if (currentIndex !== -1) {
-        // Remove from current position and add to end
-        const [workspace] = workspaces.splice(currentIndex, 1);
-        workspaces.push(workspace);
-      }
-
-      return { activeWorkspaces: workspaces };
-    }),
-
-  sendWorkspaceToBack: (workspaceId) =>
-    set((state) => {
-      const workspaces = [...state.activeWorkspaces];
-      const currentIndex = workspaces.findIndex((w) => w.id === workspaceId);
-
-      if (currentIndex !== -1) {
-        // Remove from current position and add to beginning
-        const [workspace] = workspaces.splice(currentIndex, 1);
-        workspaces.unshift(workspace);
-      }
-
-      return { activeWorkspaces: workspaces };
-    }),
-
-  // Layer ordering within workspace
-  moveLayerUp: (workspaceId, layerId) =>
+  // Rearrange workspace order within a category
+  rearrangeWorkspace: (categoryId, workspaceId, action) =>
     set((state) => ({
-      activeWorkspaces: state.activeWorkspaces.map((workspace) => {
-        if (workspace.id !== workspaceId || !workspace.layers) return workspace;
-
-        const layers = [...workspace.layers];
-        const currentIndex = layers.findIndex((l) => l.id === layerId);
-
-        if (currentIndex < layers.length - 1) {
-          // Swap positions
-          [layers[currentIndex], layers[currentIndex + 1]] = [
-            layers[currentIndex + 1],
-            layers[currentIndex],
-          ];
-        }
-
-        return { ...workspace, layers };
-      }),
+      activeWorkspaces: state.activeWorkspaces.map((c) =>
+        c.workspace_category.id === categoryId
+          ? {
+              ...c,
+              workspaces: rearrange(
+                [...c.workspaces],
+                (ws) => ws.id === workspaceId,
+                action
+              ),
+            }
+          : c
+      ),
     })),
 
-  moveLayerDown: (workspaceId, layerId) =>
+  // Rearrange layer order within a workspace
+  rearrangeLayer: (workspaceId, layerId, action) =>
     set((state) => ({
-      activeWorkspaces: state.activeWorkspaces.map((workspace) => {
-        if (workspace.id !== workspaceId || !workspace.layers) return workspace;
-
-        const layers = [...workspace.layers];
-        const currentIndex = layers.findIndex((l) => l.id === layerId);
-
-        if (currentIndex > 0) {
-          // Swap positions
-          [layers[currentIndex], layers[currentIndex - 1]] = [
-            layers[currentIndex - 1],
-            layers[currentIndex],
-          ];
-        }
-
-        return { ...workspace, layers };
-      }),
-    })),
-
-  bringLayerToFront: (workspaceId, layerId) =>
-    set((state) => ({
-      activeWorkspaces: state.activeWorkspaces.map((workspace) => {
-        if (workspace.id !== workspaceId || !workspace.layers) return workspace;
-
-        const layers = [...workspace.layers];
-        const currentIndex = layers.findIndex((l) => l.id === layerId);
-
-        if (currentIndex !== -1) {
-          // Remove from current position and add to end
-          const [layer] = layers.splice(currentIndex, 1);
-          layers.push(layer);
-        }
-
-        return { ...workspace, layers };
-      }),
-    })),
-
-  sendLayerToBack: (workspaceId, layerId) =>
-    set((state) => ({
-      activeWorkspaces: state.activeWorkspaces.map((workspace) => {
-        if (workspace.id !== workspaceId || !workspace.layers) return workspace;
-
-        const layers = [...workspace.layers];
-        const currentIndex = layers.findIndex((l) => l.id === layerId);
-
-        if (currentIndex !== -1) {
-          // Remove from current position and add to beginning
-          const [layer] = layers.splice(currentIndex, 1);
-          layers.unshift(layer);
-        }
-
-        return { ...workspace, layers };
-      }),
+      activeWorkspaces: state.activeWorkspaces.map((c) => ({
+        ...c,
+        workspaces: c.workspaces.map((ws) =>
+          ws.id === workspaceId
+            ? {
+                ...ws,
+                layers: rearrange(
+                  [...(ws.layers ?? [])],
+                  (l) => l.id === layerId,
+                  action
+                ),
+              }
+            : ws
+        ),
+      })),
     })),
 }));
 

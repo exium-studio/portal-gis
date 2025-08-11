@@ -155,7 +155,12 @@ const GeoJSONFilter = () => {
               </AccordionRoot>
             </CContainer>
 
-            <BButton mt={1} variant={"outline"} onClick={clearFilterGeoJSON}>
+            <BButton
+              mt={1}
+              variant={"outline"}
+              onClick={clearFilterGeoJSON}
+              size={"md"}
+            >
               Clear
             </BButton>
           </PopoverContent>

@@ -381,6 +381,10 @@ export const with_explanation = {
   id: "Dengan keterangan",
   en: "With explanation",
 };
+export const without_explanation = {
+  id: "Tanpa keterangan",
+  en: "Without explanation",
+};
 export const with_explanation_helper = {
   id: "Centang jika perlu menambahkan detail pihak yang bersengketa, permasalahan, upaya penanganan & tindak lanjut, serta hasil",
   en: "Check if you need to add details of disputing parties, issues, handling efforts & follow-up, and results",
@@ -410,8 +414,12 @@ export const default_layer_type = {
   en: "Default layer type",
 };
 export const edit_layer_alert = {
-  id: "Jika mengirim file layer, file layer yang dikirim akan menimpa data layer lama",
-  en: "If you send a layer file, the layer file you send will overwrite the old layer data",
+  id: "Jika mengirim file layer, file layer yang dikirim akan menimpa diproses dan menimpa data layer lama",
+  en: "If you send a layer file, the layer file you send will overwrite the processed and overwrite the data of the old layer",
+};
+export const edit_delete_cannot_be_active_workspace = {
+  id: "Tidak dapat edit atau delete layer saat workspace aktif",
+  en: "Cannot edit or delete layer when workspace is active",
 };
 export const delete_layer = {
   id: "Hapus layer",
@@ -446,6 +454,10 @@ export const view_workspace = {
 export const view_layer = {
   id: "Lihat area layer",
   en: "View layer area",
+};
+export const fit_bounds = {
+  id: "Menyesuaikan batas",
+  en: "Fit bounds",
 };
 export const field_info = {
   id: "Info bidang",

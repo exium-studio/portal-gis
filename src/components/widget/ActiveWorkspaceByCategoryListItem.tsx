@@ -1,16 +1,19 @@
 import { MAP_TRANSITION_DURATION } from "@/constants/duration";
-import { Interface__ActiveWorkspace } from "@/constants/interfaces";
+import { Interface__ActiveWorkspacesByWorkspaceCategory } from "@/constants/interfaces";
 import { FIT_BOUNDS_PADDING } from "@/constants/sizes";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useLang from "@/context/useLang";
 import useMapViewState from "@/context/useMapViewState";
-import { Box, HStack, Icon } from "@chakra-ui/react";
+import { useThemeConfig } from "@/context/useThemeConfig";
+import { computeCombinedBboxAndCenterFromActiveWorkspace } from "@/utils/geospatial";
+import { HStack, Icon } from "@chakra-ui/react";
 import {
+  IconCategory2,
   IconEye,
   IconEyeOff,
-  IconFolders,
   IconZoomInArea,
 } from "@tabler/icons-react";
+import { useState } from "react";
 import BButton from "../ui-custom/BButton";
 import CContainer from "../ui-custom/CContainer";
 import P from "../ui-custom/P";
@@ -18,18 +21,19 @@ import {
   AccordionItem,
   AccordionItemContent,
   AccordionItemTrigger,
+  AccordionRoot,
 } from "../ui/accordion";
 import { Tooltip } from "../ui/tooltip";
-import ActiveLayerListItem from "./ActiveLayerListItem";
+import ActiveWorkspaceListItem from "./ActiveWorkspaceListItem";
 
 interface Props {
-  workspace: Interface__ActiveWorkspace;
+  activeWorkspace: Interface__ActiveWorkspacesByWorkspaceCategory;
   index?: number;
 }
 
-const ActiveWorkspaceUtils = (props: any) => {
+const ActiveWorkspaceByCategoryUtils = (props: any) => {
   // Props
-  const { workspace, index, ...restProps } = props;
+  const { activeWorkspace, index, ...restProps } = props;
 
   return (
     <HStack
@@ -38,16 +42,15 @@ const ActiveWorkspaceUtils = (props: any) => {
       onClick={(e) => e.stopPropagation()}
       {...restProps}
     >
-      <ViewWorkspace workspace={workspace} />
+      <ViewWorkspaceByCategory activeWorkspace={activeWorkspace} />
 
-      <ToggleVisibility workspace={workspace} />
+      <ToggleVisibility activeWorkspace={activeWorkspace} />
     </HStack>
   );
 };
-
-const ViewWorkspace = (props: any) => {
+const ViewWorkspaceByCategory = (props: any) => {
   // Props
-  const { workspace, ...restProps } = props;
+  const { activeWorkspace, ...restProps } = props;
 
   // Hooks
   const { l } = useLang();
@@ -57,8 +60,11 @@ const ViewWorkspace = (props: any) => {
 
   // Utils
   function onFitBounds() {
-    if (mapRef.current && workspace?.bbox) {
-      const [minLng, minLat, maxLng, maxLat] = workspace.bbox;
+    const { bbox } =
+      computeCombinedBboxAndCenterFromActiveWorkspace(activeWorkspace);
+
+    if (mapRef.current && bbox) {
+      const [minLng, minLat, maxLng, maxLat] = bbox;
 
       mapRef.current.fitBounds(
         [
@@ -75,7 +81,7 @@ const ViewWorkspace = (props: any) => {
   }
 
   return (
-    <Tooltip content={l.fit_bounds}>
+    <Tooltip content={l.view_workspace}>
       <BButton
         unclicky
         iconButton
@@ -93,14 +99,14 @@ const ViewWorkspace = (props: any) => {
 };
 const ToggleVisibility = (props: any) => {
   // Props
-  const { workspace } = props;
+  const { activeWorkspace } = props;
 
   // Hooks
   const { l } = useLang();
 
   // Contexts
-  const toggleWorkspaceVisibility = useActiveWorkspaces(
-    (s) => s.toggleWorkspaceVisibility
+  const toggleCategoryVisibility = useActiveWorkspaces(
+    (s) => s.toggleCategoryVisibility
   );
 
   return (
@@ -111,14 +117,11 @@ const ToggleVisibility = (props: any) => {
         size={"xs"}
         variant={"ghost"}
         onClick={() => {
-          toggleWorkspaceVisibility(
-            workspace.workspace_category.id,
-            workspace?.id
-          );
+          toggleCategoryVisibility(activeWorkspace.workspace_category.id);
         }}
       >
         <Icon boxSize={5}>
-          {workspace?.visible ? (
+          {activeWorkspace?.visible ? (
             <IconEye stroke={1.5} />
           ) : (
             <IconEyeOff stroke={1.5} />
@@ -129,27 +132,39 @@ const ToggleVisibility = (props: any) => {
   );
 };
 
-const ActiveWorkspaceListItem = (props: Props) => {
+const ActiveWorkspaceByCategoryListItem = (props: Props) => {
   // Props
-  const { workspace, index } = props;
+  const { activeWorkspace, index } = props;
+
+  // Contexts
+  const { themeConfig } = useThemeConfig();
+
+  // States
+  const [value, setValue] = useState<string[]>([]);
 
   return (
-    <AccordionItem value={workspace.id} border={"none"} pb={1}>
+    <AccordionItem
+      value={`${activeWorkspace?.workspace_category.id}`}
+      bg={"body"}
+      borderRadius={themeConfig.radii.component}
+      border={"1px solid"}
+      borderColor={"border.subtle"}
+    >
       <AccordionItemTrigger indicatorPlacement="none" px={2} py={1}>
         <HStack w={"full"} gap={4} justify={"space-between"}>
           <HStack truncate>
             <Icon boxSize={5} color={"fg.subtle"}>
-              <IconFolders stroke={1.5} />
+              <IconCategory2 stroke={1.5} />
             </Icon>
 
             <P fontWeight={"semibold"} lineClamp={1} lineHeight={1}>
-              {workspace.title}
+              {activeWorkspace.workspace_category.label}
             </P>
           </HStack>
 
-          <CContainer w={"fit"} gap={1}>
-            <ActiveWorkspaceUtils
-              workspace={workspace}
+          <CContainer w={"fit"} gap={"2px"}>
+            <ActiveWorkspaceByCategoryUtils
+              activeWorkspace={activeWorkspace}
               index={index}
               ml={"auto"}
             />
@@ -157,33 +172,25 @@ const ActiveWorkspaceListItem = (props: Props) => {
         </HStack>
       </AccordionItemTrigger>
 
-      <AccordionItemContent p={0}>
-        <CContainer borderColor={"border.muted"}>
-          {[...workspace?.layers]?.reverse()?.map((layer, i) => {
-            const last = i === workspace?.layers?.length - 1;
-
-            return (
-              <HStack w={"full"} gap={0}>
-                <HStack w={"28px"} h={"40px"} flexShrink={0} gap={0} pl={4}>
-                  <Box
-                    w={"1px"}
-                    h={last ? "50%" : "full"}
-                    borderLeft={"1px solid"}
-                    borderColor={"border.emphasized"}
-                    mb={"auto"}
-                  />
-
-                  <Box w={"8px"} h={"1px"} bg={"border.emphasized"} />
-                </HStack>
-
-                <ActiveLayerListItem key={layer.id} layer={layer} />
-              </HStack>
-            );
-          })}
+      <AccordionItemContent
+        p={0}
+        borderTop={"1px solid"}
+        borderColor={"border.muted"}
+      >
+        <CContainer gap={2}>
+          <AccordionRoot
+            multiple
+            value={value}
+            onValueChange={(e) => setValue(e.value)}
+          >
+            {activeWorkspace?.workspaces?.map((workspace) => {
+              return <ActiveWorkspaceListItem workspace={workspace} />;
+            })}
+          </AccordionRoot>
         </CContainer>
       </AccordionItemContent>
     </AccordionItem>
   );
 };
 
-export default ActiveWorkspaceListItem;
+export default ActiveWorkspaceByCategoryListItem;

@@ -149,6 +149,32 @@ const Create = () => {
             <form id="create_workspace" onSubmit={formik.handleSubmit}>
               <FieldsetRoot>
                 <Field
+                  label={l.title}
+                  invalid={!!formik.errors.title}
+                  errorText={formik.errors.title as string}
+                >
+                  <StringInput
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("title", input);
+                    }}
+                    inputValue={formik.values.title}
+                  />
+                </Field>
+
+                <Field
+                  label={l.description}
+                  invalid={!!formik.errors.description}
+                  errorText={formik.errors.description as string}
+                >
+                  <Textarea
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("description", input);
+                    }}
+                    inputValue={formik.values.description}
+                  />
+                </Field>
+
+                <Field
                   label={l.workspace_category}
                   invalid={!!formik.errors.workspace_category}
                   errorText={formik.errors.workspace_category as string}
@@ -175,32 +201,6 @@ const Create = () => {
                     }}
                     inputValue={formik.values.thumbnail}
                     accept=".png, .jpg, .jpeg,"
-                  />
-                </Field>
-
-                <Field
-                  label={l.title}
-                  invalid={!!formik.errors.title}
-                  errorText={formik.errors.title as string}
-                >
-                  <StringInput
-                    onChangeSetter={(input) => {
-                      formik.setFieldValue("title", input);
-                    }}
-                    inputValue={formik.values.title}
-                  />
-                </Field>
-
-                <Field
-                  label={l.description}
-                  invalid={!!formik.errors.description}
-                  errorText={formik.errors.description as string}
-                >
-                  <Textarea
-                    onChangeSetter={(input) => {
-                      formik.setFieldValue("description", input);
-                    }}
-                    inputValue={formik.values.description}
                   />
                 </Field>
               </FieldsetRoot>

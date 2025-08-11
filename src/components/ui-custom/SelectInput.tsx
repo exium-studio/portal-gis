@@ -276,7 +276,7 @@ const SelectInput = ({
           </DisclosureHeader>
 
           <DisclosureBody
-            py={"0 !important"}
+            // py={"0 !important"}
             pb={"0 !important"}
             // pt={"4 !important"}
             className="scrollY"
@@ -284,7 +284,7 @@ const SelectInput = ({
             mr={"1px"}
           >
             {fl && (
-              <HStack position={"sticky"} top={"0"} bg={"body"} zIndex={2}>
+              <HStack zIndex={2}>
                 <SearchInput
                   onChangeSetter={(inputValue) => {
                     setSearch(inputValue);

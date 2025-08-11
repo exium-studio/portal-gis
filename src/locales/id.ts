@@ -139,7 +139,8 @@ const translations = {
   "document": "Dokumen",
   "edge_permissions_settings_link": "Pengaturan → Cookie dan izin situs → ",
   "edit": "Edit",
-  "edit_layer_alert": "Jika mengirim file layer, file layer yang dikirim akan menimpa data layer lama",
+  "edit_delete_cannot_be_active_workspace": "Tidak dapat edit atau delete layer saat workspace aktif",
+  "edit_layer_alert": "Jika mengirim file layer, file layer yang dikirim akan menimpa diproses dan menimpa data layer lama",
   "edit_workspace": "Edit workspace",
   "education": "Pendidikan",
   "empty": "Kosong",
@@ -224,6 +225,7 @@ const translations = {
   "field_info": "Info bidang",
   "file_dropzone_label": "Drag and drop/klik untuk unggah berkas",
   "firefox_permissions_settings_link": "Preferensi → Privasi & Keamanan → Izin → ",
+  "fit_bounds": "Menyesuaikan batas",
   "for_gender": "Untuk gender",
   "forbidden_feedback": {
     "title": "Tidak ada akses",
@@ -578,6 +580,7 @@ const translations = {
   "weekly": "Mingguan",
   "with_explanation": "Dengan keterangan",
   "with_explanation_helper": "Centang jika perlu menambahkan detail pihak yang bersengketa, permasalahan, upaya penanganan & tindak lanjut, serta hasil",
+  "without_explanation": "Tanpa keterangan",
   "workspace_category": "Kategori workspace",
   "workspace_detail": "Detail workspace",
   "workspace_loaded_toast": {

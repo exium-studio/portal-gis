@@ -2,27 +2,20 @@ import {
   Interface__ActiveLayer,
   Interface__ActiveWorkspace,
 } from "@/constants/interfaces";
-import useActiveWorkspaces from "@/context/useActiveWorkspaces";
-import useLegend from "@/context/useLegend";
-import useMapStyle from "@/context/useMapStyle";
 import useMapViewState from "@/context/useMapViewState";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
-import { useCallback, useEffect } from "react";
+import useLegend from "@/context/useLegend";
+import useMapStyle from "@/context/useMapStyle";
 import { useColorMode } from "../ui/color-mode";
-import empty from "@/utils/empty";
+import { useCallback, useEffect, useRef } from "react";
 
 interface LayerSourceProps {
   activeWorkspace: Interface__ActiveWorkspace;
   activeLayer: Interface__ActiveLayer;
 }
 
-const LayerSource = (props: LayerSourceProps) => {
-  // Props
-  const { activeWorkspace, activeLayer } = props;
-
-  // Contexts
-  const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
+const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
   const mapRef = useMapViewState((s) => s.mapRef);
   const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
   const setSelectedPolygon = useSelectedPolygon((s) => s.setSelectedPolygon);
@@ -35,14 +28,16 @@ const LayerSource = (props: LayerSourceProps) => {
   const mapStyle = useMapStyle((s) => s.mapStyle);
   const { colorMode } = useColorMode();
 
-  // States
-  const legendType = legend?.label;
   const geojson = activeLayer?.data?.geojson;
+  const fillLayerId = `${activeLayer.id}-fill`;
+  const lineLayerId = `${activeLayer.id}-outline`;
+  const sourceId = `${activeLayer.id}-source`;
+
   const plainLight = colorMode === "light" && mapStyle?.id === 1;
   const plainDark = colorMode === "dark" && mapStyle?.id === 1;
   const colorful = mapStyle?.id === 2;
   const satellite = mapStyle?.id === 3;
-  const legendList = empty(legend.list) ? [] : legend.list;
+
   const defaultFillColor = plainLight
     ? "#bbb"
     : plainDark
@@ -61,35 +56,29 @@ const LayerSource = (props: LayerSourceProps) => {
     : satellite
     ? "#555"
     : "#ccc";
-  const fillLayerId = `${activeLayer.id}-fill`;
-  const lineLayerId = `${activeLayer.id}-outline`;
-  const sourceId = `${activeLayer.id}-source`;
-  const isFillLayer = activeLayer.layer_type === "fill";
-  const isLineLayer = activeLayer.layer_type === "line";
-  const selectedPolygonId = selectedPolygon?.polygon?.properties?.id || null;
 
   const fillColor = ["coalesce", ["get", "color"], defaultFillColor];
   const fillOpacity = 0.6;
+  const isFillLayer = activeLayer.layer_type === "fill";
+  const isLineLayer = activeLayer.layer_type === "line";
 
-  // Utils
+  const lastGeojsonRef = useRef<any>(null);
+
   const handleOnClickPolygon = useCallback(
     (event: any) => {
       if (!activeLayer.visible) return;
-
       const clickedFeature = event.features?.[0];
       if (!clickedFeature) {
         clearSelectedPolygon();
         return;
       }
-
-      const selectedId = selectedPolygon?.polygon?.properties?.id;
       const clickedId = clickedFeature.properties?.id;
-
+      const selectedId = selectedPolygon?.polygon?.properties?.id;
       if (selectedId === clickedId) {
         clearSelectedPolygon();
       } else {
-        const clickedPolygon = activeLayer?.data?.geojson?.features?.find(
-          (feature) => feature?.properties?.id === clickedId
+        const clickedPolygon = geojson?.features?.find(
+          (f) => f.properties?.id === clickedId
         );
         setSelectedPolygon({
           polygon: clickedPolygon,
@@ -100,44 +89,38 @@ const LayerSource = (props: LayerSourceProps) => {
       }
     },
     [
-      selectedPolygon?.polygon?.properties?.id,
-      activeWorkspace,
       activeLayer,
+      activeWorkspace,
+      selectedPolygon,
+      geojson,
       themeConfig.primaryColorHex,
-      fillColor,
     ]
   );
 
-  // Handle initialize layers
   useEffect(() => {
-    const map = mapRef.current?.getMap();
+    const map = mapRef?.current?.getMap();
     if (!map || !geojson) return;
 
-    // Add or update source
+    // Add/Update source
     const existingSource = map.getSource(sourceId);
-    const existingFill = map.getLayer(fillLayerId);
-    const existingLine = map.getLayer(lineLayerId);
-
     if (existingSource) {
-      (existingSource as any).setData(geojson);
+      if (lastGeojsonRef.current !== geojson) {
+        (existingSource as any).setData(geojson);
+        lastGeojsonRef.current = geojson;
+      }
     } else {
-      map.addSource(sourceId, {
-        type: "geojson",
-        data: geojson,
-      });
+      map.addSource(sourceId, { type: "geojson", data: geojson });
+      lastGeojsonRef.current = geojson;
     }
 
-    // Fill layer
+    // Add or update layers
     if (isFillLayer || isLineLayer) {
-      if (!existingFill) {
+      if (!map.getLayer(fillLayerId)) {
         map.addLayer({
           id: fillLayerId,
           type: "fill",
           source: sourceId,
-          paint: {
-            "fill-color": fillColor,
-            "fill-opacity": fillOpacity,
-          },
+          paint: { "fill-color": fillColor, "fill-opacity": fillOpacity },
         });
       } else {
         map.setPaintProperty(fillLayerId, "fill-color", fillColor);
@@ -145,9 +128,8 @@ const LayerSource = (props: LayerSourceProps) => {
       }
     }
 
-    // Outline layer
     if (isFillLayer || isLineLayer) {
-      if (!existingLine) {
+      if (!map.getLayer(lineLayerId)) {
         map.addLayer({
           id: lineLayerId,
           type: "line",
@@ -163,7 +145,7 @@ const LayerSource = (props: LayerSourceProps) => {
       }
     }
 
-    // Click event
+    // Event click (per layer)
     if (activeLayer.visible) {
       map.on("click", fillLayerId, handleOnClickPolygon);
     }
@@ -173,28 +155,24 @@ const LayerSource = (props: LayerSourceProps) => {
     };
   }, [
     geojson,
-    activeLayer.id,
     activeLayer.visible,
-    activeLayer.layer_type,
     legend,
     themeConfig.primaryColorHex,
-    selectedPolygon,
     fillColor,
     fillOpacity,
-    activeWorkspaces,
     colorway,
   ]);
 
-  // Cleanup on layer unmount
+  // Cleanup saat unmount
   useEffect(() => {
     return () => {
-      const map = mapRef.current?.getMap();
+      const map = mapRef?.current?.getMap();
       if (!map) return;
       if (map.getLayer(fillLayerId)) map.removeLayer(fillLayerId);
       if (map.getLayer(lineLayerId)) map.removeLayer(lineLayerId);
       if (map.getSource(sourceId)) map.removeSource(sourceId);
     };
-  }, [activeLayer.id]);
+  }, []);
 
   return null;
 };

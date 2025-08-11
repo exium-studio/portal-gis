@@ -1,20 +1,19 @@
 import useDateFormat from "@/context/useDateFormat";
 import useLang from "@/context/useLang";
 import useTimeZone from "@/context/useTimeZone";
+import useClickOutside from "@/hooks/useClickOutside";
 import autoTimeZone from "@/utils/autoTimeZone";
 import formatDate from "@/utils/formatDate";
 import { HStack, Icon, Text, useDisclosure } from "@chakra-ui/react";
 import { IconTimezone } from "@tabler/icons-react";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import BButton, { BButtonProps } from "../ui-custom/BButton";
 import CContainer from "../ui-custom/CContainer";
-import HelperText from "../ui-custom/HelperText";
 import { PopoverContent, PopoverRoot, PopoverTrigger } from "../ui/popover";
 import { Tooltip } from "../ui/tooltip";
 import Clock from "./Clock";
 import MenuHeaderContainer from "./MenuHeaderContainer";
-import useClickOutside from "@/hooks/useClickOutside";
-import { useRef } from "react";
 
 const CurrentUserTimeZone = (props: BButtonProps) => {
   // Props
@@ -65,7 +64,7 @@ const CurrentUserTimeZone = (props: BButtonProps) => {
         </MenuHeaderContainer>
 
         <CContainer p={2}>
-          <HelperText mb={1}>{l.selected_time_zone}</HelperText>
+          {/* <HelperText mb={1}>{l.selected_time_zone}</HelperText> */}
 
           <HStack>
             <Text fontWeight={"medium"}>{formatDate(new Date())}</Text>
@@ -79,7 +78,7 @@ const CurrentUserTimeZone = (props: BButtonProps) => {
 
         {!userSelect && (
           <CContainer px={2} my={2}>
-            <HelperText mb={1}>{l.auto_time_zone}</HelperText>
+            {/* <HelperText mb={1}>{l.auto_time_zone}</HelperText> */}
 
             <HStack>
               <Text fontWeight={"medium"}>

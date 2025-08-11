@@ -62,7 +62,9 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
             minH={sh < 500 ? "90dvh" : ""}
             bg="body"
             shadow="none"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
             {...rest}
           >
             {children}

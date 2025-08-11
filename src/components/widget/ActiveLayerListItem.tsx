@@ -1,6 +1,9 @@
+import { MAP_TRANSITION_DURATION } from "@/constants/duration";
 import { Interface__ActiveLayer } from "@/constants/interfaces";
+import { FIT_BOUNDS_PADDING } from "@/constants/sizes";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useLang from "@/context/useLang";
+import useMapViewState from "@/context/useMapViewState";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import capsFirstLetter from "@/utils/capsFirstLetter";
 import { HStack, Icon, StackProps } from "@chakra-ui/react";
@@ -9,6 +12,7 @@ import {
   IconEyeOff,
   IconLine,
   IconPolygon,
+  IconZoomInArea,
 } from "@tabler/icons-react";
 import BButton from "../ui-custom/BButton";
 import CContainer from "../ui-custom/CContainer";
@@ -17,81 +21,67 @@ import { Tooltip } from "../ui/tooltip";
 import SimplePopover from "./SimplePopover";
 
 interface Props extends StackProps {
-  activeLayer: Interface__ActiveLayer;
+  layer: Interface__ActiveLayer;
 }
 
 const ActiveLayerUtils = (props: any) => {
   // Props
   const { activeLayer, ...restProps } = props;
 
-  // TODO dev control zindex for workspace layer
-
   return (
     <HStack gap={1} {...restProps}>
-      {/* <DecreaseLayerLevel activeLayer={activeLayer} /> */}
-
-      {/* <IncreaseLayerLevel activeLayer={activeLayer} /> */}
+      <ViewWorkspace activeLayer={activeLayer} />
 
       <ToggleVisibility activeLayer={activeLayer} />
     </HStack>
   );
 };
-// const DecreaseLayerLevel = (props: any) => {
-//   // Props
-//   const { activeLayer } = props;
+const ViewWorkspace = (props: any) => {
+  // Props
+  const { activeLayer, ...restProps } = props;
 
-//   // Hooks
-//   const { l } = useLang();
+  // Hooks
+  const { l } = useLang();
 
-//   // Contexts
-//   const decreaseLayerLevel = useActiveWorkspaces((s) => s.moveLayerDown);
+  // Contexts
+  const mapRef = useMapViewState((s) => s.mapRef);
 
-//   return (
-//     <Tooltip content={l.move_down_layer_level}>
-//       <BButton
-//         iconButton
-//         unclicky
-//         size={"xs"}
-//         variant={"ghost"}
-//         onClick={() => {
-//           decreaseLayerLevel(activeLayer?.workspace?.id, activeLayer?.id);
-//         }}
-//       >
-//         <Icon boxSize={5}>
-//           <IconStackPush stroke={1.5} />
-//         </Icon>
-//       </BButton>
-//     </Tooltip>
-//   );
-// };
-// const IncreaseLayerLevel = (props: any) => {
-//   // Props
-//   const { activeLayer } = props;
+  // Utils
+  function onFitBounds() {
+    if (mapRef.current && activeLayer.data.bbox) {
+      const [minLng, minLat, maxLng, maxLat] = activeLayer.data.bbox;
 
-//   // Hooks
-//   const { l } = useLang();
+      mapRef.current.fitBounds(
+        [
+          [minLng, minLat],
+          [maxLng, maxLat],
+        ],
+        {
+          padding: FIT_BOUNDS_PADDING,
+          duration: MAP_TRANSITION_DURATION,
+          essential: true,
+        }
+      );
+    }
+  }
 
-//   // Contexts
-//   const increaseLayerLevel = useActiveWorkspaces((s) => s.moveLayerUp);
-
-//   return (
-//     <Tooltip content={l.move_up_layer_level}>
-//       <BButton
-//         iconButton
-//         unclicky
-//         size={"xs"}
-//         variant={"ghost"}
-//         onClick={() => {
-//           increaseLayerLevel(activeLayer?.workspace?.id, activeLayer?.id);
-//         }}
-//       >
-//         <Icon boxSize={5}>
-//           <IconStackPop stroke={1.5} />
-//         </Icon>
-//       </BButton>
-//     </Tooltip>
-//   );
-// };
+  return (
+    <Tooltip content={l.fit_bounds}>
+      <BButton
+        unclicky
+        iconButton
+        variant={"ghost"}
+        onClick={onFitBounds}
+        size={"xs"}
+        {...restProps}
+      >
+        <Icon boxSize={5}>
+          <IconZoomInArea stroke={1.5} />
+        </Icon>
+      </BButton>
+    </Tooltip>
+  );
+};
 const ToggleVisibility = (props: any) => {
   // Props
   const { activeLayer } = props;
@@ -100,7 +90,9 @@ const ToggleVisibility = (props: any) => {
   const { l } = useLang();
 
   // Contexts
-  const toggleVisibility = useActiveWorkspaces((s) => s.toggleLayerVisibility);
+  const toggleLayerVisibility = useActiveWorkspaces(
+    (s) => s.toggleLayerVisibility
+  );
 
   return (
     <Tooltip content={l.toggle_visibility}>
@@ -110,7 +102,7 @@ const ToggleVisibility = (props: any) => {
         size={"xs"}
         variant={"ghost"}
         onClick={() => {
-          toggleVisibility(activeLayer?.workspace?.id, activeLayer?.id);
+          toggleLayerVisibility(activeLayer?.workspace?.id, activeLayer?.id);
         }}
       >
         <Icon boxSize={5}>
@@ -127,13 +119,15 @@ const ToggleVisibility = (props: any) => {
 
 const ActiveLayerListItem = (props: Props) => {
   // Props
-  const { activeLayer, ...restProps } = props;
+  const { layer, ...restProps } = props;
 
   // Contexts
   const { themeConfig } = useThemeConfig();
 
   return (
     <HStack
+      w={"full"}
+      pr={2}
       borderRadius={themeConfig.radii.container}
       transition={"200ms"}
       gap={0}
@@ -143,40 +137,40 @@ const ActiveLayerListItem = (props: Props) => {
         <SimplePopover
           content={
             <CContainer gap={1}>
-              <P w={"full"}>{activeLayer?.name}</P>
+              <P w={"full"}>{layer?.name}</P>
 
               <P w={"full"} color={"fg.subtle"}>
-                {activeLayer?.description}
+                {layer?.description}
               </P>
 
               <HStack color={"fg.subtle"} mt={1}>
                 <Icon boxSize={5}>
-                  {activeLayer?.layer_type === "fill" ? (
+                  {layer?.layer_type === "fill" ? (
                     <IconPolygon stroke={1.5} />
                   ) : (
                     <IconLine stroke={1.5} />
                   )}
                 </Icon>
 
-                <P lineClamp={1}>{capsFirstLetter(activeLayer?.layer_type)}</P>
+                <P lineClamp={1}>{capsFirstLetter(layer?.layer_type)}</P>
               </HStack>
             </CContainer>
           }
         >
           <HStack cursor={"pointer"} pl={1}>
             <Icon boxSize={5} color={"fg.subtle"}>
-              {activeLayer?.layer_type === "fill" ? (
+              {layer?.layer_type === "fill" ? (
                 <IconPolygon stroke={1.5} />
               ) : (
                 <IconLine stroke={1.5} />
               )}
             </Icon>
 
-            <P lineClamp={1}>{activeLayer?.name}</P>
+            <P lineClamp={1}>{layer?.name}</P>
           </HStack>
         </SimplePopover>
 
-        <ActiveLayerUtils activeLayer={activeLayer} ml={"auto"} />
+        <ActiveLayerUtils activeLayer={layer} ml={"auto"} />
       </HStack>
     </HStack>
   );

@@ -139,7 +139,8 @@ const translations = {
   "document": "Document",
   "edge_permissions_settings_link": "Settings → Cookies and site permissions → ",
   "edit": "Edit",
-  "edit_layer_alert": "If you send a layer file, the layer file you send will overwrite the old layer data",
+  "edit_delete_cannot_be_active_workspace": "Cannot edit or delete layer when workspace is active",
+  "edit_layer_alert": "If you send a layer file, the layer file you send will overwrite the processed and overwrite the data of the old layer",
   "edit_workspace": "Edit workspace",
   "education": "Education",
   "empty": "Empty",
@@ -224,6 +225,7 @@ const translations = {
   "field_info": "Field info",
   "file_dropzone_label": "Drag and drop/click to upload files",
   "firefox_permissions_settings_link": "Preferences → Privacy & Security → Permissions → ",
+  "fit_bounds": "Fit bounds",
   "for_gender": "For gender",
   "forbidden_feedback": {
     "title": "No Access",
@@ -578,6 +580,7 @@ const translations = {
   "weekly": "Weekly",
   "with_explanation": "With explanation",
   "with_explanation_helper": "Check if you need to add details of disputing parties, issues, handling efforts & follow-up, and results",
+  "without_explanation": "Without explanation",
   "workspace_category": "Workspace category",
   "workspace_detail": "Workspace detail",
   "workspace_loaded_toast": {
