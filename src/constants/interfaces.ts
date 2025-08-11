@@ -81,10 +81,12 @@ export interface Interface__Layer extends Interface__CUD {
 export interface Interface__LayerData extends Interface__CUD {
   id: number;
   layer_id: number;
-  documents: Interface__StorageFile[];
   geojson: GeoJSON.FeatureCollection;
   bbox?: number[];
   bbox_center?: number[];
+}
+export interface Interface__GeoJSONData extends GeoJSON.FeatureCollection {
+  documents: Interface__StorageFile[];
 }
 export interface Interface__ActiveWorkspace extends Interface__Workspace {
   visible: boolean;

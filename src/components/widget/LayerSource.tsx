@@ -68,36 +68,8 @@ const LayerSource = (props: LayerSourceProps) => {
   const isLineLayer = activeLayer.layer_type === "line";
   const selectedPolygonId = selectedPolygon?.polygon?.properties?.id || null;
 
-  const fillColor = [
-    "case",
-    ["==", ["get", "id"], selectedPolygonId],
-    selectedPolygon?.fillColor || defaultFillColor,
-    legendList.length > 0
-      ? [
-          "match",
-          ["get", legendType],
-          ...legend.list.flatMap((legend) => [legend.label, legend.color]),
-          defaultFillColor,
-        ]
-      : defaultFillColor,
-  ];
-  const fillOpacity = !activeLayer?.visible
-    ? 0
-    : [
-        "case",
-        ["==", ["get", "id"], selectedPolygonId],
-        0.6,
-        [
-          "case",
-          [
-            "all",
-            ["==", ["literal", activeLayer.visible], true],
-            ["!", ["==", ["literal", isLineLayer], true]],
-          ],
-          0.6,
-          0,
-        ],
-      ];
+  const fillColor = ["coalesce", ["get", "color"], defaultFillColor];
+  const fillOpacity = 0.6;
 
   // Utils
   const handleOnClickPolygon = useCallback(
@@ -183,15 +155,11 @@ const LayerSource = (props: LayerSourceProps) => {
           paint: {
             "line-color": defaultLineColor,
             "line-width": 1,
-            "line-opacity": activeLayer.visible ? 1 : 0,
+            "line-opacity": 1,
           },
         });
       } else {
-        map.setPaintProperty(
-          lineLayerId,
-          "line-opacity",
-          activeLayer.visible ? 1 : 0
-        );
+        map.setPaintProperty(lineLayerId, "line-opacity", 1);
       }
     }
 
