@@ -87,7 +87,7 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
             overflowY={"auto"}
             maxH={"full"}
           >
-            <CContainer className="scrollY" pl={2} pr={1} gap={4}>
+            <CContainer className="scrollY" px={2} gap={4}>
               {SETTINGS_NAVS.map((item, i) => {
                 return (
                   <CContainer key={i}>
@@ -117,7 +117,7 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
                             {pluck(l, nav.labelKey)}
 
                             {compact && (
-                              <Icon ml={"auto"} mr={-1}>
+                              <Icon ml={"auto"} boxSize={4}>
                                 <IconChevronRight stroke={1.5} />
                               </Icon>
                             )}
@@ -134,7 +134,10 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
       )}
 
       {/* Content */}
-      <PageContainer display={compact && settingsRoute ? "none" : "flex"}>
+      <PageContainer
+        display={compact && settingsRoute ? "none" : "flex"}
+        h={"full"}
+      >
         {children}
       </PageContainer>
     </HStack>
