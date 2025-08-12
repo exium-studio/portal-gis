@@ -149,7 +149,7 @@ export const LegendContent = (props: any) => {
       }}
       animationEntrance="left"
     >
-      <MenuHeaderContainer borderless>
+      <MenuHeaderContainer>
         <HStack h={"20px"}>
           <IconFlag stroke={1.5} size={20} />
           <P fontWeight={"bold"}>{l.legend}</P>
@@ -158,7 +158,7 @@ export const LegendContent = (props: any) => {
         </HStack>
       </MenuHeaderContainer>
 
-      <CContainer px={3} className="scrollY" gap={3}>
+      <CContainer className="scrollY" gap={3} px={1}>
         {empty(activeWorkspaces) && (
           <FeedbackNoData
             icon={<IconFoldersOff />}
@@ -179,7 +179,7 @@ export const LegendContent = (props: any) => {
                     key={layer.id}
                     value={`${layer.id}`}
                     gap={2}
-                    px={1}
+                    px={3}
                     py={1}
                     pb={last ? 0 : 1}
                     border={last ? "none" : ""}
