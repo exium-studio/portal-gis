@@ -64,6 +64,10 @@ import WorkspaceLayersDisclosureTrigger from "./WorkspaceLayersDisclosureTrigger
 import { Checkbox } from "../ui/checkbox";
 import interpolate from "@/utils/interpolate";
 import { FIT_BOUNDS_PADDING } from "@/constants/sizes";
+import {
+  useIsWorkspaceLoading,
+  useWorkspaceLoading,
+} from "@/context/useWorkspaceLoading";
 
 const WorkspaceMenu = (props: any) => {
   // Props
@@ -401,6 +405,9 @@ const WorkspaceLayersUtils = (props: {
   // Props
   const { workspace, workspaceActive, ...restProps } = props;
 
+  // Contexts
+  const workspaceLoading = useIsWorkspaceLoading(workspace.id);
+
   return (
     <HStack
       gap={1}
@@ -412,11 +419,17 @@ const WorkspaceLayersUtils = (props: {
       borderColor={"border.subtle"}
       {...restProps}
     >
-      <AddLayer workspace={workspace} disabled={!!workspaceActive} />
+      <AddLayer
+        workspace={workspace}
+        disabled={workspaceLoading || !!workspaceActive}
+      />
 
-      <WorkspaceLayers workspace={workspace} />
+      <WorkspaceLayers workspace={workspace} disabled={workspaceLoading} />
 
-      <ViewWorkspace workspace={workspace} disabled={!workspaceActive} />
+      <ViewWorkspace
+        workspace={workspace}
+        disabled={!workspaceActive || workspaceLoading}
+      />
 
       <ToggleLoadWorkspace
         workspace={workspace}
@@ -707,7 +720,7 @@ const ToggleLoadWorkspace = (props: any) => {
 
   // Hooks
   const { l } = useLang();
-  const { req, loading } = useRequest({
+  const { req } = useRequest({
     id: `load_workspace_${workspace.id}`,
     loadingMessage: {
       title: interpolate(l.workspace_loading_toast.title, {
@@ -727,6 +740,11 @@ const ToggleLoadWorkspace = (props: any) => {
   const { themeConfig } = useThemeConfig();
   const loadWorkspace = useActiveWorkspaces((s) => s.loadWorkspace);
   const unloadWorkspace = useActiveWorkspaces((s) => s.unloadWorkspace);
+  const addWorkspaceLoading = useWorkspaceLoading((s) => s.addWorkspaceLoading);
+  const removeWorkspaceLoading = useWorkspaceLoading(
+    (s) => s.removeWorkspaceLoading
+  );
+  const workspaceLoading = useIsWorkspaceLoading(workspace.id);
 
   // States
   const [checked, setChecked] = useState<boolean>(workspaceActive);
@@ -735,6 +753,8 @@ const ToggleLoadWorkspace = (props: any) => {
 
   // Utils
   function onLoad() {
+    addWorkspaceLoading(workspace.id);
+
     const url = `/api/gis-bpn/workspaces-layers/load/${workspace.id}`;
     const config = {
       url,
@@ -773,6 +793,8 @@ const ToggleLoadWorkspace = (props: any) => {
             newActiveWorkspace?.workspace_category?.id,
             newActiveWorkspace
           );
+
+          removeWorkspaceLoading(workspace.id);
         },
         onError: () => {
           setChecked(false);
@@ -802,11 +824,11 @@ const ToggleLoadWorkspace = (props: any) => {
       <HStack px={2} justify={"center"} {...restProps}>
         <Switch
           colorPalette={themeConfig.colorPalette}
-          checked={checked}
+          checked={checked || workspaceLoading}
           onCheckedChange={(e) => {
             setChecked(e.checked);
           }}
-          disabled={loading}
+          disabled={workspaceLoading}
         />
       </HStack>
     </Tooltip>
