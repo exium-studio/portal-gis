@@ -47,6 +47,7 @@ const EXCLUDED_KEYS = [
   "document_ids",
   "docs",
   "deleted_docs",
+  "color",
 ];
 
 export const LegendTrigger = () => {
@@ -301,6 +302,8 @@ const ColorwayOptions = (props: any) => {
 export const LegendContent = (props: any) => {
   // Props
   const { containerProps } = props;
+
+  // TODO generate legend from active workspaces and render
 
   // Hooks
   const { l } = useLang();

@@ -40,6 +40,7 @@ const EXCLUDED_KEYS = [
   "PERMASALAH",
   "TINDAKLANJ",
   "HASIL",
+  "color",
 ];
 
 export const EditField = (props: any) => {
@@ -59,6 +60,7 @@ export const EditField = (props: any) => {
 
   // Contexts
   const { themeConfig } = useThemeConfig();
+  // TODO update layer data (properties)
   const updateActiveLayerData = useActiveWorkspaces((s) => s.updateLayerData);
 
   // States

@@ -11,6 +11,7 @@ import {
   IconCategory2,
   IconEye,
   IconEyeOff,
+  IconStackPop,
   IconZoomInArea,
 } from "@tabler/icons-react";
 import { useState } from "react";
@@ -23,6 +24,7 @@ import {
   AccordionItemTrigger,
   AccordionRoot,
 } from "../ui/accordion";
+import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
 import { Tooltip } from "../ui/tooltip";
 import ActiveWorkspaceListItem from "./ActiveWorkspaceListItem";
 
@@ -42,10 +44,90 @@ const ActiveWorkspaceByCategoryUtils = (props: any) => {
       onClick={(e) => e.stopPropagation()}
       {...restProps}
     >
+      <Rearange activeWorkspace={activeWorkspace} />
+
       <ViewWorkspaceByCategory activeWorkspace={activeWorkspace} />
 
       <ToggleVisibility activeWorkspace={activeWorkspace} />
     </HStack>
+  );
+};
+const Rearange = (props: any) => {
+  // Props
+  const { activeWorkspace } = props;
+
+  // Hooks
+  const { l } = useLang();
+
+  // Contexts
+  const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
+  const rearrangeCategory = useActiveWorkspaces((s) => s.rearrangeCategory);
+
+  // States
+  const workspaceCategoryId = activeWorkspace.workspace_category.id;
+  const first =
+    activeWorkspaces[0]?.workspace_category?.id ===
+    activeWorkspace?.workspace_category?.id;
+  const last =
+    activeWorkspaces[activeWorkspaces.length - 1]?.workspace_category?.id ===
+    activeWorkspace?.workspace_category?.id;
+
+  return (
+    <MenuRoot>
+      <MenuTrigger asChild>
+        <BButton
+          iconButton
+          unclicky
+          variant={"ghost"}
+          size={"xs"}
+          disabled={first && last}
+          {...props}
+        >
+          <Icon boxSize={5}>
+            <IconStackPop stroke={1.5} />
+          </Icon>
+        </BButton>
+      </MenuTrigger>
+
+      <MenuContent>
+        <MenuItem
+          value="front"
+          disabled={last}
+          onClick={() => {
+            rearrangeCategory(workspaceCategoryId, "front");
+          }}
+        >
+          {l.bring_to_front_layer_level}
+        </MenuItem>
+        <MenuItem
+          value="back"
+          disabled={first}
+          onClick={() => {
+            rearrangeCategory(workspaceCategoryId, "back");
+          }}
+        >
+          {l.send_to_back_layer_level}
+        </MenuItem>
+        <MenuItem
+          value="up"
+          disabled={last}
+          onClick={() => {
+            rearrangeCategory(workspaceCategoryId, "up");
+          }}
+        >
+          {l.move_up_layer_level}
+        </MenuItem>
+        <MenuItem
+          value="down"
+          disabled={first}
+          onClick={() => {
+            rearrangeCategory(workspaceCategoryId, "down");
+          }}
+        >
+          {l.move_down_layer_level}
+        </MenuItem>
+      </MenuContent>
+    </MenuRoot>
   );
 };
 const ViewWorkspaceByCategory = (props: any) => {
@@ -183,8 +265,14 @@ const ActiveWorkspaceByCategoryListItem = (props: Props) => {
             value={value}
             onValueChange={(e) => setValue(e.value)}
           >
-            {activeWorkspace?.workspaces?.map((workspace) => {
-              return <ActiveWorkspaceListItem workspace={workspace} />;
+            {activeWorkspace?.workspaces?.map((workspace, i) => {
+              return (
+                <ActiveWorkspaceListItem
+                  workspace={workspace}
+                  index={i}
+                  workspacesLength={activeWorkspace.workspaces.length}
+                />
+              );
             })}
           </AccordionRoot>
         </CContainer>

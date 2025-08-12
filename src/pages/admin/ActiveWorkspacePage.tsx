@@ -1,6 +1,6 @@
 import { HStack } from "@chakra-ui/react";
 import { IconFoldersOff } from "@tabler/icons-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import CContainer from "@/components/ui-custom/CContainer";
 import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
@@ -21,27 +21,37 @@ const ActiveWorkspacePage = () => {
 
   // States
   const [searchTerm, setSearchTerm] = useState("");
-  const [value, setValue] = useState<string[]>([]);
-  const filteredWorkspacesByCategory = [...activeWorkspacesByCategory]
-    ?.reverse()
-    .map((category) => {
-      const filteredWorkspaces = category.workspaces.filter((workspace) => {
-        if (!searchTerm) return true;
+  const filteredWorkspacesByCategory = useMemo(() => {
+    const lowerSearch = searchTerm?.toLowerCase() || "";
 
-        const lowerSearch = searchTerm.toLowerCase();
-        const titleMatch = workspace.title.toLowerCase().includes(lowerSearch);
-        const layerNameMatch = workspace.layers?.some((layer) =>
-          layer.name.toLowerCase().includes(lowerSearch)
-        );
-        return titleMatch || layerNameMatch;
-      });
+    return (
+      activeWorkspacesByCategory
+        ?.slice() // copy array biar nggak mutasi
+        .reverse()
+        .map((category) => {
+          const filteredWorkspaces =
+            category.workspaces?.filter((workspace) => {
+              if (!lowerSearch) return true;
 
-      return {
-        ...category,
-        workspaces: filteredWorkspaces,
-      };
-    })
-    .filter((category) => category.workspaces.length > 0);
+              const titleMatch = workspace.title
+                ?.toLowerCase()
+                .includes(lowerSearch);
+
+              const layerNameMatch = workspace.layers?.some((layer) =>
+                layer.name?.toLowerCase().includes(lowerSearch)
+              );
+
+              return titleMatch || layerNameMatch;
+            }) || [];
+
+          return {
+            ...category,
+            workspaces: filteredWorkspaces,
+          };
+        })
+        .filter((category) => category.workspaces.length > 0) || []
+    );
+  }, [activeWorkspacesByCategory, searchTerm]);
   const empty = filteredWorkspacesByCategory.length === 0;
 
   return (
@@ -63,12 +73,8 @@ const ActiveWorkspacePage = () => {
             description={l.no_active_workspaces.description}
           />
         ) : (
-          <AccordionRoot
-            multiple
-            value={value}
-            onValueChange={(e) => setValue(e.value)}
-          >
-            <CContainer gap={4}>
+          <AccordionRoot multiple>
+            <CContainer gap={2}>
               {filteredWorkspacesByCategory.map((activeWorkspace, i) => (
                 <ActiveWorkspaceByCategoryListItem
                   key={activeWorkspace.workspace_category.id}

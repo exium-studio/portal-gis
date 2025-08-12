@@ -18,6 +18,7 @@ interface Props extends Omit<InputGroupProps, "children"> {
   onChangeSetter?: Dispatch<string>;
   name?: string;
   placeholder?: string;
+  additionalPlaceholder?: string;
   tooltipLabel?: string;
   inputRef?: any;
   inputProps?: InputProps;
@@ -35,6 +36,7 @@ export default function SearchInput({
   onChangeSetter,
   tooltipLabel,
   placeholder,
+  additionalPlaceholder = "",
   inputProps,
   icon,
   iconProps,
@@ -107,7 +109,7 @@ export default function SearchInput({
             pl={inputProps?.size === "xs" || inputProps?.size === "sm" ? 8 : 10}
             name={name}
             fRef={inputRef ? inputRef : null}
-            placeholder={placeholder || l.search_input_default_placeholder}
+            placeholder={placeholder || `${l.search} ${additionalPlaceholder}`}
             pr={"40px"}
             onChangeSetter={(input) => {
               setSearchLocal(input as string);

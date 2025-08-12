@@ -20,6 +20,7 @@ const EXCLUDED_KEYS = [
   "document_ids",
   "docs",
   "deleted_docs",
+  "color",
 ];
 
 export const FieldInfo = () => {

@@ -240,7 +240,7 @@ const Workspaces = (props: any) => {
 
   return (
     <CContainer flex={1}>
-      <SimpleGrid columns={layoutHalfMap ? 1 : [1, null, 2, 4]} gap={4}>
+      <SimpleGrid columns={layoutHalfMap ? 1 : [1, null, 2, 4]} gap={2}>
         {data?.map((item: any) => {
           return (
             <WorkspaceItem

@@ -340,8 +340,8 @@ const translations = {
   "month": "Month",
   "monthly": "Monthly",
   "mosque": "Mosque",
-  "move_down_layer_level": "Move down one level",
-  "move_up_layer_level": "Move up one level",
+  "move_down_layer_level": "Move down one layer",
+  "move_up_layer_level": "Move up one layer",
   "must_be_after": "${a} must be after ${b}",
   "must_be_before": "${a} must be before ${b}",
   "must_login_first_feedback": {

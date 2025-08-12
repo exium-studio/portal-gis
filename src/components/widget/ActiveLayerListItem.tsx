@@ -6,7 +6,7 @@ import useLang from "@/context/useLang";
 import useMapViewState from "@/context/useMapViewState";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import capsFirstLetter from "@/utils/capsFirstLetter";
-import { HStack, Icon, StackProps } from "@chakra-ui/react";
+import { Badge, HStack, Icon, StackProps } from "@chakra-ui/react";
 import {
   IconEye,
   IconEyeOff,
@@ -121,6 +121,9 @@ const ActiveLayerListItem = (props: Props) => {
   // Props
   const { layer, ...restProps } = props;
 
+  // Hooks
+  const { l } = useLang();
+
   // Contexts
   const { themeConfig } = useThemeConfig();
 
@@ -137,22 +140,38 @@ const ActiveLayerListItem = (props: Props) => {
         <SimplePopover
           content={
             <CContainer gap={1}>
-              <P w={"full"}>{layer?.name}</P>
+              <CContainer>
+                <P w={"full"}>{layer?.name}</P>
 
-              <P w={"full"} color={"fg.subtle"}>
-                {layer?.description}
-              </P>
+                <P w={"full"} color={"fg.subtle"}>
+                  {layer?.description}
+                </P>
+              </CContainer>
 
-              <HStack color={"fg.subtle"} mt={1}>
-                <Icon boxSize={5}>
-                  {layer?.layer_type === "fill" ? (
-                    <IconPolygon stroke={1.5} />
-                  ) : (
-                    <IconLine stroke={1.5} />
-                  )}
-                </Icon>
+              <HStack wrap={"wrap"} mt={2}>
+                <Badge color={"fg.muted"}>
+                  <Icon boxSize={4}>
+                    {layer?.layer_type === "fill" ? (
+                      <IconPolygon stroke={1.5} />
+                    ) : (
+                      <IconLine stroke={1.5} />
+                    )}
+                  </Icon>
 
-                <P lineClamp={1}>{capsFirstLetter(layer?.layer_type)}</P>
+                  <P lineClamp={1} fontSize={"xs"}>
+                    {capsFirstLetter(layer?.layer_type)}
+                  </P>
+                </Badge>
+
+                <Badge color={"fg.muted"}>
+                  <P lineClamp={1} fontSize={"xs"}>
+                    {capsFirstLetter(
+                      layer?.with_explanation
+                        ? l.with_explanation
+                        : l.without_explanation
+                    )}
+                  </P>
+                </Badge>
               </HStack>
             </CContainer>
           }

@@ -394,20 +394,20 @@ export const toggle_visibility = {
   en: "Toggle visibility",
 };
 export const bring_to_front_layer_level = {
-  id: "Lettakkan di depan",
+  id: "Letakkan di paling depan",
   en: "Bring to front",
 };
 export const send_to_back_layer_level = {
-  id: "Letakkan di belakang",
+  id: "Letakkan di paling belakang",
   en: "Send to back",
 };
 export const move_up_layer_level = {
-  id: "Naikkan satu tingkat",
-  en: "Move up one level",
+  id: "Naikkan satu lapis",
+  en: "Move up one layer",
 };
 export const move_down_layer_level = {
-  id: "Turunkan satu tingkat",
-  en: "Move down one level",
+  id: "Turunkan satu lapis",
+  en: "Move down one layer",
 };
 export const default_layer_type = {
   id: "Tipe layer default",
