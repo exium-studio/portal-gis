@@ -72,7 +72,7 @@ const ExistingFileItem = (props: Props) => {
             colorPalette={"red"}
             onClick={onDelete}
           >
-            <Icon>
+            <Icon boxSize={5}>
               <IconTrash />
             </Icon>
           </BButton>
@@ -84,6 +84,7 @@ const ExistingFileItem = (props: Props) => {
             size={"xs"}
             onClick={onUndo}
             variant={"ghost"}
+            colorPalette={"gray"}
           >
             Undo
           </BButton>

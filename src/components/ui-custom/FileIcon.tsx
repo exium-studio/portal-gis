@@ -28,7 +28,7 @@ const FileIcon = forwardRef<SVGSVGElement, Props>(
     switch (true) {
       // PDF Files
       case mime === "application/pdf" || extension === "pdf":
-        iconColor = "red.500";
+        iconColor = "fg.error";
         IconComponent = IconFileTypePdf;
         break;
 

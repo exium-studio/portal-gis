@@ -37,16 +37,18 @@ export const FieldInfo = () => {
   const halfPanel = useLayout((s) => s.halfPanel);
 
   // States
-  const [data, setData] = useState<any>(selectedPolygon?.polygon?.properties);
+  const [properties, setProperties] = useState<any>(
+    selectedPolygon?.polygon?.properties
+  );
   const finalData =
-    data &&
+    properties &&
     Object.fromEntries(
-      Object.entries(data)
+      Object.entries(properties)
         .filter(([key]) => !EXCLUDED_KEYS.includes(key))
         .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
     );
   const excludedKeysCount = EXCLUDED_KEYS.filter(
-    (key) => data && Object.keys(data).includes(key)
+    (key) => properties && Object.keys(properties).includes(key)
   ).length;
 
   // console.log(selectedPolygon?.polygon?.geometry?.coordinates?.length);
@@ -56,7 +58,7 @@ export const FieldInfo = () => {
   useEffect(() => {
     if (selectedPolygon) {
       onOpen();
-      setData(selectedPolygon?.polygon?.properties);
+      setProperties(selectedPolygon?.polygon?.properties);
     } else {
       onClose();
     }
@@ -111,8 +113,8 @@ export const FieldInfo = () => {
 
           <HStack gap={1} ml={"auto"} mr={-1}>
             <EditField
-              data={data}
-              setData={setData}
+              properties={properties}
+              setProperties={setProperties}
               selectedPolygon={selectedPolygon}
               size={["xs", null, "sm"]}
             />
@@ -128,17 +130,17 @@ export const FieldInfo = () => {
       </MenuHeaderContainer>
 
       <CContainer px={1} className="scrollY">
-        {data &&
+        {properties &&
           Object?.keys(finalData)?.map((key, i) => {
             const last =
-              i === Object?.keys(data)?.length - excludedKeysCount - 1;
+              i === Object?.keys(properties)?.length - excludedKeysCount - 1;
 
             return (
               <ItemContainer key={key} last={last}>
                 <P fontWeight={"medium"} color={"fg.subtle"}>
                   {`${key}`}
                 </P>
-                <PropertyValue>{`${data?.[key] || "-"}`}</PropertyValue>
+                <PropertyValue>{`${properties?.[key] || "-"}`}</PropertyValue>
               </ItemContainer>
             );
           })}

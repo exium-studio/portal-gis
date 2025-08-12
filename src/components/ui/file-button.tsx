@@ -129,7 +129,7 @@ interface FileUploadListProps
 
 export const FileUploadList = forwardRef<HTMLUListElement, FileUploadListProps>(
   function FileUploadList(props, ref) {
-    const { showSize, clearable, files, ...rest } = props;
+    const { showSize = true, clearable = true, files, ...rest } = props;
 
     const fileUpload = useFileUploadContext();
     const acceptedFiles = files ?? fileUpload.acceptedFiles;

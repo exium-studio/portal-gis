@@ -16,6 +16,7 @@ import Textarea from "@/components/ui-custom/Textarea";
 import { Field } from "@/components/ui/field";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useLang from "@/context/useLang";
+import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useBackOnClose from "@/hooks/useBackOnClose";
 import useRequest from "@/hooks/useRequest";
@@ -46,12 +47,12 @@ const EXCLUDED_KEYS = [
 
 export const EditField = (props: any) => {
   // Props
-  const { data, setData, selectedPolygon, ...restProps } = props;
+  const { properties, setProperties, selectedPolygon, ...restProps } = props;
 
   // Hooks
   const { l } = useLang();
   const { open, onOpen, onClose } = useDisclosure();
-  useBackOnClose(`edit-${data?.id}`, open, onOpen, onClose);
+  useBackOnClose(`edit-${properties?.id}`, open, onOpen, onClose);
   const { req } = useRequest({
     id: "crud-field",
   });
@@ -59,6 +60,7 @@ export const EditField = (props: any) => {
   // Contexts
   const { themeConfig } = useThemeConfig();
   const updateActiveLayerData = useActiveWorkspaces((s) => s.updateLayerData);
+  const setSelectedPolygon = useSelectedPolygon((s) => s.setSelectedPolygon);
 
   // States
   const workspaceId = selectedPolygon?.activeWorkspace?.id;
@@ -70,10 +72,10 @@ export const EditField = (props: any) => {
     (f: any) => f.properties.id === propertiesId
   );
   const withExplanation = selectedPolygon?.activeLayer?.with_explanation;
-  const [existingDocs, setExistingDocs] = useState<any[]>(data?.thumbnail);
-  const [deletedDocs, setDeletedDocs] = useState<any[]>(data?.thumbnail);
+  const [existingDocs, setExistingDocs] = useState<any[]>([]);
+  const [deletedDocs, setDeletedDocs] = useState<any[]>([]);
   const finalData = Object.fromEntries(
-    Object.entries(data)
+    Object.entries(properties)
       .filter(([key]) => !EXCLUDED_KEYS.includes(key))
       .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
   );
@@ -95,7 +97,7 @@ export const EditField = (props: any) => {
         allowedExtensions: ["pdf", "doc", "docx"],
       }),
     }),
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       // console.log(values);
       back();
 
@@ -124,11 +126,10 @@ export const EditField = (props: any) => {
       } else if (values.docs) {
         payload.append("file", values.docs);
       }
-      if (!empty(deletedDocs)) {
-        deletedDocs.forEach((doc: any) => {
-          payload.append("delete_document_ids", doc.id);
-        });
-      }
+      payload.append(
+        "delete_document_ids",
+        JSON.stringify(deletedDocs?.map((d) => d.id))
+      );
       payload.append("properties", JSON.stringify(newPropertiesPayload));
       const url = `/api/gis-bpn/workspaces-layers/update-field`;
       const config = {
@@ -141,8 +142,11 @@ export const EditField = (props: any) => {
         config,
         onResolve: {
           onSuccess: (r) => {
-            // TODO apply reponse updated feature to context
-            // new geojson
+            resetForm();
+            setExistingDocs([]);
+            setDeletedDocs([]);
+
+            const newDocs = r.data.data.data.geojson.features?.[0].documents;
             const newGeojson = {
               ...geojson,
               features: geojson?.features.map((feature: any, index: number) => {
@@ -153,7 +157,7 @@ export const EditField = (props: any) => {
                       ...feature.properties,
                       ...newProperties,
                     },
-                    documents: r?.data?.documents,
+                    documents: newDocs,
                   };
                 }
                 return feature;
@@ -167,7 +171,14 @@ export const EditField = (props: any) => {
             if (workspaceId && layerId) {
               updateActiveLayerData(workspaceId, layerId, newData);
             }
-            setData(newProperties);
+            setProperties(newProperties);
+            setSelectedPolygon({
+              ...selectedPolygon,
+              polygon: {
+                ...selectedPolygon?.polygon,
+                documents: newDocs,
+              },
+            });
           },
         },
       });
@@ -176,10 +187,17 @@ export const EditField = (props: any) => {
 
   // Handle initial values
   useEffect(() => {
-    Object.keys(data).forEach((key) => {
-      formik.setFieldValue(key, data[key]);
+    Object.keys(properties).forEach((key) => {
+      formik.setFieldValue(key, properties[key]);
     });
-  }, [data]);
+  }, [properties]);
+
+  // Handle initial docs
+  useEffect(() => {
+    formik.setFieldValue("docs", undefined);
+    setExistingDocs(selectedPolygon?.polygon?.documents);
+    setDeletedDocs([]);
+  }, [selectedPolygon?.polygon?.documents]);
 
   return (
     <>
@@ -222,7 +240,7 @@ export const EditField = (props: any) => {
                 top={0}
                 zIndex={2}
               >
-                {/* information tab */}
+                {/* Information tab */}
                 <Tabs.Trigger
                   flex={1}
                   justifyContent={"center"}
@@ -231,7 +249,7 @@ export const EditField = (props: any) => {
                   {l.information}
                 </Tabs.Trigger>
 
-                {/* explanation tab */}
+                {/* Explanation tab */}
                 {withExplanation && (
                   <Tabs.Trigger
                     flex={1}
@@ -241,7 +259,7 @@ export const EditField = (props: any) => {
                     {l.explanation}
                   </Tabs.Trigger>
                 )}
-                {/* document tab */}
+                {/* Document tab */}
                 <Tabs.Trigger
                   flex={1}
                   justifyContent={"center"}
@@ -251,7 +269,7 @@ export const EditField = (props: any) => {
                 </Tabs.Trigger>
               </Tabs.List>
 
-              {/* information content */}
+              {/* Information content */}
               <Tabs.Content value="information" px={4}>
                 <SimpleGrid columns={[1, null, 2]} gap={4}>
                   {!empty(finalData) &&
@@ -259,7 +277,7 @@ export const EditField = (props: any) => {
                       return (
                         !EXCLUDED_KEYS.includes(key) && (
                           <Field key={key} readOnly label={key}>
-                            <StringInput inputValue={data[key]} />
+                            <StringInput inputValue={properties[key]} />
                           </Field>
                         )
                       );
@@ -267,7 +285,7 @@ export const EditField = (props: any) => {
                 </SimpleGrid>
               </Tabs.Content>
 
-              {/* explanation content */}
+              {/* Explanation content */}
               {withExplanation && (
                 <Tabs.Content value="explanation" px={4}>
                   <Field
@@ -327,7 +345,7 @@ export const EditField = (props: any) => {
                 </Tabs.Content>
               )}
 
-              {/* document content */}
+              {/* Document content */}
               <Tabs.Content value="document" px={4}>
                 <Field
                   label={l.document}
@@ -335,7 +353,7 @@ export const EditField = (props: any) => {
                   errorText={formik.errors.docs as string}
                 >
                   {!empty(existingDocs) && (
-                    <CContainer>
+                    <CContainer gap={2}>
                       {existingDocs?.map((item: any, i: number) => {
                         return (
                           <ExistingFileItem
@@ -353,7 +371,7 @@ export const EditField = (props: any) => {
                     </CContainer>
                   )}
 
-                  {empty(existingDocs) && (
+                  {existingDocs?.length < 5 && (
                     <FileInput
                       dropzone
                       name="docs"
@@ -362,7 +380,7 @@ export const EditField = (props: any) => {
                       }}
                       inputValue={formik.values.docs}
                       accept=".pdf, .doc, .docx"
-                      maxFiles={5}
+                      maxFiles={5 - existingDocs.length}
                     />
                   )}
 

@@ -10,11 +10,11 @@ import {
   FileUploadRootProps,
   FileUploadTrigger,
 } from "../ui/file-button";
-import { toaster } from "../ui/toaster";
 import BButton from "./BButton";
 import FileIcon from "./FileIcon";
 
 interface Props extends FileUploadRootProps {
+  fRef?: any;
   name?: string;
   onChangeSetter?: (inputValue: File[] | undefined) => void;
   inputValue?: File[] | string | undefined;
@@ -32,6 +32,7 @@ interface Props extends FileUploadRootProps {
 const FileInput = (props: Props) => {
   // Props
   const {
+    fRef,
     name,
     onChangeSetter,
     inputValue,
@@ -84,18 +85,19 @@ const FileInput = (props: Props) => {
 
   return (
     <FileUploadRoot
+      ref={fRef}
       alignItems="stretch"
       onFileChange={handleFileChange}
-      onFileReject={() => {
-        toaster.error({
-          title: l.error_file_input.title,
-          description: l.error_file_input.description,
-          action: {
-            label: "Close",
-            onClick: () => {},
-          },
-        });
-      }}
+      // onFileReject={() => {
+      //   toaster.error({
+      //     title: l.error_file_input.title,
+      //     description: l.error_file_input.description,
+      //     action: {
+      //       label: "Close",
+      //       onClick: () => {},
+      //     },
+      //   });
+      // }}
       maxFiles={maxFiles}
       gap={2}
       accept={accept}
