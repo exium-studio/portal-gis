@@ -48,13 +48,13 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
     ? "#bbb"
     : "#fff";
   const defaultLineColor = plainLight
-    ? "#555"
+    ? "#aaa"
     : plainDark
-    ? "#ddd"
+    ? "#888"
     : colorful
-    ? "#333"
+    ? "#777"
     : satellite
-    ? "#555"
+    ? "#ddd"
     : "#ccc";
 
   const fillColor = ["coalesce", ["get", "color"], defaultFillColor];
@@ -114,7 +114,37 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
     }
 
     // Add or update layers
-    if (isFillLayer || isLineLayer) {
+    if (isFillLayer) {
+      // Line
+      if (!map.getLayer(lineLayerId)) {
+        map.addLayer({
+          id: lineLayerId,
+          type: "line",
+          source: sourceId,
+          paint: {
+            "line-color": defaultLineColor,
+            "line-width": 1,
+            "line-opacity": 1,
+          },
+        });
+      }
+
+      // Fill
+      if (!map.getLayer(fillLayerId)) {
+        map.addLayer({
+          id: fillLayerId,
+          type: "fill",
+          source: sourceId,
+          paint: { "fill-color": fillColor, "fill-opacity": fillOpacity },
+        });
+      } else {
+        map.setPaintProperty(fillLayerId, "fill-color", fillColor);
+        map.setPaintProperty(fillLayerId, "fill-opacity", fillOpacity);
+      }
+    }
+
+    if (isLineLayer) {
+      // Line
       if (!map.getLayer(lineLayerId)) {
         map.addLayer({
           id: lineLayerId,
@@ -129,19 +159,15 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
       } else {
         map.setPaintProperty(lineLayerId, "line-opacity", 1);
       }
-    }
 
-    if (isFillLayer || isLineLayer) {
+      // Invisible fill for click area
       if (!map.getLayer(fillLayerId)) {
         map.addLayer({
           id: fillLayerId,
           type: "fill",
           source: sourceId,
-          paint: { "fill-color": fillColor, "fill-opacity": fillOpacity },
+          paint: { "fill-color": "#000", "fill-opacity": 0 },
         });
-      } else {
-        map.setPaintProperty(fillLayerId, "fill-color", fillColor);
-        map.setPaintProperty(fillLayerId, "fill-opacity", fillOpacity);
       }
     }
 

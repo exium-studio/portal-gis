@@ -13,6 +13,7 @@ import { useEffect, useRef, useState } from "react";
 import Map, { MapRef, Marker } from "react-map-gl/mapbox";
 import LayerManager from "../LayerManager";
 import MapMarkerCircle from "../MapMarkerCircle";
+import SelectedPolygonLayer from "../SelectedPolygonLayer";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 const MIN_ZOOM = 1;
@@ -200,6 +201,7 @@ const BaseMap = () => {
     >
       {mapLoad && (
         <>
+          {/* Current Location Marker */}
           {currentLocation && (
             <Marker
               longitude={currentLocation.lon}
@@ -208,6 +210,7 @@ const BaseMap = () => {
               <MapMarkerCircle />
             </Marker>
           )}
+          {/* Search Result Marker */}
           {selectedSearchResult && (
             <Marker
               longitude={selectedSearchResult.center[0]}
@@ -216,7 +219,12 @@ const BaseMap = () => {
               <MapMarkerCircle color="fg" />
             </Marker>
           )}
+
+          {/* Main Layer  */}
           <LayerManager />
+
+          {/* Selected Polygon Layer */}
+          <SelectedPolygonLayer />
         </>
       )}
     </Map>
