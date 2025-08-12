@@ -154,6 +154,7 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
             "line-color": defaultLineColor,
             "line-width": 1,
             "line-opacity": 1,
+            "line-dasharray": [3, 4],
           },
         });
       } else {
