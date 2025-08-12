@@ -181,6 +181,7 @@ export const LegendContent = (props: any) => {
                     gap={2}
                     px={1}
                     py={1}
+                    pb={last ? 0 : 1}
                     border={last ? "none" : ""}
                   >
                     <AccordionItemTrigger>
