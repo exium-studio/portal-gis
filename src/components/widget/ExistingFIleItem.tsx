@@ -69,7 +69,7 @@ const ExistingFileItem = (props: Props) => {
             iconButton
             size={"xs"}
             variant={"ghost"}
-            colorPalette={"red"}
+            colorPalette={"gray"}
             onClick={onDelete}
           >
             <Icon boxSize={5}>

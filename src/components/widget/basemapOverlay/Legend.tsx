@@ -84,7 +84,7 @@ export const LegendContent = (props: any) => {
 
   useEffect(() => {}, []);
 
-  // console.log(activeWorkspacesByCategory);
+  console.log(activeWorkspacesByCategory);
 
   return (
     <FloatingContainer

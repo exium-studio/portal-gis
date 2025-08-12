@@ -100,6 +100,7 @@ export const EditField = (props: any) => {
     onSubmit: (values, { resetForm }) => {
       // console.log(values);
       back();
+      formik.setFieldValue("docs", undefined);
 
       const explanationProperties = {
         PARAPIHAKB: values?.PARAPIHAKB,
