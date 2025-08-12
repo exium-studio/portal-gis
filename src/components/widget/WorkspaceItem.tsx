@@ -772,6 +772,8 @@ const ToggleLoadWorkspace = (props: any) => {
       config,
       onResolve: {
         onSuccess: (r: any) => {
+          setChecked(true);
+
           const layers = r?.data?.data as Interface__Layer[];
 
           // 1. Get all GeoJSON FeatureCollections from layers
