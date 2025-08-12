@@ -83,6 +83,7 @@ interface ActiveWorkspacesStore {
     layerId: number,
     newData: Interface__LayerData
   ) => void;
+  clearActiveWorkspaces: () => void;
 }
 
 const useActiveWorkspaces = create<ActiveWorkspacesStore>((set, get) => ({
@@ -347,6 +348,12 @@ const useActiveWorkspaces = create<ActiveWorkspacesStore>((set, get) => ({
           };
         }),
       })),
+    })),
+
+  // Clear active workspaces
+  clearActiveWorkspaces: () =>
+    set(() => ({
+      activeWorkspaces: [],
     })),
 }));
 

@@ -5,10 +5,13 @@ import NavLink from "@/components/ui-custom/NavLink";
 import { Avatar } from "@/components/ui/avatar";
 import { ColorModeButton } from "@/components/ui/color-mode";
 import SigninForm from "@/components/widget/SigninForm";
+import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useAuthMiddleware from "@/context/useAuthMiddleware";
+import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useRequest from "@/hooks/useRequest";
 import { HStack, Text, VStack } from "@chakra-ui/react";
+import { useEffect } from "react";
 
 const RootPage = () => {
   // Hooks
@@ -23,6 +26,12 @@ const RootPage = () => {
   const setPermissions = useAuthMiddleware((s) => s.setPermissions);
   const setAuthToken = useAuthMiddleware((s) => s.setAuthToken);
   const { themeConfig } = useThemeConfig();
+  const clearSelectedPolygon = useSelectedPolygon(
+    (s) => s.clearSelectedPolygon
+  );
+  const clearActiveWorkspaces = useActiveWorkspaces(
+    (s) => s.clearActiveWorkspaces
+  );
 
   // States
   const currentYear = new Date().getFullYear();
@@ -48,6 +57,11 @@ const RootPage = () => {
       },
     });
   }
+
+  useEffect(() => {
+    clearSelectedPolygon();
+    clearActiveWorkspaces();
+  }, []);
 
   return (
     <CContainer
