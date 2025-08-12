@@ -210,7 +210,7 @@ const Theme = () => {
             layoutHalfMap
               ? iss
                 ? 5
-                : [3, null, null, 5, null, 10]
+                : [3, null, null, 5]
               : [5, 10, null, null, 15]
           }
           gap={2}
