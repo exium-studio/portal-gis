@@ -362,7 +362,7 @@ const translations = {
   "next_week": "This week",
   "no_active_workspaces": {
     "title": "No active workspaces",
-    "description": "Load workspace first from <b>Workspace</b> menu"
+    "description": "Load workspace first from Workspace menu"
   },
   "no_auth_toast": {
     "title": "No authentication",

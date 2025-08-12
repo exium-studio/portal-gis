@@ -431,8 +431,8 @@ export const no_active_workspaces = {
     en: "No active workspaces",
   },
   description: {
-    id: "Load workspace dahulu dari menu <b>Workspace</b>",
-    en: "Load workspace first from <b>Workspace</b> menu",
+    id: "Load workspace dahulu dari menu Workspace",
+    en: "Load workspace first from Workspace menu",
   },
 };
 export const toggle_dark_mode = {

@@ -56,6 +56,14 @@ import SelectLayerFileType from "./SelectLayerFileType";
 import SelectLayerType from "./SelectLayerType";
 import SimplePopover from "./SimplePopover";
 
+const SetLegend = (props: any) => {
+  // Props
+  const { layer, ...restProps } = props;
+  // Hooks
+  const { l } = useLang();
+
+  return <></>;
+};
 const EditLayer = (props: any) => {
   // Props
   const { workspace, layer, ...restProps } = props;

@@ -362,7 +362,7 @@ const translations = {
   "next_week": "Minggu ini",
   "no_active_workspaces": {
     "title": "Tidak ada workspace aktif",
-    "description": "Load workspace dahulu dari menu <b>Workspace</b>"
+    "description": "Load workspace dahulu dari menu Workspace"
   },
   "no_auth_toast": {
     "title": "Tidak memiliki autentikasi",
