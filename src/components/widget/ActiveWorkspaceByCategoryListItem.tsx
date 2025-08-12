@@ -232,7 +232,7 @@ const ActiveWorkspaceByCategoryListItem = (props: Props) => {
       border={"1px solid"}
       borderColor={"border.subtle"}
     >
-      <AccordionItemTrigger indicatorPlacement="none" px={2} py={1}>
+      <AccordionItemTrigger indicatorPlacement="none" pl={2} pr={1} py={1}>
         <HStack w={"full"} gap={4} justify={"space-between"}>
           <HStack truncate>
             <Icon boxSize={5} color={"fg.subtle"}>
