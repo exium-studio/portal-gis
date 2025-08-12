@@ -51,6 +51,8 @@ interface ActiveWorkspacesStore {
     workspaceId: string
   ) => Interface__ActiveWorkspace | undefined;
 
+  allWorkspaces: () => Interface__ActiveWorkspace[];
+
   loadWorkspace: (
     categoryId: number,
     workspace: Interface__ActiveWorkspace
@@ -89,6 +91,12 @@ const useActiveWorkspaces = create<ActiveWorkspacesStore>((set, get) => ({
     }
     return undefined;
   },
+
+  // Get all workspaces flat map
+  allWorkspaces: () =>
+    get().activeWorkspaces.flatMap(
+      (activeWorkspace) => activeWorkspace?.workspaces
+    ),
 
   // Add a workspace into a category
   loadWorkspace: (categoryId, workspace) =>

@@ -451,13 +451,25 @@ const DashboardPage = () => {
   const { l } = useLang();
 
   // Contexts
-  const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
+  const activeWorkspacesByCategory = useActiveWorkspaces(
+    (s) => s.activeWorkspaces
+  );
   const filterGeoJSON = useFilterGeoJSON((s) => s.filterGeoJSON);
 
   // States
+  const [activeWorkspaces, setActiveWorkspaces] = useState<
+    Interface__ActiveWorkspace[]
+  >([]);
   const [dashboardData, setDashboardData] = useState<DashboardSummary>(
     summarizeDashboard(activeWorkspaces, filterGeoJSON)
   );
+
+  useEffect(() => {
+    const newActiveWorkspaces = activeWorkspacesByCategory.flatMap(
+      (activeWorkspace) => activeWorkspace?.workspaces
+    );
+    setActiveWorkspaces(newActiveWorkspaces);
+  }, [activeWorkspacesByCategory]);
 
   useEffect(() => {
     setDashboardData(summarizeDashboard(activeWorkspaces, filterGeoJSON));
