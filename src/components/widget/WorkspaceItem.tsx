@@ -207,124 +207,128 @@ const EditWorkspace = (props: any) => {
           </DisclosureHeader>
 
           <DisclosureBody>
-            <FieldsetRoot>
-              <Field
-                label={l.title}
-                invalid={!!formik.errors.title}
-                errorText={formik.errors.title as string}
-              >
-                <StringInput
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("title", input);
-                  }}
-                  inputValue={formik.values.title}
-                />
-              </Field>
-
-              <Field
-                label={l.description}
-                invalid={!!formik.errors.description}
-                errorText={formik.errors.description as string}
-              >
-                <Textarea
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("description", input);
-                  }}
-                  inputValue={formik.values.description}
-                />
-              </Field>
-
-              <Field
-                label={l.workspace_category}
-                invalid={!!formik.errors.workspace_category}
-                errorText={formik.errors.workspace_category as string}
-              >
-                <SelectWorkspaceCategory
-                  onConfirm={(input) => {
-                    formik.setFieldValue("workspace_category", input);
-                  }}
-                  inputValue={formik.values.workspace_category}
-                />
-              </Field>
-
-              <Field
-                label={"Thumbnail"}
-                invalid={!!formik.errors.thumbnail}
-                errorText={formik.errors.thumbnail as string}
-              >
-                {!empty(existingThumbnail) && (
-                  <CContainer>
-                    {existingThumbnail?.map((item: any, i: number) => {
-                      return (
-                        <ExistingFileItem
-                          key={i}
-                          data={item}
-                          onDelete={() => {
-                            setExistingThumbnail((prev) =>
-                              prev.filter((f) => f !== item)
-                            );
-                            formik.setFieldValue("deleted_thumbnail", [
-                              ...formik.values.deleted_thumbnail,
-                              item,
-                            ]);
-                          }}
-                        />
-                      );
-                    })}
-                  </CContainer>
-                )}
-
-                {empty(existingThumbnail) && (
-                  <FileInput
-                    dropzone
-                    name="thumbnail"
+            <form id="edit_workspace_form" onSubmit={formik.handleSubmit}>
+              <FieldsetRoot>
+                <Field
+                  label={l.title}
+                  invalid={!!formik.errors.title}
+                  errorText={formik.errors.title as string}
+                >
+                  <StringInput
                     onChangeSetter={(input) => {
-                      formik.setFieldValue("thumbnail", input);
+                      formik.setFieldValue("title", input);
                     }}
-                    inputValue={formik.values.thumbnail}
-                    accept=".png, .jpg, .jpeg,"
+                    inputValue={formik.values.title}
                   />
-                )}
+                </Field>
 
-                {!empty(formik.values.deleted_thumbnail) && (
-                  <CContainer gap={2} mt={2}>
-                    <P color={"fg.muted"}>{l.deleted_thumbnail}</P>
+                <Field
+                  label={l.description}
+                  invalid={!!formik.errors.description}
+                  errorText={formik.errors.description as string}
+                >
+                  <Textarea
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("description", input);
+                    }}
+                    inputValue={formik.values.description}
+                  />
+                </Field>
 
-                    {formik.values.deleted_thumbnail?.map(
-                      (item: any, i: number) => {
+                <Field
+                  label={l.workspace_category}
+                  invalid={!!formik.errors.workspace_category}
+                  errorText={formik.errors.workspace_category as string}
+                >
+                  <SelectWorkspaceCategory
+                    onConfirm={(input) => {
+                      formik.setFieldValue("workspace_category", input);
+                    }}
+                    inputValue={formik.values.workspace_category}
+                  />
+                </Field>
+
+                <Field
+                  label={"Thumbnail"}
+                  invalid={!!formik.errors.thumbnail}
+                  errorText={formik.errors.thumbnail as string}
+                >
+                  {!empty(existingThumbnail) && (
+                    <CContainer>
+                      {existingThumbnail?.map((item: any, i: number) => {
                         return (
                           <ExistingFileItem
                             key={i}
                             data={item}
-                            withDeleteButton={false}
-                            withUndobutton
-                            onUndo={() => {
-                              setExistingThumbnail((prev) => [...prev, item]);
-
-                              formik.setFieldValue(
-                                "deleted_thumbnail",
-                                formik.values.deleted_thumbnail.filter(
-                                  (f: any) => f !== item
-                                )
+                            onDelete={() => {
+                              setExistingThumbnail((prev) =>
+                                prev.filter((f) => f !== item)
                               );
-
-                              formik.setFieldValue("icon", undefined);
+                              formik.setFieldValue("deleted_thumbnail", [
+                                ...formik.values.deleted_thumbnail,
+                                item,
+                              ]);
                             }}
                           />
                         );
-                      }
-                    )}
-                  </CContainer>
-                )}
-              </Field>
-            </FieldsetRoot>
+                      })}
+                    </CContainer>
+                  )}
+
+                  {empty(existingThumbnail) && (
+                    <FileInput
+                      dropzone
+                      name="thumbnail"
+                      onChangeSetter={(input) => {
+                        formik.setFieldValue("thumbnail", input);
+                      }}
+                      inputValue={formik.values.thumbnail}
+                      accept=".png, .jpg, .jpeg,"
+                    />
+                  )}
+
+                  {!empty(formik.values.deleted_thumbnail) && (
+                    <CContainer gap={2} mt={2}>
+                      <P color={"fg.muted"}>{l.deleted_thumbnail}</P>
+
+                      {formik.values.deleted_thumbnail?.map(
+                        (item: any, i: number) => {
+                          return (
+                            <ExistingFileItem
+                              key={i}
+                              data={item}
+                              withDeleteButton={false}
+                              withUndobutton
+                              onUndo={() => {
+                                setExistingThumbnail((prev) => [...prev, item]);
+
+                                formik.setFieldValue(
+                                  "deleted_thumbnail",
+                                  formik.values.deleted_thumbnail.filter(
+                                    (f: any) => f !== item
+                                  )
+                                );
+
+                                formik.setFieldValue("icon", undefined);
+                              }}
+                            />
+                          );
+                        }
+                      )}
+                    </CContainer>
+                  )}
+                </Field>
+              </FieldsetRoot>
+            </form>
           </DisclosureBody>
 
           <DisclosureFooter>
             <BackButton />
+
             <BButton
+              type="submit"
+              form={"edit_workspace_form"}
               colorPalette={themeConfig?.colorPalette}
-              onClick={formik.submitForm}
             >
               {l.save}
             </BButton>

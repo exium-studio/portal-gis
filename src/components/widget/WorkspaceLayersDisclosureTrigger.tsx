@@ -214,7 +214,7 @@ const EditLayer = (props: any) => {
       }),
     }),
     onSubmit: (values, { resetForm }) => {
-      // console.log(values.file[0]);
+      // console.log(values);
 
       back();
 
