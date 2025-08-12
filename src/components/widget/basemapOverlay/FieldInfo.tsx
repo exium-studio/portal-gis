@@ -13,6 +13,7 @@ import MenuHeaderContainer from "../MenuHeaderContainer";
 import PropertyValue from "../PropertyValue";
 import { EditField } from "./EditField";
 import FloatingContainerCloseButton from "./FloatingContainerCloseButton";
+import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 
 const EXCLUDED_KEYS = [
   "id",
@@ -37,6 +38,10 @@ export const FieldInfo = () => {
   const halfPanel = useLayout((s) => s.halfPanel);
 
   // States
+  const workspaceId = selectedPolygon?.activeWorkspace?.id;
+  const getActiveWorkspace = useActiveWorkspaces((s) => s.getActiveWorkspace);
+  const workspaceActive = !!getActiveWorkspace(workspaceId as number);
+  const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
   const [properties, setProperties] = useState<any>(
     selectedPolygon?.polygon?.properties
   );
@@ -63,6 +68,12 @@ export const FieldInfo = () => {
       onClose();
     }
   }, [selectedPolygon]);
+
+  useEffect(() => {
+    if (!workspaceActive) {
+      clearSelectedPolygon();
+    }
+  }, [workspaceActive, activeWorkspaces]);
 
   // Components
   const ItemContainer = (props: any) => {

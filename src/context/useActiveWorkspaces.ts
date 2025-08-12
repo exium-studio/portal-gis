@@ -49,7 +49,7 @@ interface ActiveWorkspacesStore {
   activeWorkspaces: Interface__ActiveWorkspacesByWorkspaceCategory[];
 
   getActiveWorkspace: (
-    workspaceId: string
+    workspaceId: number
   ) => Interface__ActiveWorkspace | undefined;
 
   allWorkspaces: () => Interface__ActiveWorkspace[];
@@ -58,11 +58,11 @@ interface ActiveWorkspacesStore {
     categoryId: number,
     workspace: Interface__ActiveWorkspace
   ) => void;
-  unloadWorkspace: (categoryId: number, workspaceId: string) => void;
+  unloadWorkspace: (categoryId: number, workspaceId: number) => void;
 
   toggleCategoryVisibility: (categoryId: number) => void;
-  toggleWorkspaceVisibility: (categoryId: number, workspaceId: string) => void;
-  toggleLayerVisibility: (workspaceId: string, layerId: number) => void;
+  toggleWorkspaceVisibility: (categoryId: number, workspaceId: number) => void;
+  toggleLayerVisibility: (workspaceId: number, layerId: number) => void;
 
   rearrangeCategory: (
     categoryId: number,
@@ -70,16 +70,16 @@ interface ActiveWorkspacesStore {
   ) => void;
   rearrangeWorkspace: (
     categoryId: number,
-    workspaceId: string,
+    workspaceId: number,
     action: "front" | "back" | "up" | "down"
   ) => void;
   rearrangeLayer: (
-    workspaceId: string,
+    workspaceId: number,
     layerId: number,
     action: "front" | "back" | "up" | "down"
   ) => void;
   updateLayerData: (
-    workspaceId: string,
+    workspaceId: number,
     layerId: number,
     newData: Interface__LayerData
   ) => void;

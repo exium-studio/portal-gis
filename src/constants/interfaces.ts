@@ -56,7 +56,7 @@ export interface Interface__WorkspaceCategory extends Interface__CUD {
   label: string;
 }
 export interface Interface__Workspace extends Interface__CUD {
-  id: string;
+  id: number;
   title: string;
   description: string;
   layers?: Interface__Layer[];
