@@ -15,7 +15,7 @@ const SelectedPolygonLayer = () => {
     const fillLayerId = "selected-polygon-fill";
     const lineLayerId = "selected-polygon-outline";
 
-    // Bersihkan dulu biar nggak dobel
+    // layer cleanup, prevent duplicate
     if (map.getLayer(fillLayerId)) map.removeLayer(fillLayerId);
     if (map.getLayer(lineLayerId)) map.removeLayer(lineLayerId);
     if (map.getSource(sourceId)) map.removeSource(sourceId);
