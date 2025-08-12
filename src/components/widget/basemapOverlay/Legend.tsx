@@ -29,6 +29,7 @@ import {
   IconFlag,
   IconFlagOff,
   IconFoldersOff,
+  IconLine,
   IconPolygon,
 } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
@@ -192,7 +193,11 @@ export const LegendContent = (props: any) => {
                     <AccordionItemTrigger>
                       <HStack align={"start"}>
                         <Icon boxSize={5} color={"fg.subtle"}>
-                          <IconPolygon />
+                          {layer?.layer_type === "fill" ? (
+                            <IconPolygon />
+                          ) : (
+                            <IconLine />
+                          )}
                         </Icon>
 
                         <CContainer truncate gap={"6px"}>
