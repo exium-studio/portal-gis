@@ -361,6 +361,10 @@ export const deleted_file = {
 };
 
 // UI
+export const property = {
+  id: "Properti",
+  en: "Property",
+};
 export const data_unit_ha = {
   id: "Data ditampilkan dalam satuan ha",
   en: "Data displayed in ha units",
@@ -418,8 +422,8 @@ export const edit_layer_alert = {
   en: "If you send a layer file, the layer file you send will overwrite the processed and overwrite the data of the old layer",
 };
 export const edit_delete_cannot_be_active_workspace = {
-  id: "Tidak dapat edit atau delete layer saat workspace aktif",
-  en: "Cannot edit or delete layer when workspace is active",
+  id: "Tidak dapat edit, set legenda dan delete layer saat workspace aktif",
+  en: "Cannot edit set legend and delete layer when workspace is active",
 };
 export const delete_layer = {
   id: "Hapus layer",

@@ -1,3 +1,4 @@
+import { LEGEND_COLOR_OPTIONS } from "@/constants/colors";
 import { Interface__Layer } from "@/constants/interfaces";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useConfirmationDisclosure from "@/context/useConfirmationDisclosure";
@@ -25,6 +26,7 @@ import {
 } from "@chakra-ui/react";
 import {
   IconEdit,
+  IconFlag,
   IconLine,
   IconPolygon,
   IconTrash,
@@ -52,17 +54,127 @@ import Textarea from "../ui-custom/Textarea";
 import { Checkbox } from "../ui/checkbox";
 import { Field } from "../ui/field";
 import { Tooltip } from "../ui/tooltip";
+import SelectColorscale from "./SelectColorscale";
 import SelectLayerFileType from "./SelectLayerFileType";
 import SelectLayerType from "./SelectLayerType";
+import SelectPropertyByLayerId from "./SelectPropertyByLayerId";
 import SimplePopover from "./SimplePopover";
 
 const SetLegend = (props: any) => {
   // Props
   const { layer, ...restProps } = props;
+
   // Hooks
   const { l } = useLang();
+  const { open, onOpen, onClose } = useDisclosure();
+  useBackOnClose(`set-legend`, open, onOpen, onClose);
+  const { req } = useRequest({
+    id: "set_legend",
+  });
 
-  return <></>;
+  // Contexts
+  const { themeConfig } = useThemeConfig();
+
+  // States
+  const formik = useFormik({
+    validateOnChange: false,
+    initialValues: {
+      colorscale: LEGEND_COLOR_OPTIONS[0],
+      propertyKey: undefined as any,
+    },
+    validationSchema: yup.object().shape({
+      colorscale: yup.object().required(l.required_form),
+      propertyKey: yup.array().required(l.required_form),
+    }),
+    onSubmit: (values, { resetForm }) => {
+      console.log(values);
+
+      back();
+
+      const payload = {
+        propertyKey: values.propertyKey?.[0].id,
+        colorscale: values.colorscale?.colors,
+      };
+
+      const config = {
+        url: `/api/gis-bpn/workspaces-layers/update-color/${layer?.id}`,
+        method: "PATCH",
+        data: payload,
+      };
+
+      req({
+        config,
+        onResolve: {
+          onSuccess: () => {
+            resetForm();
+          },
+        },
+      });
+    },
+  });
+
+  return (
+    <>
+      <BButton iconButton variant={"ghost"} onClick={onOpen} {...restProps}>
+        <Icon boxSize={5}>
+          <IconFlag stroke={1.5} />
+        </Icon>
+      </BButton>
+
+      <DisclosureRoot open={open} lazyLoad size={"xs"}>
+        <DisclosureContent>
+          <DisclosureHeader>
+            <DisclosureHeaderContent title={`Set ${l.legend}`} />
+          </DisclosureHeader>
+
+          <DisclosureBody>
+            <form id="set_legend_form" onSubmit={formik.handleSubmit}>
+              <FieldsetRoot>
+                <Field
+                  label={l.property}
+                  invalid={!!formik.errors.propertyKey}
+                  errorText={formik.errors.propertyKey as string}
+                >
+                  <SelectPropertyByLayerId
+                    layerId={layer?.id}
+                    inputValue={formik.values.propertyKey}
+                    onConfirm={(input) => {
+                      formik.setFieldValue("propertyKey", input);
+                    }}
+                  />
+                </Field>
+
+                <Field
+                  label={`Colorscale`}
+                  invalid={!!formik.errors.colorscale}
+                  errorText={formik.errors.colorscale as string}
+                >
+                  <SelectColorscale
+                    inputValue={formik.values.colorscale}
+                    onConfirm={(input: any) => {
+                      formik.setFieldValue("colorscale", input);
+                    }}
+                  />
+                </Field>
+              </FieldsetRoot>
+            </form>
+          </DisclosureBody>
+
+          <DisclosureFooter>
+            <BackButton />
+
+            <BButton
+              type="submit"
+              form={"set_legend_form"}
+              colorPalette={themeConfig.colorPalette}
+            >
+              {l.save}
+            </BButton>
+          </DisclosureFooter>
+        </DisclosureContent>
+      </DisclosureRoot>
+    </>
+  );
 };
 const EditLayer = (props: any) => {
   // Props
@@ -484,6 +596,12 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                           </SimplePopover>
 
                           <HStack gap={1} ml={"auto"}>
+                            <SetLegend
+                              layer={layer}
+                              size={"xs"}
+                              disabled={workspaceActive}
+                            />
+
                             <EditLayer
                               workspace={workspace}
                               layer={layer}
