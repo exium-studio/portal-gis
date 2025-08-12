@@ -59,6 +59,7 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
 
   const fillColor = ["coalesce", ["get", "color"], defaultFillColor];
   const fillOpacity = 0.6;
+  const lineColor = ["coalesce", ["get", "color"], defaultLineColor];
   const isFillLayer = activeLayer.layer_type === "fill";
   const isLineLayer = activeLayer.layer_type === "line";
 
@@ -151,9 +152,9 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
           type: "line",
           source: sourceId,
           paint: {
-            "line-color": defaultLineColor,
-            "line-width": 2,
-            "line-opacity": 1,
+            "line-color": lineColor,
+            "line-width": 1.5,
+            "line-opacity": 0.6,
             "line-dasharray": [3, 4],
           },
         });
