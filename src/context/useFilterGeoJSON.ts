@@ -30,10 +30,24 @@ export const useFilterGeoJSON = create<Store>((set) => ({
   addFilterGeoJSON: (data) =>
     set((s) => {
       const next: FilterGeoJSON = { ...s.filterGeoJSON };
+      let changed = false;
+
       (Object.keys(data) as (keyof FilterGeoJSON)[]).forEach((k) => {
         const incoming = data[k] ?? [];
-        next[k] = uniq([...(s.filterGeoJSON[k] ?? []), ...incoming]);
+        const combined = uniq([...(s.filterGeoJSON[k] ?? []), ...incoming]);
+        if (
+          combined.length !== s.filterGeoJSON[k]?.length ||
+          combined.some((val, idx) => val !== s.filterGeoJSON[k][idx])
+        ) {
+          next[k] = combined;
+          changed = true;
+        } else {
+          next[k] = s.filterGeoJSON[k];
+        }
       });
+
+      if (!changed) return s; // no changes, skip set
+
       return { filterGeoJSON: next };
     }),
 

@@ -14,6 +14,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Tooltip } from "@/components/ui/tooltip";
+import { Interface__ActiveWorkspace } from "@/constants/interfaces";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import { useFilterGeoJSON } from "@/context/useFilterGeoJSON";
 import useLang from "@/context/useLang";
@@ -27,24 +28,34 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { IconFilter } from "@tabler/icons-react";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import MenuHeaderContainer from "../MenuHeaderContainer";
+import useDebouncedCallback from "@/hooks/useDebouncedCallback";
 
 const GeoJSONFilter = () => {
   // Hooks
   const { l } = useLang();
 
   // Context
-  const filterGeoJSON = useFilterGeoJSON((s) => s.filterGeoJSON);
+  const rawFilterGeoJSON = useFilterGeoJSON((s) => s.filterGeoJSON);
+  const filterGeoJSON = useMemo(
+    () => rawFilterGeoJSON,
+    [JSON.stringify(rawFilterGeoJSON)]
+  );
   const addFilterGeoJSON = useFilterGeoJSON((s) => s.addFilterGeoJSON);
   const removeFilterGeoJSON = useFilterGeoJSON((s) => s.removeFilterGeoJSON);
   const clearFilterGeoJSON = useFilterGeoJSON((s) => s.clearFilterGeoJSON);
+  const activeWorkspacesByCategory = useActiveWorkspaces(
+    (s) => s.activeWorkspaces
+  );
 
   // States
-  const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
+  const [activeWorkspaces, setActiveWorkspaces] = useState<
+    Interface__ActiveWorkspace[]
+  >([]);
   const filterOptions = useMemo(
     () => filterOptionGroups(activeWorkspaces, filterGeoJSON),
-    [activeWorkspaces, filterGeoJSON]
+    [activeWorkspaces, JSON.stringify(filterGeoJSON)]
   );
 
   // Popover
@@ -53,20 +64,34 @@ const GeoJSONFilter = () => {
   const contentRef = useRef(null);
   useClickOutside([triggerRef, contentRef], onClose);
 
-  // Handler toggle checkbox
+  // Utils
+  const debouncedAddFilterGeoJSON = useDebouncedCallback(addFilterGeoJSON, 200);
+  const debouncedRemoveFilterGeoJSON = useDebouncedCallback(
+    removeFilterGeoJSON,
+    200
+  );
   const handleToggle = (
     property: keyof typeof filterGeoJSON,
     value: string,
     nextChecked: boolean
   ) => {
-    if (nextChecked) {
-      addFilterGeoJSON({ [property]: [value] } as Partial<
-        typeof filterGeoJSON
-      >);
+    if (!nextChecked) {
+      debouncedAddFilterGeoJSON({ [property]: [value] });
     } else {
-      removeFilterGeoJSON(property, value);
+      debouncedRemoveFilterGeoJSON(property, value);
     }
   };
+
+  useEffect(() => {
+    const newActiveWorkspaces = activeWorkspacesByCategory.flatMap(
+      (activeWorkspace) => activeWorkspace?.workspaces
+    );
+    setActiveWorkspaces((prev) => {
+      if (JSON.stringify(prev) === JSON.stringify(newActiveWorkspaces))
+        return prev;
+      return newActiveWorkspaces;
+    });
+  }, [activeWorkspacesByCategory]);
 
   return (
     <PopoverRoot open={open}>

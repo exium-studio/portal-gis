@@ -46,7 +46,7 @@ export function filterOptionGroups(
     const activeList = new Set(current?.[key] ?? []);
     const values: Interface__FilterOptionValue[] = uniqueValues.map((v) => ({
       value: v,
-      active: activeList.has(v),
+      active: !activeList.has(v), // true = shown, false = filtered
     }));
     return { property: key, values };
   });
