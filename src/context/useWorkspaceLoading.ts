@@ -2,9 +2,9 @@
 import { create } from "zustand";
 
 interface WorkspaceLoadingState {
-  loadingWorkspaceIds: string[];
-  addWorkspaceLoading: (id: string) => void;
-  removeWorkspaceLoading: (id: string) => void;
+  loadingWorkspaceIds: number[];
+  addWorkspaceLoading: (id: number) => void;
+  removeWorkspaceLoading: (id: number) => void;
   clearWorkspaceLoading: () => void;
 }
 
@@ -26,5 +26,5 @@ export const useWorkspaceLoading = create<WorkspaceLoadingState>((set) => ({
 }));
 
 // custom hook selector
-export const useIsWorkspaceLoading = (id: string) =>
+export const useIsWorkspaceLoading = (id: number) =>
   useWorkspaceLoading((s) => s.loadingWorkspaceIds.includes(id));
