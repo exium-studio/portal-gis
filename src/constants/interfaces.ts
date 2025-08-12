@@ -17,6 +17,18 @@ import {
 } from "./types";
 import { FilterGeoJSON } from "@/context/useFilterGeoJSON";
 
+// Legends
+export interface LegendItem {
+  value: string;
+  color: string;
+}
+
+export interface LayerLegends {
+  layer: Interface__ActiveLayer;
+  workspace: Interface__ActiveWorkspace;
+  legends: LegendItem[];
+}
+
 // Dashboard
 export interface Interface__FilterOptionValue {
   value: string;
@@ -68,6 +80,7 @@ export interface Interface__Workspace extends Interface__CUD {
 export interface Interface__Layer extends Interface__CUD {
   id: number;
   workspace_id: number;
+  color_property_key?: string;
   parent_layer_id?: number | null;
   with_explanation: boolean;
   name: string;

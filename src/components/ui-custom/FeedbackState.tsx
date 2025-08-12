@@ -17,7 +17,7 @@ const FeedbackState = (props: Props) => {
   const descriptionString = typeof description === "string";
 
   return (
-    <VStack {...restProps}>
+    <VStack gap={1} {...restProps}>
       <Icon mb={2} color={"fg.subtle"} boxSize={10}>
         {icon || <IconDatabaseOff />}
       </Icon>

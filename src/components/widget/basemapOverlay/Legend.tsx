@@ -3,20 +3,34 @@ import CContainer from "@/components/ui-custom/CContainer";
 import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
 import FloatingContainer from "@/components/ui-custom/FloatingContainer";
 import P from "@/components/ui-custom/P";
+import {
+  AccordionItem,
+  AccordionItemContent,
+  AccordionItemTrigger,
+  AccordionRoot,
+} from "@/components/ui/accordion";
 import { Tooltip } from "@/components/ui/tooltip";
+import { LayerLegends } from "@/constants/interfaces";
+import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
 import useLegend from "@/context/useLegend";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import empty from "@/utils/empty";
-import { Circle, HStack, Portal, SimpleGrid } from "@chakra-ui/react";
-import { IconFlag, IconFoldersOff } from "@tabler/icons-react";
+import {
+  Circle,
+  HStack,
+  Icon,
+  Portal,
+  SimpleGrid,
+  VStack,
+} from "@chakra-ui/react";
+import { IconFlag, IconFlagOff, IconFoldersOff } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import { OverlayItemContainer } from "../OverlayItemContainer";
 import SimplePopover from "../SimplePopover";
 import FloatingContainerCloseButton from "./FloatingContainerCloseButton";
-import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 
 export const LegendTrigger = () => {
   // Hooks
@@ -64,8 +78,6 @@ export const LegendContent = (props: any) => {
   // Props
   const { containerProps } = props;
 
-  // TODO generate legend from active workspaces and render
-
   // Hooks
   const { l } = useLang();
   const iss = useIsSmScreenWidth();
@@ -78,13 +90,46 @@ export const LegendContent = (props: any) => {
   const halfPanel = useLayout((s) => s.halfPanel);
   const open = useLegend((s) => s.open);
   const onClose = useLegend((s) => s.onClose);
-  const legend = useLegend((s) => s.legend);
 
-  const [legends, setLegends] = useState<string[]>([]);
+  const [layerLegends, setLayerLegends] = useState<LayerLegends[]>([]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const legendsResult: LayerLegends[] = [];
 
-  // console.log("activeWorkspacesByCategory", activeWorkspacesByCategory);
+    activeWorkspacesByCategory.forEach((category) => {
+      category.workspaces.forEach((workspace) => {
+        workspace.layers.forEach((layer) => {
+          if (!layer.data?.geojson?.features) return;
+
+          const uniqueMap = new Map<string, string>();
+
+          layer.data.geojson.features.forEach((feature) => {
+            const props = feature.properties as Record<string, any>;
+            const key = layer.color_property_key || "";
+            // const key = feature.properties?.color_property_key || "";
+            const value = props[key];
+            const color = props.color;
+
+            if (value && color && !uniqueMap.has(value)) {
+              uniqueMap.set(value, color);
+            }
+          });
+
+          const legendsArray = Array.from(uniqueMap.entries()).map(
+            ([value, color]) => ({ value, color })
+          );
+
+          legendsResult.push({
+            layer,
+            workspace,
+            legends: legendsArray,
+          });
+        });
+      });
+    });
+
+    setLayerLegends(legendsResult);
+  }, [activeWorkspacesByCategory]);
 
   return (
     <FloatingContainer
@@ -113,7 +158,7 @@ export const LegendContent = (props: any) => {
         </HStack>
       </MenuHeaderContainer>
 
-      <CContainer px={3} mb={1} className="scrollY" gap={3}>
+      <CContainer px={3} className="scrollY" gap={3}>
         {empty(activeWorkspaces) && (
           <FeedbackNoData
             icon={<IconFoldersOff />}
@@ -122,26 +167,68 @@ export const LegendContent = (props: any) => {
           />
         )}
 
-        {!empty(legend.list) && (
-          <>
-            <SimpleGrid gapX={4} gapY={1} px={"2px"} columns={[1, null, 2]}>
-              {legend.list.map((item) => {
-                return (
-                  <SimplePopover key={item?.label} content={item?.label}>
-                    <HStack cursor={"pointer"}>
-                      <Circle
-                        w={"10px"}
-                        h={"10px"}
-                        bg={item?.color}
-                        opacity={0.6}
-                      />
-                      <P lineClamp={1}>{item?.label}</P>
-                    </HStack>
-                  </SimplePopover>
-                );
-              })}
-            </SimpleGrid>
-          </>
+        {!empty(layerLegends) && (
+          <AccordionRoot multiple>
+            {layerLegends?.map(({ layer, workspace, legends }, i) => {
+              const last = i === layerLegends.length - 1;
+
+              return (
+                <AccordionItem
+                  key={layer.id}
+                  value={`${layer.id}`}
+                  gap={2}
+                  px={1}
+                  border={last ? "none" : ""}
+                >
+                  <AccordionItemTrigger>
+                    <CContainer truncate gap={"6px"}>
+                      <P lineClamp={1} lineHeight={1}>
+                        {layer.name}
+                      </P>
+                      <P
+                        color={"fg.subtle"}
+                        lineClamp={1}
+                        fontSize={"xs"}
+                        lineHeight={1}
+                      >{`${workspace.title}`}</P>
+                    </CContainer>
+                  </AccordionItemTrigger>
+
+                  <AccordionItemContent p={0} pb={last ? 0 : 2}>
+                    {empty(legends) && (
+                      <VStack py={4} color={"fg.subtle"}>
+                        <Icon>
+                          <IconFlagOff />
+                        </Icon>
+
+                        <P>{l.no_legends}</P>
+                      </VStack>
+                    )}
+
+                    {!empty(legends) && (
+                      <SimpleGrid columns={2} gap={1}>
+                        {legends.map(({ value, color }) => {
+                          return (
+                            <SimplePopover key={value} content={value}>
+                              <HStack cursor={"pointer"} w={"fit"}>
+                                <Circle
+                                  w={"10px"}
+                                  h={"10px"}
+                                  bg={color}
+                                  opacity={0.6}
+                                />
+                                <P lineClamp={1}>{value}</P>
+                              </HStack>
+                            </SimplePopover>
+                          );
+                        })}
+                      </SimpleGrid>
+                    )}
+                  </AccordionItemContent>
+                </AccordionItem>
+              );
+            })}
+          </AccordionRoot>
         )}
       </CContainer>
     </FloatingContainer>

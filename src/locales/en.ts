@@ -372,6 +372,7 @@ const translations = {
     "title": "Data not found",
     "description": "No data available."
   },
+  "no_legends": "No legends",
   "north_direction": "North direction",
   "not_found_feedback": {
     "title": "Not found",

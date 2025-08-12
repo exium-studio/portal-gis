@@ -359,11 +359,15 @@ export const deleted_file = {
   id: "File yang dihapus",
   en: "Deleted file",
 };
-
-// UI
 export const property = {
   id: "Properti",
   en: "Property",
+};
+
+// UI
+export const no_legends = {
+  id: "Tidak ada legenda",
+  en: "No legends",
 };
 export const data_unit_ha = {
   id: "Data ditampilkan dalam satuan ha",

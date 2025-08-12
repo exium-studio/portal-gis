@@ -372,6 +372,7 @@ const translations = {
     "title": "Data tidak ditemukan",
     "description": "Belum ada data yang tersedia."
   },
+  "no_legends": "Tidak ada legenda",
   "north_direction": "Arah utara",
   "not_found_feedback": {
     "title": "Tidak ditemukan",
