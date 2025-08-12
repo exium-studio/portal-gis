@@ -225,7 +225,7 @@ const translations = {
   "field_info": "Info bidang",
   "file_dropzone_label": "Drag and drop/klik untuk unggah berkas",
   "firefox_permissions_settings_link": "Preferensi → Privasi & Keamanan → Izin → ",
-  "fit_bounds": "Menyesuaikan batas",
+  "fit_bounds": "Lihat area",
   "for_gender": "Untuk gender",
   "forbidden_feedback": {
     "title": "Tidak ada akses",

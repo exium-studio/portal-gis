@@ -225,7 +225,7 @@ const translations = {
   "field_info": "Field info",
   "file_dropzone_label": "Drag and drop/click to upload files",
   "firefox_permissions_settings_link": "Preferences → Privacy & Security → Permissions → ",
-  "fit_bounds": "Fit bounds",
+  "fit_bounds": "View area",
   "for_gender": "For gender",
   "forbidden_feedback": {
     "title": "No Access",

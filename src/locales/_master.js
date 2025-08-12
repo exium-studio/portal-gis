@@ -456,8 +456,8 @@ export const view_layer = {
   en: "View layer area",
 };
 export const fit_bounds = {
-  id: "Menyesuaikan batas",
-  en: "Fit bounds",
+  id: "Lihat area",
+  en: "View area",
 };
 export const field_info = {
   id: "Info bidang",

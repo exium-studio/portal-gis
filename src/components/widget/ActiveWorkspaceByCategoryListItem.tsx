@@ -163,7 +163,7 @@ const ViewWorkspaceByCategory = (props: any) => {
   }
 
   return (
-    <Tooltip content={l.view_workspace}>
+    <Tooltip content={l.fit_bounds}>
       <BButton
         unclicky
         iconButton
