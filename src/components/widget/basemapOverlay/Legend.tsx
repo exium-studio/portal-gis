@@ -209,7 +209,7 @@ export const LegendContent = (props: any) => {
                       )}
 
                       {!empty(legends) && (
-                        <SimpleGrid columns={2} gap={1}>
+                        <SimpleGrid columns={2} gapY={1} gapX={4}>
                           {legends.map(({ value, color }) => {
                             return (
                               <SimplePopover key={value} content={value}>
