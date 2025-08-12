@@ -180,6 +180,7 @@ export const LegendContent = (props: any) => {
                     value={`${layer.id}`}
                     gap={2}
                     px={1}
+                    py={1}
                     border={last ? "none" : ""}
                   >
                     <AccordionItemTrigger>
@@ -196,7 +197,7 @@ export const LegendContent = (props: any) => {
                       </CContainer>
                     </AccordionItemTrigger>
 
-                    <AccordionItemContent p={0} pb={last ? 0 : 2}>
+                    <AccordionItemContent p={0} py={1}>
                       {empty(legends) && (
                         <VStack py={4} color={"fg.subtle"}>
                           <Icon>
