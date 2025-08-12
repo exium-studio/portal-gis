@@ -25,7 +25,12 @@ import {
   SimpleGrid,
   VStack,
 } from "@chakra-ui/react";
-import { IconFlag, IconFlagOff, IconFoldersOff } from "@tabler/icons-react";
+import {
+  IconFlag,
+  IconFlagOff,
+  IconFoldersOff,
+  IconPolygon,
+} from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import { OverlayItemContainer } from "../OverlayItemContainer";
@@ -185,17 +190,24 @@ export const LegendContent = (props: any) => {
                     border={last ? "none" : ""}
                   >
                     <AccordionItemTrigger>
-                      <CContainer truncate gap={"6px"}>
-                        <P lineClamp={1} lineHeight={1}>
-                          {layer.name}
-                        </P>
-                        <P
-                          color={"fg.subtle"}
-                          lineClamp={1}
-                          fontSize={"xs"}
-                          lineHeight={1}
-                        >{`${workspace.title}`}</P>
-                      </CContainer>
+                      <HStack align={"start"}>
+                        <Icon boxSize={5} color={"fg.subtle"}>
+                          <IconPolygon />
+                        </Icon>
+
+                        <CContainer truncate gap={"6px"}>
+                          <P lineClamp={1} lineHeight={1}>
+                            {layer.name}
+                          </P>
+
+                          <P
+                            color={"fg.subtle"}
+                            lineClamp={1}
+                            fontSize={"xs"}
+                            lineHeight={1}
+                          >{`${workspace.title}`}</P>
+                        </CContainer>
+                      </HStack>
                     </AccordionItemTrigger>
 
                     <AccordionItemContent p={0} py={1}>
