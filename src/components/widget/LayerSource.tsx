@@ -152,7 +152,7 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
           source: sourceId,
           paint: {
             "line-color": defaultLineColor,
-            "line-width": 1,
+            "line-width": 2,
             "line-opacity": 1,
             "line-dasharray": [3, 4],
           },

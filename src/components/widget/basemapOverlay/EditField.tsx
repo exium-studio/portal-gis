@@ -34,6 +34,7 @@ const EXCLUDED_KEYS = [
   "id",
   "layer_id",
   "document_ids",
+  "deleted_docs",
   "docs",
   "deleted_docs",
   "PARAPIHAKB",
@@ -47,9 +48,6 @@ export const EditField = (props: any) => {
   // Props
   const { data, setData, selectedPolygon, ...restProps } = props;
 
-  // TODO handle crud docs
-  // console.log(data.document_ids);
-
   // Hooks
   const { l } = useLang();
   const { open, onOpen, onClose } = useDisclosure();
@@ -60,7 +58,6 @@ export const EditField = (props: any) => {
 
   // Contexts
   const { themeConfig } = useThemeConfig();
-  // TODO update layer data (properties)
   const updateActiveLayerData = useActiveWorkspaces((s) => s.updateLayerData);
 
   // States
@@ -74,6 +71,7 @@ export const EditField = (props: any) => {
   );
   const withExplanation = selectedPolygon?.activeLayer?.with_explanation;
   const [existingDocs, setExistingDocs] = useState<any[]>(data?.thumbnail);
+  const [deletedDocs, setDeletedDocs] = useState<any[]>(data?.thumbnail);
   const finalData = Object.fromEntries(
     Object.entries(data)
       .filter(([key]) => !EXCLUDED_KEYS.includes(key))
@@ -91,7 +89,6 @@ export const EditField = (props: any) => {
       ...finalData,
       ...(withExplanation ? withExplanationValues : {}),
       docs: undefined as any,
-      deleted_docs: [],
     },
     validationSchema: yup.object().shape({
       docs: fileValidation({
@@ -122,10 +119,15 @@ export const EditField = (props: any) => {
       payload.append("table_name", `${tableName}`);
       if (Array.isArray(values.docs)) {
         values.docs.forEach((file: any) => {
-          payload.append(`document`, file);
+          payload.append(`file`, file);
         });
       } else if (values.docs) {
-        payload.append("document", values.docs);
+        payload.append("file", values.docs);
+      }
+      if (!empty(deletedDocs)) {
+        deletedDocs.forEach((doc: any) => {
+          payload.append("delete_document_ids", doc.id);
+        });
       }
       payload.append("properties", JSON.stringify(newPropertiesPayload));
       const url = `/api/gis-bpn/workspaces-layers/update-field`;
@@ -135,31 +137,33 @@ export const EditField = (props: any) => {
         data: payload,
       };
 
-      // new geojson
-      const newGeojson = {
-        ...geojson,
-        features: geojson?.features.map((feature: any, index: number) => {
-          if (index === featuresIndex) {
-            return {
-              ...feature,
-              properties: {
-                ...feature.properties,
-                ...newProperties,
-              },
-            };
-          }
-          return feature;
-        }),
-      };
-      const newData = {
-        ...selectedPolygon?.activeLayer?.data,
-        geojson: newGeojson,
-      };
-
       req({
         config,
         onResolve: {
-          onSuccess: () => {
+          onSuccess: (r) => {
+            // TODO apply reponse updated feature to context
+            // new geojson
+            const newGeojson = {
+              ...geojson,
+              features: geojson?.features.map((feature: any, index: number) => {
+                if (index === featuresIndex) {
+                  return {
+                    ...feature,
+                    properties: {
+                      ...feature.properties,
+                      ...newProperties,
+                    },
+                    documents: r?.data?.documents,
+                  };
+                }
+                return feature;
+              }),
+            };
+            const newData = {
+              ...selectedPolygon?.activeLayer?.data,
+              geojson: newGeojson,
+            };
+
             if (workspaceId && layerId) {
               updateActiveLayerData(workspaceId, layerId, newData);
             }
@@ -341,10 +345,7 @@ export const EditField = (props: any) => {
                               setExistingDocs((prev) =>
                                 prev.filter((f) => f !== item)
                               );
-                              formik.setFieldValue("deleted_docs", [
-                                ...formik.values.deleted_docs,
-                                item,
-                              ]);
+                              setDeletedDocs((ps) => [...ps, item]);
                             }}
                           />
                         );
@@ -365,34 +366,27 @@ export const EditField = (props: any) => {
                     />
                   )}
 
-                  {!empty(formik.values.deleted_docs) && (
+                  {!empty(deletedDocs) && (
                     <CContainer gap={2} mt={2}>
                       <P color={"fg.muted"}>{l.deleted_docs}</P>
 
-                      {formik.values.deleted_docs?.map(
-                        (item: any, i: number) => {
-                          return (
-                            <ExistingFileItem
-                              key={i}
-                              data={item}
-                              withDeleteButton={false}
-                              withUndobutton
-                              onUndo={() => {
-                                setExistingDocs((prev) => [...prev, item]);
+                      {deletedDocs?.map((item: any, i: number) => {
+                        return (
+                          <ExistingFileItem
+                            key={i}
+                            data={item}
+                            withDeleteButton={false}
+                            withUndobutton
+                            onUndo={() => {
+                              setExistingDocs((prev) => [...prev, item]);
 
-                                formik.setFieldValue(
-                                  "deleted_docs",
-                                  formik.values.deleted_docs.filter(
-                                    (f: any) => f !== item
-                                  )
-                                );
-
-                                formik.setFieldValue("icon", undefined);
-                              }}
-                            />
-                          );
-                        }
-                      )}
+                              setDeletedDocs((ps) =>
+                                ps.filter((f) => f != item)
+                              );
+                            }}
+                          />
+                        );
+                      })}
                     </CContainer>
                   )}
                 </Field>

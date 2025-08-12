@@ -81,7 +81,7 @@ interface ActiveWorkspacesStore {
   updateLayerData: (
     workspaceId: string,
     layerId: number,
-    newData: Partial<Interface__LayerData>
+    newData: Interface__LayerData
   ) => void;
 }
 
@@ -336,24 +336,16 @@ const useActiveWorkspaces = create<ActiveWorkspacesStore>((set, get) => ({
     set((state) => ({
       activeWorkspaces: state.activeWorkspaces.map((category) => ({
         ...category,
-        workspaces: category.workspaces.map((workspace) =>
-          workspace.id === workspaceId
-            ? {
-                ...workspace,
-                layers: workspace.layers?.map((layer) =>
-                  layer.id === layerId
-                    ? {
-                        ...layer,
-                        data: {
-                          ...layer.data,
-                          ...newData,
-                        },
-                      }
-                    : layer
-                ),
-              }
-            : workspace
-        ),
+        workspaces: category.workspaces.map((workspace) => {
+          if (workspace.id !== workspaceId) return workspace;
+
+          return {
+            ...workspace,
+            layers: workspace.layers?.map((layer) =>
+              layer.id === layerId ? { ...layer, data: newData } : layer
+            ),
+          };
+        }),
       })),
     })),
 }));
