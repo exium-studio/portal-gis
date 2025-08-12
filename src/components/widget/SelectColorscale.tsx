@@ -91,7 +91,7 @@ const SelectColorscale = (props: any) => {
       <DisclosureRoot open={open} lazyLoad size={"xs"}>
         <DisclosureContent>
           <DisclosureHeader>
-            <DisclosureHeaderContent title={`Colorway`} />
+            <DisclosureHeaderContent title={`Colorscale`} />
           </DisclosureHeader>
 
           <DisclosureBody>
@@ -121,10 +121,10 @@ const SelectColorscale = (props: any) => {
                       borderRadius={3}
                       overflow={"clip"}
                     >
-                      {item?.colors?.map((color: string) => {
+                      {item?.colors?.map((color: string, i: number) => {
                         return (
                           <Box
-                            key={color}
+                            key={`${color}-${i}`}
                             bg={color}
                             flex={"1 1 20px"}
                             h={"full"}

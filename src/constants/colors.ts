@@ -124,16 +124,6 @@ export const LEGEND_COLOR_OPTIONS = [
       "#075267",
     ],
   },
-  //  50: { value: "#E9FFF6" },
-  // 100: { value: "#CFFBE9" },
-  // 200: { value: "#A0F7DC" },
-  // 300: { value: "#6EE8CD" },
-  // 400: { value: "#47D1BF" },
-  // 500: { value: "#16B3AC" },
-  // 600: { value: "#109399" },
-  // 700: { value: "#0B7180" },
-  // 800: { value: "#075267" },
-  // 900: { value: "#043C55" },
   {
     label: "Orange Gradient",
     colors: [
@@ -158,6 +148,19 @@ export const LEGEND_COLOR_OPTIONS = [
       "#7c7ac4",
       "#6a68b0",
       "#58569c",
+    ],
+  },
+  {
+    label: "Absolut Orange",
+    colors: [
+      "#ffa726",
+      "#ffa726",
+      "#ffa726",
+      "#ffa726",
+      "#ffa726",
+      "#ffa726",
+      "#ffa726",
+      "#ffa726",
     ],
   },
 ];

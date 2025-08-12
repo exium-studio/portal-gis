@@ -42,11 +42,12 @@ const SelectedPolygonLayer = () => {
       },
     });
 
-    return () => {
-      if (map.getLayer(fillLayerId)) map.removeLayer(fillLayerId);
-      if (map.getLayer(lineLayerId)) map.removeLayer(lineLayerId);
-      if (map.getSource(sourceId)) map.removeSource(sourceId);
-    };
+    // TODO fix cleanup error get own layer on mapstyle changes
+    // return () => {
+    //   if (map.getLayer(fillLayerId)) map.removeLayer(fillLayerId);
+    //   if (map.getLayer(lineLayerId)) map.removeLayer(lineLayerId);
+    //   if (map.getSource(sourceId)) map.removeSource(sourceId);
+    // };
   }, [mapRef, selectedPolygon]);
 
   return null;

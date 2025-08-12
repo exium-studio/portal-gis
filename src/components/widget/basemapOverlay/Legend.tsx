@@ -11,7 +11,7 @@ import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import empty from "@/utils/empty";
 import { Circle, HStack, Portal, SimpleGrid } from "@chakra-ui/react";
 import { IconFlag, IconFoldersOff } from "@tabler/icons-react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import { OverlayItemContainer } from "../OverlayItemContainer";
 import SimplePopover from "../SimplePopover";
@@ -72,10 +72,19 @@ export const LegendContent = (props: any) => {
 
   // Contexts
   const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
+  const activeWorkspacesByCategory = useActiveWorkspaces(
+    (s) => s.activeWorkspaces
+  );
   const halfPanel = useLayout((s) => s.halfPanel);
   const open = useLegend((s) => s.open);
   const onClose = useLegend((s) => s.onClose);
   const legend = useLegend((s) => s.legend);
+
+  const [legends, setLegends] = useState<string[]>([]);
+
+  useEffect(() => {}, []);
+
+  console.log(activeWorkspacesByCategory);
 
   return (
     <FloatingContainer
