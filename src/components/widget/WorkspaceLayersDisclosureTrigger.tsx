@@ -299,7 +299,6 @@ const DeleteLayer = (props: any) => {
   const setRt = useRenderTrigger((s) => s.setRt);
   const { setConfirmationData, confirmationOnOpen } =
     useConfirmationDisclosure();
-  // TODO handle remove layer
   // const removeLayer = useActiveWorkspaces((s) => s.removeLayer);
 
   // Utils
@@ -317,7 +316,6 @@ const DeleteLayer = (props: any) => {
       onResolve: {
         onSuccess: () => {
           setRt((ps) => !ps);
-          // TODO handle remove layer
           // removeLayer(workspace?.id, layer.id);
         },
       },

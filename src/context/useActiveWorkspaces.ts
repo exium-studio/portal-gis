@@ -3,6 +3,7 @@ import useMapViewState from "./useMapViewState";
 import {
   Interface__ActiveWorkspace,
   Interface__ActiveWorkspacesByWorkspaceCategory,
+  Interface__LayerData,
 } from "@/constants/interfaces";
 
 // Generic helper to toggle visibility in an array
@@ -76,6 +77,11 @@ interface ActiveWorkspacesStore {
     workspaceId: string,
     layerId: number,
     action: "front" | "back" | "up" | "down"
+  ) => void;
+  updateLayerData: (
+    workspaceId: string,
+    layerId: number,
+    newData: Partial<Interface__LayerData>
   ) => void;
 }
 
@@ -321,6 +327,32 @@ const useActiveWorkspaces = create<ActiveWorkspacesStore>((set, get) => ({
                 ),
               }
             : ws
+        ),
+      })),
+    })),
+
+  // Update layer data in a workspace
+  updateLayerData: (workspaceId, layerId, newData) =>
+    set((state) => ({
+      activeWorkspaces: state.activeWorkspaces.map((category) => ({
+        ...category,
+        workspaces: category.workspaces.map((workspace) =>
+          workspace.id === workspaceId
+            ? {
+                ...workspace,
+                layers: workspace.layers?.map((layer) =>
+                  layer.id === layerId
+                    ? {
+                        ...layer,
+                        data: {
+                          ...layer.data,
+                          ...newData,
+                        },
+                      }
+                    : layer
+                ),
+              }
+            : workspace
         ),
       })),
     })),
