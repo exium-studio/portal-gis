@@ -87,7 +87,7 @@ const SetLegend = (props: any) => {
       propertyKey: yup.array().required(l.required_form),
     }),
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
+      // `console`.log(values);
 
       back();
 
