@@ -169,65 +169,67 @@ export const LegendContent = (props: any) => {
 
         {!empty(layerLegends) && (
           <AccordionRoot multiple>
-            {layerLegends?.map(({ layer, workspace, legends }, i) => {
-              const last = i === layerLegends.length - 1;
+            {[...layerLegends]
+              ?.reverse()
+              ?.map(({ layer, workspace, legends }, i) => {
+                const last = i === layerLegends.length - 1;
 
-              return (
-                <AccordionItem
-                  key={layer.id}
-                  value={`${layer.id}`}
-                  gap={2}
-                  px={1}
-                  border={last ? "none" : ""}
-                >
-                  <AccordionItemTrigger>
-                    <CContainer truncate gap={"6px"}>
-                      <P lineClamp={1} lineHeight={1}>
-                        {layer.name}
-                      </P>
-                      <P
-                        color={"fg.subtle"}
-                        lineClamp={1}
-                        fontSize={"xs"}
-                        lineHeight={1}
-                      >{`${workspace.title}`}</P>
-                    </CContainer>
-                  </AccordionItemTrigger>
+                return (
+                  <AccordionItem
+                    key={layer.id}
+                    value={`${layer.id}`}
+                    gap={2}
+                    px={1}
+                    border={last ? "none" : ""}
+                  >
+                    <AccordionItemTrigger>
+                      <CContainer truncate gap={"6px"}>
+                        <P lineClamp={1} lineHeight={1}>
+                          {layer.name}
+                        </P>
+                        <P
+                          color={"fg.subtle"}
+                          lineClamp={1}
+                          fontSize={"xs"}
+                          lineHeight={1}
+                        >{`${workspace.title}`}</P>
+                      </CContainer>
+                    </AccordionItemTrigger>
 
-                  <AccordionItemContent p={0} pb={last ? 0 : 2}>
-                    {empty(legends) && (
-                      <VStack py={4} color={"fg.subtle"}>
-                        <Icon>
-                          <IconFlagOff />
-                        </Icon>
+                    <AccordionItemContent p={0} pb={last ? 0 : 2}>
+                      {empty(legends) && (
+                        <VStack py={4} color={"fg.subtle"}>
+                          <Icon>
+                            <IconFlagOff />
+                          </Icon>
 
-                        <P>{l.no_legends}</P>
-                      </VStack>
-                    )}
+                          <P>{l.no_legends}</P>
+                        </VStack>
+                      )}
 
-                    {!empty(legends) && (
-                      <SimpleGrid columns={2} gap={1}>
-                        {legends.map(({ value, color }) => {
-                          return (
-                            <SimplePopover key={value} content={value}>
-                              <HStack cursor={"pointer"} w={"fit"}>
-                                <Circle
-                                  w={"10px"}
-                                  h={"10px"}
-                                  bg={color}
-                                  opacity={0.6}
-                                />
-                                <P lineClamp={1}>{value}</P>
-                              </HStack>
-                            </SimplePopover>
-                          );
-                        })}
-                      </SimpleGrid>
-                    )}
-                  </AccordionItemContent>
-                </AccordionItem>
-              );
-            })}
+                      {!empty(legends) && (
+                        <SimpleGrid columns={2} gap={1}>
+                          {legends.map(({ value, color }) => {
+                            return (
+                              <SimplePopover key={value} content={value}>
+                                <HStack cursor={"pointer"} w={"fit"}>
+                                  <Circle
+                                    w={"10px"}
+                                    h={"10px"}
+                                    bg={color}
+                                    opacity={0.6}
+                                  />
+                                  <P lineClamp={1}>{value}</P>
+                                </HStack>
+                              </SimplePopover>
+                            );
+                          })}
+                        </SimpleGrid>
+                      )}
+                    </AccordionItemContent>
+                  </AccordionItem>
+                );
+              })}
           </AccordionRoot>
         )}
       </CContainer>
