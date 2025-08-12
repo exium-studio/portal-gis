@@ -115,20 +115,6 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
 
     // Add or update layers
     if (isFillLayer || isLineLayer) {
-      if (!map.getLayer(fillLayerId)) {
-        map.addLayer({
-          id: fillLayerId,
-          type: "fill",
-          source: sourceId,
-          paint: { "fill-color": fillColor, "fill-opacity": fillOpacity },
-        });
-      } else {
-        map.setPaintProperty(fillLayerId, "fill-color", fillColor);
-        map.setPaintProperty(fillLayerId, "fill-opacity", fillOpacity);
-      }
-    }
-
-    if (isFillLayer || isLineLayer) {
       if (!map.getLayer(lineLayerId)) {
         map.addLayer({
           id: lineLayerId,
@@ -142,6 +128,20 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
         });
       } else {
         map.setPaintProperty(lineLayerId, "line-opacity", 1);
+      }
+    }
+
+    if (isFillLayer || isLineLayer) {
+      if (!map.getLayer(fillLayerId)) {
+        map.addLayer({
+          id: fillLayerId,
+          type: "fill",
+          source: sourceId,
+          paint: { "fill-color": fillColor, "fill-opacity": fillOpacity },
+        });
+      } else {
+        map.setPaintProperty(fillLayerId, "fill-color", fillColor);
+        map.setPaintProperty(fillLayerId, "fill-opacity", fillOpacity);
       }
     }
 
