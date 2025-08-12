@@ -217,7 +217,7 @@ const ActiveWorkspaceListItem = (props: Props) => {
 
   return (
     <AccordionItem value={`${workspace.id}`} border={"none"}>
-      <AccordionItemTrigger indicatorPlacement="none" px={2} py={1}>
+      <AccordionItemTrigger indicatorPlacement="none" pl={2} pr={1} py={1}>
         <HStack w={"full"} gap={4} justify={"space-between"}>
           <HStack truncate>
             <Icon boxSize={5} color={"fg.subtle"}>

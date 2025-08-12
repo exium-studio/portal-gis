@@ -130,7 +130,7 @@ const ActiveLayerListItem = (props: Props) => {
   return (
     <HStack
       w={"full"}
-      pr={2}
+      pr={1}
       borderRadius={themeConfig.radii.container}
       transition={"200ms"}
       gap={0}
