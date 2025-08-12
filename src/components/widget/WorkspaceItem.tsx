@@ -422,19 +422,26 @@ const WorkspaceLayersUtils = (props: {
       <AddLayer
         workspace={workspace}
         disabled={workspaceLoading || !!workspaceActive}
+        size={"xs"}
       />
 
-      <WorkspaceLayers workspace={workspace} disabled={workspaceLoading} />
+      <WorkspaceLayers
+        workspace={workspace}
+        disabled={workspaceLoading}
+        size={"xs"}
+      />
 
       <ViewWorkspace
         workspace={workspace}
         disabled={!workspaceActive || workspaceLoading}
+        size={"xs"}
       />
 
       <ToggleLoadWorkspace
         workspace={workspace}
         workspaceActive={workspaceActive}
         ml={"auto"}
+        size={"xs"}
       />
     </HStack>
   );
@@ -525,7 +532,7 @@ const AddLayer = (props: any) => {
           onClick={onOpen}
           {...restProps}
         >
-          <Icon>
+          <Icon boxSize={5}>
             <IconFilePlus stroke={1.8} />
           </Icon>
         </BButton>
