@@ -80,11 +80,11 @@ const SetLegend = (props: any) => {
     validateOnChange: false,
     initialValues: {
       colorscale: LEGEND_COLOR_OPTIONS[0],
-      propertyKey: undefined as any,
+      property_key: undefined as any,
     },
     validationSchema: yup.object().shape({
       colorscale: yup.object().required(l.required_form),
-      propertyKey: yup.array().required(l.required_form),
+      property_key: yup.array().required(l.required_form),
     }),
     onSubmit: (values, { resetForm }) => {
       // `console`.log(values);
@@ -92,7 +92,7 @@ const SetLegend = (props: any) => {
       back();
 
       const payload = {
-        propertyKey: values.propertyKey?.[0].id,
+        property_key: values.property_key?.[0].id,
         colorscale: values.colorscale?.colors,
       };
 
@@ -132,14 +132,14 @@ const SetLegend = (props: any) => {
               <FieldsetRoot>
                 <Field
                   label={l.property}
-                  invalid={!!formik.errors.propertyKey}
-                  errorText={formik.errors.propertyKey as string}
+                  invalid={!!formik.errors.property_key}
+                  errorText={formik.errors.property_key as string}
                 >
                   <SelectPropertyByLayerId
                     layerId={layer?.id}
-                    inputValue={formik.values.propertyKey}
+                    inputValue={formik.values.property_key}
                     onConfirm={(input) => {
-                      formik.setFieldValue("propertyKey", input);
+                      formik.setFieldValue("property_key", input);
                     }}
                   />
                 </Field>

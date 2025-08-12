@@ -70,10 +70,10 @@ const SelectColorscale = (props: any) => {
           h={"30px"}
           mr={2}
         >
-          {localColorscale?.colors?.map((color: string) => {
+          {localColorscale?.colors?.map((color: string, i: number) => {
             return (
               <Box
-                key={color}
+                key={`${color}${i}`}
                 bg={color}
                 flex={"1 1 20px"}
                 h={"full"}
