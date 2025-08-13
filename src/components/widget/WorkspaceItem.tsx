@@ -6,6 +6,7 @@ import {
   Interface__StorageFile,
   Interface__Workspace,
 } from "@/constants/interfaces";
+import { FIT_BOUNDS_PADDING } from "@/constants/sizes";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useConfirmationDisclosure from "@/context/useConfirmationDisclosure";
 import useLang from "@/context/useLang";
@@ -13,6 +14,10 @@ import useMapViewState from "@/context/useMapViewState";
 import useRenderTrigger from "@/context/useRenderTrigger";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useWorkspaceDisplay from "@/context/useWorkspaceDisplay";
+import {
+  useIsWorkspaceLoading,
+  useWorkspaceLoading,
+} from "@/context/useWorkspaceLoading";
 import useBackOnClose from "@/hooks/useBackOnClose";
 import useRequest from "@/hooks/useRequest";
 import {
@@ -24,8 +29,15 @@ import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import empty from "@/utils/empty";
 import { formatTableName } from "@/utils/formatTableName";
 import { computeBboxAndCenter } from "@/utils/geospatial";
+import interpolate from "@/utils/interpolate";
 import { fileValidation } from "@/utils/validationSchemas";
-import { FieldsetRoot, HStack, Icon, useDisclosure } from "@chakra-ui/react";
+import {
+  Badge,
+  FieldsetRoot,
+  HStack,
+  Icon,
+  useDisclosure,
+} from "@chakra-ui/react";
 import {
   IconCategory2,
   IconDots,
@@ -51,6 +63,7 @@ import Img from "../ui-custom/Img";
 import P from "../ui-custom/P";
 import StringInput from "../ui-custom/StringInput";
 import Textarea from "../ui-custom/Textarea";
+import { Checkbox } from "../ui/checkbox";
 import { Field } from "../ui/field";
 import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
 import { Switch } from "../ui/switch";
@@ -61,13 +74,6 @@ import SelectLayerType from "./SelectLayerType";
 import SelectWorkspaceCategory from "./SelectWorkspaceCategory";
 import SimplePopover from "./SimplePopover";
 import WorkspaceLayersDisclosureTrigger from "./WorkspaceLayersDisclosureTrigger";
-import { Checkbox } from "../ui/checkbox";
-import interpolate from "@/utils/interpolate";
-import { FIT_BOUNDS_PADDING } from "@/constants/sizes";
-import {
-  useIsWorkspaceLoading,
-  useWorkspaceLoading,
-} from "@/context/useWorkspaceLoading";
 
 const WorkspaceMenu = (props: any) => {
   // Props
@@ -860,13 +866,13 @@ const DetailWorkspacePopoverContent = (props: any) => {
         {workspace?.description}
       </P>
 
-      <HStack mt={2} color={"fg.subtle"}>
+      <Badge mt={2} color={"fg.subtle"} w={"fit"}>
         <Icon boxSize={4}>
           <IconCategory2 stroke={1.5} />
         </Icon>
 
         <P fontSize={"xs"}>{workspace?.workspace_category?.label}</P>
-      </HStack>
+      </Badge>
     </CContainer>
   );
 };

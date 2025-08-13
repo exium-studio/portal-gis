@@ -4,7 +4,7 @@
     "": {
       "name": "map-gis",
       "dependencies": {
-        "@chakra-ui/charts": "^3.24.0",
+        "@chakra-ui/charts": "^3.24.2",
         "@chakra-ui/react": "^3.14.2",
         "@emotion/react": "^11.14.0",
         "@tabler/icons-react": "^3.28.1",
@@ -24,7 +24,7 @@
         "react-map-gl": "^8.0.1",
         "react-router-dom": "^6.28.0",
         "react-virtualized": "^9.22.6",
-        "recharts": "^3.1.0",
+        "recharts": "^3.1.2",
         "yup": "^1.4.0",
         "zustand": "^5.0.1",
       },
@@ -247,7 +247,7 @@
 
     "@canvas/image-data": ["@canvas/image-data@1.0.0", "", {}, "sha512-BxOqI5LgsIQP1odU5KMwV9yoijleOPzHL18/YvNqF9KFSGF2K/DLlYAbDQsWqd/1nbaFuSkYD/191dpMtNh4vw=="],
 
-    "@chakra-ui/charts": ["@chakra-ui/charts@3.24.0", "", { "peerDependencies": { "@chakra-ui/react": ">=3", "react": ">=18", "react-dom": ">=18", "recharts": ">=2" } }, "sha512-dVADDLi0XaFj7Ge9YN4pZoalDlVirkzRRNkHFvnuaavwLSEf2lIA6i4Qtj3+C8WgmIoQWRgCubLgAxUOJKc3Tg=="],
+    "@chakra-ui/charts": ["@chakra-ui/charts@3.24.2", "", { "peerDependencies": { "@chakra-ui/react": ">=3", "react": ">=18", "react-dom": ">=18", "recharts": ">=2" } }, "sha512-1ax9+tX79YsFBV++tq7Kh39+tRA5AG3Gr1CT6rUDbX0iO34A1FD21TczvZv/ftbieiVw+cdRgTDU/QfNOvuT8A=="],
 
     "@chakra-ui/react": ["@chakra-ui/react@3.14.2", "", { "dependencies": { "@ark-ui/react": "5.3.1", "@emotion/is-prop-valid": "1.3.1", "@emotion/serialize": "1.3.3", "@emotion/use-insertion-effect-with-fallbacks": "1.2.0", "@emotion/utils": "1.4.2", "@pandacss/is-valid-prop": "0.41.0", "csstype": "3.1.3", "fast-safe-stringify": "2.1.1" }, "peerDependencies": { "@emotion/react": ">=11", "react": ">=18", "react-dom": ">=18" } }, "sha512-lCEEx7F2pfq0SoxuWA/t8uJwfCrEnzP0N0auuPH0mv+dZZ9Z2rArpgttg0qWCU5FpT5CN5cqx9scnPV/PnQt5A=="],
 
@@ -1615,7 +1615,7 @@
 
     "readable-stream": ["readable-stream@2.3.8", "", { "dependencies": { "core-util-is": "~1.0.0", "inherits": "~2.0.3", "isarray": "~1.0.0", "process-nextick-args": "~2.0.0", "safe-buffer": "~5.1.1", "string_decoder": "~1.1.1", "util-deprecate": "~1.0.1" } }, "sha512-8p0AUk4XODgIewSi0l8Epjs+EVnWiK7NoDIEGU0HhE7+ZyY8D1IMY7odu5lRrFXGg71L15KG8QrPmum45RTtdA=="],
 
-    "recharts": ["recharts@3.1.0", "", { "dependencies": { "@reduxjs/toolkit": "1.x.x || 2.x.x", "clsx": "^2.1.1", "decimal.js-light": "^2.5.1", "es-toolkit": "^1.39.3", "eventemitter3": "^5.0.1", "immer": "^10.1.1", "react-redux": "8.x.x || 9.x.x", "reselect": "5.1.1", "tiny-invariant": "^1.3.3", "use-sync-external-store": "^1.2.2", "victory-vendor": "^37.0.2" }, "peerDependencies": { "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react-dom": "^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react-is": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0" } }, "sha512-NqAqQcGBmLrfDs2mHX/bz8jJCQtG2FeXfE0GqpZmIuXIjkpIwj8sd9ad0WyvKiBKPd8ZgNG0hL85c8sFDwascw=="],
+    "recharts": ["recharts@3.1.2", "", { "dependencies": { "@reduxjs/toolkit": "1.x.x || 2.x.x", "clsx": "^2.1.1", "decimal.js-light": "^2.5.1", "es-toolkit": "^1.39.3", "eventemitter3": "^5.0.1", "immer": "^10.1.1", "react-redux": "8.x.x || 9.x.x", "reselect": "5.1.1", "tiny-invariant": "^1.3.3", "use-sync-external-store": "^1.2.2", "victory-vendor": "^37.0.2" }, "peerDependencies": { "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react-dom": "^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react-is": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0" } }, "sha512-vhNbYwaxNbk/IATK0Ki29k3qvTkGqwvCgyQAQ9MavvvBwjvKnMTswdbklJpcOAoMPN/qxF3Lyqob0zO+ZXkZ4g=="],
 
     "redux": ["redux@5.0.1", "", {}, "sha512-M9/ELqF6fy8FwmkpnF0S3YKOqMyoWJ4+CS5Efg2ct3oY9daQvd/Pc71FpGZsVsbl3Cpb+IIcjBDUnnyBdQbq4w=="],
 

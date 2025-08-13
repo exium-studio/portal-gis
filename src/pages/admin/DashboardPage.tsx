@@ -9,12 +9,12 @@ import HelperText from "@/components/ui-custom/HelperText";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import P from "@/components/ui-custom/P";
+import SearchInput from "@/components/ui-custom/SearchInput";
 import { Checkbox } from "@/components/ui/checkbox";
 import GeoJSONFilter from "@/components/widget/basemapOverlay/GeoJSONFilter";
 import PageContainer from "@/components/widget/PageContainer";
 import SimplePopover from "@/components/widget/SimplePopover";
 import { Interface__ActiveWorkspace } from "@/constants/interfaces";
-import { R_GAP } from "@/constants/sizes";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import { useFilterGeoJSON } from "@/context/useFilterGeoJSON";
 import useLang from "@/context/useLang";
@@ -24,8 +24,8 @@ import { Chart, useChart } from "@chakra-ui/charts";
 import { Circle, HStack } from "@chakra-ui/react";
 import { IconFoldersOff } from "@tabler/icons-react";
 import chroma from "chroma-js";
-import { useEffect, useMemo, useState } from "react";
-import { Cell, Pie, PieChart, Tooltip } from "recharts";
+import { useEffect, useState } from "react";
+import { Cell, Pie, PieChart, Sector, Tooltip } from "recharts";
 
 type DashboardStat = {
   name: string;
@@ -184,6 +184,7 @@ const HGUArea = (props: any) => {
   const chart = useChart({
     data: chartData,
   });
+  const activeIndex = chart.data && chart.data.length > 0 ? 0 : -1;
 
   useEffect(() => {
     const newChartData = data?.map((item: any, i: number) => {
@@ -200,6 +201,8 @@ const HGUArea = (props: any) => {
     });
     setChartData(newChartData);
   }, [data, percentageView]);
+
+  console.log(chart.data);
 
   return (
     <ItemContainer pb={4} {...restProps}>
@@ -228,12 +231,14 @@ const HGUArea = (props: any) => {
               data={chart.data}
               dataKey={chart.key("value")}
               nameKey="name"
+              labelLine={{ strokeWidth: 1 }}
+              activeShape={<Sector outerRadius={110} />}
             >
               {chart.data.map((item) => (
                 <Cell
                   key={item.name}
-                  fill={chart.color(item.color)}
                   strokeWidth={0}
+                  fill={chart.color(item.color)}
                 />
               ))}
             </Pie>
@@ -447,6 +452,55 @@ const HGUAreaByKabupaten = (props: any) => {
   );
 };
 
+const DashboardData = (props: any) => {
+  // Props
+  const { search } = props;
+
+  // Contexts
+  const activeWorkspacesByCategory = useActiveWorkspaces(
+    (s) => s.activeWorkspaces
+  );
+  const filterGeoJSON = useFilterGeoJSON((s) => s.filterGeoJSON);
+
+  // States
+  const [activeWorkspaces, setActiveWorkspaces] = useState<
+    Interface__ActiveWorkspace[]
+  >([]);
+  const [dashboardData, setDashboardData] = useState<DashboardSummary>(
+    summarizeDashboard(activeWorkspaces, filterGeoJSON)
+  );
+  const [filteredDashboardData, setFilteredDashboardData] =
+    useState<DashboardSummary>(
+      summarizeDashboard(activeWorkspaces, filterGeoJSON)
+    );
+
+  // console.log(dashboardData);
+
+  useEffect(() => {
+    const newActiveWorkspaces = activeWorkspacesByCategory.flatMap(
+      (activeWorkspace) => activeWorkspace?.workspaces
+    );
+    setActiveWorkspaces(newActiveWorkspaces);
+  }, [activeWorkspacesByCategory]);
+
+  useEffect(() => {
+    setDashboardData(summarizeDashboard(activeWorkspaces, filterGeoJSON));
+  }, [activeWorkspaces, filterGeoJSON]);
+
+  return (
+    <HStack wrap={"wrap"} align={"stretch"} gap={4}>
+      <HGUArea data={dashboardData?.areaByTipeHak} flex={"1 1 300px"} />
+
+      <HGUCount data={dashboardData?.countByTipeHak} flex={"1 1 300px"} />
+
+      <HGUAreaByKabupaten
+        data={dashboardData?.areaByKabupaten}
+        flex={"1 1 300px"}
+      />
+    </HStack>
+  );
+};
+
 const DashboardPage = () => {
   const { l } = useLang();
 
@@ -454,66 +508,22 @@ const DashboardPage = () => {
   const activeWorkspacesByCategory = useActiveWorkspaces(
     (s) => s.activeWorkspaces
   );
-  const filterGeoJSON = useFilterGeoJSON((s) => s.filterGeoJSON);
-  const defaultFilterGeoJSON = useFilterGeoJSON((s) => s.defaultFilterGeoJSON);
 
   // States
+  const [search, setSearch] = useState<string>("");
   const [activeWorkspaces, setActiveWorkspaces] = useState<
     Interface__ActiveWorkspace[]
   >([]);
-  const [dashboardData, setDashboardData] = useState<DashboardSummary | null>(
-    null
-  );
 
-  // Set aktif workspace dari context
   useEffect(() => {
     const newActiveWorkspaces = activeWorkspacesByCategory.flatMap(
-      (ws) => ws?.workspaces ?? []
+      (activeWorkspace) => activeWorkspace?.workspaces
     );
     setActiveWorkspaces(newActiveWorkspaces);
   }, [activeWorkspacesByCategory]);
 
-  // Hitung data summary murni tanpa filter
-  useEffect(() => {
-    setDashboardData(
-      summarizeDashboard(activeWorkspaces, defaultFilterGeoJSON)
-    ); // kosongkan filter
-  }, [activeWorkspaces]);
-
-  // State untuk set nama yang disembunyikan (filter)
-  // Bisa langsung ambil dari filterGeoJSON, yang berisi nilai disembunyikan
-  // Supaya gampang, kita flatten semua value filterGeoJSON ke satu Set
-  const hiddenSet = useMemo(() => {
-    const s = new Set<string>();
-    for (const key in filterGeoJSON) {
-      (filterGeoJSON[key as keyof typeof filterGeoJSON] || []).forEach((v) =>
-        s.add(v)
-      );
-    }
-    return s;
-  }, [filterGeoJSON]);
-
-  // Filter dashboard data sesuai hiddenSet
-  const filteredDashboardData = useMemo(() => {
-    if (!dashboardData) return null;
-
-    // Helper filter function
-    const filterItems = (items: { name: string; active?: boolean }[]) =>
-      items.map((item) => ({
-        ...item,
-        active: !hiddenSet.has(item.name), // aktif kalau gak di hidden set
-      }));
-
-    return {
-      areaByTipeHak: filterItems(dashboardData.areaByTipeHak),
-      countByTipeHak: filterItems(dashboardData.countByTipeHak),
-      areaByKabupaten: filterItems(dashboardData.areaByKabupaten),
-    };
-  }, [dashboardData, hiddenSet]);
-
-  // Render
   return (
-    <PageContainer gap={R_GAP} pb={4} flex={1}>
+    <PageContainer pb={4} flex={1}>
       {empty(activeWorkspaces) && (
         <FeedbackNoData
           icon={<IconFoldersOff />}
@@ -522,27 +532,21 @@ const DashboardPage = () => {
         />
       )}
 
-      {!empty(activeWorkspaces) && filteredDashboardData && (
-        <>
-          <HStack justify={"end"}>
+      {!empty(activeWorkspaces) && (
+        <CContainer gap={4}>
+          <HStack>
+            <SearchInput
+              onChangeSetter={(input) => {
+                setSearch(input);
+              }}
+              inputValue={search}
+            />
+
             <GeoJSONFilter />
           </HStack>
 
-          <HStack wrap={"wrap"} align={"stretch"} gap={4}>
-            <HGUArea
-              data={filteredDashboardData.areaByTipeHak}
-              flex={"1 1 300px"}
-            />
-            <HGUCount
-              data={filteredDashboardData.countByTipeHak}
-              flex={"1 1 300px"}
-            />
-            <HGUAreaByKabupaten
-              data={filteredDashboardData.areaByKabupaten}
-              flex={"1 1 300px"}
-            />
-          </HStack>
-        </>
+          <DashboardData search={search} />
+        </CContainer>
       )}
     </PageContainer>
   );

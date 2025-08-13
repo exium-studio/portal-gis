@@ -95,7 +95,7 @@ const GeoJSONFilter = () => {
 
   return (
     <PopoverRoot open={open}>
-      <PopoverTrigger w={"full"}>
+      <PopoverTrigger>
         {/* <OverlayItemContainer> */}
         <Tooltip content={l.basemap_filter}>
           <BButton

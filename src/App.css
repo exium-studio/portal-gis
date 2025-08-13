@@ -301,7 +301,7 @@ button {
 }
 
 /* Firefox */
-.scrollX,
+/* .scrollX,
 .scrollY {
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
@@ -313,7 +313,7 @@ button {
 .scrollX:hover,
 .scrollY:hover {
   scrollbar-color: var(--d3) transparent;
-}
+} */
 
 /* SVGs */
 svg * {

@@ -9,7 +9,7 @@ interface WorkspaceDisplayState {
 }
 
 const useWorkspaceDisplay = create<WorkspaceDisplayState>((set) => ({
-  displayMode: "rows", // Default: "rows"
+  displayMode: "list",
   toggleDisplayMode: () =>
     set((state) => ({
       displayMode: state.displayMode === "rows" ? "list" : "rows",
