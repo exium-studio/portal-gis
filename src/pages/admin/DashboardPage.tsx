@@ -531,7 +531,7 @@ const DashboardData = (props: any) => {
     return dashboardItems.filter((item) => {
       return item.name.toLowerCase().includes(searchTerm);
     });
-  }, [searchTerm]);
+  }, [searchTerm, dashboardData]);
 
   // const [filteredDashboardData, setFilteredDashboardData] =
   //   useState<DashboardSummary>(
@@ -571,20 +571,10 @@ const DashboardPage = () => {
 
   // States
   const [search, setSearch] = useState<string>("");
-  const [activeWorkspaces, setActiveWorkspaces] = useState<
-    Interface__ActiveWorkspace[]
-  >([]);
-
-  useEffect(() => {
-    const newActiveWorkspaces = activeWorkspacesByCategory.flatMap(
-      (activeWorkspace) => activeWorkspace?.workspaces
-    );
-    setActiveWorkspaces(newActiveWorkspaces);
-  }, [activeWorkspacesByCategory]);
 
   return (
     <PageContainer pb={4} flex={1}>
-      {empty(activeWorkspaces) && (
+      {empty(activeWorkspacesByCategory) && (
         <FeedbackNoData
           icon={<IconFoldersOff />}
           title={l.no_active_workspaces.title}
@@ -592,7 +582,7 @@ const DashboardPage = () => {
         />
       )}
 
-      {!empty(activeWorkspaces) && (
+      {!empty(activeWorkspacesByCategory) && (
         <CContainer gap={4} flex={1}>
           <HStack>
             <SearchInput
