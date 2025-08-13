@@ -16,8 +16,9 @@ import PageContainer from "@/components/widget/PageContainer";
 import SimplePopover from "@/components/widget/SimplePopover";
 import { Interface__ActiveWorkspace } from "@/constants/interfaces";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
-import { useFilterGeoJSON } from "@/context/useFilterGeoJSON";
+import { FilterGeoJSON, useFilterGeoJSON } from "@/context/useFilterGeoJSON";
 import useLang from "@/context/useLang";
+import useDebouncedCallback from "@/hooks/useDebouncedCallback";
 import { addOpacityToHex } from "@/utils/addOpacityToHex";
 import empty from "@/utils/empty";
 import { Chart, useChart } from "@chakra-ui/charts";
@@ -52,10 +53,10 @@ const COLORWAY = [
   "#b3b3b3",
 ].reverse();
 
-function summarizeDashboard(
+const summarizeDashboard = (
   workspaces: Interface__ActiveWorkspace[],
   filter: { [K in FilterKey]: string[] }
-): DashboardSummary {
+): DashboardSummary => {
   const areaRaw: Record<string, number> = {};
   const countRaw: Record<string, number> = {};
   const areaByKabupatenRaw: Record<string, Record<string, number>> = {};
@@ -173,7 +174,26 @@ function summarizeDashboard(
     .sort(byNameAsc);
 
   return { areaByTipeHak, countByTipeHak, areaByKabupaten };
-}
+};
+const applyFilterToDashboard = (
+  original: DashboardSummary,
+  filter: FilterGeoJSON
+): DashboardSummary => {
+  const lookup: Record<keyof FilterGeoJSON, Set<string>> = {
+    KABUPATEN: new Set(filter?.KABUPATEN ?? []),
+    TIPEHAK: new Set(filter?.TIPEHAK ?? []),
+    GUNATANAHK: new Set(filter?.GUNATANAHK ?? []),
+  };
+
+  const filterStat = (data: DashboardStat[], key: keyof FilterGeoJSON) =>
+    data.filter((item) => !lookup[key].has(item.name));
+
+  return {
+    areaByTipeHak: filterStat(original.areaByTipeHak, "TIPEHAK"),
+    countByTipeHak: filterStat(original.countByTipeHak, "TIPEHAK"),
+    areaByKabupaten: filterStat(original.areaByKabupaten, "KABUPATEN"),
+  };
+};
 
 const HGUArea = (props: any) => {
   // Props
@@ -238,7 +258,7 @@ const HGUArea = (props: any) => {
                   nameKey="name"
                   activeShape={<Sector outerRadius={110} />}
                 >
-                  {chart.data.map((item) => (
+                  {chart.data?.map((item) => (
                     <Cell
                       key={item.name}
                       strokeWidth={0}
@@ -252,7 +272,7 @@ const HGUArea = (props: any) => {
 
           <CContainer mt={4}>
             <CContainer maxH={"150px"} className="scrollY" px={8} gap={2}>
-              {chart.data.map((item: any) => {
+              {chart.data?.map((item: any) => {
                 return (
                   <HStack key={item?.name}>
                     <Circle
@@ -343,7 +363,7 @@ const HGUCount = (props: any) => {
                   nameKey="name"
                   activeShape={<Sector outerRadius={110} />}
                 >
-                  {chart.data.map((item) => (
+                  {chart.data?.map((item) => (
                     <Cell
                       key={item.color}
                       fill={chart.color(item.color)}
@@ -357,7 +377,7 @@ const HGUCount = (props: any) => {
 
           <CContainer mt={4}>
             <CContainer maxH={"150px"} className="scrollY" px={8} gap={2}>
-              {chart.data.map((item: any) => {
+              {chart.data?.map((item: any) => {
                 return (
                   <HStack key={item?.name}>
                     <Circle
@@ -444,7 +464,7 @@ const HGUAreaByKabupaten = (props: any) => {
                   nameKey="name"
                   activeShape={<Sector outerRadius={110} />}
                 >
-                  {chart.data.map((item) => (
+                  {chart.data?.map((item) => (
                     <Cell
                       key={item.color}
                       fill={chart.color(item.color)}
@@ -458,7 +478,7 @@ const HGUAreaByKabupaten = (props: any) => {
 
           <CContainer mt={4}>
             <CContainer maxH={"150px"} className="scrollY" px={8} gap={2}>
-              {chart.data.map((item: any) => {
+              {chart.data?.map((item: any) => {
                 return (
                   <HStack key={item?.name}>
                     <Circle
@@ -502,30 +522,35 @@ const DashboardData = (props: any) => {
 
   // States
   const searchTerm = useMemo(() => search?.toLowerCase() || "", [search]);
-  const [activeWorkspaces, setActiveWorkspaces] = useState<
-    Interface__ActiveWorkspace[]
-  >([]);
-  const [dashboardData, setDashboardData] = useState<DashboardSummary>(
-    summarizeDashboard(activeWorkspaces, filterGeoJSON)
+  const [dashboardData, setDashboardData] = useState<DashboardSummary | null>(
+    null
   );
+  const [filteredDashboardData, setFilteredDashboardData] =
+    useState<DashboardSummary | null>(dashboardData);
   const dashboardItems = [
     {
       name: l.hgu_area,
       component: (
-        <HGUArea data={dashboardData?.areaByTipeHak} flex={"1 1 300px"} />
+        <HGUArea
+          data={filteredDashboardData?.areaByTipeHak}
+          flex={"1 1 300px"}
+        />
       ),
     },
     {
       name: l.hgu_count,
       component: (
-        <HGUCount data={dashboardData?.countByTipeHak} flex={"1 1 300px"} />
+        <HGUCount
+          data={filteredDashboardData?.countByTipeHak}
+          flex={"1 1 300px"}
+        />
       ),
     },
     {
       name: l.hgu_area_by_kabupaten,
       component: (
         <HGUAreaByKabupaten
-          data={dashboardData?.areaByKabupaten}
+          data={filteredDashboardData?.areaByKabupaten}
           flex={"1 1 300px"}
         />
       ),
@@ -535,25 +560,32 @@ const DashboardData = (props: any) => {
     return dashboardItems.filter((item) => {
       return item.name.toLowerCase().includes(searchTerm);
     });
-  }, [searchTerm, dashboardData]);
+  }, [searchTerm, filteredDashboardData]);
 
-  // const [filteredDashboardData, setFilteredDashboardData] =
-  //   useState<DashboardSummary>(
-  //     summarizeDashboard(activeWorkspaces, filterGeoJSON)
-  //   );
+  // Utils
+  const debouncedSetFilteredDashboardData = useDebouncedCallback(
+    (data: DashboardSummary, filter: FilterGeoJSON) => {
+      setFilteredDashboardData(applyFilterToDashboard(data, filter));
+    },
+    200 // delay ms
+  );
 
-  // console.log(dashboardData);
-
+  // Handle init dashboard data when active workspces by category changes
   useEffect(() => {
     const newActiveWorkspaces = activeWorkspacesByCategory.flatMap(
       (activeWorkspace) => activeWorkspace?.workspaces
     );
-    setActiveWorkspaces(newActiveWorkspaces);
+    setDashboardData(summarizeDashboard(newActiveWorkspaces, filterGeoJSON));
   }, [activeWorkspacesByCategory]);
 
+  // Handle filter
   useEffect(() => {
-    setDashboardData(summarizeDashboard(activeWorkspaces, filterGeoJSON));
-  }, [activeWorkspaces, filterGeoJSON]);
+    if (dashboardData) {
+      debouncedSetFilteredDashboardData(dashboardData, filterGeoJSON);
+    }
+  }, [dashboardData, filterGeoJSON]);
+
+  console.log(filterGeoJSON);
 
   return (
     <HStack wrap={"wrap"} align={"stretch"} gap={4} h={"full"}>

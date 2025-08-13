@@ -8,7 +8,7 @@ import { FilterGeoJSON } from "@/context/useFilterGeoJSON";
 const FILTER_KEYS: (keyof FilterGeoJSON)[] = [
   "KABUPATEN",
   "TIPEHAK",
-  "GUNATANAHK",
+  // "GUNATANAHK",
 ];
 
 const norm = (v: unknown) => (typeof v === "string" ? v.trim() : "");

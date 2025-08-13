@@ -14,7 +14,10 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Tooltip } from "@/components/ui/tooltip";
-import { Interface__ActiveWorkspace } from "@/constants/interfaces";
+import {
+  Interface__ActiveWorkspace,
+  Interface__FilterOptionGroup,
+} from "@/constants/interfaces";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import { useFilterGeoJSON } from "@/context/useFilterGeoJSON";
 import useLang from "@/context/useLang";
@@ -30,7 +33,6 @@ import {
 import { IconFilter } from "@tabler/icons-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import MenuHeaderContainer from "../MenuHeaderContainer";
-import useDebouncedCallback from "@/hooks/useDebouncedCallback";
 
 const GeoJSONFilter = () => {
   // Hooks
@@ -53,10 +55,9 @@ const GeoJSONFilter = () => {
   const [activeWorkspaces, setActiveWorkspaces] = useState<
     Interface__ActiveWorkspace[]
   >([]);
-  const filterOptions = useMemo(
-    () => filterOptionGroups(activeWorkspaces, filterGeoJSON),
-    [activeWorkspaces, JSON.stringify(filterGeoJSON)]
-  );
+  const [filterOptions, setFilterOptions] = useState<
+    Interface__FilterOptionGroup[]
+  >([]);
 
   // Popover
   const { open, onToggle, onClose } = useDisclosure();
@@ -65,20 +66,28 @@ const GeoJSONFilter = () => {
   useClickOutside([triggerRef, contentRef], onClose);
 
   // Utils
-  const debouncedAddFilterGeoJSON = useDebouncedCallback(addFilterGeoJSON, 200);
-  const debouncedRemoveFilterGeoJSON = useDebouncedCallback(
-    removeFilterGeoJSON,
-    200
-  );
   const handleToggle = (
     property: keyof typeof filterGeoJSON,
     value: string,
     nextChecked: boolean
   ) => {
+    setFilterOptions((prev) =>
+      prev.map((group) =>
+        group.property === property
+          ? {
+              ...group,
+              values: group.values.map((v) =>
+                v.value === value ? { ...v, active: nextChecked } : v
+              ),
+            }
+          : group
+      )
+    );
+
     if (!nextChecked) {
-      debouncedAddFilterGeoJSON({ [property]: [value] });
+      addFilterGeoJSON({ [property]: [value] });
     } else {
-      debouncedRemoveFilterGeoJSON(property, value);
+      removeFilterGeoJSON(property, value);
     }
   };
 
@@ -92,6 +101,10 @@ const GeoJSONFilter = () => {
       return newActiveWorkspaces;
     });
   }, [activeWorkspacesByCategory]);
+
+  useEffect(() => {
+    setFilterOptions(filterOptionGroups(activeWorkspaces, filterGeoJSON));
+  }, [activeWorkspaces]);
 
   return (
     <PopoverRoot open={open}>
