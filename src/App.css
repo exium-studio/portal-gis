@@ -265,7 +265,8 @@ button {
   scrollbar-gutter: auto;
 }
 .scrollY {
-  overflow-y: auto;
+  /* overflow-y: auto; */
+  overflow-y: scroll;
   scrollbar-gutter: auto;
 }
 

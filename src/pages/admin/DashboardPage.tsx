@@ -24,7 +24,7 @@ import { Chart, useChart } from "@chakra-ui/charts";
 import { Circle, HStack } from "@chakra-ui/react";
 import { IconFoldersOff } from "@tabler/icons-react";
 import chroma from "chroma-js";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Cell, Pie, PieChart, Sector, Tooltip } from "recharts";
 
 type DashboardStat = {
@@ -184,7 +184,6 @@ const HGUArea = (props: any) => {
   const chart = useChart({
     data: chartData,
   });
-  const activeIndex = chart.data && chart.data.length > 0 ? 0 : -1;
 
   useEffect(() => {
     const newChartData = data?.map((item: any, i: number) => {
@@ -201,8 +200,6 @@ const HGUArea = (props: any) => {
     });
     setChartData(newChartData);
   }, [data, percentageView]);
-
-  console.log(chart.data);
 
   return (
     <ItemContainer pb={4} {...restProps}>
@@ -231,7 +228,6 @@ const HGUArea = (props: any) => {
               data={chart.data}
               dataKey={chart.key("value")}
               nameKey="name"
-              labelLine={{ strokeWidth: 1 }}
               activeShape={<Sector outerRadius={110} />}
             >
               {chart.data.map((item) => (
@@ -326,6 +322,7 @@ const HGUCount = (props: any) => {
               data={chart.data}
               dataKey={chart.key("value")}
               nameKey="name"
+              activeShape={<Sector outerRadius={110} />}
             >
               {chart.data.map((item) => (
                 <Cell
@@ -415,6 +412,7 @@ const HGUAreaByKabupaten = (props: any) => {
               data={chart.data}
               dataKey={chart.key("value")}
               nameKey="name"
+              activeShape={<Sector outerRadius={110} />}
             >
               {chart.data.map((item) => (
                 <Cell
@@ -456,6 +454,9 @@ const DashboardData = (props: any) => {
   // Props
   const { search } = props;
 
+  // Hooks
+  const { l } = useLang();
+
   // Contexts
   const activeWorkspacesByCategory = useActiveWorkspaces(
     (s) => s.activeWorkspaces
@@ -463,16 +464,18 @@ const DashboardData = (props: any) => {
   const filterGeoJSON = useFilterGeoJSON((s) => s.filterGeoJSON);
 
   // States
+  const searchTerm = useMemo(() => search?.toLowerCase() || "", [search]);
+
   const [activeWorkspaces, setActiveWorkspaces] = useState<
     Interface__ActiveWorkspace[]
   >([]);
   const [dashboardData, setDashboardData] = useState<DashboardSummary>(
     summarizeDashboard(activeWorkspaces, filterGeoJSON)
   );
-  const [filteredDashboardData, setFilteredDashboardData] =
-    useState<DashboardSummary>(
-      summarizeDashboard(activeWorkspaces, filterGeoJSON)
-    );
+  // const [filteredDashboardData, setFilteredDashboardData] =
+  //   useState<DashboardSummary>(
+  //     summarizeDashboard(activeWorkspaces, filterGeoJSON)
+  //   );
 
   // console.log(dashboardData);
 
@@ -489,14 +492,20 @@ const DashboardData = (props: any) => {
 
   return (
     <HStack wrap={"wrap"} align={"stretch"} gap={4}>
-      <HGUArea data={dashboardData?.areaByTipeHak} flex={"1 1 300px"} />
+      {l.hgu_area.includes(searchTerm) && (
+        <HGUArea data={dashboardData?.areaByTipeHak} flex={"1 1 300px"} />
+      )}
 
-      <HGUCount data={dashboardData?.countByTipeHak} flex={"1 1 300px"} />
+      {l.hgu_count.includes(searchTerm) && (
+        <HGUCount data={dashboardData?.countByTipeHak} flex={"1 1 300px"} />
+      )}
 
-      <HGUAreaByKabupaten
-        data={dashboardData?.areaByKabupaten}
-        flex={"1 1 300px"}
-      />
+      {l.hgu_area_by_kabupaten.includes(searchTerm) && (
+        <HGUAreaByKabupaten
+          data={dashboardData?.areaByKabupaten}
+          flex={"1 1 300px"}
+        />
+      )}
     </HStack>
   );
 };
