@@ -18,6 +18,7 @@ import {
 import { UOM_FORMATS } from "@/constants/uomFormats";
 import useDateFormat from "@/context/useDateFormat";
 import useLang from "@/context/useLang";
+import useLayout from "@/context/useLayout";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useTimeFormat from "@/context/useTimeFormat";
 import useTimeZone from "@/context/useTimeZone";
@@ -94,6 +95,7 @@ const TimeZone = () => {
   // Contexts
   const { l } = useLang();
   const { timeZone, setTimeZone } = useTimeZone();
+  const halfPanel = useLayout((s) => s.halfPanel);
 
   // Constants
   const autoTZ = useMemo(() => autoTimeZone(), []);
@@ -116,7 +118,7 @@ const TimeZone = () => {
   // Utils
   const { sw } = useScreen();
   const iss = sw < 1000;
-  const columnCount = iss ? 1 : 2;
+  const columnCount = iss || halfPanel ? 1 : 2;
 
   // Cell Renderer vz
   const cellRenderer: GridCellRenderer = ({
@@ -229,8 +231,8 @@ const TimeZone = () => {
                   className="scrollY timezones-list"
                   style={{
                     paddingTop: "8px",
-                    // paddingBottom: "8px",
                     overflowX: "clip",
+                    // paddingBottom: "8px",
                   }}
                 />
               )}
