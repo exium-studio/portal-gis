@@ -629,7 +629,7 @@ const PermissionsSettingsPage = () => {
         <Location />
       </CContainer>
 
-      <HelperText px={2} mt={4}>
+      <HelperText px={2} my={4}>
         {l.permissions_settings_helper_text}
       </HelperText>
     </CContainer>
