@@ -62,7 +62,6 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
       pl={!compact ? 4 : ""}
       align={"start"}
       gap={0}
-      overflowY={"auto"}
       {...props}
     >
       {/* Settings Navs */}
@@ -90,7 +89,7 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
             overflowY={"auto"}
             maxH={"full"}
           >
-            <CContainer className="scrollY" px={2} gap={4}>
+            <CContainer className="scrollY" pl={2} pr={"2px"} gap={4}>
               {SETTINGS_NAVS.map((item, i) => {
                 return (
                   <CContainer key={i}>
