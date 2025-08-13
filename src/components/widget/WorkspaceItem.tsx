@@ -817,6 +817,7 @@ const ToggleLoadWorkspace = (props: any) => {
         },
         onError: () => {
           setChecked(false);
+          removeWorkspaceLoading(workspace.id);
         },
       },
     });
