@@ -578,7 +578,7 @@ const DashboardData = (props: any) => {
     }
   }, [dashboardData, filterGeoJSON]);
 
-  console.log(dashboardData, filterGeoJSON);
+  // console.log(dashboardData, filterGeoJSON);
 
   return (
     <HStack wrap={"wrap"} align={"stretch"} gap={4} h={"full"}>

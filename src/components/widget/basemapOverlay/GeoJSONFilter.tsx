@@ -46,7 +46,7 @@ const GeoJSONFilter = () => {
   );
   const addFilterGeoJSON = useFilterGeoJSON((s) => s.addFilterGeoJSON);
   const removeFilterGeoJSON = useFilterGeoJSON((s) => s.removeFilterGeoJSON);
-  const clearFilterGeoJSON = useFilterGeoJSON((s) => s.clearFilterGeoJSON);
+  const resetFilterGeoJSON = useFilterGeoJSON((s) => s.clearFilterGeoJSON);
   const activeWorkspacesByCategory = useActiveWorkspaces(
     (s) => s.activeWorkspaces
   );
@@ -196,12 +196,22 @@ const GeoJSONFilter = () => {
 
             <CContainer p={1}>
               <BButton
-                mt={1}
                 variant={"outline"}
-                onClick={clearFilterGeoJSON}
+                onClick={() => {
+                  resetFilterGeoJSON();
+                  setFilterOptions((prev) =>
+                    prev.map((group) => ({
+                      ...group,
+                      values: group.values.map((v) => ({
+                        ...v,
+                        active: true,
+                      })),
+                    }))
+                  );
+                }}
                 size={"md"}
               >
-                Clear
+                Reset
               </BButton>
             </CContainer>
           </PopoverContent>
