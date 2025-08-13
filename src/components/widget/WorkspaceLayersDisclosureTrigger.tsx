@@ -510,7 +510,7 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
           </DisclosureHeader>
 
           <DisclosureBody p={"0 !important"}>
-            <CContainer px={4} py={4} gap={2}>
+            <CContainer pl={4} pr={"10px"} py={4} gap={2}>
               {workspaceActive && (
                 <AlertRoot status="warning" mb={2}>
                   <AlertIndicator />
