@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 import BButton from "../ui-custom/BButton";
 import CContainer from "../ui-custom/CContainer";
 import PageContainer from "./PageContainer";
+import P from "../ui-custom/P";
 
 interface Props extends StackProps {
   children?: any;
@@ -74,7 +75,9 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
           w={compact ? "full" : "240px"}
           flexShrink={0}
           overflowY={"auto"}
+          h={"full"}
           maxH={"full"}
+          gap={4}
         >
           <CContainer
             bg={"body"}
@@ -130,6 +133,16 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
               })}
             </CContainer>
           </CContainer>
+
+          <P
+            fontWeight={"semibold"}
+            fontSize={"xs"}
+            textAlign={"center"}
+            color={"fg.subtle"}
+            mt={"auto"}
+          >
+            Powered by Exium
+          </P>
         </CContainer>
       )}
 

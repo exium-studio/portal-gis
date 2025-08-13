@@ -195,9 +195,9 @@ export const LegendContent = (props: any) => {
                       <HStack align={"start"}>
                         <Icon boxSize={5} color={"fg.subtle"}>
                           {layer?.layer_type === "fill" ? (
-                            <IconPolygon />
+                            <IconPolygon stroke={1.5} />
                           ) : (
-                            <IconLine />
+                            <IconLine stroke={1.5} />
                           )}
                         </Icon>
 
