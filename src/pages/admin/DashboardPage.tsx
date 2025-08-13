@@ -18,7 +18,6 @@ import { Interface__ActiveWorkspace } from "@/constants/interfaces";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import { FilterGeoJSON, useFilterGeoJSON } from "@/context/useFilterGeoJSON";
 import useLang from "@/context/useLang";
-import useDebouncedCallback from "@/hooks/useDebouncedCallback";
 import { addOpacityToHex } from "@/utils/addOpacityToHex";
 import empty from "@/utils/empty";
 import { Chart, useChart } from "@chakra-ui/charts";
@@ -562,14 +561,6 @@ const DashboardData = (props: any) => {
     });
   }, [searchTerm, filteredDashboardData]);
 
-  // Utils
-  const debouncedSetFilteredDashboardData = useDebouncedCallback(
-    (data: DashboardSummary, filter: FilterGeoJSON) => {
-      setFilteredDashboardData(applyFilterToDashboard(data, filter));
-    },
-    200 // delay ms
-  );
-
   // Handle init dashboard data when active workspces by category changes
   useEffect(() => {
     const newActiveWorkspaces = activeWorkspacesByCategory.flatMap(
@@ -581,11 +572,13 @@ const DashboardData = (props: any) => {
   // Handle filter
   useEffect(() => {
     if (dashboardData) {
-      debouncedSetFilteredDashboardData(dashboardData, filterGeoJSON);
+      setFilteredDashboardData(
+        applyFilterToDashboard(dashboardData, filterGeoJSON)
+      );
     }
   }, [dashboardData, filterGeoJSON]);
 
-  console.log(filterGeoJSON);
+  console.log(dashboardData, filterGeoJSON);
 
   return (
     <HStack wrap={"wrap"} align={"stretch"} gap={4} h={"full"}>
