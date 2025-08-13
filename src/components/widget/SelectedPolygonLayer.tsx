@@ -38,7 +38,7 @@ const SelectedPolygonLayer = () => {
       source: sourceId,
       paint: {
         "fill-color": selectedPolygon.fillColor,
-        "fill-opacity": 0.5,
+        "fill-opacity": 0.8,
       },
     });
 
