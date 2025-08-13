@@ -145,7 +145,8 @@ const DisclosureBody = ({ children, ...props }: DisclosureBodyProps) => {
 
   return iss ? (
     <DrawerBody
-      px={4}
+      pl={4}
+      pr={"10px"}
       py={0}
       className={finalClassName}
       overflowX={"clip"}
@@ -157,7 +158,7 @@ const DisclosureBody = ({ children, ...props }: DisclosureBodyProps) => {
   ) : (
     <DialogBody
       pl={4}
-      pr={4}
+      pr={"10px"}
       py={4}
       pb={"4 !important"}
       className={finalClassName}

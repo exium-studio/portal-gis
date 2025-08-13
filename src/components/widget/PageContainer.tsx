@@ -7,7 +7,8 @@ const PageContainer = ({ children, ...props }: Props) => {
     <CContainer
       pt={4}
       pb={4}
-      px={4}
+      pl={3}
+      pr={"6px"}
       // pl={[2, null, 4]}
       // pr={["2px", null, "10px"]}
       {...props}

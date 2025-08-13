@@ -271,7 +271,7 @@ export const EditField = (props: any) => {
               </Tabs.List>
 
               {/* Information content */}
-              <Tabs.Content value="information" px={4}>
+              <Tabs.Content value="information" pl={4} pr={"10px"}>
                 <SimpleGrid columns={[1, null, 2]} gap={4}>
                   {!empty(finalData) &&
                     Object.keys(finalData).map((key) => {
@@ -288,7 +288,7 @@ export const EditField = (props: any) => {
 
               {/* Explanation content */}
               {withExplanation && (
-                <Tabs.Content value="explanation" px={4}>
+                <Tabs.Content value="explanation" pl={4} pr={"10px"}>
                   <Field
                     label={"PARAPIHAKB"}
                     invalid={!!formik.errors.PARAPIHAKB}
@@ -347,7 +347,7 @@ export const EditField = (props: any) => {
               )}
 
               {/* Document content */}
-              <Tabs.Content value="document" px={4}>
+              <Tabs.Content value="document" pl={4} pr={"10px"}>
                 <Field
                   label={l.document}
                   invalid={!!formik.errors.docs}

@@ -165,7 +165,7 @@ export const LegendContent = (props: any) => {
         </HStack>
       </MenuHeaderContainer>
 
-      <CContainer className="scrollY" gap={3} px={1}>
+      <CContainer className="scrollY" gap={3} pl={1}>
         {empty(activeWorkspaces) && (
           <FeedbackNoData
             icon={<IconFoldersOff />}
@@ -186,7 +186,8 @@ export const LegendContent = (props: any) => {
                     key={layer.id}
                     value={`${layer.id}`}
                     gap={2}
-                    px={3}
+                    pl={3}
+                    pr={"10px"}
                     py={1}
                     pb={last ? 0 : 1}
                     border={last ? "none" : ""}
