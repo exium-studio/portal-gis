@@ -965,6 +965,7 @@ const ListItem = (props: any) => {
           workspace={workspace}
           setWorkspace={setWorkspace}
           size={"xs"}
+          disabled={workspaceActive}
         />
       </HStack>
 
