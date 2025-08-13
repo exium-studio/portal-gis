@@ -24,7 +24,7 @@ import { Chart, useChart } from "@chakra-ui/charts";
 import { Circle, HStack } from "@chakra-ui/react";
 import { IconFoldersOff } from "@tabler/icons-react";
 import chroma from "chroma-js";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Cell, Pie, PieChart, Tooltip } from "recharts";
 
 type DashboardStat = {
@@ -455,26 +455,63 @@ const DashboardPage = () => {
     (s) => s.activeWorkspaces
   );
   const filterGeoJSON = useFilterGeoJSON((s) => s.filterGeoJSON);
+  const defaultFilterGeoJSON = useFilterGeoJSON((s) => s.defaultFilterGeoJSON);
 
   // States
   const [activeWorkspaces, setActiveWorkspaces] = useState<
     Interface__ActiveWorkspace[]
   >([]);
-  const [dashboardData, setDashboardData] = useState<DashboardSummary>(
-    summarizeDashboard(activeWorkspaces, filterGeoJSON)
+  const [dashboardData, setDashboardData] = useState<DashboardSummary | null>(
+    null
   );
 
+  // Set aktif workspace dari context
   useEffect(() => {
     const newActiveWorkspaces = activeWorkspacesByCategory.flatMap(
-      (activeWorkspace) => activeWorkspace?.workspaces
+      (ws) => ws?.workspaces ?? []
     );
     setActiveWorkspaces(newActiveWorkspaces);
   }, [activeWorkspacesByCategory]);
 
+  // Hitung data summary murni tanpa filter
   useEffect(() => {
-    setDashboardData(summarizeDashboard(activeWorkspaces, filterGeoJSON));
-  }, [activeWorkspaces, filterGeoJSON]);
+    setDashboardData(
+      summarizeDashboard(activeWorkspaces, defaultFilterGeoJSON)
+    ); // kosongkan filter
+  }, [activeWorkspaces]);
 
+  // State untuk set nama yang disembunyikan (filter)
+  // Bisa langsung ambil dari filterGeoJSON, yang berisi nilai disembunyikan
+  // Supaya gampang, kita flatten semua value filterGeoJSON ke satu Set
+  const hiddenSet = useMemo(() => {
+    const s = new Set<string>();
+    for (const key in filterGeoJSON) {
+      (filterGeoJSON[key as keyof typeof filterGeoJSON] || []).forEach((v) =>
+        s.add(v)
+      );
+    }
+    return s;
+  }, [filterGeoJSON]);
+
+  // Filter dashboard data sesuai hiddenSet
+  const filteredDashboardData = useMemo(() => {
+    if (!dashboardData) return null;
+
+    // Helper filter function
+    const filterItems = (items: { name: string; active?: boolean }[]) =>
+      items.map((item) => ({
+        ...item,
+        active: !hiddenSet.has(item.name), // aktif kalau gak di hidden set
+      }));
+
+    return {
+      areaByTipeHak: filterItems(dashboardData.areaByTipeHak),
+      countByTipeHak: filterItems(dashboardData.countByTipeHak),
+      areaByKabupaten: filterItems(dashboardData.areaByKabupaten),
+    };
+  }, [dashboardData, hiddenSet]);
+
+  // Render
   return (
     <PageContainer gap={R_GAP} pb={4} flex={1}>
       {empty(activeWorkspaces) && (
@@ -485,19 +522,23 @@ const DashboardPage = () => {
         />
       )}
 
-      {!empty(activeWorkspaces) && (
+      {!empty(activeWorkspaces) && filteredDashboardData && (
         <>
           <HStack justify={"end"}>
-            {/* <SearchInput /> */}
             <GeoJSONFilter />
           </HStack>
+
           <HStack wrap={"wrap"} align={"stretch"} gap={4}>
-            <HGUArea data={dashboardData?.areaByTipeHak} flex={"1 1 300px"} />
-
-            <HGUCount data={dashboardData?.countByTipeHak} flex={"1 1 300px"} />
-
+            <HGUArea
+              data={filteredDashboardData.areaByTipeHak}
+              flex={"1 1 300px"}
+            />
+            <HGUCount
+              data={filteredDashboardData.countByTipeHak}
+              flex={"1 1 300px"}
+            />
             <HGUAreaByKabupaten
-              data={dashboardData?.areaByKabupaten}
+              data={filteredDashboardData.areaByKabupaten}
               flex={"1 1 300px"}
             />
           </HStack>

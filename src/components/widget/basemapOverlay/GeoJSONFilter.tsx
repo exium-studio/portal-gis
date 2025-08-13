@@ -95,20 +95,21 @@ const GeoJSONFilter = () => {
 
   return (
     <PopoverRoot open={open}>
-      <PopoverTrigger>
+      <PopoverTrigger w={"full"}>
         {/* <OverlayItemContainer> */}
         <Tooltip content={l.basemap_filter}>
           <BButton
             ref={triggerRef}
             unclicky
-            iconButton
+            // iconButton
             variant={"outline"}
-            w={"fit"}
+            w={"full"}
             onClick={onToggle}
           >
             <Icon boxSize={5}>
               <IconFilter stroke={1.5} />
             </Icon>
+            Filter
           </BButton>
         </Tooltip>
         {/* </OverlayItemContainer> */}
@@ -118,7 +119,7 @@ const GeoJSONFilter = () => {
         <PopoverPositioner>
           <PopoverContent
             ref={contentRef}
-            p={1}
+            p={0}
             mr={"2px"}
             w={"200px"}
             pointerEvents={"auto"}
@@ -136,7 +137,7 @@ const GeoJSONFilter = () => {
               pt={1}
               className="scrollY"
               maxH={"calc(50dvh - 56px)"}
-              w={"calc(100% + 6px)"}
+              w={"calc(100%)"}
               px={1}
             >
               <AccordionRoot multiple>
@@ -180,14 +181,16 @@ const GeoJSONFilter = () => {
               </AccordionRoot>
             </CContainer>
 
-            <BButton
-              mt={1}
-              variant={"outline"}
-              onClick={clearFilterGeoJSON}
-              size={"md"}
-            >
-              Clear
-            </BButton>
+            <CContainer p={1}>
+              <BButton
+                mt={1}
+                variant={"outline"}
+                onClick={clearFilterGeoJSON}
+                size={"md"}
+              >
+                Clear
+              </BButton>
+            </CContainer>
           </PopoverContent>
         </PopoverPositioner>
       </Portal>

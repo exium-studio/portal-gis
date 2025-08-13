@@ -8,6 +8,7 @@ export type FilterGeoJSON = {
 
 type Store = {
   filterGeoJSON: FilterGeoJSON;
+  defaultFilterGeoJSON: FilterGeoJSON;
   setFilterGeoJSON: (data: FilterGeoJSON) => void;
   addFilterGeoJSON: (data: Partial<FilterGeoJSON>) => void;
   removeFilterGeoJSON: (key: keyof FilterGeoJSON, value: string) => void;
@@ -24,6 +25,8 @@ const uniq = (arr: string[]) => Array.from(new Set(arr));
 
 export const useFilterGeoJSON = create<Store>((set) => ({
   filterGeoJSON: DEFAULT,
+
+  defaultFilterGeoJSON: DEFAULT,
 
   setFilterGeoJSON: (data) => set({ filterGeoJSON: { ...DEFAULT, ...data } }),
 

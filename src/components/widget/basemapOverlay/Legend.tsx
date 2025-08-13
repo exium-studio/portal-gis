@@ -18,6 +18,7 @@ import useLegend from "@/context/useLegend";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import empty from "@/utils/empty";
 import {
+  Badge,
   Circle,
   HStack,
   Icon,
@@ -28,6 +29,7 @@ import {
 import {
   IconFlag,
   IconFlagOff,
+  IconFolder,
   IconFoldersOff,
   IconLine,
   IconPolygon,
@@ -210,7 +212,7 @@ export const LegendContent = (props: any) => {
                             lineClamp={1}
                             fontSize={"xs"}
                             lineHeight={1}
-                          >{`${workspace.title}`}</P>
+                          >{`${layer.color_property_key}`}</P>
                         </CContainer>
                       </HStack>
                     </AccordionItemTrigger>
@@ -227,23 +229,37 @@ export const LegendContent = (props: any) => {
                       )}
 
                       {!empty(legends) && (
-                        <SimpleGrid columns={2} gapY={1} gapX={4}>
-                          {legends.map(({ value, color }) => {
-                            return (
-                              <SimplePopover key={value} content={value}>
-                                <HStack cursor={"pointer"} w={"fit"}>
-                                  <Circle
-                                    w={"10px"}
-                                    h={"10px"}
-                                    bg={color}
-                                    opacity={0.6}
-                                  />
-                                  <P lineClamp={1}>{value}</P>
-                                </HStack>
-                              </SimplePopover>
-                            );
-                          })}
-                        </SimpleGrid>
+                        <CContainer gap={2}>
+                          <SimpleGrid columns={2} gapY={1} gapX={4}>
+                            {legends.map(({ value, color }) => {
+                              return (
+                                <SimplePopover key={value} content={value}>
+                                  <HStack cursor={"pointer"} w={"fit"}>
+                                    <Circle
+                                      w={"10px"}
+                                      h={"10px"}
+                                      bg={color}
+                                      opacity={0.6}
+                                    />
+                                    <P lineClamp={1}>{value}</P>
+                                  </HStack>
+                                </SimplePopover>
+                              );
+                            })}
+                          </SimpleGrid>
+
+                          <Badge color={"fg.subtle"} w={"fit"}>
+                            <Icon boxSize={4}>
+                              <IconFolder stroke={1.5} />
+                            </Icon>
+
+                            <P
+                              lineClamp={1}
+                              fontSize={"xs"}
+                              lineHeight={1}
+                            >{`${workspace.title}`}</P>
+                          </Badge>
+                        </CContainer>
                       )}
                     </AccordionItemContent>
                   </AccordionItem>

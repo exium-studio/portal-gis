@@ -57,15 +57,6 @@ const ActiveWorkspacePage = () => {
   return (
     <PageContainer gap={R_GAP} pb={4} flex={1}>
       <CContainer flex={1} gap={4}>
-        <ItemHeaderContainer borderless p={0}>
-          <HStack justify="space-between" w="full">
-            <SearchInput
-              inputValue={searchTerm}
-              onChangeSetter={(input) => setSearchTerm(input)}
-            />
-          </HStack>
-        </ItemHeaderContainer>
-
         {empty ? (
           <FeedbackNoData
             icon={<IconFoldersOff />}
@@ -73,17 +64,28 @@ const ActiveWorkspacePage = () => {
             description={l.no_active_workspaces.description}
           />
         ) : (
-          <AccordionRoot multiple>
-            <CContainer gap={2}>
-              {filteredWorkspacesByCategory.map((activeWorkspace, i) => (
-                <ActiveWorkspaceByCategoryListItem
-                  key={activeWorkspace.workspace_category.id}
-                  activeWorkspace={activeWorkspace}
-                  index={i}
+          <>
+            <ItemHeaderContainer borderless p={0}>
+              <HStack justify="space-between" w="full">
+                <SearchInput
+                  inputValue={searchTerm}
+                  onChangeSetter={(input) => setSearchTerm(input)}
                 />
-              ))}
-            </CContainer>
-          </AccordionRoot>
+              </HStack>
+            </ItemHeaderContainer>
+
+            <AccordionRoot multiple>
+              <CContainer gap={2}>
+                {filteredWorkspacesByCategory.map((activeWorkspace, i) => (
+                  <ActiveWorkspaceByCategoryListItem
+                    key={activeWorkspace.workspace_category.id}
+                    activeWorkspace={activeWorkspace}
+                    index={i}
+                  />
+                ))}
+              </CContainer>
+            </AccordionRoot>
+          </>
         )}
       </CContainer>
     </PageContainer>
