@@ -83,7 +83,11 @@ function summarizeDashboard(
       const activeSet = lookup[key];
       if (activeSet.size === 0) continue; // empty = semua lolos utk key tsb
       const val = norm(props[key]);
-      if (!val || !activeSet.has(val)) return false;
+
+      if (val && activeSet.has(val)) return false;
+
+      // if value is in filter → reject
+      if (activeSet.has(val)) return false;
     }
     return true;
   };
