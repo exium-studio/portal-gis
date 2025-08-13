@@ -465,13 +465,41 @@ const DashboardData = (props: any) => {
 
   // States
   const searchTerm = useMemo(() => search?.toLowerCase() || "", [search]);
-
   const [activeWorkspaces, setActiveWorkspaces] = useState<
     Interface__ActiveWorkspace[]
   >([]);
   const [dashboardData, setDashboardData] = useState<DashboardSummary>(
     summarizeDashboard(activeWorkspaces, filterGeoJSON)
   );
+  const dashboardItems = [
+    {
+      name: l.hgu_area,
+      component: (
+        <HGUArea data={dashboardData?.areaByTipeHak} flex={"1 1 300px"} />
+      ),
+    },
+    {
+      name: l.hgu_count,
+      component: (
+        <HGUCount data={dashboardData?.countByTipeHak} flex={"1 1 300px"} />
+      ),
+    },
+    {
+      name: l.hgu_area_by_kabupaten,
+      component: (
+        <HGUAreaByKabupaten
+          data={dashboardData?.areaByKabupaten}
+          flex={"1 1 300px"}
+        />
+      ),
+    },
+  ];
+  const filteredDashboardItems = useMemo(() => {
+    return dashboardItems.filter((item) => {
+      return item.name.toLowerCase().includes(searchTerm);
+    });
+  }, [searchTerm]);
+
   // const [filteredDashboardData, setFilteredDashboardData] =
   //   useState<DashboardSummary>(
   //     summarizeDashboard(activeWorkspaces, filterGeoJSON)
@@ -491,21 +519,11 @@ const DashboardData = (props: any) => {
   }, [activeWorkspaces, filterGeoJSON]);
 
   return (
-    <HStack wrap={"wrap"} align={"stretch"} gap={4}>
-      {l.hgu_area.includes(searchTerm) && (
-        <HGUArea data={dashboardData?.areaByTipeHak} flex={"1 1 300px"} />
-      )}
+    <HStack wrap={"wrap"} align={"stretch"} gap={4} h={"full"}>
+      {empty(filteredDashboardItems) && <FeedbackNoData />}
 
-      {l.hgu_count.includes(searchTerm) && (
-        <HGUCount data={dashboardData?.countByTipeHak} flex={"1 1 300px"} />
-      )}
-
-      {l.hgu_area_by_kabupaten.includes(searchTerm) && (
-        <HGUAreaByKabupaten
-          data={dashboardData?.areaByKabupaten}
-          flex={"1 1 300px"}
-        />
-      )}
+      {!empty(filteredDashboardItems) &&
+        filteredDashboardItems.map((item) => item.component)}
     </HStack>
   );
 };
@@ -542,7 +560,7 @@ const DashboardPage = () => {
       )}
 
       {!empty(activeWorkspaces) && (
-        <CContainer gap={4}>
+        <CContainer gap={4} flex={1}>
           <HStack>
             <SearchInput
               onChangeSetter={(input) => {
