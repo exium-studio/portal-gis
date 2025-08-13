@@ -18,7 +18,6 @@ import useLegend from "@/context/useLegend";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import empty from "@/utils/empty";
 import {
-  Badge,
   Circle,
   HStack,
   Icon,
@@ -29,7 +28,7 @@ import {
 import {
   IconFlag,
   IconFlagOff,
-  IconFolder,
+  IconFolders,
   IconFoldersOff,
   IconLine,
   IconPolygon,
@@ -229,7 +228,7 @@ export const LegendContent = (props: any) => {
                       )}
 
                       {!empty(legends) && (
-                        <CContainer gap={2}>
+                        <CContainer gap={4}>
                           <SimpleGrid columns={2} gapY={1} gapX={4}>
                             {legends.map(({ value, color }) => {
                               return (
@@ -248,9 +247,9 @@ export const LegendContent = (props: any) => {
                             })}
                           </SimpleGrid>
 
-                          <Badge color={"fg.subtle"} w={"fit"}>
+                          <HStack color={"fg.subtle"}>
                             <Icon boxSize={4}>
-                              <IconFolder stroke={1.5} />
+                              <IconFolders stroke={1.5} />
                             </Icon>
 
                             <P
@@ -258,7 +257,7 @@ export const LegendContent = (props: any) => {
                               fontSize={"xs"}
                               lineHeight={1}
                             >{`${workspace.title}`}</P>
-                          </Badge>
+                          </HStack>
                         </CContainer>
                       )}
                     </AccordionItemContent>
