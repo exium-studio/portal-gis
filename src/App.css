@@ -272,10 +272,10 @@ button {
 
 /* WebKit (Chrome, Edge, Safari) */
 .scrollX::-webkit-scrollbar {
-  height: 7px;
+  height: 8px;
 }
 .scrollY::-webkit-scrollbar {
-  width: 7px;
+  width: 8px;
 }
 .scrollX::-webkit-scrollbar-corner,
 .scrollY::-webkit-scrollbar-corner {
