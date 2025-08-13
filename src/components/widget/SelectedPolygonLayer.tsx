@@ -1,11 +1,17 @@
 import { useEffect, useRef } from "react";
 import useMapViewState from "@/context/useMapViewState";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
+import { useThemeConfig } from "@/context/useThemeConfig";
 
 const SelectedPolygonLayer = () => {
-  const mapRef = useMapViewState((s) => s.mapRef);
+  // Contexts
+  const { themeConfig } = useThemeConfig();
   const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
+  const setSelectedPolygon = useSelectedPolygon((s) => s.setSelectedPolygon);
+
+  // Refs
   const lastGeojsonRef = useRef<any>(null);
+  const mapRef = useMapViewState((s) => s.mapRef);
 
   useEffect(() => {
     const map = mapRef?.current?.getMap();
@@ -49,6 +55,13 @@ const SelectedPolygonLayer = () => {
     //   if (map.getSource(sourceId)) map.removeSource(sourceId);
     // };
   }, [mapRef, selectedPolygon]);
+
+  useEffect(() => {
+    setSelectedPolygon({
+      ...selectedPolygon,
+      fillColor: themeConfig?.primaryColorHex,
+    });
+  }, [themeConfig?.primaryColorHex]);
 
   return null;
 };
