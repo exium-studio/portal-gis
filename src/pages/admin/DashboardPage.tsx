@@ -213,55 +213,66 @@ const HGUArea = (props: any) => {
         </HStack>
       </ItemHeaderContainer>
 
-      <CContainer p={4} pos={"relative"}>
-        <Chart.Root chart={chart} mx="auto">
-          <PieChart>
-            <Tooltip
-              cursor={false}
-              animationDuration={100}
-              content={<Chart.Tooltip hideLabel />}
-            />
-            <Pie
-              innerRadius={70}
-              outerRadius={100}
-              isAnimationActive={false}
-              data={chart.data}
-              dataKey={chart.key("value")}
-              nameKey="name"
-              activeShape={<Sector outerRadius={110} />}
-            >
-              {chart.data.map((item) => (
-                <Cell
-                  key={item.name}
-                  strokeWidth={0}
-                  fill={chart.color(item.color)}
+      {empty(data) && <FeedbackNoData />}
+
+      {!empty(data) && (
+        <>
+          <CContainer p={4} pos={"relative"}>
+            <Chart.Root chart={chart} mx="auto">
+              <PieChart>
+                <Tooltip
+                  cursor={false}
+                  animationDuration={100}
+                  content={<Chart.Tooltip hideLabel />}
                 />
-              ))}
-            </Pie>
-          </PieChart>
-        </Chart.Root>
-      </CContainer>
+                <Pie
+                  innerRadius={70}
+                  outerRadius={100}
+                  isAnimationActive={false}
+                  data={chart.data}
+                  dataKey={chart.key("value")}
+                  nameKey="name"
+                  activeShape={<Sector outerRadius={110} />}
+                >
+                  {chart.data.map((item) => (
+                    <Cell
+                      key={item.name}
+                      strokeWidth={0}
+                      fill={chart.color(item.color)}
+                    />
+                  ))}
+                </Pie>
+              </PieChart>
+            </Chart.Root>
+          </CContainer>
 
-      <CContainer mt={4}>
-        <CContainer maxH={"150px"} className="scrollY" px={8} gap={2}>
-          {chart.data.map((item: any) => {
-            return (
-              <HStack key={item?.name}>
-                <Circle w={"10px"} h={"10px"} bg={item?.color} opacity={0.8} />
-                <SimplePopover content={item?.name}>
-                  <P lineClamp={1}>{item?.name}</P>
-                </SimplePopover>
+          <CContainer mt={4}>
+            <CContainer maxH={"150px"} className="scrollY" px={8} gap={2}>
+              {chart.data.map((item: any) => {
+                return (
+                  <HStack key={item?.name}>
+                    <Circle
+                      w={"10px"}
+                      h={"10px"}
+                      bg={item?.color}
+                      opacity={0.8}
+                    />
+                    <SimplePopover content={item?.name}>
+                      <P lineClamp={1}>{item?.name}</P>
+                    </SimplePopover>
 
-                <P textAlign={"right"} ml={"auto"}>{`${item?.value}`}</P>
-              </HStack>
-            );
-          })}
-        </CContainer>
-      </CContainer>
+                    <P textAlign={"right"} ml={"auto"}>{`${item?.value}`}</P>
+                  </HStack>
+                );
+              })}
+            </CContainer>
+          </CContainer>
 
-      <CContainer px={4} align={"center"} mt={"auto"} pt={4}>
-        <HelperText textAlign={"center"}>{l.data_unit_ha}</HelperText>
-      </CContainer>
+          <CContainer px={4} align={"center"} mt={"auto"} pt={4}>
+            <HelperText textAlign={"center"}>{l.data_unit_ha}</HelperText>
+          </CContainer>
+        </>
+      )}
     </ItemContainer>
   );
 };
@@ -307,51 +318,62 @@ const HGUCount = (props: any) => {
         </HStack>
       </ItemHeaderContainer>
 
-      <CContainer p={4} pos={"relative"}>
-        <Chart.Root chart={chart} mx="auto">
-          <PieChart>
-            <Tooltip
-              cursor={false}
-              animationDuration={100}
-              content={<Chart.Tooltip hideLabel />}
-            />
-            <Pie
-              innerRadius={70}
-              outerRadius={100}
-              isAnimationActive={false}
-              data={chart.data}
-              dataKey={chart.key("value")}
-              nameKey="name"
-              activeShape={<Sector outerRadius={110} />}
-            >
-              {chart.data.map((item) => (
-                <Cell
-                  key={item.color}
-                  fill={chart.color(item.color)}
-                  strokeWidth={0}
+      {empty(data) && <FeedbackNoData />}
+
+      {!empty(data) && (
+        <>
+          <CContainer p={4} pos={"relative"}>
+            <Chart.Root chart={chart} mx="auto">
+              <PieChart>
+                <Tooltip
+                  cursor={false}
+                  animationDuration={100}
+                  content={<Chart.Tooltip hideLabel />}
                 />
-              ))}
-            </Pie>
-          </PieChart>
-        </Chart.Root>
-      </CContainer>
+                <Pie
+                  innerRadius={70}
+                  outerRadius={100}
+                  isAnimationActive={false}
+                  data={chart.data}
+                  dataKey={chart.key("value")}
+                  nameKey="name"
+                  activeShape={<Sector outerRadius={110} />}
+                >
+                  {chart.data.map((item) => (
+                    <Cell
+                      key={item.color}
+                      fill={chart.color(item.color)}
+                      strokeWidth={0}
+                    />
+                  ))}
+                </Pie>
+              </PieChart>
+            </Chart.Root>
+          </CContainer>
 
-      <CContainer mt={4}>
-        <CContainer maxH={"150px"} className="scrollY" px={8} gap={2}>
-          {chart.data.map((item: any) => {
-            return (
-              <HStack key={item?.name}>
-                <Circle w={"10px"} h={"10px"} bg={item?.color} opacity={0.8} />
-                <SimplePopover content={item?.name}>
-                  <P lineClamp={1}>{item?.name}</P>
-                </SimplePopover>
+          <CContainer mt={4}>
+            <CContainer maxH={"150px"} className="scrollY" px={8} gap={2}>
+              {chart.data.map((item: any) => {
+                return (
+                  <HStack key={item?.name}>
+                    <Circle
+                      w={"10px"}
+                      h={"10px"}
+                      bg={item?.color}
+                      opacity={0.8}
+                    />
+                    <SimplePopover content={item?.name}>
+                      <P lineClamp={1}>{item?.name}</P>
+                    </SimplePopover>
 
-                <P textAlign={"right"} ml={"auto"}>{`${item?.value}`}</P>
-              </HStack>
-            );
-          })}
-        </CContainer>
-      </CContainer>
+                    <P textAlign={"right"} ml={"auto"}>{`${item?.value}`}</P>
+                  </HStack>
+                );
+              })}
+            </CContainer>
+          </CContainer>
+        </>
+      )}
     </ItemContainer>
   );
 };
@@ -397,55 +419,66 @@ const HGUAreaByKabupaten = (props: any) => {
         </HStack>
       </ItemHeaderContainer>
 
-      <CContainer p={4}>
-        <Chart.Root chart={chart} mx="auto">
-          <PieChart>
-            <Tooltip
-              cursor={false}
-              animationDuration={100}
-              content={<Chart.Tooltip hideLabel />}
-            />
-            <Pie
-              innerRadius={70}
-              outerRadius={100}
-              isAnimationActive={false}
-              data={chart.data}
-              dataKey={chart.key("value")}
-              nameKey="name"
-              activeShape={<Sector outerRadius={110} />}
-            >
-              {chart.data.map((item) => (
-                <Cell
-                  key={item.color}
-                  fill={chart.color(item.color)}
-                  strokeWidth={0}
+      {empty(data) && <FeedbackNoData />}
+
+      {!empty(data) && (
+        <>
+          <CContainer p={4}>
+            <Chart.Root chart={chart} mx="auto">
+              <PieChart>
+                <Tooltip
+                  cursor={false}
+                  animationDuration={100}
+                  content={<Chart.Tooltip hideLabel />}
                 />
-              ))}
-            </Pie>
-          </PieChart>
-        </Chart.Root>
-      </CContainer>
+                <Pie
+                  innerRadius={70}
+                  outerRadius={100}
+                  isAnimationActive={false}
+                  data={chart.data}
+                  dataKey={chart.key("value")}
+                  nameKey="name"
+                  activeShape={<Sector outerRadius={110} />}
+                >
+                  {chart.data.map((item) => (
+                    <Cell
+                      key={item.color}
+                      fill={chart.color(item.color)}
+                      strokeWidth={0}
+                    />
+                  ))}
+                </Pie>
+              </PieChart>
+            </Chart.Root>
+          </CContainer>
 
-      <CContainer mt={4}>
-        <CContainer maxH={"150px"} className="scrollY" px={8} gap={2}>
-          {chart.data.map((item: any) => {
-            return (
-              <HStack key={item?.name}>
-                <Circle w={"10px"} h={"10px"} bg={item?.color} opacity={0.8} />
-                <SimplePopover content={item?.name}>
-                  <P lineClamp={1}>{item?.name}</P>
-                </SimplePopover>
+          <CContainer mt={4}>
+            <CContainer maxH={"150px"} className="scrollY" px={8} gap={2}>
+              {chart.data.map((item: any) => {
+                return (
+                  <HStack key={item?.name}>
+                    <Circle
+                      w={"10px"}
+                      h={"10px"}
+                      bg={item?.color}
+                      opacity={0.8}
+                    />
+                    <SimplePopover content={item?.name}>
+                      <P lineClamp={1}>{item?.name}</P>
+                    </SimplePopover>
 
-                <P textAlign={"right"} ml={"auto"}>{`${item?.value}`}</P>
-              </HStack>
-            );
-          })}
-        </CContainer>
-      </CContainer>
+                    <P textAlign={"right"} ml={"auto"}>{`${item?.value}`}</P>
+                  </HStack>
+                );
+              })}
+            </CContainer>
+          </CContainer>
 
-      <CContainer px={4} align={"center"} mt={"auto"} pt={4}>
-        <HelperText textAlign={"center"}>{l.data_unit_ha}</HelperText>
-      </CContainer>
+          <CContainer px={4} align={"center"} mt={"auto"} pt={4}>
+            <HelperText textAlign={"center"}>{l.data_unit_ha}</HelperText>
+          </CContainer>
+        </>
+      )}
     </ItemContainer>
   );
 };
