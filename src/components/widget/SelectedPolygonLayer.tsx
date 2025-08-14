@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import useMapViewState from "@/context/useMapViewState";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
+import empty from "@/utils/empty";
 
 const SelectedPolygonLayer = () => {
   // Contexts
@@ -56,11 +57,15 @@ const SelectedPolygonLayer = () => {
     // };
   }, [mapRef, selectedPolygon]);
 
+  console.log(selectedPolygon);
+
   useEffect(() => {
-    setSelectedPolygon({
-      ...selectedPolygon,
-      fillColor: themeConfig?.primaryColorHex,
-    });
+    if (!empty(selectedPolygon)) {
+      setSelectedPolygon({
+        ...selectedPolygon,
+        fillColor: themeConfig?.primaryColorHex,
+      });
+    }
   }, [themeConfig?.primaryColorHex]);
 
   return null;

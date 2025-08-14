@@ -74,11 +74,13 @@ export const EditField = (props: any) => {
   const withExplanation = selectedPolygon?.activeLayer?.with_explanation;
   const [existingDocs, setExistingDocs] = useState<any[]>([]);
   const [deletedDocs, setDeletedDocs] = useState<any[]>([]);
-  const finalData = Object.fromEntries(
-    Object.entries(properties)
-      .filter(([key]) => !EXCLUDED_KEYS.includes(key))
-      .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
-  );
+  const finalData = properties
+    ? Object.fromEntries(
+        Object.entries(properties)
+          .filter(([key]) => !EXCLUDED_KEYS.includes(key))
+          .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
+      )
+    : {};
   const withExplanationValues = {
     PARAPIHAKB: "",
     PERMASALAH: "",
@@ -188,9 +190,11 @@ export const EditField = (props: any) => {
 
   // Handle initial values
   useEffect(() => {
-    Object.keys(properties).forEach((key) => {
-      formik.setFieldValue(key, properties[key]);
-    });
+    if (properties) {
+      Object.keys(properties).forEach((key) => {
+        formik.setFieldValue(key, properties[key]);
+      });
+    }
   }, [properties]);
 
   // Handle initial docs
