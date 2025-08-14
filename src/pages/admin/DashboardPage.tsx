@@ -581,7 +581,7 @@ const DashboardData = (props: any) => {
   // console.log(dashboardData, filterGeoJSON);
 
   return (
-    <HStack wrap={"wrap"} align={"stretch"} gap={4} h={"full"}>
+    <HStack wrap={"wrap"} align={"stretch"} gap={4}>
       {empty(filteredDashboardItems) && <FeedbackNoData />}
 
       {!empty(filteredDashboardItems) &&
