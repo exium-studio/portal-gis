@@ -7,17 +7,13 @@ import {
   AccordionItemTrigger,
   AccordionRoot,
 } from "@/components/ui/accordion";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   PopoverContent,
   PopoverRoot,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Tooltip } from "@/components/ui/tooltip";
-import {
-  Interface__ActiveWorkspace,
-  Interface__FilterOptionGroup,
-} from "@/constants/interfaces";
+import { Interface__FilterOptionGroup } from "@/constants/interfaces";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import { useFilterGeoJSON } from "@/context/useFilterGeoJSON";
 import useLang from "@/context/useLang";
@@ -31,7 +27,8 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { IconFilter } from "@tabler/icons-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import FilterCheckbox from "../FilterCheckbox";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 
 const GeoJSONFilter = () => {
@@ -39,22 +36,13 @@ const GeoJSONFilter = () => {
   const { l } = useLang();
 
   // Context
-  const rawFilterGeoJSON = useFilterGeoJSON((s) => s.filterGeoJSON);
-  const filterGeoJSON = useMemo(
-    () => rawFilterGeoJSON,
-    [JSON.stringify(rawFilterGeoJSON)]
-  );
-  const addFilterGeoJSON = useFilterGeoJSON((s) => s.addFilterGeoJSON);
-  const removeFilterGeoJSON = useFilterGeoJSON((s) => s.removeFilterGeoJSON);
+  const filterGeoJSON = useFilterGeoJSON((s) => s.filterGeoJSON);
   const resetFilterGeoJSON = useFilterGeoJSON((s) => s.clearFilterGeoJSON);
   const activeWorkspacesByCategory = useActiveWorkspaces(
     (s) => s.activeWorkspaces
   );
 
   // States
-  const [activeWorkspaces, setActiveWorkspaces] = useState<
-    Interface__ActiveWorkspace[]
-  >([]);
   const [filterOptions, setFilterOptions] = useState<
     Interface__FilterOptionGroup[]
   >([]);
@@ -65,46 +53,15 @@ const GeoJSONFilter = () => {
   const contentRef = useRef(null);
   useClickOutside([triggerRef, contentRef], onClose);
 
-  // Utils
-  const handleToggle = (
-    property: keyof typeof filterGeoJSON,
-    value: string,
-    nextChecked: boolean
-  ) => {
-    setFilterOptions((prev) =>
-      prev.map((group) =>
-        group.property === property
-          ? {
-              ...group,
-              values: group.values.map((v) =>
-                v.value === value ? { ...v, active: nextChecked } : v
-              ),
-            }
-          : group
-      )
-    );
-
-    if (!nextChecked) {
-      addFilterGeoJSON({ [property]: [value] });
-    } else {
-      removeFilterGeoJSON(property, value);
-    }
-  };
-
   useEffect(() => {
-    const newActiveWorkspaces = activeWorkspacesByCategory.flatMap(
+    const activeWorkspaces = activeWorkspacesByCategory.flatMap(
       (activeWorkspace) => activeWorkspace?.workspaces
     );
-    setActiveWorkspaces((prev) => {
-      if (JSON.stringify(prev) === JSON.stringify(newActiveWorkspaces))
-        return prev;
-      return newActiveWorkspaces;
-    });
+    setFilterOptions(filterOptionGroups(activeWorkspaces, filterGeoJSON));
   }, [activeWorkspacesByCategory]);
 
-  useEffect(() => {
-    setFilterOptions(filterOptionGroups(activeWorkspaces, filterGeoJSON));
-  }, [activeWorkspaces]);
+  // console.log("filterGeoJSON", filterGeoJSON);
+  // console.log("filterOptions", filterOptions);
 
   return (
     <PopoverRoot open={open}>
@@ -169,23 +126,14 @@ const GeoJSONFilter = () => {
 
                     <AccordionItemContent>
                       <CContainer gap={4}>
-                        {option.values?.map((v) => (
-                          <Checkbox
-                            key={`${option.property}-${v.value}`}
-                            checked={v.active}
-                            onChange={(e: any) =>
-                              handleToggle(
-                                option.property,
-                                v.value,
-                                !!e.target.checked
-                              )
-                            }
-                            aria-label={`${option.property}-${v.value}`}
-                          >
-                            <Tooltip content={v.value}>
-                              <P lineClamp={1}>{v.value}</P>
-                            </Tooltip>
-                          </Checkbox>
+                        {option.values?.map((value) => (
+                          <FilterCheckbox
+                            key={value.value}
+                            option={option}
+                            value={value}
+                            filterOptions={filterOptions}
+                            setFilterOptions={setFilterOptions}
+                          />
                         ))}
                       </CContainer>
                     </AccordionItemContent>
@@ -198,7 +146,6 @@ const GeoJSONFilter = () => {
               <BButton
                 variant={"outline"}
                 onClick={() => {
-                  resetFilterGeoJSON();
                   setFilterOptions((prev) =>
                     prev.map((group) => ({
                       ...group,
@@ -208,6 +155,7 @@ const GeoJSONFilter = () => {
                       })),
                     }))
                   );
+                  resetFilterGeoJSON();
                 }}
                 size={"md"}
               >
