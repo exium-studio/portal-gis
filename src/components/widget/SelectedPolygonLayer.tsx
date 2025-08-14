@@ -57,8 +57,6 @@ const SelectedPolygonLayer = () => {
     // };
   }, [mapRef, selectedPolygon]);
 
-  console.log(selectedPolygon);
-
   useEffect(() => {
     if (!empty(selectedPolygon)) {
       setSelectedPolygon({
