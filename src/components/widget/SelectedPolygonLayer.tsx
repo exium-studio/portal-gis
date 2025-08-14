@@ -3,12 +3,18 @@ import useMapViewState from "@/context/useMapViewState";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import empty from "@/utils/empty";
+import useActiveWorkspaces from "@/context/useActiveWorkspaces";
+
+const FILL_LAYER_ID = "selected-polygon-fill";
 
 const SelectedPolygonLayer = () => {
   // Contexts
   const { themeConfig } = useThemeConfig();
   const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
   const setSelectedPolygon = useSelectedPolygon((s) => s.setSelectedPolygon);
+  const activeWorkspaceByCategory = useActiveWorkspaces(
+    (s) => s.activeWorkspaces
+  );
 
   // Refs
   const lastGeojsonRef = useRef<any>(null);
@@ -19,12 +25,9 @@ const SelectedPolygonLayer = () => {
     if (!map) return;
 
     const sourceId = "selected-polygon-source";
-    const fillLayerId = "selected-polygon-fill";
-    const lineLayerId = "selected-polygon-outline";
 
     // layer cleanup, prevent duplicate
-    if (map.getLayer(fillLayerId)) map.removeLayer(fillLayerId);
-    if (map.getLayer(lineLayerId)) map.removeLayer(lineLayerId);
+    if (map.getLayer(FILL_LAYER_ID)) map.removeLayer(FILL_LAYER_ID);
     if (map.getSource(sourceId)) map.removeSource(sourceId);
 
     if (!selectedPolygon) return;
@@ -40,7 +43,7 @@ const SelectedPolygonLayer = () => {
 
     // Fill layer highlight
     map.addLayer({
-      id: fillLayerId,
+      id: FILL_LAYER_ID,
       type: "fill",
       source: sourceId,
       paint: {
@@ -51,11 +54,20 @@ const SelectedPolygonLayer = () => {
 
     // TODO fix cleanup error get own layer on mapstyle changes
     // return () => {
-    //   if (map.getLayer(fillLayerId)) map.removeLayer(fillLayerId);
+    //   if (map.getLayer(FILL_LAYER_ID)) map.removeLayer(FILL_LAYER_ID);
     //   if (map.getLayer(lineLayerId)) map.removeLayer(lineLayerId);
     //   if (map.getSource(sourceId)) map.removeSource(sourceId);
     // };
   }, [mapRef, selectedPolygon]);
+
+  useEffect(() => {
+    const map = mapRef?.current?.getMap();
+    if (!map) return;
+
+    if (map.getLayer(FILL_LAYER_ID)) {
+      map.moveLayer(FILL_LAYER_ID);
+    }
+  }, [activeWorkspaceByCategory]);
 
   useEffect(() => {
     if (!empty(selectedPolygon)) {

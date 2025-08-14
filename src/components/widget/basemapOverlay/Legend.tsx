@@ -18,14 +18,17 @@ import useLegend from "@/context/useLegend";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import empty from "@/utils/empty";
 import {
+  Badge,
   Circle,
   HStack,
   Icon,
   Portal,
   SimpleGrid,
+  Text,
   VStack,
 } from "@chakra-ui/react";
 import {
+  IconCategory2,
   IconFlag,
   IconFlagOff,
   IconFolders,
@@ -203,16 +206,20 @@ export const LegendContent = (props: any) => {
                         </Icon>
 
                         <CContainer truncate gap={"6px"}>
-                          <P lineClamp={1} lineHeight={1}>
-                            {layer.name}
-                          </P>
+                          <HStack>
+                            <Text lineClamp={1} lineHeight={1}>
+                              {layer.name}
+                            </Text>
+                          </HStack>
 
-                          <P
-                            color={"fg.subtle"}
-                            lineClamp={1}
-                            fontSize={"xs"}
-                            lineHeight={1}
-                          >{`${layer.color_property_key}`}</P>
+                          <HStack>
+                            <P
+                              color={"fg.subtle"}
+                              lineClamp={1}
+                              fontSize={"xs"}
+                              lineHeight={1}
+                            >{`${layer.color_property_key}`}</P>
+                          </HStack>
                         </CContainer>
                       </HStack>
                     </AccordionItemTrigger>
@@ -229,7 +236,7 @@ export const LegendContent = (props: any) => {
                       )}
 
                       {!empty(legends) && (
-                        <CContainer gap={4}>
+                        <CContainer gap={3}>
                           <SimpleGrid columns={2} gapY={1} gapX={4}>
                             {legends.map(({ value, color }) => {
                               return (
@@ -248,6 +255,31 @@ export const LegendContent = (props: any) => {
                             })}
                           </SimpleGrid>
 
+                          <HStack wrap={"wrap"}>
+                            <Badge w={"fit"} color={"fg.subtle"} size={"xs"}>
+                              <Icon boxSize={3}>
+                                <IconCategory2 stroke={1.5} />
+                              </Icon>
+
+                              <P
+                                fontSize={"2xs"}
+                                lineHeight={1}
+                              >{`${workspace.workspace_category.label}`}</P>
+                            </Badge>
+
+                            <Badge w={"fit"} color={"fg.subtle"} size={"xs"}>
+                              <Icon boxSize={3}>
+                                <IconFolders stroke={1.5} />
+                              </Icon>
+
+                              <P
+                                fontSize={"2xs"}
+                                lineHeight={1}
+                              >{`${workspace.title}`}</P>
+                            </Badge>
+                          </HStack>
+
+                          {/* 
                           <HStack color={"fg.subtle"}>
                             <Icon boxSize={4}>
                               <IconFolders stroke={1.5} />
@@ -258,7 +290,7 @@ export const LegendContent = (props: any) => {
                               fontSize={"xs"}
                               lineHeight={1}
                             >{`${workspace.title}`}</P>
-                          </HStack>
+                          </HStack> */}
                         </CContainer>
                       )}
                     </AccordionItemContent>
