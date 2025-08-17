@@ -137,7 +137,10 @@ const MasterDataNavsContainer = ({ children, activePath, ...props }: Props) => {
       )}
 
       {/* Content */}
-      <PageContainer display={compact && masterDataRoute ? "none" : "flex"}>
+      <PageContainer
+        display={compact && masterDataRoute ? "none" : "flex"}
+        h={"full"}
+      >
         {children}
       </PageContainer>
     </HStack>
