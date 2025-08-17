@@ -9,7 +9,7 @@ const MasterDataPage = () => {
   const { l } = useLang();
 
   return (
-    <ItemContainer minH={"full"} py={8}>
+    <ItemContainer minH={"full"} py={10} flex={1}>
       <EmptyState
         icon={
           <Icon>
