@@ -140,7 +140,7 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
             color={"fg.subtle"}
             mt={"auto"}
           >
-            Powered by Exium
+            Powered by Exium.id
           </P>
         </CContainer>
       )}
