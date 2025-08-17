@@ -1585,23 +1585,6 @@ export const error_duplicate_email_toast = {
     en: "Email is already registered",
   },
 };
-export const error_409_toast = {
-  title: {
-    id: "Data duplikat",
-    en: "Duplicate data",
-  },
-  description: {
-    id: "Permintaan tidak dapat diproses karena data sudah ada",
-    en: "Request could not be processed because the data already exists",
-  },
-};
-export const error_500_toast = {
-  title: { id: "Kesalahan server", en: "Server error" },
-  description: {
-    id: "Terjadi kesalahan pada server. Silakan coba beberapa saat lagi.",
-    en: "An error occurred on the server. Please try again later.",
-  },
-};
 export const account_registration_loading_toast = {
   title: {
     id: "Mendaftar",
@@ -1627,6 +1610,23 @@ export const error_network_toast = {
   description: {
     id: "Tidak dapat terhubung ke server. Coba lagi nanti.",
     en: "Unable to connect to the server. Try again later.",
+  },
+};
+export const error_409_toast = {
+  title: {
+    id: "Data duplikat",
+    en: "Duplicate data",
+  },
+  description: {
+    id: "Permintaan tidak dapat diproses karena data sudah ada",
+    en: "Request could not be processed because the data already exists",
+  },
+};
+export const error_500_toast = {
+  title: { id: "Kesalahan server", en: "Server error" },
+  description: {
+    id: "Terjadi kesalahan pada server. Silakan coba beberapa saat lagi.",
+    en: "An error occurred on the server. Please try again later.",
   },
 };
 export const error_400_toast = {
