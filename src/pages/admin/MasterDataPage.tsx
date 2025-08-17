@@ -16,8 +16,8 @@ const MasterDataPage = () => {
             <IconServerCog />
           </Icon>
         }
-        title={l.settings_page.title}
-        description={l.settings_page.description}
+        title={l.master_data_page.title}
+        description={l.master_data_page.description}
         m={"auto"}
       />
     </ItemContainer>
