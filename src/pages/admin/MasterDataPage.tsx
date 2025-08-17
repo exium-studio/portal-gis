@@ -2,7 +2,7 @@ import ItemContainer from "@/components/ui-custom/ItemContainer";
 import { EmptyState } from "@/components/ui/empty-state";
 import useLang from "@/context/useLang";
 import { Icon } from "@chakra-ui/react";
-import { IconSettings } from "@tabler/icons-react";
+import { IconServerCog } from "@tabler/icons-react";
 
 const MasterDataPage = () => {
   // Contexts
@@ -13,7 +13,7 @@ const MasterDataPage = () => {
       <EmptyState
         icon={
           <Icon>
-            <IconSettings />
+            <IconServerCog />
           </Icon>
         }
         title={l.settings_page.title}
