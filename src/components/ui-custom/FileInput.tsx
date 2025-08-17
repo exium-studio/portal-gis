@@ -132,7 +132,9 @@ const FileInput = (props: Props) => {
           </FileUploadTrigger>
         )}
 
-        {!singleFileInputted && <FileUploadList files={inputValue as File[]} />}
+        {!singleFileInputted && inputValue && (
+          <FileUploadList files={inputValue as File[]} />
+        )}
       </>
     </FileUploadRoot>
   );
