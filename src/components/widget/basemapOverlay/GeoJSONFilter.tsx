@@ -75,6 +75,7 @@ const GeoJSONFilter = () => {
             variant={"outline"}
             w={"full"}
             onClick={onToggle}
+            size={"md"}
           >
             <Icon boxSize={5}>
               <IconFilter stroke={1.5} />
