@@ -232,9 +232,9 @@ const translations = {
     "description": "Anda tidak memiliki izin untuk mengakses informasi ini."
   },
   "forgot_password": "Lupa password",
-  "forgot_password_step_1_helper": "Langkah pertama lupa kata sandi, masukkan email Anda dan kami akan mengirimkan OTP untuk mengatur ulang kata sandi Anda.",
-  "forgot_password_step_2_helper": "Langkah kedua lupa kata sandi, verifikasi OTP",
-  "forgot_password_step_3_helper": "Langkah ketiga lupa kata sandi, masukkan kata sandi baru Anda",
+  "forgot_password_step_1_helper": "Langkah pertama, masukkan email Anda dan kami akan mengirimkan OTP untuk mengatur ulang kata sandi Anda.",
+  "forgot_password_step_2_helper": "Langkah kedua, verifikasi OTP",
+  "forgot_password_step_3_helper": "Langkah ketiga, masukkan kata sandi baru Anda",
   "full_main_panel": "Panel utama penuh",
   "fund_mutation": "Mutasi dana",
   "gender": "Jenis Kelamin",

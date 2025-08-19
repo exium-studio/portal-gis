@@ -1,5 +1,6 @@
 import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
+import Img from "@/components/ui-custom/Img";
 import LangSwitcher from "@/components/ui-custom/LangSwitcher";
 import NavLink from "@/components/ui-custom/NavLink";
 import { Avatar } from "@/components/ui/avatar";
@@ -10,7 +11,7 @@ import useAuthMiddleware from "@/context/useAuthMiddleware";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useRequest from "@/hooks/useRequest";
-import { HStack, Text, VStack } from "@chakra-ui/react";
+import { Center, HStack, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import { useEffect } from "react";
 
 const RootPage = () => {
@@ -64,20 +65,14 @@ const RootPage = () => {
   }, []);
 
   return (
-    <CContainer
-      p={4}
-      justify={"center"}
-      align={"center"}
-      minH={"100dvh"}
-      bg={"bg.subtle"}
-    >
-      <HStack>
-        <LangSwitcher />
+    <SimpleGrid columns={[1, null, 2]} h={"100dvh"} w={"full"} bg={"body"}>
+      <CContainer p={4} justify={"space-between"} align={"center"}>
+        <HStack>
+          <LangSwitcher />
 
-        <ColorModeButton ml={"auto"} />
-      </HStack>
+          <ColorModeButton ml={"auto"} />
+        </HStack>
 
-      <CContainer justify={"center"} align={"center"} m={"auto"}>
         {!authToken && <SigninForm />}
 
         {authToken && (
@@ -107,15 +102,19 @@ const RootPage = () => {
             </VStack>
           </VStack>
         )}
+
+        <VStack w={"full"} py={4}>
+          <Text textAlign={"center"} fontSize={"sm"}>
+            © {currentYear} powered by{" "}
+            <span style={{ fontWeight: 600 }}>Exium</span>
+          </Text>
+        </VStack>
       </CContainer>
 
-      <VStack w={"full"} py={4}>
-        <Text textAlign={"center"} fontSize={"sm"}>
-          © {currentYear} powered by{" "}
-          <span style={{ fontWeight: 600 }}>Exium</span>
-        </Text>
-      </VStack>
-    </CContainer>
+      <Center p={12} bg={themeConfig.primaryColor}>
+        <Img src={`/logo.png`} w={"full"} maxW={"300px"} />
+      </Center>
+    </SimpleGrid>
   );
 };
 

@@ -476,15 +476,15 @@ export const password_confirmation_not_match = {
   en: "Password confirmation does not match",
 };
 export const forgot_password_step_1_helper = {
-  id: "Langkah pertama lupa kata sandi, masukkan email Anda dan kami akan mengirimkan OTP untuk mengatur ulang kata sandi Anda.",
+  id: "Langkah pertama, masukkan email Anda dan kami akan mengirimkan OTP untuk mengatur ulang kata sandi Anda.",
   en: "First step of forgot password, enter your email and we will send you an OTP to reset your password.",
 };
 export const forgot_password_step_2_helper = {
-  id: "Langkah kedua lupa kata sandi, verifikasi OTP",
+  id: "Langkah kedua, verifikasi OTP",
   en: "Second step of forgot password, verify OTP",
 };
 export const forgot_password_step_3_helper = {
-  id: "Langkah ketiga lupa kata sandi, masukkan kata sandi baru Anda",
+  id: "Langkah ketiga, masukkan kata sandi baru Anda",
   en: "Third step of forgot password, enter your new password",
 };
 export const deleted_thumbnail = {

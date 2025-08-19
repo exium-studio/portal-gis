@@ -3,6 +3,7 @@ import useLang from "@/context/useLang";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useBackOnClose from "@/hooks/useBackOnClose";
 import useRequest from "@/hooks/useRequest";
+import back from "@/utils/back";
 import { maskEmail } from "@/utils/maskEmail";
 import {
   PinInputControl,
@@ -25,11 +26,9 @@ import {
 } from "../ui-custom/Disclosure";
 import DisclosureHeaderContent from "../ui-custom/DisclosureHeaderContent";
 import HelperText from "../ui-custom/HelperText";
-import StringInput from "../ui-custom/StringInput";
-import TextRouterLink from "../ui-custom/TextRouterLink";
-import { Field } from "../ui/field";
 import PasswordInput from "../ui-custom/PasswordInput";
-import back from "@/utils/back";
+import StringInput from "../ui-custom/StringInput";
+import { Field } from "../ui/field";
 
 const Step1 = (props: any) => {
   // Props
@@ -332,9 +331,11 @@ const Step3 = (props: any) => {
   );
 };
 
-const ForgotPassword = () => {
+const ResetPasswordDisclosureTrigger = (props: any) => {
+  // Props
+  const { children, ...restProps } = props;
+
   // Hooks
-  const { l } = useLang();
   const { open, onOpen, onClose } = useDisclosure();
   useBackOnClose(`forgot-password`, open, onOpen, onClose);
 
@@ -354,9 +355,9 @@ const ForgotPassword = () => {
 
   return (
     <>
-      <TextRouterLink to="/" onClick={onOpen}>
-        {l.forgot_password}
-      </TextRouterLink>
+      <CContainer onClick={onOpen} w={"fit"} {...restProps}>
+        {children}
+      </CContainer>
 
       <DisclosureRoot open={open} lazyLoad size={"xs"}>
         <DisclosureContent>
@@ -371,4 +372,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ResetPasswordDisclosureTrigger;

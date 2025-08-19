@@ -2,17 +2,20 @@ import useAuthMiddleware from "@/context/useAuthMiddleware";
 import useLang from "@/context/useLang";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useRequest from "@/hooks/useRequest";
-import { FieldsetRoot, HStack, Text } from "@chakra-ui/react";
+import { FieldsetRoot, HStack, Icon, Text } from "@chakra-ui/react";
+import { IconLock, IconUser } from "@tabler/icons-react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import BButton from "../ui-custom/BButton";
 import CContainer from "../ui-custom/CContainer";
+import Divider from "../ui-custom/Divider";
 import Heading6 from "../ui-custom/Heading6";
 import PasswordInput from "../ui-custom/PasswordInput";
 import StringInput from "../ui-custom/StringInput";
 import { Field } from "../ui/field";
-import ForgotPassword from "./ForgotPassword";
+import { InputGroup } from "../ui/input-group";
+import ResetPasswordDisclosureTrigger from "./ResetPasswordDisclosureTrigger";
 
 const SigninForm = () => {
   // Hooks
@@ -81,54 +84,74 @@ const SigninForm = () => {
 
   return (
     <CContainer
-      bg={"body"}
       m={"auto"}
       w={"full"}
       maxW={"380px"}
       p={6}
       borderRadius={themeConfig.radii.container}
+      align={"center"}
     >
       <FieldsetRoot disabled={loading}>
-        <CContainer mb={4} gap={1}>
-          <Heading6 fontWeight={"bold"}>{l.login_form.title}</Heading6>
-          <Text fontSize={"sm"}>{l.login_form.description}</Text>
+        <CContainer mb={4} gap={1} align={"center"}>
+          <Heading6 textAlign={"center"} fontWeight={"bold"}>
+            {l.login_form.title}
+          </Heading6>
+          <Text textAlign={"center"} fontSize={"sm"}>
+            {l.login_form.description}
+          </Text>
         </CContainer>
 
         <form id="signin_form" onSubmit={formik.handleSubmit}>
           <Field
-            label="Email"
+            // label="Email"
             invalid={!!formik.errors.identifier}
             errorText={formik.errors.identifier as string}
             mb={4}
           >
-            <StringInput
-              name="identifier"
-              onChangeSetter={(input) => {
-                formik.setFieldValue("identifier", input);
-              }}
-              inputValue={formik.values.identifier}
-              placeholder="example@email.com"
-            />
+            <InputGroup
+              w={"full"}
+              startElement={
+                <Icon boxSize={5}>
+                  <IconUser stroke={1.5} />
+                </Icon>
+              }
+            >
+              <StringInput
+                name="identifier"
+                onChangeSetter={(input) => {
+                  formik.setFieldValue("identifier", input);
+                }}
+                inputValue={formik.values.identifier}
+                placeholder="Email"
+                pl={"40px !important"}
+              />
+            </InputGroup>
           </Field>
 
           <Field
-            label="Password"
+            // label="Password"
             invalid={!!formik.errors.password}
             errorText={formik.errors.password as string}
           >
-            <PasswordInput
-              name="password"
-              onChangeSetter={(input) => {
-                formik.setFieldValue("password", input);
-              }}
-              inputValue={formik.values.password}
-              placeholder="example@email.comm"
-            />
+            <InputGroup
+              w={"full"}
+              startElement={
+                <Icon boxSize={5}>
+                  <IconLock stroke={1.5} />
+                </Icon>
+              }
+            >
+              <PasswordInput
+                name="password"
+                onChangeSetter={(input) => {
+                  formik.setFieldValue("password", input);
+                }}
+                inputValue={formik.values.password}
+                placeholder="Password"
+                pl={"40px !important"}
+              />
+            </InputGroup>
           </Field>
-
-          <HStack mt={4}>
-            <ForgotPassword />
-          </HStack>
 
           <BButton
             type="submit"
@@ -141,6 +164,18 @@ const SigninForm = () => {
           >
             Login
           </BButton>
+
+          <HStack mt={4}>
+            <Divider borderColor={"red"} h={"2px"} w={"full"} />
+
+            <ResetPasswordDisclosureTrigger>
+              <BButton variant={"ghost"} color={themeConfig.primaryColor}>
+                {l.forgot_password}
+              </BButton>
+            </ResetPasswordDisclosureTrigger>
+
+            <Divider borderColor={"red"} h={"2px"} w={"full"} />
+          </HStack>
         </form>
       </FieldsetRoot>
     </CContainer>
