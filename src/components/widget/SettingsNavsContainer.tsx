@@ -17,8 +17,8 @@ import { IconChevronRight } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import BButton from "../ui-custom/BButton";
 import CContainer from "../ui-custom/CContainer";
+import ExiumWatermark from "./ExiumWatermark";
 import PageContainer from "./PageContainer";
-import P from "../ui-custom/P";
 
 interface Props extends StackProps {
   children?: any;
@@ -133,15 +133,7 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
             </CContainer>
           </CContainer>
 
-          <P
-            fontWeight={"semibold"}
-            fontSize={"xs"}
-            textAlign={"center"}
-            color={"fg.subtle"}
-            mt={"auto"}
-          >
-            Powered by Exium.id
-          </P>
+          <ExiumWatermark mt={"auto"} color={"fg.subtle"} />
         </CContainer>
       )}
 
