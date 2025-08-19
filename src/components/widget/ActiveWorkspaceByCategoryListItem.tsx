@@ -265,7 +265,7 @@ const ActiveWorkspaceByCategoryListItem = (props: Props) => {
             value={value}
             onValueChange={(e) => setValue(e.value)}
           >
-            {activeWorkspace?.workspaces?.map((workspace, i) => {
+            {activeWorkspace?.workspaces?.reverse()?.map((workspace, i) => {
               return (
                 <ActiveWorkspaceListItem
                   workspace={workspace}

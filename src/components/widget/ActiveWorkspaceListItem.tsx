@@ -89,7 +89,7 @@ const Rearange = (props: any) => {
       <MenuContent>
         <MenuItem
           value="front"
-          disabled={last}
+          disabled={first}
           onClick={() => {
             rearrangeWorkspace(workspaceCategoryId, workspaceId, "front");
           }}
@@ -98,7 +98,7 @@ const Rearange = (props: any) => {
         </MenuItem>
         <MenuItem
           value="back"
-          disabled={first}
+          disabled={last}
           onClick={() => {
             rearrangeWorkspace(workspaceCategoryId, workspaceId, "back");
           }}
@@ -107,7 +107,7 @@ const Rearange = (props: any) => {
         </MenuItem>
         <MenuItem
           value="up"
-          disabled={last}
+          disabled={first}
           onClick={() => {
             rearrangeWorkspace(workspaceCategoryId, workspaceId, "up");
           }}
@@ -116,7 +116,7 @@ const Rearange = (props: any) => {
         </MenuItem>
         <MenuItem
           value="down"
-          disabled={first}
+          disabled={last}
           onClick={() => {
             rearrangeWorkspace(workspaceCategoryId, workspaceId, "down");
           }}
