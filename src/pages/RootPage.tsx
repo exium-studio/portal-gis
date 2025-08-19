@@ -11,6 +11,7 @@ import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useAuthMiddleware from "@/context/useAuthMiddleware";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
+import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import useRequest from "@/hooks/useRequest";
 import { Center, HStack, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import { useEffect } from "react";
@@ -22,6 +23,7 @@ const RootPage = () => {
     showLoadingToast: false,
     showSuccessToast: false,
   });
+  const iss = useIsSmScreenWidth();
 
   // Contexts
   const authToken = useAuthMiddleware((s) => s.authToken);
@@ -106,9 +108,11 @@ const RootPage = () => {
         </VStack>
       </CContainer>
 
-      <Center p={12} bg={themeConfig.primaryColor}>
-        <Img src={`/logo.png`} w={"full"} maxW={"300px"} />
-      </Center>
+      {!iss && (
+        <Center p={12} bg={themeConfig.primaryColor}>
+          <Img src={`/logo.png`} w={"full"} maxW={"300px"} />
+        </Center>
+      )}
     </SimpleGrid>
   );
 };
