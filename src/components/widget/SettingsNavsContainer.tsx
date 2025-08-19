@@ -92,7 +92,7 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
             <CContainer className="scrollY" pl={2} pr={"2px"} gap={4}>
               {SETTINGS_NAVS.map((item, i) => {
                 return (
-                  <CContainer key={i}>
+                  <CContainer key={i} gap={1}>
                     <Text fontWeight={"bold"} color={"fg.subtle"} mx={2} mb={2}>
                       {pluck(l, item.groupLabelKey)}
                     </Text>

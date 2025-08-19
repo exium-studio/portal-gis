@@ -91,7 +91,7 @@ const MasterDataNavsContainer = ({ children, activePath, ...props }: Props) => {
             <CContainer className="scrollY" pl={2} pr={1} gap={4}>
               {MASTER_DATA_NAVS.map((item, i) => {
                 return (
-                  <CContainer key={i}>
+                  <CContainer key={i} gap={1}>
                     <Text fontWeight={"bold"} color={"fg.subtle"} mx={2} mb={2}>
                       {pluck(l, item.groupLabelKey)}
                     </Text>

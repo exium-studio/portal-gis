@@ -839,12 +839,17 @@ const ToggleLoadWorkspace = (props: any) => {
     if (empty(activeWorkspace(workspace.id)?.layers)) setChecked(false);
   }, [activeWorkspaces]);
 
+  // if (workspace?.title === "Batas Hutan") {
+  //   console.log("checked", checked);
+  //   console.log("workspaceLoading", workspaceLoading);
+  // }
+
   return (
     <Tooltip content={"Toggle load workspace"}>
       <HStack px={2} justify={"center"} {...restProps}>
         <Switch
           colorPalette={themeConfig.colorPalette}
-          checked={checked || workspaceLoading}
+          checked={workspaceActive || checked || workspaceLoading}
           onCheckedChange={(e) => {
             setChecked(e.checked);
           }}
