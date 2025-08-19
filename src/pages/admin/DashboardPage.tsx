@@ -24,7 +24,7 @@ import { Chart, useChart } from "@chakra-ui/charts";
 import { Circle, HStack } from "@chakra-ui/react";
 import { IconFoldersOff } from "@tabler/icons-react";
 import chroma from "chroma-js";
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { Cell, Pie, PieChart, Sector, Tooltip } from "recharts";
 
 type DashboardStat = {
@@ -557,7 +557,11 @@ const DashboardData = (props: any) => {
   ];
   const filteredDashboardItems = useMemo(() => {
     return dashboardItems.filter((item) => {
-      return item.name.toLowerCase().includes(searchTerm);
+      return (
+        <Fragment key={item.name}>
+          {item.name.toLowerCase().includes(searchTerm)}
+        </Fragment>
+      );
     });
   }, [searchTerm, filteredDashboardData]);
 
