@@ -1,5 +1,8 @@
 import { MAP_TRANSITION_DURATION } from "@/constants/duration";
-import { Interface__ActiveLayer } from "@/constants/interfaces";
+import {
+  Interface__ActiveLayer,
+  Interface__ActiveWorkspace,
+} from "@/constants/interfaces";
 import { FIT_BOUNDS_PADDING } from "@/constants/sizes";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useLang from "@/context/useLang";
@@ -12,6 +15,7 @@ import {
   IconEyeOff,
   IconLine,
   IconPolygon,
+  IconStackPop,
   IconZoomInArea,
 } from "@tabler/icons-react";
 import BButton from "../ui-custom/BButton";
@@ -19,26 +23,110 @@ import CContainer from "../ui-custom/CContainer";
 import P from "../ui-custom/P";
 import { Tooltip } from "../ui/tooltip";
 import SimplePopover from "./SimplePopover";
+import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
 
 interface Props extends StackProps {
+  index: number;
   layer: Interface__ActiveLayer;
+  workspace: Interface__ActiveWorkspace;
 }
 
 const ActiveLayerUtils = (props: any) => {
   // Props
-  const { activeLayer, ...restProps } = props;
+  const { index, layer, workspace, ...restProps } = props;
 
   return (
     <HStack gap={1} {...restProps}>
-      <ViewWorkspace activeLayer={activeLayer} />
+      <Rearange
+        index={index}
+        layer={layer}
+        workspace={workspace}
+        length={workspace?.layers?.length}
+      />
 
-      <ToggleVisibility activeLayer={activeLayer} />
+      <ViewWorkspace layer={layer} />
+
+      <ToggleVisibility layer={layer} />
     </HStack>
+  );
+};
+const Rearange = (props: any) => {
+  // Props
+  const { index, layer, workspace, length } = props;
+
+  // Hooks
+  const { l } = useLang();
+
+  // Contexts
+  const rearrangeLayer = useActiveWorkspaces((s) => s.rearrangeLayer);
+
+  // States
+  const workspaceId = workspace.id;
+  const layerId = layer.id;
+  const first = index === 0;
+  const last = index === length - 1;
+
+  return (
+    <MenuRoot>
+      <MenuTrigger asChild>
+        <BButton
+          iconButton
+          unclicky
+          variant={"ghost"}
+          size={"xs"}
+          disabled={first && last}
+          {...props}
+        >
+          <Icon boxSize={5}>
+            <IconStackPop stroke={1.5} />
+          </Icon>
+        </BButton>
+      </MenuTrigger>
+
+      <MenuContent>
+        <MenuItem
+          value="front"
+          disabled={first}
+          onClick={() => {
+            rearrangeLayer(workspaceId, layerId, "front");
+          }}
+        >
+          {l.bring_to_front_layer_level}
+        </MenuItem>
+        <MenuItem
+          value="back"
+          disabled={last}
+          onClick={() => {
+            rearrangeLayer(workspaceId, layerId, "back");
+          }}
+        >
+          {l.send_to_back_layer_level}
+        </MenuItem>
+        <MenuItem
+          value="up"
+          disabled={first}
+          onClick={() => {
+            rearrangeLayer(workspaceId, layerId, "up");
+          }}
+        >
+          {l.move_up_layer_level}
+        </MenuItem>
+        <MenuItem
+          value="down"
+          disabled={last}
+          onClick={() => {
+            rearrangeLayer(workspaceId, layerId, "down");
+          }}
+        >
+          {l.move_down_layer_level}
+        </MenuItem>
+      </MenuContent>
+    </MenuRoot>
   );
 };
 const ViewWorkspace = (props: any) => {
   // Props
-  const { activeLayer, ...restProps } = props;
+  const { layer, ...restProps } = props;
 
   // Hooks
   const { l } = useLang();
@@ -48,8 +136,8 @@ const ViewWorkspace = (props: any) => {
 
   // Utils
   function onFitBounds() {
-    if (mapRef.current && activeLayer.data.bbox) {
-      const [minLng, minLat, maxLng, maxLat] = activeLayer.data.bbox;
+    if (mapRef.current && layer.data.bbox) {
+      const [minLng, minLat, maxLng, maxLat] = layer.data.bbox;
 
       mapRef.current.fitBounds(
         [
@@ -84,7 +172,7 @@ const ViewWorkspace = (props: any) => {
 };
 const ToggleVisibility = (props: any) => {
   // Props
-  const { activeLayer } = props;
+  const { layer } = props;
 
   // Hooks
   const { l } = useLang();
@@ -102,11 +190,11 @@ const ToggleVisibility = (props: any) => {
         size={"xs"}
         variant={"ghost"}
         onClick={() => {
-          toggleLayerVisibility(activeLayer?.workspace?.id, activeLayer?.id);
+          toggleLayerVisibility(layer?.workspace?.id, layer?.id);
         }}
       >
         <Icon boxSize={5}>
-          {activeLayer?.visible ? (
+          {layer?.visible ? (
             <IconEye stroke={1.5} />
           ) : (
             <IconEyeOff stroke={1.5} />
@@ -119,7 +207,7 @@ const ToggleVisibility = (props: any) => {
 
 const ActiveLayerListItem = (props: Props) => {
   // Props
-  const { layer, ...restProps } = props;
+  const { layer, workspace, index, ...restProps } = props;
 
   // Hooks
   const { l } = useLang();
@@ -189,7 +277,12 @@ const ActiveLayerListItem = (props: Props) => {
           </HStack>
         </SimplePopover>
 
-        <ActiveLayerUtils activeLayer={layer} ml={"auto"} />
+        <ActiveLayerUtils
+          index={index}
+          layer={layer}
+          workspace={workspace}
+          ml={"auto"}
+        />
       </HStack>
     </HStack>
   );

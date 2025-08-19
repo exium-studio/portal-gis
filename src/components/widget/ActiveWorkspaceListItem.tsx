@@ -259,7 +259,12 @@ const ActiveWorkspaceListItem = (props: Props) => {
                   <Box w={"8px"} h={"1px"} bg={"border.emphasized"} />
                 </HStack>
 
-                <ActiveLayerListItem key={layer.id} layer={layer} />
+                <ActiveLayerListItem
+                  key={layer.id}
+                  index={i}
+                  layer={layer}
+                  workspace={workspace}
+                />
               </HStack>
             );
           })}
