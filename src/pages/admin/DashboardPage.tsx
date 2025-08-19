@@ -571,7 +571,7 @@ const DashboardData = (props: any) => {
       (activeWorkspace) => activeWorkspace?.workspaces
     );
     setDashboardData(summarizeDashboard(newActiveWorkspaces, filterGeoJSON));
-  }, [activeWorkspacesByCategory]);
+  }, [activeWorkspacesByCategory, filterGeoJSON]);
 
   // Handle filter
   useEffect(() => {
