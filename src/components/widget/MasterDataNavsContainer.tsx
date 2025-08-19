@@ -92,7 +92,7 @@ const MasterDataNavsContainer = ({ children, activePath, ...props }: Props) => {
               {MASTER_DATA_NAVS.map((item, i) => {
                 return (
                   <CContainer key={i} gap={1}>
-                    <Text fontWeight={"bold"} color={"fg.subtle"} mx={2} mb={2}>
+                    <Text fontWeight={"bold"} color={"fg.subtle"} mx={2} mb={1}>
                       {pluck(l, item.groupLabelKey)}
                     </Text>
 
