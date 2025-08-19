@@ -26,21 +26,20 @@ import { useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import BackButton from "../ui-custom/BackButton";
 import BButton from "../ui-custom/BButton";
-import BnwLogo from "../ui-custom/BnwLogo";
 import CContainer from "../ui-custom/CContainer";
 import FloatCounter from "../ui-custom/FloatCounter";
 import Heading6 from "../ui-custom/Heading6";
 import HelperText from "../ui-custom/HelperText";
 import HScroll from "../ui-custom/HScroll";
-import Logo from "../ui-custom/Logo";
+import Img from "../ui-custom/Img";
 import { Avatar } from "../ui/avatar";
 import { ColorModeButton } from "../ui/color-mode";
 import { Tooltip } from "../ui/tooltip";
 import BaseMap from "./admin/Basemap";
 import BasemapMapOverlay from "./admin/BasemapMapOverlay";
 import CurrentUserTimeZone from "./CurrentUserTimeZone";
-import Trivia from "./Trivia";
 import SimplePopover from "./SimplePopover";
+import Trivia from "./Trivia";
 
 interface Interface__NavItemContainer extends StackProps {
   active?: boolean;
@@ -347,11 +346,7 @@ const NavContainer = ({
             flexShrink={0}
           >
             <Link to={"/"}>
-              {themeConfig.colorPalette === "gray" ? (
-                <BnwLogo />
-              ) : (
-                <Logo size={16} color={themeConfig.primaryColorHex} />
-              )}
+              <Img src="/logo.png" w={"24px"} />
             </Link>
 
             <VStack justify={"center"} flex={1}>

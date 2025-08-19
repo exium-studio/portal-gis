@@ -362,7 +362,7 @@ const ResetPasswordDisclosureTrigger = (props: any) => {
       <DisclosureRoot open={open} lazyLoad size={"xs"}>
         <DisclosureContent>
           <DisclosureHeader>
-            <DisclosureHeaderContent title={`Forgot Password`} />
+            <DisclosureHeaderContent title={`Reset Password`} />
           </DisclosureHeader>
 
           {STEP_SECTION[step as keyof typeof STEP_SECTION]}

@@ -2,6 +2,7 @@ import BButton from "@/components/ui-custom/BButton";
 import P from "@/components/ui-custom/P";
 import { Avatar } from "@/components/ui/avatar";
 import PageContainer from "@/components/widget/PageContainer";
+import ResetPasswordDisclosureTrigger from "@/components/widget/ResetPasswordDisclosureTrigger";
 import useAuthMiddleware from "@/context/useAuthMiddleware";
 import useRequest from "@/hooks/useRequest";
 import { VStack } from "@chakra-ui/react";
@@ -50,6 +51,10 @@ const ProfilePage = () => {
         </P>
         <P textAlign={"center"}>admin@gmail.com</P>
       </VStack>
+
+      <ResetPasswordDisclosureTrigger>
+        <BButton variant={"outline"}>Reset password</BButton>
+      </ResetPasswordDisclosureTrigger>
 
       <BButton
         onClick={onSignout}
