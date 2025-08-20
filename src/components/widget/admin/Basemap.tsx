@@ -57,7 +57,7 @@ const BaseMap = () => {
     if (mapRef.current && currentLocation) {
       mapRef.current.flyTo({
         center: [currentLocation.lon, currentLocation.lat],
-        zoom: 14,
+        zoom: 12,
         duration: MAP_TRANSITION_DURATION,
         essential: true,
       });
@@ -67,13 +67,13 @@ const BaseMap = () => {
   // Ease to search result if available
   useEffect(() => {
     if (mapRef.current && selectedSearchResult) {
-      mapRef.current.easeTo({
+      mapRef.current.flyTo({
         center: [
           selectedSearchResult.center[0],
           selectedSearchResult.center[1],
         ],
-        zoom: 11,
-        duration: 1000,
+        zoom: 12,
+        duration: MAP_TRANSITION_DURATION,
       });
     }
   }, [selectedSearchResult]);

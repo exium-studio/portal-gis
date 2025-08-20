@@ -197,7 +197,7 @@ export const SearchAddress = () => {
               pointerEvents={"auto"}
             >
               {/* Render loading */}
-              {loading && <ComponentSpinner />}
+              {loading && <ComponentSpinner minH={"210px"} />}
 
               {/* Render result */}
               {!loading && (
