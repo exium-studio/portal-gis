@@ -385,10 +385,9 @@ const NavContainer = ({
               borderColor={"border.muted"}
             >
               <HStack
-                // h={"67px"}
                 justify={"space-between"}
                 pl={4}
-                pr={2}
+                pr={[0, null, 1]}
                 py={"9px"}
                 flexShrink={0}
                 position={"sticky"}
