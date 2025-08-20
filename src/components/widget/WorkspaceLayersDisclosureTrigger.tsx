@@ -67,7 +67,7 @@ const SetLegend = (props: any) => {
   // Hooks
   const { l } = useLang();
   const { open, onOpen, onClose } = useDisclosure();
-  useBackOnClose(`set-legend`, open, onOpen, onClose);
+  useBackOnClose(`set-legend-${layer?.id}`, open, onOpen, onClose);
   const { req } = useRequest({
     id: "set_legend",
   });
