@@ -79,10 +79,19 @@ const WorkspaceMenu = (props: any) => {
   // Props
   const { workspace, setWorkspace, ...restProps } = props;
 
+  // Contexts
+  const workspaceLoading = useIsWorkspaceLoading(workspace.id);
+
   return (
     <MenuRoot>
       <MenuTrigger asChild>
-        <BButton iconButton unclicky variant={"ghost"} {...restProps}>
+        <BButton
+          iconButton
+          unclicky
+          variant={"ghost"}
+          disabled={workspaceLoading}
+          {...restProps}
+        >
           <Icon boxSize={5}>
             <IconDots />
           </Icon>
