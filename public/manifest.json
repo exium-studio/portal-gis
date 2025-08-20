@@ -1,6 +1,6 @@
 {
-  "name": "MapGis",
-  "short_name": "MG",
+  "name": "Portal Gis",
+  "short_name": "PG",
   "start_url": "/",
   "display": "standalone",
   "icons": [
