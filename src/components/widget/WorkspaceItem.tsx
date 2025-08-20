@@ -79,19 +79,10 @@ const WorkspaceMenu = (props: any) => {
   // Props
   const { workspace, setWorkspace, ...restProps } = props;
 
-  // Contexts
-  const workspaceLoading = useIsWorkspaceLoading(workspace.id);
-
   return (
     <MenuRoot>
       <MenuTrigger asChild>
-        <BButton
-          iconButton
-          unclicky
-          variant={"ghost"}
-          disabled={workspaceLoading}
-          {...restProps}
-        >
+        <BButton iconButton unclicky variant={"ghost"} {...restProps}>
           <Icon boxSize={5}>
             <IconDots />
           </Icon>
@@ -899,6 +890,7 @@ const RowItem = (props: any) => {
 
   // Contexts
   const { themeConfig } = useThemeConfig();
+  const workspaceLoading = useIsWorkspaceLoading(workspace.id);
 
   return (
     <CContainer
@@ -918,7 +910,7 @@ const RowItem = (props: any) => {
           aspectRatio={16 / 10}
         />
 
-        <HStack align={"stretch"} gap={0} p={2}>
+        <HStack align={"stretch"} justify={"space-between"} gap={0} p={2}>
           <SimplePopover
             content={<DetailWorkspacePopoverContent workspace={workspace} />}
           >
@@ -937,7 +929,7 @@ const RowItem = (props: any) => {
             workspace={workspace}
             setWorkspace={setWorkspace}
             size={"xs"}
-            ml={"auto"}
+            disabled={workspaceLoading || workspaceActive}
           />
         </HStack>
       </CContainer>
@@ -955,6 +947,7 @@ const ListItem = (props: any) => {
 
   // Contexts
   const { themeConfig } = useThemeConfig();
+  const workspaceLoading = useIsWorkspaceLoading(workspace.id);
 
   return (
     <CContainer
@@ -979,7 +972,7 @@ const ListItem = (props: any) => {
           workspace={workspace}
           setWorkspace={setWorkspace}
           size={"xs"}
-          disabled={workspaceActive}
+          disabled={workspaceLoading || workspaceActive}
         />
       </HStack>
 
