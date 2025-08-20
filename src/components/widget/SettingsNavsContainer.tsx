@@ -109,6 +109,7 @@ const SettingsNavsContainer = ({ children, activePath, ...props }: Props) => {
                             justifyContent={"start"}
                             px={2}
                             position={"relative"}
+                            size={"md"}
                           >
                             {active && <ActiveNavIndicator />}
 
