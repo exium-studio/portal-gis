@@ -5,7 +5,6 @@ import LangSwitcher from "@/components/ui-custom/LangSwitcher";
 import NavLink from "@/components/ui-custom/NavLink";
 import { Avatar } from "@/components/ui/avatar";
 import { ColorModeButton } from "@/components/ui/color-mode";
-import ExiumWatermark from "@/components/widget/ExiumWatermark";
 import SigninForm from "@/components/widget/SigninForm";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useAuthMiddleware from "@/context/useAuthMiddleware";
@@ -103,9 +102,9 @@ const RootPage = () => {
           </VStack>
         )}
 
-        <VStack w={"full"} py={4}>
+        {/* <VStack w={"full"} py={4}>
           <ExiumWatermark />
-        </VStack>
+        </VStack> */}
       </CContainer>
 
       {!iss && (
