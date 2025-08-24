@@ -75,7 +75,7 @@ const RootPage = () => {
         {!authToken && <SigninForm />}
 
         {authToken && (
-          <VStack gap={4}>
+          <VStack gap={4} m={"auto"}>
             <Avatar size={"2xl"} />
 
             <VStack gap={0}>
