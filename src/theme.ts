@@ -10,9 +10,9 @@ const customConfig = defineConfig({
     //   color: "text",
     // },
   },
-  conditions: {
-    hover: "&:is(:hover, [data-hover]):not(:disabled, [data-disabled])",
-  },
+  // conditions: {
+  //   hover: "&:is(:hover, [data-hover]):not(:disabled, [data-disabled])",
+  // },
   theme: {
     breakpoints: {
       sm: "320px",
