@@ -1514,21 +1514,18 @@ export const payment_settled_toast = {
     en: "Payment has been received.",
   },
 };
+export const error_srs_required_toast = {
+  title: { id: "File .zip tidak valid", en: "Invalid .zip file" },
+  description: {
+    id: "File .zip tidak memuat .prj. Sertakan file .prj untuk melanjutkan.",
+    en: "The .zip file does not contain .prj. Please include the .prj file to continue.",
+  },
+};
 export const payment_unsettled_toast = {
   title: { id: "Pembayaran belum selesai", en: "Payment not complete" },
   description: {
     id: "Pembayaran Anda belum selesai.",
     en: "Your payment is not complete.",
-  },
-};
-export const error_duplicate_animal_category_and_breed_toast = {
-  title: {
-    id: "Data duplikat",
-    en: "Duplicate data",
-  },
-  description: {
-    id: "Kategori dan ras sudah terdaftar",
-    en: "Category and breed are already registered",
   },
 };
 export const error_invalid_otp_toast = {

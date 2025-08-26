@@ -175,6 +175,11 @@ const useRequest = (props: Props) => {
                   title: l.error_400_toast.title,
                   description: l.error_400_toast.description,
                 };
+              case "SRS_REQUIRED":
+                return {
+                  title: l.error_srs_required_toast.title,
+                  description: l.error_srs_required_toast.description,
+                };
               case "FAILED_VALIDATION":
                 return {
                   title: l.error_422_toast.title,

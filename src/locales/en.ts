@@ -186,10 +186,6 @@ const translations = {
     "title": "An error occurred",
     "description": "An unknown error occurred. Please try again."
   },
-  "error_duplicate_animal_category_and_breed_toast": {
-    "title": "Duplicate data",
-    "description": "Category and breed are already registered"
-  },
   "error_duplicate_email_toast": {
     "title": "Duplicate data",
     "description": "Email is already registered"
@@ -213,6 +209,10 @@ const translations = {
   "error_network_toast": {
     "title": "Server connection problem",
     "description": "Unable to connect to the server. Try again later."
+  },
+  "error_srs_required_toast": {
+    "title": "Invalid .zip file",
+    "description": "The .zip file does not contain .prj. Please include the .prj file to continue."
   },
   "expense": "Expense",
   "expense_category": "Expense category",

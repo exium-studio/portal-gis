@@ -186,10 +186,6 @@ const translations = {
     "title": "Terjadi kesalahan",
     "description": "Terjadi kesalahan yang tidak diketahui. Silakan coba lagi."
   },
-  "error_duplicate_animal_category_and_breed_toast": {
-    "title": "Data duplikat",
-    "description": "Kategori dan ras sudah terdaftar"
-  },
   "error_duplicate_email_toast": {
     "title": "Data duplikat",
     "description": "Email sudah terdaftar"
@@ -213,6 +209,10 @@ const translations = {
   "error_network_toast": {
     "title": "Gangguan koneksi ke server",
     "description": "Tidak dapat terhubung ke server. Coba lagi nanti."
+  },
+  "error_srs_required_toast": {
+    "title": "File .zip tidak valid",
+    "description": "File .zip tidak memuat .prj. Sertakan file .prj untuk melanjutkan."
   },
   "expense": "Pengeluaran",
   "expense_category": "Kategori pengeluaran",
