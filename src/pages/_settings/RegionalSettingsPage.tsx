@@ -136,7 +136,7 @@ const TimeZone = () => {
         key={key}
         style={{
           ...style,
-          paddingLeft: itemIndex % 2 === 0 || iss ? "8px" : "",
+          paddingLeft: itemIndex % 2 === 0 || iss || halfPanel ? "8px" : "",
           paddingRight: itemIndex % 2 === 0 && !iss ? "" : "8px",
         }}
       >
