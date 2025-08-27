@@ -2,8 +2,8 @@ import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
 import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
 import P from "@/components/ui-custom/P";
+import SearchInput from "@/components/ui-custom/SearchInput";
 import SelectInput from "@/components/ui-custom/SelectInput";
-import StringInput from "@/components/ui-custom/StringInput";
 import TableComponent from "@/components/ui-custom/TableComponent";
 import { Field } from "@/components/ui/field";
 import { Tooltip } from "@/components/ui/tooltip";
@@ -93,7 +93,6 @@ const ViewField = (props: any) => {
     </Tooltip>
   );
 };
-
 const DataTable = (props: any) => {
   // Props
   const { filteredFields, ...restProps } = props;
@@ -321,7 +320,7 @@ const FieldDataPage = () => {
           >
             <SimpleGrid gap={4} columns={halfPanel ? 1 : [1, null, null, 3]}>
               <Field label={"No hak"}>
-                <StringInput
+                <SearchInput
                   placeholder="0200*********"
                   onChangeSetter={(input) => {
                     setFilterConfig({
@@ -369,7 +368,7 @@ const FieldDataPage = () => {
             </SimpleGrid>
           </CContainer>
 
-          <CContainer gap={2}>
+          <CContainer gap={2} flex={1}>
             <HStack justify={"space-between"} gap={4} wrap={"wrap"} px={2}>
               <P fontWeight={"medium"} color={"fg.subtle"}>
                 {l.result}
@@ -380,8 +379,14 @@ const FieldDataPage = () => {
               </P>
             </HStack>
 
-            <CContainer borderRadius={themeConfig.radii.container} bg={"body"}>
-              {empty(filteredFields) && <FeedbackNoData />}
+            <CContainer
+              borderRadius={themeConfig.radii.container}
+              bg={"body"}
+              flex={empty(filteredFields) ? 1 : 0}
+            >
+              {empty(filteredFields) && (
+                <FeedbackNoData description={l.no_data_feedback.description2} />
+              )}
 
               {!empty(filteredFields) && (
                 <DataTable filteredFields={filteredFields} />

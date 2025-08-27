@@ -1244,6 +1244,10 @@ export const no_data_feedback = {
     id: "Belum ada data yang tersedia.",
     en: "No data available.",
   },
+  description2: {
+    id: "Sesuaikan pencarian/filter.",
+    en: "Adjust search/filter.",
+  },
 };
 export const not_found_feedback = {
   title: {

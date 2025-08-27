@@ -25,14 +25,14 @@ export const NAVS = [
     },
   },
   {
-    labelKey: "navs.dashboard",
-    path: "/dashboard",
-    icon: IconChartPie,
-  },
-  {
     labelKey: "navs.field_data",
     path: "/field-data",
     icon: IconMapPinSearch,
+  },
+  {
+    labelKey: "navs.dashboard",
+    path: "/dashboard",
+    icon: IconChartPie,
   },
   {
     labelKey: "navs.master_data",
