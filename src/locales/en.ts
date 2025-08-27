@@ -225,7 +225,7 @@ const translations = {
   "field_info": "Field info",
   "file_dropzone_label": "Drag and drop/click to upload files",
   "firefox_permissions_settings_link": "Preferences → Privacy & Security → Permissions → ",
-  "fit_bounds": "View area",
+  "fit_bounds": "View area (fit bounds)",
   "for_gender": "For gender",
   "forbidden_feedback": {
     "title": "No Access",
@@ -251,6 +251,9 @@ const translations = {
   "information": "Information",
   "infrastructure": "Infrastructure",
   "input_otp": "Enter OTP code",
+  "interface_field_data": {
+    "no_hak": "No. Hak"
+  },
   "inventory": "Inventory",
   "kk": "Family Card (KK)",
   "kk_poor": "Family Card (KK) poor",

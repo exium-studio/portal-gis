@@ -722,6 +722,7 @@ const TableComponent = ({
     <CContainer
       borderColor={"border.muted"}
       minH={props?.minH || sh < 625 ? "400px" : "fit"}
+      maxH={props?.maxH}
       overflowY={"auto"}
       flex={1}
     >

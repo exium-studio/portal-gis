@@ -3,7 +3,7 @@
   "short_name": "PG",
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#0D47A1",
+  "theme_color": "#000",
   "background_color": "#FFFFFF",
   "icons": [
     {

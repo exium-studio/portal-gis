@@ -225,7 +225,7 @@ const translations = {
   "field_info": "Info bidang",
   "file_dropzone_label": "Drag and drop/klik untuk unggah berkas",
   "firefox_permissions_settings_link": "Preferensi → Privasi & Keamanan → Izin → ",
-  "fit_bounds": "Lihat area",
+  "fit_bounds": "Lihat area (fit bounds)",
   "for_gender": "Untuk gender",
   "forbidden_feedback": {
     "title": "Tidak ada akses",
@@ -251,6 +251,9 @@ const translations = {
   "information": "Informasi",
   "infrastructure": "Infrastruktur",
   "input_otp": "Masukkan kode OTP",
+  "interface_field_data": {
+    "no_hak": "No. Hak"
+  },
   "inventory": "Inventori",
   "kk": "Kartu Keluarga (KK)",
   "kk_poor": "Kartu Keluarga (KK) miskin",

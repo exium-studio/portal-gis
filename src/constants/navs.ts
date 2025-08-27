@@ -5,9 +5,9 @@ import {
   IconFolderOpen,
   IconFolders,
   IconLanguage,
+  IconMapPinSearch,
   IconServerCog,
   IconShieldHalf,
-  IconTable,
 } from "@tabler/icons-react";
 
 export const NAVS = [
@@ -32,7 +32,7 @@ export const NAVS = [
   {
     labelKey: "navs.field_data",
     path: "/field-data",
-    icon: IconTable,
+    icon: IconMapPinSearch,
   },
   {
     labelKey: "navs.master_data",

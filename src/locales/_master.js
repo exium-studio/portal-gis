@@ -468,8 +468,8 @@ export const view_layer = {
   en: "View layer area",
 };
 export const fit_bounds = {
-  id: "Lihat area",
-  en: "View area",
+  id: "Lihat area (fit bounds)",
+  en: "View area (fit bounds)",
 };
 export const field_info = {
   id: "Info bidang",

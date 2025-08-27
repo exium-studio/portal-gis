@@ -392,7 +392,7 @@ const NavContainer = ({
                 flexShrink={0}
                 position={"sticky"}
                 top={0}
-                zIndex={2}
+                zIndex={4}
                 bg={iss ? "body" : "bgContent"}
                 borderBottom={iss ? "1px solid {colors.border.subtle}" : ""}
               >

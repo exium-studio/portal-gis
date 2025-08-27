@@ -1,3 +1,4 @@
+import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
 import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
 import P from "@/components/ui-custom/P";
@@ -5,18 +6,23 @@ import SelectInput from "@/components/ui-custom/SelectInput";
 import StringInput from "@/components/ui-custom/StringInput";
 import TableComponent from "@/components/ui-custom/TableComponent";
 import { Field } from "@/components/ui/field";
+import { Tooltip } from "@/components/ui/tooltip";
 import PageContainer from "@/components/widget/PageContainer";
+import { MAP_TRANSITION_DURATION } from "@/constants/duration";
 import {
   Interface__ActiveLayer,
   Interface__SelectOption,
 } from "@/constants/interfaces";
+import { FIT_BOUNDS_PADDING } from "@/constants/sizes";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
+import useMapViewState from "@/context/useMapViewState";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import empty from "@/utils/empty";
-import { HStack, SimpleGrid } from "@chakra-ui/react";
-import { IconFoldersOff } from "@tabler/icons-react";
+import { computeBboxAndCenter } from "@/utils/geospatial";
+import { HStack, Icon, SimpleGrid } from "@chakra-ui/react";
+import { IconFoldersOff, IconZoomInArea } from "@tabler/icons-react";
 import { useMemo, useState } from "react";
 
 const DEFAULT_FILTER_CONFIG = {
@@ -26,6 +32,67 @@ const DEFAULT_FILTER_CONFIG = {
 };
 const PROVINCE_KEYS = ["province", "provinsi", "propinsi"];
 const KABUPATEN_KEYS = ["kabupaten", "kab"];
+
+const ViewField = (props: any) => {
+  // Props
+  const { field, ...restProps } = props;
+
+  // Hooks
+  const { l } = useLang();
+
+  // Contexts
+  const mapRef = useMapViewState((s) => s.mapRef);
+
+  // States
+  const formattedFeatureCollection = [
+    {
+      type: "FeatureCollection",
+      features: [
+        {
+          type: "Feature",
+          geometry: field.geometry,
+        },
+      ],
+    },
+  ];
+  const fieldBBoxAndCenter = computeBboxAndCenter(
+    formattedFeatureCollection as any
+  );
+
+  // Utils
+  function onViewLayers() {
+    if (mapRef.current && fieldBBoxAndCenter?.bbox) {
+      const [minLng, minLat, maxLng, maxLat] = fieldBBoxAndCenter?.bbox;
+      mapRef.current.fitBounds(
+        [
+          [minLng, minLat],
+          [maxLng, maxLat],
+        ],
+        {
+          padding: FIT_BOUNDS_PADDING,
+          duration: MAP_TRANSITION_DURATION,
+          essential: true,
+        }
+      );
+    }
+  }
+
+  return (
+    <Tooltip content={l.fit_bounds}>
+      <BButton
+        unclicky
+        iconButton
+        variant={"ghost"}
+        onClick={onViewLayers}
+        {...restProps}
+      >
+        <Icon boxSize={5}>
+          <IconZoomInArea stroke={1.5} />
+        </Icon>
+      </BButton>
+    </Tooltip>
+  );
+};
 
 const DataTable = (props: any) => {
   // Props
@@ -50,6 +117,15 @@ const DataTable = (props: any) => {
       th: "NIB",
       sortable: true,
     },
+    {
+      th: "",
+      wrapperProps: {
+        justify: "center",
+      },
+      tableColumnHeaderProps: {
+        w: "32px",
+      },
+    },
   ];
   const tds = filteredFields.map((field: any, i: number) => {
     const propsNormalized = normalizeKeys(field.properties);
@@ -66,11 +142,30 @@ const DataTable = (props: any) => {
           value: propsNormalized.nib,
           td: propsNormalized.nib || "-",
         },
+        {
+          value: "",
+          td: <ViewField field={field} />,
+          wrapperProps: {
+            justify: "center",
+            w: "48px",
+          },
+          tableCellProps: {
+            w: "32px",
+          },
+        },
       ],
     };
   });
 
-  return <TableComponent ths={ths} tds={tds} {...restProps} />;
+  return (
+    <TableComponent
+      ths={ths}
+      tds={tds}
+      minH={""}
+      maxH={"400px"}
+      {...restProps}
+    />
+  );
 };
 
 const FieldDataPage = () => {
@@ -207,10 +302,6 @@ const FieldDataPage = () => {
     return results;
   }, [allFields, filterConfig]);
 
-  // console.log(allFields);
-  // console.log(filterConfig);
-  // console.log(filteredFields);
-
   return (
     <PageContainer pb={4} flex={1}>
       {empty(activeWorkspacesByCategory) && (
@@ -279,7 +370,7 @@ const FieldDataPage = () => {
           </CContainer>
 
           <CContainer gap={2}>
-            <HStack justify={"space-between"} gap={4} wrap={"wrap"}>
+            <HStack justify={"space-between"} gap={4} wrap={"wrap"} px={2}>
               <P fontWeight={"medium"} color={"fg.subtle"}>
                 {l.result}
               </P>
@@ -289,12 +380,7 @@ const FieldDataPage = () => {
               </P>
             </HStack>
 
-            <CContainer
-              borderRadius={themeConfig.radii.container}
-              bg={"body"}
-              maxH={"500px"}
-              className="scrollY"
-            >
+            <CContainer borderRadius={themeConfig.radii.container} bg={"body"}>
               {empty(filteredFields) && <FeedbackNoData />}
 
               {!empty(filteredFields) && (
