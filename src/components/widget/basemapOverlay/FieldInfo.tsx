@@ -62,7 +62,8 @@ export const FieldInfo = () => {
   // Handle open
   useEffect(() => {
     if (selectedPolygon) {
-      onOpen();
+      // TODO open ketika user klik detail pada popover bidang
+      // onOpen();
       setProperties(selectedPolygon?.polygon?.properties);
     } else {
       onClose();

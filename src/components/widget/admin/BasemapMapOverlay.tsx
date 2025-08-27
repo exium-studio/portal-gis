@@ -27,6 +27,7 @@ const AdminMapOverlay = () => {
       top={0}
     >
       <FieldInfo />
+
       {iss && <LegendContent containerProps={{ top: "66px" }} />}
 
       <CContainer flex={1} justify={"space-between"}>
