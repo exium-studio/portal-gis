@@ -18,7 +18,6 @@ export default function PolygonPopover() {
       padding: 8px !important;
       border-radius: 6px !important;
       background: ${colorMode === "dark" ? "#151515" : "#ffffff"} !important;
-      color: ${colorMode === "dark" ? "#f8fafc" : "#0f172a"} !important;
     }
     .mapboxgl-popup-tip {
       border-top-color: ${
@@ -26,6 +25,8 @@ export default function PolygonPopover() {
       } !important;
     }
   `;
+
+  console.log("selectedPolygon", selectedPolygon);
 
   return (
     <>

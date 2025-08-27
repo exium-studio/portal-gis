@@ -160,8 +160,9 @@ const DataTable = (props: any) => {
     <TableComponent
       ths={ths}
       tds={tds}
-      minH={""}
-      maxH={"400px"}
+      minH={"360px"}
+      // maxH={"400px"}
+      flex={1}
       {...restProps}
     />
   );
@@ -302,7 +303,7 @@ const FieldDataPage = () => {
   }, [allFields, filterConfig]);
 
   return (
-    <PageContainer pb={4} flex={1}>
+    <PageContainer pb={4} flex={1} className="scrollY" overflowY={"auto"}>
       {empty(activeWorkspacesByCategory) && (
         <FeedbackNoData
           icon={<IconFoldersOff />}
@@ -312,7 +313,7 @@ const FieldDataPage = () => {
       )}
 
       {!empty(activeWorkspacesByCategory) && (
-        <CContainer gap={4} flex={1}>
+        <CContainer gap={4} flex={1} className="scrollY" overflowY={"auto"}>
           <CContainer
             p={3}
             borderRadius={themeConfig.radii.container}
@@ -368,7 +369,7 @@ const FieldDataPage = () => {
             </SimpleGrid>
           </CContainer>
 
-          <CContainer gap={2} flex={1}>
+          <CContainer gap={2} flex={1} className="scrollY" overflowY={"auto"}>
             <HStack justify={"space-between"} gap={4} wrap={"wrap"} px={2}>
               <P fontWeight={"medium"} color={"fg.subtle"}>
                 {l.result}
@@ -382,7 +383,9 @@ const FieldDataPage = () => {
             <CContainer
               borderRadius={themeConfig.radii.container}
               bg={"body"}
-              flex={empty(filteredFields) ? 1 : 0}
+              flex={1}
+              className="scrollY"
+              overflowY={"auto"}
             >
               {empty(filteredFields) && (
                 <FeedbackNoData description={l.no_data_feedback.description2} />
