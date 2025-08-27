@@ -1,85 +1,63 @@
+import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
+import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import P from "@/components/ui-custom/P";
-import { useColorMode } from "@/components/ui/color-mode";
 import useLang from "@/context/useLang";
+import useMapViewState from "@/context/useMapViewState";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import { normalizeKeys } from "@/utils/normalizeKeys";
-import { HStack, Icon } from "@chakra-ui/react";
+import { Box, HStack, Icon } from "@chakra-ui/react";
 import { IconInfoCircle } from "@tabler/icons-react";
-import { Popup } from "react-map-gl/mapbox";
+import { useEffect, useState } from "react";
 import PropertyValue from "../PropertyValue";
 import FloatingContainerCloseButton from "./FloatingContainerCloseButton";
-import ItemContainer from "@/components/ui-custom/ItemContainer";
-import BButton from "@/components/ui-custom/BButton";
 
 const KEYS = [
-  {
-    label: "Hak",
-    value: "hak",
-  },
-  {
-    label: "NIB",
-    value: "nib",
-  },
-  {
-    label: "Luas tertulis",
-    value: "luastertul",
-  },
-  {
-    label: "Luas peta",
-    value: "liaspeta",
-  },
-  {
-    label: "Pemilik",
-    value: "pemilik",
-  },
-  {
-    label: "Tanggal terbit",
-    value: "tglterbith",
-  },
-  {
-    label: "Tanggal berakhir",
-    value: "berakhirha",
-  },
-  {
-    label: "SK",
-    value: "sk",
-  },
+  { label: "Hak", value: "hak" },
+  { label: "NIB", value: "nib" },
+  { label: "Luas tertulis", value: "luastertul" },
+  { label: "Luas peta", value: "liaspeta" },
+  { label: "Pemilik", value: "pemilik" },
+  { label: "Tanggal terbit", value: "tglterbith" },
+  { label: "Tanggal berakhir", value: "berakhirha" },
+  { label: "SK", value: "sk" },
 ];
 
 export default function PolygonPopover() {
-  // Contexts
   const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
   const clearSelectedPolygon = useSelectedPolygon(
     (s) => s.clearSelectedPolygon
   );
   const { l } = useLang();
   const { themeConfig } = useThemeConfig();
-  const { colorMode } = useColorMode();
+  const { mapRef } = useMapViewState();
 
-  // States
   const { lat, lon } = selectedPolygon?.clickedLngLat ?? {};
   const properties = normalizeKeys(selectedPolygon?.polygon?.properties as any);
-  const popupStyle = `
-    .mapboxgl-popup-content {
-      padding: 0px !important;
-      border-radius: 6px !important;
-      background: ${colorMode === "dark" ? "#151515" : "#ffffff"} !important;
-    }
-    .mapboxgl-popup-tip {
-      border-top-color: ${
-        colorMode === "dark" ? "#151515" : "#ffffff"
-      } !important;
-    }
-  `;
 
-  // Components
+  const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
+
+  useEffect(() => {
+    if (!mapRef?.current || !lat || !lon) return;
+
+    const mapbox = mapRef.current.getMap(); // mapRef.current itu MapRef
+    function update() {
+      const { x, y } = mapbox.project([lon, lat]);
+      setPos({ x, y });
+    }
+
+    update();
+    mapbox.on("move", update);
+    return () => {
+      mapbox.off("move", update);
+    };
+  }, [mapRef, lat, lon]);
+
   const ListItemContainer = (props: any) => {
     const { children, last } = props;
-
     return (
       <CContainer
         borderBottom={last ? "" : "1px solid"}
@@ -93,78 +71,74 @@ export default function PolygonPopover() {
     );
   };
 
+  if (!selectedPolygon || !pos) return null;
+
   return (
-    <>
-      <style>{popupStyle}</style>
+    <CContainer
+      w={"fit"}
+      pos={"relative"}
+      left={pos.x}
+      top={pos.y}
+      transform={"translate(-50%, -100%)"}
+      pointerEvents={"auto"}
+    >
+      <Box
+        w={"20px"}
+        h={"20px"}
+        transform={"rotate(45deg) translateX(-50%)"}
+        left={"50%"}
+        bg={"body"}
+        pos={"absolute"}
+        bottom={"-15px"}
+      />
+      <ItemContainer
+        bg={"body"}
+        borderRadius={themeConfig.radii.container}
+        w={"250px"}
+      >
+        <ItemHeaderContainer p={2} py={1}>
+          <HStack>
+            <Icon>
+              <IconInfoCircle stroke={1.5} size={20} />
+            </Icon>
+            <P fontWeight={"bold"} lineClamp={1}>
+              {capsFirstLetterEachWord(l.field_info)}
+            </P>
+          </HStack>
 
-      {selectedPolygon && lat && lon && (
-        <Popup
-          longitude={lon}
-          latitude={lat}
-          anchor="bottom"
-          closeButton={false}
-          closeOnClick={false}
+          <HStack gap={1} ml={"auto"}>
+            <FloatingContainerCloseButton
+              size={["xs", null, "sm"]}
+              onClick={() => clearSelectedPolygon()}
+            />
+          </HStack>
+        </ItemHeaderContainer>
+
+        <CContainer className="scrollY" pl={"6px"}>
+          {KEYS.map((key, i) => (
+            <ListItemContainer key={key.value} last={i === KEYS.length - 1}>
+              <P fontWeight={"medium"} color={"fg.subtle"}>
+                {key.label}
+              </P>
+              <PropertyValue>{properties?.[key.value] || "-"}</PropertyValue>
+            </ListItemContainer>
+          ))}
+        </CContainer>
+
+        <HStack
+          justify={"end"}
+          p={2}
+          borderTop={"1px solid"}
+          borderColor={"border.muted"}
         >
-          <ItemContainer
-            bg={"body"}
-            borderRadius={themeConfig.radii.container}
-            minW={"250px"}
+          <BButton
+            colorPalette={themeConfig.colorPalette}
+            size={["md", null, "sm"]}
           >
-            <ItemHeaderContainer p={2} py={1}>
-              <HStack>
-                <Icon>
-                  <IconInfoCircle stroke={1.5} size={20} />
-                </Icon>
-
-                <P fontWeight={"bold"} lineClamp={1}>
-                  {capsFirstLetterEachWord(l.field_info)}
-                </P>
-              </HStack>
-
-              <HStack gap={1} ml={"auto"}>
-                <FloatingContainerCloseButton
-                  size={["xs", null, "sm"]}
-                  onClick={() => {
-                    clearSelectedPolygon();
-                  }}
-                />
-              </HStack>
-            </ItemHeaderContainer>
-
-            <CContainer className="scrollY" pl={"6px"}>
-              {KEYS.map((key, i) => {
-                return (
-                  <ListItemContainer
-                    key={key.value}
-                    last={i === KEYS.length - 1}
-                  >
-                    <P fontWeight={"medium"} color={"fg.subtle"}>
-                      {`${key.label}`}
-                    </P>
-                    <PropertyValue>{`${
-                      properties?.[key.value] || "-"
-                    }`}</PropertyValue>
-                  </ListItemContainer>
-                );
-              })}
-            </CContainer>
-
-            <HStack
-              justify={"end"}
-              p={2}
-              borderTop={"1px solid"}
-              borderColor={"border.muted"}
-            >
-              <BButton
-                colorPalette={themeConfig.colorPalette}
-                size={["md", null, "sm"]}
-              >
-                Detail
-              </BButton>
-            </HStack>
-          </ItemContainer>
-        </Popup>
-      )}
-    </>
+            Detail
+          </BButton>
+        </HStack>
+      </ItemContainer>
+    </CContainer>
   );
 }

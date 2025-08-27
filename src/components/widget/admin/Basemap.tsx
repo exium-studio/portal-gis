@@ -182,11 +182,12 @@ const BaseMap = () => {
     <Map
       key={mapKey}
       ref={mapRef}
+      initialViewState={mapViewState}
+      // {...mapViewState}
       minZoom={MIN_ZOOM}
       maxZoom={MAX_ZOOM}
       projection="globe"
       doubleClickZoom={false}
-      {...mapViewState}
       onLoad={() => setMapLoad(true)}
       onRemove={() => setMapLoad(false)}
       onMove={(evt) => {
