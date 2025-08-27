@@ -289,7 +289,12 @@ const FieldDataPage = () => {
               </P>
             </HStack>
 
-            <CContainer borderRadius={themeConfig.radii.container} bg={"body"}>
+            <CContainer
+              borderRadius={themeConfig.radii.container}
+              bg={"body"}
+              maxH={"500px"}
+              className="scrollY"
+            >
               {empty(filteredFields) && <FeedbackNoData />}
 
               {!empty(filteredFields) && (
