@@ -2,17 +2,14 @@ import { createSystem, defineConfig, defaultConfig } from "@chakra-ui/react";
 import { SM_SCREEN_W_NUMBER } from "./constants/sizes";
 
 const customConfig = defineConfig({
+  conditions: {
+    hover: "&:is(:hover, [data-hover]):not(:disabled, [data-disabled])",
+  },
   globalCss: {
     "html, body": {
       bg: "body",
     },
-    // "p, h1, h2, h3, h4, h5, h6, a, label, th, td": {
-    //   color: "text",
-    // },
   },
-  // conditions: {
-  //   hover: "&:is(:hover, [data-hover]):not(:disabled, [data-disabled])",
-  // },
   theme: {
     breakpoints: {
       sm: "320px",

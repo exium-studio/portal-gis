@@ -68,24 +68,32 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
   const handleOnClickPolygon = useCallback(
     (event: any) => {
       if (!activeLayer.visible) return;
+
       const clickedFeature = event.features?.[0];
       if (!clickedFeature) {
         clearSelectedPolygon();
         return;
       }
+
       const clickedId = clickedFeature.properties?.id;
       const selectedId = selectedPolygon?.polygon?.properties?.id;
+
       if (selectedId === clickedId) {
         clearSelectedPolygon();
       } else {
         const clickedPolygon = geojson?.features?.find(
           (f) => f.properties?.id === clickedId
         );
+
         setSelectedPolygon({
           polygon: clickedPolygon,
           activeLayer,
           activeWorkspace,
           fillColor: themeConfig.primaryColorHex,
+          clickedLngLat: {
+            lat: event.lngLat.lat,
+            lon: event.lngLat.lng,
+          },
         });
       }
     },

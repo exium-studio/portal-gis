@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { Dispatch, SetStateAction } from "react";
 import {
+  LatLong,
   Type__DateRange,
   Type__DateRangePresets,
   Type__DisclosureSizes,
@@ -62,6 +63,7 @@ export interface Type_SelectedPolygon {
   activeLayer: Interface__ActiveLayer;
   polygon: GeoJSON.Feature<GeoJSON.Polygon>;
   fillColor: string;
+  clickedLngLat: LatLong;
 }
 export interface Interface__WorkspaceCategory extends Interface__CUD {
   id: number;

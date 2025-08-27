@@ -21,6 +21,7 @@ import useMapViewState from "@/context/useMapViewState";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import empty from "@/utils/empty";
 import { computeBboxAndCenter } from "@/utils/geospatial";
+import { normalizeKeys } from "@/utils/normalizeKeys";
 import { HStack, Icon, SimpleGrid } from "@chakra-ui/react";
 import { IconFoldersOff, IconZoomInArea } from "@tabler/icons-react";
 import { useMemo, useState } from "react";
@@ -98,15 +99,6 @@ const DataTable = (props: any) => {
   const { filteredFields, ...restProps } = props;
 
   // States
-  const normalizeKeys = <T extends object>(obj: T): Record<string, any> => {
-    const out: Record<string, any> = {};
-    for (const k in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, k)) {
-        out[k.toLowerCase()] = (obj as any)[k];
-      }
-    }
-    return out;
-  };
   const ths = [
     {
       th: "No. Hak",

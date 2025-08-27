@@ -24,7 +24,7 @@ const EXCLUDED_KEYS = [
   "color",
 ];
 
-export const FieldInfo = () => {
+const FieldInfoDetail = () => {
   // Hooks
   const { l } = useLang();
   const { open, onOpen, onClose } = useDisclosure();
@@ -63,7 +63,7 @@ export const FieldInfo = () => {
   useEffect(() => {
     if (selectedPolygon) {
       // TODO open ketika user klik detail pada popover bidang
-      // onOpen();
+      onOpen();
       setProperties(selectedPolygon?.polygon?.properties);
     } else {
       onClose();
@@ -84,7 +84,7 @@ export const FieldInfo = () => {
       <CContainer
         borderBottom={last ? "" : "1px solid"}
         borderColor={"border.muted"}
-        px={3}
+        px={2}
         pt={2}
         pb={last ? 0 : 2}
       >
@@ -123,7 +123,7 @@ export const FieldInfo = () => {
             </P>
           </HStack>
 
-          <HStack gap={1} ml={"auto"} mr={-1}>
+          <HStack gap={1} ml={"auto"} mr={"-2px"}>
             <EditField
               properties={properties}
               setProperties={setProperties}
@@ -136,12 +136,13 @@ export const FieldInfo = () => {
                 clearSelectedPolygon();
                 onClose();
               }}
+              size={["xs", null, "sm"]}
             />
           </HStack>
         </HStack>
       </MenuHeaderContainer>
 
-      <CContainer px={1} className="scrollY">
+      <CContainer pl={"6px"} className="scrollY">
         {properties &&
           Object?.keys(finalData)?.map((key, i) => {
             const last =
@@ -160,3 +161,5 @@ export const FieldInfo = () => {
     </FloatingContainer>
   );
 };
+
+export default FieldInfoDetail;
