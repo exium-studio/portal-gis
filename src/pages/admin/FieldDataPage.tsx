@@ -1,0 +1,306 @@
+import CContainer from "@/components/ui-custom/CContainer";
+import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
+import P from "@/components/ui-custom/P";
+import SelectInput from "@/components/ui-custom/SelectInput";
+import StringInput from "@/components/ui-custom/StringInput";
+import TableComponent from "@/components/ui-custom/TableComponent";
+import { Field } from "@/components/ui/field";
+import PageContainer from "@/components/widget/PageContainer";
+import {
+  Interface__ActiveLayer,
+  Interface__SelectOption,
+} from "@/constants/interfaces";
+import useActiveWorkspaces from "@/context/useActiveWorkspaces";
+import useLang from "@/context/useLang";
+import useLayout from "@/context/useLayout";
+import { useThemeConfig } from "@/context/useThemeConfig";
+import empty from "@/utils/empty";
+import { HStack, SimpleGrid } from "@chakra-ui/react";
+import { IconFoldersOff } from "@tabler/icons-react";
+import { useMemo, useState } from "react";
+
+const DEFAULT_FILTER_CONFIG = {
+  no_hak: "",
+  province: [],
+  kabupaten: [],
+};
+const PROVINCE_KEYS = ["province", "provinsi", "propinsi"];
+const KABUPATEN_KEYS = ["kabupaten", "kab"];
+
+const DataTable = (props: any) => {
+  // Props
+  const { filteredFields, ...restProps } = props;
+
+  // States
+  const normalizeKeys = <T extends object>(obj: T): Record<string, any> => {
+    const out: Record<string, any> = {};
+    for (const k in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, k)) {
+        out[k.toLowerCase()] = (obj as any)[k];
+      }
+    }
+    return out;
+  };
+  const ths = [
+    {
+      th: "No. Hak",
+      sortable: true,
+    },
+    {
+      th: "NIB",
+      sortable: true,
+    },
+  ];
+  const tds = filteredFields.map((field: any, i: number) => {
+    const propsNormalized = normalizeKeys(field.properties);
+
+    return {
+      originalData: field,
+      index: i,
+      columnsFormat: [
+        {
+          value: propsNormalized.hak,
+          td: propsNormalized.hak || "-",
+        },
+        {
+          value: propsNormalized.nib,
+          td: propsNormalized.nib || "-",
+        },
+      ],
+    };
+  });
+
+  return <TableComponent ths={ths} tds={tds} {...restProps} />;
+};
+
+const FieldDataPage = () => {
+  // Hooks
+  const { l } = useLang();
+
+  // Contexts
+  const { themeConfig } = useThemeConfig();
+  const halfPanel = useLayout((s) => s.halfPanel);
+  const activeWorkspacesByCategory = useActiveWorkspaces(
+    (s) => s.activeWorkspaces
+  );
+
+  // States
+  const [filterConfig, setFilterConfig] = useState<any>(DEFAULT_FILTER_CONFIG);
+  const { allFields, allProvinces, allKabupatens } = useMemo(() => {
+    if (!activeWorkspacesByCategory) {
+      return { allFields: [], allProvinces: [], allKabupatens: [] };
+    }
+
+    const layers: Interface__ActiveLayer[] = [];
+    const provinces = new Set<string>();
+    const kabupatens = new Set<string>();
+
+    for (const category of activeWorkspacesByCategory) {
+      for (const workspace of category.workspaces) {
+        for (const layer of workspace.layers ?? []) {
+          layers.push(layer);
+
+          for (const feature of layer.data?.geojson.features ?? []) {
+            const props = feature.properties ?? {};
+
+            // normalize props keys → lowercase
+            const normalized: Record<string, unknown> = {};
+            for (const key in props) {
+              normalized[key.toLowerCase()] = props[key];
+            }
+
+            // province coverage
+            for (const key of PROVINCE_KEYS) {
+              const val = normalized[key] as string | undefined;
+              if (val) {
+                provinces.add(val);
+                break;
+              }
+            }
+
+            // kabupaten coverage
+            for (const key of KABUPATEN_KEYS) {
+              const val = normalized[key] as string | undefined;
+              if (val) {
+                kabupatens.add(val);
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return {
+      allFields: layers,
+      allProvinces: Array.from(provinces).sort(),
+      allKabupatens: Array.from(kabupatens).sort(),
+    };
+  }, [activeWorkspacesByCategory]);
+
+  const filteredFields = useMemo<Interface__SelectOption[]>(() => {
+    if (!allFields) return [];
+
+    const provinceFilterIds = (filterConfig.province ?? []).map(
+      (p: Interface__SelectOption) => p.id
+    );
+    const kabupatenFilterIds = (filterConfig.kabupaten ?? []).map(
+      (k: Interface__SelectOption) => k.id
+    );
+    const noHakFilter = filterConfig.no_hak ?? "";
+
+    const isEmptyFilter =
+      provinceFilterIds.length === 0 &&
+      kabupatenFilterIds.length === 0 &&
+      !noHakFilter;
+
+    if (isEmptyFilter) return [];
+
+    const results: any[] = [];
+
+    for (const layer of allFields) {
+      for (const feature of layer.data?.geojson.features ?? []) {
+        const props = feature.properties ?? {};
+
+        // normalize props keys → lowercase
+        const normalized: Record<string, unknown> = {};
+        for (const key in props) {
+          normalized[key.toLowerCase()] = props[key];
+        }
+
+        const id = normalized["id"];
+        if (!id) continue;
+
+        // province filter
+        let provinceOk = true;
+        if (provinceFilterIds.length > 0) {
+          const provinceVal = PROVINCE_KEYS.map((k) => normalized[k]).find(
+            (v) => v !== undefined
+          ) as string | undefined;
+          provinceOk = provinceVal
+            ? provinceFilterIds.includes(provinceVal)
+            : false;
+        }
+
+        // kabupaten filter
+        let kabupatenOk = true;
+        if (kabupatenFilterIds.length > 0) {
+          const kabVal = KABUPATEN_KEYS.map((k) => normalized[k]).find(
+            (v) => v !== undefined
+          ) as string | undefined;
+          kabupatenOk = kabVal ? kabupatenFilterIds.includes(kabVal) : false;
+        }
+
+        // no_hak filter
+        let noHakOk = true;
+        if (noHakFilter) {
+          const noHakVal = normalized["hak"] as string | undefined;
+          noHakOk = noHakVal ? noHakVal.includes(noHakFilter) : false;
+        }
+
+        if (provinceOk && kabupatenOk && noHakOk) {
+          results.push(feature);
+        }
+      }
+    }
+
+    return results;
+  }, [allFields, filterConfig]);
+
+  // console.log(allFields);
+  // console.log(filterConfig);
+  // console.log(filteredFields);
+
+  return (
+    <PageContainer pb={4} flex={1}>
+      {empty(activeWorkspacesByCategory) && (
+        <FeedbackNoData
+          icon={<IconFoldersOff />}
+          title={l.no_active_workspaces.title}
+          description={l.no_active_workspaces.description}
+        />
+      )}
+
+      {!empty(activeWorkspacesByCategory) && (
+        <CContainer gap={4} flex={1}>
+          <CContainer
+            p={3}
+            borderRadius={themeConfig.radii.container}
+            bg={"body"}
+          >
+            <SimpleGrid gap={4} columns={halfPanel ? 1 : [1, null, null, 3]}>
+              <Field label={"No hak"}>
+                <StringInput
+                  placeholder="0200*********"
+                  onChangeSetter={(input) => {
+                    setFilterConfig({
+                      ...filterConfig,
+                      no_hak: input,
+                    });
+                  }}
+                  inputValue={filterConfig.no_hak}
+                />
+              </Field>
+
+              <Field label={l.province}>
+                <SelectInput
+                  multiple
+                  initialOptions={allProvinces?.map((p) => ({
+                    id: p,
+                    label: p,
+                  }))}
+                  onConfirm={(input) => {
+                    setFilterConfig({
+                      ...filterConfig,
+                      province: input,
+                    });
+                  }}
+                  inputValue={filterConfig.province}
+                />
+              </Field>
+
+              <Field label={"Kabupaten"}>
+                <SelectInput
+                  multiple
+                  initialOptions={allKabupatens?.map((k) => ({
+                    id: k,
+                    label: k,
+                  }))}
+                  onConfirm={(input) => {
+                    setFilterConfig({
+                      ...filterConfig,
+                      kabupaten: input,
+                    });
+                  }}
+                  inputValue={filterConfig.kabupaten}
+                />
+              </Field>
+            </SimpleGrid>
+          </CContainer>
+
+          <CContainer gap={2}>
+            <HStack justify={"space-between"} gap={4} wrap={"wrap"}>
+              <P fontWeight={"medium"} color={"fg.subtle"}>
+                {l.result}
+              </P>
+
+              <P fontWeight={"medium"} color={"fg.subtle"}>
+                {`Total: ${filteredFields.length}`}
+              </P>
+            </HStack>
+
+            <CContainer borderRadius={themeConfig.radii.container} bg={"body"}>
+              {empty(filteredFields) && <FeedbackNoData />}
+
+              {!empty(filteredFields) && (
+                <DataTable filteredFields={filteredFields} />
+              )}
+            </CContainer>
+          </CContainer>
+        </CContainer>
+      )}
+    </PageContainer>
+  );
+};
+
+export default FieldDataPage;

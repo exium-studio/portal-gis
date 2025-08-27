@@ -354,6 +354,7 @@ const translations = {
     "workspace": "Workspace",
     "active_workspace": "Active Workspace",
     "dashboard": "Dashboard",
+    "field_data": "Field Data Search",
     "master_data": "Master data",
     "settings": "Settings",
     "profile": "Profile"

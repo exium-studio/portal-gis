@@ -386,7 +386,7 @@ const NavContainer = ({
             >
               <HStack
                 justify={"space-between"}
-                pl={4}
+                pl={3}
                 pr={[0, null, 1]}
                 py={"9px"}
                 flexShrink={0}

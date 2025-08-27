@@ -354,6 +354,7 @@ const translations = {
     "workspace": "Workspace",
     "active_workspace": "Workspace Aktif",
     "dashboard": "Dasbor",
+    "field_data": "Pencarian Data Bidang",
     "master_data": "Master data",
     "settings": "Pengaturan",
     "profile": "Profil"

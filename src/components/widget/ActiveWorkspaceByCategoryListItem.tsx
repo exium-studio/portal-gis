@@ -265,15 +265,18 @@ const ActiveWorkspaceByCategoryListItem = (props: Props) => {
             value={value}
             onValueChange={(e) => setValue(e.value)}
           >
-            {activeWorkspace?.workspaces?.reverse()?.map((workspace, i) => {
-              return (
-                <ActiveWorkspaceListItem
-                  workspace={workspace}
-                  index={i}
-                  workspacesLength={activeWorkspace.workspaces.length}
-                />
-              );
-            })}
+            {activeWorkspace?.workspaces
+              ?.slice()
+              ?.reverse()
+              ?.map((workspace, i) => {
+                return (
+                  <ActiveWorkspaceListItem
+                    workspace={workspace}
+                    index={i}
+                    workspacesLength={activeWorkspace.workspaces.length}
+                  />
+                );
+              })}
           </AccordionRoot>
         </CContainer>
       </AccordionItemContent>

@@ -12,6 +12,10 @@ export const navs = {
     id: "Dasbor",
     en: "Dashboard",
   },
+  field_data: {
+    id: "Pencarian Data Bidang",
+    en: "Field Data Search",
+  },
   master_data: {
     id: "Master data",
     en: "Master data",
@@ -1609,38 +1613,11 @@ export const error_network_toast = {
     en: "Unable to connect to the server. Try again later.",
   },
 };
-export const error_409_toast = {
-  title: {
-    id: "Data duplikat",
-    en: "Duplicate data",
-  },
-  description: {
-    id: "Permintaan tidak dapat diproses karena data sudah ada",
-    en: "Request could not be processed because the data already exists",
-  },
-};
-export const error_500_toast = {
-  title: { id: "Kesalahan server", en: "Server error" },
-  description: {
-    id: "Terjadi kesalahan pada server. Silakan coba beberapa saat lagi.",
-    en: "An error occurred on the server. Please try again later.",
-  },
-};
 export const error_400_toast = {
   title: { id: "Permintaan tidak valid", en: "Bad request" },
   description: {
     id: "Server tidak dapat memproses permintaan karena kesalahan klien.",
     en: "The server could not process the request due to client error.",
-  },
-};
-export const error_422_toast = {
-  title: {
-    id: "Validasi gagal",
-    en: "Validation failed",
-  },
-  description: {
-    id: "Data yang dikirim tidak valid. Silakan periksa kembali formulir Anda.",
-    en: "The submitted data is invalid. Please review your form entries.",
   },
 };
 export const error_401_toast = {
@@ -1657,6 +1634,23 @@ export const error_403_toast = {
     en: "You do not have permission to access this resource.",
   },
 };
+export const error_404_toast = {
+  title: { id: "Tidak ditemukan", en: "Not Found" },
+  description: {
+    id: "Sumber daya yang Anda cari tidak ditemukan.",
+    en: "The resource you are looking for was not found.",
+  },
+};
+export const error_409_toast = {
+  title: {
+    id: "Data duplikat",
+    en: "Duplicate data",
+  },
+  description: {
+    id: "Permintaan tidak dapat diproses karena data sudah ada",
+    en: "Request could not be processed because the data already exists",
+  },
+};
 export const error_413_toast = {
   title: {
     id: "Batas Ukuran Dilampaui",
@@ -1665,6 +1659,16 @@ export const error_413_toast = {
   description: {
     id: "Data yang Anda kirim melebihi batas ukuran yang diizinkan. Silakan coba lagi dengan data yang lebih kecil atau bagi menjadi beberapa bagian.",
     en: "The data you're sending exceeds the allowed size limit. Please try again with smaller data or split it into multiple parts.",
+  },
+};
+export const error_422_toast = {
+  title: {
+    id: "Validasi gagal",
+    en: "Validation failed",
+  },
+  description: {
+    id: "Data yang dikirim tidak valid. Silakan periksa kembali formulir Anda.",
+    en: "The submitted data is invalid. Please review your form entries.",
   },
 };
 export const error_429_toast = {
@@ -1677,11 +1681,11 @@ export const error_429_toast = {
     en: "You have made too many requests. Please try again later.",
   },
 };
-export const error_404_toast = {
-  title: { id: "Tidak ditemukan", en: "Not Found" },
+export const error_500_toast = {
+  title: { id: "Kesalahan server", en: "Server error" },
   description: {
-    id: "Sumber daya yang Anda cari tidak ditemukan.",
-    en: "The resource you are looking for was not found.",
+    id: "Terjadi kesalahan pada server. Silakan coba beberapa saat lagi.",
+    en: "An error occurred on the server. Please try again later.",
   },
 };
 export const signin_loading_toast = {
@@ -1874,4 +1878,12 @@ export const min_char = {
 export const max_char = {
   id: "Maksimal ${maxChar} karakter",
   en: "Maksimal ${maxChar} characters",
+};
+
+// Interface
+export const interface_field_data = {
+  no_hak: {
+    id: "No. Hak",
+    en: "No. Hak",
+  },
 };

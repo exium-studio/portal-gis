@@ -242,32 +242,35 @@ const ActiveWorkspaceListItem = (props: Props) => {
 
       <AccordionItemContent p={0}>
         <CContainer borderColor={"border.muted"}>
-          {[...workspace?.layers]?.reverse()?.map((layer, i) => {
-            const last = i === workspace?.layers?.length - 1;
+          {workspace?.layers
+            ?.slice()
+            ?.reverse()
+            ?.map((layer, i) => {
+              const last = i === workspace?.layers?.length - 1;
 
-            return (
-              <HStack w={"full"} gap={0}>
-                <HStack w={"28px"} h={"40px"} flexShrink={0} gap={0} pl={4}>
-                  <Box
-                    w={"1px"}
-                    h={last ? "50%" : "full"}
-                    borderLeft={"1px solid"}
-                    borderColor={"border.emphasized"}
-                    mb={"auto"}
+              return (
+                <HStack w={"full"} gap={0}>
+                  <HStack w={"28px"} h={"40px"} flexShrink={0} gap={0} pl={4}>
+                    <Box
+                      w={"1px"}
+                      h={last ? "50%" : "full"}
+                      borderLeft={"1px solid"}
+                      borderColor={"border.emphasized"}
+                      mb={"auto"}
+                    />
+
+                    <Box w={"8px"} h={"1px"} bg={"border.emphasized"} />
+                  </HStack>
+
+                  <ActiveLayerListItem
+                    key={layer.id}
+                    index={i}
+                    layer={layer}
+                    workspace={workspace}
                   />
-
-                  <Box w={"8px"} h={"1px"} bg={"border.emphasized"} />
                 </HStack>
-
-                <ActiveLayerListItem
-                  key={layer.id}
-                  index={i}
-                  layer={layer}
-                  workspace={workspace}
-                />
-              </HStack>
-            );
-          })}
+              );
+            })}
         </CContainer>
       </AccordionItemContent>
     </AccordionItem>

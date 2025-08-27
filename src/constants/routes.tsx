@@ -13,6 +13,7 @@ import RootPage from "@/pages/RootPage";
 import SettingsPage from "@/pages/SettingsPage";
 import { Interface__PrivateRoute, Interface__Route } from "./interfaces";
 import MasterDataWorkspaceCategoriesPage from "@/pages/admin/MasterDataWorkspaceCategoriesPage";
+import FieldDataPage from "@/pages/admin/FieldDataPage";
 
 export const ROUTES: Interface__Route[] = [
   {
@@ -40,6 +41,12 @@ export const PRIVATE_ROUTES: Interface__PrivateRoute[] = [
     activePath: "/dashboard",
     titleKey: "navs.dashboard",
     element: <DashboardPage />,
+  },
+  {
+    path: "/field-data",
+    activePath: "/field-data",
+    titleKey: "navs.field_data",
+    element: <FieldDataPage />,
   },
 
   // Profile

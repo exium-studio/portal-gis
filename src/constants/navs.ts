@@ -7,6 +7,7 @@ import {
   IconLanguage,
   IconServerCog,
   IconShieldHalf,
+  IconTable,
 } from "@tabler/icons-react";
 
 export const NAVS = [
@@ -27,6 +28,11 @@ export const NAVS = [
     labelKey: "navs.dashboard",
     path: "/dashboard",
     icon: IconChartPie,
+  },
+  {
+    labelKey: "navs.field_data",
+    path: "/field-data",
+    icon: IconTable,
   },
   {
     labelKey: "navs.master_data",
