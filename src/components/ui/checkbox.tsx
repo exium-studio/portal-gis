@@ -23,6 +23,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         <ChakraCheckbox.Control
           borderRadius={"sm"}
           borderColor={rest.borderColor}
+          bg={rest.bg}
         >
           {icon || <ChakraCheckbox.Indicator />}
         </ChakraCheckbox.Control>

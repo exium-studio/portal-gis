@@ -28,7 +28,8 @@ const SimplePopover = (props: Props) => {
 
       <PopoverContent
         ref={containerRef}
-        p={3}
+        px={3}
+        py={2}
         w={"full"}
         maxW={"280px !important"}
         onClick={(e) => {

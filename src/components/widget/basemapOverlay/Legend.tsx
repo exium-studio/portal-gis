@@ -216,7 +216,6 @@ export const LegendContent = (props: any) => {
                             <P
                               color={"fg.subtle"}
                               lineClamp={1}
-                              fontSize={"xs"}
                               lineHeight={1}
                             >{`${layer.color_property_key}`}</P>
                           </HStack>

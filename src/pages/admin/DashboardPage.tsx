@@ -15,7 +15,8 @@ import PageContainer from "@/components/widget/PageContainer";
 import SimplePopover from "@/components/widget/SimplePopover";
 import { Interface__ActiveWorkspace } from "@/constants/interfaces";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
-import { FilterGeoJSON, useFilterGeoJSON } from "@/context/useFilterGeoJSON";
+import { useConfirmFilterGeoJSON } from "@/context/useConfirmFilterGeoJSON";
+import { FilterGeoJSON } from "@/context/useFilterGeoJSON";
 import useLang from "@/context/useLang";
 import { addOpacityToHex } from "@/utils/addOpacityToHex";
 import empty from "@/utils/empty";
@@ -517,7 +518,7 @@ const DashboardData = (props: any) => {
   const activeWorkspacesByCategory = useActiveWorkspaces(
     (s) => s.activeWorkspaces
   );
-  const filterGeoJSON = useFilterGeoJSON((s) => s.filterGeoJSON);
+  const filterGeoJSON = useConfirmFilterGeoJSON((s) => s.confirmFilterGeoJSON);
 
   // States
   const searchTerm = useMemo(() => search?.toLowerCase() || "", [search]);

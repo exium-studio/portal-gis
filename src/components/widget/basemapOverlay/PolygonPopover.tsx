@@ -148,7 +148,7 @@ export default function PolygonPopover() {
         >
           <BButton
             colorPalette={themeConfig.colorPalette}
-            size={["md", null, "sm"]}
+            size={"sm"}
             onClick={() => detailFieldInfoOnOpen()}
           >
             Detail

@@ -312,19 +312,8 @@ const FieldDataPage = () => {
       {!empty(activeWorkspacesByCategory) && (
         <CContainer gap={4} flex={1} overflowY={"auto"}>
           <ItemContainer borderRadius={themeConfig.radii.container}>
-            <ItemHeaderContainer justify={"space-between"} p={2} pl={4}>
+            <ItemHeaderContainer justify={"space-between"}>
               <P fontWeight={"semibold"}>Filter Data</P>
-
-              <BButton
-                variant={"ghost"}
-                colorPalette={themeConfig.colorPalette}
-                onClick={() => {
-                  setFilterConfig(DEFAULT_FILTER_CONFIG);
-                }}
-                size={"sm"}
-              >
-                Reset
-              </BButton>
             </ItemHeaderContainer>
 
             <SimpleGrid
@@ -381,12 +370,28 @@ const FieldDataPage = () => {
               </Field>
             </SimpleGrid>
 
-            <HStack px={4} pb={4} justify={"end"}>
+            <HStack
+              p={4}
+              // borderTop={"1px solid"}
+              borderColor={"border.muted"}
+              justify={"end"}
+            >
+              <BButton
+                variant={"outline"}
+                onClick={() => {
+                  setFilterConfig(DEFAULT_FILTER_CONFIG);
+                }}
+                size={"sm"}
+              >
+                Reset
+              </BButton>
+
               <BButton
                 colorPalette={themeConfig.colorPalette}
                 onClick={() => {
                   setConfirmFilterConfig(filterConfig);
                 }}
+                size={"sm"}
               >
                 {l.apply}
               </BButton>
