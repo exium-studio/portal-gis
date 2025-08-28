@@ -40,6 +40,7 @@ type DashboardSummary = {
 };
 type FilterKey = (typeof FILTER_KEYS)[number];
 
+const PIE_INNER_RADIUS = 0;
 const FILTER_KEYS = ["KABUPATEN", "TIPEHAK", "GUNATANAHK"] as const;
 const COLORWAY = [
   "#66c2a5",
@@ -249,7 +250,7 @@ const HGUArea = (props: any) => {
                   content={<Chart.Tooltip hideLabel />}
                 />
                 <Pie
-                  innerRadius={70}
+                  innerRadius={PIE_INNER_RADIUS}
                   outerRadius={100}
                   isAnimationActive={false}
                   data={chart.data}
@@ -270,7 +271,7 @@ const HGUArea = (props: any) => {
           </CContainer>
 
           <CContainer mt={4}>
-            <CContainer maxH={"150px"} className="scrollY" px={8} gap={2}>
+            <CContainer maxH={"200px"} className="scrollY" px={8} gap={2}>
               {chart.data?.map((item: any) => {
                 return (
                   <HStack key={item?.name}>
@@ -354,7 +355,7 @@ const HGUCount = (props: any) => {
                   content={<Chart.Tooltip hideLabel />}
                 />
                 <Pie
-                  innerRadius={70}
+                  innerRadius={PIE_INNER_RADIUS}
                   outerRadius={100}
                   isAnimationActive={false}
                   data={chart.data}
@@ -375,7 +376,7 @@ const HGUCount = (props: any) => {
           </CContainer>
 
           <CContainer mt={4}>
-            <CContainer maxH={"150px"} className="scrollY" px={8} gap={2}>
+            <CContainer maxH={"200px"} className="scrollY" px={8} gap={2}>
               {chart.data?.map((item: any) => {
                 return (
                   <HStack key={item?.name}>
@@ -455,7 +456,7 @@ const HGUAreaByKabupaten = (props: any) => {
                   content={<Chart.Tooltip hideLabel />}
                 />
                 <Pie
-                  innerRadius={70}
+                  innerRadius={PIE_INNER_RADIUS}
                   outerRadius={100}
                   isAnimationActive={false}
                   data={chart.data}
@@ -476,7 +477,7 @@ const HGUAreaByKabupaten = (props: any) => {
           </CContainer>
 
           <CContainer mt={4}>
-            <CContainer maxH={"150px"} className="scrollY" px={8} gap={2}>
+            <CContainer maxH={"200px"} className="scrollY" px={8} gap={2}>
               {chart.data?.map((item: any) => {
                 return (
                   <HStack key={item?.name}>
