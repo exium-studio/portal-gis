@@ -129,7 +129,7 @@ export default function PolygonPopover() {
           </HStack>
         </ItemHeaderContainer>
 
-        <CContainer className="scrollY" pl={"6px"}>
+        <CContainer px={"6px"}>
           {KEYS.map((key, i) => (
             <ListItemContainer key={key.value} last={i === KEYS.length - 1}>
               <P fontWeight={"medium"} color={"fg.subtle"}>
