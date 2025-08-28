@@ -58,6 +58,10 @@ const FieldInfoDetail = () => {
   ).length;
 
   useEffect(() => {
+    setProperties(selectedPolygon?.polygon?.properties);
+  }, [selectedPolygon]);
+
+  useEffect(() => {
     if (!workspaceActive) {
       clearSelectedPolygon();
       onClose();
@@ -80,6 +84,8 @@ const FieldInfoDetail = () => {
       </CContainer>
     );
   };
+
+  console.log(selectedPolygon?.polygon?.properties?.KABUPATEN);
 
   return (
     <FloatingContainer
