@@ -44,7 +44,7 @@ const GeoJSONFilter = () => {
   return (
     <ItemContainer bg={"body"} borderRadius={themeConfig.radii.container}>
       <ItemHeaderContainer justify={"space-between"}>
-        <P fontWeight={"semibold"}>Filter Dashboard</P>
+        <P fontWeight={"semibold"}>Filter GeoJSON</P>
       </ItemHeaderContainer>
 
       <SimpleGrid gap={4} columns={halfPanel ? 1 : [1, null, null, 3]} p={4}>
