@@ -50,7 +50,7 @@ const GeoJSONFilter = () => {
       <SimpleGrid gap={4} columns={halfPanel ? 1 : [1, null, null, 3]} p={4}>
         {filterOptions?.map((option, i) => (
           <CContainer
-            key={option.property}
+            key={`${option.property}`}
             border={i === filterOptions.length - 1 ? "none" : ""}
             gap={2}
           >

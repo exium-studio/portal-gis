@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { Dispatch, SetStateAction } from "react";
 import {
+  FilterGeoJSON,
   LatLong,
   Type__DateRange,
   Type__DateRangePresets,
@@ -16,7 +17,6 @@ import {
   Type__TableOptions,
   Type__TimeRange,
 } from "./types";
-import { FilterGeoJSON } from "@/context/useFilterGeoJSON";
 
 // Legends
 export interface LegendItem {
