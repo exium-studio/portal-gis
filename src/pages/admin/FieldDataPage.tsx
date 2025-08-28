@@ -393,7 +393,6 @@ const FieldDataPage = () => {
               borderRadius={themeConfig.radii.container}
               bg={"body"}
               flex={1}
-              className="scrollY"
               overflowY={"auto"}
             >
               {empty(filteredFields) && (
