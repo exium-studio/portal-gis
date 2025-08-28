@@ -88,7 +88,7 @@ const MasterDataNavsContainer = ({ children, activePath, ...props }: Props) => {
             overflowY={"auto"}
             maxH={"full"}
           >
-            <CContainer className="scrollY" pl={2} pr={1} gap={4}>
+            <CContainer className="scrollY" pl={2} pr={"2px"} gap={4}>
               {MASTER_DATA_NAVS.map((item, i) => {
                 return (
                   <CContainer key={i} gap={1}>
