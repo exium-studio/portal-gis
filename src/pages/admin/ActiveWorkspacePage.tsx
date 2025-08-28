@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 
 import CContainer from "@/components/ui-custom/CContainer";
 import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
-import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import SearchInput from "@/components/ui-custom/SearchInput";
 import { AccordionRoot } from "@/components/ui/accordion";
 import ActiveWorkspaceByCategoryListItem from "@/components/widget/ActiveWorkspaceByCategoryListItem";
@@ -65,14 +64,12 @@ const ActiveWorkspacePage = () => {
           />
         ) : (
           <>
-            <ItemHeaderContainer borderless p={0}>
-              <HStack justify="space-between" w="full">
-                <SearchInput
-                  inputValue={searchTerm}
-                  onChangeSetter={(input) => setSearchTerm(input)}
-                />
-              </HStack>
-            </ItemHeaderContainer>
+            <HStack justify="space-between" w="full">
+              <SearchInput
+                inputValue={searchTerm}
+                onChangeSetter={(input) => setSearchTerm(input)}
+              />
+            </HStack>
 
             <AccordionRoot multiple>
               <CContainer gap={2}>

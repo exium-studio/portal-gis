@@ -13,7 +13,6 @@ import DisclosureHeaderContent from "@/components/ui-custom/DisclosureHeaderCont
 import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
 import FeedbackRetry from "@/components/ui-custom/FeedbackRetry";
 import FileInput from "@/components/ui-custom/FileInput";
-import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import NumberInput from "@/components/ui-custom/NumberInput";
 import SearchInput from "@/components/ui-custom/SearchInput";
 import StringInput from "@/components/ui-custom/StringInput";
@@ -417,23 +416,21 @@ const WorkspacePage = () => {
   return (
     <PageContainer flex={1}>
       <CContainer flex={1} gap={4}>
-        <ItemHeaderContainer borderless p={0}>
-          <HStack justify={"space-between"} w={"full"}>
-            <SearchInput
-              onChangeSetter={(input) => {
-                setFilterConfig({
-                  ...filterConfig,
-                  search: input,
-                });
-              }}
-              inputValue={filterConfig.search}
-            />
+        <HStack justify={"space-between"} w={"full"}>
+          <SearchInput
+            onChangeSetter={(input) => {
+              setFilterConfig({
+                ...filterConfig,
+                search: input,
+              });
+            }}
+            inputValue={filterConfig.search}
+          />
 
-            <ToggleDisplay />
+          <ToggleDisplay />
 
-            <Create />
-          </HStack>
-        </ItemHeaderContainer>
+          <Create />
+        </HStack>
 
         {initialLoading && render.loading}
         {!initialLoading && (
