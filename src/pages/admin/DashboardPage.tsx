@@ -9,7 +9,6 @@ import HelperText from "@/components/ui-custom/HelperText";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import P from "@/components/ui-custom/P";
-import SearchInput from "@/components/ui-custom/SearchInput";
 import { Checkbox } from "@/components/ui/checkbox";
 import GeoJSONFilter from "@/components/widget/basemapOverlay/GeoJSONFilter";
 import PageContainer from "@/components/widget/PageContainer";
@@ -602,7 +601,7 @@ const DashboardPage = () => {
   );
 
   // States
-  const [search, setSearch] = useState<string>("");
+  const [search] = useState<string>("");
 
   return (
     <PageContainer pb={4} flex={1}>
@@ -616,14 +615,14 @@ const DashboardPage = () => {
 
       {!empty(activeWorkspacesByCategory) && (
         <CContainer gap={4} flex={1}>
-          <HStack>
+          {/* <HStack>
             <SearchInput
               onChangeSetter={(input) => {
                 setSearch(input);
               }}
               inputValue={search}
             />
-          </HStack>
+          </HStack> */}
 
           <GeoJSONFilter />
 
