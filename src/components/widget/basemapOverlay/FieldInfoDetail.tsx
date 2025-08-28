@@ -1,19 +1,20 @@
 import CContainer from "@/components/ui-custom/CContainer";
 import FloatingContainer from "@/components/ui-custom/FloatingContainer";
 import P from "@/components/ui-custom/P";
+import useActiveWorkspaces from "@/context/useActiveWorkspaces";
+import useDetailFieldInfo from "@/context/useDetailFieldInfo";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
-import { HStack, Icon, useDisclosure } from "@chakra-ui/react";
+import { HStack, Icon } from "@chakra-ui/react";
 import { IconInfoCircle } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import PropertyValue from "../PropertyValue";
 import { EditField } from "./EditField";
 import FloatingContainerCloseButton from "./FloatingContainerCloseButton";
-import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 
 const EXCLUDED_KEYS = [
   "id",
@@ -27,10 +28,10 @@ const EXCLUDED_KEYS = [
 const FieldInfoDetail = () => {
   // Hooks
   const { l } = useLang();
-  const { open, onOpen, onClose } = useDisclosure();
   const iss = useIsSmScreenWidth();
 
   // Contexts
+  const { open, onClose } = useDetailFieldInfo();
   const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
   const clearSelectedPolygon = useSelectedPolygon(
     (s) => s.clearSelectedPolygon
@@ -55,20 +56,6 @@ const FieldInfoDetail = () => {
   const excludedKeysCount = EXCLUDED_KEYS.filter(
     (key) => properties && Object.keys(properties).includes(key)
   ).length;
-
-  // console.log(selectedPolygon?.polygon?.geometry?.coordinates?.length);
-  // console.log(selectedPolygon?.polygon?.geometry?.coordinates?.length);
-
-  // Handle open
-  useEffect(() => {
-    if (selectedPolygon) {
-      // TODO open ketika user klik detail pada popover bidang
-      onOpen();
-      setProperties(selectedPolygon?.polygon?.properties);
-    } else {
-      onClose();
-    }
-  }, [selectedPolygon]);
 
   useEffect(() => {
     if (!workspaceActive) {
@@ -133,7 +120,6 @@ const FieldInfoDetail = () => {
 
             <FloatingContainerCloseButton
               onClick={() => {
-                clearSelectedPolygon();
                 onClose();
               }}
               size={["xs", null, "sm"]}

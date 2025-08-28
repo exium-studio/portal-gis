@@ -14,6 +14,7 @@ import { IconInfoCircle } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import PropertyValue from "../PropertyValue";
 import FloatingContainerCloseButton from "./FloatingContainerCloseButton";
+import useDetailFieldInfo from "@/context/useDetailFieldInfo";
 
 const KEYS = [
   { label: "Hak", value: "hak" },
@@ -27,19 +28,23 @@ const KEYS = [
 ];
 
 export default function PolygonPopover() {
+  // Contexts
+  const { l } = useLang();
+  const { themeConfig } = useThemeConfig();
+  const { mapRef } = useMapViewState();
+  const detailFieldInfoOnOpen = useDetailFieldInfo((s) => s.onOpen);
+  const detailFieldInfoOnClose = useDetailFieldInfo((s) => s.onClose);
   const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
   const clearSelectedPolygon = useSelectedPolygon(
     (s) => s.clearSelectedPolygon
   );
-  const { l } = useLang();
-  const { themeConfig } = useThemeConfig();
-  const { mapRef } = useMapViewState();
 
+  // States
   const { lat, lon } = selectedPolygon?.clickedLngLat ?? {};
   const properties = normalizeKeys(selectedPolygon?.polygon?.properties as any);
-
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
 
+  // Update pos
   useEffect(() => {
     if (!mapRef?.current || !lat || !lon) return;
 
@@ -56,6 +61,12 @@ export default function PolygonPopover() {
     };
   }, [mapRef, lat, lon]);
 
+  // Reset pos on close
+  useEffect(() => {
+    if (!selectedPolygon) setPos(null);
+  }, [selectedPolygon]);
+
+  // Components
   const ListItemContainer = (props: any) => {
     const { children, last } = props;
     return (
@@ -91,6 +102,7 @@ export default function PolygonPopover() {
         pos={"absolute"}
         bottom={"-15px"}
       />
+
       <ItemContainer
         bg={"body"}
         borderRadius={themeConfig.radii.container}
@@ -109,7 +121,10 @@ export default function PolygonPopover() {
           <HStack gap={1} ml={"auto"}>
             <FloatingContainerCloseButton
               size={["xs", null, "sm"]}
-              onClick={() => clearSelectedPolygon()}
+              onClick={() => {
+                clearSelectedPolygon();
+                detailFieldInfoOnClose();
+              }}
             />
           </HStack>
         </ItemHeaderContainer>
@@ -134,6 +149,7 @@ export default function PolygonPopover() {
           <BButton
             colorPalette={themeConfig.colorPalette}
             size={["md", null, "sm"]}
+            onClick={() => detailFieldInfoOnOpen()}
           >
             Detail
           </BButton>
