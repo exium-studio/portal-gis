@@ -335,7 +335,8 @@ const NavContainer = ({
           <VStack
             w={"fit"}
             align={"center"}
-            px={2}
+            pl={2}
+            pr={"2px"}
             py={"22px"}
             overflowX={"clip"}
             className="scrollY"
