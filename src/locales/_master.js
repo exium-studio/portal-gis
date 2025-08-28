@@ -744,7 +744,7 @@ export const mark_as_read = {
   en: "Mark all as read",
 };
 export const search = {
-  id: "Pencarian",
+  id: "Cari",
   en: "Search",
 };
 export const angle_to_north = {
@@ -954,6 +954,10 @@ export const current_total_village_fund = {
 export const announcement = {
   id: "Pengumuman",
   en: "Announcement",
+};
+export const apply = {
+  id: "Terapkan",
+  en: "Apply",
 };
 export const official_contact = {
   id: "Kontak perangkat desa",

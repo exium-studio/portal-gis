@@ -174,6 +174,9 @@ const FieldDataPage = () => {
   );
 
   // States
+  const [confirmFilterConfig, setConfirmFilterConfig] = useState<any>(
+    DEFAULT_FILTER_CONFIG
+  );
   const [filterConfig, setFilterConfig] = useState<any>(DEFAULT_FILTER_CONFIG);
   const { allFields, allProvinces, allKabupatens } = useMemo(() => {
     if (!activeWorkspacesByCategory) {
@@ -230,13 +233,13 @@ const FieldDataPage = () => {
   const filteredFields = useMemo<Interface__SelectOption[]>(() => {
     if (!allFields) return [];
 
-    const provinceFilterIds = (filterConfig.province ?? []).map(
+    const provinceFilterIds = (confirmFilterConfig.province ?? []).map(
       (p: Interface__SelectOption) => p.id
     );
-    const kabupatenFilterIds = (filterConfig.kabupaten ?? []).map(
+    const kabupatenFilterIds = (confirmFilterConfig.kabupaten ?? []).map(
       (k: Interface__SelectOption) => k.id
     );
-    const noHakFilter = filterConfig.no_hak ?? "";
+    const noHakFilter = confirmFilterConfig.no_hak ?? "";
 
     const isEmptyFilter =
       provinceFilterIds.length === 0 &&
@@ -294,7 +297,7 @@ const FieldDataPage = () => {
     }
 
     return results;
-  }, [allFields, filterConfig]);
+  }, [allFields, confirmFilterConfig]);
 
   return (
     <PageContainer pb={4} flex={1} overflowY={"auto"}>
@@ -308,12 +311,13 @@ const FieldDataPage = () => {
 
       {!empty(activeWorkspacesByCategory) && (
         <CContainer gap={4} flex={1} overflowY={"auto"}>
-          <ItemContainer borderRadius={themeConfig.radii.container} bg={"body"}>
+          <ItemContainer borderRadius={themeConfig.radii.container}>
             <ItemHeaderContainer justify={"space-between"} p={2} pl={4}>
               <P fontWeight={"semibold"}>Filter Data</P>
 
               <BButton
-                variant={"outline"}
+                variant={"ghost"}
+                colorPalette={themeConfig.colorPalette}
                 onClick={() => {
                   setFilterConfig(DEFAULT_FILTER_CONFIG);
                 }}
@@ -376,6 +380,17 @@ const FieldDataPage = () => {
                 />
               </Field>
             </SimpleGrid>
+
+            <HStack px={4} pb={4} justify={"end"}>
+              <BButton
+                colorPalette={themeConfig.colorPalette}
+                onClick={() => {
+                  setConfirmFilterConfig(filterConfig);
+                }}
+              >
+                {l.apply}
+              </BButton>
+            </HStack>
           </ItemContainer>
 
           <CContainer gap={2} flex={1} overflowY={"auto"}>
@@ -389,9 +404,8 @@ const FieldDataPage = () => {
               </P>
             </HStack>
 
-            <CContainer
+            <ItemContainer
               borderRadius={themeConfig.radii.container}
-              bg={"body"}
               flex={1}
               overflowY={"auto"}
             >
@@ -402,7 +416,7 @@ const FieldDataPage = () => {
               {!empty(filteredFields) && (
                 <DataTable filteredFields={filteredFields} />
               )}
-            </CContainer>
+            </ItemContainer>
           </CContainer>
         </CContainer>
       )}

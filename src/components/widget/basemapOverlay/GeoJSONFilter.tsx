@@ -48,7 +48,8 @@ const GeoJSONFilter = () => {
         <P fontWeight={"semibold"}>Filter Dashboard</P>
 
         <BButton
-          variant={"outline"}
+          variant={"ghost"}
+          colorPalette={themeConfig.colorPalette}
           onClick={() => {
             setFilterOptions((prev) =>
               prev.map((group) => ({

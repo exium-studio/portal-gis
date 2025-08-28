@@ -27,6 +27,7 @@ const translations = {
   "animal_breed": "Animal breed",
   "animal_category": "Animal Category",
   "announcement": "Announcement",
+  "apply": "Apply",
   "ask": "Ask",
   "attachment": "Attachment",
   "auto_time_zone": "Local time zone (auto)",
