@@ -106,7 +106,13 @@ export default function SearchInput({
       >
         <HStack position="relative" w="full">
           <StringInput
-            pl={inputProps?.size === "xs" || inputProps?.size === "sm" ? 8 : 10}
+            pl={
+              noIcon
+                ? 4
+                : inputProps?.size === "xs" || inputProps?.size === "sm"
+                ? 8
+                : 10
+            }
             name={name}
             fRef={inputRef ? inputRef : null}
             placeholder={placeholder || `${l.search} ${additionalPlaceholder}`}

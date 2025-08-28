@@ -330,6 +330,7 @@ const FieldDataPage = () => {
             >
               <Field label={"No hak"}>
                 <SearchInput
+                  noIcon
                   placeholder="0200*********"
                   onChangeSetter={(input) => {
                     setFilterConfig({
