@@ -623,9 +623,9 @@ const DashboardPage = () => {
               }}
               inputValue={search}
             />
-
-            <GeoJSONFilter />
           </HStack>
+
+          <GeoJSONFilter />
 
           <DashboardData search={search} />
         </CContainer>

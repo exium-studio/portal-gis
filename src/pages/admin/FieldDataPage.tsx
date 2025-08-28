@@ -1,6 +1,7 @@
 import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
 import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
+import ItemContainer from "@/components/ui-custom/ItemContainer";
 import P from "@/components/ui-custom/P";
 import SearchInput from "@/components/ui-custom/SearchInput";
 import SelectInput from "@/components/ui-custom/SelectInput";
@@ -295,7 +296,7 @@ const FieldDataPage = () => {
   }, [allFields, filterConfig]);
 
   return (
-    <PageContainer pb={4} flex={1} className="scrollY" overflowY={"auto"}>
+    <PageContainer pb={4} flex={1} overflowY={"auto"}>
       {empty(activeWorkspacesByCategory) && (
         <FeedbackNoData
           icon={<IconFoldersOff />}
@@ -305,8 +306,8 @@ const FieldDataPage = () => {
       )}
 
       {!empty(activeWorkspacesByCategory) && (
-        <CContainer gap={4} flex={1} className="scrollY" overflowY={"auto"}>
-          <CContainer
+        <CContainer gap={4} flex={1} overflowY={"auto"}>
+          <ItemContainer
             p={3}
             borderRadius={themeConfig.radii.container}
             bg={"body"}
@@ -359,9 +360,9 @@ const FieldDataPage = () => {
                 />
               </Field>
             </SimpleGrid>
-          </CContainer>
+          </ItemContainer>
 
-          <CContainer gap={2} flex={1} className="scrollY" overflowY={"auto"}>
+          <CContainer gap={2} flex={1} overflowY={"auto"}>
             <HStack justify={"space-between"} gap={4} wrap={"wrap"} px={2}>
               <P fontWeight={"medium"} color={"fg.subtle"}>
                 {l.result}
