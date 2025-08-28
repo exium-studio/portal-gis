@@ -85,8 +85,6 @@ const FieldInfoDetail = () => {
     );
   };
 
-  console.log(selectedPolygon?.polygon?.properties?.KABUPATEN);
-
   return (
     <FloatingContainer
       open={open}
