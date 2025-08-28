@@ -10,6 +10,8 @@ import useMapStyle from "@/context/useMapStyle";
 import { useColorMode } from "../ui/color-mode";
 import { useCallback, useEffect, useRef } from "react";
 import useDetailFieldInfo from "@/context/useDetailFieldInfo";
+import { useConfirmFilterGeoJSON } from "@/context/useConfirmFilterGeoJSON";
+import useFilteredGeoJSON from "@/hooks/useFilteredGeoJSON";
 
 interface LayerSourceProps {
   activeWorkspace: Interface__ActiveWorkspace;
@@ -30,7 +32,11 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
   const mapStyle = useMapStyle((s) => s.mapStyle);
   const { colorMode } = useColorMode();
 
+  const confirmFilterGeoJSON = useConfirmFilterGeoJSON(
+    (s) => s.confirmFilterGeoJSON
+  );
   const geojson = activeLayer?.data?.geojson;
+  const filteredGeojson = useFilteredGeoJSON(geojson, confirmFilterGeoJSON);
   const fillLayerId = `${activeLayer.id}-fill`;
   const lineLayerId = `${activeLayer.id}-outline`;
   const sourceId = `${activeLayer.id}-source`;
@@ -83,7 +89,7 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
       if (selectedId === clickedId) {
         clearSelectedPolygon();
       } else {
-        const clickedPolygon = geojson?.features?.find(
+        const clickedPolygon = filteredGeojson?.features?.find(
           (f) => f.properties?.id === clickedId
         );
 
@@ -104,25 +110,25 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
       activeLayer,
       activeWorkspace,
       selectedPolygon,
-      geojson,
+      filteredGeojson,
       themeConfig.primaryColorHex,
     ]
   );
 
   useEffect(() => {
     const map = mapRef?.current?.getMap();
-    if (!map || !geojson) return;
+    if (!map || !filteredGeojson) return;
 
     // Add/Update source
     const existingSource = map.getSource(sourceId);
     if (existingSource) {
-      if (lastGeojsonRef.current !== geojson) {
-        (existingSource as any).setData(geojson);
-        lastGeojsonRef.current = geojson;
+      if (lastGeojsonRef.current !== filteredGeojson) {
+        (existingSource as any).setData(filteredGeojson);
+        lastGeojsonRef.current = filteredGeojson;
       }
     } else {
-      map.addSource(sourceId, { type: "geojson", data: geojson });
-      lastGeojsonRef.current = geojson;
+      map.addSource(sourceId, { type: "geojson", data: filteredGeojson });
+      lastGeojsonRef.current = filteredGeojson;
     }
 
     // Add or update layers
@@ -193,7 +199,7 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
       map.off("click", fillLayerId, handleOnClickPolygon);
     };
   }, [
-    geojson,
+    filteredGeojson,
     activeLayer.visible,
     legend,
     themeConfig.primaryColorHex,

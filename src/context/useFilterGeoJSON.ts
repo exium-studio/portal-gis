@@ -1,10 +1,5 @@
+import { FilterGeoJSON } from "@/constants/types";
 import { create } from "zustand";
-
-export type FilterGeoJSON = {
-  KABUPATEN: string[];
-  TIPEHAK: string[];
-  GUNATANAHK: string[];
-};
 
 type Store = {
   filterGeoJSON: FilterGeoJSON;

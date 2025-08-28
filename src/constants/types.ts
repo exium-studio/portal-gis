@@ -1,6 +1,12 @@
 import { ButtonProps, MenuItemProps } from "@chakra-ui/react";
 import { RefObject } from "react";
 
+export type FilterGeoJSON = {
+  KABUPATEN: string[];
+  TIPEHAK: string[];
+  GUNATANAHK: string[];
+};
+
 export interface WMSServiceConfig {
   baseUrl: string; // "http://localhost:8080/geoserver/bpn-gis/wms"
   workspace: string; // "bpn-gis"
