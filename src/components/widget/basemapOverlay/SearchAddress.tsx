@@ -1,6 +1,15 @@
 import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
+import ComponentSpinner from "@/components/ui-custom/ComponentSpinner";
+import FeedbackNotFound from "@/components/ui-custom/FeedbackNotFound";
 import P from "@/components/ui-custom/P";
+import SearchInput from "@/components/ui-custom/SearchInput";
+import {
+  PopoverContent,
+  PopoverRoot,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Tooltip } from "@/components/ui/tooltip";
 import useSearchAddress from "@/constants/useSearchAddress";
 import useLang from "@/context/useLang";
 import useSearchMode from "@/context/useSearchMode";
@@ -10,17 +19,6 @@ import { Icon, PopoverPositioner, Portal } from "@chakra-ui/react";
 import { IconClock, IconMapPin, IconSearch } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
 import { OverlayItemContainer } from "../OverlayItemContainer";
-import SearchInput from "@/components/ui-custom/SearchInput";
-import {
-  PopoverContent,
-  PopoverRoot,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import ComponentSpinner from "@/components/ui-custom/ComponentSpinner";
-import FeedbackNotFound from "@/components/ui-custom/FeedbackNotFound";
-import { Tooltip } from "@/components/ui/tooltip";
-
-const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 export const SearchAddress = () => {
   // Utils
@@ -69,14 +67,20 @@ export const SearchAddress = () => {
     if (searchAddress) {
       setLoading(true);
       fetch(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
           searchAddress
-        )}.json?access_token=${MAPBOX_ACCESS_TOKEN}`
+        )}&format=json&addressdetails=1&limit=5`
       )
         .then((response) => response.json())
         .then((data) => {
-          if (data.features && data.features.length > 0) {
-            setSearchResult(data.features);
+          if (data && data.length > 0) {
+            // Normalisasi biar mirip kayak Mapbox features
+            const normalized = data.map((item: any) => ({
+              place_name: item.display_name,
+              center: [parseFloat(item.lon), parseFloat(item.lat)],
+              raw: item,
+            }));
+            setSearchResult(normalized);
           }
         })
         .finally(() => {
@@ -171,7 +175,7 @@ export const SearchAddress = () => {
           inputValue={searchAddress}
           noIcon
           inputProps={{
-            pl: 1,
+            pl: 2,
             border: "none",
             onFocus: () => setSearchInputFocus(true),
           }}
@@ -205,7 +209,9 @@ export const SearchAddress = () => {
                   {searchAddress && (
                     <>
                       {/* Render Not Found */}
-                      {searchResult.length === 0 && <FeedbackNotFound />}
+                      {searchResult.length === 0 && (
+                        <FeedbackNotFound minH={"210px"} />
+                      )}
 
                       {/* Render Search Result */}
                       {searchResult?.length > 0 &&
