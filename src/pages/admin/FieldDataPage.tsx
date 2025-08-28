@@ -300,7 +300,7 @@ const FieldDataPage = () => {
   }, [allFields, confirmFilterConfig]);
 
   return (
-    <PageContainer pb={4} flex={1} overflowY={"auto"}>
+    <PageContainer flex={1}>
       {empty(activeWorkspacesByCategory) && (
         <FeedbackNoData
           icon={<IconFoldersOff />}
@@ -398,7 +398,7 @@ const FieldDataPage = () => {
             </HStack>
           </ItemContainer>
 
-          <CContainer gap={2} flex={1} overflowY={"auto"}>
+          <CContainer gap={2} flex={1} overflowY={"auto"} minH={"300px"}>
             <HStack justify={"space-between"} gap={4} wrap={"wrap"} px={2}>
               <P fontWeight={"medium"} color={"fg.subtle"}>
                 {l.result}
