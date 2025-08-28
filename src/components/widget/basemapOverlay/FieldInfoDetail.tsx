@@ -106,7 +106,7 @@ const FieldInfoDetail = () => {
             </Icon>
 
             <P fontWeight={"bold"} lineClamp={1}>
-              {capsFirstLetterEachWord(l.field_info)}
+              {`Detail ${capsFirstLetterEachWord(l.field_info)}`}
             </P>
           </HStack>
 
