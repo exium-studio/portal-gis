@@ -58,8 +58,8 @@ export const BasemapMapStyle = () => {
             >
               <Img
                 src={displaySrc}
-                w={"36px"}
-                borderRadius={themeConfig.radii.component}
+                w={"40px"}
+                borderRadius={"sm"}
                 cursor={"pointer"}
                 _hover={{ opacity: 0.6 }}
                 transition={"200ms"}
