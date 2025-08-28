@@ -18,7 +18,6 @@ import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import { useConfirmFilterGeoJSON } from "@/context/useConfirmFilterGeoJSON";
 import { FilterGeoJSON } from "@/context/useFilterGeoJSON";
 import useLang from "@/context/useLang";
-import { addOpacityToHex } from "@/utils/addOpacityToHex";
 import empty from "@/utils/empty";
 import { Chart, useChart } from "@chakra-ui/charts";
 import { Circle, HStack } from "@chakra-ui/react";
@@ -43,12 +42,12 @@ type FilterKey = (typeof FILTER_KEYS)[number];
 const PIE_INNER_RADIUS = 0;
 const FILTER_KEYS = ["KABUPATEN", "TIPEHAK", "GUNATANAHK"] as const;
 const COLORWAY = [
-  "#66c2a5",
-  "#fc8d62",
-  "#8da0cb",
   "#e78ac3",
+  "#66c2a5",
+  "#8da0cb",
   "#a6d854",
   "#ffd92f",
+  "#ff775c",
   "#e5c494",
   "#b3b3b3",
 ].reverse();
@@ -82,12 +81,10 @@ const summarizeDashboard = (
   const passFilter = (props: Record<string, unknown>) => {
     for (const key of FILTER_KEYS) {
       const activeSet = lookup[key];
-      if (activeSet.size === 0) continue; // empty = semua lolos utk key tsb
+      if (activeSet.size === 0) continue;
       const val = norm(props[key]);
 
       if (val && activeSet.has(val)) return false;
-
-      // if value is in filter → reject
       if (activeSet.has(val)) return false;
     }
     return true;
@@ -129,8 +126,12 @@ const summarizeDashboard = (
   const toFixedNum = (v: number, d: number) =>
     Number.isFinite(v) ? parseFloat(v.toFixed(d)) : 0;
 
+  // make color scales from COLORWAY
+  const scaleTipeHak = chroma.scale(COLORWAY).colors(domainTipeHak.size);
+  const scaleKabupaten = chroma.scale(COLORWAY).colors(domainKabupaten.size);
+
   const areaByTipeHak: DashboardStat[] = Array.from(domainTipeHak)
-    .map((name) => {
+    .map((name, i) => {
       const value = areaRaw[name] || 0;
       const active =
         lookup.TIPEHAK.size === 0 ? true : lookup.TIPEHAK.has(name);
@@ -139,12 +140,13 @@ const summarizeDashboard = (
         value: toFixedNum(value, 2),
         percentage: toFixedNum((value / (totalArea || 1)) * 100, 2),
         active,
+        color: scaleTipeHak[i],
       };
     })
     .sort(byNameAsc);
 
   const countByTipeHak: DashboardStat[] = Array.from(domainTipeHak)
-    .map((name) => {
+    .map((name, i) => {
       const value = countRaw[name] || 0;
       const active =
         lookup.TIPEHAK.size === 0 ? true : lookup.TIPEHAK.has(name);
@@ -153,12 +155,13 @@ const summarizeDashboard = (
         value: toFixedNum(value, 2),
         percentage: toFixedNum((value / (totalCount || 1)) * 100, 2),
         active,
+        color: scaleTipeHak[i],
       };
     })
     .sort(byNameAsc);
 
   const areaByKabupaten: DashboardStat[] = Array.from(domainKabupaten)
-    .map((kabupaten) => {
+    .map((kabupaten, i) => {
       const totalKabupaten = Object.values(
         areaByKabupatenRaw[kabupaten] ?? []
       ).reduce((sum, v) => sum + v, 0);
@@ -169,6 +172,7 @@ const summarizeDashboard = (
         value: toFixedNum(totalKabupaten, 1),
         percentage: toFixedNum((totalKabupaten / (totalArea || 1)) * 100, 1),
         active,
+        color: scaleKabupaten[i],
       };
     })
     .sort(byNameAsc);
@@ -210,16 +214,11 @@ const HGUArea = (props: any) => {
   });
 
   useEffect(() => {
-    const newChartData = data?.map((item: any, i: number) => {
-      const colors = chroma
-        .scale(COLORWAY)
-        .mode("lab")
-        .colors(data?.length || 0);
-
+    const newChartData = data?.map((item: any) => {
       return {
+        ...item,
         name: item?.name,
         value: percentageView ? item?.percentage : item?.value,
-        color: addOpacityToHex(colors[i], 0.8),
       };
     });
     setChartData(newChartData);
@@ -315,16 +314,11 @@ const HGUCount = (props: any) => {
   });
 
   useEffect(() => {
-    const newChartData = data?.map((item: any, i: number) => {
-      const colors = chroma
-        .scale(COLORWAY)
-        .mode("lab")
-        .colors(data?.length || 0);
-
+    const newChartData = data?.map((item: any) => {
       return {
+        ...item,
         name: item?.name,
         value: percentageView ? item?.percentage : item?.value,
-        color: addOpacityToHex(colors[i], 0.8),
       };
     });
     setChartData(newChartData);
@@ -416,16 +410,11 @@ const HGUAreaByKabupaten = (props: any) => {
   });
 
   useEffect(() => {
-    const newChartData = data?.map((item: any, i: number) => {
-      const colors = chroma
-        .scale(COLORWAY)
-        .mode("lab")
-        .colors(data?.length || 0);
-
+    const newChartData = data?.map((item: any) => {
       return {
+        ...item,
         name: item?.name,
         value: percentageView ? item?.percentage : item?.value,
-        color: addOpacityToHex(colors[i], 0.8),
       };
     });
     setChartData(newChartData);
@@ -574,6 +563,8 @@ const DashboardData = (props: any) => {
     setDashboardData(summarizeDashboard(newActiveWorkspaces, filterGeoJSON));
   }, [activeWorkspacesByCategory, filterGeoJSON]);
 
+  // console.log(dashboardData);
+
   // Handle filter
   useEffect(() => {
     if (dashboardData) {
@@ -592,7 +583,6 @@ const DashboardData = (props: any) => {
     </HStack>
   );
 };
-
 const DashboardPage = () => {
   const { l } = useLang();
 
