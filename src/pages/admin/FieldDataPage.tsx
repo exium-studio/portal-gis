@@ -2,6 +2,7 @@ import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
 import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
+import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import P from "@/components/ui-custom/P";
 import SearchInput from "@/components/ui-custom/SearchInput";
 import SelectInput from "@/components/ui-custom/SelectInput";
@@ -307,12 +308,26 @@ const FieldDataPage = () => {
 
       {!empty(activeWorkspacesByCategory) && (
         <CContainer gap={4} flex={1} overflowY={"auto"}>
-          <ItemContainer
-            p={3}
-            borderRadius={themeConfig.radii.container}
-            bg={"body"}
-          >
-            <SimpleGrid gap={4} columns={halfPanel ? 1 : [1, null, null, 3]}>
+          <ItemContainer borderRadius={themeConfig.radii.container} bg={"body"}>
+            <ItemHeaderContainer justify={"space-between"} p={2} pl={4}>
+              <P fontWeight={"semibold"}>Filter Data</P>
+
+              <BButton
+                variant={"outline"}
+                onClick={() => {
+                  setFilterConfig(DEFAULT_FILTER_CONFIG);
+                }}
+                size={"sm"}
+              >
+                Reset
+              </BButton>
+            </ItemHeaderContainer>
+
+            <SimpleGrid
+              p={4}
+              gap={4}
+              columns={halfPanel ? 1 : [1, null, null, 3]}
+            >
               <Field label={"No hak"}>
                 <SearchInput
                   placeholder="0200*********"
