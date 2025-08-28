@@ -245,7 +245,7 @@ const Edit = (props: any) => {
               form="edit_workspace_category"
               colorPalette={themeConfig?.colorPalette}
             >
-              {l.add}
+              {l.save}
             </BButton>
           </DisclosureFooter>
         </DisclosureContent>
