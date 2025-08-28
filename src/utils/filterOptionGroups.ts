@@ -3,7 +3,7 @@ import {
   Interface__FilterOptionGroup,
   Interface__FilterOptionValue,
 } from "@/constants/interfaces";
-import { FilterGeoJSON } from "@/context/useFilterGeoJSON";
+import { FilterGeoJSON } from "@/constants/types";
 
 const FILTER_KEYS: (keyof FilterGeoJSON)[] = [
   "KABUPATEN",
