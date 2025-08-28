@@ -90,7 +90,7 @@ export default function PolygonPopover() {
       pos={"relative"}
       left={pos.x}
       top={pos.y}
-      transform={"translate(-50%, -100%)"}
+      transform={"translate(-50%, calc(-100% - 20px))"}
       pointerEvents={"auto"}
     >
       <Box

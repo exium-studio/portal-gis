@@ -12,6 +12,7 @@ import useOffline from "./context/useOffilne";
 import Routing from "./routes/Routing";
 import theme from "./theme";
 import useStatusBarColor from "./utils/statusBarColor";
+import { useFirefoxPaddingY } from "./hooks/useFirefoxPaddingY";
 
 const EndpointWrapper = ({ children }: { children: React.ReactNode }) => {
   // Contexts
@@ -49,6 +50,9 @@ const EndpointWrapper = ({ children }: { children: React.ReactNode }) => {
 };
 
 function App() {
+  // Hooks
+  useFirefoxPaddingY(6);
+
   // Contexts
   const { l } = useLang();
   const { setOffline } = useOffline();

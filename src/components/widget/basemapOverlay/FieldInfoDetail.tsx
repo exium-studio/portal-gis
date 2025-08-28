@@ -60,6 +60,7 @@ const FieldInfoDetail = () => {
   useEffect(() => {
     if (!workspaceActive) {
       clearSelectedPolygon();
+      onClose();
     }
   }, [workspaceActive, activeWorkspaces]);
 

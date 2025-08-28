@@ -9,6 +9,7 @@ import useLegend from "@/context/useLegend";
 import useMapStyle from "@/context/useMapStyle";
 import { useColorMode } from "../ui/color-mode";
 import { useCallback, useEffect, useRef } from "react";
+import useDetailFieldInfo from "@/context/useDetailFieldInfo";
 
 interface LayerSourceProps {
   activeWorkspace: Interface__ActiveWorkspace;
@@ -22,6 +23,7 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
   const clearSelectedPolygon = useSelectedPolygon(
     (s) => s.clearSelectedPolygon
   );
+  const detailFieldInfoOnClose = useDetailFieldInfo((s) => s.onClose);
   const { themeConfig } = useThemeConfig();
   const legend = useLegend((s) => s.legend);
   const colorway = useLegend((s) => s.colorway);
@@ -95,6 +97,7 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
             lon: event.lngLat.lng,
           },
         });
+        detailFieldInfoOnClose();
       }
     },
     [
