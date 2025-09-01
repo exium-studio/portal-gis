@@ -3,9 +3,8 @@ import {
   Interface__SelectOption,
 } from "@/constants/interfaces";
 import useRequest from "@/hooks/useRequest";
-import SelectInput from "../ui-custom/SelectInput";
-import useLang from "@/context/useLang";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
+import SelectInput from "../ui-custom/SelectInput";
 
 interface Props extends Interface__Select {
   workspaceId: number;
@@ -15,7 +14,6 @@ const SelectLayerByWorkspaceId = (props: Props) => {
   const { workspaceId, ...restProps } = props;
 
   // Hooks
-  const { l } = useLang();
   const { req } = useRequest({
     id: "select_layer_by_workspace_id",
     showLoadingToast: false,
@@ -25,7 +23,7 @@ const SelectLayerByWorkspaceId = (props: Props) => {
   // Utils
   function fetch(setOptions: any) {
     const config = {
-      url: `/api/gis-bpn/workspaces-layers/load/${workspaceId}`,
+      url: `/api/gis-bpn/workspaces-layers/layers-by-workspace/${workspaceId}`,
       method: "GET",
       params: {
         with_trashed: 0,
@@ -38,9 +36,9 @@ const SelectLayerByWorkspaceId = (props: Props) => {
       onResolve: {
         onSuccess: (r) => {
           const newOptions = r?.data?.data?.properties
-            ?.map((property: any) => ({
-              id: property,
-              label: property,
+            ?.map((layer: any) => ({
+              id: layer?.id,
+              label: layer?.name,
             }))
             .sort((a: Interface__SelectOption, b: Interface__SelectOption) =>
               a.label.localeCompare(b.label)
@@ -53,7 +51,7 @@ const SelectLayerByWorkspaceId = (props: Props) => {
 
   return (
     <SelectInput
-      title={capsFirstLetterEachWord(l.property)}
+      title={capsFirstLetterEachWord("Layer")}
       fetch={fetch}
       {...restProps}
     />

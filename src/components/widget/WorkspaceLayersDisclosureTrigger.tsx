@@ -54,6 +54,7 @@ import SelectLayerFileType from "./SelectLayerFileType";
 import SelectLayerType from "./SelectLayerType";
 import SelectPropertyByLayerId from "./SelectPropertyByLayerId";
 import SimplePopover from "./SimplePopover";
+import SelectLayerByWorkspaceId from "./SelectLayerByWorkspaceId";
 
 const SetLegend = (props: any) => {
   // Props
@@ -196,6 +197,7 @@ const EditLayer = (props: any) => {
       layer_type: undefined as any,
       file_type: undefined as any,
       file: undefined as any,
+      parent_layer: undefined as any,
     },
     validationSchema: yup.object().shape({
       with_explanation: yup.boolean(),
@@ -207,6 +209,7 @@ const EditLayer = (props: any) => {
         allowedExtensions: ["zip"],
         maxSizeMB: 50,
       }),
+      parent_layer: yup.array(),
     }),
     onSubmit: (values, { resetForm }) => {
       // console.log(values);
@@ -226,6 +229,7 @@ const EditLayer = (props: any) => {
       if (values.file_type)
         payload.append("file_type", values.file_type?.[0]?.id);
       if (values.file) payload.append("file", values.file?.[0]);
+      payload.append("parent_layer_id", values.parent_layer?.[0]?.id);
 
       const url = `/api/gis-bpn/workspaces-layers/update/${layer?.id}`;
       const config = {
@@ -261,6 +265,12 @@ const EditLayer = (props: any) => {
         ],
         file_type: undefined,
         file: undefined,
+        parent_layer: [
+          {
+            id: layer?.parent_layer?.id,
+            label: layer?.parent_layer?.name,
+          },
+        ],
       });
     }
   }, [layer, open]);
@@ -380,6 +390,20 @@ const EditLayer = (props: any) => {
                     inputValue={formik.values.file}
                     disabled={empty(formik.values.file_type)}
                     accept=".zip"
+                  />
+                </Field>
+
+                <Field
+                  label={l.parent_layer}
+                  invalid={!!formik.errors.parent_layer}
+                  errorText={formik.errors.parent_layer as string}
+                >
+                  <SelectLayerByWorkspaceId
+                    workspaceId={workspace?.id}
+                    onConfirm={(input) => {
+                      formik.setFieldValue("parent_layer", input);
+                    }}
+                    inputValue={formik.values.parent_layer}
                   />
                 </Field>
               </FieldsetRoot>
