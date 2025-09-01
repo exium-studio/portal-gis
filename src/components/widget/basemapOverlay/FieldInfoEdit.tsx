@@ -10,7 +10,6 @@ import useLang from "@/context/useLang";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useRequest from "@/hooks/useRequest";
-import back from "@/utils/back";
 import empty from "@/utils/empty";
 import { normalizeKeys } from "@/utils/normalizeKeys";
 import { fileValidation } from "@/utils/validationSchemas";
@@ -188,7 +187,6 @@ export const FieldInfoEdit = (props: any) => {
     }),
     onSubmit: (values, { resetForm }) => {
       // console.log(values);
-      back();
       formik.setFieldValue("docs", undefined);
 
       const explanationProperties = {
@@ -283,7 +281,9 @@ export const FieldInfoEdit = (props: any) => {
         formik.setFieldValue(key, properties[key]);
       });
     }
-  }, [properties]);
+  }, [properties.id]);
+
+  console.log(properties.id);
 
   // Handle initial docs
   useEffect(() => {
@@ -312,7 +312,7 @@ export const FieldInfoEdit = (props: any) => {
           <Tabs.List bg={"body"} minW={"max"} w={"full"}>
             {/* Information tab */}
             <Tabs.Trigger
-              flex={1}
+              minW={"fit !important"}
               justifyContent={"center"}
               value="information"
             >
@@ -321,8 +321,7 @@ export const FieldInfoEdit = (props: any) => {
 
             {/* Usage tab */}
             <Tabs.Trigger
-              whiteSpace={"nowrap"}
-              flex={1}
+              minW={"fit !important"}
               justifyContent={"center"}
               value="usage"
             >
@@ -332,7 +331,7 @@ export const FieldInfoEdit = (props: any) => {
             {/* Explanation tab */}
             {withExplanation && (
               <Tabs.Trigger
-                flex={1}
+                minW={"fit !important"}
                 justifyContent={"center"}
                 value="explanation"
               >
@@ -341,7 +340,12 @@ export const FieldInfoEdit = (props: any) => {
             )}
 
             {/* Document tab */}
-            <Tabs.Trigger flex={1} justifyContent={"center"} value="document">
+            <Tabs.Trigger
+              minW={"fit !important"}
+              flex={1}
+              justifyContent={"center"}
+              value="document"
+            >
               {l.document}
             </Tabs.Trigger>
           </Tabs.List>
