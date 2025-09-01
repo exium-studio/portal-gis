@@ -60,10 +60,10 @@ const FileInput = (props: Props) => {
   // States
   const singleFileInputted = maxFiles === 1 && !empty(inputValue);
   const singleFile = inputValue?.[0] as File;
-  const finalIcon = singleFileInputted ? (
+  const resolvedIcon = singleFileInputted ? (
     <FileIcon name={singleFile.name} mimeType={singleFile.type} size={"2xl"} />
   ) : undefined;
-  const finalLabel = singleFileInputted
+  const resolvedLabel = singleFileInputted
     ? singleFile?.name
     : l.file_dropzone_label;
   const finalDescription = singleFileInputted
@@ -106,8 +106,8 @@ const FileInput = (props: Props) => {
       <>
         {dropzone ? (
           <FileUploadDropzone
-            icon={finalIcon}
-            label={finalLabel}
+            icon={resolvedIcon}
+            label={resolvedLabel}
             description={finalDescription}
             border={"2px dashed"}
             borderColor={

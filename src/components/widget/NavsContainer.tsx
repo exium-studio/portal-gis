@@ -17,9 +17,9 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import {
-  IconMaximize,
-  IconMinimize,
   IconSettings,
+  IconWindowMaximize,
+  IconWindowMinimize,
   IconX,
 } from "@tabler/icons-react";
 import { useRef } from "react";
@@ -52,59 +52,6 @@ interface Props {
   withMaps?: boolean;
 }
 
-const MainPanelUtils = () => {
-  // Hooks
-  const { l } = useLang();
-
-  // Contexts
-  const fullPanel = useLayout((s) => s.fullPanel);
-  const setLayout = useLayout((s) => s.setLayout);
-
-  function toggleFullMainPanel() {
-    if (!fullPanel) {
-      setLayout(LAYOUT_OPTIONS[1]);
-    } else if (fullPanel) {
-      setLayout(LAYOUT_OPTIONS[0]);
-    }
-  }
-
-  return (
-    <HStack flexShrink={0} gap={0}>
-      <ColorModeButton size={"md"} />
-
-      <CurrentUserTimeZone />
-
-      <Tooltip content={fullPanel ? l.half_main_panel : l.full_main_panel}>
-        <BButton iconButton variant={"ghost"} onClick={toggleFullMainPanel}>
-          <Icon>
-            {fullPanel ? (
-              <IconMinimize stroke={1.5} />
-            ) : (
-              <IconMaximize stroke={1.5} />
-            )}
-          </Icon>
-        </BButton>
-      </Tooltip>
-
-      {/* <LayoutMenu /> */}
-
-      <Tooltip content={l.close_main_panel}>
-        <BButton
-          iconButton
-          variant={"ghost"}
-          color={"fg.error"}
-          onClick={() => {
-            setLayout(LAYOUT_OPTIONS[2]);
-          }}
-        >
-          <Icon>
-            <IconX />
-          </Icon>
-        </BButton>
-      </Tooltip>
-    </HStack>
-  );
-};
 const ActiveNavIndicator = ({ ...props }: CircleProps) => {
   // Contexts
   const { themeConfig } = useThemeConfig();
@@ -301,6 +248,107 @@ const NavList2 = (props: any) => {
     </>
   );
 };
+const HeaderUtils = () => {
+  // Hooks
+  const { l } = useLang();
+
+  // Contexts
+  const fullPanel = useLayout((s) => s.fullPanel);
+  const setLayout = useLayout((s) => s.setLayout);
+
+  function toggleFullMainPanel() {
+    if (!fullPanel) {
+      setLayout(LAYOUT_OPTIONS[1]);
+    } else if (fullPanel) {
+      setLayout(LAYOUT_OPTIONS[0]);
+    }
+  }
+
+  return (
+    <HStack flexShrink={0} gap={1}>
+      <ColorModeButton size={"sm"} />
+
+      <CurrentUserTimeZone size={"sm"} />
+
+      <Tooltip content={fullPanel ? l.half_main_panel : l.full_main_panel}>
+        <BButton
+          iconButton
+          variant={"ghost"}
+          size={"sm"}
+          onClick={toggleFullMainPanel}
+        >
+          <Icon boxSize={5}>
+            {fullPanel ? (
+              <IconWindowMinimize stroke={1.5} />
+            ) : (
+              <IconWindowMaximize stroke={1.5} />
+            )}
+          </Icon>
+        </BButton>
+      </Tooltip>
+
+      {/* <LayoutMenu /> */}
+
+      <Tooltip content={l.close_main_panel}>
+        <BButton
+          iconButton
+          variant={"ghost"}
+          size={"sm"}
+          onClick={() => {
+            setLayout(LAYOUT_OPTIONS[2]);
+          }}
+        >
+          <Icon boxSize={5}>
+            <IconX />
+          </Icon>
+        </BButton>
+      </Tooltip>
+    </HStack>
+  );
+};
+const Header = (props: any) => {
+  // Props
+  const { title, backPath } = props;
+
+  // Hooks
+  const iss = useIsSmScreenWidth();
+
+  // Contexts
+  const { themeConfig } = useThemeConfig();
+
+  return (
+    <HStack
+      justify={"space-between"}
+      pl={3}
+      pr={[0, null, 1]}
+      py={"9px"}
+      flexShrink={0}
+      position={"sticky"}
+      top={0}
+      zIndex={4}
+      bg={iss ? "body" : "bgContent"}
+      borderBottom={iss ? "1px solid {colors.border.subtle}" : ""}
+    >
+      <HStack>
+        {backPath && (
+          <BackButton
+            iconButton
+            backPath={backPath}
+            borderRadius={themeConfig.radii.component}
+          />
+        )}
+
+        <SimplePopover content={title}>
+          <Heading6 fontWeight={"bold"} lineClamp={1} cursor={"pointer"}>
+            {title}
+          </Heading6>
+        </SimplePopover>
+      </HStack>
+
+      <HeaderUtils />
+    </HStack>
+  );
+};
 
 const NavContainer = ({
   children,
@@ -313,7 +361,6 @@ const NavContainer = ({
   const iss = useIsSmScreenWidth();
 
   // Contexts
-  const { themeConfig } = useThemeConfig();
   const halfPanel = useLayout((s) => s.halfPanel);
   const fullPanel = useLayout((s) => s.fullPanel);
   const closedPanel = useLayout((s) => s.closedPanel);
@@ -385,40 +432,11 @@ const NavContainer = ({
               borderTop={iss ? "1px solid" : ""}
               borderColor={"border.muted"}
             >
-              <HStack
-                justify={"space-between"}
-                pl={3}
-                pr={[0, null, 1]}
-                py={"9px"}
-                flexShrink={0}
-                position={"sticky"}
-                top={0}
-                zIndex={4}
-                bg={iss ? "body" : "bgContent"}
-                borderBottom={iss ? "1px solid {colors.border.subtle}" : ""}
-              >
-                <HStack>
-                  {backPath && (
-                    <BackButton
-                      iconButton
-                      backPath={backPath}
-                      borderRadius={themeConfig.radii.component}
-                    />
-                  )}
-
-                  <SimplePopover content={title}>
-                    <Heading6
-                      fontWeight={"bold"}
-                      lineClamp={1}
-                      cursor={"pointer"}
-                    >
-                      {title}
-                    </Heading6>
-                  </SimplePopover>
-                </HStack>
-
-                <MainPanelUtils />
-              </HStack>
+              <Header
+                title={title}
+                backPath={backPath}
+                activePath={activePath}
+              />
 
               {children}
             </CContainer>

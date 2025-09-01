@@ -1,15 +1,16 @@
 "use client";
 
 import useADM from "@/context/useADM";
+import useLang from "@/context/useLang";
 import type { IconButtonProps, SpanProps } from "@chakra-ui/react";
-import { ClientOnly, IconButton, Skeleton, Span } from "@chakra-ui/react";
+import { Icon, Span } from "@chakra-ui/react";
 import { IconMoon2 } from "@tabler/icons-react";
 import type { ThemeProviderProps } from "next-themes";
 import { ThemeProvider, useTheme } from "next-themes";
 import * as React from "react";
 import { LuSun } from "react-icons/lu";
+import BButton from "../ui-custom/BButton";
 import { Tooltip } from "./tooltip";
-import useLang from "@/context/useLang";
 
 export interface ColorModeProviderProps extends ThemeProviderProps {}
 
@@ -44,11 +45,6 @@ export function useColorModeValue<T>(light: T, dark: T) {
   return colorMode === "dark" ? dark : light;
 }
 
-export function ColorModeIcon() {
-  const { colorMode } = useColorMode();
-  return colorMode === "dark" ? <IconMoon2 stroke={1.8} /> : <LuSun />;
-}
-
 interface ColorModeButtonProps extends Omit<IconButtonProps, "aria-label"> {}
 
 export const ColorModeButton = React.forwardRef<
@@ -61,26 +57,27 @@ export const ColorModeButton = React.forwardRef<
 
   // Contexts
   const { ADM } = useADM();
+  const { colorMode } = useColorMode();
 
   // States
   const ADMActive = ADM === "true";
 
   return (
-    <ClientOnly fallback={<Skeleton boxSize="8" />}>
-      <Tooltip content={ADMActive ? l.adm_active : l.toggle_dark_mode}>
-        <IconButton
-          onClick={toggleColorMode}
-          variant="ghost"
-          aria-label="Toggle color mode"
-          size="sm"
-          disabled={ADMActive}
-          ref={ref}
-          {...props}
-        >
-          <ColorModeIcon />
-        </IconButton>
-      </Tooltip>
-    </ClientOnly>
+    <Tooltip content={ADMActive ? l.adm_active : l.toggle_dark_mode}>
+      <BButton
+        iconButton
+        onClick={toggleColorMode}
+        variant="ghost"
+        aria-label="Toggle color mode"
+        disabled={ADMActive}
+        ref={ref}
+        {...props}
+      >
+        <Icon boxSize={5}>
+          {colorMode === "dark" ? <IconMoon2 stroke={1.8} /> : <LuSun />}
+        </Icon>
+      </BButton>
+    </Tooltip>
   );
 });
 

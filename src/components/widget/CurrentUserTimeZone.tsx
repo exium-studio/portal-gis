@@ -47,7 +47,7 @@ const CurrentUserTimeZone = (props: BButtonProps) => {
               onClick={onToggle}
               {...restProps}
             >
-              <Icon>
+              <Icon boxSize={5}>
                 <IconTimezone stroke={1.5} />
               </Icon>
             </BButton>

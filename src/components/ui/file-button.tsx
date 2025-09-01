@@ -15,6 +15,7 @@ import { IconUpload, IconX } from "@tabler/icons-react";
 import { forwardRef } from "react";
 import FileIcon from "../ui-custom/FileIcon";
 import { useThemeConfig } from "@/context/useThemeConfig";
+import P from "../ui-custom/P";
 
 export interface FileUploadRootProps extends ChakraFileUpload.RootProps {
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
@@ -56,7 +57,7 @@ export const FileUploadDropzone = forwardRef<
         {icon || <IconUpload />}
       </Icon>
       <ChakraFileUpload.DropzoneContent>
-        <div>{label}</div>
+        <P>{label}</P>
         {description && (
           <Text color="fg.muted">{description || ".* up to 5MB"}</Text>
         )}

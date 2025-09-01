@@ -315,6 +315,11 @@ const customConfig = defineConfig({
           value: { base: "{colors.light}aa", _dark: "{colors.dark}aa" },
         },
         ibody: { value: { base: "{colors.dark}", _dark: "{colors.light}" } },
+        fg: {
+          error: {
+            value: { base: "{colors.red.500}", _dark: "{colors.red.500}" },
+          },
+        },
         border: {
           subtle: {
             value: {
