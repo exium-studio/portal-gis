@@ -205,20 +205,20 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
         );
       }
 
+      // Circle layer as hitbox (32px equivalent in pixels)
       if (!map.getLayer(lineLayerId)) {
         map.addLayer({
           id: lineLayerId,
-          type: "line",
+          type: "circle",
           source: sourceId,
           paint: {
-            "line-color": defaultLineColor,
-            "line-width": 1,
-            "line-opacity": 0.5,
+            "circle-radius": 16, // 32px diameter
+            "circle-opacity": 0, // invisible hitbox
           },
-          layout: { visibility: "none" },
         });
       }
 
+      // Symbol layer for the actual icon + label
       if (!map.getLayer(fillLayerId)) {
         map.addLayer({
           id: fillLayerId,

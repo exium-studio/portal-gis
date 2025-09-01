@@ -14,7 +14,6 @@ import Map, { MapRef, Marker } from "react-map-gl/mapbox";
 import LayerManager from "../LayerManager";
 import MapMarkerCircle from "../MapMarkerCircle";
 import SelectedPolygonLayer from "../SelectedPolygonLayer";
-import PolygonPopover from "../basemapOverlay/PolygonPopover";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 const MIN_ZOOM = 1;
@@ -228,7 +227,7 @@ const BaseMap = () => {
           {/* Selected Polygon Layer */}
           <SelectedPolygonLayer />
 
-          <PolygonPopover />
+          {/* <PolygonPopover /> */}
         </>
       )}
     </Map>

@@ -31,7 +31,7 @@ const FieldInfoDetail = () => {
   const iss = useIsSmScreenWidth();
 
   // Contexts
-  const { open, onClose } = useDetailFieldInfo();
+  const { open, onOpen, onClose } = useDetailFieldInfo();
   const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
   const clearSelectedPolygon = useSelectedPolygon(
     (s) => s.clearSelectedPolygon
@@ -56,6 +56,14 @@ const FieldInfoDetail = () => {
   const excludedKeysCount = EXCLUDED_KEYS.filter(
     (key) => properties && Object.keys(properties).includes(key)
   ).length;
+
+  useEffect(() => {
+    if (selectedPolygon) {
+      onOpen();
+    } else {
+      onClose();
+    }
+  }, [selectedPolygon]);
 
   useEffect(() => {
     setProperties(selectedPolygon?.polygon?.properties);
