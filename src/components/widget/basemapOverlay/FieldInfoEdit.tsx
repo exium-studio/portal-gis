@@ -222,8 +222,8 @@ export const FieldInfoEdit = (props: any) => {
         colorPalette={themeConfig.colorPalette}
         className="scrollY"
       >
-        <HScroll className="noScroll">
-          <Tabs.List bg={"body"} w={"max"} pos={"sticky"} top={0} zIndex={2}>
+        <HScroll className="noScroll" pos={"sticky"} top={0} zIndex={2}>
+          <Tabs.List bg={"body"} w={"max"}>
             {/* Information tab */}
             <Tabs.Trigger
               flex={1}
