@@ -224,7 +224,7 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
           source: sourceId,
           layout: {
             "icon-image": "custom-marker",
-            "icon-size": 0.4,
+            "icon-size": 0.3125,
             "icon-anchor": "bottom",
             "text-field": ["get", "name"],
             "text-size": 12,
