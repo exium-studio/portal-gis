@@ -15,6 +15,7 @@ import MenuHeaderContainer from "../MenuHeaderContainer";
 import PropertyValue from "../PropertyValue";
 import { EditField } from "./EditField";
 import FloatingContainerCloseButton from "./FloatingContainerCloseButton";
+import HScroll from "@/components/ui-custom/HScroll";
 
 const EXCLUDED_KEYS = [
   "id",
@@ -24,6 +25,22 @@ const EXCLUDED_KEYS = [
   "deleted_docs",
   "color",
 ];
+
+const ItemContainer = (props: any) => {
+  const { children, last } = props;
+
+  return (
+    <CContainer
+      borderBottom={last ? "" : "1px solid"}
+      borderColor={"border.muted"}
+      px={2}
+      pt={2}
+      pb={last ? 0 : 2}
+    >
+      {children}
+    </CContainer>
+  );
+};
 
 const FieldInfoDetail = () => {
   // Hooks
@@ -57,6 +74,7 @@ const FieldInfoDetail = () => {
     (key) => properties && Object.keys(properties).includes(key)
   ).length;
 
+  //  open on selectedPolygon changes
   useEffect(() => {
     if (selectedPolygon) {
       onOpen();
@@ -66,29 +84,13 @@ const FieldInfoDetail = () => {
     setProperties(selectedPolygon?.polygon?.properties);
   }, [selectedPolygon]);
 
+  // close on workspace deactivation
   useEffect(() => {
     if (!workspaceActive) {
       clearSelectedPolygon();
       onClose();
     }
   }, [workspaceActive, activeWorkspaces]);
-
-  // Components
-  const ItemContainer = (props: any) => {
-    const { children, last } = props;
-
-    return (
-      <CContainer
-        borderBottom={last ? "" : "1px solid"}
-        borderColor={"border.muted"}
-        px={2}
-        pt={2}
-        pb={last ? 0 : 2}
-      >
-        {children}
-      </CContainer>
-    );
-  };
 
   return (
     <FloatingContainer
@@ -140,18 +142,19 @@ const FieldInfoDetail = () => {
       </MenuHeaderContainer>
 
       <CContainer pl={"6px"} className="scrollY">
+        <HScroll></HScroll>
+
         {properties &&
           Object?.keys(finalData)?.map((key, i) => {
             const last =
               i === Object?.keys(properties)?.length - excludedKeysCount - 1;
-            // const latitudeKey = key.toLocaleLowerCase() === "latitude";
-            // const longitudeKey = key.toLocaleLowerCase() === "longitude";
 
             return (
               <ItemContainer key={key} last={last}>
                 <P fontWeight={"medium"} color={"fg.subtle"}>
                   {`${key}`}
                 </P>
+
                 <PropertyValue>{`${properties?.[key] || "-"}`}</PropertyValue>
               </ItemContainer>
             );

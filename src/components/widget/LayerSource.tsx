@@ -63,6 +63,24 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
     : satellite
     ? "#ddd"
     : "#ccc";
+  const defaultSymbolTextColor = plainLight
+    ? "#151515"
+    : plainDark
+    ? "#fff"
+    : colorful
+    ? "#151515"
+    : satellite
+    ? "#fff"
+    : "#151515";
+  const defaultSymbolHaloTextColor = plainLight
+    ? "#fff"
+    : plainDark
+    ? "#151515"
+    : colorful
+    ? "#fff"
+    : satellite
+    ? "#151515"
+    : "#fff";
 
   const fillColor = ["coalesce", ["get", "color"], defaultFillColor];
   const fillOpacity = 0.6;
@@ -244,8 +262,8 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
             "symbol-z-order": "source",
           },
           paint: {
-            "text-color": "#333",
-            "text-halo-color": "#fff",
+            "text-color": defaultSymbolTextColor,
+            "text-halo-color": defaultSymbolHaloTextColor,
             "text-halo-width": 1,
           },
         });
