@@ -1,7 +1,7 @@
 // Hardcoded Dashboard
-// HGU_AREA each TIPEHAK sum the LUASPETA
+// HGU_AREA each TIPEHAK sum the LUASTERTUL
 // HGU_COUNT_PERCENTAGE calculate percentage each TIPEHAK
-// HGU_AREA_BY_KABUPATEN each KABUPATEN sum the LUASPETA wich has TIPEHAK value
+// HGU_AREA_BY_KABUPATEN each KABUPATEN sum the LUASTERTUL wich has TIPEHAK value
 
 import CContainer from "@/components/ui-custom/CContainer";
 import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
@@ -103,7 +103,7 @@ const summarizeDashboard = (
 
         if (!passFilter(props)) continue;
 
-        const luas = parseNum(props.LUASPETA);
+        const luas = parseNum(props.LUASTERTUL);
         if (!tipeHak || !Number.isFinite(luas)) continue;
 
         areaRaw[tipeHak] = (areaRaw[tipeHak] || 0) + luas;
