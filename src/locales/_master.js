@@ -79,6 +79,14 @@ export const master_data_navs = {
 };
 
 // Semantic
+export const show_all = {
+  id: "Lihat semua",
+  en: "Show all",
+};
+export const show_less = {
+  id: "Lihat sedikit",
+  en: "Show less",
+};
 export const pay = {
   id: "Bayar",
   en: "Pay",

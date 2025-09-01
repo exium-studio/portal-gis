@@ -508,6 +508,8 @@ const translations = {
     "description": "Please select the settings menu."
   },
   "show": "Show",
+  "show_all": "Show all",
+  "show_less": "Show less",
   "shrink": "Down ${value} from last year",
   "signin_form": {
     "title": "Login to System",

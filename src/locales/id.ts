@@ -508,6 +508,8 @@ const translations = {
     "description": "Silahkan pilih menu pengaturan."
   },
   "show": "Tampilkan",
+  "show_all": "Lihat semua",
+  "show_less": "Lihat sedikit",
   "shrink": "Turun ${value} dari tahun lalu",
   "signin_form": {
     "title": "Login ke Sistem",

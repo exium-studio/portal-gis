@@ -20,6 +20,7 @@ import * as yup from "yup";
 import ExistingFileItem from "../ExistingFIleItem";
 import PropertyValue from "../PropertyValue";
 import HScroll from "@/components/ui-custom/HScroll";
+import { normalizeKeys } from "@/utils/normalizeKeys";
 
 const EXCLUDED_KEYS = [
   "id",
@@ -35,7 +36,18 @@ const EXCLUDED_KEYS = [
   "color",
 ];
 
-const ItemContainer = (props: any) => {
+const MINIMAL_KEYS = [
+  { label: "Hak", value: "hak" },
+  { label: "NIB", value: "nib" },
+  { label: "Luas tertulis", value: "luastertul" },
+  { label: "Luas peta", value: "liaspeta" },
+  { label: "Pemilik", value: "pemilik" },
+  { label: "Tanggal terbit", value: "tglterbith" },
+  { label: "Tanggal berakhir", value: "berakhirha" },
+  { label: "SK", value: "sk" },
+];
+
+const ListItemContainer = (props: any) => {
   const { children, last } = props;
 
   return (
@@ -47,6 +59,68 @@ const ItemContainer = (props: any) => {
       pb={last ? 0 : 2}
     >
       {children}
+    </CContainer>
+  );
+};
+const InformationContent = (props: any) => {
+  // Props
+  const { properties, normalizeProperties, resolvedData, ...restProps } = props;
+
+  // Contexts
+  const { l } = useLang();
+
+  // States
+  const [showAll, setShowAll] = useState<boolean>(false);
+  const excludedKeysCount = EXCLUDED_KEYS.filter(
+    (key) => properties && Object.keys(properties).includes(key)
+  ).length;
+
+  return (
+    <CContainer {...restProps}>
+      {!showAll &&
+        MINIMAL_KEYS.map((key, i) => (
+          <ListItemContainer
+            key={key.value}
+            last={i === MINIMAL_KEYS.length - 1}
+          >
+            <P fontWeight={"medium"} color={"fg.subtle"}>
+              {key.label}
+            </P>
+            <PropertyValue>
+              {normalizeProperties?.[key.value] || "-"}
+            </PropertyValue>
+          </ListItemContainer>
+        ))}
+
+      {showAll &&
+        properties &&
+        Object?.keys(resolvedData)?.map((key, i) => {
+          const last =
+            i === Object?.keys(properties)?.length - excludedKeysCount - 1;
+
+          return (
+            <ListItemContainer key={key} last={last}>
+              <P fontWeight={"medium"} color={"fg.subtle"}>
+                {`${key}`}
+              </P>
+
+              <PropertyValue>{`${properties?.[key] || "-"}`}</PropertyValue>
+            </ListItemContainer>
+          );
+        })}
+
+      <CContainer mt={4} px={"2px"}>
+        <BButton
+          size={"sm"}
+          variant={"ghost"}
+          colorPalette={"gray"}
+          onClick={() => {
+            setShowAll(!showAll);
+          }}
+        >
+          {showAll ? l.show_less : l.show_all}
+        </BButton>
+      </CContainer>
     </CContainer>
   );
 };
@@ -70,6 +144,9 @@ export const FieldInfoEdit = (props: any) => {
   const setSelectedPolygon = useSelectedPolygon((s) => s.setSelectedPolygon);
 
   // States
+  const normalizeProperties = normalizeKeys(
+    selectedPolygon?.polygon?.properties as any
+  );
   const workspaceId = selectedPolygon?.activeWorkspace?.id;
   const layerId = selectedPolygon?.activeLayer?.id;
   const tableName = selectedPolygon?.activeLayer?.table_name;
@@ -88,9 +165,6 @@ export const FieldInfoEdit = (props: any) => {
         .filter(([key]) => !EXCLUDED_KEYS.includes(key))
         .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
     );
-  const excludedKeysCount = EXCLUDED_KEYS.filter(
-    (key) => properties && Object.keys(properties).includes(key)
-  ).length;
   const withExplanationValues = {
     PARAPIHAKB: "",
     PERMASALAH: "",
@@ -264,30 +338,20 @@ export const FieldInfoEdit = (props: any) => {
         </HScroll>
 
         {/* Information content */}
-        <Tabs.Content value="information" p={0} px={1}>
-          {properties &&
-            Object?.keys(resolvedData)?.map((key, i) => {
-              const last =
-                i === Object?.keys(properties)?.length - excludedKeysCount - 1;
-
-              return (
-                <ItemContainer key={key} last={last}>
-                  <P fontWeight={"medium"} color={"fg.subtle"}>
-                    {`${key}`}
-                  </P>
-
-                  <PropertyValue>{`${properties?.[key] || "-"}`}</PropertyValue>
-                </ItemContainer>
-              );
-            })}
+        <Tabs.Content value="information" p={0} pl={"6px"}>
+          <InformationContent
+            properties={properties}
+            normalizeProperties={normalizeProperties}
+            resolvedData={resolvedData}
+          />
         </Tabs.Content>
 
         {/* Usage content */}
-        <Tabs.Content value="explanation" px={3} py={2}></Tabs.Content>
+        <Tabs.Content value="explanation" p={0} pl={"6px"}></Tabs.Content>
 
         {/* Explanation content */}
         {withExplanation && (
-          <Tabs.Content value="explanation" px={3} py={2}>
+          <Tabs.Content value="explanation" pl={"14px"} pr={"8px"} py={2}>
             <FieldRoot gap={4}>
               <Field
                 label={"PARAPIHAKB"}
@@ -347,6 +411,7 @@ export const FieldInfoEdit = (props: any) => {
                 colorPalette={themeConfig.colorPalette}
                 onClick={formik.submitForm}
                 loading={loading}
+                size={"sm"}
               >
                 {l.save}
               </BButton>
@@ -355,7 +420,7 @@ export const FieldInfoEdit = (props: any) => {
         )}
 
         {/* Document content */}
-        <Tabs.Content value="document" px={3} py={2}>
+        <Tabs.Content value="document" pl={"14px"} pr={"8px"} py={2}>
           <FieldRoot gap={4}>
             <Field
               label={l.document}
@@ -423,6 +488,7 @@ export const FieldInfoEdit = (props: any) => {
               colorPalette={themeConfig.colorPalette}
               onClick={formik.submitForm}
               loading={loading}
+              size={"sm"}
             >
               {l.save}
             </BButton>
