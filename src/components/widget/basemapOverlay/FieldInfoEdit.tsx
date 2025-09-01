@@ -67,12 +67,17 @@ const InformationContent = (props: any) => {
 
   // Contexts
   const { l } = useLang();
+  const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
 
   // States
   const [showAll, setShowAll] = useState<boolean>(false);
   const excludedKeysCount = EXCLUDED_KEYS.filter(
     (key) => properties && Object.keys(properties).includes(key)
   ).length;
+
+  useEffect(() => {
+    setShowAll(false);
+  }, [selectedPolygon]);
 
   return (
     <CContainer {...restProps}>
