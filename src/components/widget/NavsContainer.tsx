@@ -319,7 +319,7 @@ const Header = (props: any) => {
   return (
     <HStack
       justify={"space-between"}
-      pl={3}
+      pl={4}
       pr={[0, null, 1]}
       py={"9px"}
       flexShrink={0}

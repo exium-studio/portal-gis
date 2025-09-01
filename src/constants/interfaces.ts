@@ -62,7 +62,10 @@ export interface PolygonWithDocuments {
   type: "Feature";
   geometry: GeoJSON.Polygon;
   properties: Record<string, any>;
+  // TODO delete documents, garap crud 2 dokumen below
   documents: Interface__StorageFile[];
+  sk_document: Interface__StorageFile[];
+  other_document: Interface__StorageFile[];
 }
 export interface Type_SelectedPolygon {
   activeWorkspace: Interface__ActiveWorkspace;
@@ -105,9 +108,6 @@ export interface Interface__LayerData extends Interface__CUD {
   geojson: GeoJSON.FeatureCollection;
   bbox?: number[];
   bbox_center?: number[];
-}
-export interface Interface__GeoJSONData extends GeoJSON.FeatureCollection {
-  documents: Interface__StorageFile[];
 }
 export interface Interface__ActiveWorkspacesByWorkspaceCategory {
   workspace_category: Interface__WorkspaceCategory;
