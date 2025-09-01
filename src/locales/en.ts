@@ -403,6 +403,7 @@ const translations = {
   "owner": "Owner",
   "owner_type": "Owner type",
   "paid": "Paid",
+  "parent_layer": "Parent layer",
   "password_confirmation": "Confirm password",
   "password_confirmation_not_match": "Password confirmation does not match",
   "pay": "Pay",

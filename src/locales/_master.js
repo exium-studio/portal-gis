@@ -79,6 +79,10 @@ export const master_data_navs = {
 };
 
 // Semantic
+export const parent_layer = {
+  id: "Layer induk",
+  en: "Parent layer",
+};
 export const show_all = {
   id: "Lihat semua",
   en: "Show all",

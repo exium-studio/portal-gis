@@ -403,6 +403,7 @@ const translations = {
   "owner": "Pemilik",
   "owner_type": "Tipe pemilik",
   "paid": "Dibayar",
+  "parent_layer": "Layer induk",
   "password_confirmation": "Konfirmasi password",
   "password_confirmation_not_match": "Konfirmasi password tidak cocok",
   "pay": "Bayar",

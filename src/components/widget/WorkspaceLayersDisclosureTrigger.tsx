@@ -597,7 +597,7 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                           <HStack gap={1} ml={"auto"}>
                             <SetLegend
                               layer={layer}
-                              size={"xs"}
+                              size={"sm"}
                               disabled={workspaceActive}
                             />
 
@@ -605,14 +605,14 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                               workspace={workspace}
                               layer={layer}
                               disabled={workspaceActive}
-                              size={"xs"}
+                              size={"sm"}
                             />
 
                             <DeleteLayer
                               workspace={workspace}
                               layer={layer}
                               disabled={workspaceActive}
-                              size={"xs"}
+                              size={"sm"}
                             />
                           </HStack>
                         </HStack>
