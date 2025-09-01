@@ -63,7 +63,7 @@ const FieldInfoDetail = () => {
         right: "8px",
         top: "66px",
         pointerEvents: "auto",
-        w: iss ? "calc(50vw - 14px)" : "320px",
+        w: iss ? "calc(50vw - 14px)" : "314px",
         pb: 2,
         maxH: iss
           ? halfPanel
