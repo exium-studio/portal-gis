@@ -4,7 +4,6 @@ import {
 } from "@/constants/interfaces";
 import { IMAGES_PATH } from "@/constants/paths";
 import { useConfirmFilterGeoJSON } from "@/context/useConfirmFilterGeoJSON";
-import useDetailFieldInfo from "@/context/useDetailFieldInfo";
 import useLegend from "@/context/useLegend";
 import useMapStyle from "@/context/useMapStyle";
 import useMapViewState from "@/context/useMapViewState";
@@ -26,7 +25,6 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
   const clearSelectedPolygon = useSelectedPolygon(
     (s) => s.clearSelectedPolygon
   );
-  const detailFieldInfoOnClose = useDetailFieldInfo((s) => s.onClose);
   const { themeConfig } = useThemeConfig();
   const legend = useLegend((s) => s.legend);
   const colorway = useLegend((s) => s.colorway);
@@ -105,7 +103,6 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
             lon: event.lngLat.lng,
           },
         });
-        detailFieldInfoOnClose();
       }
     },
     [
@@ -212,8 +209,9 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
           type: "circle",
           source: sourceId,
           paint: {
-            "circle-radius": 16, // 32px diameter
-            "circle-opacity": 0, // invisible hitbox
+            "circle-radius": 20, // 32px diameter
+            "circle-opacity": 0,
+            "circle-color": "white",
           },
         });
       }
@@ -226,7 +224,7 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
           source: sourceId,
           layout: {
             "icon-image": "custom-marker",
-            "icon-size": 0.3,
+            "icon-size": 0.4,
             "icon-anchor": "bottom",
             "text-field": ["get", "name"],
             "text-size": 12,

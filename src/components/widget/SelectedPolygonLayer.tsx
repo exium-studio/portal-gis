@@ -78,6 +78,8 @@ const SelectedPolygonLayer = () => {
     }
   }, [themeConfig?.primaryColorHex]);
 
+  console.log("selectedPolygon", selectedPolygon);
+
   return null;
 };
 

@@ -63,9 +63,6 @@ const FieldInfoDetail = () => {
     } else {
       onClose();
     }
-  }, [selectedPolygon]);
-
-  useEffect(() => {
     setProperties(selectedPolygon?.polygon?.properties);
   }, [selectedPolygon]);
 
