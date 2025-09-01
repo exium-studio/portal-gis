@@ -36,9 +36,11 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
   );
   const geojson = activeLayer?.data?.geojson;
   const filteredGeojson = useFilteredGeoJSON(geojson, confirmFilterGeoJSON);
-  const fillLayerId = `${activeLayer.id}-fill`;
-  const lineLayerId = `${activeLayer.id}-outline`;
-  const sourceId = `${activeLayer.id}-source`;
+  const fillLayerId = `${activeWorkspace?.id}-${activeLayer.id}-fill`;
+  const lineLayerId = `${activeWorkspace?.id}-${activeLayer.id}-outline`;
+  const circleLayerId = `${activeWorkspace?.id}-${activeLayer.id}-circle`;
+  const symbolLayerId = `${activeWorkspace?.id}-${activeLayer.id}-symbol`;
+  const sourceId = `${activeWorkspace?.id}-${activeLayer.id}-source`;
 
   const plainLight = colorMode === "light" && mapStyle?.id === 1;
   const plainDark = colorMode === "dark" && mapStyle?.id === 1;
@@ -221,7 +223,7 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
       }
 
       // Circle layer as hitbox (32px equivalent in pixels)
-      if (!map.getLayer(lineLayerId)) {
+      if (!map.getLayer(circleLayerId)) {
         map.addLayer({
           id: lineLayerId,
           type: "circle",
@@ -235,7 +237,7 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
       }
 
       // Symbol layer for the actual icon + label
-      if (!map.getLayer(fillLayerId)) {
+      if (!map.getLayer(symbolLayerId)) {
         map.addLayer({
           id: fillLayerId,
           type: "symbol",
@@ -303,6 +305,8 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
       if (!map) return;
       if (map.getLayer(fillLayerId)) map.removeLayer(fillLayerId);
       if (map.getLayer(lineLayerId)) map.removeLayer(lineLayerId);
+      if (map.getLayer(circleLayerId)) map.removeLayer(circleLayerId);
+      if (map.getLayer(symbolLayerId)) map.removeLayer(symbolLayerId);
       if (map.getSource(sourceId)) map.removeSource(sourceId);
     };
   }, []);
