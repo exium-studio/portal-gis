@@ -5,7 +5,7 @@ import { Box, HStack } from "@chakra-ui/react";
 import { BasemapFilter } from "../basemapOverlay/BasemapFIlter";
 import { BasemapMapStyle } from "../basemapOverlay/BasemapMapStyle";
 import { CurrentLocation } from "../basemapOverlay/CurrentLocation";
-import FieldInfoDetail from "../basemapOverlay/FieldInfoDetail";
+import FieldInfo from "../basemapOverlay/FieldInfo";
 import { LegendContent, LegendTrigger } from "../basemapOverlay/Legend";
 import { SearchAddress } from "../basemapOverlay/SearchAddress";
 import { ZoomControl } from "../basemapOverlay/ZoomControl";
@@ -26,7 +26,7 @@ const AdminMapOverlay = () => {
       position={"absolute"}
       top={0}
     >
-      <FieldInfoDetail />
+      <FieldInfo />
 
       {iss && <LegendContent containerProps={{ top: "66px" }} />}
 
