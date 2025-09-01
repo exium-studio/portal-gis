@@ -1,5 +1,5 @@
 import { HStack, StackProps } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
 interface Props extends StackProps {
   fRef?: any;
@@ -11,20 +11,22 @@ const HScroll = ({ fRef, children, ...props }: Props) => {
   const scrollVelocity = useRef(0);
   const rafId = useRef<number | null>(null);
 
-  const handleScroll = (event: React.WheelEvent<HTMLDivElement>) => {
-    if (!hStackRef.current) return;
+  useEffect(() => {
+    const el = hStackRef.current;
+    if (!el) return;
 
-    const canScroll =
-      hStackRef.current.scrollWidth > hStackRef.current.clientWidth;
+    const handleScroll = (event: WheelEvent) => {
+      const canScroll = el.scrollWidth > el.clientWidth;
+      if (!canScroll) return;
 
-    if (canScroll) {
-      // event.preventDefault();
+      event.preventDefault(); // stop vertical scroll
+
       scrollVelocity.current += event.deltaY * 0.2;
 
       if (!rafId.current) {
         const smoothScroll = () => {
-          if (!hStackRef.current) return;
-          hStackRef.current.scrollLeft += scrollVelocity.current;
+          if (!el) return;
+          el.scrollLeft += scrollVelocity.current;
           scrollVelocity.current *= 0.85;
 
           if (Math.abs(scrollVelocity.current) > 0.5) {
@@ -35,8 +37,11 @@ const HScroll = ({ fRef, children, ...props }: Props) => {
         };
         rafId.current = requestAnimationFrame(smoothScroll);
       }
-    }
-  };
+    };
+
+    el.addEventListener("wheel", handleScroll, { passive: false });
+    return () => el.removeEventListener("wheel", handleScroll);
+  }, []);
 
   return (
     <HStack
@@ -44,8 +49,7 @@ const HScroll = ({ fRef, children, ...props }: Props) => {
       overflowX="auto"
       overflowY="hidden"
       w="full"
-      className={`scrollX ${props.className}`}
-      onWheel={handleScroll}
+      className={`scrollX ${props.className ?? ""}`}
       {...props}
     >
       {children}

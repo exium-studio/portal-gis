@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import * as yup from "yup";
 import ExistingFileItem from "../ExistingFIleItem";
 import PropertyValue from "../PropertyValue";
+import HScroll from "@/components/ui-custom/HScroll";
 
 const EXCLUDED_KEYS = [
   "id",
@@ -221,27 +222,46 @@ export const FieldInfoEdit = (props: any) => {
         colorPalette={themeConfig.colorPalette}
         className="scrollY"
       >
-        <Tabs.List bg={"body"} w={"full"} pos={"sticky"} top={0} zIndex={2}>
-          {/* Information tab */}
-          <Tabs.Trigger flex={1} justifyContent={"center"} value="information">
-            {l.information}
-          </Tabs.Trigger>
-
-          {/* Explanation tab */}
-          {withExplanation && (
+        <HScroll className="noScroll">
+          <Tabs.List bg={"body"} w={"max"} pos={"sticky"} top={0} zIndex={2}>
+            {/* Information tab */}
             <Tabs.Trigger
               flex={1}
               justifyContent={"center"}
-              value="explanation"
+              value="information"
             >
-              {l.explanation}
+              {l.information}
             </Tabs.Trigger>
-          )}
-          {/* Document tab */}
-          <Tabs.Trigger flex={1} justifyContent={"center"} value="document">
-            {l.document}
-          </Tabs.Trigger>
-        </Tabs.List>
+
+            {/* Usage tab */}
+            {withExplanation && (
+              <Tabs.Trigger
+                whiteSpace={"nowrap"}
+                flex={1}
+                justifyContent={"center"}
+                value="area"
+              >
+                {l.usage}
+              </Tabs.Trigger>
+            )}
+
+            {/* Explanation tab */}
+            {withExplanation && (
+              <Tabs.Trigger
+                flex={1}
+                justifyContent={"center"}
+                value="explanation"
+              >
+                {l.explanation}
+              </Tabs.Trigger>
+            )}
+
+            {/* Document tab */}
+            <Tabs.Trigger flex={1} justifyContent={"center"} value="document">
+              {l.document}
+            </Tabs.Trigger>
+          </Tabs.List>
+        </HScroll>
 
         {/* Information content */}
         <Tabs.Content value="information" p={0} px={1}>
@@ -261,6 +281,9 @@ export const FieldInfoEdit = (props: any) => {
               );
             })}
         </Tabs.Content>
+
+        {/* Usage content */}
+        <Tabs.Content value="explanation" px={3} py={2}></Tabs.Content>
 
         {/* Explanation content */}
         {withExplanation && (
