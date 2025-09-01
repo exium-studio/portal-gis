@@ -112,7 +112,7 @@ export const BasemapMapStyle = () => {
                       >
                         <Img
                           src={item.img[colorMode as keyof typeof item.img]}
-                          borderRadius={"md"}
+                          borderRadius={"sm"}
                           aspectRatio={1}
                           w={"full"}
                         />

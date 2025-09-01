@@ -1,6 +1,7 @@
 import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
 import FileInput from "@/components/ui-custom/FileInput";
+import HScroll from "@/components/ui-custom/HScroll";
 import P from "@/components/ui-custom/P";
 import Textarea from "@/components/ui-custom/Textarea";
 import { Field } from "@/components/ui/field";
@@ -8,19 +9,17 @@ import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useLang from "@/context/useLang";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
-import useBackOnClose from "@/hooks/useBackOnClose";
 import useRequest from "@/hooks/useRequest";
 import back from "@/utils/back";
 import empty from "@/utils/empty";
+import { normalizeKeys } from "@/utils/normalizeKeys";
 import { fileValidation } from "@/utils/validationSchemas";
-import { FieldRoot, HStack, Tabs, useDisclosure } from "@chakra-ui/react";
+import { FieldRoot, HStack, Tabs } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import * as yup from "yup";
 import ExistingFileItem from "../ExistingFIleItem";
 import PropertyValue from "../PropertyValue";
-import HScroll from "@/components/ui-custom/HScroll";
-import { normalizeKeys } from "@/utils/normalizeKeys";
 
 const EXCLUDED_KEYS = [
   "id",
@@ -131,8 +130,6 @@ export const FieldInfoEdit = (props: any) => {
 
   // Hooks
   const { l } = useLang();
-  const { open, onOpen, onClose } = useDisclosure();
-  useBackOnClose(`edit-${properties?.id}`, open, onOpen, onClose);
   const { req, loading } = useRequest({
     id: "crud-field",
   });
@@ -156,6 +153,7 @@ export const FieldInfoEdit = (props: any) => {
     (f: any) => f.properties.id === propertiesId
   );
   const withExplanation = selectedPolygon?.activeLayer?.with_explanation;
+  const [tabValue, setTabValue] = useState<string>("information");
   const [existingDocs, setExistingDocs] = useState<any[]>([]);
   const [deletedDocs, setDeletedDocs] = useState<any[]>([]);
   const resolvedData =
@@ -274,6 +272,7 @@ export const FieldInfoEdit = (props: any) => {
 
   // Handle initial values
   useEffect(() => {
+    setTabValue("information");
     if (properties) {
       Object.keys(properties).forEach((key) => {
         formik.setFieldValue(key, properties[key]);
@@ -291,13 +290,20 @@ export const FieldInfoEdit = (props: any) => {
   return (
     <CContainer pos={"relative"} overflowY={"auto"} {...restProps}>
       <Tabs.Root
-        defaultValue="information"
+        value={tabValue}
+        onValueChange={(e) => setTabValue(e.value)}
         top={0}
         colorPalette={themeConfig.colorPalette}
         className="scrollY"
       >
-        <HScroll className="noScroll" pos={"sticky"} top={0} zIndex={2}>
-          <Tabs.List bg={"body"} w={"max"}>
+        <HScroll
+          className="noScroll"
+          w={"full"}
+          pos={"sticky"}
+          top={0}
+          zIndex={2}
+        >
+          <Tabs.List bg={"body"} minW={"max"} w={"full"}>
             {/* Information tab */}
             <Tabs.Trigger
               flex={1}
@@ -308,16 +314,14 @@ export const FieldInfoEdit = (props: any) => {
             </Tabs.Trigger>
 
             {/* Usage tab */}
-            {withExplanation && (
-              <Tabs.Trigger
-                whiteSpace={"nowrap"}
-                flex={1}
-                justifyContent={"center"}
-                value="area"
-              >
-                {l.usage}
-              </Tabs.Trigger>
-            )}
+            <Tabs.Trigger
+              whiteSpace={"nowrap"}
+              flex={1}
+              justifyContent={"center"}
+              value="usage"
+            >
+              {l.usage}
+            </Tabs.Trigger>
 
             {/* Explanation tab */}
             {withExplanation && (
@@ -347,7 +351,7 @@ export const FieldInfoEdit = (props: any) => {
         </Tabs.Content>
 
         {/* Usage content */}
-        <Tabs.Content value="explanation" p={0} pl={"6px"}></Tabs.Content>
+        <Tabs.Content value="usage" p={0} pl={"6px"}></Tabs.Content>
 
         {/* Explanation content */}
         {withExplanation && (
