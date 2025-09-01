@@ -224,7 +224,16 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
           source: sourceId,
           layout: {
             "icon-image": "custom-marker",
-            "icon-size": 0.3125,
+            "icon-size": [
+              "case",
+              [
+                "==",
+                ["get", "id"],
+                selectedPolygon?.polygon?.properties?.id || "",
+              ],
+              0.5,
+              0.3125,
+            ],
             "icon-anchor": "bottom",
             "text-field": ["get", "name"],
             "text-size": 12,
@@ -239,6 +248,12 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
         });
       } else {
         map.setLayoutProperty(fillLayerId, "icon-image", "custom-marker");
+        map.setLayoutProperty(fillLayerId, "icon-size", [
+          "case",
+          ["==", ["get", "id"], selectedPolygon?.polygon?.properties?.id || ""],
+          0.5,
+          0.3125,
+        ]);
       }
     }
 

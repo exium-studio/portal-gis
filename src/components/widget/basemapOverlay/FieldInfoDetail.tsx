@@ -131,6 +131,7 @@ const FieldInfoDetail = () => {
             <FloatingContainerCloseButton
               onClick={() => {
                 onClose();
+                clearSelectedPolygon();
               }}
               size={["xs", null, "sm"]}
             />
@@ -143,6 +144,8 @@ const FieldInfoDetail = () => {
           Object?.keys(finalData)?.map((key, i) => {
             const last =
               i === Object?.keys(properties)?.length - excludedKeysCount - 1;
+            // const latitudeKey = key.toLocaleLowerCase() === "latitude";
+            // const longitudeKey = key.toLocaleLowerCase() === "longitude";
 
             return (
               <ItemContainer key={key} last={last}>
