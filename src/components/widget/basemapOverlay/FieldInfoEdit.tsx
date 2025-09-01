@@ -295,6 +295,7 @@ export const FieldInfoEdit = (props: any) => {
         top={0}
         colorPalette={themeConfig.colorPalette}
         className="scrollY"
+        pl={"6px"}
       >
         <HScroll
           className="noScroll"
@@ -342,7 +343,7 @@ export const FieldInfoEdit = (props: any) => {
         </HScroll>
 
         {/* Information content */}
-        <Tabs.Content value="information" p={0} pl={"6px"}>
+        <Tabs.Content value="information" p={0}>
           <InformationContent
             properties={properties}
             normalizeProperties={normalizeProperties}
@@ -351,11 +352,11 @@ export const FieldInfoEdit = (props: any) => {
         </Tabs.Content>
 
         {/* Usage content */}
-        <Tabs.Content value="usage" p={0} pl={"6px"}></Tabs.Content>
+        <Tabs.Content value="usage" p={0}></Tabs.Content>
 
         {/* Explanation content */}
         {withExplanation && (
-          <Tabs.Content value="explanation" pl={"14px"} pr={"8px"} py={2}>
+          <Tabs.Content value="explanation" p={2}>
             <FieldRoot gap={4}>
               <Field
                 label={"PARAPIHAKB"}
@@ -424,7 +425,7 @@ export const FieldInfoEdit = (props: any) => {
         )}
 
         {/* Document content */}
-        <Tabs.Content value="document" pl={"14px"} pr={"8px"} py={2}>
+        <Tabs.Content value="document" p={2}>
           <FieldRoot gap={4}>
             <Field
               label={l.document}
