@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/accordion";
 import { Tooltip } from "@/components/ui/tooltip";
 import { LayerLegends } from "@/constants/interfaces";
+import { LAYER_TYPES } from "@/constants/lateral";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
@@ -33,8 +34,6 @@ import {
   IconFlagOff,
   IconFolders,
   IconFoldersOff,
-  IconLine,
-  IconPolygon,
 } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
 import MenuHeaderContainer from "../MenuHeaderContainer";
@@ -183,14 +182,16 @@ export const LegendContent = (props: any) => {
               ?.reverse()
               ?.map(({ layer, workspace, legends }, i) => {
                 const last = i === layerLegends.length - 1;
+                const LayerIcon =
+                  LAYER_TYPES[layer.layer_type as keyof typeof LAYER_TYPES]
+                    .icon;
 
                 return (
                   <AccordionItem
                     key={layer.id}
                     value={`${layer.id}`}
                     gap={2}
-                    pl={3}
-                    pr={"10px"}
+                    px={2}
                     py={1}
                     pb={last ? 0 : 1}
                     border={last ? "none" : ""}
@@ -198,11 +199,7 @@ export const LegendContent = (props: any) => {
                     <AccordionItemTrigger>
                       <HStack align={"start"}>
                         <Icon boxSize={5} color={"fg.subtle"}>
-                          {layer?.layer_type === "fill" ? (
-                            <IconPolygon stroke={1.5} />
-                          ) : (
-                            <IconLine stroke={1.5} />
-                          )}
+                          <LayerIcon stroke={1.5} />
                         </Icon>
 
                         <CContainer truncate gap={"6px"}>

@@ -3,6 +3,7 @@ import {
   Interface__ActiveLayer,
   Interface__ActiveWorkspace,
 } from "@/constants/interfaces";
+import { LAYER_TYPES } from "@/constants/lateral";
 import { FIT_BOUNDS_PADDING } from "@/constants/sizes";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useLang from "@/context/useLang";
@@ -13,17 +14,15 @@ import { Badge, HStack, Icon, StackProps } from "@chakra-ui/react";
 import {
   IconEye,
   IconEyeOff,
-  IconLine,
-  IconPolygon,
   IconStackPop,
   IconZoomInArea,
 } from "@tabler/icons-react";
 import BButton from "../ui-custom/BButton";
 import CContainer from "../ui-custom/CContainer";
 import P from "../ui-custom/P";
+import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
 import { Tooltip } from "../ui/tooltip";
 import SimplePopover from "./SimplePopover";
-import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
 
 interface Props extends StackProps {
   index: number;
@@ -215,6 +214,10 @@ const ActiveLayerListItem = (props: Props) => {
   // Contexts
   const { themeConfig } = useThemeConfig();
 
+  // States
+  const LayerIcon =
+    LAYER_TYPES[layer.layer_type as keyof typeof LAYER_TYPES].icon;
+
   return (
     <HStack
       w={"full"}
@@ -239,11 +242,7 @@ const ActiveLayerListItem = (props: Props) => {
               <HStack wrap={"wrap"} mt={2}>
                 <Badge color={"fg.muted"}>
                   <Icon boxSize={4}>
-                    {layer?.layer_type === "fill" ? (
-                      <IconPolygon stroke={1.5} />
-                    ) : (
-                      <IconLine stroke={1.5} />
-                    )}
+                    <LayerIcon stroke={1.5} />
                   </Icon>
 
                   <P lineClamp={1} fontSize={"xs"}>
@@ -266,11 +265,7 @@ const ActiveLayerListItem = (props: Props) => {
         >
           <HStack cursor={"pointer"} pl={1}>
             <Icon boxSize={5} color={"fg.subtle"}>
-              {layer?.layer_type === "fill" ? (
-                <IconPolygon stroke={1.5} />
-              ) : (
-                <IconLine stroke={1.5} />
-              )}
+              <LayerIcon stroke={1.5} />
             </Icon>
 
             <P lineClamp={1}>{layer?.name}</P>

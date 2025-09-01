@@ -2,16 +2,17 @@ import {
   Interface__ActiveLayer,
   Interface__ActiveWorkspace,
 } from "@/constants/interfaces";
+import { IMAGES_PATH } from "@/constants/paths";
+import { useConfirmFilterGeoJSON } from "@/context/useConfirmFilterGeoJSON";
+import useDetailFieldInfo from "@/context/useDetailFieldInfo";
+import useLegend from "@/context/useLegend";
+import useMapStyle from "@/context/useMapStyle";
 import useMapViewState from "@/context/useMapViewState";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
-import useLegend from "@/context/useLegend";
-import useMapStyle from "@/context/useMapStyle";
-import { useColorMode } from "../ui/color-mode";
-import { useCallback, useEffect, useRef } from "react";
-import useDetailFieldInfo from "@/context/useDetailFieldInfo";
-import { useConfirmFilterGeoJSON } from "@/context/useConfirmFilterGeoJSON";
 import useFilteredGeoJSON from "@/hooks/useFilteredGeoJSON";
+import { useCallback, useEffect, useRef } from "react";
+import { useColorMode } from "../ui/color-mode";
 
 interface LayerSourceProps {
   activeWorkspace: Interface__ActiveWorkspace;
@@ -70,6 +71,7 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
   const lineColor = ["coalesce", ["get", "color"], defaultLineColor];
   const isFillLayer = activeLayer.layer_type === "fill";
   const isLineLayer = activeLayer.layer_type === "line";
+  const isSymbolLayer = activeLayer.layer_type === "symbol";
 
   const lastGeojsonRef = useRef<any>(null);
 
@@ -187,6 +189,58 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
           source: sourceId,
           paint: { "fill-color": "#000", "fill-opacity": 0 },
         });
+      }
+    }
+
+    if (isSymbolLayer) {
+      if (!map.hasImage("custom-marker")) {
+        map.loadImage(
+          `${IMAGES_PATH}/map_marker.png`,
+          (error: any, image: any) => {
+            if (error) throw error;
+            if (!map.hasImage("custom-marker") && image) {
+              map.addImage("custom-marker", image);
+            }
+          }
+        );
+      }
+
+      if (!map.getLayer(lineLayerId)) {
+        map.addLayer({
+          id: lineLayerId,
+          type: "line",
+          source: sourceId,
+          paint: {
+            "line-color": defaultLineColor,
+            "line-width": 1,
+            "line-opacity": 0.5,
+          },
+          layout: { visibility: "none" },
+        });
+      }
+
+      if (!map.getLayer(fillLayerId)) {
+        map.addLayer({
+          id: fillLayerId,
+          type: "symbol",
+          source: sourceId,
+          layout: {
+            "icon-image": "custom-marker",
+            "icon-size": 0.3,
+            "icon-anchor": "bottom",
+            "text-field": ["get", "name"],
+            "text-size": 12,
+            "text-anchor": "top",
+            "text-offset": [0, 0.8],
+          },
+          paint: {
+            "text-color": "#333",
+            "text-halo-color": "#fff",
+            "text-halo-width": 1,
+          },
+        });
+      } else {
+        map.setLayoutProperty(fillLayerId, "icon-image", "custom-marker");
       }
     }
 

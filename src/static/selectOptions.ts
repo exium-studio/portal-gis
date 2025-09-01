@@ -15,4 +15,5 @@ export const OPTIONS_LAYER_FILE_TYPE = [
 export const OPTIONS_LAYER_TYPE = [
   { id: "fill", label: "Fill" },
   { id: "line", label: "Line" },
+  { id: "symbol", label: "Point" },
 ];

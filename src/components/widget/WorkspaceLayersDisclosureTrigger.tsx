@@ -1,5 +1,6 @@
 import { LEGEND_COLOR_OPTIONS } from "@/constants/colors";
 import { Interface__Layer } from "@/constants/interfaces";
+import { LAYER_TYPES } from "@/constants/lateral";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useConfirmationDisclosure from "@/context/useConfirmationDisclosure";
 import useLang from "@/context/useLang";
@@ -24,13 +25,7 @@ import {
   Icon,
   useDisclosure,
 } from "@chakra-ui/react";
-import {
-  IconEdit,
-  IconFlag,
-  IconLine,
-  IconPolygon,
-  IconTrash,
-} from "@tabler/icons-react";
+import { IconEdit, IconFlag, IconTrash } from "@tabler/icons-react";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import * as yup from "yup";
@@ -542,6 +537,15 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                 {filteredLayers && (
                   <>
                     {filteredLayers?.reverse().map((layer) => {
+                      const LayerIcon =
+                        LAYER_TYPES[
+                          layer.layer_type as keyof typeof LAYER_TYPES
+                        ].icon;
+                      const layerTypeLabel =
+                        LAYER_TYPES[
+                          layer.layer_type as keyof typeof LAYER_TYPES
+                        ].label;
+
                       return (
                         <HStack key={layer.id} py={1}>
                           <SimplePopover
@@ -558,15 +562,11 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                                 <HStack wrap={"wrap"} mt={2}>
                                   <Badge color={"fg.muted"}>
                                     <Icon boxSize={4}>
-                                      {layer?.layer_type === "fill" ? (
-                                        <IconPolygon stroke={1.5} />
-                                      ) : (
-                                        <IconLine stroke={1.5} />
-                                      )}
+                                      <LayerIcon stroke={1.5} />
                                     </Icon>
 
                                     <P lineClamp={1} fontSize={"xs"}>
-                                      {capsFirstLetter(layer?.layer_type)}
+                                      {layerTypeLabel}
                                     </P>
                                   </Badge>
 
@@ -585,11 +585,9 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                           >
                             <HStack cursor={"pointer"}>
                               <Icon boxSize={5} color={"fg.subtle"}>
-                                {layer?.layer_type === "fill" ? (
-                                  <IconPolygon stroke={1.5} />
-                                ) : (
-                                  <IconLine stroke={1.5} />
-                                )}
+                                <Icon boxSize={4}>
+                                  <LayerIcon stroke={1.5} />
+                                </Icon>
                               </Icon>
 
                               <P lineClamp={1}>{layer?.name}</P>
