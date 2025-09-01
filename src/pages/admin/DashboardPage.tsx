@@ -30,7 +30,7 @@ type DashboardStat = {
   name: string;
   value: number;
   percentage: number;
-  active: boolean; // NEW
+  active: boolean;
 };
 type DashboardSummary = {
   areaByTipeHak: DashboardStat[];
