@@ -5,7 +5,9 @@ import LayerSource from "./LayerSource";
 
 const LayerManager = () => {
   // Contexts
-  const activeWorkspaces = useActiveWorkspaces((s) => s.activeWorkspaces);
+  const activeWorkspacesByCategory = useActiveWorkspaces(
+    (s) => s.activeWorkspaces
+  );
   const map = useMapViewState().mapRef?.current?.getMap();
 
   // Refs
@@ -17,7 +19,7 @@ const LayerManager = () => {
 
     const newLayerOrder: string[] = [];
 
-    activeWorkspaces
+    activeWorkspacesByCategory
       .filter((cat) => cat.visible)
       .forEach((cat) => {
         cat.workspaces
@@ -41,11 +43,11 @@ const LayerManager = () => {
       });
       layerOrderRef.current = newLayerOrder;
     }
-  }, [activeWorkspaces, map]);
+  }, [activeWorkspacesByCategory, map]);
 
   return (
     <>
-      {activeWorkspaces
+      {activeWorkspacesByCategory
         .filter((cat) => cat.visible)
         .flatMap((cat) =>
           cat.workspaces
