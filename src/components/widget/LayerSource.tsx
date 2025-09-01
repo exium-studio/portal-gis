@@ -238,7 +238,7 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
             "text-field": ["get", "Nama_Point"],
             "text-size": 14,
             "text-anchor": "top",
-            "text-offset": [0, 0.8],
+            "text-offset": [0, 0.4],
             "icon-allow-overlap": true,
             "text-allow-overlap": true,
             "symbol-z-order": "source",
