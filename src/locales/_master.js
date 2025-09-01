@@ -472,8 +472,8 @@ export const fit_bounds = {
   en: "View area (fit bounds)",
 };
 export const field_info = {
-  id: "Info bidang",
-  en: "Field info",
+  id: "Informasi bidang",
+  en: "Field information",
 };
 export const password_confirmation_not_match = {
   id: "Konfirmasi password tidak cocok",

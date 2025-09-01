@@ -223,7 +223,7 @@ const translations = {
   "fiat": {
     "description": "Pembayaran dengan mata uang resmi (misal: IDR, USD)."
   },
-  "field_info": "Info bidang",
+  "field_info": "Informasi bidang",
   "file_dropzone_label": "Drag and drop/klik untuk unggah berkas",
   "firefox_permissions_settings_link": "Preferensi → Privasi & Keamanan → Izin → ",
   "fit_bounds": "Lihat area (fit bounds)",
