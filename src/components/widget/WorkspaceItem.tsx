@@ -652,6 +652,7 @@ const AddLayer = (props: any) => {
                   label={l.parent_layer}
                   invalid={!!formik.errors.parent_layer}
                   errorText={formik.errors.parent_layer as string}
+                  optional
                 >
                   <SelectLayerByWorkspaceId
                     workspaceId={workspace?.id}

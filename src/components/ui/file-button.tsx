@@ -109,6 +109,7 @@ const FileUploadItem = (props: FileUploadItemProps) => {
         <ChakraFileUpload.ItemDeleteTrigger asChild>
           <IconButton
             variant="ghost"
+            colorPalette={"gray"}
             color="fg.muted"
             size="xs"
             h={"32px"}
