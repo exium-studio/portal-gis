@@ -79,6 +79,14 @@ export const master_data_navs = {
 };
 
 // Semantic
+export const deleted_sk_docs = {
+  id: "Dokumen SK dihapus",
+  en: "Deleted SK document",
+};
+export const deleted_other_docs = {
+  id: "Dokumen lain dihapus",
+  en: "Deleted other document",
+};
 export const properties = {
   id: "Properti",
   en: "Properties",

@@ -130,6 +130,8 @@ const translations = {
   "delete_workspace": "Delete workspace",
   "deleted_docs": "Dokumen yang dihapus",
   "deleted_file": "File yang dihapus",
+  "deleted_other_docs": "Dokumen lain dihapus",
+  "deleted_sk_docs": "Dokumen SK dihapus",
   "deleted_thumbnail": "Thumbnail dihapus",
   "delivery_address": "Alamat pengiriman",
   "description": "Deskripsi",

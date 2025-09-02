@@ -232,7 +232,7 @@ export const FieldInfoEdit = (props: any) => {
       );
       payload.append(
         "delete_other_document_ids",
-        JSON.stringify(deletedSkDocs?.map((d) => d?.id))
+        JSON.stringify(deletedOtherDocs?.map((d) => d?.id))
       );
       payload.append("properties", JSON.stringify(newPropertiesPayload));
       const url = `/api/gis-bpn/workspaces-layers/update-field`;
@@ -249,8 +249,13 @@ export const FieldInfoEdit = (props: any) => {
             resetForm();
             setExistingSkDocs([]);
             setDeletedSkDocs([]);
+            setExistingOtherDocs([]);
+            setDeletedOtherDocs([]);
 
-            const newDocs = r.data.data.data.geojson.features?.[0]?.documents;
+            const newSkDocs =
+              r.data.data.data.geojson.features?.[0]?.sk_document;
+            const newOtherDocs =
+              r.data.data.data.geojson.features?.[0]?.other_document;
             const newGeojson = {
               ...geojson,
               features: geojson?.features.map((feature: any, index: number) => {
@@ -261,7 +266,8 @@ export const FieldInfoEdit = (props: any) => {
                       ...feature.properties,
                       ...newProperties,
                     },
-                    documents: newDocs,
+                    sk_document: newSkDocs,
+                    other_document: newOtherDocs,
                   };
                 }
                 return feature;
@@ -280,7 +286,8 @@ export const FieldInfoEdit = (props: any) => {
               ...selectedPolygon,
               polygon: {
                 ...selectedPolygon?.polygon,
-                documents: newDocs,
+                sk_document: newSkDocs,
+                other_document: newOtherDocs,
               },
             });
           },
@@ -299,12 +306,26 @@ export const FieldInfoEdit = (props: any) => {
     }
   }, [properties?.id]);
 
-  // Handle initial sk_document
+  // Handle initial document
   useEffect(() => {
     formik.setFieldValue("sk_document", undefined);
-    setExistingSkDocs(selectedPolygon?.polygon?.documents || []);
+    setExistingSkDocs(selectedPolygon?.polygon?.sk_document || []);
     setDeletedSkDocs([]);
-  }, [selectedPolygon?.polygon?.documents]);
+
+    formik.setFieldValue("other_document", undefined);
+    setExistingOtherDocs(selectedPolygon?.polygon?.other_document || []);
+    setDeletedOtherDocs([]);
+  }, [
+    selectedPolygon?.polygon?.sk_document,
+    selectedPolygon?.polygon?.other_document,
+  ]);
+
+  // console.log(
+  //   "selectedPolygon?.polygon?.sk_document",
+  //   selectedPolygon?.polygon?.sk_document
+  // );
+  // console.log("existingSkDocs", existingSkDocs);
+  // console.log("deletedSkDocs", deletedSkDocs);
 
   return (
     <CContainer pos={"relative"} overflowY={"auto"} {...restProps}>
@@ -478,8 +499,8 @@ export const FieldInfoEdit = (props: any) => {
                 )}
 
                 {!empty(deletedSkDocs) && (
-                  <CContainer gap={2} mt={2}>
-                    <P color={"fg.muted"}>{l.deleted_docs}</P>
+                  <CContainer gap={2}>
+                    <P color={"fg.muted"}>{l.deleted_sk_docs}</P>
 
                     {deletedSkDocs?.map((item: any, i: number) => {
                       return (
@@ -541,7 +562,7 @@ export const FieldInfoEdit = (props: any) => {
 
                 {!empty(deletedOtherDocs) && (
                   <CContainer gap={2} mt={2}>
-                    <P color={"fg.muted"}>{l.deleted_docs}</P>
+                    <P color={"fg.muted"}>{l.deleted_other_docs}</P>
 
                     {deletedOtherDocs?.map((item: any, i: number) => {
                       return (
