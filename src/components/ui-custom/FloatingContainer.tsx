@@ -1,7 +1,6 @@
+import { useThemeConfig } from "@/context/useThemeConfig";
 import { Presence, PresenceProps, StackProps } from "@chakra-ui/react";
 import CContainer from "./CContainer";
-import { useThemeConfig } from "@/context/useThemeConfig";
-import useSelectedPolygon from "@/context/useSelectedPolygon";
 
 interface Props extends PresenceProps {
   fRef?: any;
@@ -24,7 +23,6 @@ const FloatingContainer = (props: Props) => {
 
   // Context
   const { themeConfig } = useThemeConfig();
-  const selectedPolygon = useSelectedPolygon((s) => s.selectedPolygon);
 
   const animationName = {
     top: {
@@ -51,7 +49,6 @@ const FloatingContainer = (props: Props) => {
 
   return (
     <Presence
-      key={`${selectedPolygon?.polygon?.properties?.id}-${selectedPolygon?.clickedLngLat?.lon}-${selectedPolygon?.clickedLngLat?.lat}`}
       lazyMount
       unmountOnExit
       present={open}

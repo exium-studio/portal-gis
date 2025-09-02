@@ -337,7 +337,12 @@ export const FieldInfoEdit = (props: any) => {
   ]);
 
   return (
-    <CContainer pos={"relative"} overflowY={"auto"} {...restProps}>
+    <CContainer
+      key={`${selectedPolygon?.polygon?.properties?.id}-${selectedPolygon?.clickedLngLat?.lon}-${selectedPolygon?.clickedLngLat?.lat}`}
+      pos={"relative"}
+      overflowY={"auto"}
+      {...restProps}
+    >
       <Tabs.Root
         value={tabValue}
         onValueChange={(e) => setTabValue(e.value)}
