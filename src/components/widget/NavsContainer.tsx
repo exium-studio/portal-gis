@@ -387,7 +387,6 @@ const NavContainer = ({
             py={"22px"}
             overflowX={"clip"}
             className="scrollY"
-            overflowY={"auto"}
             bg={"body"}
             // borderRight={"1px solid"}
             // borderColor={"border.muted"}
