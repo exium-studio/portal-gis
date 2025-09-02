@@ -986,13 +986,7 @@ const TableComponent = ({
           )}
 
           {!iss && (
-            <SimpleGrid
-              columns={3}
-              gap={4}
-              my={2}
-              px={2}
-              {...footerContainerProps}
-            >
+            <SimpleGrid columns={3} gap={4} my={2} {...footerContainerProps}>
               <LimitControl
                 initialLimit={initialLimit}
                 limitControl={limitControl}

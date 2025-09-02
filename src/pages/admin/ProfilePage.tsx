@@ -1,4 +1,5 @@
 import BButton from "@/components/ui-custom/BButton";
+import CContainer from "@/components/ui-custom/CContainer";
 import P from "@/components/ui-custom/P";
 import { Avatar } from "@/components/ui/avatar";
 import PageContainer from "@/components/widget/PageContainer";
@@ -52,19 +53,23 @@ const ProfilePage = () => {
         <P textAlign={"center"}>admin@gmail.com</P>
       </VStack>
 
-      <ResetPasswordDisclosureTrigger>
-        <BButton variant={"outline"}>Reset password</BButton>
-      </ResetPasswordDisclosureTrigger>
+      <CContainer gap={2} align={"center"}>
+        <ResetPasswordDisclosureTrigger>
+          <BButton variant={"outline"} w={"140px"}>
+            Reset password
+          </BButton>
+        </ResetPasswordDisclosureTrigger>
 
-      <BButton
-        onClick={onSignout}
-        w={"fit"}
-        colorPalette={"red"}
-        variant={"ghost"}
-        loading={loading}
-      >
-        Sign out
-      </BButton>
+        <BButton
+          onClick={onSignout}
+          w={"140px"}
+          colorPalette={"red"}
+          variant={"ghost"}
+          loading={loading}
+        >
+          Sign out
+        </BButton>
+      </CContainer>
     </PageContainer>
   );
 };
