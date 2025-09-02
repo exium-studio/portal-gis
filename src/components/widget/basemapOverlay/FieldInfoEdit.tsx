@@ -214,17 +214,17 @@ export const FieldInfoEdit = (props: any) => {
       payload.append("table_name", `${tableName}`);
       if (Array.isArray(values.sk_document)) {
         values.sk_document.forEach((file: any) => {
-          payload.append(`file`, file);
+          payload.append(`sk_document`, file);
         });
       } else if (values.sk_document) {
-        payload.append("file", values.sk_document);
+        payload.append("sk_document", values.sk_document);
       }
       if (Array.isArray(values.other_document)) {
         values.other_document.forEach((file: any) => {
-          payload.append(`file`, file);
+          payload.append(`other_document`, file);
         });
       } else if (values.other_document) {
-        payload.append("file", values.other_document);
+        payload.append("other_document", values.other_document);
       }
       payload.append(
         "delete_sk_document_ids",
@@ -365,226 +365,229 @@ export const FieldInfoEdit = (props: any) => {
           </Tabs.List>
         </HScroll>
 
-        {/* Properties content */}
-        <Tabs.Content value="information" p={0}>
-          <InformationContent
-            properties={properties}
-            normalizeProperties={normalizeProperties}
-            resolvedData={resolvedData}
-          />
-        </Tabs.Content>
+        <form id="field_info_form" onSubmit={formik.handleSubmit}>
+          {/* Properties content */}
+          <Tabs.Content value="information" p={0}>
+            <InformationContent
+              properties={properties}
+              normalizeProperties={normalizeProperties}
+              resolvedData={resolvedData}
+            />
+          </Tabs.Content>
 
-        {/* Usage content */}
-        <Tabs.Content value="usage" p={0}></Tabs.Content>
+          {/* Usage content */}
+          <Tabs.Content value="usage" p={0}></Tabs.Content>
 
-        {/* Explanation content */}
-        {withExplanation && (
-          <Tabs.Content value="explanation" p={2}>
+          {/* Explanation content */}
+          {withExplanation && (
+            <Tabs.Content value="explanation" p={2}>
+              <FieldRoot gap={4}>
+                <Field
+                  label={"PARAPIHAKB"}
+                  invalid={!!formik.errors.PARAPIHAKB}
+                  errorText={formik.errors.PARAPIHAKB as string}
+                >
+                  <Textarea
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("PARAPIHAKB", input);
+                    }}
+                    inputValue={formik.values.PARAPIHAKB}
+                  />
+                </Field>
+
+                <Field
+                  label={"PERMASALAH"}
+                  invalid={!!formik.errors.PERMASALAH}
+                  errorText={formik.errors.PERMASALAH as string}
+                >
+                  <Textarea
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("PERMASALAH", input);
+                    }}
+                    inputValue={formik.values.PERMASALAH}
+                  />
+                </Field>
+
+                <Field
+                  label={"TINDAKLANJ"}
+                  invalid={!!formik.errors.TINDAKLANJ}
+                  errorText={formik.errors.TINDAKLANJ as string}
+                >
+                  <Textarea
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("TINDAKLANJ", input);
+                    }}
+                    inputValue={formik.values.TINDAKLANJ}
+                  />
+                </Field>
+
+                <Field
+                  label={"HASIL"}
+                  invalid={!!formik.errors.HASIL}
+                  errorText={formik.errors.HASIL as string}
+                >
+                  <Textarea
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("HASIL", input);
+                    }}
+                    inputValue={formik.values.HASIL}
+                  />
+                </Field>
+              </FieldRoot>
+            </Tabs.Content>
+          )}
+
+          {/* Document content */}
+          <Tabs.Content value="document" p={2} pb={3}>
             <FieldRoot gap={4}>
               <Field
-                label={"PARAPIHAKB"}
-                invalid={!!formik.errors.PARAPIHAKB}
-                errorText={formik.errors.PARAPIHAKB as string}
+                label={l.sk_docs}
+                invalid={!!formik.errors.sk_document}
+                errorText={formik.errors.sk_document as string}
               >
-                <Textarea
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("PARAPIHAKB", input);
-                  }}
-                  inputValue={formik.values.PARAPIHAKB}
-                />
+                {!empty(existingSkDocs) && (
+                  <CContainer gap={2}>
+                    {existingSkDocs?.map((item: any, i: number) => {
+                      return (
+                        <ExistingFileItem
+                          key={i}
+                          data={item}
+                          onDelete={() => {
+                            setExistingSkDocs((prev) =>
+                              prev.filter((f) => f !== item)
+                            );
+                            setDeletedSkDocs((ps) => [...ps, item]);
+                          }}
+                        />
+                      );
+                    })}
+                  </CContainer>
+                )}
+
+                {existingSkDocs?.length < 5 && (
+                  <FileInput
+                    dropzone
+                    name="sk_document"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("sk_document", input);
+                    }}
+                    inputValue={formik.values.sk_document}
+                    accept=".pdf, .doc, .docx"
+                    maxFiles={5 - existingSkDocs.length}
+                  />
+                )}
+
+                {!empty(deletedSkDocs) && (
+                  <CContainer gap={2} mt={2}>
+                    <P color={"fg.muted"}>{l.deleted_docs}</P>
+
+                    {deletedSkDocs?.map((item: any, i: number) => {
+                      return (
+                        <ExistingFileItem
+                          key={i}
+                          data={item}
+                          withDeleteButton={false}
+                          withUndobutton
+                          onUndo={() => {
+                            setExistingSkDocs((prev) => [...prev, item]);
+
+                            setDeletedSkDocs((ps) =>
+                              ps.filter((f) => f != item)
+                            );
+                          }}
+                        />
+                      );
+                    })}
+                  </CContainer>
+                )}
               </Field>
 
               <Field
-                label={"PERMASALAH"}
-                invalid={!!formik.errors.PERMASALAH}
-                errorText={formik.errors.PERMASALAH as string}
+                label={l.other_docs}
+                invalid={!!formik.errors.other_document}
+                errorText={formik.errors.other_document as string}
               >
-                <Textarea
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("PERMASALAH", input);
-                  }}
-                  inputValue={formik.values.PERMASALAH}
-                />
-              </Field>
+                {!empty(existingOtherDocs) && (
+                  <CContainer gap={2}>
+                    {existingOtherDocs?.map((item: any, i: number) => {
+                      return (
+                        <ExistingFileItem
+                          key={i}
+                          data={item}
+                          onDelete={() => {
+                            setExistingOtherDocs((prev) =>
+                              prev.filter((f) => f !== item)
+                            );
+                            setDeletedOtherDocs((ps) => [...ps, item]);
+                          }}
+                        />
+                      );
+                    })}
+                  </CContainer>
+                )}
 
-              <Field
-                label={"TINDAKLANJ"}
-                invalid={!!formik.errors.TINDAKLANJ}
-                errorText={formik.errors.TINDAKLANJ as string}
-              >
-                <Textarea
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("TINDAKLANJ", input);
-                  }}
-                  inputValue={formik.values.TINDAKLANJ}
-                />
-              </Field>
+                {existingOtherDocs?.length < 5 && (
+                  <FileInput
+                    dropzone
+                    name="other_document"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("other_document", input);
+                    }}
+                    inputValue={formik.values.other_document}
+                    accept=".pdf, .doc, .docx"
+                    maxFiles={5 - existingOtherDocs.length}
+                  />
+                )}
 
-              <Field
-                label={"HASIL"}
-                invalid={!!formik.errors.HASIL}
-                errorText={formik.errors.HASIL as string}
-              >
-                <Textarea
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("HASIL", input);
-                  }}
-                  inputValue={formik.values.HASIL}
-                />
+                {!empty(deletedOtherDocs) && (
+                  <CContainer gap={2} mt={2}>
+                    <P color={"fg.muted"}>{l.deleted_docs}</P>
+
+                    {deletedOtherDocs?.map((item: any, i: number) => {
+                      return (
+                        <ExistingFileItem
+                          key={i}
+                          data={item}
+                          withDeleteButton={false}
+                          withUndobutton
+                          onUndo={() => {
+                            setExistingOtherDocs((prev) => [...prev, item]);
+
+                            setDeletedOtherDocs((ps) =>
+                              ps.filter((f) => f != item)
+                            );
+                          }}
+                        />
+                      );
+                    })}
+                  </CContainer>
+                )}
               </Field>
             </FieldRoot>
-
-            <HStack justify={"end"} mt={4}>
-              <BButton
-                colorPalette={themeConfig.colorPalette}
-                onClick={formik.submitForm}
-                loading={loading}
-                size={"sm"}
-              >
-                {l.save}
-              </BButton>
-            </HStack>
           </Tabs.Content>
-        )}
-
-        {/* Document content */}
-        <Tabs.Content value="document" p={2}>
-          <FieldRoot gap={4}>
-            <Field
-              label={l.sk_docs}
-              invalid={!!formik.errors.sk_document}
-              errorText={formik.errors.sk_document as string}
-            >
-              {!empty(existingSkDocs) && (
-                <CContainer gap={2}>
-                  {existingSkDocs?.map((item: any, i: number) => {
-                    return (
-                      <ExistingFileItem
-                        key={i}
-                        data={item}
-                        onDelete={() => {
-                          setExistingSkDocs((prev) =>
-                            prev.filter((f) => f !== item)
-                          );
-                          setDeletedSkDocs((ps) => [...ps, item]);
-                        }}
-                      />
-                    );
-                  })}
-                </CContainer>
-              )}
-
-              {existingSkDocs?.length < 5 && (
-                <FileInput
-                  dropzone
-                  name="sk_document"
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("sk_document", input);
-                  }}
-                  inputValue={formik.values.sk_document}
-                  accept=".pdf, .doc, .docx"
-                  maxFiles={5 - existingSkDocs.length}
-                />
-              )}
-
-              {!empty(deletedSkDocs) && (
-                <CContainer gap={2} mt={2}>
-                  <P color={"fg.muted"}>{l.deleted_docs}</P>
-
-                  {deletedSkDocs?.map((item: any, i: number) => {
-                    return (
-                      <ExistingFileItem
-                        key={i}
-                        data={item}
-                        withDeleteButton={false}
-                        withUndobutton
-                        onUndo={() => {
-                          setExistingSkDocs((prev) => [...prev, item]);
-
-                          setDeletedSkDocs((ps) => ps.filter((f) => f != item));
-                        }}
-                      />
-                    );
-                  })}
-                </CContainer>
-              )}
-            </Field>
-
-            <Field
-              label={l.other_docs}
-              invalid={!!formik.errors.other_document}
-              errorText={formik.errors.other_document as string}
-            >
-              {!empty(existingOtherDocs) && (
-                <CContainer gap={2}>
-                  {existingOtherDocs?.map((item: any, i: number) => {
-                    return (
-                      <ExistingFileItem
-                        key={i}
-                        data={item}
-                        onDelete={() => {
-                          setExistingOtherDocs((prev) =>
-                            prev.filter((f) => f !== item)
-                          );
-                          setDeletedOtherDocs((ps) => [...ps, item]);
-                        }}
-                      />
-                    );
-                  })}
-                </CContainer>
-              )}
-
-              {existingOtherDocs?.length < 5 && (
-                <FileInput
-                  dropzone
-                  name="other_document"
-                  onChangeSetter={(input) => {
-                    formik.setFieldValue("other_document", input);
-                  }}
-                  inputValue={formik.values.other_document}
-                  accept=".pdf, .doc, .docx"
-                  maxFiles={5 - existingOtherDocs.length}
-                />
-              )}
-
-              {!empty(deletedOtherDocs) && (
-                <CContainer gap={2} mt={2}>
-                  <P color={"fg.muted"}>{l.deleted_docs}</P>
-
-                  {deletedOtherDocs?.map((item: any, i: number) => {
-                    return (
-                      <ExistingFileItem
-                        key={i}
-                        data={item}
-                        withDeleteButton={false}
-                        withUndobutton
-                        onUndo={() => {
-                          setExistingOtherDocs((prev) => [...prev, item]);
-
-                          setDeletedOtherDocs((ps) =>
-                            ps.filter((f) => f != item)
-                          );
-                        }}
-                      />
-                    );
-                  })}
-                </CContainer>
-              )}
-            </Field>
-          </FieldRoot>
-
-          <HStack justify={"end"} mt={4}>
-            <BButton
-              colorPalette={themeConfig.colorPalette}
-              onClick={formik.submitForm}
-              loading={loading}
-              size={"sm"}
-            >
-              {l.save}
-            </BButton>
-          </HStack>
-        </Tabs.Content>
+        </form>
       </Tabs.Root>
+
+      {["explanation", "document"].includes(tabValue) && (
+        <HStack
+          justify={"end"}
+          p={3}
+          pb={1}
+          bg={"body"}
+          borderTop={"1px solid"}
+          borderColor={"border.muted"}
+        >
+          <BButton
+            type="submit"
+            form="field_info_form"
+            colorPalette={themeConfig.colorPalette}
+            loading={loading}
+            size={"sm"}
+          >
+            {l.save}
+          </BButton>
+        </HStack>
+      )}
     </CContainer>
   );
 };
