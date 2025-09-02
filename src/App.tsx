@@ -16,15 +16,12 @@ import { useFirefoxPaddingY } from "./hooks/useFirefoxPaddingY";
 
 const EndpointWrapper = ({ children }: { children: React.ReactNode }) => {
   // Contexts
-  // const { themeConfig } = useThemeConfig();
+  const { colorMode } = useColorMode();
 
   // Utils
   const location = useLocation();
   const navigate = useNavigate();
-  // const setStatusBarPrimary = useStatusBarColor(
-  //   themeConfig.primaryColorHex,
-  //   themeConfig.primaryColorHex
-  // );
+
   const setStatusBarBody = useStatusBarColor("#ffffff", "#151515");
   const setStatusBarDark = useStatusBarColor("#151515", "#151515");
 
@@ -37,7 +34,7 @@ const EndpointWrapper = ({ children }: { children: React.ReactNode }) => {
         setStatusBarBody();
         break;
     }
-  }, [location, setStatusBarBody, setStatusBarDark]);
+  }, [location, colorMode, setStatusBarBody, setStatusBarDark]);
 
   // Handle on refresh remove all query params
   useEffect(() => {
