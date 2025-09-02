@@ -154,7 +154,7 @@ export const FieldInfoEdit = (props: any) => {
   const propertiesId = selectedPolygon?.polygon?.properties?.id;
   const geojson = selectedPolygon?.activeLayer?.data?.geojson;
   const featuresIndex = geojson?.features?.findIndex(
-    (f: any) => f.properties.id === propertiesId
+    (f: any) => f.properties?.id === propertiesId
   );
   const withExplanation = selectedPolygon?.activeLayer?.with_explanation;
   const [tabValue, setTabValue] = useState<string>("information");
@@ -216,7 +216,7 @@ export const FieldInfoEdit = (props: any) => {
       }
       payload.append(
         "delete_document_ids",
-        JSON.stringify(deletedDocs?.map((d) => d.id))
+        JSON.stringify(deletedDocs?.map((d) => d?.id))
       );
       payload.append("properties", JSON.stringify(newPropertiesPayload));
       const url = `/api/gis-bpn/workspaces-layers/update-field`;
@@ -234,7 +234,7 @@ export const FieldInfoEdit = (props: any) => {
             setExistingDocs([]);
             setDeletedDocs([]);
 
-            const newDocs = r.data.data.data.geojson.features?.[0].documents;
+            const newDocs = r.data.data.data.geojson.features?.[0]?.documents;
             const newGeojson = {
               ...geojson,
               features: geojson?.features.map((feature: any, index: number) => {
@@ -281,9 +281,7 @@ export const FieldInfoEdit = (props: any) => {
         formik.setFieldValue(key, properties[key]);
       });
     }
-  }, [properties.id]);
-
-  console.log(properties.id);
+  }, [properties?.id]);
 
   // Handle initial docs
   useEffect(() => {
