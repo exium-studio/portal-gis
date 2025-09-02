@@ -214,7 +214,7 @@ export const LegendContent = (props: any) => {
                               color={"fg.subtle"}
                               lineClamp={1}
                               lineHeight={1}
-                            >{`${layer.color_property_key}`}</P>
+                            >{`${layer.color_property_key || "-"}`}</P>
                           </HStack>
                         </CContainer>
                       </HStack>
