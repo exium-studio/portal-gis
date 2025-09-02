@@ -14,6 +14,7 @@ import { filterOptionGroups } from "@/utils/filterOptionGroups";
 import { HStack, SimpleGrid } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import FilterCheckbox from "../FilterCheckbox";
+import empty from "@/utils/empty";
 
 const GeoJSONFilter = () => {
   // Context
@@ -44,31 +45,38 @@ const GeoJSONFilter = () => {
   return (
     <ItemContainer bg={"body"} borderRadius={themeConfig.radii.container}>
       <ItemHeaderContainer justify={"space-between"}>
-        <P fontWeight={"semibold"}>Filter GeoJSON</P>
+        <P fontWeight={"semibold"}>Filter</P>
       </ItemHeaderContainer>
 
       <SimpleGrid gap={4} columns={halfPanel ? 1 : [1, null, null, 3]} p={4}>
-        {filterOptions?.map((option, i) => (
-          <CContainer
-            key={`${option.property}`}
-            border={i === filterOptions.length - 1 ? "none" : ""}
-            gap={2}
-          >
-            <P color={"fg.subtle"}>{option.property}</P>
+        {filterOptions?.map((option, i) => {
+          const optionValues = option.values;
 
-            <SimpleGrid gap={4} columns={[2]}>
-              {option.values?.map((value) => (
-                <FilterCheckbox
-                  key={value.value}
-                  option={option}
-                  value={value}
-                  filterOptions={filterOptions}
-                  setFilterOptions={setFilterOptions}
-                />
-              ))}
-            </SimpleGrid>
-          </CContainer>
-        ))}
+          return (
+            <CContainer
+              key={`${option.property}`}
+              border={i === filterOptions.length - 1 ? "none" : ""}
+              gap={2}
+            >
+              <P color={"fg.subtle"}>{option.property}</P>
+              {empty(optionValues) && <P color={"fg.subtle"}>-</P>}
+
+              {!empty(optionValues) && (
+                <SimpleGrid gap={4} columns={[2]}>
+                  {optionValues?.map((value) => (
+                    <FilterCheckbox
+                      key={value.value}
+                      option={option}
+                      value={value}
+                      filterOptions={filterOptions}
+                      setFilterOptions={setFilterOptions}
+                    />
+                  ))}
+                </SimpleGrid>
+              )}
+            </CContainer>
+          );
+        })}
       </SimpleGrid>
 
       <HStack
