@@ -103,7 +103,9 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
 
       const clickedId =
         clickedFeature.properties?.id || clickedFeature.properties?.gid;
-      const selectedId = selectedPolygon?.polygon?.properties?.id;
+      const selectedId =
+        selectedPolygon?.polygon?.properties?.id ||
+        selectedPolygon?.polygon?.properties?.gid;
 
       // console.log("clickedFeature.properties", clickedFeature.properties);
       // console.log("clickedId", clickedId);
