@@ -83,6 +83,8 @@ const FileInput = (props: Props) => {
     }
   };
 
+  // console.log(inputValue);
+
   return (
     <FileUploadRoot
       ref={fRef}

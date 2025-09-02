@@ -98,7 +98,11 @@ const FieldInfoDetail = () => {
       </MenuHeaderContainer>
 
       <CContainer pos={"relative"} overflowY={"auto"}>
-        <FieldInfoEdit properties={properties} setProperties={setProperties} />
+        <FieldInfoEdit
+          properties={properties}
+          setProperties={setProperties}
+          open={open}
+        />
       </CContainer>
     </FloatingContainer>
   );

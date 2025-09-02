@@ -22,9 +22,12 @@ import PropertyValue from "../PropertyValue";
 
 const EXCLUDED_KEYS = [
   "id",
+  "gid",
   "layer_id",
-  "document_ids",
   "sk_document",
+  "document_sk_ids",
+  "other_document",
+  "other_document_ids",
   "deleted_docs",
   "PARAPIHAKB",
   "PERMASALAH",
@@ -177,7 +180,7 @@ export const FieldInfoEdit = (props: any) => {
   const formik = useFormik({
     validateOnChange: false,
     initialValues: {
-      ...resolvedData,
+      ...properties,
       ...(withExplanation ? withExplanationValues : {}),
       sk_document: undefined as any,
       other_document: undefined as any,
@@ -192,7 +195,16 @@ export const FieldInfoEdit = (props: any) => {
     }),
     onSubmit: (values, { resetForm }) => {
       // console.log(values);
-      formik.setFieldValue("sk_document", undefined);
+      function resetDocsInputValue() {
+        resetForm();
+        formik.setFieldValue("sk_document", undefined);
+        setExistingSkDocs([]);
+        setDeletedSkDocs([]);
+        setExistingOtherDocs([]);
+        setDeletedOtherDocs([]);
+      }
+
+      resetDocsInputValue();
 
       const explanationProperties = {
         PARAPIHAKB: values?.PARAPIHAKB,
@@ -200,9 +212,10 @@ export const FieldInfoEdit = (props: any) => {
         TINDAKLANJ: values?.TINDAKLANJ,
         HASIL: values?.HASIL,
       };
+      const { other_document, sk_document, ...restNewProperties } = values;
       const newProperties = {
         id: propertiesId,
-        ...values,
+        ...restNewProperties,
         ...(withExplanation ? explanationProperties : {}),
       };
       const newPropertiesPayload = {
@@ -246,11 +259,7 @@ export const FieldInfoEdit = (props: any) => {
         config,
         onResolve: {
           onSuccess: (r) => {
-            resetForm();
-            setExistingSkDocs([]);
-            setDeletedSkDocs([]);
-            setExistingOtherDocs([]);
-            setDeletedOtherDocs([]);
+            resetDocsInputValue();
 
             const newSkDocs =
               r.data.data.data.geojson.features?.[0]?.sk_document;
@@ -281,7 +290,11 @@ export const FieldInfoEdit = (props: any) => {
             if (workspaceId && layerId) {
               updateActiveLayerData(workspaceId, layerId, newData as any);
             }
-            setProperties(newProperties);
+            if (restNewProperties) {
+              Object.keys(restNewProperties).forEach((key) => {
+                formik.setFieldValue(key, restNewProperties[key]);
+              });
+            }
             setSelectedPolygon({
               ...selectedPolygon,
               polygon: {
@@ -290,6 +303,9 @@ export const FieldInfoEdit = (props: any) => {
                 other_document: newOtherDocs,
               },
             });
+          },
+          onError: () => {
+            resetDocsInputValue();
           },
         },
       });
@@ -320,6 +336,7 @@ export const FieldInfoEdit = (props: any) => {
     selectedPolygon?.polygon?.other_document,
   ]);
 
+  // console.log("selectedPolygon Properties", selectedPolygon?.polygon);
   // console.log(
   //   "selectedPolygon?.polygon?.sk_document",
   //   selectedPolygon?.polygon?.sk_document

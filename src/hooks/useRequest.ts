@@ -85,6 +85,10 @@ const useRequest = (props: Props) => {
         id: id,
         title: fLoadingMessage.title,
         description: fLoadingMessage.description,
+        action: {
+          label: "Close",
+          onClick: () => {},
+        },
       });
 
     if (!loading) setLoading(true);
