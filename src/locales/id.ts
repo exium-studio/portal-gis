@@ -454,6 +454,7 @@ const translations = {
   "primary_address": "Alamat utama",
   "problems": "Permasalahan",
   "profile": "Profil",
+  "properties": "Properti",
   "property": "Properti",
   "province": "Provinsi",
   "published_date": "Tanggal publikasi",

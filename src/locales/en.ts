@@ -454,6 +454,7 @@ const translations = {
   "primary_address": "Primary address",
   "problems": "Problems",
   "profile": "Profile",
+  "properties": "Properties",
   "property": "Property",
   "province": "Province",
   "published_date": "Date published",

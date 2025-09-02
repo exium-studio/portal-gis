@@ -79,6 +79,10 @@ export const master_data_navs = {
 };
 
 // Semantic
+export const properties = {
+  id: "Properti",
+  en: "Properties",
+};
 export const sk_docs = {
   id: "Dokumen SK",
   en: "SK Document",

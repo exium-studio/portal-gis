@@ -324,13 +324,13 @@ export const FieldInfoEdit = (props: any) => {
           zIndex={2}
         >
           <Tabs.List bg={"body"} minW={"max"} w={"full"}>
-            {/* Information tab */}
+            {/* Porperties tab */}
             <Tabs.Trigger
               minW={"fit !important"}
               justifyContent={"center"}
               value="information"
             >
-              {l.information}
+              {l.properties}
             </Tabs.Trigger>
 
             {/* Usage tab */}
@@ -365,7 +365,7 @@ export const FieldInfoEdit = (props: any) => {
           </Tabs.List>
         </HScroll>
 
-        {/* Information content */}
+        {/* Properties content */}
         <Tabs.Content value="information" p={0}>
           <InformationContent
             properties={properties}
