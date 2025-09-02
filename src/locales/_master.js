@@ -79,6 +79,14 @@ export const master_data_navs = {
 };
 
 // Semantic
+export const sk_docs = {
+  id: "Dokumen SK",
+  en: "SK Document",
+};
+export const other_docs = {
+  id: "Dokumen lain",
+  en: "Other Document",
+};
 export const parent_layer = {
   id: "Layer induk",
   en: "Parent layer",

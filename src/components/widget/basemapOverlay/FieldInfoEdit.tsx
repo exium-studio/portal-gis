@@ -24,8 +24,7 @@ const EXCLUDED_KEYS = [
   "id",
   "layer_id",
   "document_ids",
-  "deleted_docs",
-  "docs",
+  "sk_document",
   "deleted_docs",
   "PARAPIHAKB",
   "PERMASALAH",
@@ -158,8 +157,10 @@ export const FieldInfoEdit = (props: any) => {
   );
   const withExplanation = selectedPolygon?.activeLayer?.with_explanation;
   const [tabValue, setTabValue] = useState<string>("information");
-  const [existingDocs, setExistingDocs] = useState<any[]>([]);
-  const [deletedDocs, setDeletedDocs] = useState<any[]>([]);
+  const [existingSkDocs, setExistingSkDocs] = useState<any[]>([]);
+  const [deletedSkDocs, setDeletedSkDocs] = useState<any[]>([]);
+  const [existingOtherDocs, setExistingOtherDocs] = useState<any[]>([]);
+  const [deletedOtherDocs, setDeletedOtherDocs] = useState<any[]>([]);
   const resolvedData =
     properties &&
     Object.fromEntries(
@@ -178,16 +179,20 @@ export const FieldInfoEdit = (props: any) => {
     initialValues: {
       ...resolvedData,
       ...(withExplanation ? withExplanationValues : {}),
-      docs: undefined as any,
+      sk_document: undefined as any,
+      other_document: undefined as any,
     },
     validationSchema: yup.object().shape({
-      docs: fileValidation({
+      sk_document: fileValidation({
+        allowedExtensions: ["pdf", "doc", "docx"],
+      }),
+      other_document: fileValidation({
         allowedExtensions: ["pdf", "doc", "docx"],
       }),
     }),
     onSubmit: (values, { resetForm }) => {
       // console.log(values);
-      formik.setFieldValue("docs", undefined);
+      formik.setFieldValue("sk_document", undefined);
 
       const explanationProperties = {
         PARAPIHAKB: values?.PARAPIHAKB,
@@ -207,16 +212,27 @@ export const FieldInfoEdit = (props: any) => {
       const payload = new FormData();
       payload.append("layer_id", `${layerId}`);
       payload.append("table_name", `${tableName}`);
-      if (Array.isArray(values.docs)) {
-        values.docs.forEach((file: any) => {
+      if (Array.isArray(values.sk_document)) {
+        values.sk_document.forEach((file: any) => {
           payload.append(`file`, file);
         });
-      } else if (values.docs) {
-        payload.append("file", values.docs);
+      } else if (values.sk_document) {
+        payload.append("file", values.sk_document);
+      }
+      if (Array.isArray(values.other_document)) {
+        values.other_document.forEach((file: any) => {
+          payload.append(`file`, file);
+        });
+      } else if (values.other_document) {
+        payload.append("file", values.other_document);
       }
       payload.append(
-        "delete_document_ids",
-        JSON.stringify(deletedDocs?.map((d) => d?.id))
+        "delete_sk_document_ids",
+        JSON.stringify(deletedSkDocs?.map((d) => d?.id))
+      );
+      payload.append(
+        "delete_other_document_ids",
+        JSON.stringify(deletedSkDocs?.map((d) => d?.id))
       );
       payload.append("properties", JSON.stringify(newPropertiesPayload));
       const url = `/api/gis-bpn/workspaces-layers/update-field`;
@@ -231,8 +247,8 @@ export const FieldInfoEdit = (props: any) => {
         onResolve: {
           onSuccess: (r) => {
             resetForm();
-            setExistingDocs([]);
-            setDeletedDocs([]);
+            setExistingSkDocs([]);
+            setDeletedSkDocs([]);
 
             const newDocs = r.data.data.data.geojson.features?.[0]?.documents;
             const newGeojson = {
@@ -283,11 +299,11 @@ export const FieldInfoEdit = (props: any) => {
     }
   }, [properties?.id]);
 
-  // Handle initial docs
+  // Handle initial sk_document
   useEffect(() => {
-    formik.setFieldValue("docs", undefined);
-    setExistingDocs(selectedPolygon?.polygon?.documents || []);
-    setDeletedDocs([]);
+    formik.setFieldValue("sk_document", undefined);
+    setExistingSkDocs(selectedPolygon?.polygon?.documents || []);
+    setDeletedSkDocs([]);
   }, [selectedPolygon?.polygon?.documents]);
 
   return (
@@ -435,22 +451,22 @@ export const FieldInfoEdit = (props: any) => {
         <Tabs.Content value="document" p={2}>
           <FieldRoot gap={4}>
             <Field
-              label={l.document}
-              invalid={!!formik.errors.docs}
-              errorText={formik.errors.docs as string}
+              label={l.sk_docs}
+              invalid={!!formik.errors.sk_document}
+              errorText={formik.errors.sk_document as string}
             >
-              {!empty(existingDocs) && (
+              {!empty(existingSkDocs) && (
                 <CContainer gap={2}>
-                  {existingDocs?.map((item: any, i: number) => {
+                  {existingSkDocs?.map((item: any, i: number) => {
                     return (
                       <ExistingFileItem
                         key={i}
                         data={item}
                         onDelete={() => {
-                          setExistingDocs((prev) =>
+                          setExistingSkDocs((prev) =>
                             prev.filter((f) => f !== item)
                           );
-                          setDeletedDocs((ps) => [...ps, item]);
+                          setDeletedSkDocs((ps) => [...ps, item]);
                         }}
                       />
                     );
@@ -458,24 +474,24 @@ export const FieldInfoEdit = (props: any) => {
                 </CContainer>
               )}
 
-              {existingDocs?.length < 5 && (
+              {existingSkDocs?.length < 5 && (
                 <FileInput
                   dropzone
-                  name="docs"
+                  name="sk_document"
                   onChangeSetter={(input) => {
-                    formik.setFieldValue("docs", input);
+                    formik.setFieldValue("sk_document", input);
                   }}
-                  inputValue={formik.values.docs}
+                  inputValue={formik.values.sk_document}
                   accept=".pdf, .doc, .docx"
-                  maxFiles={5 - existingDocs.length}
+                  maxFiles={5 - existingSkDocs.length}
                 />
               )}
 
-              {!empty(deletedDocs) && (
+              {!empty(deletedSkDocs) && (
                 <CContainer gap={2} mt={2}>
                   <P color={"fg.muted"}>{l.deleted_docs}</P>
 
-                  {deletedDocs?.map((item: any, i: number) => {
+                  {deletedSkDocs?.map((item: any, i: number) => {
                     return (
                       <ExistingFileItem
                         key={i}
@@ -483,9 +499,71 @@ export const FieldInfoEdit = (props: any) => {
                         withDeleteButton={false}
                         withUndobutton
                         onUndo={() => {
-                          setExistingDocs((prev) => [...prev, item]);
+                          setExistingSkDocs((prev) => [...prev, item]);
 
-                          setDeletedDocs((ps) => ps.filter((f) => f != item));
+                          setDeletedSkDocs((ps) => ps.filter((f) => f != item));
+                        }}
+                      />
+                    );
+                  })}
+                </CContainer>
+              )}
+            </Field>
+
+            <Field
+              label={l.other_docs}
+              invalid={!!formik.errors.other_document}
+              errorText={formik.errors.other_document as string}
+            >
+              {!empty(existingOtherDocs) && (
+                <CContainer gap={2}>
+                  {existingOtherDocs?.map((item: any, i: number) => {
+                    return (
+                      <ExistingFileItem
+                        key={i}
+                        data={item}
+                        onDelete={() => {
+                          setExistingOtherDocs((prev) =>
+                            prev.filter((f) => f !== item)
+                          );
+                          setDeletedOtherDocs((ps) => [...ps, item]);
+                        }}
+                      />
+                    );
+                  })}
+                </CContainer>
+              )}
+
+              {existingOtherDocs?.length < 5 && (
+                <FileInput
+                  dropzone
+                  name="other_document"
+                  onChangeSetter={(input) => {
+                    formik.setFieldValue("other_document", input);
+                  }}
+                  inputValue={formik.values.other_document}
+                  accept=".pdf, .doc, .docx"
+                  maxFiles={5 - existingOtherDocs.length}
+                />
+              )}
+
+              {!empty(deletedOtherDocs) && (
+                <CContainer gap={2} mt={2}>
+                  <P color={"fg.muted"}>{l.deleted_docs}</P>
+
+                  {deletedOtherDocs?.map((item: any, i: number) => {
+                    return (
+                      <ExistingFileItem
+                        key={i}
+                        data={item}
+                        withDeleteButton={false}
+                        withUndobutton
+                        onUndo={() => {
+                          setExistingOtherDocs((prev) => [...prev, item]);
+
+                          setDeletedOtherDocs((ps) =>
+                            ps.filter((f) => f != item)
+                          );
                         }}
                       />
                     );
