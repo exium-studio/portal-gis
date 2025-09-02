@@ -392,9 +392,17 @@ const NavContainer = ({
             // borderColor={"border.muted"}
             flexShrink={0}
           >
-            <Link to={"/"}>
-              <Img src="/logo.png" w={"24px"} />
-            </Link>
+            <VStack pos={"relative"}>
+              <Link to={"/"}>
+                <Img src="/logo.png" w={"24px"} />
+              </Link>
+
+              {/* <BButton iconButton variant={"ghost"} color={"fg.muted"}>
+                <Icon boxSize={5}>
+                  <IconList stroke={1.5} />
+                </Icon>
+              </BButton> */}
+            </VStack>
 
             <VStack justify={"center"} flex={1}>
               <NavList activePath={activePath} />
