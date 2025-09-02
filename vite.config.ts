@@ -19,9 +19,9 @@ export default defineConfig({
       },
 
       manifest: {
-        name: "vite-chakra-pwa-template",
-        short_name: "vite-chakra-pwa-template",
-        description: "PWA template with vite n chakra",
+        name: "portal-gis",
+        short_name: "pg",
+        description: "Portal GIS",
         theme_color: "#000000",
       },
 
