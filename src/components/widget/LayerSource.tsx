@@ -101,14 +101,20 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
         return;
       }
 
-      const clickedId = clickedFeature.properties?.id;
+      const clickedId =
+        clickedFeature.properties?.id || clickedFeature.properties?.gid;
       const selectedId = selectedPolygon?.polygon?.properties?.id;
+
+      console.log("clickedFeature.properties", clickedFeature.properties);
+      // console.log("clickedId", clickedId);
+      // console.log("selectedId", selectedId);
 
       if (selectedId === clickedId) {
         clearSelectedPolygon();
       } else {
         const clickedPolygon = filteredGeojson?.features?.find(
-          (f) => f.properties?.id === clickedId
+          (f) =>
+            f.properties?.id === clickedId || f.properties?.gid === clickedId
         );
 
         setSelectedPolygon({
