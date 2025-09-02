@@ -20,7 +20,7 @@ export default defineConfig({
 
       manifest: {
         name: "portal-gis",
-        short_name: "pg",
+        short_name: "portal-gis",
         description: "Portal GIS",
         theme_color: "#000000",
       },
@@ -29,7 +29,6 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,svg,png,ico}"],
         cleanupOutdatedCaches: true,
         clientsClaim: true,
-        // maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
       },
 
       devOptions: {
@@ -40,20 +39,4 @@ export default defineConfig({
       },
     }),
   ],
-  build: {
-    terserOptions: {
-      compress: {
-        drop_console: true, // Remove console logs to reduce size
-      },
-    },
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes("node_modules")) {
-            return "vendor"; // Optimize chunking
-          }
-        },
-      },
-    },
-  },
 });
