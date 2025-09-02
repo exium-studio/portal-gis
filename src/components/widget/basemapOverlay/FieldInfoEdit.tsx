@@ -336,14 +336,6 @@ export const FieldInfoEdit = (props: any) => {
     selectedPolygon?.polygon?.other_document,
   ]);
 
-  // console.log("selectedPolygon Properties", selectedPolygon?.polygon);
-  // console.log(
-  //   "selectedPolygon?.polygon?.sk_document",
-  //   selectedPolygon?.polygon?.sk_document
-  // );
-  // console.log("existingSkDocs", existingSkDocs);
-  // console.log("deletedSkDocs", deletedSkDocs);
-
   return (
     <CContainer pos={"relative"} overflowY={"auto"} {...restProps}>
       <Tabs.Root
@@ -364,6 +356,7 @@ export const FieldInfoEdit = (props: any) => {
           <Tabs.List bg={"body"} minW={"max"} w={"full"}>
             {/* Porperties tab */}
             <Tabs.Trigger
+              flex={1}
               minW={"fit !important"}
               justifyContent={"center"}
               value="information"
@@ -373,6 +366,7 @@ export const FieldInfoEdit = (props: any) => {
 
             {/* Usage tab */}
             <Tabs.Trigger
+              flex={1}
               minW={"fit !important"}
               justifyContent={"center"}
               value="usage"
@@ -383,6 +377,7 @@ export const FieldInfoEdit = (props: any) => {
             {/* Explanation tab */}
             {withExplanation && (
               <Tabs.Trigger
+                flex={1}
                 minW={"fit !important"}
                 justifyContent={"center"}
                 value="explanation"
@@ -393,8 +388,8 @@ export const FieldInfoEdit = (props: any) => {
 
             {/* Document tab */}
             <Tabs.Trigger
-              minW={"fit !important"}
               flex={1}
+              minW={"fit !important"}
               justifyContent={"center"}
               value="document"
             >
