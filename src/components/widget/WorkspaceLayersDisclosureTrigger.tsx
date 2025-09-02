@@ -260,7 +260,8 @@ const EditLayer = (props: any) => {
         layer_type: [
           {
             id: layer?.layer_type,
-            label: capsFirstLetter(layer?.layer_type),
+            label:
+              LAYER_TYPES[layer?.layer_type as keyof typeof LAYER_TYPES].label,
           },
         ],
         file_type: undefined,
