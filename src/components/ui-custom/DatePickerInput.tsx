@@ -121,7 +121,7 @@ const DatePickerInput = ({
 
   // States, Refs
   const userTz = userTimeZone();
-  const offsetInMs = moment.tz(userTz.key).utcOffset() * 60 * 1000;
+  const userTzOffsetInMs = moment.tz(userTz.key).utcOffset() * 60 * 1000;
   const finalPlaceholder = placeholder || l.date_picker_default_placeholder;
   const [date, setDate] = useState<Date>(
     inputValue?.[0] ? new Date(inputValue?.[0]) : new Date()
@@ -142,7 +142,7 @@ const DatePickerInput = ({
 
     const startOfFirstWeek = startOfWeek(firstDayOfMonth, { weekStartsOn: 1 });
 
-    let weekDates = [];
+    const weekDates = [];
     let currentWeek = [];
 
     for (let i = 0; i < 6; i++) {
@@ -297,7 +297,8 @@ const DatePickerInput = ({
             if (inputValue) {
               setSelectedDates(
                 inputValue.map(
-                  (item) => new Date(new Date(item).getTime() - offsetInMs)
+                  (item) =>
+                    new Date(new Date(item).getTime() - userTzOffsetInMs)
                 )
               );
             }

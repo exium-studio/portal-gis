@@ -33,20 +33,16 @@ const FileInput = (props: Props) => {
   // Props
   const {
     fRef,
-    name,
     onChangeSetter,
     inputValue,
     accept,
     invalid,
-    placeholder,
-    initialFilepath,
     label,
     dropzone,
-    maxFileSize,
     maxFiles = 1,
     description = `up to ${props.maxFileSize || 10} MB, max ${
       props?.maxFiles || 1
-    } file${props?.maxFiles!! > 1 ? "s" : ""}`,
+    } file${props.maxFiles! > 1 ? "s" : ""}`,
     disabled,
     ...restProps
   } = props;
