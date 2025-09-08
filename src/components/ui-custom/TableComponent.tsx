@@ -181,7 +181,6 @@ const BatchOptions = ({
     </MenuRoot>
   );
 };
-
 const RowOptions = ({
   rowData,
   rowOptions,
@@ -283,7 +282,6 @@ const RowOptions = ({
     </MenuRoot>
   );
 };
-
 const TableFooterNote = ({ footerContent }: Interface__TableFooterNote) => {
   return (
     <CContainer
@@ -294,7 +292,6 @@ const TableFooterNote = ({ footerContent }: Interface__TableFooterNote) => {
     </CContainer>
   );
 };
-
 const LimitControl = ({
   initialLimit,
   limitControl,
@@ -358,7 +355,6 @@ const LimitControl = ({
     </CContainer>
   );
 };
-
 const PageControl = ({
   initialPage,
   pageControl,
@@ -517,7 +513,6 @@ const TableComponent = ({
   ths,
   tds,
   rowClick,
-  originalData,
   columnsConfig,
   rowOptions,
   batchOptions,
