@@ -132,7 +132,7 @@ const InformationContent = (props: any) => {
 
 export const FieldInfoEdit = (props: any) => {
   // Props
-  const { properties, setProperties, ...restProps } = props;
+  const { properties, ...restProps } = props;
 
   // Hooks
   const { l } = useLang();
@@ -212,7 +212,7 @@ export const FieldInfoEdit = (props: any) => {
         TINDAKLANJ: values?.TINDAKLANJ,
         HASIL: values?.HASIL,
       };
-      const { other_document, sk_document, ...restNewProperties } = values;
+      const { ...restNewProperties } = values;
       const newProperties = {
         id: propertiesId,
         ...restNewProperties,
