@@ -719,8 +719,6 @@ const ViewWorkspace = (props: any) => {
     if (mapRef.current && activeWorkspace?.bbox) {
       const [minLng, minLat, maxLng, maxLat] = activeWorkspace.bbox;
 
-      console.log(activeWorkspace.bbox);
-
       mapRef.current.fitBounds(
         [
           [minLng, minLat],
