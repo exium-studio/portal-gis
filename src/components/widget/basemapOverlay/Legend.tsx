@@ -239,8 +239,8 @@ export const LegendContent = (props: any) => {
                                 <SimplePopover key={value} content={value}>
                                   <HStack cursor={"pointer"} w={"fit"}>
                                     <Box
-                                      w={"8px"}
-                                      h={"8px"}
+                                      w={"10px"}
+                                      h={"10px"}
                                       bg={color}
                                       opacity={0.6}
                                       flexShrink={0}

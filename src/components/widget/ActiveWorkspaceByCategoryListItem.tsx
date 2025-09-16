@@ -256,7 +256,7 @@ const ActiveWorkspaceByCategoryListItem = (props: Props) => {
 
       <AccordionItemContent
         p={0}
-        borderTop={"1px solid"}
+        // borderTop={"1px solid"}
         borderColor={"border.muted"}
       >
         <CContainer gap={2}>
