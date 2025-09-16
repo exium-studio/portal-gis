@@ -255,20 +255,30 @@ const ActiveWorkspaceListItem = (props: Props) => {
         </HStack>
       </AccordionItemTrigger>
 
-      <AccordionItemContent p={0}>
-        <CContainer borderColor={"border.muted"} pl={6}>
+      <AccordionItemContent
+        p={0}
+        // borderTop={"1px solid"}
+        borderColor={"border.muted"}
+      >
+        <CContainer pl={4}>
           {workspace?.layers
             ?.slice()
             ?.reverse()
             ?.map((layer, i) => {
-              const last = i === workspace?.layers?.length - 1;
+              const lastLayer = i === workspace?.layers?.length - 1;
 
               return (
-                <HStack w={"full"} gap={1}>
+                <HStack
+                  w={"full"}
+                  gap={1}
+                  borderLeft={last ? "" : "1px solid"}
+                  borderColor={"border.emphasized"}
+                  pl={2}
+                >
                   <HStack w={"28px"} h={"40px"} flexShrink={0} gap={0} pl={4}>
                     <Box
                       w={"1px"}
-                      h={last ? "50%" : "full"}
+                      h={lastLayer ? "50%" : "full"}
                       borderLeft={"1px solid"}
                       borderColor={"border.emphasized"}
                       mb={"auto"}
