@@ -1,14 +1,24 @@
 import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
+import {
+  DisclosureBody,
+  DisclosureContent,
+  DisclosureFooter,
+  DisclosureHeader,
+  DisclosureRoot,
+} from "@/components/ui-custom/Disclosure";
+import DisclosureHeaderContent from "@/components/ui-custom/DisclosureHeaderContent";
 import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
 import FloatingContainer from "@/components/ui-custom/FloatingContainer";
 import P from "@/components/ui-custom/P";
+import StringInput from "@/components/ui-custom/StringInput";
 import {
   AccordionItem,
   AccordionItemContent,
   AccordionItemTrigger,
   AccordionRoot,
 } from "@/components/ui/accordion";
+import { Field } from "@/components/ui/field";
 import { Tooltip } from "@/components/ui/tooltip";
 import { LayerLegends } from "@/constants/interfaces";
 import { LAYER_TYPES } from "@/constants/lateral";
@@ -16,16 +26,24 @@ import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
 import useLegend from "@/context/useLegend";
+import { useThemeConfig } from "@/context/useThemeConfig";
+import useBackOnClose from "@/hooks/useBackOnClose";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
+import useRequest from "@/hooks/useRequest";
+import back from "@/utils/back";
 import empty from "@/utils/empty";
 import {
   Badge,
   Box,
+  ColorPicker,
+  FieldRoot,
   HStack,
   Icon,
+  parseColor,
   Portal,
   SimpleGrid,
   Text,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import {
@@ -35,10 +53,11 @@ import {
   IconFolders,
   IconFoldersOff,
 } from "@tabler/icons-react";
+import { useFormik } from "formik";
 import { useEffect, useRef, useState } from "react";
+import * as yup from "yup";
 import MenuHeaderContainer from "../MenuHeaderContainer";
 import { OverlayItemContainer } from "../OverlayItemContainer";
-import SimplePopover from "../SimplePopover";
 import FloatingContainerCloseButton from "./FloatingContainerCloseButton";
 
 export const LegendTrigger = () => {
@@ -79,6 +98,134 @@ export const LegendTrigger = () => {
           </Tooltip>
         </OverlayItemContainer>
       </CContainer>
+    </>
+  );
+};
+export const EditLegendTrigger = (props: any) => {
+  // Props
+  const { children, layerId, propertyKey, propertyValue, color, ...restProps } =
+    props;
+
+  // Contexts
+  const { l } = useLang();
+  const { themeConfig } = useThemeConfig();
+
+  // Hooks
+  const { open, onOpen, onClose } = useDisclosure();
+  useBackOnClose(
+    `edit-legend-${propertyKey}-${propertyValue}`,
+    open,
+    onOpen,
+    onClose
+  );
+  const { req } = useRequest({
+    id: "edit_legend",
+  });
+
+  // States
+  const formik = useFormik({
+    validateOnChange: false,
+    initialValues: {
+      property_key: "",
+      property_value: "",
+      color: "",
+    },
+    validationSchema: yup.object().shape({
+      property_key: yup.string().required(l.required_form),
+      property_value: yup.string().required(l.required_form),
+      color: yup.string().required(l.required_form),
+    }),
+    onSubmit: (values) => {
+      console.log(values);
+
+      back();
+
+      const config = {
+        url: `/api/gis-bpn/workspaces-layers/update-color-key/${layerId}`,
+        data: values,
+      };
+
+      req({
+        config,
+        onResolve: {
+          onSuccess: () => {},
+        },
+      });
+    },
+  });
+
+  useEffect(() => {
+    if (open) {
+      formik.setValues({
+        property_key: propertyKey,
+        property_value: propertyValue,
+        color: color,
+      });
+    }
+  }, [open, propertyKey, propertyValue]);
+
+  return (
+    <>
+      <Box onClick={onOpen} {...restProps}>
+        {children}
+      </Box>
+
+      <DisclosureRoot open={open} lazyLoad size={"xs"}>
+        <DisclosureContent>
+          <DisclosureHeader>
+            <DisclosureHeaderContent title={`Edit ${l.legend}`} />
+          </DisclosureHeader>
+
+          <DisclosureBody>
+            <form id="edit_legend" onSubmit={formik.handleSubmit}>
+              <FieldRoot gap={4}>
+                <Field label={l.property} readOnly>
+                  <StringInput inputValue={formik.values.property_key} />
+                </Field>
+
+                <Field label={l.property_value} readOnly>
+                  <StringInput inputValue={formik.values.property_value} />
+                </Field>
+
+                <Field label={l.color} readOnly>
+                  <ColorPicker.Root
+                    value={parseColor(formik.values.color)}
+                    format="hsla"
+                    onValueChange={(e) =>
+                      formik.setFieldValue("color", e.value)
+                    }
+                    w={"full"}
+                  >
+                    <ColorPicker.HiddenInput />
+                    <ColorPicker.Control>
+                      <ColorPicker.Input />
+                      <ColorPicker.Trigger />
+                    </ColorPicker.Control>
+                    <Portal>
+                      <ColorPicker.Positioner>
+                        <ColorPicker.Content>
+                          <ColorPicker.Area />
+                          <HStack>
+                            <ColorPicker.EyeDropper
+                              size="xs"
+                              variant="outline"
+                            />
+                            <ColorPicker.Sliders />
+                          </HStack>
+                        </ColorPicker.Content>
+                      </ColorPicker.Positioner>
+                    </Portal>
+                  </ColorPicker.Root>
+                </Field>
+              </FieldRoot>
+            </form>
+          </DisclosureBody>
+
+          <DisclosureFooter>
+            <BButton colorPalette={themeConfig.colorPalette}>{l.save}</BButton>
+          </DisclosureFooter>
+        </DisclosureContent>
+      </DisclosureRoot>
     </>
   );
 };
@@ -236,7 +383,13 @@ export const LegendContent = (props: any) => {
                           <SimpleGrid columns={1} gapY={1} gapX={4}>
                             {legends.map(({ value, color }) => {
                               return (
-                                <SimplePopover key={value} content={value}>
+                                <EditLegendTrigger
+                                  key={value}
+                                  layerId={layer.id}
+                                  propertyKey={layer.color_property_key}
+                                  propertyValue={value}
+                                  color={color}
+                                >
                                   <HStack cursor={"pointer"} w={"fit"}>
                                     <Box
                                       w={"10px"}
@@ -248,7 +401,7 @@ export const LegendContent = (props: any) => {
 
                                     <P lineClamp={1}>{value}</P>
                                   </HStack>
-                                </SimplePopover>
+                                </EditLegendTrigger>
                               );
                             })}
                           </SimpleGrid>

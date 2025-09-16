@@ -399,6 +399,14 @@ export const property = {
   id: "Properti",
   en: "Property",
 };
+export const property_value = {
+  id: "Nilai properti",
+  en: "Property value",
+};
+export const color = {
+  id: "Warna",
+  en: "Color",
+};
 
 // UI
 export const no_legends = {

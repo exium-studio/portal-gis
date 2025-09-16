@@ -429,7 +429,7 @@ const EditLayer = (props: any) => {
 };
 const DeleteLayer = (props: any) => {
   // Props
-  const { workspace, layer, ...restProps } = props;
+  const { layer, ...restProps } = props;
 
   // Hooks
   const { l } = useLang();
@@ -557,7 +557,7 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                 />
               </HStack>
 
-              <CContainer gap={2} px={3} className="scrollY">
+              <CContainer gap={2} pl={3} pr={0} className="scrollY">
                 {empty(filteredLayers) && <FeedbackNoData />}
 
                 {filteredLayers && (
