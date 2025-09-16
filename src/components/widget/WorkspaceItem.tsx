@@ -482,7 +482,7 @@ const AddLayer = (props: any) => {
       description: "",
       layer_type: [OPTIONS_LAYER_TYPE[0]],
       file_type: [OPTIONS_LAYER_FILE_TYPE[0]],
-      file: undefined as any,
+      layer_file: undefined as any,
       parent_layer: undefined as any,
     },
     validationSchema: yup.object().shape({
@@ -490,10 +490,10 @@ const AddLayer = (props: any) => {
       description: yup.string().required(l.required_form),
       layer_type: yup.array().required(l.required_form),
       file_type: yup.array().required(l.required_form),
-      file: fileValidation({
-        allowedExtensions: ["zip"],
-        maxSizeMB: 50,
-      }).required(l.required_form),
+      // layer_file: fileValidation({
+      //   allowedExtensions: ["zip"],
+      //   maxSizeMB: 50,
+      // }).required(l.required_form),
       parent_layer: yup.array(),
     }),
     onSubmit: (values, { resetForm }) => {
@@ -512,7 +512,7 @@ const AddLayer = (props: any) => {
       payload.append("description", values.description);
       payload.append("layer_type", values.layer_type?.[0]?.id);
       payload.append("file_type", values.file_type?.[0]?.id);
-      if (values.file) payload.append("file", values.file?.[0]);
+      if (values.layer_file) payload.append("file", values.layer_file?.[0]);
       payload.append("parent_layer_id", values.parent_layer?.[0]?.id);
 
       const url = `/api/gis-bpn/workspaces-layers/create`;
@@ -632,16 +632,16 @@ const AddLayer = (props: any) => {
 
                 <Field
                   label={"File"}
-                  invalid={!!formik.errors.file}
-                  errorText={formik.errors.file as string}
+                  invalid={!!formik.errors.layer_file}
+                  errorText={formik.errors.layer_file as string}
                   disabled={empty(formik.values.file_type)}
                 >
                   <FileInput
                     dropzone
                     onChangeSetter={(input) => {
-                      formik.setFieldValue("file", input);
+                      formik.setFieldValue("layer_file", input);
                     }}
-                    inputValue={formik.values.file}
+                    inputValue={formik.values.layer_file}
                     disabled={empty(formik.values.file_type)}
                     accept=".zip"
                     maxFileSize={50}

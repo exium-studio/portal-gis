@@ -12,6 +12,8 @@ import {
 } from "../ui/file-button";
 import BButton from "./BButton";
 import FileIcon from "./FileIcon";
+import { toaster } from "@/components/ui/toaster";
+import { useState } from "react";
 
 interface Props extends FileUploadRootProps {
   fRef?: any;
@@ -24,8 +26,8 @@ interface Props extends FileUploadRootProps {
   initialFilepath?: string;
   label?: string;
   dropzone?: boolean;
-  maxFileSize?: number;
   maxFiles?: number;
+  maxFileSize?: number;
   description?: string;
   disabled?: boolean;
 }
@@ -44,6 +46,7 @@ const FileInput = (props: Props) => {
       props?.maxFiles || 1
     } file${props.maxFiles! > 1 ? "s" : ""}`,
     disabled,
+    maxFileSize,
     ...restProps
   } = props;
 
@@ -54,6 +57,7 @@ const FileInput = (props: Props) => {
   const fc = useFieldContext();
 
   // States
+  const [key, setKey] = useState<number>(1);
   const singleFileInputted = maxFiles === 1 && !empty(inputValue);
   const singleFile = inputValue?.[0] as File;
   const resolvedIcon = singleFileInputted ? (
@@ -79,24 +83,25 @@ const FileInput = (props: Props) => {
     }
   };
 
-  // console.log(inputValue);
-
   return (
     <FileUploadRoot
+      key={`${key}`}
       ref={fRef}
       alignItems="stretch"
       onFileChange={handleFileChange}
-      // onFileReject={() => {
-      //   toaster.error({
-      //     title: l.error_file_input.title,
-      //     description: l.error_file_input.description,
-      //     action: {
-      //       label: "Close",
-      //       onClick: () => {},
-      //     },
-      //   });
-      // }}
+      onFileReject={() => {
+        setKey((ps) => ps + 1);
+        toaster.error({
+          title: l.error_file_input.title,
+          description: l.error_file_input.description,
+          action: {
+            label: "Close",
+            onClick: () => {},
+          },
+        });
+      }}
       maxFiles={maxFiles}
+      maxFileSize={maxFileSize ? maxFileSize * 1024 * 1024 : 10 * 1024 * 1024}
       gap={2}
       accept={accept}
       {...restProps}

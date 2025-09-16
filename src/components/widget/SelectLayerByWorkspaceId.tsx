@@ -35,7 +35,8 @@ const SelectLayerByWorkspaceId = (props: Props) => {
       config,
       onResolve: {
         onSuccess: (r) => {
-          const newOptions = r?.data?.data?.properties
+          console.log(r.data.data);
+          const newOptions = r?.data?.data
             ?.map((layer: any) => ({
               id: layer?.id,
               label: layer?.name,
