@@ -15,7 +15,6 @@ import capsFirstLetter from "@/utils/capsFirstLetter";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import empty from "@/utils/empty";
 import { formatTableName } from "@/utils/formatTableName";
-import { hsbToHex } from "@/utils/toHex";
 import { fileValidation } from "@/utils/validationSchemas";
 import {
   AlertIndicator,
@@ -23,6 +22,7 @@ import {
   AlertTitle,
   Badge,
   Box,
+  Color,
   ColorPicker,
   FieldRoot,
   FieldsetRoot,
@@ -62,6 +62,7 @@ import SelectLayerFileType from "./SelectLayerFileType";
 import SelectLayerType from "./SelectLayerType";
 import SelectPropertyByLayerId from "./SelectPropertyByLayerId";
 import SimplePopover from "./SimplePopover";
+import useDebouncedCallback from "@/hooks/useDebouncedCallback";
 
 const SetLegendColorscale = (props: any) => {
   // Props
@@ -164,34 +165,43 @@ const PropertyLegendColorPicker = (props: any) => {
   // Contexts
   const { themeConfig } = useThemeConfig();
 
+  // Hooks
+  const debouncedUpdate = useDebouncedCallback((colorObject: Color) => {
+    const hexColor = colorObject.toString("hex");
+
+    const newPropertyValues = formik.values.property_values.map((item: any) =>
+      item.value === pv.value ? { ...item, color: hexColor } : item
+    );
+
+    formik.setFieldValue("property_values", newPropertyValues);
+  }, 300);
+
+  // States
+  const [tempColor, setTempColor] = useState<Color>(
+    layer.color_property_key === formik.values.property_key?.[0]?.id
+      ? parseColor(pv.color || DEFAULT_LAYER_COLOR)
+      : parseColor(DEFAULT_LAYER_COLOR)
+  );
+
   return (
     <CContainer key={pv.value}>
       <ColorPicker.Root
-        defaultValue={
-          layer.color_property_key === formik.values.property_key?.[0]?.id
-            ? parseColor(pv.color || DEFAULT_LAYER_COLOR)
-            : parseColor(DEFAULT_LAYER_COLOR)
-        }
-        onValueChangeEnd={(e) => {
-          const { hue, saturation, brightness, alpha } = e.value as any;
-
-          const hex = hsbToHex(hue, saturation, brightness, alpha);
-
-          const newPropertyValues = formik.values.property_values.map(
-            (item: any) =>
-              item.value === pv.value ? { ...item, color: hex } : item
-          );
-
-          formik.setFieldValue("property_values", newPropertyValues);
+        value={tempColor}
+        onValueChange={(e) => {
+          setTempColor(e.value);
+          debouncedUpdate(e.value);
         }}
         colorPalette={themeConfig.colorPalette}
       >
         <ColorPicker.HiddenInput />
+
         <ColorPicker.Label>{pv.value}</ColorPicker.Label>
+
         <ColorPicker.Control>
           <ColorPicker.Input />
           <ColorPicker.Trigger />
         </ColorPicker.Control>
+
         <Portal container={containerRef}>
           <ColorPicker.Positioner>
             <ColorPicker.Content>
@@ -297,6 +307,8 @@ const SetLegendProperty = (props: any) => {
       ]);
     }
   }, [layer.color_property_key]);
+
+  // console.log(formik.values.property_values?.[0]);
 
   return (
     <form id="set_legend_property" onSubmit={formik.handleSubmit}>
