@@ -436,19 +436,14 @@ const RegionalSettingsPage = () => {
   return (
     <CContainer>
       <CContainer gap={4}>
-        {/* Language */}
         <Language />
 
-        {/* Time Zone */}
         <TimeZone />
 
-        {/* Date Format */}
         <DateFormat />
 
-        {/* Time Format */}
         <TimeFormat />
 
-        {/* Measurment Unit Format */}
         <UOMFormat />
       </CContainer>
 

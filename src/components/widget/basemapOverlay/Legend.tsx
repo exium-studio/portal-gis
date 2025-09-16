@@ -20,7 +20,7 @@ import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import empty from "@/utils/empty";
 import {
   Badge,
-  Circle,
+  Box,
   HStack,
   Icon,
   Portal,
@@ -232,18 +232,20 @@ export const LegendContent = (props: any) => {
                       )}
 
                       {!empty(legends) && (
-                        <CContainer gap={3}>
-                          <SimpleGrid columns={2} gapY={1} gapX={4}>
+                        <CContainer gap={3} pl={7}>
+                          <SimpleGrid columns={1} gapY={1} gapX={4}>
                             {legends.map(({ value, color }) => {
                               return (
                                 <SimplePopover key={value} content={value}>
                                   <HStack cursor={"pointer"} w={"fit"}>
-                                    <Circle
-                                      w={"10px"}
-                                      h={"10px"}
+                                    <Box
+                                      w={"8px"}
+                                      h={"8px"}
                                       bg={color}
                                       opacity={0.6}
+                                      flexShrink={0}
                                     />
+
                                     <P lineClamp={1}>{value}</P>
                                   </HStack>
                                 </SimplePopover>

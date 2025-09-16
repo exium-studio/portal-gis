@@ -35,7 +35,7 @@ interface Props {
 
 const ActiveWorkspaceByCategoryUtils = (props: any) => {
   // Props
-  const { activeWorkspace, index, ...restProps } = props;
+  const { activeWorkspace, ...restProps } = props;
 
   return (
     <HStack

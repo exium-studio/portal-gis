@@ -137,7 +137,6 @@ const DarkMode = () => {
     </ItemContainer>
   );
 };
-
 const Theme = () => {
   // Hooks
   const { l } = useLang();
