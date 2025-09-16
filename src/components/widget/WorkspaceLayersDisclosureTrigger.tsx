@@ -1,4 +1,6 @@
-import { LEGEND_COLOR_OPTIONS } from "@/constants/colors";
+import ComponentSpinner from "@/components/ui-custom/ComponentSpinner";
+import HelperText from "@/components/ui-custom/HelperText";
+import { DEFAULT_LAYER_COLOR, LEGEND_COLOR_OPTIONS } from "@/constants/colors";
 import { Interface__Layer } from "@/constants/interfaces";
 import { LAYER_TYPES } from "@/constants/lateral";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
@@ -13,6 +15,7 @@ import capsFirstLetter from "@/utils/capsFirstLetter";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import empty from "@/utils/empty";
 import { formatTableName } from "@/utils/formatTableName";
+import { hsbToHex } from "@/utils/toHex";
 import { fileValidation } from "@/utils/validationSchemas";
 import {
   AlertIndicator,
@@ -20,14 +23,18 @@ import {
   AlertTitle,
   Badge,
   Box,
+  ColorPicker,
+  FieldRoot,
   FieldsetRoot,
   HStack,
   Icon,
+  parseColor,
+  Portal,
   useDisclosure,
 } from "@chakra-ui/react";
 import { IconEdit, IconFlag, IconTrash } from "@tabler/icons-react";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as yup from "yup";
 import BackButton from "../ui-custom/BackButton";
 import BButton from "../ui-custom/BButton";
@@ -50,15 +57,15 @@ import { Checkbox } from "../ui/checkbox";
 import { Field } from "../ui/field";
 import { Tooltip } from "../ui/tooltip";
 import SelectColorscale from "./SelectColorscale";
+import SelectLayerByWorkspaceId from "./SelectLayerByWorkspaceId";
 import SelectLayerFileType from "./SelectLayerFileType";
 import SelectLayerType from "./SelectLayerType";
 import SelectPropertyByLayerId from "./SelectPropertyByLayerId";
 import SimplePopover from "./SimplePopover";
-import SelectLayerByWorkspaceId from "./SelectLayerByWorkspaceId";
 
-const SetLegend = (props: any) => {
+const SetLegendColorscale = (props: any) => {
   // Props
-  const { layer, ...restProps } = props;
+  const { layer } = props;
 
   // Hooks
   const { l } = useLang();
@@ -67,9 +74,6 @@ const SetLegend = (props: any) => {
   const { req } = useRequest({
     id: "set_legend",
   });
-
-  // Contexts
-  const { themeConfig } = useThemeConfig();
 
   // States
   const formik = useFormik({
@@ -109,6 +113,285 @@ const SetLegend = (props: any) => {
     },
   });
 
+  useEffect(() => {
+    if (layer.color_property_key) {
+      formik.setFieldValue("property_key", [
+        {
+          id: layer.color_property_key,
+          label: layer.color_property_key,
+        },
+      ]);
+    }
+  }, [layer.color_property_key]);
+
+  return (
+    <form id="set_legend_colorscale" onSubmit={formik.handleSubmit}>
+      <FieldsetRoot>
+        <Field
+          label={l.property}
+          invalid={!!formik.errors.property_key}
+          errorText={formik.errors.property_key as string}
+        >
+          <SelectPropertyByLayerId
+            layerId={layer?.id}
+            inputValue={formik.values.property_key}
+            onConfirm={(input) => {
+              formik.setFieldValue("property_key", input);
+            }}
+          />
+        </Field>
+
+        <Field
+          label={`Colorscale`}
+          invalid={!!formik.errors.colorscale}
+          errorText={formik.errors.colorscale as string}
+        >
+          <SelectColorscale
+            inputValue={formik.values.colorscale}
+            onConfirm={(input: any) => {
+              formik.setFieldValue("colorscale", input);
+            }}
+          />
+        </Field>
+      </FieldsetRoot>
+    </form>
+  );
+};
+const PropertyLegendColorPicker = (props: any) => {
+  // Props
+  const { pv, layer, formik, containerRef } = props;
+
+  // Contexts
+  const { themeConfig } = useThemeConfig();
+
+  return (
+    <CContainer key={pv.value}>
+      <ColorPicker.Root
+        defaultValue={
+          layer.color_property_key === formik.values.property_key?.[0]?.id
+            ? parseColor(pv.color || DEFAULT_LAYER_COLOR)
+            : parseColor(DEFAULT_LAYER_COLOR)
+        }
+        onValueChangeEnd={(e) => {
+          const { hue, saturation, brightness, alpha } = e.value as any;
+
+          const hex = hsbToHex(hue, saturation, brightness, alpha);
+
+          const newPropertyValues = formik.values.property_values.map(
+            (item: any) =>
+              item.value === pv.value ? { ...item, color: hex } : item
+          );
+
+          formik.setFieldValue("property_values", newPropertyValues);
+        }}
+        colorPalette={themeConfig.colorPalette}
+      >
+        <ColorPicker.HiddenInput />
+        <ColorPicker.Label>{pv.value}</ColorPicker.Label>
+        <ColorPicker.Control>
+          <ColorPicker.Input />
+          <ColorPicker.Trigger />
+        </ColorPicker.Control>
+        <Portal container={containerRef}>
+          <ColorPicker.Positioner>
+            <ColorPicker.Content>
+              <ColorPicker.Area />
+              <HStack>
+                <ColorPicker.EyeDropper size="xs" variant="outline" />
+                <ColorPicker.Sliders />
+              </HStack>
+            </ColorPicker.Content>
+          </ColorPicker.Positioner>
+        </Portal>
+      </ColorPicker.Root>
+    </CContainer>
+  );
+};
+const SetLegendProperty = (props: any) => {
+  // Props
+  const { layer, containerRef } = props;
+
+  // Hooks
+  const { req, loading } = useRequest({
+    id: "get_props_value_by_props_key",
+    showLoadingToast: false,
+    showSuccessToast: false,
+  });
+  const { req: reqUpdate } = useRequest({
+    id: "update_props_color",
+  });
+
+  // Contexts
+  const { l } = useLang();
+  const { themeConfig } = useThemeConfig();
+
+  // States
+  const formik = useFormik({
+    validateOnChange: false,
+    initialValues: {
+      property_key: undefined as any,
+      property_values: undefined as any,
+    },
+    validationSchema: yup.object().shape({
+      property_key: yup
+        .array()
+        .min(1, l.required_form)
+        .required(l.required_form),
+      property_values: yup
+        .array()
+        .min(1, l.required_form)
+        .required(l.required_form),
+    }),
+    onSubmit: (values) => {
+      back();
+
+      const payload = {
+        property_key: values.property_key?.[0]?.id,
+        property_values: values.property_values.map((item: any) => ({
+          property_value: item.value,
+          color: item.color,
+        })),
+      };
+      const config = {
+        url: `/api/gis-bpn/workspaces-layers/update-color-key/${layer.id}`,
+        method: "PATCH",
+        data: payload,
+      };
+      reqUpdate({
+        config,
+        onResolve: {
+          onSuccess: () => {},
+        },
+      });
+    },
+  });
+
+  useEffect(() => {
+    const config = {
+      url: `/api/gis-bpn/workspaces-layers/property-value/${layer?.id}`,
+      method: "POST",
+      data: {
+        property_key: formik.values.property_key?.[0]?.id,
+      },
+    };
+
+    if (formik.values.property_key) {
+      req({
+        config,
+        onResolve: {
+          onSuccess: (r) => {
+            formik.setFieldValue("property_values", r.data.data.values);
+          },
+        },
+      });
+    }
+  }, [formik.values.property_key]);
+
+  useEffect(() => {
+    if (layer.color_property_key) {
+      formik.setFieldValue("property_key", [
+        {
+          id: layer.color_property_key,
+          label: layer.color_property_key,
+        },
+      ]);
+    }
+  }, [layer.color_property_key]);
+
+  return (
+    <form id="set_legend_property" onSubmit={formik.handleSubmit}>
+      <FieldRoot gap={4}>
+        <Field
+          label={l.property}
+          invalid={!!formik.errors.property_key}
+          errorText={formik.errors.property_key as string}
+        >
+          <SelectPropertyByLayerId
+            layerId={layer?.id}
+            inputValue={formik.values.property_key}
+            onConfirm={(input) => {
+              formik.setFieldValue("property_key", input);
+            }}
+          />
+        </Field>
+
+        {loading && <ComponentSpinner />}
+
+        {!loading && (
+          <>
+            {empty(formik.values.property_values) && (
+              <CContainer align={"center"}>
+                <HelperText color={"fg.subtle"}>
+                  {l.select_property_first}
+                </HelperText>
+              </CContainer>
+            )}
+
+            {!empty(formik.values.property_values) && (
+              <Field
+                label={l.color}
+                invalid={!!formik.errors.property_key}
+                errorText={formik.errors.property_key as string}
+              >
+                <CContainer
+                  rounded={themeConfig.radii.container}
+                  p={4}
+                  border={"2px dashed"}
+                  borderColor={"border.muted"}
+                  gap={4}
+                >
+                  {formik.values.property_values?.map((pv: any) => {
+                    return (
+                      <PropertyLegendColorPicker
+                        key={pv.value}
+                        pv={pv}
+                        layer={layer}
+                        formik={formik}
+                        containerRef={containerRef}
+                      />
+                    );
+                  })}
+                </CContainer>
+              </Field>
+            )}
+          </>
+        )}
+      </FieldRoot>
+    </form>
+  );
+};
+
+const SetLegend = (props: any) => {
+  // Props
+  const { layer, ...restProps } = props;
+
+  // Hooks
+  const { open, onOpen, onClose } = useDisclosure();
+  useBackOnClose(`set-legend-${layer?.id}`, open, onOpen, onClose);
+
+  // Contexts
+  const { l } = useLang();
+  const { themeConfig } = useThemeConfig();
+
+  // Refs
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  // States
+  const [mode, setMode] = useState<string>("colorscale");
+  const setLegend = {
+    colorscale: {
+      label: "Colorscale",
+      formId: "set_legend_colorscale",
+      render: <SetLegendColorscale layer={layer} />,
+    },
+    property: {
+      label: l.property_value,
+      formId: "set_legend_property",
+      render: <SetLegendProperty layer={layer} containerRef={containerRef} />,
+    },
+  };
+  const activeSetLegend = setLegend[mode as keyof typeof setLegend];
+
   return (
     <>
       <BButton iconButton variant={"ghost"} onClick={onOpen} {...restProps}>
@@ -124,36 +407,35 @@ const SetLegend = (props: any) => {
           </DisclosureHeader>
 
           <DisclosureBody>
-            <form id="set_legend_form" onSubmit={formik.handleSubmit}>
-              <FieldsetRoot>
-                <Field
-                  label={l.property}
-                  invalid={!!formik.errors.property_key}
-                  errorText={formik.errors.property_key as string}
-                >
-                  <SelectPropertyByLayerId
-                    layerId={layer?.id}
-                    inputValue={formik.values.property_key}
-                    onConfirm={(input) => {
-                      formik.setFieldValue("property_key", input);
+            <CContainer fRef={containerRef}>
+              <HStack
+                bg={"bg.muted"}
+                mb={4}
+                p={1}
+                rounded={themeConfig.radii.component}
+                gap={1}
+              >
+                {Object.keys(setLegend).map((item) => (
+                  <BButton
+                    key={item}
+                    unclicky
+                    flex={1}
+                    onClick={() => {
+                      setMode(item);
                     }}
-                  />
-                </Field>
+                    variant={"ghost"}
+                    bg={mode === item ? "body" : "transparent"}
+                    color={
+                      mode === item ? themeConfig.primaryColor : "fg.subtle"
+                    }
+                  >
+                    {setLegend[item as keyof typeof setLegend].label}
+                  </BButton>
+                ))}
+              </HStack>
 
-                <Field
-                  label={`Colorscale`}
-                  invalid={!!formik.errors.colorscale}
-                  errorText={formik.errors.colorscale as string}
-                >
-                  <SelectColorscale
-                    inputValue={formik.values.colorscale}
-                    onConfirm={(input: any) => {
-                      formik.setFieldValue("colorscale", input);
-                    }}
-                  />
-                </Field>
-              </FieldsetRoot>
-            </form>
+              {activeSetLegend.render}
+            </CContainer>
           </DisclosureBody>
 
           <DisclosureFooter>
@@ -161,7 +443,7 @@ const SetLegend = (props: any) => {
 
             <BButton
               type="submit"
-              form={"set_legend_form"}
+              form={activeSetLegend.formId}
               colorPalette={themeConfig.colorPalette}
             >
               {l.save}
@@ -316,9 +598,10 @@ const EditLayer = (props: any) => {
                 <Field
                   invalid={!!formik.errors.with_explanation}
                   errorText={formik.errors.with_explanation as string}
+                  disabled
                   // helperText={l.with_explanation_helper}
                 >
-                  <Checkbox readOnly checked={formik.values.with_explanation}>
+                  <Checkbox checked={formik.values.with_explanation}>
                     {l.with_explanation}
                   </Checkbox>
                 </Field>

@@ -490,6 +490,7 @@ const translations = {
   "select_all": "Pilih semua",
   "select_input_default_placeholder": "Pilih...",
   "select_input_default_title": "Pilih",
+  "select_property_first": "Pilih properti terlebih dahulu untuk menampilan warna berdasarkan nilai properti",
   "selected": "terpilih",
   "selected_time_zone": "Zona waktu dipilih",
   "selected_timezone": "Zona waktu dipilih",
@@ -562,6 +563,7 @@ const translations = {
   "tomorrow": "Besok",
   "transaction": "Transaksi",
   "try_label": "Coba",
+  "unit": "Satuan",
   "unload_workspace_from_map": "Unload workspace dari peta",
   "uom": {
     "mass": "Berat",

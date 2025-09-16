@@ -164,3 +164,5 @@ export const LEGEND_COLOR_OPTIONS = [
     ],
   },
 ];
+
+export const DEFAULT_LAYER_COLOR = "#666666";

@@ -34,7 +34,6 @@ interface Props {
     }
   >;
   dataResource?: boolean;
-
   loginPath?: string;
 }
 const useRequest = (props: Props) => {

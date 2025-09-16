@@ -490,6 +490,7 @@ const translations = {
   "select_all": "Select all",
   "select_input_default_placeholder": "Select...",
   "select_input_default_title": "Select",
+  "select_property_first": "Please select a property first to display color based on property value",
   "selected": "selected",
   "selected_time_zone": "Selected time zone",
   "selected_timezone": "Selected time zone",
@@ -562,6 +563,7 @@ const translations = {
   "tomorrow": "Tomorrow",
   "transaction": "Transaction",
   "try_label": "Try",
+  "unit": "Unit",
   "unload_workspace_from_map": "Unload workspace from map",
   "uom": {
     "mass": "Weight",

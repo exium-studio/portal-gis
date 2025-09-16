@@ -546,7 +546,7 @@ const AddLayer = (props: any) => {
           {...restProps}
         >
           <Icon boxSize={5}>
-            <IconFilePlus stroke={1.8} />
+            <IconFilePlus stroke={1.5} />
           </Icon>
         </BButton>
       </Tooltip>

@@ -79,6 +79,14 @@ export const master_data_navs = {
 };
 
 // Semantic
+export const select_property_first = {
+  id: "Pilih properti terlebih dahulu untuk menampilan warna berdasarkan nilai properti",
+  en: "Please select a property first to display color based on property value",
+};
+export const unit = {
+  id: "Satuan",
+  en: "Unit",
+};
 export const deleted_sk_docs = {
   id: "Dokumen SK dihapus",
   en: "Deleted SK document",

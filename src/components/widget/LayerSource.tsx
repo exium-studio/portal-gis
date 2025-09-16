@@ -12,6 +12,7 @@ import { useThemeConfig } from "@/context/useThemeConfig";
 import useFilteredGeoJSON from "@/hooks/useFilteredGeoJSON";
 import { useCallback, useEffect, useRef } from "react";
 import { useColorMode } from "../ui/color-mode";
+import { DEFAULT_LAYER_COLOR } from "@/constants/colors";
 
 interface LayerSourceProps {
   activeWorkspace: Interface__ActiveWorkspace;
@@ -45,24 +46,26 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
   const colorful = mapStyle?.id === 2;
   const satellite = mapStyle?.id === 3;
 
-  const defaultFillColor = plainLight
-    ? "#bbb"
-    : plainDark
-    ? "#444"
-    : colorful
-    ? "#bbb"
-    : satellite
-    ? "#bbb"
-    : "#fff";
-  const defaultLineColor = plainLight
-    ? "#aaa"
-    : plainDark
-    ? "#888"
-    : colorful
-    ? "#777"
-    : satellite
-    ? "#ddd"
-    : "#ccc";
+  // const defaultFillColor = plainLight
+  //   ? "#bbb"
+  //   : plainDark
+  //   ? "#444"
+  //   : colorful
+  //   ? "#bbb"
+  //   : satellite
+  //   ? "#bbb"
+  //   : "#fff";
+  // const defaultLineColor = plainLight
+  //   ? "#aaa"
+  //   : plainDark
+  //   ? "#888"
+  //   : colorful
+  //   ? "#777"
+  //   : satellite
+  //   ? "#ddd"
+  //   : "#ccc";
+  const defaultFillColor = DEFAULT_LAYER_COLOR;
+  const defaultLineColor = DEFAULT_LAYER_COLOR;
   const defaultSymbolTextColor = plainLight
     ? "#151515"
     : plainDark
