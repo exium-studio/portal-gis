@@ -56,6 +56,13 @@ const ActiveWorkspacePage = () => {
   return (
     <PageContainer gap={R_GAP} pb={4} flex={1}>
       <CContainer flex={1} gap={4}>
+        <HStack justify="space-between" w="full">
+          <SearchInput
+            inputValue={searchTerm}
+            onChangeSetter={(input) => setSearchTerm(input)}
+          />
+        </HStack>
+
         {empty ? (
           <FeedbackNoData
             icon={<IconFoldersOff />}
@@ -64,13 +71,6 @@ const ActiveWorkspacePage = () => {
           />
         ) : (
           <>
-            <HStack justify="space-between" w="full">
-              <SearchInput
-                inputValue={searchTerm}
-                onChangeSetter={(input) => setSearchTerm(input)}
-              />
-            </HStack>
-
             <AccordionRoot multiple>
               <CContainer gap={2}>
                 {filteredWorkspacesByCategory.map((activeWorkspace, i) => (
