@@ -1,9 +1,9 @@
 import { create } from "zustand";
 
 const DEFAULT_MAPS_VIEW_STATE = {
-  latitude: -2.5489,
-  longitude: 118.0149,
-  zoom: 3,
+  latitude: 1.831874664,
+  longitude: 98.745963431,
+  zoom: 6,
 };
 
 interface Props {
