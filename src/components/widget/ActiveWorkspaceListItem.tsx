@@ -28,6 +28,7 @@ interface Props {
   workspace: Interface__ActiveWorkspace;
   index: number;
   workspacesLength: number;
+  last?: boolean;
 }
 
 const ActiveWorkspaceUtils = (props: any) => {
@@ -213,20 +214,34 @@ const ToggleVisibility = (props: any) => {
 
 const ActiveWorkspaceListItem = (props: Props) => {
   // Props
-  const { workspace, index, workspacesLength } = props;
+  const { workspace, index, workspacesLength, last } = props;
 
   return (
     <AccordionItem value={`${workspace.id}`} border={"none"}>
-      <AccordionItemTrigger indicatorPlacement="none" pl={2} pr={1} py={1}>
+      <AccordionItemTrigger indicatorPlacement="none" pr={1} py={1}>
         <HStack w={"full"} gap={4} justify={"space-between"}>
-          <HStack truncate>
-            <Icon boxSize={5} color={"fg.subtle"}>
-              <IconFolders stroke={1.5} />
-            </Icon>
+          <HStack truncate gap={1}>
+            <HStack w={"28px"} h={"40px"} flexShrink={0} gap={0} pl={4}>
+              <Box
+                w={"1px"}
+                h={last ? "50%" : "full"}
+                borderLeft={"1px solid"}
+                borderColor={"border.emphasized"}
+                mb={"auto"}
+              />
 
-            <P fontWeight={"semibold"} lineClamp={1} lineHeight={1}>
-              {workspace.title}
-            </P>
+              <Box w={"8px"} h={"1px"} bg={"border.emphasized"} />
+            </HStack>
+
+            <HStack>
+              <Icon boxSize={5} color={"fg.subtle"}>
+                <IconFolders stroke={1.5} />
+              </Icon>
+
+              <P fontWeight={"semibold"} lineClamp={1} lineHeight={1}>
+                {workspace.title}
+              </P>
+            </HStack>
           </HStack>
 
           <CContainer w={"fit"} gap={1}>
@@ -241,7 +256,7 @@ const ActiveWorkspaceListItem = (props: Props) => {
       </AccordionItemTrigger>
 
       <AccordionItemContent p={0}>
-        <CContainer borderColor={"border.muted"}>
+        <CContainer borderColor={"border.muted"} pl={6}>
           {workspace?.layers
             ?.slice()
             ?.reverse()
@@ -249,7 +264,7 @@ const ActiveWorkspaceListItem = (props: Props) => {
               const last = i === workspace?.layers?.length - 1;
 
               return (
-                <HStack w={"full"} gap={0}>
+                <HStack w={"full"} gap={1}>
                   <HStack w={"28px"} h={"40px"} flexShrink={0} gap={0} pl={4}>
                     <Box
                       w={"1px"}

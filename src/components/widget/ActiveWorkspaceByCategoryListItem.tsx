@@ -274,6 +274,7 @@ const ActiveWorkspaceByCategoryListItem = (props: Props) => {
                     workspace={workspace}
                     index={i}
                     workspacesLength={activeWorkspace.workspaces.length}
+                    last={i === activeWorkspace.workspaces.length - 1}
                   />
                 );
               })}

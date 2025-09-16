@@ -263,7 +263,7 @@ const ActiveLayerListItem = (props: Props) => {
             </CContainer>
           }
         >
-          <HStack cursor={"pointer"} pl={1}>
+          <HStack cursor={"pointer"}>
             <Icon boxSize={5} color={"fg.subtle"}>
               <LayerIcon stroke={1.5} />
             </Icon>
