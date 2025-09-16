@@ -101,7 +101,7 @@ const FileInput = (props: Props) => {
         });
       }}
       maxFiles={maxFiles}
-      maxFileSize={maxFileSize ? maxFileSize * 1024 * 1024 : 10 * 1024 * 1024}
+      maxFileSize={(maxFileSize ?? 10) * 1024 * 1024}
       gap={2}
       accept={accept}
       {...restProps}
