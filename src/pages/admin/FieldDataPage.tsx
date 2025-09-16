@@ -65,7 +65,7 @@ const ViewField = (props: any) => {
   // Utils
   function onViewLayers() {
     if (mapRef.current && fieldBBoxAndCenter?.bbox) {
-      const [minLng, minLat, maxLng, maxLat] = fieldBBoxAndCenter?.bbox;
+      const [minLng, minLat, maxLng, maxLat] = fieldBBoxAndCenter.bbox;
       mapRef.current.fitBounds(
         [
           [minLng, minLat],

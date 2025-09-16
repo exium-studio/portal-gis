@@ -421,7 +421,7 @@ export const FieldInfoEdit = (props: any) => {
             <Tabs.Content value="explanation" p={2}>
               <FieldRoot gap={4}>
                 <Field
-                  label={"PARAPIHAKB"}
+                  label={"Para Pihak yang Berkaitan"}
                   invalid={!!formik.errors.PARAPIHAKB}
                   errorText={formik.errors.PARAPIHAKB as string}
                 >
@@ -434,7 +434,7 @@ export const FieldInfoEdit = (props: any) => {
                 </Field>
 
                 <Field
-                  label={"PERMASALAH"}
+                  label={"Permasalahan"}
                   invalid={!!formik.errors.PERMASALAH}
                   errorText={formik.errors.PERMASALAH as string}
                 >
@@ -447,7 +447,7 @@ export const FieldInfoEdit = (props: any) => {
                 </Field>
 
                 <Field
-                  label={"TINDAKLANJ"}
+                  label={"Tindak Lanjut"}
                   invalid={!!formik.errors.TINDAKLANJ}
                   errorText={formik.errors.TINDAKLANJ as string}
                 >
@@ -460,7 +460,7 @@ export const FieldInfoEdit = (props: any) => {
                 </Field>
 
                 <Field
-                  label={"HASIL"}
+                  label={"Hasil"}
                   invalid={!!formik.errors.HASIL}
                   errorText={formik.errors.HASIL as string}
                 >
