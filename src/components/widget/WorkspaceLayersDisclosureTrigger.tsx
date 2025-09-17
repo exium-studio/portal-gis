@@ -397,7 +397,7 @@ const SetLegend = (props: any) => {
       render: <SetLegendColorscale layer={layer} />,
     },
     property: {
-      label: l.property_value,
+      label: "Custom",
       formId: "set_legend_property",
       render: <SetLegendProperty layer={layer} containerRef={containerRef} />,
     },
