@@ -63,6 +63,7 @@ import SelectLayerType from "./SelectLayerType";
 import SelectPropertyByLayerId from "./SelectPropertyByLayerId";
 import SimplePopover from "./SimplePopover";
 import useDebouncedCallback from "@/hooks/useDebouncedCallback";
+import { isPublicUser } from "@/utils/isPublicUser";
 
 const SetLegendColorscale = (props: any) => {
   // Props
@@ -919,20 +920,20 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                             <SetLegend
                               layer={layer}
                               size={"sm"}
-                              disabled={workspaceActive}
+                              disabled={isPublicUser() || workspaceActive}
                             />
 
                             <EditLayer
                               workspace={workspace}
                               layer={layer}
-                              disabled={workspaceActive}
+                              disabled={isPublicUser() || workspaceActive}
                               size={"sm"}
                             />
 
                             <DeleteLayer
                               workspace={workspace}
                               layer={layer}
-                              disabled={workspaceActive}
+                              disabled={isPublicUser() || workspaceActive}
                               size={"sm"}
                             />
                           </HStack>

@@ -6,6 +6,7 @@ import PageContainer from "@/components/widget/PageContainer";
 import ResetPasswordDisclosureTrigger from "@/components/widget/ResetPasswordDisclosureTrigger";
 import useAuthMiddleware from "@/context/useAuthMiddleware";
 import useRequest from "@/hooks/useRequest";
+import { isPublicUser } from "@/utils/isPublicUser";
 import { VStack } from "@chakra-ui/react";
 
 const ProfilePage = () => {
@@ -55,7 +56,7 @@ const ProfilePage = () => {
 
       <CContainer gap={2} align={"center"}>
         <ResetPasswordDisclosureTrigger>
-          <BButton variant={"outline"} w={"140px"}>
+          <BButton variant={"outline"} w={"140px"} disabled={isPublicUser()}>
             Reset password
           </BButton>
         </ResetPasswordDisclosureTrigger>

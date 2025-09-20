@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import * as yup from "yup";
 import ExistingFileItem from "../ExistingFIleItem";
 import PropertyValue from "../PropertyValue";
+import { isPublicUser } from "@/utils/isPublicUser";
 
 const EXCLUDED_KEYS = [
   "id",
@@ -621,6 +622,7 @@ export const FieldInfoEdit = (props: any) => {
             colorPalette={themeConfig.colorPalette}
             loading={loading}
             size={"sm"}
+            disabled={isPublicUser()}
           >
             {l.save}
           </BButton>

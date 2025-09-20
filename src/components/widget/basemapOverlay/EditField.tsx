@@ -30,6 +30,7 @@ import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import * as yup from "yup";
 import ExistingFileItem from "../ExistingFIleItem";
+import { isPublicUser } from "@/utils/isPublicUser";
 
 const EXCLUDED_KEYS = [
   "id",
@@ -423,6 +424,7 @@ export const EditField = (props: any) => {
             <BButton
               colorPalette={themeConfig.colorPalette}
               onClick={formik.submitForm}
+              disabled={isPublicUser()}
             >
               {l.save}
             </BButton>

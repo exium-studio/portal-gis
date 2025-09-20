@@ -75,6 +75,7 @@ import SelectWorkspaceCategory from "./SelectWorkspaceCategory";
 import SimplePopover from "./SimplePopover";
 import WorkspaceLayersDisclosureTrigger from "./WorkspaceLayersDisclosureTrigger";
 import SelectLayerByWorkspaceId from "./SelectLayerByWorkspaceId";
+import { isPublicUser } from "@/utils/isPublicUser";
 
 const WorkspaceMenu = (props: any) => {
   // Props
@@ -432,7 +433,7 @@ const WorkspaceLayersUtils = (props: {
     >
       <AddLayer
         workspace={workspace}
-        disabled={workspaceLoading || !!workspaceActive}
+        disabled={isPublicUser() || workspaceLoading || !!workspaceActive}
         size={"xs"}
       />
 
@@ -947,7 +948,7 @@ const RowItem = (props: any) => {
             workspace={workspace}
             setWorkspace={setWorkspace}
             size={"xs"}
-            disabled={workspaceLoading || workspaceActive}
+            disabled={isPublicUser() || workspaceLoading || workspaceActive}
           />
         </HStack>
       </CContainer>
@@ -990,7 +991,7 @@ const ListItem = (props: any) => {
           workspace={workspace}
           setWorkspace={setWorkspace}
           size={"xs"}
-          disabled={workspaceLoading || workspaceActive}
+          disabled={isPublicUser() || workspaceLoading || workspaceActive}
         />
       </HStack>
 

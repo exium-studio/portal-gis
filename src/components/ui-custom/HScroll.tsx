@@ -7,7 +7,10 @@ interface Props extends StackProps {
 }
 
 const HScroll = ({ fRef, children, ...props }: Props) => {
-  const hStackRef = fRef ?? useRef<HTMLDivElement>(null);
+  // always use useRef
+  const internalRef = useRef<HTMLDivElement>(null);
+  const hStackRef = fRef ?? internalRef;
+
   const scrollVelocity = useRef(0);
   const rafId = useRef<number | null>(null);
 
@@ -19,7 +22,10 @@ const HScroll = ({ fRef, children, ...props }: Props) => {
       const canScroll = el.scrollWidth > el.clientWidth;
       if (!canScroll) return;
 
-      event.preventDefault(); // stop vertical scroll
+      // if horizontal scroll (trackpad), allow default horizontal scrolling
+      if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+
+      event.preventDefault(); // stop vertical scroll, convert to horizontal
 
       scrollVelocity.current += event.deltaY * 0.2;
 
@@ -41,7 +47,7 @@ const HScroll = ({ fRef, children, ...props }: Props) => {
 
     el.addEventListener("wheel", handleScroll, { passive: false });
     return () => el.removeEventListener("wheel", handleScroll);
-  }, []);
+  }, [hStackRef]);
 
   return (
     <HStack

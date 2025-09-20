@@ -321,7 +321,7 @@ const Step3 = (props: any) => {
           onClick={formik.submitForm}
           loading={loading}
           disabled={
-            !!!(formik.values.password && formik.values.password_confirmation)
+            !(formik.values.password && formik.values.password_confirmation)
           }
         >
           {l.save}

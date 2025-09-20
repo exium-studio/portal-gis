@@ -38,6 +38,7 @@ import useDataState from "@/hooks/useDataState";
 import useRequest from "@/hooks/useRequest";
 import back from "@/utils/back";
 import empty from "@/utils/empty";
+import { isPublicUser } from "@/utils/isPublicUser";
 import { fileValidation } from "@/utils/validationSchemas";
 import {
   FieldsetRoot,
@@ -132,6 +133,7 @@ const Create = () => {
         iconButton
         colorPalette={themeConfig?.colorPalette}
         onClick={onOpen}
+        disabled={isPublicUser()}
       >
         <Icon>
           <IconPlus />

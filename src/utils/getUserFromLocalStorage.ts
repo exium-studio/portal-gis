@@ -1,5 +1,5 @@
 const getUserFromLocalStorage = () => {
-  const userData = localStorage.getItem("user");
+  const userData = localStorage.getItem("__user_data");
   if (!userData) {
     return null;
   }

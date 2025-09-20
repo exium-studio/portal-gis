@@ -27,13 +27,17 @@ import useRequest from "@/hooks/useRequest";
 import back from "@/utils/back";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import empty from "@/utils/empty";
+import { isPublicUser } from "@/utils/isPublicUser";
 import { FieldsetRoot, HStack, Icon, useDisclosure } from "@chakra-ui/react";
 import { IconPlus } from "@tabler/icons-react";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import * as yup from "yup";
 
-const Create = () => {
+const Create = (props: any) => {
+  // Props
+  const { ...restProps } = props;
+
   // Hooks
   const { l } = useLang();
   const { open, onOpen, onClose } = useDisclosure();
@@ -88,6 +92,7 @@ const Create = () => {
         iconButton
         colorPalette={themeConfig?.colorPalette}
         onClick={onOpen}
+        {...restProps}
       >
         <Icon>
           <IconPlus />
@@ -141,7 +146,7 @@ const Create = () => {
 };
 const Edit = (props: any) => {
   // Props
-  const { workspaceCategory } = props;
+  const { workspaceCategory, ...restProps } = props;
 
   // Hooks
   const { req } = useRequest({
@@ -206,7 +211,13 @@ const Edit = (props: any) => {
 
   return (
     <>
-      <MenuItem value="edit" onClick={onOpen}>
+      <MenuItem
+        value="edit"
+        onClick={() => {
+          if (!restProps.disabled) onOpen();
+        }}
+        {...restProps}
+      >
         Edit
       </MenuItem>
 
@@ -302,7 +313,12 @@ const WorkspaceCategoriesTable = (props: any) => {
       label: "Edit",
       independent: true,
       component: (rowData: any) => {
-        return <Edit workspaceCategory={rowData?.originalData} />;
+        return (
+          <Edit
+            workspaceCategory={rowData?.originalData}
+            disabled={isPublicUser()}
+          />
+        );
       },
     },
     {
@@ -338,7 +354,7 @@ const WorkspaceCategoriesTable = (props: any) => {
     {
       label: "Delete",
       disabled: (rowData: any) => {
-        return rowData.originalData.deleted_at;
+        return isPublicUser() || rowData.originalData.deleted_at;
       },
       menuItemProps: {
         color: "red.400",
@@ -425,7 +441,7 @@ const MasterDataWorkspaceCategoriesPage = () => {
           inputValue={filterConfig.search}
         />
 
-        <Create />
+        <Create disabled={isPublicUser()} />
       </HStack>
 
       {initialLoading && render.loading}
