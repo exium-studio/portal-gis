@@ -28,6 +28,7 @@ import { Tooltip } from "@/components/ui/tooltip";
 import PageContainer from "@/components/widget/PageContainer";
 import SelectWorkspaceCategory from "@/components/widget/SelectWorkspaceCategory";
 import WorkspaceItem from "@/components/widget/WorkspaceItem";
+import { useAlerts } from "@/context/useAlerts";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
 import useRenderTrigger from "@/context/useRenderTrigger";
@@ -41,6 +42,9 @@ import empty from "@/utils/empty";
 import { isPublicUser } from "@/utils/isPublicUser";
 import { fileValidation } from "@/utils/validationSchemas";
 import {
+  AlertIndicator,
+  AlertRoot,
+  AlertTitle,
   FieldsetRoot,
   HStack,
   Icon,
@@ -57,7 +61,7 @@ import {
   IconPlus,
 } from "@tabler/icons-react";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as yup from "yup";
 
 const Create = () => {
@@ -393,6 +397,44 @@ const ToggleDisplay = (props: any) => {
   );
 };
 
+const WorkspaceAlert = () => {
+  // Contexts
+  const { l } = useLang();
+  const { alerts, initAlert, hideAlert } = useAlerts();
+  const alertKey = "hide_show_disable_active_workspace_actions_alert";
+
+  // handle init
+  useEffect(() => {
+    initAlert(alertKey);
+  }, []);
+
+  if (!alerts[alertKey]) return null;
+
+  return (
+    <AlertRoot status="warning" p={2}>
+      <CContainer>
+        <HStack align={"start"} gap={4} p={2}>
+          <AlertIndicator />
+          <AlertTitle>
+            {l.disable_action_when_there_is_workspace_active}
+          </AlertTitle>
+        </HStack>
+
+        <BButton
+          size="xs"
+          variant="ghost"
+          colorPalette="orange"
+          w="fit"
+          ml="auto"
+          onClick={() => hideAlert(alertKey)}
+        >
+          {l.dont_show_again}
+        </BButton>
+      </CContainer>
+    </AlertRoot>
+  );
+};
+
 const WorkspacePage = () => {
   // States
   const [filterConfig, setFilterConfig] = useState<any>({
@@ -433,6 +475,8 @@ const WorkspacePage = () => {
 
           <Create />
         </HStack>
+
+        <WorkspaceAlert />
 
         {initialLoading && render.loading}
         {!initialLoading && (

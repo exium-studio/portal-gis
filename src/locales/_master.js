@@ -79,6 +79,10 @@ export const master_data_navs = {
 };
 
 // Semantic
+export const dont_show_again = {
+  id: "Jangan tampilkan lagi",
+  en: "Don't show again",
+};
 export const select_property_first = {
   id: "Pilih properti terlebih dahulu untuk menampilan warna berdasarkan nilai properti",
   en: "Please select a property first to display color based on property value",
@@ -477,8 +481,8 @@ export const edit_layer_alert = {
   id: "Jika mengirim file layer, file layer yang dikirim akan menimpa diproses dan menimpa data layer lama",
   en: "If you send a layer file, the layer file you send will overwrite the processed and overwrite the data of the old layer",
 };
-export const edit_delete_cannot_be_active_workspace = {
-  id: "Tidak dapat edit, set legenda dan delete layer saat workspace aktif",
+export const disable_action_when_there_is_workspace_active = {
+  id: "Tidak dapat edit, delete workspace dan tidak dapat edit, set legenda, delete layer saat workspace aktif",
   en: "Cannot edit set legend and delete layer when workspace is active",
 };
 export const delete_layer = {

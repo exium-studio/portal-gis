@@ -9,12 +9,14 @@ import useLang from "@/context/useLang";
 import useRenderTrigger from "@/context/useRenderTrigger";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useBackOnClose from "@/hooks/useBackOnClose";
+import useDebouncedCallback from "@/hooks/useDebouncedCallback";
 import useRequest from "@/hooks/useRequest";
 import back from "@/utils/back";
 import capsFirstLetter from "@/utils/capsFirstLetter";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import empty from "@/utils/empty";
 import { formatTableName } from "@/utils/formatTableName";
+import { isPublicUser } from "@/utils/isPublicUser";
 import { fileValidation } from "@/utils/validationSchemas";
 import {
   AlertIndicator,
@@ -62,8 +64,6 @@ import SelectLayerFileType from "./SelectLayerFileType";
 import SelectLayerType from "./SelectLayerType";
 import SelectPropertyByLayerId from "./SelectPropertyByLayerId";
 import SimplePopover from "./SimplePopover";
-import useDebouncedCallback from "@/hooks/useDebouncedCallback";
-import { isPublicUser } from "@/utils/isPublicUser";
 
 const SetLegendColorscale = (props: any) => {
   // Props
@@ -828,15 +828,6 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
 
           <DisclosureBody p={"0 !important"}>
             <CContainer pl={4} pr={"10px"} py={4} gap={2}>
-              {workspaceActive && (
-                <AlertRoot status="warning" mb={2}>
-                  <AlertIndicator />
-                  <AlertTitle>
-                    {l.edit_delete_cannot_be_active_workspace}
-                  </AlertTitle>
-                </AlertRoot>
-              )}
-
               <HStack mb={2}>
                 <SearchInput
                   onChangeSetter={(inputValue) => {
