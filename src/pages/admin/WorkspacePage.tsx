@@ -28,6 +28,7 @@ import { Tooltip } from "@/components/ui/tooltip";
 import PageContainer from "@/components/widget/PageContainer";
 import SelectWorkspaceCategory from "@/components/widget/SelectWorkspaceCategory";
 import WorkspaceItem from "@/components/widget/WorkspaceItem";
+import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import { useAlerts } from "@/context/useAlerts";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
@@ -401,6 +402,11 @@ const WorkspaceAlert = () => {
   // Contexts
   const { l } = useLang();
   const { alerts, initAlert, hideAlert } = useAlerts();
+  const activeWorkspacesByCategory = useActiveWorkspaces(
+    (s) => s.activeWorkspaces
+  );
+
+  // States
   const alertKey = "hide_show_disable_active_workspace_actions_alert";
 
   // handle init
@@ -411,27 +417,29 @@ const WorkspaceAlert = () => {
   if (!alerts[alertKey]) return null;
 
   return (
-    <AlertRoot status="warning" p={2}>
-      <CContainer>
-        <HStack align={"start"} gap={4} p={2}>
-          <AlertIndicator />
-          <AlertTitle>
-            {l.disable_action_when_there_is_workspace_active}
-          </AlertTitle>
-        </HStack>
+    !empty(activeWorkspacesByCategory) && (
+      <AlertRoot status="warning" p={2}>
+        <CContainer>
+          <HStack align={"start"} gap={4} p={2}>
+            <AlertIndicator />
+            <AlertTitle>
+              {l.disable_action_when_there_is_workspace_active}
+            </AlertTitle>
+          </HStack>
 
-        <BButton
-          size="xs"
-          variant="ghost"
-          colorPalette="orange"
-          w="fit"
-          ml="auto"
-          onClick={() => hideAlert(alertKey)}
-        >
-          {l.dont_show_again}
-        </BButton>
-      </CContainer>
-    </AlertRoot>
+          <BButton
+            size="xs"
+            variant="ghost"
+            colorPalette="orange"
+            w="fit"
+            ml="auto"
+            onClick={() => hideAlert(alertKey)}
+          >
+            {l.dont_show_again}
+          </BButton>
+        </CContainer>
+      </AlertRoot>
+    )
   );
 };
 

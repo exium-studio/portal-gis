@@ -90,7 +90,7 @@ const DateRangePickerInput = ({
 
     const startOfFirstWeek = startOfWeek(firstDayOfMonth, { weekStartsOn: 1 }); // 0 = Sunday
 
-    let weekDates = [];
+    const weekDates = [];
     let currentWeek = [];
 
     for (let i = 0; i < 6; i++) {
@@ -303,9 +303,6 @@ const DateRangePickerInput = ({
       back();
     }
   }
-
-  console.log(selected);
-  console.log("iv", inputValue);
 
   return (
     <>
