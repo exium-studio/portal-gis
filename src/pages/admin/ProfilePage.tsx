@@ -6,6 +6,7 @@ import PageContainer from "@/components/widget/PageContainer";
 import ResetPasswordDisclosureTrigger from "@/components/widget/ResetPasswordDisclosureTrigger";
 import useAuthMiddleware from "@/context/useAuthMiddleware";
 import useRequest from "@/hooks/useRequest";
+import getUserFromLocalStorage from "@/utils/getUserFromLocalStorage";
 import { isPublicUser } from "@/utils/isPublicUser";
 import { VStack } from "@chakra-ui/react";
 
@@ -20,6 +21,7 @@ const ProfilePage = () => {
   // Contexts
   const setPermissions = useAuthMiddleware((s) => s.setPermissions);
   const setAuthToken = useAuthMiddleware((s) => s.setAuthToken);
+  const user = getUserFromLocalStorage();
 
   // Utils
   function onSignout() {
@@ -49,9 +51,9 @@ const ProfilePage = () => {
 
       <VStack gap={0}>
         <P textAlign={"center"} fontWeight={"semibold"}>
-          Admin
+          {isPublicUser() ? "Public" : "Admin"}
         </P>
-        <P textAlign={"center"}>admin@gmail.com</P>
+        <P textAlign={"center"}>{user?.email || "-"}</P>
       </VStack>
 
       <CContainer gap={2} align={"center"}>
