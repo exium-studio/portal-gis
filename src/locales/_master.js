@@ -482,8 +482,8 @@ export const edit_layer_alert = {
   en: "If you send a layer file, the layer file you send will overwrite the processed and overwrite the data of the old layer",
 };
 export const disable_action_when_there_is_workspace_active = {
-  id: "Tidak dapat edit, delete workspace dan tidak dapat edit, set legenda, delete layer saat workspace aktif",
-  en: "Cannot edit set legend and delete layer when workspace is active",
+  id: "Tidak dapat mengedit atau menghapus workspace dan layer, serta mengatur atau mengedit legenda saat workspace aktif",
+  en: "You cannot edit or delete workspaces and layers, or set or edit legends while a workspace is active",
 };
 export const delete_layer = {
   id: "Hapus layer",

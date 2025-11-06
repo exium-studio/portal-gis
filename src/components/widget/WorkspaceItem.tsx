@@ -75,7 +75,7 @@ import SelectWorkspaceCategory from "./SelectWorkspaceCategory";
 import SimplePopover from "./SimplePopover";
 import WorkspaceLayersDisclosureTrigger from "./WorkspaceLayersDisclosureTrigger";
 import SelectLayerByWorkspaceId from "./SelectLayerByWorkspaceId";
-import { isPublicUser } from "@/utils/isPublicUser";
+import { isPublicUser } from "@/utils/role";
 
 const WorkspaceMenu = (props: any) => {
   // Props

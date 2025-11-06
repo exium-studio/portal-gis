@@ -16,7 +16,7 @@ import capsFirstLetter from "@/utils/capsFirstLetter";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import empty from "@/utils/empty";
 import { formatTableName } from "@/utils/formatTableName";
-import { isPublicUser } from "@/utils/isPublicUser";
+import { isPublicUser } from "@/utils/role";
 import { fileValidation } from "@/utils/validationSchemas";
 import {
   AlertIndicator,

@@ -40,7 +40,7 @@ import useDataState from "@/hooks/useDataState";
 import useRequest from "@/hooks/useRequest";
 import back from "@/utils/back";
 import empty from "@/utils/empty";
-import { isPublicUser } from "@/utils/isPublicUser";
+import { isPublicUser } from "@/utils/role";
 import { fileValidation } from "@/utils/validationSchemas";
 import {
   AlertIndicator,

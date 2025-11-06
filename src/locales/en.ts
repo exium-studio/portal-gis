@@ -137,7 +137,7 @@ const translations = {
   "delivery_address": "Delivery address",
   "description": "Description",
   "dialy": "Daily",
-  "disable_action_when_there_is_workspace_active": "Cannot edit set legend and delete layer when workspace is active",
+  "disable_action_when_there_is_workspace_active": "You cannot edit or delete workspaces and layers, or set or edit legends while a workspace is active",
   "display_settings_helper_text": "These display settings are stored locally on your device and will not be synced with your account.",
   "displayed_data": "Displayed data",
   "dispute_parties": "The parties to the dispute",

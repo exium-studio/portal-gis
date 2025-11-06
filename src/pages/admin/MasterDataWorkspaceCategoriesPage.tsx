@@ -27,7 +27,7 @@ import useRequest from "@/hooks/useRequest";
 import back from "@/utils/back";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import empty from "@/utils/empty";
-import { isPublicUser } from "@/utils/isPublicUser";
+import { isPublicUser } from "@/utils/role";
 import { FieldsetRoot, HStack, Icon, useDisclosure } from "@chakra-ui/react";
 import { IconPlus } from "@tabler/icons-react";
 import { useFormik } from "formik";

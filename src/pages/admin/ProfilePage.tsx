@@ -7,7 +7,7 @@ import ResetPasswordDisclosureTrigger from "@/components/widget/ResetPasswordDis
 import useAuthMiddleware from "@/context/useAuthMiddleware";
 import useRequest from "@/hooks/useRequest";
 import getUserFromLocalStorage from "@/utils/getUserFromLocalStorage";
-import { isPublicUser } from "@/utils/isPublicUser";
+import { isPublicUser } from "@/utils/role";
 import { VStack } from "@chakra-ui/react";
 
 const ProfilePage = () => {

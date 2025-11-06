@@ -30,7 +30,7 @@ import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import * as yup from "yup";
 import ExistingFileItem from "../ExistingFIleItem";
-import { isPublicUser } from "@/utils/isPublicUser";
+import { isPublicUser } from "@/utils/role";
 
 const EXCLUDED_KEYS = [
   "id",

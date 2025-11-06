@@ -137,7 +137,7 @@ const translations = {
   "delivery_address": "Alamat pengiriman",
   "description": "Deskripsi",
   "dialy": "Harian",
-  "disable_action_when_there_is_workspace_active": "Tidak dapat edit, delete workspace dan tidak dapat edit, set legenda, delete layer saat workspace aktif",
+  "disable_action_when_there_is_workspace_active": "Tidak dapat mengedit atau menghapus workspace dan layer, serta mengatur atau mengedit legenda saat workspace aktif",
   "display_settings_helper_text": "Pengaturan tampilan ini disimpan secara lokal di perangkat Anda dan tidak akan disinkronkan dengan akun Anda.",
   "displayed_data": "Data yang ditampilkan",
   "dispute_parties": "Para pihak yang berselisih",
@@ -361,7 +361,7 @@ const translations = {
   "navs": {
     "workspace": "Workspace",
     "active_workspace": "Workspace Aktif",
-    "dashboard": "Dasbor",
+    "dashboard": "Dashboard",
     "field_data": "Pencarian Data Bidang",
     "master_data": "Master data",
     "settings": "Pengaturan",

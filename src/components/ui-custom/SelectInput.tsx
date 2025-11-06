@@ -253,7 +253,7 @@ const SelectInput = ({
                     <BButton
                       unclicky
                       iconButton
-                      variant={"ghost"}
+                      variant={"subtle"}
                       mr={[4, null, 3]}
                       size={["xs", null, "2xs"]}
                       borderRadius={"full"}

@@ -15,29 +15,31 @@ export const NAVS = [
     labelKey: "navs.workspace",
     path: "/workspace",
     icon: IconFolders,
+    allowedRoleIds: [1, 2, 3],
   },
   {
     labelKey: "navs.active_workspace",
     path: "/active-workspace",
     icon: IconFolderOpen,
-    iconProps: {
-      // boxSize: ["", null, "22px"],
-    },
+    allowedRoleIds: [1, 2, 3],
   },
   {
     labelKey: "navs.field_data",
     path: "/field-data",
     icon: IconMapPinSearch,
+    allowedRoleIds: [1, 2, 3],
   },
   {
     labelKey: "navs.dashboard",
     path: "/dashboard",
     icon: IconChartPie,
+    allowedRoleIds: [1, 2, 3],
   },
   {
     labelKey: "navs.master_data",
     path: "/master-data",
     icon: IconServerCog,
+    allowedRoleIds: [1],
   },
 ];
 
