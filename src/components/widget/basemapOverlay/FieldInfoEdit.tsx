@@ -313,10 +313,10 @@ export const FieldInfoEdit = (props: any) => {
       }
       if (Array.isArray(values.image)) {
         values.image.forEach((file: any) => {
-          payload.append(`image`, file);
+          payload.append(`images`, file);
         });
       } else if (values.image) {
-        payload.append("image", values.image);
+        payload.append("images", values.image);
       }
       payload.append(
         "delete_sk_document_ids",
@@ -327,8 +327,8 @@ export const FieldInfoEdit = (props: any) => {
         JSON.stringify(deletedOtherDocs?.map((d) => d?.id))
       );
       payload.append(
-        "delete_image_ids",
-        JSON.stringify(deletedSkDocs?.map((d) => d?.id))
+        "delete_images_ids",
+        JSON.stringify(deletedImage?.map((d) => d?.id))
       );
       payload.append("properties", JSON.stringify(newPropertiesPayload));
       const url = `/api/gis-bpn/workspaces-layers/update-field`;
