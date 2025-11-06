@@ -419,6 +419,10 @@ export const color = {
   id: "Warna",
   en: "Color",
 };
+export const photo = {
+  id: "Foto",
+  en: "Photo",
+};
 export const image = {
   id: "Gambar",
   en: "Image",

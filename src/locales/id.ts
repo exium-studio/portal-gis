@@ -450,6 +450,7 @@ const translations = {
     "notifications": "Tes Kamera"
   },
   "phone_number": "Telepon",
+  "photo": "Foto",
   "plain": "Polos",
   "please_select_category": "Silahkan pilih kategori",
   "population": "Populasi",

@@ -450,6 +450,7 @@ const translations = {
     "notifications": "Camera Test"
   },
   "phone_number": "Phone",
+  "photo": "Photo",
   "plain": "Plain",
   "please_select_category": "Please select category",
   "population": "Population",

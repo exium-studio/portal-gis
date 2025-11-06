@@ -174,7 +174,7 @@ const ImageList = (props: any) => {
       <DisclosureRoot open={open} lazyLoad>
         <DisclosureContent>
           <DisclosureHeader>
-            <DisclosureHeaderContent title={`${l.image}`} />
+            <DisclosureHeaderContent title={`${l.image}/${l.photo}`} />
           </DisclosureHeader>
 
           <DisclosureBody>
@@ -679,7 +679,7 @@ export const FieldInfoEdit = (props: any) => {
               </Field>
 
               <Field
-                label={l.image}
+                label={`${l.image}/${l.photo}`}
                 invalid={!!formik.errors.image}
                 errorText={formik.errors.image as string}
               >
