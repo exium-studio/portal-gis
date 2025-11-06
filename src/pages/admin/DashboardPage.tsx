@@ -663,10 +663,12 @@ const DashboardUtilization = () => {
         {
           value: item.L_Spasial,
           td: item.L_Spasial,
+          dataType: "number",
         },
         {
           value: item.L_Tekstual,
           td: item.L_Tekstual,
+          dataType: "number",
         },
       ],
     };

@@ -3,6 +3,7 @@ import CContainer from "@/components/ui-custom/CContainer";
 import Img from "@/components/ui-custom/Img";
 import LangSwitcher from "@/components/ui-custom/LangSwitcher";
 import NavLink from "@/components/ui-custom/NavLink";
+import P from "@/components/ui-custom/P";
 import { Avatar } from "@/components/ui/avatar";
 import { ColorModeButton } from "@/components/ui/color-mode";
 import SigninForm from "@/components/widget/SigninForm";
@@ -12,7 +13,8 @@ import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import useRequest from "@/hooks/useRequest";
-import { Center, HStack, SimpleGrid, Text, VStack } from "@chakra-ui/react";
+import getUserFromLocalStorage from "@/utils/getUserFromLocalStorage";
+import { Center, HStack, SimpleGrid, VStack } from "@chakra-ui/react";
 import { useEffect } from "react";
 
 const RootPage = () => {
@@ -35,6 +37,9 @@ const RootPage = () => {
   const clearActiveWorkspaces = useActiveWorkspaces(
     (s) => s.clearActiveWorkspaces
   );
+
+  // States
+  const user = getUserFromLocalStorage();
 
   // Utils
   function onSignout() {
@@ -79,8 +84,10 @@ const RootPage = () => {
             <Avatar size={"2xl"} />
 
             <VStack gap={0}>
-              <Text fontWeight={"semibold"}>Admin</Text>
-              <Text>admin@gmail.com</Text>
+              <P textAlign={"center"} fontWeight={"semibold"}>
+                {user?.role?.name || "-"}
+              </P>
+              <P textAlign={"center"}>{user?.email || "-"}</P>
             </VStack>
 
             <VStack>
