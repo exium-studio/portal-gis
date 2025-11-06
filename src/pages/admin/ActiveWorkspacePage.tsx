@@ -52,25 +52,30 @@ const ActiveWorkspacePage = () => {
     );
   }, [activeWorkspacesByCategory, searchTerm]);
   const empty = filteredWorkspacesByCategory.length === 0;
+  const noActiveWorkspace = activeWorkspacesByCategory?.length === 0;
 
   return (
     <PageContainer gap={R_GAP} pb={4} flex={1}>
-      <CContainer flex={1} gap={4}>
-        <HStack justify="space-between" w="full">
-          <SearchInput
-            inputValue={searchTerm}
-            onChangeSetter={(input) => setSearchTerm(input)}
-          />
-        </HStack>
+      {noActiveWorkspace && (
+        <FeedbackNoData
+          icon={<IconFoldersOff />}
+          title={l.no_active_workspaces.title}
+          description={l.no_active_workspaces.description}
+        />
+      )}
 
-        {empty ? (
-          <FeedbackNoData
-            icon={<IconFoldersOff />}
-            title={l.no_active_workspaces.title}
-            description={l.no_active_workspaces.description}
-          />
-        ) : (
-          <>
+      {!noActiveWorkspace && (
+        <CContainer flex={1} gap={4}>
+          <HStack justify="space-between" w="full">
+            <SearchInput
+              inputValue={searchTerm}
+              onChangeSetter={(input) => setSearchTerm(input)}
+            />
+          </HStack>
+
+          {empty && <FeedbackNoData />}
+
+          {!empty && (
             <AccordionRoot multiple>
               <CContainer gap={2}>
                 {filteredWorkspacesByCategory.map((activeWorkspace, i) => (
@@ -82,9 +87,9 @@ const ActiveWorkspacePage = () => {
                 ))}
               </CContainer>
             </AccordionRoot>
-          </>
-        )}
-      </CContainer>
+          )}
+        </CContainer>
+      )}
     </PageContainer>
   );
 };
