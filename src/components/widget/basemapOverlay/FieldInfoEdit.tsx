@@ -1,25 +1,39 @@
+import BackButton from "@/components/ui-custom/BackButton";
 import BButton from "@/components/ui-custom/BButton";
 import CContainer from "@/components/ui-custom/CContainer";
+import {
+  DisclosureBody,
+  DisclosureContent,
+  DisclosureFooter,
+  DisclosureHeader,
+  DisclosureRoot,
+} from "@/components/ui-custom/Disclosure";
+import DisclosureHeaderContent from "@/components/ui-custom/DisclosureHeaderContent";
 import FileInput from "@/components/ui-custom/FileInput";
 import HScroll from "@/components/ui-custom/HScroll";
+import Img from "@/components/ui-custom/Img";
 import P from "@/components/ui-custom/P";
 import Textarea from "@/components/ui-custom/Textarea";
 import { Field } from "@/components/ui/field";
+import { Interface__StorageFile } from "@/constants/interfaces";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useLang from "@/context/useLang";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
+import useBackOnClose from "@/hooks/useBackOnClose";
 import useRequest from "@/hooks/useRequest";
 import empty from "@/utils/empty";
 import { normalizeKeys } from "@/utils/normalizeKeys";
 import { isRoleViewer, isWorkspaceCreatedBy } from "@/utils/role";
 import { fileValidation } from "@/utils/validationSchemas";
-import { FieldRoot, HStack, Tabs } from "@chakra-ui/react";
+import { FieldRoot, HStack, Icon, Tabs, useDisclosure } from "@chakra-ui/react";
+import { IconPhoto } from "@tabler/icons-react";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import * as yup from "yup";
 import ExistingFileItem from "../ExistingFIleItem";
 import PropertyValue from "../PropertyValue";
+import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
 
 const EXCLUDED_KEYS = [
   "id",
@@ -130,6 +144,57 @@ const InformationContent = (props: any) => {
     </CContainer>
   );
 };
+const ImageList = (props: any) => {
+  // Props
+  const { images, ...restProps } = props;
+
+  // Contexts
+  const { l } = useLang();
+
+  // Hooks
+  const { open, onOpen, onClose } = useDisclosure();
+  useBackOnClose(`image-list`, open, onOpen, onClose);
+
+  return (
+    <>
+      <BButton
+        w={"full"}
+        variant={"outline"}
+        onClick={onOpen}
+        size={"md"}
+        {...restProps}
+      >
+        <Icon>
+          <IconPhoto stroke={1.5} />
+        </Icon>
+
+        {l.view}
+      </BButton>
+
+      <DisclosureRoot open={open} lazyLoad>
+        <DisclosureContent>
+          <DisclosureHeader>
+            <DisclosureHeaderContent title={`${l.image}`} />
+          </DisclosureHeader>
+
+          <DisclosureBody>
+            <CContainer>
+              {empty(images) && <FeedbackNoData />}
+
+              {images?.map((img: Interface__StorageFile) => {
+                return <Img src={img.file_url} />;
+              })}
+            </CContainer>
+          </DisclosureBody>
+
+          <DisclosureFooter>
+            <BackButton />
+          </DisclosureFooter>
+        </DisclosureContent>
+      </DisclosureRoot>
+    </>
+  );
+};
 
 export const FieldInfoEdit = (props: any) => {
   // Props
@@ -165,6 +230,8 @@ export const FieldInfoEdit = (props: any) => {
   const [deletedSkDocs, setDeletedSkDocs] = useState<any[]>([]);
   const [existingOtherDocs, setExistingOtherDocs] = useState<any[]>([]);
   const [deletedOtherDocs, setDeletedOtherDocs] = useState<any[]>([]);
+  const [existingImage, setExistingImage] = useState<any[]>([]);
+  const [deletedImage, setDeletedImage] = useState<any[]>([]);
   const resolvedData =
     properties &&
     Object.fromEntries(
@@ -185,6 +252,7 @@ export const FieldInfoEdit = (props: any) => {
       ...(withExplanation ? withExplanationValues : {}),
       sk_document: undefined as any,
       other_document: undefined as any,
+      image: undefined as any,
     },
     validationSchema: yup.object().shape({
       sk_document: fileValidation({
@@ -192,6 +260,9 @@ export const FieldInfoEdit = (props: any) => {
       }),
       other_document: fileValidation({
         allowedExtensions: ["pdf", "doc", "docx"],
+      }),
+      image: fileValidation({
+        allowedExtensions: ["png", "jpg", "jpeg"],
       }),
     }),
     onSubmit: (values, { resetForm }) => {
@@ -331,6 +402,10 @@ export const FieldInfoEdit = (props: any) => {
 
     formik.setFieldValue("other_document", undefined);
     setExistingOtherDocs(selectedPolygon?.polygon?.other_document || []);
+    setDeletedOtherDocs([]);
+
+    formik.setFieldValue("image", undefined);
+    setExistingOtherDocs(selectedPolygon?.polygon?.image || []);
     setDeletedOtherDocs([]);
   }, [
     selectedPolygon?.polygon?.sk_document,
@@ -593,6 +668,70 @@ export const FieldInfoEdit = (props: any) => {
                             setExistingOtherDocs((prev) => [...prev, item]);
 
                             setDeletedOtherDocs((ps) =>
+                              ps.filter((f) => f != item)
+                            );
+                          }}
+                        />
+                      );
+                    })}
+                  </CContainer>
+                )}
+              </Field>
+
+              <Field
+                label={l.image}
+                invalid={!!formik.errors.image}
+                errorText={formik.errors.image as string}
+              >
+                <ImageList images={selectedPolygon?.polygon?.image} />
+
+                {!empty(existingImage) && (
+                  <CContainer gap={2}>
+                    {existingImage?.map((item: any, i: number) => {
+                      return (
+                        <ExistingFileItem
+                          key={i}
+                          data={item}
+                          onDelete={() => {
+                            setExistingImage((prev) =>
+                              prev.filter((f) => f !== item)
+                            );
+                            setDeletedImage((ps) => [...ps, item]);
+                          }}
+                        />
+                      );
+                    })}
+                  </CContainer>
+                )}
+
+                {existingImage?.length < 5 && (
+                  <FileInput
+                    dropzone
+                    name="image"
+                    onChangeSetter={(input) => {
+                      formik.setFieldValue("image", input);
+                    }}
+                    inputValue={formik.values.image}
+                    accept=".png, .jpg, .jpeg"
+                    maxFiles={5 - existingImage.length}
+                  />
+                )}
+
+                {!empty(deletedImage) && (
+                  <CContainer gap={2} mt={2}>
+                    <P color={"fg.muted"}>{l.image_delete}</P>
+
+                    {deletedImage?.map((item: any, i: number) => {
+                      return (
+                        <ExistingFileItem
+                          key={i}
+                          data={item}
+                          withDeleteButton={false}
+                          withUndobutton
+                          onUndo={() => {
+                            setExistingImage((prev) => [...prev, item]);
+
+                            setDeletedImage((ps) =>
                               ps.filter((f) => f != item)
                             );
                           }}

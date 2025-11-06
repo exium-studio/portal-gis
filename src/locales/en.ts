@@ -250,6 +250,8 @@ const translations = {
   "hgu_area": "HGU Area",
   "hgu_area_by_kabupaten": "HGU Area by kabupaten",
   "hgu_count": "HGU Count",
+  "image": "Image",
+  "image_delete": "Deleted image",
   "in_use": "in use",
   "income": "Income",
   "income_source": "Income source",

@@ -250,6 +250,8 @@ const translations = {
   "hgu_area": "Luas HGU",
   "hgu_area_by_kabupaten": "Luas HGU berdasarkan kabupaten",
   "hgu_count": "Jumlah HGU",
+  "image": "Gambar",
+  "image_delete": "Gambar dihapus",
   "in_use": "sedang digunakan",
   "income": "Pendapatan",
   "income_source": "Sumber pendapatan",

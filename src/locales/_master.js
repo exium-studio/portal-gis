@@ -419,6 +419,14 @@ export const color = {
   id: "Warna",
   en: "Color",
 };
+export const image = {
+  id: "Gambar",
+  en: "Image",
+};
+export const image_delete = {
+  id: "Gambar dihapus",
+  en: "Deleted image",
+};
 
 // UI
 export const select_field = {

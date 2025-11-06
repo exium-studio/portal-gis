@@ -205,8 +205,6 @@ export const EditField = (props: any) => {
     setDeletedDocs([]);
   }, [selectedPolygon?.polygon?.documents]);
 
-  console.debug(selectedPolygon);
-
   return (
     <>
       <BButton

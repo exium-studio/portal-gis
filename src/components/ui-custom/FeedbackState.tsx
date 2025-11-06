@@ -18,12 +18,12 @@ const FeedbackState = (props: Props) => {
 
   return (
     <VStack gap={1} {...restProps}>
-      <Icon mb={2} color={"fg.subtle"} boxSize={10}>
+      <Icon mb={2} color={"fg.subtle"} boxSize={8}>
         {icon || <IconDatabaseOff />}
       </Icon>
 
       {titleString && (
-        <P textAlign={"center"} fontSize={"lg"} fontWeight={"semibold"}>
+        <P textAlign={"center"} fontWeight={"semibold"}>
           {title}
         </P>
       )}
