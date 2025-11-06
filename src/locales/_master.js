@@ -9,7 +9,7 @@ export const navs = {
     en: "Active Workspace",
   },
   dashboard: {
-    id: "Dasbor",
+    id: "Dashboard",
     en: "Dashboard",
   },
   field_data: {
