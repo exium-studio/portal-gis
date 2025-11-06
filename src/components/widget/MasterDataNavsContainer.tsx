@@ -141,6 +141,8 @@ const MasterDataNavsContainer = ({ children, activePath, ...props }: Props) => {
       <PageContainer
         display={compact && masterDataRoute ? "none" : "flex"}
         h={"full"}
+        overflowY={"auto"}
+        pb={1}
       >
         {children}
       </PageContainer>

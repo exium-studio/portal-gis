@@ -402,6 +402,7 @@ const WorkspaceCategoriesTable = (props: any) => {
       rowOptions={rowOptions}
       borderBottom={"none"}
       borderRadius={themeConfig.radii.component}
+      maxH={"calc(100% - 48px)"}
     />
   );
 };
@@ -429,7 +430,7 @@ const MasterDataWorkspaceCategoriesPage = () => {
   };
 
   return (
-    <CContainer flex={1} gap={4}>
+    <CContainer flex={1} gap={4} overflowY={"auto"}>
       <HStack justify={"space-between"} w={"full"}>
         <SearchInput
           onChangeSetter={(input) => {
