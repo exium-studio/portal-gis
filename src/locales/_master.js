@@ -421,6 +421,10 @@ export const color = {
 };
 
 // UI
+export const select_field = {
+  id: "Pilih bidang",
+  en: "Select field",
+};
 export const no_legends = {
   id: "Tidak ada legenda",
   en: "No legends",

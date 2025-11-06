@@ -13,6 +13,7 @@ import PageContainer from "@/components/widget/PageContainer";
 import { MAP_TRANSITION_DURATION } from "@/constants/duration";
 import {
   Interface__ActiveLayer,
+  Interface__ActiveWorkspace,
   Interface__SelectOption,
 } from "@/constants/interfaces";
 import { FIT_BOUNDS_PADDING } from "@/constants/sizes";
@@ -20,12 +21,13 @@ import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
 import useMapViewState from "@/context/useMapViewState";
+import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import empty from "@/utils/empty";
 import { computeBboxAndCenter } from "@/utils/geospatial";
 import { normalizeKeys } from "@/utils/normalizeKeys";
 import { HStack, Icon, SimpleGrid } from "@chakra-ui/react";
-import { IconFoldersOff, IconZoomInArea } from "@tabler/icons-react";
+import { IconFoldersOff, IconLocation } from "@tabler/icons-react";
 import { useMemo, useState } from "react";
 
 const DEFAULT_FILTER_CONFIG = {
@@ -38,13 +40,15 @@ const KABUPATEN_KEYS = ["kabupaten", "kab"];
 
 const ViewField = (props: any) => {
   // Props
-  const { field, ...restProps } = props;
+  const { fieldset, ...restProps } = props;
 
   // Hooks
   const { l } = useLang();
+  const { themeConfig } = useThemeConfig();
 
   // Contexts
   const mapRef = useMapViewState((s) => s.mapRef);
+  const setSelectedPolygon = useSelectedPolygon((s) => s.setSelectedPolygon);
 
   // States
   const formattedFeatureCollection = [
@@ -53,7 +57,7 @@ const ViewField = (props: any) => {
       features: [
         {
           type: "Feature",
-          geometry: field.geometry,
+          geometry: fieldset.feature.geometry,
         },
       ],
     },
@@ -61,6 +65,8 @@ const ViewField = (props: any) => {
   const fieldBBoxAndCenter = computeBboxAndCenter(
     formattedFeatureCollection as any
   );
+
+  // console.log(field);
 
   // Utils
   function onViewLayers() {
@@ -77,11 +83,22 @@ const ViewField = (props: any) => {
           essential: true,
         }
       );
+
+      setSelectedPolygon({
+        polygon: fieldset.feature,
+        activeLayer: fieldset.layer,
+        activeWorkspace: fieldset.workspace,
+        fillColor: themeConfig.primaryColorHex,
+        clickedLngLat: {
+          lat: minLat,
+          lon: minLng,
+        },
+      });
     }
   }
 
   return (
-    <Tooltip content={l.fit_bounds}>
+    <Tooltip content={l.select_field}>
       <BButton
         unclicky
         iconButton
@@ -90,7 +107,7 @@ const ViewField = (props: any) => {
         {...restProps}
       >
         <Icon boxSize={5}>
-          <IconZoomInArea stroke={1.5} />
+          <IconLocation stroke={1.5} />
         </Icon>
       </BButton>
     </Tooltip>
@@ -120,11 +137,11 @@ const DataTable = (props: any) => {
       },
     },
   ];
-  const tds = filteredFields.map((field: any, i: number) => {
-    const propsNormalized = normalizeKeys(field.properties);
+  const tds = filteredFields.map((fieldset: any, i: number) => {
+    const propsNormalized = normalizeKeys(fieldset.feature.properties);
 
     return {
-      originalData: field,
+      originalData: fieldset.feature,
       index: i,
       columnsFormat: [
         {
@@ -137,7 +154,7 @@ const DataTable = (props: any) => {
         },
         {
           value: "",
-          td: <ViewField field={field} />,
+          td: <ViewField fieldset={fieldset} />,
           wrapperProps: {
             justify: "center",
             w: "48px",
@@ -183,14 +200,20 @@ const FieldDataPage = () => {
       return { allFields: [], allProvinces: [], allKabupatens: [] };
     }
 
-    const layers: Interface__ActiveLayer[] = [];
+    const dataset: {
+      workspace: Interface__ActiveWorkspace;
+      layer: Interface__ActiveLayer;
+    }[] = [];
     const provinces = new Set<string>();
     const kabupatens = new Set<string>();
 
     for (const category of activeWorkspacesByCategory) {
       for (const workspace of category.workspaces) {
         for (const layer of workspace.layers ?? []) {
-          layers.push(layer);
+          dataset.push({
+            workspace: workspace,
+            layer: layer,
+          });
 
           for (const feature of layer.data?.geojson.features ?? []) {
             const props = feature.properties ?? {};
@@ -224,7 +247,7 @@ const FieldDataPage = () => {
     }
 
     return {
-      allFields: layers,
+      allFields: dataset,
       allProvinces: Array.from(provinces).sort(),
       allKabupatens: Array.from(kabupatens).sort(),
     };
@@ -250,8 +273,8 @@ const FieldDataPage = () => {
 
     const results: any[] = [];
 
-    for (const layer of allFields) {
-      for (const feature of layer.data?.geojson.features ?? []) {
+    for (const data of allFields) {
+      for (const feature of data.layer.data?.geojson.features ?? []) {
         const props = feature.properties ?? {};
 
         // normalize props keys → lowercase
@@ -291,7 +314,11 @@ const FieldDataPage = () => {
         }
 
         if (provinceOk && kabupatenOk && noHakOk) {
-          results.push(feature);
+          results.push({
+            workspace: data.workspace,
+            layer: data.layer,
+            feature: feature,
+          });
         }
       }
     }

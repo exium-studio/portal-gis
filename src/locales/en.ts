@@ -489,6 +489,7 @@ const translations = {
   "see_detail": "See detail",
   "see_on_map": "See on map",
   "select_all": "Select all",
+  "select_field": "Select field",
   "select_input_default_placeholder": "Select...",
   "select_input_default_title": "Select",
   "select_property_first": "Please select a property first to display color based on property value",

@@ -489,6 +489,7 @@ const translations = {
   "see_detail": "Lihat detail",
   "see_on_map": "Lihat di peta",
   "select_all": "Pilih semua",
+  "select_field": "Pilih bidang",
   "select_input_default_placeholder": "Pilih...",
   "select_input_default_title": "Pilih",
   "select_property_first": "Pilih properti terlebih dahulu untuk menampilan warna berdasarkan nilai properti",
