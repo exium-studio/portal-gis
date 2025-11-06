@@ -129,46 +129,52 @@ const NavList = (props: any) => {
   return (
     <>
       {NAVS.map((nav: any, i) => {
+        // const user = getUserFromLocalStorage();
         const active = activePath === nav.path;
+        // TODO pasang filter menu sesuai role
+        // const allowed = nav?.allowedRoles?.includes(user?.role?.id);
+        const allowed = true;
 
         return (
-          <NavLinkContainer key={i} to={nav.path}>
-            <Tooltip
-              content={pluck(l, nav.labelKey)}
-              positioning={{ placement: "right" }}
-              contentProps={{ ml: 2 }}
-            >
-              <NavItemContainer active={active} w={["64px", null, "40px"]}>
-                <FloatCounter
-                  circleProps={{
-                    h: "18px",
-                    fontSize: "xs",
-                    mt: "18px",
-                    mr: "18px",
-                  }}
-                  display={"none"}
-                >
-                  2
-                </FloatCounter>
-
-                <Icon {...nav?.iconProps}>
-                  <nav.icon strokeWidth={1.5} size={iss ? 24 : 20} />
-                </Icon>
-
-                {iss && (
-                  <HelperText
-                    color={active ? "" : "fg.muted"}
-                    lineHeight={1}
-                    mt={1}
-                    maxW={"50px"}
-                    truncate
+          allowed && (
+            <NavLinkContainer key={i} to={nav.path}>
+              <Tooltip
+                content={pluck(l, nav.labelKey)}
+                positioning={{ placement: "right" }}
+                contentProps={{ ml: 2 }}
+              >
+                <NavItemContainer active={active} w={["64px", null, "40px"]}>
+                  <FloatCounter
+                    circleProps={{
+                      h: "18px",
+                      fontSize: "xs",
+                      mt: "18px",
+                      mr: "18px",
+                    }}
+                    display={"none"}
                   >
-                    {pluck(l, nav.labelKey)}
-                  </HelperText>
-                )}
-              </NavItemContainer>
-            </Tooltip>
-          </NavLinkContainer>
+                    2
+                  </FloatCounter>
+
+                  <Icon {...nav?.iconProps}>
+                    <nav.icon strokeWidth={1.5} size={iss ? 24 : 20} />
+                  </Icon>
+
+                  {iss && (
+                    <HelperText
+                      color={active ? "" : "fg.muted"}
+                      lineHeight={1}
+                      mt={1}
+                      maxW={"50px"}
+                      truncate
+                    >
+                      {pluck(l, nav.labelKey)}
+                    </HelperText>
+                  )}
+                </NavItemContainer>
+              </Tooltip>
+            </NavLinkContainer>
+          )
         );
       })}
     </>

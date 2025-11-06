@@ -20,7 +20,11 @@ export const isRoleViewer = () => {
   return user?.role?.id === 3;
 };
 
-export const isWorkspaceCreatedBy = (createdByUserId: number) => {
+export const isWorkspaceCreatedBy = (
+  createdByUserId: number | undefined | null
+) => {
+  if (!createdByUserId) return false;
   const user = getUserFromLocalStorage();
+  if (isRoleSuperAdmin()) return true;
   return user?.id === createdByUserId;
 };

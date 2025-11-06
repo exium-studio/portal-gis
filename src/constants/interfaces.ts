@@ -80,6 +80,7 @@ export interface Interface__WorkspaceCategory extends Interface__CUD {
 }
 export interface Interface__Workspace extends Interface__CUD {
   id: number;
+  created_by: number;
   title: string;
   description: string;
   layers?: Interface__Layer[];

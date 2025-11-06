@@ -27,7 +27,7 @@ import useRequest from "@/hooks/useRequest";
 import back from "@/utils/back";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import empty from "@/utils/empty";
-import { isPublicUser } from "@/utils/role";
+import { isRoleSuperAdmin } from "@/utils/role";
 import { FieldsetRoot, HStack, Icon, useDisclosure } from "@chakra-ui/react";
 import { IconPlus } from "@tabler/icons-react";
 import { useFormik } from "formik";
@@ -316,7 +316,7 @@ const WorkspaceCategoriesTable = (props: any) => {
         return (
           <Edit
             workspaceCategory={rowData?.originalData}
-            disabled={isPublicUser()}
+            disabled={!isRoleSuperAdmin()}
           />
         );
       },
@@ -354,7 +354,7 @@ const WorkspaceCategoriesTable = (props: any) => {
     {
       label: "Delete",
       disabled: (rowData: any) => {
-        return isPublicUser() || rowData.originalData.deleted_at;
+        return !isRoleSuperAdmin() || rowData.originalData.deleted_at;
       },
       menuItemProps: {
         color: "red.400",
@@ -441,7 +441,7 @@ const MasterDataWorkspaceCategoriesPage = () => {
           inputValue={filterConfig.search}
         />
 
-        <Create disabled={isPublicUser()} />
+        <Create disabled={!isRoleSuperAdmin()} />
       </HStack>
 
       {initialLoading && render.loading}

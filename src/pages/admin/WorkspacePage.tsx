@@ -40,7 +40,7 @@ import useDataState from "@/hooks/useDataState";
 import useRequest from "@/hooks/useRequest";
 import back from "@/utils/back";
 import empty from "@/utils/empty";
-import { isPublicUser } from "@/utils/role";
+import { isRoleViewer } from "@/utils/role";
 import { fileValidation } from "@/utils/validationSchemas";
 import {
   AlertIndicator,
@@ -138,7 +138,7 @@ const Create = () => {
         iconButton
         colorPalette={themeConfig?.colorPalette}
         onClick={onOpen}
-        disabled={isPublicUser()}
+        disabled={isRoleViewer()}
       >
         <Icon>
           <IconPlus />

@@ -30,6 +30,7 @@ import empty from "@/utils/empty";
 import { formatTableName } from "@/utils/formatTableName";
 import { computeBboxAndCenter } from "@/utils/geospatial";
 import interpolate from "@/utils/interpolate";
+import { isRoleViewer, isWorkspaceCreatedBy } from "@/utils/role";
 import { fileValidation } from "@/utils/validationSchemas";
 import {
   Badge,
@@ -69,13 +70,12 @@ import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
 import { Switch } from "../ui/switch";
 import { Tooltip } from "../ui/tooltip";
 import ExistingFileItem from "./ExistingFIleItem";
+import SelectLayerByWorkspaceId from "./SelectLayerByWorkspaceId";
 import SelectLayerFileType from "./SelectLayerFileType";
 import SelectLayerType from "./SelectLayerType";
 import SelectWorkspaceCategory from "./SelectWorkspaceCategory";
 import SimplePopover from "./SimplePopover";
 import WorkspaceLayersDisclosureTrigger from "./WorkspaceLayersDisclosureTrigger";
-import SelectLayerByWorkspaceId from "./SelectLayerByWorkspaceId";
-import { isPublicUser } from "@/utils/role";
 
 const WorkspaceMenu = (props: any) => {
   // Props
@@ -433,7 +433,12 @@ const WorkspaceLayersUtils = (props: {
     >
       <AddLayer
         workspace={workspace}
-        disabled={isPublicUser() || workspaceLoading || !!workspaceActive}
+        disabled={
+          isRoleViewer() ||
+          !isWorkspaceCreatedBy(workspace?.created_by) ||
+          workspaceLoading ||
+          !!workspaceActive
+        }
         size={"xs"}
       />
 
@@ -948,7 +953,12 @@ const RowItem = (props: any) => {
             workspace={workspace}
             setWorkspace={setWorkspace}
             size={"xs"}
-            disabled={isPublicUser() || workspaceLoading || workspaceActive}
+            disabled={
+              isRoleViewer() ||
+              !isWorkspaceCreatedBy(workspace?.created_by) ||
+              workspaceLoading ||
+              workspaceActive
+            }
           />
         </HStack>
       </CContainer>
@@ -991,7 +1001,12 @@ const ListItem = (props: any) => {
           workspace={workspace}
           setWorkspace={setWorkspace}
           size={"xs"}
-          disabled={isPublicUser() || workspaceLoading || workspaceActive}
+          disabled={
+            isRoleViewer() ||
+            !isWorkspaceCreatedBy(workspace?.created_by) ||
+            workspaceLoading ||
+            workspaceActive
+          }
         />
       </HStack>
 

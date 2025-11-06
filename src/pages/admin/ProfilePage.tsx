@@ -7,7 +7,6 @@ import ResetPasswordDisclosureTrigger from "@/components/widget/ResetPasswordDis
 import useAuthMiddleware from "@/context/useAuthMiddleware";
 import useRequest from "@/hooks/useRequest";
 import getUserFromLocalStorage from "@/utils/getUserFromLocalStorage";
-import { isPublicUser } from "@/utils/role";
 import { VStack } from "@chakra-ui/react";
 
 const ProfilePage = () => {
@@ -51,14 +50,14 @@ const ProfilePage = () => {
 
       <VStack gap={0}>
         <P textAlign={"center"} fontWeight={"semibold"}>
-          {isPublicUser() ? "Public" : "Admin"}
+          {user?.role?.name || "-"}
         </P>
         <P textAlign={"center"}>{user?.email || "-"}</P>
       </VStack>
 
       <CContainer gap={2} align={"center"}>
         <ResetPasswordDisclosureTrigger>
-          <BButton variant={"outline"} w={"140px"} disabled={isPublicUser()}>
+          <BButton variant={"outline"} w={"140px"}>
             Reset password
           </BButton>
         </ResetPasswordDisclosureTrigger>

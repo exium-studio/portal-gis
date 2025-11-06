@@ -16,7 +16,7 @@ import capsFirstLetter from "@/utils/capsFirstLetter";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import empty from "@/utils/empty";
 import { formatTableName } from "@/utils/formatTableName";
-import { isPublicUser } from "@/utils/role";
+import { isRoleViewer, isWorkspaceCreatedBy } from "@/utils/role";
 import { fileValidation } from "@/utils/validationSchemas";
 import {
   AlertIndicator,
@@ -911,20 +911,32 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                             <SetLegend
                               layer={layer}
                               size={"sm"}
-                              disabled={isPublicUser() || workspaceActive}
+                              disabled={
+                                isRoleViewer() ||
+                                !isWorkspaceCreatedBy(workspace?.created_by) ||
+                                workspaceActive
+                              }
                             />
 
                             <EditLayer
                               workspace={workspace}
                               layer={layer}
-                              disabled={isPublicUser() || workspaceActive}
+                              disabled={
+                                isRoleViewer() ||
+                                !isWorkspaceCreatedBy(workspace?.created_by) ||
+                                workspaceActive
+                              }
                               size={"sm"}
                             />
 
                             <DeleteLayer
                               workspace={workspace}
                               layer={layer}
-                              disabled={isPublicUser() || workspaceActive}
+                              disabled={
+                                isRoleViewer() ||
+                                !isWorkspaceCreatedBy(workspace?.created_by) ||
+                                workspaceActive
+                              }
                               size={"sm"}
                             />
                           </HStack>

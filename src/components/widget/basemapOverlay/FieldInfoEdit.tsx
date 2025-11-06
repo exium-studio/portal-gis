@@ -12,6 +12,7 @@ import { useThemeConfig } from "@/context/useThemeConfig";
 import useRequest from "@/hooks/useRequest";
 import empty from "@/utils/empty";
 import { normalizeKeys } from "@/utils/normalizeKeys";
+import { isRoleViewer, isWorkspaceCreatedBy } from "@/utils/role";
 import { fileValidation } from "@/utils/validationSchemas";
 import { FieldRoot, HStack, Tabs } from "@chakra-ui/react";
 import { useFormik } from "formik";
@@ -19,7 +20,6 @@ import { useEffect, useState } from "react";
 import * as yup from "yup";
 import ExistingFileItem from "../ExistingFIleItem";
 import PropertyValue from "../PropertyValue";
-import { isPublicUser } from "@/utils/role";
 
 const EXCLUDED_KEYS = [
   "id",
@@ -371,14 +371,14 @@ export const FieldInfoEdit = (props: any) => {
             </Tabs.Trigger>
 
             {/* Usage tab */}
-            <Tabs.Trigger
+            {/* <Tabs.Trigger
               flex={1}
               minW={"fit !important"}
               justifyContent={"center"}
               value="usage"
             >
               {l.usage}
-            </Tabs.Trigger>
+            </Tabs.Trigger> */}
 
             {/* Explanation tab */}
             {withExplanation && (
@@ -622,7 +622,12 @@ export const FieldInfoEdit = (props: any) => {
             colorPalette={themeConfig.colorPalette}
             loading={loading}
             size={"sm"}
-            disabled={isPublicUser()}
+            disabled={
+              isRoleViewer() ||
+              !isWorkspaceCreatedBy(
+                selectedPolygon?.activeWorkspace?.created_by
+              )
+            }
           >
             {l.save}
           </BButton>

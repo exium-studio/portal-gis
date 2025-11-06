@@ -23,6 +23,7 @@ import useRequest from "@/hooks/useRequest";
 import back from "@/utils/back";
 import capsFirstLetterEachWord from "@/utils/capsFirstLetterEachWord";
 import empty from "@/utils/empty";
+import { isRoleViewer, isWorkspaceCreatedBy } from "@/utils/role";
 import { fileValidation } from "@/utils/validationSchemas";
 import { Icon, SimpleGrid, Tabs, useDisclosure } from "@chakra-ui/react";
 import { IconEdit } from "@tabler/icons-react";
@@ -30,7 +31,6 @@ import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import * as yup from "yup";
 import ExistingFileItem from "../ExistingFIleItem";
-import { isPublicUser } from "@/utils/role";
 
 const EXCLUDED_KEYS = [
   "id",
@@ -204,6 +204,8 @@ export const EditField = (props: any) => {
     setExistingDocs(selectedPolygon?.polygon?.documents);
     setDeletedDocs([]);
   }, [selectedPolygon?.polygon?.documents]);
+
+  console.debug(selectedPolygon);
 
   return (
     <>
@@ -424,7 +426,10 @@ export const EditField = (props: any) => {
             <BButton
               colorPalette={themeConfig.colorPalette}
               onClick={formik.submitForm}
-              disabled={isPublicUser()}
+              disabled={
+                isRoleViewer() ||
+                !isWorkspaceCreatedBy(selectedPolygon?.workspace?.created_by)
+              }
             >
               {l.save}
             </BButton>
