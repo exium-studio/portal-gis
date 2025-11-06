@@ -583,6 +583,7 @@ const translations = {
     "iso": "International standard measurement system. Based on metric."
   },
   "usage": "Usage",
+  "utilization": "Utilization",
   "verify": "Verify",
   "verify_email": "Verify email",
   "view": "View",

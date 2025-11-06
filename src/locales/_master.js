@@ -427,6 +427,10 @@ export const image_delete = {
   id: "Gambar dihapus",
   en: "Deleted image",
 };
+export const utilization = {
+  id: "Pemanfaatan",
+  en: "Utilization",
+};
 
 // UI
 export const select_field = {

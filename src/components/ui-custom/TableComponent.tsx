@@ -716,7 +716,7 @@ const TableComponent = ({
   return (
     <CContainer
       borderColor={"border.muted"}
-      minH={props?.minH || sh < 625 ? "400px" : "fit"}
+      minH={props?.minH || sh < 625 ? "400px" : ""}
       maxH={props?.maxH}
       overflowY={"auto"}
       flex={1}
@@ -726,8 +726,6 @@ const TableComponent = ({
         borderBottom={"1px solid"}
         borderColor={borderColor}
         minW={"full"}
-        minH={"fit"}
-        h={"fit"}
         maxH={"full"}
         className="scrollX scrollY"
         overflow={"auto"}

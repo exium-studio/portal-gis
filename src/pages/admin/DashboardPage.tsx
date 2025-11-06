@@ -9,18 +9,23 @@ import HelperText from "@/components/ui-custom/HelperText";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
 import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import P from "@/components/ui-custom/P";
+import TableComponent from "@/components/ui-custom/TableComponent";
 import { Checkbox } from "@/components/ui/checkbox";
 import GeoJSONFilter from "@/components/widget/basemapOverlay/GeoJSONFilter";
 import PageContainer from "@/components/widget/PageContainer";
 import SimplePopover from "@/components/widget/SimplePopover";
-import { Interface__ActiveWorkspace } from "@/constants/interfaces";
+import {
+  Interface__ActiveWorkspace,
+  Interface__ActiveWorkspacesByWorkspaceCategory,
+} from "@/constants/interfaces";
 import { FilterGeoJSON } from "@/constants/types";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import { useConfirmFilterGeoJSON } from "@/context/useConfirmFilterGeoJSON";
 import useLang from "@/context/useLang";
+import { useThemeConfig } from "@/context/useThemeConfig";
 import empty from "@/utils/empty";
 import { Chart, useChart } from "@chakra-ui/charts";
-import { Circle, HStack } from "@chakra-ui/react";
+import { Circle, HStack, Link, Tabs } from "@chakra-ui/react";
 import { IconFoldersOff } from "@tabler/icons-react";
 import chroma from "chroma-js";
 import { Fragment, useEffect, useMemo, useState } from "react";
@@ -496,7 +501,7 @@ const HGUAreaByKabupaten = (props: any) => {
   );
 };
 
-const DashboardData = (props: any) => {
+const DashboardHGUData = (props: any) => {
   // Props
   const { search } = props;
 
@@ -583,10 +588,9 @@ const DashboardData = (props: any) => {
     </HStack>
   );
 };
-const DashboardPage = () => {
-  const { l } = useLang();
-
+const DashboardHGU = () => {
   // Contexts
+  const { l } = useLang();
   const activeWorkspacesByCategory = useActiveWorkspaces(
     (s) => s.activeWorkspaces
   );
@@ -617,10 +621,167 @@ const DashboardPage = () => {
 
           <GeoJSONFilter />
 
-          <DashboardData search={search} />
+          <DashboardHGUData search={search} />
         </CContainer>
       )}
     </PageContainer>
+  );
+};
+const DashboardUtilization = () => {
+  // Contexts
+  const { l } = useLang();
+  const activeWorkspacesByCategory = useActiveWorkspaces(
+    (s) => s.activeWorkspaces
+  );
+
+  // States
+  const summary = getSummaryFromActiveWorkspaces(activeWorkspacesByCategory);
+  const ths = [
+    {
+      th: "Pmftan_Lhn",
+      sortable: true,
+    },
+    {
+      th: "L_Spasial",
+      sortable: true,
+    },
+    {
+      th: "L_Tekstual",
+      sortable: true,
+    },
+  ];
+  const tds = summary?.map((item: any, i: number) => {
+    return {
+      id: item.id,
+      index: i,
+      originalData: item,
+      columnsFormat: [
+        {
+          value: item.Pmftan_Lhn,
+          td: item.Pmftan_Lhn,
+        },
+        {
+          value: item.L_Spasial,
+          td: item.L_Spasial,
+        },
+        {
+          value: item.L_Tekstual,
+          td: item.L_Tekstual,
+        },
+      ],
+    };
+  });
+
+  // Utils
+  function getSummaryFromActiveWorkspaces(
+    categories: Interface__ActiveWorkspacesByWorkspaceCategory[]
+  ) {
+    const grouped = new Map<
+      string,
+      { Pmftan_Lhn: string; L_Spasial: number; L_Tekstual: number }
+    >();
+
+    for (const cat of categories) {
+      for (const ws of cat.workspaces) {
+        for (const layer of ws.layers) {
+          // Only proceed if layer has geojson data
+          const features = layer.data?.geojson?.features;
+          if (!Array.isArray(features)) continue;
+
+          for (const feature of features) {
+            const props = feature.properties || {};
+            const key = props["Pmftan_Lhn"];
+            if (!key) continue;
+
+            const lSpasial = Number(props["L_Spasial"]) || 0;
+            const lTekstual = Number(props["L_Tekstual"]) || 0;
+
+            if (!grouped.has(key)) {
+              grouped.set(key, {
+                Pmftan_Lhn: key,
+                L_Spasial: lSpasial,
+                L_Tekstual: lTekstual,
+              });
+            } else {
+              const item = grouped.get(key)!;
+              item.L_Spasial += lSpasial;
+              item.L_Tekstual += lTekstual;
+            }
+          }
+        }
+      }
+    }
+
+    return Array.from(grouped.values());
+  }
+
+  return (
+    <PageContainer pb={4} flex={1} overflowY={"auto"}>
+      {empty(activeWorkspacesByCategory) && (
+        <FeedbackNoData
+          icon={<IconFoldersOff />}
+          title={l.no_active_workspaces.title}
+          description={l.no_active_workspaces.description}
+        />
+      )}
+
+      {!empty(activeWorkspacesByCategory) && (
+        <TableComponent flex={1} originalData={summary} ths={ths} tds={tds} />
+      )}
+    </PageContainer>
+  );
+};
+
+const DashboardPage = () => {
+  // Contexts
+  const { l } = useLang();
+  const { themeConfig } = useThemeConfig();
+
+  return (
+    <CContainer flex={1} maxH={"calc(100% - 54px)"}>
+      <Tabs.Root
+        as={CContainer}
+        flex={1}
+        defaultValue="hgu"
+        colorPalette={themeConfig.colorPalette}
+        maxH={"full"}
+      >
+        <Tabs.List position={"sticky"} top={"54px"} bg={"bgContent"} zIndex={4}>
+          <Tabs.Trigger value="hgu" asChild>
+            <Link unstyled href="#hgu">
+              HGU
+            </Link>
+          </Tabs.Trigger>
+          <Tabs.Trigger value="utilization" asChild>
+            <Link unstyled href="#utilization">
+              {l.utilization}
+            </Link>
+          </Tabs.Trigger>
+        </Tabs.List>
+
+        <>
+          <Tabs.Content
+            as={CContainer}
+            flex={1}
+            value="hgu"
+            p={0}
+            overflowY={"auto"}
+          >
+            <DashboardHGU />
+          </Tabs.Content>
+
+          <Tabs.Content
+            as={CContainer}
+            flex={1}
+            value="utilization"
+            p={0}
+            overflowY={"auto"}
+          >
+            <DashboardUtilization />
+          </Tabs.Content>
+        </>
+      </Tabs.Root>
+    </CContainer>
   );
 };
 

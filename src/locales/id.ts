@@ -583,6 +583,7 @@ const translations = {
     "iso": "Sistem pengukuran standar internasional. Berdasarkan metric."
   },
   "usage": "Penggunaan",
+  "utilization": "Pemanfaatan",
   "verify": "Verifikasi",
   "verify_email": "Verifikasi email",
   "view": "Lihat",

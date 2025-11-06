@@ -1,6 +1,10 @@
 import { ButtonProps, MenuItemProps } from "@chakra-ui/react";
 import { RefObject } from "react";
 
+export type PolygonWithProperties = {
+  properties: Record<string, any>;
+};
+
 export type FilterGeoJSON = {
   KABUPATEN: string[];
   TIPEHAK: string[];
