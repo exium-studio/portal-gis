@@ -40,6 +40,7 @@ import BasemapMapOverlay from "./admin/BasemapMapOverlay";
 import CurrentUserTimeZone from "./CurrentUserTimeZone";
 import SimplePopover from "./SimplePopover";
 import Trivia from "./Trivia";
+import getUserFromLocalStorage from "@/utils/getUserFromLocalStorage";
 
 interface Interface__NavItemContainer extends StackProps {
   active?: boolean;
@@ -129,11 +130,9 @@ const NavList = (props: any) => {
   return (
     <>
       {NAVS.map((nav: any, i) => {
-        // const user = getUserFromLocalStorage();
+        const user = getUserFromLocalStorage();
         const active = activePath === nav.path;
-        // TODO pasang filter menu sesuai role
-        // const allowed = nav?.allowedRoles?.includes(user?.role?.id);
-        const allowed = true;
+        const allowed = nav?.allowedRoleIds?.includes(user?.role?.id);
 
         return (
           allowed && (
