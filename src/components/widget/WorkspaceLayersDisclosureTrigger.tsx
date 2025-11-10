@@ -487,6 +487,7 @@ const EditLayer = (props: any) => {
     validateOnChange: false,
     initialValues: {
       with_explanation: false,
+      is_boundary: false,
       name: "",
       description: "",
       layer_type: undefined as any,
@@ -518,6 +519,7 @@ const EditLayer = (props: any) => {
         `${formatTableName(values.name)}_${workspace?.id}`
       );
       payload.append("with_explanation", values.with_explanation.toString());
+      payload.append("is_boundary", values.is_boundary.toString());
       payload.append("name", values.name);
       payload.append("description", values.description);
       payload.append("layer_type", values.layer_type?.[0]?.id);
@@ -550,6 +552,7 @@ const EditLayer = (props: any) => {
     if (open) {
       formik.setValues({
         with_explanation: layer?.with_explanation,
+        is_boundary: layer?.is_boundary,
         name: layer?.name,
         description: layer?.description,
         layer_type: [
@@ -616,6 +619,21 @@ const EditLayer = (props: any) => {
                 >
                   <Checkbox checked={formik.values.with_explanation}>
                     {l.with_explanation}
+                  </Checkbox>
+                </Field>
+
+                <Field
+                  invalid={!!formik.errors.is_boundary}
+                  errorText={formik.errors.is_boundary as string}
+                  helperText={l.is_boundary_helper}
+                >
+                  <Checkbox
+                    onChange={(e: any) => {
+                      formik.setFieldValue("is_boundary", e.target.checked);
+                    }}
+                    checked={formik.values.is_boundary}
+                  >
+                    {l.as_boundary}
                   </Checkbox>
                 </Field>
 

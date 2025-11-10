@@ -463,6 +463,14 @@ export const area_utilization = {
   id: "Peruntukan kawasan",
   en: "Area utilization",
 };
+export const as_boundary = {
+  id: "Sebagai patok",
+  en: "As boundary",
+};
+export const is_boundary_helper = {
+  id: "Centang jika layer ini sebagai patok",
+  en: "Check if this layer is a boundary",
+};
 
 // UI
 export const select_field = {

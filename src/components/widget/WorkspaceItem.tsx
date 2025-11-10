@@ -484,6 +484,7 @@ const AddLayer = (props: any) => {
     validateOnChange: false,
     initialValues: {
       with_explanation: false,
+      is_boundary: false,
       name: "",
       description: "",
       layer_type: [OPTIONS_LAYER_TYPE[0]],
@@ -514,6 +515,7 @@ const AddLayer = (props: any) => {
         `${formatTableName(values.name)}_${workspace?.id}`
       );
       payload.append("with_explanation", values.with_explanation.toString());
+      payload.append("is_boundary", `${values.is_boundary}`);
       payload.append("name", values.name);
       payload.append("description", values.description);
       payload.append("layer_type", values.layer_type?.[0]?.id);
@@ -581,6 +583,21 @@ const AddLayer = (props: any) => {
                     checked={formik.values.with_explanation}
                   >
                     {l.with_explanation}
+                  </Checkbox>
+                </Field>
+
+                <Field
+                  invalid={!!formik.errors.is_boundary}
+                  errorText={formik.errors.is_boundary as string}
+                  helperText={l.is_boundary_helper}
+                >
+                  <Checkbox
+                    onChange={(e: any) => {
+                      formik.setFieldValue("is_boundary", e.target.checked);
+                    }}
+                    checked={formik.values.is_boundary}
+                  >
+                    {l.as_boundary}
                   </Checkbox>
                 </Field>
 

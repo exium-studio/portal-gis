@@ -30,6 +30,7 @@ const translations = {
   "apply": "Apply",
   "area_ha": "Area(Ha)",
   "area_utilization": "Area utilization",
+  "as_boundary": "As boundary",
   "ask": "Ask",
   "attachment": "Attachment",
   "auto_time_zone": "Local time zone (auto)",
@@ -265,6 +266,7 @@ const translations = {
     "no_hak": "No. Hak"
   },
   "inventory": "Inventory",
+  "is_boundary_helper": "Check if this layer is a boundary",
   "kk": "Family Card (KK)",
   "kk_poor": "Family Card (KK) poor",
   "label": "Label",

@@ -30,6 +30,7 @@ const translations = {
   "apply": "Terapkan",
   "area_ha": "Luas(Ha)",
   "area_utilization": "Peruntukan kawasan",
+  "as_boundary": "Sebagai patok",
   "ask": "Meminta",
   "attachment": "Lampiran",
   "auto_time_zone": "Zona waktu lokal (auto)",
@@ -265,6 +266,7 @@ const translations = {
     "no_hak": "No. Hak"
   },
   "inventory": "Inventori",
+  "is_boundary_helper": "Centang jika layer ini sebagai patok",
   "kk": "Kartu Keluarga (KK)",
   "kk_poor": "Kartu Keluarga (KK) miskin",
   "label": "Label",
