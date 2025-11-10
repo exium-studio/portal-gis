@@ -435,6 +435,34 @@ export const utilization = {
   id: "Pemanfaatan",
   en: "Utilization",
 };
+export const garden_name = {
+  id: "Nama kebun",
+  en: "Garden name",
+};
+export const area_ha = {
+  id: "Luas(Ha)",
+  en: "Area(Ha)",
+};
+export const spasial_area = {
+  id: "Luas spasial",
+  en: "Spasial area",
+};
+export const spasial_area_ha = {
+  id: "Luas spasial(Ha)",
+  en: "Spasial area(Ha)",
+};
+export const spatial = {
+  id: "Spasial",
+  en: "Spatial",
+};
+export const textual = {
+  id: "Tekstual",
+  en: "Textual",
+};
+export const area_utilization = {
+  id: "Peruntukan kawasan",
+  en: "Area utilization",
+};
 
 // UI
 export const select_field = {
@@ -544,8 +572,8 @@ export const fit_bounds = {
   en: "View area (fit bounds)",
 };
 export const field_info = {
-  id: "Informasi bidang",
-  en: "Field information",
+  id: "Informasi detail",
+  en: "Detail information",
 };
 export const password_confirmation_not_match = {
   id: "Konfirmasi password tidak cocok",

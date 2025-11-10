@@ -79,7 +79,13 @@ const BatchOptions = ({
         // borderRadius={"full"}
         aria-label="batch options"
       >
-        <BButton iconButton unclicky variant={"ghost"} size={"xs"}>
+        <BButton
+          iconButton
+          unclicky
+          variant={"ghost"}
+          colorPalette={"gray"}
+          size={"xs"}
+        >
           <Icon>
             <IconMenu />
           </Icon>
@@ -207,7 +213,13 @@ const RowOptions = ({
   return (
     <MenuRoot lazyMount>
       <MenuTrigger asChild aria-label="row options">
-        <BButton iconButton unclicky variant={"ghost"} size={"xs"}>
+        <BButton
+          iconButton
+          unclicky
+          variant={"ghost"}
+          colorPalette={"gray"}
+          size={"xs"}
+        >
           <Icon fontSize={"lg !important"}>
             <IconDots />
           </Icon>

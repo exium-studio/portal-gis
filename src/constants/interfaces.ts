@@ -123,6 +123,26 @@ export interface Interface__ActiveWorkspace extends Interface__Workspace {
 export interface Interface__ActiveLayer extends Interface__Layer {
   visible: boolean;
 }
+export interface Interface__PmftanSummary {
+  L_Spasial: number;
+  L_Tekstual: number;
+  Luas: number;
+}
+export interface Interface__DashboardUtilitiesDataRow {
+  cols: {
+    Nm_Kebun: string;
+    no_HGU: string;
+    Pmftan_Lhn: Record<string, Interface__PmftanSummary>;
+    L_Spasial: number;
+    L_Tekstual: number;
+    Luas: number;
+    total_boundary: number;
+  };
+}
+export interface Interface__DashboardUtilitiesData {
+  workspace: Interface__Workspace;
+  rows: Interface__DashboardUtilitiesDataRow[];
+}
 
 // Gens
 export interface Interface__Gens extends Interface__CUD {

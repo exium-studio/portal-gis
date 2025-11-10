@@ -3,7 +3,16 @@
 // HGU_COUNT_PERCENTAGE calculate percentage each TIPEHAK
 // HGU_AREA_BY_KABUPATEN each KABUPATEN sum the LUASTERTUL wich has TIPEHAK value
 
+import BackButton from "@/components/ui-custom/BackButton";
 import CContainer from "@/components/ui-custom/CContainer";
+import {
+  DisclosureBody,
+  DisclosureContent,
+  DisclosureFooter,
+  DisclosureHeader,
+  DisclosureRoot,
+} from "@/components/ui-custom/Disclosure";
+import DisclosureHeaderContent from "@/components/ui-custom/DisclosureHeaderContent";
 import FeedbackNoData from "@/components/ui-custom/FeedbackNoData";
 import HelperText from "@/components/ui-custom/HelperText";
 import ItemContainer from "@/components/ui-custom/ItemContainer";
@@ -11,21 +20,27 @@ import ItemHeaderContainer from "@/components/ui-custom/ItemHeaderContainer";
 import P from "@/components/ui-custom/P";
 import TableComponent from "@/components/ui-custom/TableComponent";
 import { Checkbox } from "@/components/ui/checkbox";
+import { MenuItem } from "@/components/ui/menu";
 import GeoJSONFilter from "@/components/widget/basemapOverlay/GeoJSONFilter";
 import PageContainer from "@/components/widget/PageContainer";
 import SimplePopover from "@/components/widget/SimplePopover";
 import {
   Interface__ActiveWorkspace,
   Interface__ActiveWorkspacesByWorkspaceCategory,
+  Interface__DashboardUtilitiesData,
+  Interface__DashboardUtilitiesDataRow,
+  Interface__PmftanSummary,
 } from "@/constants/interfaces";
 import { FilterGeoJSON } from "@/constants/types";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import { useConfirmFilterGeoJSON } from "@/context/useConfirmFilterGeoJSON";
 import useLang from "@/context/useLang";
 import { useThemeConfig } from "@/context/useThemeConfig";
+import useBackOnClose from "@/hooks/useBackOnClose";
 import empty from "@/utils/empty";
+import formatNumber from "@/utils/formatNumber";
 import { Chart, useChart } from "@chakra-ui/charts";
-import { Circle, HStack, Link, Tabs } from "@chakra-ui/react";
+import { Circle, HStack, Link, Tabs, useDisclosure } from "@chakra-ui/react";
 import { IconFoldersOff } from "@tabler/icons-react";
 import chroma from "chroma-js";
 import { Fragment, useEffect, useMemo, useState } from "react";
@@ -627,6 +642,134 @@ const DashboardHGU = () => {
     </PageContainer>
   );
 };
+const DetailUtilizationTrigger = (props: any) => {
+  // Props
+  const { children, row, workspace, allPmftanKeys, ...restProps } = props;
+  const resolvedRow: Interface__DashboardUtilitiesDataRow = row;
+
+  // Contexts
+  const { l } = useLang();
+
+  // Hooks
+  const { open, onOpen, onClose } = useDisclosure();
+  useBackOnClose(
+    `detail-utilization-${workspace?.title}`,
+    open,
+    onOpen,
+    onClose
+  );
+
+  // States
+  const cols = useMemo(() => resolvedRow?.cols, [resolvedRow]);
+
+  return (
+    <>
+      <CContainer w={"fit"} onClick={onOpen} {...restProps}>
+        {children}
+      </CContainer>
+
+      <DisclosureRoot open={open} lazyLoad size={"xs"}>
+        <DisclosureContent>
+          <DisclosureHeader>
+            <DisclosureHeaderContent title={`Detail`} />
+          </DisclosureHeader>
+
+          <DisclosureBody px={1}>
+            <CContainer gap={4}>
+              <CContainer
+                gap={1}
+                pb={4}
+                borderBottom={"1px solid"}
+                borderColor={"border.muted"}
+                px={3}
+              >
+                <P fontWeight={"medium"} color={"fg.subtle"}>
+                  {l.garden_name}
+                </P>
+                <P>{cols.Nm_Kebun}</P>
+              </CContainer>
+
+              <CContainer
+                gap={1}
+                pb={4}
+                borderBottom={"1px solid"}
+                borderColor={"border.muted"}
+                px={3}
+              >
+                <P fontWeight={"medium"} color={"fg.subtle"}>
+                  {"No. HGU"}
+                </P>
+                <P>{cols?.no_HGU}</P>
+              </CContainer>
+
+              <CContainer
+                gap={1}
+                pb={4}
+                borderBottom={"1px solid"}
+                borderColor={"border.muted"}
+                px={3}
+              >
+                <P fontWeight={"medium"} color={"fg.subtle"}>
+                  {l.area_ha}
+                </P>
+                <P>{formatNumber(parseInt(`${cols?.Luas}`))}</P>
+              </CContainer>
+
+              <CContainer gap={2} px={3}>
+                <P fontWeight={"medium"} color={"fg.subtle"}>
+                  {l.area_utilization}
+                </P>
+
+                <CContainer gap={4}>
+                  {allPmftanKeys?.map((key: string, idx: number) => {
+                    const isLastIdx = idx === allPmftanKeys?.length - 1;
+
+                    return (
+                      <CContainer
+                        key={key}
+                        gap={1}
+                        pb={4}
+                        borderBottom={isLastIdx ? "" : "1px solid"}
+                        borderColor={"border.subtle"}
+                      >
+                        <P fontWeight={"medium"} color={"fg.muted"}>
+                          {key}
+                        </P>
+                        <HStack>
+                          <P w={"60px"} color={"fg.muted"}>{`${l.spatial}`}</P>
+
+                          <P>
+                            {`${formatNumber(
+                              parseInt(`${cols?.Pmftan_Lhn[key]?.L_Spasial}`)
+                            )}`}
+                          </P>
+                        </HStack>
+
+                        <HStack>
+                          <P w={"60px"} color={"fg.muted"}>{`${l.textual}`}</P>
+
+                          <P>
+                            {`${formatNumber(
+                              parseInt(`${cols?.Pmftan_Lhn[key]?.L_Tekstual}`)
+                            )}`}
+                          </P>
+                        </HStack>
+                      </CContainer>
+                    );
+                  })}
+                </CContainer>
+              </CContainer>
+            </CContainer>
+          </DisclosureBody>
+
+          <DisclosureFooter>
+            <BackButton />
+          </DisclosureFooter>
+        </DisclosureContent>
+      </DisclosureRoot>
+    </>
+  );
+};
 const DashboardUtilization = () => {
   // Contexts
   const { l } = useLang();
@@ -635,86 +778,150 @@ const DashboardUtilization = () => {
   );
 
   // States
-  const summary = getSummaryFromActiveWorkspaces(activeWorkspacesByCategory);
-  const ths = [
-    {
-      th: "Pmftan_Lhn",
-      sortable: true,
-    },
-    {
-      th: "L_Spasial",
-      sortable: true,
-    },
-    {
-      th: "L_Tekstual",
-      sortable: true,
-    },
-  ];
-  const tds = summary?.map((item: any, i: number) => {
-    return {
-      id: item.id,
-      index: i,
-      originalData: item,
-      columnsFormat: [
-        {
-          value: item.Pmftan_Lhn,
-          td: item.Pmftan_Lhn,
-        },
-        {
-          value: item.L_Spasial,
-          td: item.L_Spasial,
-          dataType: "number",
-        },
-        {
-          value: item.L_Tekstual,
-          td: item.L_Tekstual,
-          dataType: "number",
-        },
-      ],
-    };
-  });
+  const summary = getDashboardUtilitiesData(activeWorkspacesByCategory);
+
+  // console.log("summary", summary);
+  // console.log("active workspace by category", activeWorkspacesByCategory);
 
   // Utils
-  function getSummaryFromActiveWorkspaces(
+  function getProp(obj: Record<string, any>, keys: string[]) {
+    for (const k of keys) {
+      if (obj[k] != null) return obj[k];
+    }
+    return undefined;
+  }
+  function getDashboardUtilitiesData(
     categories: Interface__ActiveWorkspacesByWorkspaceCategory[]
-  ) {
-    const grouped = new Map<
-      string,
-      { Pmftan_Lhn: string; L_Spasial: number; L_Tekstual: number }
-    >();
+  ): Interface__DashboardUtilitiesData[] {
+    const result: Interface__DashboardUtilitiesData[] = [];
 
     for (const cat of categories) {
       for (const ws of cat.workspaces) {
-        for (const layer of ws.layers) {
-          // Only proceed if layer has geojson data
+        const workspaceData: Interface__DashboardUtilitiesData = {
+          workspace: ws,
+          rows: [],
+        };
+
+        // Filter layers by type
+        const fillLayers = ws.layers.filter((l) => l.layer_type === "fill");
+        const pointLayers = ws.layers.filter(
+          (l) => l.layer_type === "point" || l.layer_type === "symbol"
+        );
+
+        // Count points (patok) per no_HGU
+        const pointCountMap = new Map<string, number>();
+        for (const layer of pointLayers) {
           const features = layer.data?.geojson?.features;
           if (!Array.isArray(features)) continue;
 
-          for (const feature of features) {
-            const props = feature.properties || {};
-            const key = props["Pmftan_Lhn"];
-            if (!key) continue;
+          for (const f of features) {
+            const props = f.properties || {};
+            const no_HGU = getProp(props, [
+              "No_HGU",
+              "no_HGU",
+              "No_Hak",
+              "no_hgu",
+            ]);
+            if (!no_HGU) continue;
+            pointCountMap.set(no_HGU, (pointCountMap.get(no_HGU) || 0) + 1);
+          }
+        }
 
-            const lSpasial = Number(props["L_Spasial"]) || 0;
-            const lTekstual = Number(props["L_Tekstual"]) || 0;
+        // Group fill data by Nm_Kebun + no_HGU
+        const grouped = new Map<
+          string,
+          {
+            Nm_Kebun: string;
+            no_HGU: string;
+            Pmftan_Lhn: Record<string, Interface__PmftanSummary>;
+            L_Spasial: number;
+            L_Tekstual: number;
+            Luas: number;
+          }
+        >();
+
+        for (const layer of fillLayers) {
+          const features = layer.data?.geojson?.features;
+          if (!Array.isArray(features)) continue;
+
+          for (const f of features) {
+            const props = f.properties || {};
+            const Nm_Kebun = getProp(props, [
+              "Nm_Kebun",
+              "nm_kebun",
+              "Nama_Kebun",
+            ]);
+            const no_HGU = getProp(props, [
+              "No_HGU",
+              "no_HGU",
+              "No_Hak",
+              "no_hgu",
+            ]);
+            const pmftan = getProp(props, ["Pmftan_Lhn", "pmftan_lhn"]);
+            if (!Nm_Kebun || !no_HGU) continue;
+
+            const L_Spasial = Number(props["L_Spasial"]) || 0;
+            const L_Tekstual = Number(props["L_Tekstual"]) || 0;
+            const key = `${Nm_Kebun}__${no_HGU}`;
 
             if (!grouped.has(key)) {
               grouped.set(key, {
-                Pmftan_Lhn: key,
-                L_Spasial: lSpasial,
-                L_Tekstual: lTekstual,
+                Nm_Kebun,
+                no_HGU,
+                Pmftan_Lhn: {},
+                L_Spasial: 0,
+                L_Tekstual: 0,
+                Luas: 0,
               });
-            } else {
-              const item = grouped.get(key)!;
-              item.L_Spasial += lSpasial;
-              item.L_Tekstual += lTekstual;
             }
+
+            const kebun = grouped.get(key)!;
+            const pmKey = String(pmftan || "UNKNOWN");
+
+            // Ensure Pmftan_Lhn entry exists
+            if (!kebun.Pmftan_Lhn[pmKey]) {
+              kebun.Pmftan_Lhn[pmKey] = {
+                L_Spasial: 0,
+                L_Tekstual: 0,
+                Luas: 0,
+              };
+            }
+
+            // Update Pmftan_Lhn summary
+            const pmData = kebun.Pmftan_Lhn[pmKey];
+            pmData.L_Spasial += L_Spasial;
+            pmData.L_Tekstual += L_Tekstual;
+            pmData.Luas = pmData.L_Spasial + pmData.L_Tekstual;
+
+            // Update kebun-level totals
+            kebun.L_Spasial += L_Spasial;
+            kebun.L_Tekstual += L_Tekstual;
+            kebun.Luas = kebun.L_Spasial + kebun.L_Tekstual;
           }
         }
+
+        // Build final rows
+        for (const [, item] of grouped.entries()) {
+          const total_boundary = pointCountMap.get(item.no_HGU) || 0;
+
+          workspaceData.rows.push({
+            cols: {
+              Nm_Kebun: item.Nm_Kebun,
+              no_HGU: item.no_HGU,
+              Pmftan_Lhn: item.Pmftan_Lhn,
+              L_Spasial: item.L_Spasial,
+              L_Tekstual: item.L_Tekstual,
+              Luas: item.Luas,
+              total_boundary,
+            },
+          });
+        }
+
+        result.push(workspaceData);
       }
     }
 
-    return Array.from(grouped.values());
+    return result;
   }
 
   return (
@@ -728,7 +935,109 @@ const DashboardUtilization = () => {
       )}
 
       {!empty(activeWorkspacesByCategory) && (
-        <TableComponent flex={1} originalData={summary} ths={ths} tds={tds} />
+        <>
+          {summary?.map((item: Interface__DashboardUtilitiesData) => {
+            const allPmftanKeys = Array.from(
+              new Set(
+                item?.rows?.flatMap((r) =>
+                  Object.keys(r?.cols?.Pmftan_Lhn || {})
+                )
+              )
+            );
+            const ths = [
+              {
+                th: l.garden_name,
+                sortable: true,
+              },
+              {
+                th: "No. HGU",
+                sortable: true,
+              },
+              {
+                th: l.area_ha,
+                sortable: true,
+              },
+              // Add dynamic headers for each Pmftan_Lhn key: L_Spasial + L_Tekstual
+              ...allPmftanKeys.flatMap((key) => [
+                { th: `${key} (${l.spatial})`, sortable: true },
+                { th: `${key} (${l.textual})`, sortable: true },
+              ]),
+            ];
+            const tds = item?.rows?.map((r: any, i: number) => {
+              return {
+                id: r.id,
+                index: i,
+                originalData: r,
+                columnsFormat: [
+                  {
+                    value: r?.cols.Nm_Kebun,
+                    td: r?.cols.Nm_Kebun,
+                  },
+                  {
+                    value: r?.cols.no_HGU,
+                    td: formatNumber(r?.cols.no_HGU),
+                    dataType: "number",
+                  },
+                  {
+                    value: r?.cols.Luas,
+                    td: formatNumber(Number(r?.cols.Luas)),
+                    dataType: "number",
+                  },
+                  // Fill dynamic cells for each Pmftan_Lhn
+                  ...allPmftanKeys.flatMap((key) => {
+                    const val = r?.cols?.Pmftan_Lhn?.[key] || {};
+                    return [
+                      {
+                        value: val?.L_Spasial ?? 0,
+                        td: formatNumber(Number(val?.L_Spasial ?? 0)),
+                        dataType: "number",
+                      },
+                      {
+                        value: val?.L_Tekstual ?? 0,
+                        td: formatNumber(Number(val?.L_Tekstual ?? 0)),
+                        dataType: "number",
+                      },
+                    ];
+                  }),
+                ],
+              };
+            });
+            const rowOptions = [
+              {
+                label: "Detail",
+                independent: true,
+                component: (rowData: any) => {
+                  return (
+                    <DetailUtilizationTrigger
+                      row={rowData.originalData}
+                      workspace={item?.workspace}
+                      allPmftanKeys={allPmftanKeys}
+                      w={"full"}
+                    >
+                      <MenuItem value="detail">Detail</MenuItem>
+                    </DetailUtilizationTrigger>
+                  );
+                },
+              },
+            ];
+
+            return (
+              <CContainer gap={2}>
+                <P fontWeight={"semibold"} ml={"2px"}>
+                  {item?.workspace?.title}
+                </P>
+
+                <TableComponent
+                  flex={1}
+                  originalData={summary}
+                  ths={ths}
+                  tds={tds}
+                  rowOptions={rowOptions}
+                />
+              </CContainer>
+            );
+          })}
+        </>
       )}
     </PageContainer>
   );

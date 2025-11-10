@@ -283,7 +283,7 @@ button {
 }
 .scrollX::-webkit-scrollbar-thumb,
 .scrollY::-webkit-scrollbar-thumb {
-  background-color: transparent;
+  background-color: var(--d3);
   transition: background-color 0.3s;
   border-radius: 3px;
 }
