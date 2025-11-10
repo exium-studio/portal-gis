@@ -214,6 +214,10 @@ const translations = {
     "title": "Kode OTP tidak valid",
     "description": "Silakan periksa kembali kode OTP Anda dan coba lagi."
   },
+  "error_layer_type_must_symbol_toast": {
+    "title": "Data tidak valid",
+    "description": "Jika layer sebagai patok, tipe layer harus point"
+  },
   "error_network_toast": {
     "title": "Gangguan koneksi ke server",
     "description": "Tidak dapat terhubung ke server. Coba lagi nanti."

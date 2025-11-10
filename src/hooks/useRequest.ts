@@ -178,6 +178,11 @@ const useRequest = (props: Props) => {
                   title: l.error_400_toast.title,
                   description: l.error_400_toast.description,
                 };
+              case "LAYER_TYPE_MUST_BE_SYMBOL":
+                return {
+                  title: l.error_layer_type_must_symbol_toast.title,
+                  description: l.error_layer_type_must_symbol_toast.description,
+                };
               case "SRS_REQUIRED":
                 return {
                   title: l.error_srs_required_toast.title,

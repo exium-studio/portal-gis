@@ -214,6 +214,10 @@ const translations = {
     "title": "Invalid OTP code",
     "description": "Please check your OTP code and try again."
   },
+  "error_layer_type_must_symbol_toast": {
+    "title": "Invalid data",
+    "description": "If the layer is a hotspot, the layer type must be point"
+  },
   "error_network_toast": {
     "title": "Server connection problem",
     "description": "Unable to connect to the server. Try again later."

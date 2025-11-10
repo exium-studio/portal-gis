@@ -1641,6 +1641,13 @@ export const error_srs_required_toast = {
     en: "The .zip file does not contain .prj. Please include the .prj file to continue.",
   },
 };
+export const error_layer_type_must_symbol_toast = {
+  title: { id: "Data tidak valid", en: "Invalid data" },
+  description: {
+    id: "Jika layer sebagai patok, tipe layer harus point",
+    en: "If the layer is a hotspot, the layer type must be point",
+  },
+};
 export const payment_unsettled_toast = {
   title: { id: "Pembayaran belum selesai", en: "Payment not complete" },
   description: {
