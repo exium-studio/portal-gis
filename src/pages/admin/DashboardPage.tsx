@@ -937,7 +937,7 @@ const DashboardUtilization = () => {
       )}
 
       {!empty(activeWorkspacesByCategory) && (
-        <>
+        <CContainer gap={4}>
           {summary?.map((item: Interface__DashboardUtilitiesData) => {
             const allPmftanKeys = Array.from(
               new Set(
@@ -1039,7 +1039,7 @@ const DashboardUtilization = () => {
               </CContainer>
             );
           })}
-        </>
+        </CContainer>
       )}
     </PageContainer>
   );
