@@ -805,7 +805,9 @@ const DashboardUtilization = () => {
         // Filter layers by type
         const fillLayers = ws.layers.filter((l) => l.layer_type === "fill");
         const pointLayers = ws.layers.filter(
-          (l) => l.layer_type === "point" || l.layer_type === "symbol"
+          (l) =>
+            (l.layer_type === "point" || l.layer_type === "symbol") &&
+            l.is_boundary
         );
 
         // Count points (patok) per no_HGU

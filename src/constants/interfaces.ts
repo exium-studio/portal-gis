@@ -103,6 +103,7 @@ export interface Interface__Layer extends Interface__CUD {
   data?: Interface__LayerData;
   bbox: number[];
   bbox_center: number[];
+  is_boundary: boolean;
 }
 export interface Interface__LayerData extends Interface__CUD {
   id: number;
