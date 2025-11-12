@@ -66,9 +66,9 @@ export interface PolygonWithDocuments {
   documents: Interface__StorageFile[];
   sk_document: Interface__StorageFile[];
   other_document: Interface__StorageFile[];
-  image: Interface__StorageFile[];
+  images: Interface__StorageFile[];
 }
-export interface Type_SelectedPolygon {
+export interface Interface__SelectedPolygon {
   activeWorkspace: Interface__ActiveWorkspace;
   activeLayer: Interface__ActiveLayer;
   polygon: PolygonWithDocuments;

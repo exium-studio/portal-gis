@@ -1,8 +1,8 @@
-import { Type_SelectedPolygon } from "@/constants/interfaces";
+import { Interface__SelectedPolygon } from "@/constants/interfaces";
 import { create } from "zustand";
 
 interface ActivePolygonState {
-  selectedPolygon: Type_SelectedPolygon | null;
+  selectedPolygon: Interface__SelectedPolygon | null;
   setSelectedPolygon: (polygon: any) => void;
   clearSelectedPolygon: () => void;
   // Optional: Tambahan metadata

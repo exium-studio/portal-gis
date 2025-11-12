@@ -73,7 +73,7 @@ const ExistingFileItem = (props: Props) => {
             onClick={onDelete}
           >
             <Icon boxSize={5}>
-              <IconTrash />
+              <IconTrash stroke={1.5} />
             </Icon>
           </BButton>
         )}

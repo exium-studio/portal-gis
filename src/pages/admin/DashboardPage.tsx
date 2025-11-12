@@ -732,11 +732,17 @@ const DetailUtilizationTrigger = (props: any) => {
                         borderBottom={isLastIdx ? "" : "1px solid"}
                         borderColor={"border.subtle"}
                       >
-                        <P fontWeight={"medium"} color={"fg.muted"}>
-                          {key}
-                        </P>
-                        <HStack>
-                          <P w={"60px"} color={"fg.muted"}>{`${l.spatial}`}</P>
+                        <HStack align={"start"}>
+                          <P
+                            w={"100px"}
+                            color={"fg.muted"}
+                          >{`${l.utilization}`}</P>
+
+                          <P>{key}</P>
+                        </HStack>
+
+                        <HStack align={"start"}>
+                          <P w={"100px"} color={"fg.muted"}>{`${l.spatial}`}</P>
 
                           <P>
                             {`${formatNumber(
@@ -745,8 +751,8 @@ const DetailUtilizationTrigger = (props: any) => {
                           </P>
                         </HStack>
 
-                        <HStack>
-                          <P w={"60px"} color={"fg.muted"}>{`${l.textual}`}</P>
+                        <HStack align={"start"}>
+                          <P w={"100px"} color={"fg.muted"}>{`${l.textual}`}</P>
 
                           <P>
                             {`${formatNumber(

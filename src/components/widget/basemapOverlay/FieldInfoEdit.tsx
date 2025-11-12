@@ -168,7 +168,7 @@ const ImageList = (props: any) => {
           <IconPhoto stroke={1.5} />
         </Icon>
 
-        {l.view}
+        {`${l.all} ${l.image.toLowerCase()}/${l.photo.toLowerCase()}`}
       </BButton>
 
       <DisclosureRoot open={open} lazyLoad>
@@ -178,7 +178,7 @@ const ImageList = (props: any) => {
           </DisclosureHeader>
 
           <DisclosureBody>
-            <CContainer>
+            <CContainer gap={2}>
               {empty(images) && <FeedbackNoData />}
 
               {images?.map((img: Interface__StorageFile) => {
@@ -274,6 +274,8 @@ export const FieldInfoEdit = (props: any) => {
         setDeletedSkDocs([]);
         setExistingOtherDocs([]);
         setDeletedOtherDocs([]);
+        setExistingImage([]);
+        setDeletedImage([]);
       }
 
       resetDocsInputValue();
@@ -327,7 +329,7 @@ export const FieldInfoEdit = (props: any) => {
         JSON.stringify(deletedOtherDocs?.map((d) => d?.id))
       );
       payload.append(
-        "delete_images_ids",
+        "delete_image_ids",
         JSON.stringify(deletedImage?.map((d) => d?.id))
       );
       payload.append("properties", JSON.stringify(newPropertiesPayload));
@@ -348,6 +350,7 @@ export const FieldInfoEdit = (props: any) => {
               r.data.data.data.geojson.features?.[0]?.sk_document;
             const newOtherDocs =
               r.data.data.data.geojson.features?.[0]?.other_document;
+            const newImages = r.data.data.data.geojson.features?.[0]?.images;
             const newGeojson = {
               ...geojson,
               features: geojson?.features.map((feature: any, index: number) => {
@@ -360,6 +363,7 @@ export const FieldInfoEdit = (props: any) => {
                     },
                     sk_document: newSkDocs,
                     other_document: newOtherDocs,
+                    images: newImages,
                   };
                 }
                 return feature;
@@ -384,6 +388,7 @@ export const FieldInfoEdit = (props: any) => {
                 ...selectedPolygon?.polygon,
                 sk_document: newSkDocs,
                 other_document: newOtherDocs,
+                images: newImages,
               },
             });
           },
@@ -416,11 +421,12 @@ export const FieldInfoEdit = (props: any) => {
     setDeletedOtherDocs([]);
 
     formik.setFieldValue("image", undefined);
-    setExistingOtherDocs(selectedPolygon?.polygon?.image || []);
-    setDeletedOtherDocs([]);
+    setExistingImage(selectedPolygon?.polygon?.images || []);
+    setDeletedImage([]);
   }, [
     selectedPolygon?.polygon?.sk_document,
     selectedPolygon?.polygon?.other_document,
+    selectedPolygon?.polygon?.images,
   ]);
 
   return (
@@ -694,7 +700,7 @@ export const FieldInfoEdit = (props: any) => {
                 invalid={!!formik.errors.image}
                 errorText={formik.errors.image as string}
               >
-                <ImageList images={selectedPolygon?.polygon?.image} />
+                <ImageList images={selectedPolygon?.polygon?.images} />
 
                 {!empty(existingImage) && (
                   <CContainer gap={2}>
