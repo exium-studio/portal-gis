@@ -123,10 +123,10 @@ const RootPage = () => {
           justify={"center"}
           color={`${themeConfig.colorPalette}.contrast`}
         >
-          <P fontSize={"xl"} fontWeight={"bold"}>
+          <P fontSize={"xl"} fontWeight={"bold"} textAlign={"center"}>
             {l.root_title}
           </P>
-          <P>{l.root_subtitle}</P>
+          <P textAlign={"center"}>{l.root_subtitle}</P>
 
           <Img src={`/logo.png`} w={"full"} maxW={"300px"} />
         </VStack>
