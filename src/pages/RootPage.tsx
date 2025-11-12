@@ -9,12 +9,13 @@ import { ColorModeButton } from "@/components/ui/color-mode";
 import SigninForm from "@/components/widget/SigninForm";
 import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import useAuthMiddleware from "@/context/useAuthMiddleware";
+import useLang from "@/context/useLang";
 import useSelectedPolygon from "@/context/useSelectedPolygon";
 import { useThemeConfig } from "@/context/useThemeConfig";
 import useIsSmScreenWidth from "@/hooks/useIsSmScreenWidth";
 import useRequest from "@/hooks/useRequest";
 import getUserFromLocalStorage from "@/utils/getUserFromLocalStorage";
-import { Center, HStack, SimpleGrid, VStack } from "@chakra-ui/react";
+import { HStack, SimpleGrid, VStack } from "@chakra-ui/react";
 import { useEffect } from "react";
 
 const RootPage = () => {
@@ -27,6 +28,7 @@ const RootPage = () => {
   const iss = useIsSmScreenWidth();
 
   // Contexts
+  const { l } = useLang();
   const authToken = useAuthMiddleware((s) => s.authToken);
   const setPermissions = useAuthMiddleware((s) => s.setPermissions);
   const setAuthToken = useAuthMiddleware((s) => s.setAuthToken);
@@ -115,9 +117,19 @@ const RootPage = () => {
       </CContainer>
 
       {!iss && (
-        <Center p={12} bg={themeConfig.primaryColor}>
+        <VStack
+          p={12}
+          bg={themeConfig.primaryColor}
+          justify={"center"}
+          color={`${themeConfig.colorPalette}.contrast`}
+        >
+          <P fontSize={"xl"} fontWeight={"bold"}>
+            {l.root_title}
+          </P>
+          <P>{l.root_subtitle}</P>
+
           <Img src={`/logo.png`} w={"full"} maxW={"300px"} />
-        </Center>
+        </VStack>
       )}
     </SimpleGrid>
   );

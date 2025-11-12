@@ -79,6 +79,14 @@ export const master_data_navs = {
 };
 
 // Semantic
+export const root_title = {
+  id: "PT Perkebunan Indonesia Regional II (PTPN II)",
+  en: "PT Perkebunan Indonesia Regional II (PTPN II)",
+};
+export const root_subtitle = {
+  id: "Akses Informasi Spasial dalam Satu Platform",
+  en: "Spatial Information Access in One Platform",
+};
 export const dont_show_again = {
   id: "Jangan tampilkan lagi",
   en: "Don't show again",

@@ -264,7 +264,11 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
               0.3125,
             ],
             "icon-anchor": "bottom",
-            "text-field": ["get", "Nama_Point"],
+            "text-field": [
+              "coalesce",
+              ["get", "Nama_Point"],
+              ["get", "Point_Name"],
+            ],
             "text-size": 14,
             "text-anchor": "top",
             "text-offset": [0, 0.4],
