@@ -269,7 +269,7 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
               ["get", "Nama_Point"],
               ["get", "Point_Name"],
             ],
-            "text-size": 14,
+            "text-size": 10,
             "text-anchor": "top",
             "text-offset": [0, 0.4],
             "icon-allow-overlap": true,
