@@ -215,6 +215,11 @@ const ActiveLayerListItem = (props: Props) => {
   const { themeConfig } = useThemeConfig();
 
   // States
+  const LAYER_TYPE_REGISTRY = {
+    symbol: "Point",
+    fill: "Fill",
+    line: "Line",
+  };
   const LayerIcon =
     LAYER_TYPES[layer.layer_type as keyof typeof LAYER_TYPES].icon;
 
@@ -246,7 +251,11 @@ const ActiveLayerListItem = (props: Props) => {
                   </Icon>
 
                   <P lineClamp={1} fontSize={"xs"}>
-                    {capsFirstLetter(layer?.layer_type)}
+                    {
+                      LAYER_TYPE_REGISTRY?.[
+                        layer?.layer_type as keyof typeof LAYER_TYPE_REGISTRY
+                      ]
+                    }
                   </P>
                 </Badge>
 
