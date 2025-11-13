@@ -52,6 +52,7 @@ const AuthMiddleware = ({
   useEffect(() => {
     function handleOnSuccess(r: any) {
       const permissions = r?.data?.data?.permissions;
+      localStorage.setItem("__user_data", JSON.stringify(r?.data?.data));
 
       if (Array.isArray(permissions)) {
         setPermissions(permissions);
