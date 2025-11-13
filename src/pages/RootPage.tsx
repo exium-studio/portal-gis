@@ -122,6 +122,7 @@ const RootPage = () => {
           bg={themeConfig.primaryColor}
           justify={"center"}
           color={`${themeConfig.colorPalette}.contrast`}
+          gap={0}
         >
           <P fontSize={"xl"} fontWeight={"bold"} textAlign={"center"}>
             GeoPortal
@@ -132,7 +133,9 @@ const RootPage = () => {
           <P fontSize={"xl"} fontWeight={"bold"} textAlign={"center"}>
             (PTPN II)
           </P>
-          <P textAlign={"center"}>{l.root_subtitle}</P>
+          <P textAlign={"center"} my={4}>
+            {l.root_subtitle}
+          </P>
           <Img src={`/logo.png`} w={"full"} maxW={"300px"} />
         </VStack>
       )}
