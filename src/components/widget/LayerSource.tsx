@@ -200,7 +200,7 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
             "line-color": lineColor,
             "line-width": 1.3,
             "line-opacity": 0.8,
-            "line-dasharray": [3, 4],
+            // "line-dasharray": [3, 4],
           },
         });
       } else {
