@@ -207,14 +207,26 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
         map.setPaintProperty(lineLayerId, "line-opacity", 1);
       }
 
-      // Invisible fill for click area
-      if (!map.getLayer(fillLayerId)) {
-        map.addLayer({
-          id: fillLayerId,
-          type: "fill",
-          source: sourceId,
-          paint: { "fill-color": "#000", "fill-opacity": 0 },
-        });
+      // Get geometry type from source
+      const source = map.getSource(sourceId) as mapboxgl.GeoJSONSource;
+      const data = source?._data as GeoJSON.FeatureCollection | GeoJSON.Feature;
+      const geometryType =
+        data && "type" in data
+          ? data.type === "FeatureCollection"
+            ? data.features?.[0]?.geometry?.type
+            : data.geometry?.type
+          : undefined;
+
+      // Render invisible fill only if geometry is MultiPolygon
+      if (geometryType === "MultiPolygon") {
+        if (!map.getLayer(fillLayerId)) {
+          map.addLayer({
+            id: fillLayerId,
+            type: "fill",
+            source: sourceId,
+            paint: { "fill-color": "#000", "fill-opacity": 0 },
+          });
+        }
       }
     }
 
