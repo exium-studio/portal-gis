@@ -276,11 +276,11 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
               0.3125,
             ],
             "icon-anchor": "bottom",
-            // "text-field": [
-            //   "coalesce",
-            //   ["get", "Nama_Point"],
-            //   ["get", "Point_Name"],
-            // ],
+            "text-field": [
+              "coalesce",
+              ["get", "Nama_Point"],
+              ["get", "Point_Name"],
+            ],
             "text-size": 10,
             "text-anchor": "top",
             "text-offset": [0, 0.4],
@@ -292,6 +292,7 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
             "text-color": defaultSymbolTextColor,
             "text-halo-color": defaultSymbolHaloTextColor,
             "text-halo-width": 1,
+            "text-opacity": ["step", ["zoom"], 0, 15, 1],
           },
         });
       } else {
