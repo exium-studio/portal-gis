@@ -967,7 +967,7 @@ const DashboardUtilization = () => {
               },
               // Add dynamic headers for each Pmftan_Lhn key: L_Spasial + L_Tekstual
               ...allPmftanKeys.flatMap((key) => [
-                { th: `${key} (${l.spatial})`, sortable: true },
+                // { th: `${key} (${l.spatial})`, sortable: true },
                 { th: `${key} (${l.textual})`, sortable: true },
               ]),
             ];
@@ -995,11 +995,11 @@ const DashboardUtilization = () => {
                   ...allPmftanKeys.flatMap((key) => {
                     const val = r?.cols?.Pmftan_Lhn?.[key] || {};
                     return [
-                      {
-                        value: val?.L_Spasial ?? 0,
-                        td: formatNumber(parseInt(val?.L_Spasial ?? 0)),
-                        dataType: "number",
-                      },
+                      // {
+                      //   value: val?.L_Spasial ?? 0,
+                      //   td: formatNumber(parseInt(val?.L_Spasial ?? 0)),
+                      //   dataType: "number",
+                      // },
                       {
                         value: val?.L_Tekstual ?? 0,
                         td: formatNumber(parseInt(val?.L_Tekstual ?? 0)),
