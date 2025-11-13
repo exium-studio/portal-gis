@@ -988,7 +988,7 @@ const DashboardUtilization = () => {
                   },
                   {
                     value: r?.cols.Luas,
-                    td: formatNumber(Number(r?.cols.Luas)),
+                    td: formatNumber(parseInt(r?.cols.Luas)),
                     dataType: "number",
                   },
                   // Fill dynamic cells for each Pmftan_Lhn
@@ -997,12 +997,12 @@ const DashboardUtilization = () => {
                     return [
                       {
                         value: val?.L_Spasial ?? 0,
-                        td: formatNumber(Number(val?.L_Spasial ?? 0)),
+                        td: formatNumber(parseInt(val?.L_Spasial ?? 0)),
                         dataType: "number",
                       },
                       {
                         value: val?.L_Tekstual ?? 0,
-                        td: formatNumber(Number(val?.L_Tekstual ?? 0)),
+                        td: formatNumber(parseInt(val?.L_Tekstual ?? 0)),
                         dataType: "number",
                       },
                     ];
