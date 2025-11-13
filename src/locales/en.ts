@@ -492,7 +492,7 @@ const translations = {
   "rights_type": "Rights type",
   "road": "Road",
   "root_subtitle": "Spatial Information Access in One Platform",
-  "root_title": "PT Perkebunan Indonesia Regional II (PTPN II)",
+  "root_title": "PT Perkebunan Indonesia Regional II",
   "satellite": "Satellite",
   "save": "Save",
   "save_continue": "Save & Continue",

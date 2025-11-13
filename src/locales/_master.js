@@ -80,8 +80,8 @@ export const master_data_navs = {
 
 // Semantic
 export const root_title = {
-  id: "PT Perkebunan Indonesia Regional II (PTPN II)",
-  en: "PT Perkebunan Indonesia Regional II (PTPN II)",
+  id: "PT Perkebunan Indonesia Regional II",
+  en: "PT Perkebunan Indonesia Regional II",
 };
 export const root_subtitle = {
   id: "Akses Informasi Spasial dalam Satu Platform",

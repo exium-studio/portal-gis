@@ -124,10 +124,15 @@ const RootPage = () => {
           color={`${themeConfig.colorPalette}.contrast`}
         >
           <P fontSize={"xl"} fontWeight={"bold"} textAlign={"center"}>
+            GeoPortal
+          </P>
+          <P fontSize={"xl"} fontWeight={"bold"} textAlign={"center"}>
             {l.root_title}
           </P>
+          <P fontSize={"xl"} fontWeight={"bold"} textAlign={"center"}>
+            (PTPN II)
+          </P>
           <P textAlign={"center"}>{l.root_subtitle}</P>
-
           <Img src={`/logo.png`} w={"full"} maxW={"300px"} />
         </VStack>
       )}
