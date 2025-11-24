@@ -49,6 +49,7 @@ const EXCLUDED_KEYS = [
   "TINDAKLANJ",
   "HASIL",
   "color",
+  "image_ids",
 ];
 
 const MINIMAL_KEYS = [
