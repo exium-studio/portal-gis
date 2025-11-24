@@ -266,7 +266,7 @@ const SelectInput = ({
                       disabled={options === undefined}
                     >
                       <Icon>
-                        <IconRefresh />
+                        <IconRefresh stroke={1.5} />
                       </Icon>
                     </BButton>
                   )}
