@@ -28,7 +28,6 @@ import { Tooltip } from "@/components/ui/tooltip";
 import PageContainer from "@/components/widget/PageContainer";
 import SelectWorkspaceCategory from "@/components/widget/SelectWorkspaceCategory";
 import WorkspaceItem from "@/components/widget/WorkspaceItem";
-import useActiveWorkspaces from "@/context/useActiveWorkspaces";
 import { useAlerts } from "@/context/useAlerts";
 import useLang from "@/context/useLang";
 import useLayout from "@/context/useLayout";
@@ -43,7 +42,6 @@ import empty from "@/utils/empty";
 import { isRoleViewer } from "@/utils/role";
 import { fileValidation } from "@/utils/validationSchemas";
 import {
-  AlertIndicator,
   AlertRoot,
   AlertTitle,
   FieldsetRoot,
@@ -53,6 +51,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import {
+  IconAlertCircle,
   IconCheck,
   IconChevronDown,
   IconChevronLeft,
@@ -398,16 +397,13 @@ const ToggleDisplay = (props: any) => {
   );
 };
 
-const WorkspaceAlert = () => {
+const WorkspaceAlert = (props: any) => {
+  // Props
+  const { alertKey } = props;
+
   // Contexts
   const { l } = useLang();
   const { alerts, initAlert, hideAlert } = useAlerts();
-  const activeWorkspacesByCategory = useActiveWorkspaces(
-    (s) => s.activeWorkspaces
-  );
-
-  // States
-  const alertKey = "hide_show_disable_active_workspace_actions_alert";
 
   // handle init
   useEffect(() => {
@@ -417,33 +413,36 @@ const WorkspaceAlert = () => {
   if (!alerts[alertKey]) return null;
 
   return (
-    !empty(activeWorkspacesByCategory) && (
-      <AlertRoot status="warning" p={2}>
-        <CContainer>
-          <HStack align={"start"} gap={4} p={2}>
-            <AlertIndicator />
-            <AlertTitle>
-              {l.disable_action_when_there_is_workspace_active}
-            </AlertTitle>
-          </HStack>
+    <AlertRoot status="warning" p={2}>
+      <CContainer>
+        <HStack align={"start"} gap={4} p={2}>
+          <Icon boxSize={5}>
+            <IconAlertCircle stroke={1.5} />
+          </Icon>
+          <AlertTitle>
+            {l.disable_action_when_there_is_workspace_active}
+          </AlertTitle>
+        </HStack>
 
-          <BButton
-            size="xs"
-            variant="ghost"
-            colorPalette="orange"
-            w="fit"
-            ml="auto"
-            onClick={() => hideAlert(alertKey)}
-          >
-            {l.dont_show_again}
-          </BButton>
-        </CContainer>
-      </AlertRoot>
-    )
+        <BButton
+          size="xs"
+          variant="ghost"
+          colorPalette="orange"
+          w="fit"
+          ml="auto"
+          onClick={() => hideAlert(alertKey)}
+        >
+          {l.hide}
+        </BButton>
+      </CContainer>
+    </AlertRoot>
   );
 };
 
 const WorkspacePage = () => {
+  // Contexts
+  const { alerts, showAlert } = useAlerts();
+
   // States
   const [filterConfig, setFilterConfig] = useState<any>({
     search: "",
@@ -464,6 +463,7 @@ const WorkspacePage = () => {
     empty: <FeedbackNoData />,
     loaded: <Workspaces dataState={dataState} />,
   };
+  const alertKey = "hide_show_disable_active_workspace_actions_alert";
 
   return (
     <PageContainer flex={1}>
@@ -479,12 +479,24 @@ const WorkspacePage = () => {
             inputValue={filterConfig.search}
           />
 
+          {!alerts[alertKey] && (
+            <BButton
+              iconButton
+              variant="outline"
+              onClick={() => showAlert(alertKey)}
+            >
+              <Icon boxSize={5}>
+                <IconAlertCircle stroke={1.5} />
+              </Icon>
+            </BButton>
+          )}
+
           <ToggleDisplay />
 
           <Create />
         </HStack>
 
-        <WorkspaceAlert />
+        <WorkspaceAlert alertKey={alertKey} />
 
         {initialLoading && render.loading}
         {!initialLoading && (

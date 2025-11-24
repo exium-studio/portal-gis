@@ -79,6 +79,10 @@ export const master_data_navs = {
 };
 
 // Semantic
+export const hide = {
+  id: "Sembunyikan",
+  en: "Hide",
+};
 export const root_title = {
   id: "PT Perkebunan Indonesia Regional II",
   en: "PT Perkebunan Indonesia Regional II",
@@ -122,6 +126,10 @@ export const other_docs = {
 export const parent_layer = {
   id: "Layer induk",
   en: "Parent layer",
+};
+export const show_alert = {
+  id: "Tampilkan peringatan",
+  en: "Show alert",
 };
 export const show_all = {
   id: "Lihat semua",

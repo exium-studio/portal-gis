@@ -258,6 +258,7 @@ const translations = {
   "hgu_area": "HGU Area",
   "hgu_area_by_kabupaten": "HGU Area by kabupaten",
   "hgu_count": "HGU Count",
+  "hide": "Hide",
   "image": "Image",
   "image_delete": "Deleted image",
   "in_use": "in use",
@@ -532,6 +533,7 @@ const translations = {
     "description": "Please select the settings menu."
   },
   "show": "Show",
+  "show_alert": "Show alert",
   "show_all": "Show all",
   "show_less": "Show less",
   "shrink": "Down ${value} from last year",

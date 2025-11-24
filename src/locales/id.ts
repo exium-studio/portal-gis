@@ -258,6 +258,7 @@ const translations = {
   "hgu_area": "Luas HGU",
   "hgu_area_by_kabupaten": "Luas HGU berdasarkan kabupaten",
   "hgu_count": "Jumlah HGU",
+  "hide": "Sembunyikan",
   "image": "Gambar",
   "image_delete": "Gambar dihapus",
   "in_use": "sedang digunakan",
@@ -532,6 +533,7 @@ const translations = {
     "description": "Silahkan pilih menu pengaturan."
   },
   "show": "Tampilkan",
+  "show_alert": "Tampilkan peringatan",
   "show_all": "Lihat semua",
   "show_less": "Lihat sedikit",
   "shrink": "Turun ${value} dari tahun lalu",
