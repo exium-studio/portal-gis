@@ -169,10 +169,14 @@ const PropertyLegendColorPicker = (props: any) => {
   // Hooks
   const debouncedUpdate = useDebouncedCallback((colorObject: Color) => {
     const hexColor = colorObject.toString("hex");
+    // @ts-expect-error => alpha is exist
+    const opacity = colorObject.alpha;
 
-    const newPropertyValues = formik.values.property_values.map((item: any) =>
-      item.value === pv.value ? { ...item, color: hexColor } : item
-    );
+    const newPropertyValues = formik.values.property_values.map((item: any) => {
+      return item.value === pv.value
+        ? { ...item, color: hexColor, opacity: opacity || 0.8 }
+        : item;
+    });
 
     formik.setFieldValue("property_values", newPropertyValues);
   }, 300);
@@ -261,6 +265,7 @@ const SetLegendProperty = (props: any) => {
         property_values: values.property_values.map((item: any) => ({
           property_value: item.value,
           color: item.color,
+          opacity: item.opacity,
         })),
       };
       const config = {
@@ -615,7 +620,7 @@ const EditLayer = (props: any) => {
                   invalid={!!formik.errors.with_explanation}
                   errorText={formik.errors.with_explanation as string}
                   disabled
-                  // helperText={l.with_explanation_helper}
+                  helperText={l.with_explanation_helper}
                 >
                   <Checkbox checked={formik.values.with_explanation}>
                     {l.with_explanation}
@@ -876,6 +881,7 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                         LAYER_TYPES[
                           layer.layer_type as keyof typeof LAYER_TYPES
                         ].label;
+                      const isPoint = layer.layer_type === "symbol";
 
                       return (
                         <HStack key={layer.id} py={1}>
@@ -926,15 +932,19 @@ const WorkspaceLayersDisclosureTrigger = (props: any) => {
                           </SimplePopover>
 
                           <HStack gap={1} ml={"auto"}>
-                            <SetLegend
-                              layer={layer}
-                              size={"sm"}
-                              disabled={
-                                isRoleViewer() ||
-                                !isWorkspaceCreatedBy(workspace?.created_by) ||
-                                workspaceActive
-                              }
-                            />
+                            {!isPoint && (
+                              <SetLegend
+                                layer={layer}
+                                size={"sm"}
+                                disabled={
+                                  isRoleViewer() ||
+                                  !isWorkspaceCreatedBy(
+                                    workspace?.created_by
+                                  ) ||
+                                  workspaceActive
+                                }
+                              />
+                            )}
 
                             <EditLayer
                               workspace={workspace}

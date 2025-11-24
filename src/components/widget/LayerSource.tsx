@@ -85,8 +85,8 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
     ? "#151515"
     : "#fff";
 
+  const layerOpacity = ["coalesce", ["get", "opacity"], 0.8];
   const fillColor = ["coalesce", ["get", "color"], defaultFillColor];
-  const fillOpacity = 0.6;
   const lineColor = ["coalesce", ["get", "color"], defaultLineColor];
   const isFillLayer = activeLayer.layer_type === "fill";
   const isLineLayer = activeLayer.layer_type === "line";
@@ -181,11 +181,11 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
           id: fillLayerId,
           type: "fill",
           source: sourceId,
-          paint: { "fill-color": fillColor, "fill-opacity": fillOpacity },
+          paint: { "fill-color": fillColor, "fill-opacity": layerOpacity },
         });
       } else {
         map.setPaintProperty(fillLayerId, "fill-color", fillColor);
-        map.setPaintProperty(fillLayerId, "fill-opacity", fillOpacity);
+        map.setPaintProperty(fillLayerId, "fill-opacity", layerOpacity);
       }
     }
 
@@ -199,12 +199,12 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
           paint: {
             "line-color": lineColor,
             "line-width": 1.3,
-            "line-opacity": 0.8,
+            "line-opacity": layerOpacity,
             // "line-dasharray": [3, 4],
           },
         });
       } else {
-        map.setPaintProperty(lineLayerId, "line-opacity", 1);
+        map.setPaintProperty(lineLayerId, "line-opacity", layerOpacity);
       }
 
       // Get geometry type from source
@@ -320,7 +320,7 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
     legend,
     themeConfig.primaryColorHex,
     fillColor,
-    fillOpacity,
+    layerOpacity,
     colorway,
   ]);
 
