@@ -65,6 +65,7 @@ import SelectLayerType from "./SelectLayerType";
 import SelectPropertyByLayerId from "./SelectPropertyByLayerId";
 import SimplePopover from "./SimplePopover";
 import FeedbackNotFound from "@/components/ui-custom/FeedbackNotFound";
+import { addOpacityToHex } from "@/utils/addOpacityToHex";
 
 const SetLegendColorscale = (props: any) => {
   // Props
@@ -185,7 +186,7 @@ const PropertyLegendColorPicker = (props: any) => {
   // States
   const [tempColor, setTempColor] = useState<Color>(
     layer.color_property_key === formik.values.property_key?.[0]?.id
-      ? parseColor(pv.color || DEFAULT_LAYER_COLOR)
+      ? parseColor(addOpacityToHex(pv.color, pv.opacity) || DEFAULT_LAYER_COLOR)
       : parseColor(DEFAULT_LAYER_COLOR)
   );
 

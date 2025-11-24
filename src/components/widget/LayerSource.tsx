@@ -85,7 +85,7 @@ const LayerSource = ({ activeWorkspace, activeLayer }: LayerSourceProps) => {
     ? "#151515"
     : "#fff";
 
-  const layerOpacity = ["coalesce", ["get", "opacity"], 0.8];
+  const layerOpacity = ["coalesce", ["to-number", ["get", "opacity"]], 0.8];
   const fillColor = ["coalesce", ["get", "color"], defaultFillColor];
   const lineColor = ["coalesce", ["get", "color"], defaultLineColor];
   const isFillLayer = activeLayer.layer_type === "fill";
