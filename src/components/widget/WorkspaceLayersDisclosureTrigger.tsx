@@ -64,6 +64,7 @@ import SelectLayerFileType from "./SelectLayerFileType";
 import SelectLayerType from "./SelectLayerType";
 import SelectPropertyByLayerId from "./SelectPropertyByLayerId";
 import SimplePopover from "./SimplePopover";
+import FeedbackNotFound from "@/components/ui-custom/FeedbackNotFound";
 
 const SetLegendColorscale = (props: any) => {
   // Props
@@ -300,6 +301,8 @@ const SetLegendProperty = (props: any) => {
           },
         },
       });
+    } else {
+      formik.setFieldValue("property_values", undefined);
     }
   }, [formik.values.property_key]);
 
@@ -313,8 +316,6 @@ const SetLegendProperty = (props: any) => {
       ]);
     }
   }, [layer.color_property_key]);
-
-  // console.log(formik.values.property_values?.[0]);
 
   return (
     <form id="set_legend_property" onSubmit={formik.handleSubmit}>
@@ -337,12 +338,15 @@ const SetLegendProperty = (props: any) => {
 
         {!loading && (
           <>
-            {empty(formik.values.property_values) && (
+            {formik.values.property_values === undefined && (
               <CContainer align={"center"}>
                 <HelperText color={"fg.subtle"}>
                   {l.select_property_first}
                 </HelperText>
               </CContainer>
+            )}
+            {formik.values.property_values?.length === 0 && (
+              <FeedbackNotFound />
             )}
 
             {!empty(formik.values.property_values) && (
