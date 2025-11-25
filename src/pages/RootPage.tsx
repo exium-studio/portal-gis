@@ -125,13 +125,13 @@ const RootPage = () => {
           gap={0}
         >
           <P fontSize={"xl"} fontWeight={"bold"} textAlign={"center"}>
-            GeoPortal
+            WEBGIS ASET PERTANAHAN
           </P>
           <P fontSize={"xl"} fontWeight={"bold"} textAlign={"center"}>
-            {l.root_title}
+            PT Perkebunan Nusantara I Regional 1
           </P>
           <P fontSize={"xl"} fontWeight={"bold"} textAlign={"center"}>
-            (PTPN II)
+            (PTPN I)
           </P>
           <P textAlign={"center"} my={4}>
             {l.root_subtitle}
