@@ -50,6 +50,7 @@ const EXCLUDED_KEYS = [
   "HASIL",
   "color",
   "image_ids",
+  "opacity",
 ];
 
 const MINIMAL_KEYS = [
