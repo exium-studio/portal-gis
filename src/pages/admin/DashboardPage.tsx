@@ -232,6 +232,7 @@ const HGUArea = (props: any) => {
   const chart = useChart({
     data: chartData,
   });
+  const total = data?.reduce((acc: any, item: any) => acc + item.value, 0);
 
   useEffect(() => {
     const newChartData = data?.map((item: any) => {
@@ -291,6 +292,7 @@ const HGUArea = (props: any) => {
 
           <CContainer mt={4}>
             <CContainer maxH={"200px"} className="scrollY" px={8} gap={2}>
+              <P fontWeight={"semibold"}>{`Total : ${formatNumber(total)}`}</P>
               {chart.data?.map((item: any) => {
                 return (
                   <HStack key={item?.name}>
@@ -332,6 +334,7 @@ const HGUCount = (props: any) => {
   const chart = useChart({
     data: chartData,
   });
+  const total = data?.reduce((acc: any, item: any) => acc + item.value, 0);
 
   useEffect(() => {
     const newChartData = data?.map((item: any) => {
@@ -391,6 +394,7 @@ const HGUCount = (props: any) => {
 
           <CContainer mt={4}>
             <CContainer maxH={"200px"} className="scrollY" px={8} gap={2}>
+              <P fontWeight={"semibold"}>{`Total : ${formatNumber(total)}`}</P>
               {chart.data?.map((item: any) => {
                 return (
                   <HStack key={item?.name}>
@@ -428,6 +432,7 @@ const HGUAreaByKabupaten = (props: any) => {
   const chart = useChart({
     data: chartData,
   });
+  const total = data?.reduce((acc: any, item: any) => acc + item.value, 0);
 
   useEffect(() => {
     const newChartData = data?.map((item: any) => {
@@ -487,6 +492,7 @@ const HGUAreaByKabupaten = (props: any) => {
 
           <CContainer mt={4}>
             <CContainer maxH={"200px"} className="scrollY" px={8} gap={2}>
+              <P fontWeight={"semibold"}>{`Total : ${formatNumber(total)}`}</P>
               {chart.data?.map((item: any) => {
                 return (
                   <HStack key={item?.name}>
