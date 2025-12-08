@@ -306,7 +306,9 @@ const HGUArea = (props: any) => {
                       <P lineClamp={1}>{item?.name}</P>
                     </SimplePopover>
 
-                    <P textAlign={"right"} ml={"auto"}>{`${item?.value}`}</P>
+                    <P textAlign={"right"} ml={"auto"}>{`${formatNumber(
+                      item?.value
+                    )}`}</P>
                   </HStack>
                 );
               })}
@@ -408,7 +410,9 @@ const HGUCount = (props: any) => {
                       <P lineClamp={1}>{item?.name}</P>
                     </SimplePopover>
 
-                    <P textAlign={"right"} ml={"auto"}>{`${item?.value}`}</P>
+                    <P textAlign={"right"} ml={"auto"}>{`${formatNumber(
+                      item?.value
+                    )}`}</P>
                   </HStack>
                 );
               })}
@@ -506,7 +510,9 @@ const HGUAreaByKabupaten = (props: any) => {
                       <P lineClamp={1}>{item?.name}</P>
                     </SimplePopover>
 
-                    <P textAlign={"right"} ml={"auto"}>{`${item?.value}`}</P>
+                    <P textAlign={"right"} ml={"auto"}>{`${formatNumber(
+                      item?.value
+                    )}`}</P>
                   </HStack>
                 );
               })}
