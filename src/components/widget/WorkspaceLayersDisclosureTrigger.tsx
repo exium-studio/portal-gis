@@ -241,6 +241,7 @@ const SetLegendProperty = (props: any) => {
   // Contexts
   const { l } = useLang();
   const { themeConfig } = useThemeConfig();
+  const setRt = useRenderTrigger((s) => s.setRt);
 
   // States
   const formik = useFormik({
@@ -278,7 +279,9 @@ const SetLegendProperty = (props: any) => {
       reqUpdate({
         config,
         onResolve: {
-          onSuccess: () => {},
+          onSuccess: () => {
+            setRt((ps) => !ps);
+          },
         },
       });
     },
