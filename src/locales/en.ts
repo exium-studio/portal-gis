@@ -206,6 +206,10 @@ const translations = {
     "title": "Duplicate data",
     "description": "Name is already registered"
   },
+  "error_duplicate_workspace_name_toast": {
+    "title": "Duplicate data",
+    "description": "Workspace name is already exist"
+  },
   "error_file_input": {
     "title": "Invalid file",
     "description": "Ensure the file format and quantity meet the requirements."

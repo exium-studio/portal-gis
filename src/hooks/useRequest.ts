@@ -198,6 +198,12 @@ const useRequest = (props: Props) => {
                   title: l.error_403_toast.title,
                   description: l.error_403_toast.description,
                 };
+              case "DUPLICATE_WORKSPACE_NAME":
+                return {
+                  title: l.error_duplicate_workspace_name_toast.title,
+                  description:
+                    l.error_duplicate_workspace_name_toast.description,
+                };
               case "DUPLICATE_LAYER_NAME":
                 return {
                   title: l.error_duplicate_layer_name_toast.title,

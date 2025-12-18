@@ -206,6 +206,10 @@ const translations = {
     "title": "Data duplikat",
     "description": "Nama sudah terdaftar"
   },
+  "error_duplicate_workspace_name_toast": {
+    "title": "Data duplikat",
+    "description": "Nama workspace sudah ada"
+  },
   "error_file_input": {
     "title": "File tidak valid",
     "description": "Pastikan format dan jumlah file sesuai ketentuan."

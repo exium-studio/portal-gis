@@ -1695,6 +1695,16 @@ export const error_default_toast = {
     en: "An unknown error occurred. Please try again.",
   },
 };
+export const error_duplicate_workspace_name_toast = {
+  title: {
+    id: "Data duplikat",
+    en: "Duplicate data",
+  },
+  description: {
+    id: "Nama workspace sudah ada",
+    en: "Workspace name is already exist",
+  },
+};
 export const error_duplicate_layer_name_toast = {
   title: {
     id: "Data duplikat",
