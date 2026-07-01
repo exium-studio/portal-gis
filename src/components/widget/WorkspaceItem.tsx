@@ -667,7 +667,7 @@ const AddLayer = (props: any) => {
                     inputValue={formik.values.layer_file}
                     disabled={empty(formik.values.file_type)}
                     accept=".zip"
-                    maxFileSize={50}
+                    maxFileSize={5000}
                   />
                 </Field>
 

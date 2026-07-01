@@ -516,7 +516,7 @@ const EditLayer = (props: any) => {
       file_type: yup.array(),
       file: fileValidation({
         allowedExtensions: ["zip"],
-        maxSizeMB: 50,
+        maxSizeMB: 5000,
       }),
       parent_layer: yup.array(),
     }),
