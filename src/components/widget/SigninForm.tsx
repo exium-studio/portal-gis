@@ -68,12 +68,12 @@ const SigninForm = () => {
         config,
         onResolve: {
           onSuccess: (r: any) => {
-            localStorage.setItem("__auth_token", r.data.data?.token);
+            localStorage.setItem("__auth_token", r.data.data?.access_token);
             localStorage.setItem(
               "__user_data",
               JSON.stringify(r.data.data?.user)
             );
-            setAuthToken(r.data.data?.token);
+            setAuthToken(r.data.data?.access_token);
             setPermissions(r.data.data?.permissions);
             navigate("/workspace");
           },
