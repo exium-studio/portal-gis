@@ -42,7 +42,7 @@ const FileInput = (props: Props) => {
     label,
     dropzone,
     maxFiles = 1,
-    description = `up to ${props.maxFileSize || 10} MB, max ${
+    description = `up to ${props.maxFileSize || '-'} MB, max ${
       props?.maxFiles || 1
     } file${props.maxFiles! > 1 ? "s" : ""}`,
     disabled,
@@ -101,7 +101,7 @@ const FileInput = (props: Props) => {
         });
       }}
       maxFiles={maxFiles}
-      maxFileSize={(maxFileSize ?? 10) * 1024 * 1024}
+      maxFileSize={maxFileSize ? maxFileSize * 1024 * 1024 : undefined}
       gap={2}
       accept={accept}
       {...restProps}
